@@ -1,6 +1,7 @@
 /**
- * Created by gusenlin on 16/4/24.
+ * Created by daidongdong on 17/43/20.
  */
+
 angular.module('loginModule')
 
   .controller('loginCtrl', [
@@ -11,13 +12,14 @@ angular.module('loginModule')
     '$http',
     'publicMethod',
     '$log',
+    'hmsHttp',
     function ($scope,
               $state,
               baseConfig,
               $ionicLoading,
               $http,
               publicMethod,
-              $log) {
+              $log,hmsHttp) {
 
       $(function () {
         $log.debug("屏幕高度", $(".login").height());
@@ -30,7 +32,7 @@ angular.module('loginModule')
 
       $scope.savePassword = function () {
         $scope.checkbox_savePwd = !$scope.checkbox_savePwd;//取反 记住密码框的状态
-        console.log("此时密码框的状态为 :", angular.toJson($scope.checkbox_savePwd));
+        console.log("此时密码框的状态为1 :", angular.toJson($scope.checkbox_savePwd));
         if ($scope.loginData.password !== "") {
           if ($scope.checkbox_savePwd === true) {
             window.localStorage.password = $scope.loginData.password;
@@ -41,9 +43,17 @@ angular.module('loginModule')
       };
 
       $scope.doLogin = function () {
+        var url = baseConfig.weatherPath;
+        hmsHttp.get(url, {}).success(function (response) {
+          console.log(response);
+        }).error(function (response, status) {
+
+        });
+        $state.go("tab.indexPage");
+return;
         if (isEmpty($scope.loginData.username)) {
           $ionicLoading.show({
-            template: '用户名不为空！',
+            template: '用户名不1为空！',
             duration: 1000
           });
         } else {
@@ -54,11 +64,13 @@ angular.module('loginModule')
             } else {
               window.localStorage.password = "";
             }
-            $state.go("tab.message");
+            //检查crm权限
+
+            $state.go("tab.indexPage");
             //$ionicLoading.show({
             //  template: 'Loading...'
             //});
-            //var url = baseConfig.basePath + "/appLogin/user_login/login";
+            // var url = baseConfig.basePath + "/appLogin/user_login/login";
             //var params = '{"params":{"p_user_name":"' + $scope.loginData.username +
             //  '","p_password":"' + $scope.loginData.password + '"}}';
             //

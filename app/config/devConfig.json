@@ -4,11 +4,18 @@
     "isMobilePlatform": false,
     "clearTable": true,
     "basePath": "http://wechat.hand-china.com/hmbms_hand/api",
-    "currentVersion": "2.0.0",
+    "weatherPath": "https://api.seniverse.com/v3/weather/now.json?key=oudikeyru8gzhosh&location=beijing&language=zh-Hans&unit=c",
+    "currentVersion": "2.0.01",
     "url": "",
     "pkgIdentifier": "",
     "versionName": "此版本为UAT测试环境 2.0.0",
-    "appEnvironment": "UAT"
+    "appEnvironment": "UAT",
+    "version": {
+      "currentVersion": "2.9.0",
+      "currentversionName": "此版本为测试版本2.9.0",
+      "currentSubVersion": "2",
+      "currentSubVersionName": "资源增量包2"
+    }
   }
 }
 

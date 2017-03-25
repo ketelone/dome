@@ -5,13 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-var loginModule = angular.module('loginModule', []);
-var messageModule = angular.module('messageModule', []);
-var contactModule = angular.module('contactModule', []);
-var applicationModule = angular.module('applicationModule', []);
-var myInfoModule = angular.module('myInfoModule', []);
-var utilsModule = angular.module('utilsModule', []);
-var HmsModule = angular.module('HmsModule', []);
+
 
 var myApp = angular.module('myApp', [
   'ionic',
@@ -19,14 +13,13 @@ var myApp = angular.module('myApp', [
   'loginModule',
   'baseConfig',
   'messageModule',
-  'contactModule',
-  'applicationModule',
+  'indexPageModule',
   'myInfoModule',
   'utilModule',
-  'hmsDirectives',
   'utilsModule',
   'serviceModule',
-  'HmsModule'
+  'HmsModule',
+  'productModule'
 ]);
 
 angular.module('myApp')
@@ -80,6 +73,17 @@ angular.module('myApp')
 
         // Each tab has its own nav history stack:
 
+
+        .state('tab.indexPage', {
+          url: '/indexPage',
+          views: {
+            'tab-indexPage': {
+              templateUrl: 'build/pages/index-page/indexPage.html',
+              controller: 'indexPageCtrl'
+            }
+          }
+        })
+
         .state('tab.message', {
           url: '/message',
           views: {
@@ -90,31 +94,11 @@ angular.module('myApp')
           }
         })
 
-        .state('tab.contact', {
-          url: '/contact',
-          views: {
-            'tab-contact': {
-              templateUrl: 'build/pages/contact/contact.html',
-              controller: 'contactCtrl'
-            }
-          }
-        })
-
-        .state('tab.application', {
-          url: '/application',
-          views: {
-            'tab-application': {
-              templateUrl: 'build/pages/application/application.html',
-              controller: 'applicationCtrl'
-            }
-          }
-        })
-
         .state('tab.myInfo', {
           url: '/myInfo',
           views: {
             'tab-myInfo': {
-              templateUrl: 'build/pages/myInfo/myInfo.html',
+              templateUrl: 'build/pages/my-info/myInfo.html',
               controller: 'myInfoCtrl'
             }
           }

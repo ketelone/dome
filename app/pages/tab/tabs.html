@@ -5,20 +5,21 @@ navigation history that also transitions its views in and out.
 -->
 <ion-tabs class="tabs-icon-top tabs-color-active-positivez">
 
+
+  <!-- Contact Tab -->
+  <ion-tab title="首页" icon-off="indexPage-off" icon-on="indexPage-on" href="#/tab/indexPage">
+    <ion-nav-view name="tab-indexPage"></ion-nav-view>
+  </ion-tab>
+
+  <!--&lt;!&ndash; Application Tab &ndash;&gt;-->
+  <!--<ion-tab title="应用" icon-off="application-off" icon-on="application-on" href="#/tab/application">-->
+    <!--<ion-nav-view name="tab-application"></ion-nav-view>-->
+  <!--</ion-tab>-->
   <!-- Message Tab -->
   <ion-tab title="消息" icon-off="message-off" icon-on="message-on" href="#/tab/message">
     <ion-nav-view name="tab-message"></ion-nav-view>
   </ion-tab>
 
-  <!-- Contact Tab -->
-  <ion-tab title="通讯录" icon-off="contact-off" icon-on="contact-on" href="#/tab/contact">
-    <ion-nav-view name="tab-contact"></ion-nav-view>
-  </ion-tab>
-
-  <!-- Application Tab -->
-  <ion-tab title="应用" icon-off="application-off" icon-on="application-on" href="#/tab/application">
-    <ion-nav-view name="tab-application"></ion-nav-view>
-  </ion-tab>
 
   <!-- Account Tab -->
   <ion-tab title="我的" icon-off="mine-off" icon-on="mine-on" href="#/tab/myInfo">

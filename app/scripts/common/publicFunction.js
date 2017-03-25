@@ -256,3 +256,58 @@ function bd2gcj(lat, lon) {
   return [bd_lat, bd_lon];
 }
 
+var storedb = function(collectionName){
+  collectionName = collectionName ? collectionName : 'default';
+
+  var err;
+  var cache = localStorage[collectionName] ? JSON.parse(localStorage[collectionName]) : [];
+
+  return {
+
+    insert: function(obj,callback){
+      cache.unshift(obj);
+      localStorage.setItem(collectionName,JSON.stringify(cache));
+      if(callback)
+        callback(err,obj);
+    },
+    find: function(obj, callback){
+      if(arguments.length == 0){
+        return cache;
+      } else {
+        var result = [];
+
+        for(var key in obj){
+          for(var i = 0; i < cache.length; i++){
+            if(cache[i][key] == obj[key]){
+              result.push(cache[i]);
+            }
+          }
+        }
+        if(callback)
+          callback(err,result);
+        else
+          return result;
+      }
+    },
+    remove: function(obj,callback){
+      if(arguments.length == 0){
+        localStorage.removeItem(collectionName);
+      } else {
+
+        for(var key in obj){
+          for (var i = cache.length - 1; i >= 0; i--) {
+            if(cache[i][key] == obj[key]){
+              cache.splice(i,1);
+            }
+          }
+        }
+        localStorage.setItem(collectionName, JSON.stringify(cache));
+      }
+
+      if(callback)
+        callback(err);
+
+    }
+
+  };
+};

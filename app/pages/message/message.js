@@ -1,6 +1,7 @@
 /**
- * Created by gusenlin on 16/4/24.
+ * Created by daidongdong on 17/43/20.
  */
+
 angular.module('messageModule')
 
   .controller('messageCtrl', [

@@ -1,33 +1,24 @@
 {
-  "name": "gesture-lock",
+  "name": "ionic-tab-template",
   "version": "1.0.0",
   "main": "path/to/main.css",
   "ignore": [
     ".jshintrc",
-    "**/*.txt",
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "app/lib",
-    "test",
-    "tests"
+    "**/*.txt"
   ],
   "dependencies": {
     "ionic": "driftyco/ionic-bower#1.3.0",
+    "ionic-datepicker": "^1.2.0",
     "ngCordova": "0.1.26-alpha",
     "cryptojslib": "",
-    "jquery": "",
+    "angular-local-storage": "^0.2.3",
+    "ionic-native-transitions": "shprink/ionic-native-transitions#^1.0.0-rc10",
+    "jquery": "^2.2.0",
+    "jquery.lazyload": "",
     "handLib": "",
-    "gesture-lock": ""
+    "pouchdb": "",
+    "angular-translate":"2.13.1",
+    "angular-translate-loader-static-files":"2.13.1"
   },
-  "devDependencies": {
-    "gesture-lock": "*"
-  },
-  "homepage": "https://github.com/HandMobileForce/handTabs",
-  "authors": [
-    "wangkaihua <kaihua.wang@hand-china.com>"
-  ],
-  "description": "",
-  "license": "MIT",
-  "private": true
+  "devDependencies": {}
 }

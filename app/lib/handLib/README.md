@@ -262,6 +262,20 @@ bower update  更新所有的 （bower update handLib）更新当前库
 ```bash
    需要引入bower包 地址：git://github.com/wangkaihua/gesture-lock
    注意检查是否在index.html中引入了myLock.js
+   属性说明：
+                   operation:0//0表示初始化操作,1表示修改密码操作,2表示解锁操作,3表示取消密码操作
+                   fillstyle:""//连接线的颜色 默认为蓝色
+                   strokestyle:"",//圆圈颜色 默认为蓝色
+                   minifillstyle:'',//mini连接线的颜色 默认为蓝色
+                   ministrokestyle:'',//mini圆圈颜色 默认为蓝色
+                   linewidth:"2",//连接线的粗细 默认为2px
+                   choosetype:"3",//n*n 默认为9宫格
+                   havedelta:false,//是否需要箭头指示 默认为false
+                   successinit:'&',//成功初始化调用的回调函数
+                   successchange:'&',//成功修改手势密码调用的回调函数
+                   successrmlock:'&',//成功移除手势密码调用的回调函数
+                   successunlock:'&',//成功解锁调用的回调函数
+                   errorcallback:'&'//出错时调用的回调函数
      app.js中：
        if( window.localStorage.getItem('gesturePassword') && window.localStorage.getItem('gesturePassword') != ''){
            $urlRouterProvider.otherwise('/tab/lock');//开启了或者设置了密码 跳转到解锁界面
@@ -287,7 +301,9 @@ bower update  更新所有的 （bower update handLib）更新当前库
          <h1 class="title">手势密码设置</h1>
        </ion-header-bar>
        <ion-content>
-       <div align="center" class="hmsLockSetting lock-setting"  operation="data.operation"></div>
+       <div align="center" class="hmsLockSetting lock-setting"  havedelta="data.haveDelta"  operation="data.operation" fillstyle="data.fillstyle"  errorcallback="errorcallback()" successinit="successInit()">
+
+       </div>
        </ion-content>
        js中：
           $scope.goBack=function(){
@@ -295,7 +311,15 @@ bower update  更新所有的 （bower update handLib）更新当前库
           };
           //operation可以根据不同的情形进行设置可更改
           $scope.data={
-            operation:0//operation 有四个参数 0：重设密码 1：修改 2：初始化密码 3：取消设置的密码
+                operation:"0",
+                fillstyle:"red",
+                haveDelta:true
+              };
+          $scope.errorcallback=function(){
+             alert("失败")
+          }
+          $scope.successInit=function(){
+             alert("初始化成功");
           }
           $rootScope.$on('REMOVE_GESTURE_PASSWORD', function () {         //接收完成取消密码操作之后发送的广播
             window.localStorage.gestureLock = "false";
