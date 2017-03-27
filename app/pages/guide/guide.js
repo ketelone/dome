@@ -6,23 +6,62 @@ angular.module('loginModule')
   .controller('guideCtrl', [
     '$scope',
     '$state',
-    'publicMethod',
+    'baseConfig',
+    'checkVersionService',
+    'guideService',
     function ($scope,
               $state,
-              publicMethod) {
+              baseConfig,
+              checkVersionService,
+              guideService) {
 
       console.log('loginCtrl.enter');
-
-      $scope.toLogin = function () {
-        console.log("跳过导航页到登陆页");
-        $state.go("login");
+      console.log("guide");
+      window.localStorage.needGuid = "false";
+      if (ionic.Platform.isAndroid()) {
+      $scope.actualHeight = {
+        "height": screen.height-18+"px"
+      };
+      }else{
+        $scope.actualHeight = {
+          "height": screen.height+"px"
+        };
+      }
+      $scope.clientHeight = 'height: ' + document.body.clientHeight + 'px';
+      $scope.skipGuide = function () {
+        if (baseConfig.debug) {
+          console.log("跳过导航页到登陆页");
+        }
+        goToMain();
       };
 
-      $scope.$on('$ionicView.enter', function (e) {
-        console.log('guideCtrl.$ionicView.enter');
+      $scope.toLogin = function () {
+        if (baseConfig.debug) {
+          console.log("跳过导航页到登陆页");
+        }
+        goToMain();
+      };
+
+      var goToMain = function () {
+        //$state.go("login");
+        if (window.localStorage.token && window.localStorage.token != "" && window.localStorage.isHrms2108) {
+          //checkVersionService.checkAppVersion();
+          $state.go("tab.indexPage");
+        } else {
+          window.localStorage.isHrms2108 = "true";
+          $state.go("login");
+        }
+      };
+
+      $scope.$on('$ionicView.enter', function () {
+        if (baseConfig.debug) {
+          console.log('guideCtrl.$ionicView.enter');
+        }
       });
 
-      $scope.$on('$destroy', function (e) {
-        console.log('guideCtrl.$destroy');
+      $scope.$on('$destroy', function () {
+        if (baseConfig.debug) {
+          console.log('guideCtrl.$destroy');
+        }
       });
     }]);

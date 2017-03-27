@@ -117,6 +117,44 @@ angular.module('myApp')
         });
 
       // if none of the above states are matched, use this as the fallback
-      $urlRouterProvider.otherwise('/guide');
+      if (baseConfig.debug) {
+        console.log('app.js window.localStorage.appCacheVersion ' + window.localStorage.appCacheVersion);
+        console.log('app.js !window.localStorage.appCacheVersion ' + !window.localStorage.appCacheVersion);
+        console.log('app.js baseConfig.version.currentVersion ' + baseConfig.version.currentVersion);
+      }
 
+      //$xhrFactory('GET','http://localhost:8100/build/pages/application/application.html');
+
+      //$templateRequest('build/pages/application/application.html',true);
+      //$urlRouterProvider.otherwise('/guide'); return;
+
+
+
+      if (!window.localStorage.needGuid || window.localStorage.needGuid == "true"
+        || !window.localStorage.appCacheVersion || window.localStorage.appCacheVersion != baseConfig.version.currentVersion
+      ) {
+        if (baseConfig.debug) {
+          console.log('app.js into guide ');
+        }
+
+        $urlRouterProvider.otherwise('/guide');
+        window.localStorage.appCacheVersion = baseConfig.version.currentVersion;
+
+      } else {
+        if (window.localStorage.token && window.localStorage.token != "" && window.localStorage.isHrms2108) {
+
+          window.localStorage.isHrms2108 = "true";
+
+          if (window.localStorage.getItem('gesturePassword') && window.localStorage.getItem('gesturePassword') != '') {
+            $urlRouterProvider.otherwise('/gesture-lock');
+          } else {
+            $urlRouterProvider.otherwise('/tab/message');
+          }
+        } else {
+
+          window.localStorage.isHrms2108 = "true";
+
+          $urlRouterProvider.otherwise('/login');
+        }
+      }
     }]);
