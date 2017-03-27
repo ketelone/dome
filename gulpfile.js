@@ -349,23 +349,35 @@ function copyfile(oldPath, newPath) {
 
 function copyPages(e) {
   var oldPath = e.path;
-  console.log(oldPath+"旧");
-  var newPath = oldPath.replace('/app/', '/www/build/');
-  console.log(newPath+"新");
-  var newDirPathTemp = newPath.split("/");
+  /*
+  mac 部分
+   console.log(oldPath+"旧");
+   var newPath = oldPath.replace('/app/', '/www/build/');
+   console.log(newPath+"新");
+   var newDirPathTemp = newPath.split("/");
+  */
+  console.log(oldPath+'旧');
+  var newPath = oldPath.replace('\\app\\', '\\www\\build\\');
+  console.log(newPath+'新');
+  var newDirPathTemp = newPath.split("\\");
+
   var currentPath = fs.realpathSync('.');
+
   var newDirPath = [];
   for (var i = 0; i < newDirPathTemp.length - 1; i++) {
     newDirPath[i] = newDirPathTemp[i];
   }
   newDirPath = newDirPath.join("/");
+
   newDirPath = newDirPath.replace(currentPath, '');
+
   newDirPath = newDirPath.replace(/\\/g, "/");
+
   newDirPath = newDirPath.replace("/", "./");
-  console.log(newDirPath+"新");
 
   // 修改或增加时
   if ('added' == e.type || 'changed' == e.type || 'renamed' == e.type) {
+
     // 判断目录是否存在，不存在则创建
     fs.exists(newDirPath, function (exists) {
       if (exists) {
