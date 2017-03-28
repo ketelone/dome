@@ -327,7 +327,7 @@ function mkdirs(dirname, mode, callback) {
 
 //拷贝文件
 function copyfile(oldPath, newPath) {
-  //console.log('复制' + oldPath + ' -> ' + newPath);
+  console.log('复制' + oldPath + ' -> ' + newPath);
 
   var stat = fs.lstatSync(oldPath);
   if (stat.isDirectory()) {
@@ -349,17 +349,17 @@ function copyfile(oldPath, newPath) {
 
 function copyPages(e) {
   var oldPath = e.path;
-  /*
-  mac 部分
+
+  // mac 部分
    console.log(oldPath+"旧");
    var newPath = oldPath.replace('/app/', '/www/build/');
    console.log(newPath+"新");
    var newDirPathTemp = newPath.split("/");
-  */
-  console.log(oldPath+'旧');
-  var newPath = oldPath.replace('\\app\\', '\\www\\build\\');
-  console.log(newPath+'新');
-  var newDirPathTemp = newPath.split("\\");
+
+  // console.log(oldPath+'旧');
+  // var newPath = oldPath.replace('\\app\\', '\\www\\build\\');
+  // console.log(newPath+'新');
+  // var newDirPathTemp = newPath.split("\\");
 
   var currentPath = fs.realpathSync('.');
 
@@ -374,7 +374,7 @@ function copyPages(e) {
   newDirPath = newDirPath.replace(/\\/g, "/");
 
   newDirPath = newDirPath.replace("/", "./");
-
+  console.log(newDirPath+"---");
   // 修改或增加时
   if ('added' == e.type || 'changed' == e.type || 'renamed' == e.type) {
 

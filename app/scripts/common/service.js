@@ -3,10 +3,35 @@
  */
 
 angular.module('serviceModule', []).
-  service('publicMethod', ['$filter', '$ionicLoading', '$ionicPopup', '$ionicHistory',
-    function ($filter, $ionicLoading, $ionicPopup, $ionicHistory) {
+  service('publicMethod', ['$filter', '$ionicLoading', '$ionicPopup', '$ionicHistory','$cordovaDialogs',
+    function ($filter, $ionicLoading, $ionicPopup, $ionicHistory,$cordovaDialogs) {
       return {
-
+        deleteInfosPoint: function (text) {
+          return $cordovaDialogs.confirm(text, '提示', ['确定'])
+            .then(function (buttonIndex) {
+              // no button = 0, 'OK' = 1, 'Cancel' = 2
+              var btnIndex = buttonIndex;
+              if (btnIndex == 1) {
+                //$rootScope.goBack();
+              }
+            });
+        },
+        //调用电话
+        showphone: function (types) {
+          return $ionicActionSheet.show({
+            buttons: [
+              {text: '确定'},
+            ],
+            titleText: '是否拨打电话',
+            cancelText: '取消',
+            buttonClicked: function (index) {
+              if (index == 0) {
+                $window.location.href = "tel:" + types;
+                return true;
+              }
+            }
+          })
+        },
         //返回上一页
         goBack: function () {
           $ionicHistory.goBack();

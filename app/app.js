@@ -110,8 +110,14 @@ angular.module('myApp')
           controller: 'guideCtrl'
         })
 
+        .state('registered', {
+          url: '/registered',
+          templateUrl: 'build/pages/login/registered/registered.html',
+          controller: 'registeredCtrl'
+        })
+
         .state('login', {
-          url: '/guide',
+          url: '/login',
           templateUrl: 'build/pages/login/login.html',
           controller: 'loginCtrl'
         });

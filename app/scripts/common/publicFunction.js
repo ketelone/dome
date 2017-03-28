@@ -177,7 +177,6 @@ function inArray(array, obj) {
 
 //判断输入是否为十一位电话号码
 function phoneNumber(str) {
-  console.log("phoneNumber:" + str);
   var reg = /^([0-9]|[-])+$/g;
   if (str.length !== 11) {
     if (str.length === 12) {
@@ -194,8 +193,9 @@ function phoneNumber(str) {
 
 //邮件格式
 function isEmailAddress(obj) {
-  var pattern = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+  var pattern = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
   flag = pattern.test(obj);
+  console.log(flag);
   return flag;
 }
 
