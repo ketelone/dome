@@ -1,7 +1,7 @@
 /**
  * Created by gusenlin on 16/9/21.
  */
-angular.module('applicationModule')
+angular.module('loginModule')
   .service('guideService',
     ['baseConfig',
       function (baseConfig) {

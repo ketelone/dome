@@ -85,7 +85,7 @@ var configPRODPath = [
 
 var configiOSAppStorePath = [
   'publish/IOSAPPSTORE/config.xml'
-]
+
 
 var pluginDEVPath = [
   'publish/TEST/plugins/*.*',
