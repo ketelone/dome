@@ -75,9 +75,11 @@ angular.module('myApp')
 
         .state('tab.addMembers', {
           url: '/addMembers',
+          views: {
+            'tab-addMembers': {
           templateUrl: 'build/pages/my-info/add-members/addMembers.html',
           controller: 'addMembersCtrl'
-        })
+        }}})
 
 
         .state('tab.indexPage', {

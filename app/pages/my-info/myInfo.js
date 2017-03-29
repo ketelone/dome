@@ -25,7 +25,7 @@ angular.module('myInfoModule')
 
       $scope.goToaddMember= function () {
 
-       $state.go("addMembers");
+       $state.go("/#/tab/addMembers");
       };
 
 
