@@ -313,14 +313,15 @@ gulp.task('copy-prod', function () {
 
 // 创建多层目录
 function mkdirs(dirname, mode, callback) {
+ // console.log(dirname+"abc1");
   fs.exists(dirname, function (exists) {
     if (exists) {
       callback();
     } else {
-      //console.log(path.dirname(dirname));
+    // console.log(path.dirname(dirname)+"abc");
       mkdirs(path.dirname(dirname), mode, function () {
-        fs.mkdir(dirname, mode, callback);
-      });
+     fs.mkdir(dirname, mode, callback);
+     });
     }
   });
 }
@@ -367,14 +368,7 @@ function copyPages(e) {
   for (var i = 0; i < newDirPathTemp.length - 1; i++) {
     newDirPath[i] = newDirPathTemp[i];
   }
-  newDirPath = newDirPath.join("/");
-
-  newDirPath = newDirPath.replace(currentPath, '');
-
-  newDirPath = newDirPath.replace(/\\/g, "/");
-
-  newDirPath = newDirPath.replace("/", "./");
-
+  newDirPath = newDirPath.join("\\");
   // 修改或增加时
   if ('added' == e.type || 'changed' == e.type || 'renamed' == e.type) {
 
@@ -385,7 +379,9 @@ function copyPages(e) {
         copyfile(oldPath, newPath);
       } else {
         console.log("文件夹不存在，则创建目录");
-        mkdirs(newDirPath);
+
+       mkdirs(newDirPath);
+
         //延时，等待目录创建完成
         setTimeout(function () {
           copyfile(oldPath, newPath);
