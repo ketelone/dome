@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    id="cordova-plugin-hand-offlineMenu" version="0.0.1">
+    <name>LocalPagePlugin</name>
+    <author>hand</author>
+    <description>hand plugin.</description>
+    <keywords>cordova,local page</keywords>
+    <license>Apache 2.0</license>
+    
+    <js-module charset="utf-8" name="LocalPagePlugin" src="www/LocalPagePlugin.js">
+        <clobbers target="LocalPagePlugin"/>
+    </js-module>
+    
+    <platform name="android">
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="LocalPagePlugin">
+                <param name="android-package" value="com.hand.platform.LocalPagePlugin"/>
+				<param name="onload" value="true" />
+            </feature>
+        </config-file>
+		<source-file src="src/android/src/com/hand/platform/LocalPagePlugin.java" target-dir="src/com/hand/platform"/>
+        <framework src="src/android/src/hotpatch" custom="true"/>
+    </platform>
+    
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="LocalPagePlugin">
+                <param name="ios-package" value="HDHotPatchPlugin"/>
+                <param name="onload" value="true"/>
+            </feature>
+        </config-file>
+        <header-file src="src/ios/HDHotPatchPlugin.h" />
+        <source-file src="src/ios/HDHotPatchPlugin.m" />
+        
+        <framework src="SystemConfiguration.framework" weak="true" />
+        <framework src="Security.framework" weak="true" />
+        <framework src="libz.tbd" weak="true" />
+        
+        <framework src="src/ios/AFNetworking.framework" custom="true" />
+        <framework src="src/ios/ZipArchive.framework"  custom="true" />
+    </platform>
+</plugin>
