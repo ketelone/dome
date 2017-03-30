@@ -18,7 +18,8 @@
     "handLib": "",
     "pouchdb": "",
     "angular-translate":"2.13.1",
-    "angular-translate-loader-static-files":"2.13.1"
+    "angular-translate-loader-static-files":"2.13.1",
+    "echarts" : "3.5.1"
   },
   "devDependencies": {}
 }

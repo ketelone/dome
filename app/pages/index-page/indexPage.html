@@ -1,19 +1,36 @@
-<ion-view view-title="首页">
-  <ion-header-bar align-title="center" class="bar-stable">
-    <h1 class="title">首页</h1>
-  </ion-header-bar>
+<ion-view view-title="首页" class="new-application">
+  <div class="application-header" ng-style="headerStyle" ng-if="showHeader">
+    首页
+  </div>
 
-  <!--首行首列固定的滚动表格 begin-->
-  <ion-content scroll="false">
-    <hms-table
-      columnname="userColumnName"
-      headdata="userHeadData"
-      bodydata="userBodyData">
-    </hms-table>
+  <img ng-src="build/img/banner@3x.png" class="top-bg" ng-style="bgStyle" ng-load="onLoadBg()"/>
+
+  <ion-content class="mainApplication" style="bottom:48px;" scrollbar-y="false" on-drag="onDragContent()"
+               on-swipe="onSwipeContent()" on-release="onReleaseContent()">
+    <div on-release="onRelease()" class="application-setting-outer"
+         ng-show="animationsEnabled">
+    </div>
+
+    <div class="calendar-container">
+      <img ng-src="build/img/banner@3x.png" class="calendar-head"/>
+      <div class="calendar-content">
+        <div class="application-calendar">
+          <img ng-src="build/img/banner@3x.png" class="blur-bg"/>
+          <div class="white-bg"></div>
+          <!--<div ng-repeat="weekday in weekdays track by $index" class="highlight head-item">{{weekday}}</div>-->
+          <!--<div ng-repeat="day in days track by $index" class="date-item"-->
+               <!--ng-class="{true:'selected'}[nowSelectedDate == $index]" ng-click="selectDate($index)">-->
+            <!--{{getDateText(day)}}-->
+            <!--<div class="dot-container">-->
+              <!--<span class="TS-state"-->
+                    <!--ng-class="{0:'TS-refuse',1:'TS-commit',2:'TS-approval'}[day.timeSheetValue]"></span>-->
+              <!--<span class="plan-state" ng-class="{true:'plan-has'}[day.planCount != 0]" ng-if="hasCrm"></span>-->
+            <!--</div>-->
+          <!--</div>-->
+        </div>
+      </div>
+    </div>
   </ion-content>
-  <!--end-->
-
 </ion-view>
-
 
 

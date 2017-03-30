@@ -1,0 +1,364 @@
+$applicationColor: white !default;
+.new-application {
+
+  .application-header{
+    width: 100vw;
+    height: 44px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    line-height: 44px;
+    text-align: center;
+    color: #1F8CEB;
+    background: white;
+    opacity: 0;
+    z-index: 100;
+    font-size: 1.2em;
+    background-image: linear-gradient(0deg, transparent, transparent 50%, #f5f5f5 50%);
+    background-position: bottom;
+    background-size: 100% 1px;
+    background-repeat: no-repeat;
+    font-weight: bold;
+  }
+
+  .mainApplication {
+
+    //background: #EFEFEF;
+
+    ::-webkit-scrollbar {
+      display: none;
+    }
+
+    .header {
+      background: $applicationColor;
+    }
+
+    .hms-animated {
+      -webkit-animation-duration: 0.6s;
+      animation-duration: .6s;
+      -webkit-animation-fill-mode: both;
+      animation-fill-mode: both;
+    }
+
+    .application-setting-outer {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: none;
+    }
+
+    .application-setting {
+      position: absolute;
+      top: 200px;
+      left: 15%;
+      width: 70%;
+      right: 15%;
+      z-index: 200;
+    }
+
+    @-webkit-keyframes bounceIn {
+      from, 20%, 40%, 60%, 80%, to {
+        -webkit-animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+        animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+      }
+
+      0% {
+        opacity: 0;
+        -webkit-transform: scale3d(.3, .3, .3);
+        transform: scale3d(.3, .3, .3);
+      }
+
+      80% {
+        -webkit-transform: scale3d(.9, .9, .9);
+        transform: scale3d(.9, .9, .9);
+      }
+
+      to {
+        opacity: 1;
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+      }
+    }
+
+    @keyframes bounceIn {
+      from, 20%, 40%, 60%, 80%, to {
+        -webkit-animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+        animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+      }
+
+      0% {
+        opacity: 0;
+        -webkit-transform: scale3d(.3, .3, .3);
+        transform: scale3d(.3, .3, .3);
+      }
+
+      80% {
+        -webkit-transform: scale3d(.9, .9, .9);
+        transform: scale3d(.9, .9, .9);
+      }
+
+      to {
+        opacity: 1;
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+      }
+    }
+
+    .application-setting.ng-enter {
+      -webkit-animation: bounceIn 0.8s;
+      animation: bounceIn 0.8s;
+    }
+
+    .application-setting.ng-enter-stagger {
+      -webkit-animation-delay: 90ms;
+      animation-delay: 90ms;
+      /* override to make sure it's not inherited from other styles */
+      -webkit-animation-duration: 0s;
+      animation-duration: 0s;
+    }
+
+    @-webkit-keyframes open {
+      from, 20%, 40%, 60%, 80%, to {
+        -webkit-animation-timing-function: cubic-bezier(1, 0.22, 0, 0.84);
+        animation-timing-function: cubic-bezier(1, 0.22, 0, 0.84);
+      }
+      from {
+        transform: rotateY(0deg);
+        -webkit-transform: rotateY(0deg);
+      }
+
+      90% {
+        transform: rotateY(85deg);
+        -webkit-transform: rotateY(85deg);
+      }
+
+      to {
+        transform: rotateY(75deg);
+        -webkit-transform: rotateY(75deg);
+      }
+    }
+    @keyframes open {
+      from, 20%, 40%, 60%, 85%, to {
+        -webkit-animation-timing-function: cubic-bezier(1, 0.22, 0, 0.84);
+        animation-timing-function: cubic-bezier(1, 0.22, 0, 0.84);
+      }
+      from {
+        transform: rotateY(0deg);
+        -webkit-transform: rotateY(0deg);
+      }
+
+      90% {
+        transform: rotateY(85deg);
+        -webkit-transform: rotateY(85deg);
+      }
+
+      to {
+        transform: rotateY(75deg);
+        -webkit-transform: rotateY(75deg);
+      }
+    }
+
+    @-webkit-keyframes leave {
+      from {
+        transform: rotateY(0deg);
+        -webkit-transform: rotateY(0deg);
+      }
+      95% {
+        transform: rotateY(-85deg);
+        -webkit-transform: rotateY(-85deg);
+      }
+      to {
+        transform: rotateY(-75deg);
+        -webkit-transform: rotateY(-75deg);
+      }
+    }
+
+    @keyframes leave {
+      from, 20%, 40%, 60%, 85%, to {
+        -webkit-animation-timing-function: cubic-bezier(1, 0.22, 0, 0.84);
+        animation-timing-function: cubic-bezier(1, 0.22, 0, 0.84);
+      }
+      from {
+        transform: rotateY(0deg);
+        -webkit-transform: rotateY(0deg);
+      }
+      90% {
+        transform: rotateY(-85deg);
+        -webkit-transform: rotateY(-85deg);
+      }
+      to {
+        transform: rotateY(-75deg);
+        -webkit-transform: rotateY(-75deg);
+      }
+    }
+
+    .application-outer {
+      position: relative;
+      width: 100%;
+      height: 500px;
+      background: #efefef;
+      perspective: 300px;
+      -webkit-perspective: 300px; /* Safari and Chrome */
+      .application-left {
+        width: 50%;
+        left: 0;
+        position: absolute;
+        transform-origin: left;
+        -webkit-transform-origin: left;
+        &.start {
+          -webkit-animation-name: open;
+          animation-name: open;
+        }
+      }
+      .application-right {
+        width: 50%;
+        right: 0;
+        position: absolute;
+        transform-origin: right;
+        -webkit-transform-origin: right;
+        &.start {
+          -webkit-animation-name: leave;
+          animation-name: leave;
+        }
+      }
+    }
+
+    .calendar-container{
+      width: 100%;
+      position: relative;
+      .calendar-head{
+        width: 100vw;
+        visibility: hidden;
+      }
+      .calendar-content{
+        position: absolute;
+        bottom: 5px;
+        left: 0;
+        width: 100%;
+        .application-calendar{
+          padding-bottom: 10px;
+          overflow: hidden;
+          flex-wrap: wrap;
+          -webkit-flex-wrap: wrap;
+          -ms-flex-wrap: wrap;
+          display: flex;
+          display: -webkit-box;
+          display: -webkit-flex;
+          display: -moz-box;
+          display: -ms-flexbox;
+          justify-content: space-between;
+          -webkit-justify-content: space-between;
+          position: relative;
+          border-top-left-radius: 10px;
+          border-top-right-radius: 10px;
+          .blur-bg{
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            filter: blur(10px);
+            -webkit-filter: blur(10px);
+          }
+          .white-bg{
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255, 0.45);
+          }
+          .head-item{
+            font-weight: bold;
+            padding: 0;
+            height: 40px;
+            line-height: 40px;
+            color: #6D9EE5;
+          }
+          .date-item{
+            height: 30px;
+            line-height: 25px;
+          }
+          div{
+            background: transparent;
+            position: relative;
+            width: 14%;
+            text-align: center;
+            color: #333;
+            box-sizing: content-box;
+            .dot-container{
+              position: absolute;
+              width: 14px;
+              bottom: 4px;
+              left: calc(50% - 7px);
+              display: -webkit-box;
+              display: -webkit-flex;
+              display: -moz-box;
+              display: -ms-flexbox;
+              display: flex;
+              justify-content: space-around;
+              -webkit-justify-content: space-around;
+              span{
+                display: inline-block;
+                -webkit-flex-wrap: nowrap;
+                -ms-flex-wrap: nowrap;
+                flex-wrap: nowrap;
+                background: #959595;
+                height: 4px;
+                width: 4px;
+                border-radius: 50%;
+                box-sizing: content-box;
+              }
+            }
+          }
+          div.selected{
+            color: #6D9EE5;
+          }
+        }
+      }
+    }
+
+  }
+}
+
+.top-bg{
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  transform-origin: 50% 0;
+  -webkit-transform-origin: 50% 0;
+}
+
+.crm-search{
+  position: absolute;
+  top: 10px;
+  left: 5vw;
+  width: 90vw;
+  height: 30px;
+  line-height: 30px;
+  border-radius: 15px;
+  color: white;
+  font-size: 0.9em;
+  background: rgba(255, 255, 255, 0.3);
+  z-index: 11;
+  img{
+    vertical-align: middle;
+    height: 15px;
+    margin: 0 10px;
+  }
+}
+
+.platform-ios {
+  .new-application {
+    .crm-search {
+      top: 30px;
+    }
+    .application-header{
+      height: 64px;
+      padding-top: 20px;
+    }
+  }
+}
