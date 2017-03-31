@@ -72,14 +72,14 @@ angular.module('myApp')
         })
 
         // Each tab has its own nav history stack:
-
-        .state('tab.addMembers', {
+/*
+      .state('tab.addMembers', {
           url: '/addMembers',
           views: {
-            'tab-addMembers': {
+            'tab-myInfo': {
           templateUrl: 'build/pages/my-info/add-members/addMembers.html',
           controller: 'addMembersCtrl'
-        }}})
+        }}})*/
 
 
         .state('tab.indexPage', {

@@ -1,21 +1,20 @@
 /**
  * Created by chenjiacheng on 17/3/27.
  */
-/*
+
 angular.module('myInfoModule')
   .config(['$stateProvider',
     function($stateProvider) {
       $stateProvider
-        .state('addMembers', {
+        .state('tab.addMembers', {
           url: '/addMembers',
-          templateUrl: 'build/pages/my-info/add-members/addMembers.html',
-          controller: 'addMembersCtrl'
-        });
+          views: {
+            'tab-myInfo': {
+              templateUrl: 'build/pages/my-info/add-members/addMembers.html',
+              controller: 'addMembersCtrl'
+            }}})
     }
-  ]);*/
-angular.module('myInfoModule')
-
-  .controller('myInfoCtrl', [
+  ]).controller('myInfoCtrl', [
     '$scope',
     '$state',
     'publicMethod',
@@ -23,12 +22,9 @@ angular.module('myInfoModule')
               $state,
               publicMethod) {
 
-      $scope.goToaddMember= function () {
-
-       $state.go("/#/tab/addMembers");
-      };
-
-
+      $scope.goToaddMember= function() {
+        $state.go("tab.addMembers");
+   };
 
 
 
