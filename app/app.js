@@ -19,7 +19,8 @@ var myApp = angular.module('myApp', [
   'utilsModule',
   'serviceModule',
   'HmsModule',
-  'productModule'
+  'productModule',
+  'pascalprecht.translate'
 ]);
 
 angular.module('myApp')
@@ -41,8 +42,10 @@ angular.module('myApp')
   });
 
 angular.module('myApp')
-  .config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$ionicConfigProvider','baseConfig',
-    function ($stateProvider, $urlRouterProvider, $httpProvider, $ionicConfigProvider,baseConfig) {
+  .config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$ionicConfigProvider',
+    '$translateProvider', '$translateStaticFilesLoaderProvider','baseConfig',
+    function ($stateProvider, $urlRouterProvider, $httpProvider, $ionicConfigProvider,
+              $translateProvider, $translateStaticFilesLoaderProvider,baseConfig) {
       // Ionic uses AngularUI Router which uses the concept of states
       // Learn more here: https://github.com/angular-ui/ui-router
       // Set up the various states which the app can be in.
@@ -62,9 +65,14 @@ angular.module('myApp')
 
       $ionicConfigProvider.platform.ios.views.transition('ios');
       $ionicConfigProvider.platform.android.views.transition('android');
-
+      $translateProvider.preferredLanguage("zh");
+      $translateProvider.useStaticFilesLoader({
+        prefix: 'build/common/i18n/',
+        suffix: '.json'
+      });
+      //translate="header.navbar.new.NEW"
       $stateProvider
-        // setup an abstract state for the tabs directive
+      // setup an abstract state for the tabs directive
         .state('tab', {
           url: '/tab',
           abstract: true,
@@ -118,8 +126,14 @@ angular.module('myApp')
           controller: 'guideCtrl'
         })
 
+        .state('registered', {
+          url: '/registered',
+          templateUrl: 'build/pages/login/registered/registered.html',
+          controller: 'registeredCtrl'
+        })
+
         .state('login', {
-          url: '/guide',
+          url: '/login',
           templateUrl: 'build/pages/login/login.html',
           controller: 'loginCtrl'
         });
@@ -135,7 +149,6 @@ angular.module('myApp')
 
       //$templateRequest('build/pages/application/application.html',true);
       //$urlRouterProvider.otherwise('/guide'); return;
-
 
 
       if (!window.localStorage.needGuid || window.localStorage.needGuid == "true"

@@ -1,7 +1,8 @@
 {
   "baseConfig": {
     "debug": false,
-    "isMobilePlatform": true,
+    "isMobilePlatform": false,
+    "nativeScreenFlag": false,
     "clearTable": true,
     "basePath": "http://wechat.hand-china.com/hmbms_hand/api",
     "weatherPath": "https://api.seniverse.com/v3/weather/now.json?key=oudikeyru8gzhosh&location=beijing&language=zh-Hans&unit=c",

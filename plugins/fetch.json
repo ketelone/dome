@@ -70,5 +70,13 @@
         },
         "is_top_level": true,
         "variables": {}
+    },
+    "cordova-plugin-hand-offlineMenu": {
+        "source": {
+            "type": "local",
+            "path": "/Users/daidongdong/Downloads/cordova-plugin-hand-offlinemenu"
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }

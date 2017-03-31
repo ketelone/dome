@@ -62,7 +62,11 @@
     "cordova-plugin-statusbar",
     "cordova-plugin-whitelist",
     "cordova-sqlite-storage",
-    "ionic-plugin-keyboard"
+    "ionic-plugin-keyboard",
+    {
+      "id": "cordova-plugin-hand-offlineMenu\" version=\"0.0.1",
+      "locator": "/Users/daidongdong/Downloads/cordova-plugin-hand-offlinemenu"
+    }
   ],
   "cordovaPlatforms": [
     "android",

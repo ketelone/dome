@@ -1,49 +1,41 @@
-<ion-view>
-  <ion-content class="login">
-    <div class="img-login">
+<ion-view view-title="登录" class="login" calculate-portrait="big-portrait,little-portrait">
+  <ion-content class="content-style" has-bouncing="false" scrollbar-y="false" delegate-handle="loginScroll">
+    <div class="hand_logo">
+      <img src="build/img/login/logo@3x.png">
     </div>
-    <div class="img-login1"></div>
-    <form ng-submit="doLogin()" style="margin-top: 8%">
-      <div>
-        <div class="input-item0">
-          <div class="input-item"></div>
-          <input type="text" hms-mouse-even="red" placeholder="用户名" ng-model="loginData.username"
-                 style="height:18px;width:60%;font-size: 14px;background-color: #DFE8F4;margin-left: 4%;float:left;margin-top: 5%">
+    <div>
+      <ion-item class="login-item">
+      <!--  <label ng-class="{'focus-user-label':!focusUsername,'blur-user-label':focusUsername}">用户名</label>-->
+        <div class="login_user_img">
+          <img src="build/img/login/user@3x.png">
         </div>
-      </div>
-
-      <div style="height: 42px;border-bottom: #DBE0E4 1px solid; background-color: #DFE8F4;
-            width:68%;margin-left: 16%;margin-top:10px;  -webkit-border-radius: 15px;">
-        <div class="input-item2"></div>
-        <input id="pwd" type="password" hms-input-number placeholder="密码" ng-model="loginData.password"
-               style="height:18px;width:60%;font-size: 14px;background-color: #DFE8F4;margin-left: 4%;float:left;margin-top: 5%">
-
-        <div class="input-item3" id="cls">
+        <input type="text" autocomplete="off" class="username-input" ng-model="loginInfo.username"
+               ng-change="usernameChange()" placeholder="请输入用户名" ng-blur="userNameBlur()"/>
+        <ion-item class="user-clear-item" ng-show="showUserClearButton">
+          <button class="button button-block clear-button" ng-click="clearUsername()">
+            <img src="build/img/login/cancel@3x.png" class="clear-image"/>
+          </button>
+        </ion-item>
+        <div class="gray-line"></div>
+       <!-- <label ng-class="{'focus-password-label':!focusPassword,'blur-password-label':focusPassword}">密码</label>-->
+        <div  class="login_pwd_img">
+          <img src="build/img/login/password@3x.png">
         </div>
-      </div>
-
-      <div class="row" style="height: 45px;margin-top: 3%;padding: 0px">
-        <div class="col" style="min-width: 65%;padding: 0px;padding-top: 0.5%;">
-          <label class="toggle toggle-positive" style="margin-left: 75%;">
-            <input type="checkbox" ng-checked="checkbox_savePwd" ng-click="savePassword()">
-
-            <div class="track" style="height: 24px;width: 40px;margin-top: 5px;border: none;">
-              <div class="handle" style="height: 22px;width: 22px;top: 11px;border: none;"></div>
-            </div>
-          </label>
-        </div>
+        <input type="password" autocomplete="off" class="password-input" ng-model="loginInfo.password" placeholder="请输入密码"
+             ng-change="passwordChange()"/>
+        <ion-item class="password-clear-item" ng-show="showPasswordClearButton">
+          <button class="button button-block clear-button" ng-click="clearPassword()">
+            <img src="build/img/login/cancel@3x.png" class="clear-image"/>
+          </button>
+        </ion-item>
+        <div class="gray-line"></div>
         <div class="col" style="min-width: 30%;padding: 0px;">
-          <label style="font-size: 12px;color: #FAFBFD;margin-right: 40%;line-height: 35px">记住密码</label>
+          <div style="font-size: 12px;color: #FAFBFD;margin-right: 10%;line-height: 35px;text-align: right" ng-click="forgetPw()">记住密码？</div>
         </div>
-      </div>
-      <button ng-class="{true: 'unableLogin',false: 'ableLogin'}
-        [loginData.username == '' || loginData.password == '']"
-              style="color: white;border: 0px;-webkit-border-radius: 15px;width: 68%;height: 45px;text-align: center;margin-top: 50px;">
-        登录
-      </button>
-      <div style="text-align: center;margin-top:20px;color:#FFFFFF;">
-        Version：{{currentVersionNum}}
-      </div>
-    </form>
+    </div>
+    <div>
+      <div class="hasPassword" ng-click="login()">登录</div>
+      <div class="noPassword" ng-click="registered()" style="margin-top: 10px">创建账户</div>
+    </div>
   </ion-content>
 </ion-view>
