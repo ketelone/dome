@@ -362,3 +362,49 @@ $applicationColor: white !default;
     }
   }
 }
+
+
+.hms .slider {
+  height: 100%;
+}
+.hms.slider-slide {
+  color: #000;
+  background-color: #fff; text-align: center;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; font-weight: 300;
+  padding-top: 0px;
+  text-align: center;
+}
+.hms .tsb-icons {
+  width:100%;
+  height:60px;
+  text-align: center;
+  padding: 10px 0;
+  /*background-color:#eceef2;*/
+}
+.hms .tsb-ic-wrp{
+  display: flex;
+}
+.hms .tsb-icons .scroll a {
+  display:inline-block;
+  width:23%;
+  color:#000;
+  text-align:center;
+  font-size:14px;
+  border:1px solid rgba(0,0,0,0.2);
+  border-radius:10px;
+  text-decoration: none;
+  margin:1%;
+}
+.hms .tsb-icons .scroll a.active{
+  color:white;
+  font-size:14px;
+  background-color:#4285f4;
+  border:1px solid #4285f4;
+}
+.hms .heightLight{
+  border-bottom: 2px solid #4285f4;
+  transition: all .3s;
+  display: block;
+  z-index: 10;
+  height: 8px;
+}
