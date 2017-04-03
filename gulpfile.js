@@ -314,21 +314,22 @@ gulp.task('copy-prod', function () {
 
 // 创建多层目录
 function mkdirs(dirname, mode, callback) {
+ // console.log(dirname+"abc1");
   fs.exists(dirname, function (exists) {
     if (exists) {
       callback();
     } else {
-      //console.log(path.dirname(dirname));
+    // console.log(path.dirname(dirname)+"abc");
       mkdirs(path.dirname(dirname), mode, function () {
-        fs.mkdir(dirname, mode, callback);
-      });
+     fs.mkdir(dirname, mode, callback);
+     });
     }
   });
 }
 
 //拷贝文件
 function copyfile(oldPath, newPath) {
-  console.log('复制' + oldPath + ' -> ' + newPath);
+  //console.log('复制' + oldPath + ' -> ' + newPath);
 
   var stat = fs.lstatSync(oldPath);
   if (stat.isDirectory()) {
@@ -350,17 +351,17 @@ function copyfile(oldPath, newPath) {
 
 function copyPages(e) {
   var oldPath = e.path;
-
-  // mac 部分
+  /*
+  mac 部分
    console.log(oldPath+"旧");
    var newPath = oldPath.replace('/app/', '/www/build/');
    console.log(newPath+"新");
    var newDirPathTemp = newPath.split("/");
-
-  // console.log(oldPath+'旧');
-  // var newPath = oldPath.replace('\\app\\', '\\www\\build\\');
-  // console.log(newPath+'新');
-  // var newDirPathTemp = newPath.split("\\");
+  */
+  console.log(oldPath+'旧');
+  var newPath = oldPath.replace('\\app\\', '\\www\\build\\');
+  console.log(newPath+'新');
+  var newDirPathTemp = newPath.split("\\");
 
   var currentPath = fs.realpathSync('.');
 
@@ -368,14 +369,7 @@ function copyPages(e) {
   for (var i = 0; i < newDirPathTemp.length - 1; i++) {
     newDirPath[i] = newDirPathTemp[i];
   }
-  newDirPath = newDirPath.join("/");
-
-  newDirPath = newDirPath.replace(currentPath, '');
-
-  newDirPath = newDirPath.replace(/\\/g, "/");
-
-  newDirPath = newDirPath.replace("/", "./");
-  console.log(newDirPath+"---");
+  newDirPath = newDirPath.join("\\");
   // 修改或增加时
   if ('added' == e.type || 'changed' == e.type || 'renamed' == e.type) {
 
@@ -386,7 +380,9 @@ function copyPages(e) {
         copyfile(oldPath, newPath);
       } else {
         console.log("文件夹不存在，则创建目录");
-        mkdirs(newDirPath);
+
+       mkdirs(newDirPath);
+
         //延时，等待目录创建完成
         setTimeout(function () {
           copyfile(oldPath, newPath);

@@ -1,0 +1,74 @@
+.message{
+
+.row{padding-bottom:0px}
+.item{padding-left:0px;padding-right:0px}
+
+.headmessage{
+    padding-top:40px;
+  font-size:40px;
+  }
+
+.status{
+
+
+  padding: 5px 5px 0px 5px;
+  width: 100%;
+  flex: 0 0 25%;
+  max-width: 25%;
+
+  padding-top:50px;border-bottom:solid 3px #000
+
+}
+.statusword{
+  white-space:nowrap;
+  font-weight: bold;
+  display: block;
+  padding-bottom: 3px;
+}
+  .exceptionword{
+    white-space:nowrap;
+
+    display: block;
+    padding-bottom: 3px;
+    //border-bottom:solid 3px #000
+  }
+
+.exception{
+
+  padding: 5px 5px 0px 5px;
+  width: 100%;
+  flex: 0 0 75%;
+  max-width: 75%;
+  text-align: center;
+  padding-top:50px;border-bottom: 3px
+
+}
+
+
+
+  .circle{
+    border-radius:30px;
+    background: #d8d8d8;
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+   display: inline-block;
+  margin-right: 20px;
+  }
+.bigword{
+  heignt:20px;
+  display: inline-block;
+  padding: 0px 0px 20px 2px;
+}
+
+.smallword{
+  margin-top: 10px;
+}
+
+
+
+
+
+
+
+}

@@ -1,15 +1,45 @@
-<ion-view view-title="消息">
-  <ion-header-bar align-title="center" class="bar-stable">
-    <div class="buttons">
-      <button class="button" ng-click="">左侧按钮</button>
-    </div>
-    <div class="title">消息</div>
-    <div class="buttons">
-      <button class="button">右侧按钮</button>
-    </div>
-  </ion-header-bar>
+<ion-view view-title="消息" class="message">
+  <!-- <ion-header-bar align-title="center" class="bar-stable">
+     <div class="buttons">
+       <button class="button" ng-click="">左侧按钮</button>
+     </div>
+     <div class="title">消息</div>
+     <div class="buttons">
+       <button class="button">右侧按钮</button>
+     </div>
+   </ion-header-bar>-->
 
   <ion-content>
-    <div id="main" style="width: 100%;height:400px;"></div>
+    <div class="row">
+      <div class="col headmessage">消息</div>
+    </div>
+    <div class="row">
+      <div class="col col-33	status"><span class="statusword">状态及提醒</span></div>
+      <div class="col exception"><span class="exceptionword">异常及保修</span></div>
+    </div>
+    <ion-list>
+
+      <li class="item item-icon-right">
+        <div class="row">
+          <div class="col">
+            <div><i class="circle"></i>
+              <div class="bigword">卫生间</div>
+            </div>
+            <span class="smallword">进水滤芯寿命提醒</span>
+          </div>
+          <div class="col">
+            <div></div>
+            <span>2017-02-18 17:25</span>
+          </div>
+        </div>
+        <i class="icon ion-ios-arrow-right"></i>
+      </li>
+      <li class="item item-icon-right">
+        <i class="icon ion-ios-arrow-right"></i>
+      </li>
+      <li class="item item-icon-right">
+        <i class="icon ion-ios-arrow-right"></i>
+      </li>
+    </ion-list>
   </ion-content>
 </ion-view>
