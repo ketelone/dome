@@ -8,6 +8,7 @@
 
 @import "../pages/index-page/indexPage";
 @import "../pages/login/login";
+@import "../pages/login/registered/registered.scss";
 @import "../pages/message/message";
 @import "../pages/my-info/myInfo";
 @import "../pages/my-info/add-members/addMembers";
@@ -18,6 +19,9 @@
 @import "../pages/my-info/setting-temperature/settingTemperature";
 @import "../pages/guide/guide";
 @import "../pages/tab/tabs";
+//热更插件的scss
+@import "../pages/toilet-product/toilet";
+
 
 @import "../lib/handLib/hmsDirective";
 

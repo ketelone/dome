@@ -1,25 +1,52 @@
+
+
 {
 
 
-  "my-info": {
-    "add-members": {
-      "UPLOAD": "加载",
-      "new": {
-        "NEW": "新闻",
-        "PROJECT": "工程",
-        "TASK": "任务",
-        "USER": "用户",
-        "EMAIL": "邮件"
-      },
-      "myHome": "我家",
-      "addMembers":"添加成员"
-
+  "login": {
+    "login": "登录",
+    "rememberPassword": "记住密码?",
+    "usernamePlaceholder": "请输入用户名",
+    "passwordPlaceholder": "请输入密码",
+    "createNew": {
+      "createAccount": "创建账号",
+      "country": "国家",
+      "region": "(地区)",
+      "phoneNumber": "手机号码",
+      "nextStep": "下一步",
+      "email": "邮箱账号",
+      "password": "密码",
+      "enterEmail": "请输入您的邮箱",
+      "enterPhoneNum": "请输入手机号码",
+      "moreSix": "密码不少于六位",
+      "checkNextStep": "点击“下一步”",
+      "role": "即代表您同意遵守",
+      "aggrement": "《科勒用户协议》",
+      "phoneRegister": "使用手机号注册",
+      "mailRegister": "使用邮箱注册",
+      "securityCode": "4位",
+      "phonePwd": "6-18位"
     }
+  },
+  "alertMsg": {
+    "unfr": "用户名格式错误!",
+    "loading": "登录中...",
+    "unnn": "用户名不能为空",
+    "pwdnn": "密码不能为空",
+    "lepcpir": "登录失败,请确认密码是否正确!",
+    "lepcnlir": "登录失败,请确认网络连接是否正常,或者联系管理员",
+    "ema": "邮箱地址错误!",
+    "pwdIsLess": "密码过短",
+    "pwdIsMore": "密码过长",
+    "pnfie": "手机号码格式不正确",
+    "ywei": "您填写的邮箱是",
+    "ecmpafp": "邮箱可用于修改密码和找回密码。",
+    "pcir": "请确认是否正确无误。",
+    "cem": "确认邮箱",
+    "cr": "继续注册",
+    "rm": "返回修改",
+    "scfie": "验证码格式不正确",
+    "scie": "验证码不正确"
   }
-
-
-
-
-
 
 }

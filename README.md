@@ -1,4 +1,4 @@
-# HRMSv2研发项目
+# kohler研发项目
 
 一个基于 ionic v1 + angular v2 的 Hybrid app环境
 
