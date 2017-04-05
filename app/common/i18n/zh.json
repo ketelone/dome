@@ -1,3 +1,25 @@
 {
 
+
+  "my-info": {
+    "add-members": {
+      "UPLOAD": "加载",
+      "new": {
+        "NEW": "新闻",
+        "PROJECT": "工程",
+        "TASK": "任务",
+        "USER": "用户",
+        "EMAIL": "邮件"
+      },
+      "myHome": "我家",
+      "addMembers":"添加成员"
+
+    }
+  }
+
+
+
+
+
+
 }
