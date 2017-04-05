@@ -18,6 +18,11 @@ angular.module('indexPageModule')
               $timeout,
               $ionicScrollDelegate) {
 
+
+      $scope.goNumiProduct = function(){
+        $state.go('toilet');
+      }
+
       $scope.animationsEnabled = false;
       $scope.openDoor = 0;
       $scope.fetchWorkflowData = true;
