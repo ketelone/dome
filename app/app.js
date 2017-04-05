@@ -169,7 +169,7 @@ angular.module('myApp')
           if (window.localStorage.getItem('gesturePassword') && window.localStorage.getItem('gesturePassword') != '') {
             $urlRouterProvider.otherwise('/gesture-lock');
           } else {
-            $urlRouterProvider.otherwise('/tab/message');
+            $urlRouterProvider.otherwise('/tab/indexPage');
           }
         } else {
 
