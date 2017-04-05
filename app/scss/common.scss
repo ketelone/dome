@@ -1,0 +1,21 @@
+//公共head
+.header{
+  background-color:$global-head-bg;
+  .header_button{
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    margin-top: 1px;
+    font-size: 30px;
+    color: $color-base;
+    text-align: center;
+  }
+  .header_title{
+    color: $color-base;
+  }
+  .header_buttonRig{
+    font-size: 16px;
+    color: white;
+    background: #1a63de;
+  }
+}
