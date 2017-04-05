@@ -49,6 +49,7 @@
     "raw-loader": "^0.5.1",
     "run-sequence": "^1.1.5",
     "style-loader": "^0.13.1",
+    "tiny-lr": "^1.0.3",
     "ts-loader": "^0.8.1",
     "typescript": "^1.8.9",
     "webpack": "^1.12.14"
@@ -66,8 +67,7 @@
     {
       "id": "cordova-plugin-hand-offlineMenu\" version=\"0.0.1",
       "locator": "/Users/daidongdong/Downloads/cordova-plugin-hand-offlinemenu"
-    },
-    "cordova-plugin-globalization"
+    }
   ],
   "cordovaPlatforms": [
     "android",
