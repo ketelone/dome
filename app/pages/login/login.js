@@ -197,7 +197,7 @@ angular.module('loginModule')
           localStorage.removeItem('key_history1');
           localStorage.removeItem('common_linkman2');
         }
-        hmsPopup.showLoading('登录中...');
+        hmsPopup.showLoading('<span translate="alertMsg.loading"></span>');
         $timeout(function () {
           window.localStorage.empno = $scope.loginInfo.username;
           window.localStorage.password = $scope.loginInfo.password;
@@ -209,12 +209,12 @@ angular.module('loginModule')
 
           if (!$scope.loginInfo.username || $scope.loginInfo.username == '') {
             hmsPopup.hideLoading();
-            hmsPopup.showPopup('用户名不能为空');
+            hmsPopup.showPopup('<span translate="alertMsg.unnn"></span>');
             return;
           }
           if (!$scope.loginInfo.password || $scope.loginInfo.password == '') {
             hmsPopup.hideLoading();
-            hmsPopup.showPopup('密码不能为空');
+            hmsPopup.showPopup('<span translate="alertMsg.pwdnn"></span>');
             return;
           }
           $state.go('tab.indexPage');
@@ -237,14 +237,14 @@ angular.module('loginModule')
               }
 
             } else {
-              hmsPopup.showPopup('登录失败,请确认密码是否正确!');
+              hmsPopup.showPopup('<span translate="alertMsg.lepcpir"></span>');
             }
           }).error(function (response, status) {
             hmsPopup.hideLoading();
             if (status && status == '401') {
-              hmsPopup.showPopup('登录失败,请确认密码是否正确!');
+              hmsPopup.showPopup('<span translate="alertMsg.lepcpir"></span>');
             } else {
-              hmsPopup.showPopup('登录失败,请确认网络连接是否正常,或者联系管理员');
+              hmsPopup.showPopup('<span translate="alertMsg.lepcnlir"></span>');
               if (baseConfig.debug) {
                 console.log("response error " + angular.toJson(response));
               }
@@ -284,7 +284,9 @@ angular.module('loginModule')
         }else{
           if(isEmailAddress($scope.loginInfo.username)){
           }else{
-            hmsPopup.showPopup('用户名格式错误！');
+            if($scope.showUserClearButton){
+              hmsPopup.showPopup('<span translate="alertMsg.unfr"></span>');
+            }
           }
         }
       }
@@ -308,4 +310,5 @@ angular.module('loginModule')
           console.log('loginCtrl.$destroy');
         }
       });
+
     }]);
