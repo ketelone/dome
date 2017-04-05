@@ -1,0 +1,64 @@
+.greenLife{
+
+.alldevice{
+  font-size:10px;
+  text-align: center;
+}
+  .divide{
+    margin-top: 50px;
+
+  }
+  .runningCircle {
+    border-radius:100px;
+    background: #f9f9f9;
+    width:130px;
+    height:130px;
+    display: inline-block;
+  }
+  .waterCircle {
+
+    border-radius:100px;
+    background: #d8d8d8;
+    width: 130px;
+    height:130px;
+    display: inline-block;
+  }
+  .electricCircle {
+    border-radius:100px;
+    background: #d8d8d8;
+    width: 130px;
+    height:130px;
+    display: inline-block;
+  }
+  .goCenter{
+    text-align: center;
+  }
+  .addbutton{
+    background: #11a7df;
+    width: 80%;
+    height: 40px;
+    display: inline-block;
+    cursor: pointer;
+    color:white;
+    line-height: 30px;
+    text-align: center;
+    border: 0px;
+    margin-top: 20px;
+  }
+  .cusbutton{
+    text-align: center;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+}

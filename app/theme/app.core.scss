@@ -1,10 +1,22 @@
-@import "../scss/_Variables.scss";
-@import "../scss/common";
+// http://ionicframework.com/docs/v2/theming/
+
+// App Shared Imports
+// --------------------------------------------------
+// These are the various page imports which make up this app.
+// By default each design mode includes these shared imports.
+// App Shared Sass variables belong in app.variables.scss.
+
 @import "../pages/index-page/indexPage";
 @import "../pages/login/login";
 @import "../pages/login/registered/registered.scss";
 @import "../pages/message/message";
 @import "../pages/my-info/myInfo";
+@import "../pages/my-info/add-members/addMembers";
+@import "../pages/my-info/green-life/greenLife";
+@import "../pages/my-info/setting/setting";
+@import "../pages/my-info/personal-setting/personalSetting";
+@import "../pages/my-info/setting-language/settingLanguage";
+@import "../pages/my-info/setting-temperature/settingTemperature";
 @import "../pages/guide/guide";
 @import "../pages/tab/tabs";
 //热更插件的scss
