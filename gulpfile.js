@@ -33,6 +33,8 @@ var jsFilePath = [
   'app/pages/**/**/**/*.js'];
 var cssFilePath = [
   'app/theme/app.core.scss',
+  'app/scss/common.scss',
+  'app/scss/_Variables.scss',
   'app/pages/**/*.scss',
   'app/pages/**/**/*.scss',
   'app/pages/**/**/**/*.scss'];
