@@ -46,4 +46,6 @@ angular.module('myInfoModule')
               publicMethod) {
 
 
+
+
     }]);

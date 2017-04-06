@@ -1,4 +1,27 @@
 {
+  "my-info":{
+
+    "myhome":"我家",
+
+    "addMember":"添加成员",
+
+    "personality":"个性签名",
+
+    "myBox":"我的BOX",
+    "addNumber":"已添加4个",
+
+    "personalSetting":"个人资料设置",
+    "relatedFamily":"关联家庭",
+    "relatedNumber":"已关联2个",
+
+    "greenLife":"绿色生活",
+    "intelligentLinkage":"智能联动",
+    "openNumber":"已开启2个",
+
+    "setting":"设置"
+
+  }
+  ,
   "login": {
     "login": "登录",
     "rememberPassword": "记住密码?",

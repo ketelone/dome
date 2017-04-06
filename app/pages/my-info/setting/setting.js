@@ -29,11 +29,36 @@ angular.module('myInfoModule')
               hmsPopup,
               $rootScope, publicMethod,$stateParams,checkVersionService,SettingsService){
 
-      $scope.language="";
-      SettingsService.set("language","简体中文");
 
+     /**
+       *@autor:chenjiacheng
+       *@name:language
+       *@params:
+       *@return:默认语言
+       *@disc:设置默认语言
+       */
+      $scope.language=function(){
+
+     //  console.log( SettingsService.get("language")+"1");
+        if( SettingsService.get("language")!=false){
+          return SettingsService.get("language");
+        }
+        else{
+          SettingsService.set("language","简体中文");
+          return SettingsService.get("language");
+        }
+
+
+      }
+
+/**
+       *@autor:chenjiacheng
+       *@name:logout
+       *@params:
+       *@return:
+       *@disc:退出登录
+       */
       $scope.logout=function() {
-
         var confirmPopup = publicMethod.showPopupConfirm(null, "<div style='text-align: center'>是否退出当前账号</div>");
         confirmPopup.then(function (res) {
           if (res) {

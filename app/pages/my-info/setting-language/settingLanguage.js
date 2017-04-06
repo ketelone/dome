@@ -30,22 +30,33 @@ angular.module('myInfoModule')
               $rootScope, publicMethod,$stateParams,SettingsService) {
 
 
+      /**
+       *@autor:chenjiacheng
+       *@name:chooseLanguage
+       *@params:
+       *@return:
+       *@disc:选择语言
+       */
       $scope.chooseLanguage=function(e){
-        alert(123465);
 
     if($(e.target).text().trim()=="中文简体"){
-      alert(3);
+      SettingsService.set("language","中文简体");
+      publicMethod.goBack();
 
-     publicMethod.goBack();
- alert( SettingsService.get("language"));
     }
         if($(e.target).text().trim()=="中文繁體"){
+          SettingsService.set("language","中文繁體");
+          publicMethod.goBack();
 
         }
         if($(e.target).text().trim()=="English"){
-
+          SettingsService.set("language","English");
+          publicMethod.goBack();
         }
-
+        if($(e.target).text().trim()=="ภาษาไทย"){
+          SettingsService.set("language","ภาษาไทย");
+          publicMethod.goBack();
+        }
 
    }
 
