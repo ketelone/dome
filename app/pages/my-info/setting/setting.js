@@ -31,7 +31,7 @@ angular.module('myInfoModule')
 
 
      /**
-       *@autor:chenjiacheng
+       *@author:chenjiacheng
        *@name:language
        *@params:
        *@return:默认语言
@@ -52,24 +52,19 @@ angular.module('myInfoModule')
       }
 
 /**
-       *@autor:chenjiacheng
+       *@author:chenjiacheng
        *@name:logout
        *@params:
        *@return:
        *@disc:退出登录
        */
       $scope.logout=function() {
-        var confirmPopup = publicMethod.showPopupConfirm(null, "<div style='text-align: center'>是否退出当前账号</div>");
-        confirmPopup.then(function (res) {
-          if (res) {
-            console.log('You are sure');
-            $state.go('login');
-          } else {
-            console.log('You are not sure');
-          }
-        });
 
+        var goLogin=function(){
+          $state.go('login');
+        }
 
+        hmsPopup.confirmNoTitle( "<div style='text-align: center'>是否退出当前账号</div>",goLogin);
       }
 
 
