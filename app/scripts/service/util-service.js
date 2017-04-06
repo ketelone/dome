@@ -30,7 +30,6 @@ angular.module('HmsModule')
           console.log(procedure + " success");
         }
       };
-
       //如果登录令牌失效，跳转会登录界面
       var goBackLogin = function (state) {
         hmsPopup.hideLoading();
@@ -60,15 +59,24 @@ angular.module('HmsModule')
             console.log(postName + " paramter " + angular.toJson(paramter));
           }
           var destUrl = url;
+          var startTime = new Date().getTime();
           var post = $http.post(destUrl, paramter,{
-            headers: {'Content-Type': 'application/json','Authorization':'Bearer ' + window.localStorage.token}
+            headers: {timeout: 30000,'Content-Type': 'application/json','Authorization':'Bearer ' + window.localStorage.token}
           }).success(function (response) {
             if (baseConfig.debug) {
               console.log(postName + " success");
               console.log(postName + " response " + angular.toJson(response));
               console.log(postName + " End!");
             }
-          }).error(function (response, status) {
+          }).error(function (response, status, header, config) {
+            var respTime = new Date().getTime() - startTime;
+            //超时之后返回的方法
+            if(respTime >= config.timeout){
+              console.log('HTTP timeout');
+              if(ionic.Platform.isWebView()){
+                hmsPopup.showShortCenterToast('请求超时, 请重试!');
+              }
+            }
             if (baseConfig.debug) {
               console.log(postName + " error");
               console.log(postName + " response " + response);

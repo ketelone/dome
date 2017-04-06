@@ -270,7 +270,7 @@ angular.module('loginModule')
       *@disc:忘记密码
       */
       $scope.forgetPw = function () {
-
+        $state.go('forgetPassword');
       }
       /**
       *@autor:daidongdong

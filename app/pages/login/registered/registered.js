@@ -29,6 +29,10 @@ angular.module('loginModule').controller('registeredCtrl', ['$scope','hmsPopup',
   $scope.country = "";
   $scope.selectedStr = ['China', 'American', 'England'];
 
+  /**
+   *@autor: caolei
+   *@disc: registered function
+   */
   $scope.registered = function () {
 
     if($scope.isMailRsg){
@@ -45,6 +49,10 @@ angular.module('loginModule').controller('registeredCtrl', ['$scope','hmsPopup',
     }
   };
 
+  /**
+   *@autor: caolei
+   *@disc: phone registration
+   */
   $scope.phoneRegistered = function(){
     if(checkPhoneNumFormat()){
       $scope.isPhoneRsgNext = true;
@@ -52,6 +60,10 @@ angular.module('loginModule').controller('registeredCtrl', ['$scope','hmsPopup',
     }
   };
 
+  /**
+   *@autor: caolei
+   *@disc: the last phone registration
+   */
   $scope.phoneLastRegistered = function(){
     //1.验证码的验证
     //2.手机密码的验证
@@ -103,7 +115,10 @@ angular.module('loginModule').controller('registeredCtrl', ['$scope','hmsPopup',
     $scope.showUserClearButton = true;
   };
 
-  //verify email's format
+  /**
+   *@autor: caolei
+   *@disc: verify email's format
+   */
   var checkMailFormat = function(){
     //right
     if(isEmailAddress($scope.mailRegisterInfo.email)){

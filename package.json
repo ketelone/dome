@@ -17,7 +17,8 @@
   "license": "MIT",
   "contributors": [],
   "dependencies": {
-    "gulp-notify": "^2.2.0"
+    "gulp-notify": "^2.2.0",
+    "stream-combiner": "^0.2.2"
   },
   "devDependencies": {
     "angular-translate": "^2.13.1",
@@ -67,7 +68,8 @@
     {
       "id": "cordova-plugin-hand-offlineMenu\" version=\"0.0.1",
       "locator": "/Users/daidongdong/Downloads/cordova-plugin-hand-offlinemenu"
-    }
+    },
+    "cordova-plugin-globalization"
   ],
   "cordovaPlatforms": [
     "android",

@@ -132,6 +132,12 @@ angular.module('myApp')
           controller: 'registeredCtrl'
         })
 
+        .state('forgetPassword', {
+          url: '/forgetPassword',
+          templateUrl: 'build/pages/login/forget-password/forgetPassword.html',
+          controller: 'forgetPasswordCtrl'
+        })
+
         .state('login', {
           url: '/login',
           templateUrl: 'build/pages/login/login.html',
@@ -167,7 +173,6 @@ angular.module('myApp')
           window.localStorage.isHrms2108 = "true";
 
           if (window.localStorage.getItem('gesturePassword') && window.localStorage.getItem('gesturePassword') != '') {
-            $urlRouterProvider.otherwise('/gesture-lock');
           } else {
             $urlRouterProvider.otherwise('/tab/indexPage');
           }

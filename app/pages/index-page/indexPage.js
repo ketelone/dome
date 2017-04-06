@@ -22,6 +22,9 @@ angular.module('indexPageModule')
       $scope.goNumiProduct = function(){
         $state.go('toilet');
       }
+      $scope.goBigAunt = function(){
+        $state.go('bigAunt');
+      }
 
       $scope.animationsEnabled = false;
       $scope.openDoor = 0;

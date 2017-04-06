@@ -24,7 +24,7 @@
   ,
   "login": {
     "login": "登录",
-    "rememberPassword": "记住密码?",
+    "rememberPassword": "忘记密码?",
     "usernamePlaceholder": "请输入用户名",
     "passwordPlaceholder": "请输入密码",
     "createNew": {
@@ -65,6 +65,10 @@
     "cr": "继续注册",
     "rm": "返回修改",
     "scfie": "验证码格式不正确",
-    "scie": "验证码不正确"
+    "scie": "验证码不正确",
+    "pw": "请输入",
+    "gc": "收到的验证码",
+    "pwpnoea": "请输入手机号码或者邮箱账号",
+    "submit": "提交"
   }
 }

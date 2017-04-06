@@ -9,6 +9,7 @@
 @import "../pages/index-page/indexPage";
 @import "../pages/login/login";
 @import "../pages/login/registered/registered.scss";
+@import "../pages/login/forget-password/forgetPassword.scss";
 @import "../pages/message/message";
 @import "../pages/my-info/myInfo";
 @import "../pages/my-info/add-members/addMembers";
@@ -25,3 +26,7 @@
 
 @import "../lib/handLib/hmsDirective";
 
+
+//一键场景
+@import "../pages/keyscene-aunt/bigAunt";
+@import "../pages/keyscene-aunt/setting-aunt/bigAuntSetting";
