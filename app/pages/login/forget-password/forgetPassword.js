@@ -1,18 +1,29 @@
 /**
  *@autor: caolei
  */
-angular.module('loginModule').controller('forgetPasswordCtrl', ['$scope', '$state', 'hmsPopup', '$ionicHistory', function($scope, $state, hmsPopup, $ionicHistory){
+angular.module('loginModule').controller('forgetPasswordCtrl', ['$scope', '$state', 'hmsPopup', '$ionicHistory', '$interval', function($scope, $state, hmsPopup, $ionicHistory, $interval){
 
   $scope.showNextBtn = false;
   $scope.showNextBtnHidden = true;
   $scope.isFirstStep = true;
   $scope.isSecondStep = false;
+  $scope.isThirdStep = false;
   $scope.paracont = "";
   $scope.paraclass = "but_null";
   $scope.paraevent = true;
+  $scope.showNextSecondBtn = false;
+  $scope.showNextBtnSecondHidden = true;
+  $scope.showNextThirdBtn = false;
+  $scope.showNextBtnThirdHidden = true;
+  var second = 60;
+  var  timePromise = undefined;
   $scope.accountInfo = {
     account: "",
-    password: ""
+    password: "",
+    securityCode: ""
+  };
+  $scope.findInfo = {
+    securityCode: ""
   };
 
   /**
@@ -22,6 +33,11 @@ angular.module('loginModule').controller('forgetPasswordCtrl', ['$scope', '$stat
    */
   $scope.$watch('accountInfo', function(){
     changeFirstNextStep();
+    showSubmitBtn();
+  }, true);
+
+  $scope.$watch('findInfo', function(){
+    changeSecondNextStep();
   }, true);
 
   /**
@@ -40,11 +56,24 @@ angular.module('loginModule').controller('forgetPasswordCtrl', ['$scope', '$stat
 
   /**
    *@autor: caolei
+   *@disc: change the second 'next step' status
+   */
+  var changeSecondNextStep = function(){
+    if($scope.findInfo.securityCode){
+      $scope.showNextSecondBtn = true;
+      $scope.showNextBtnSecondHidden = false;
+    }else{
+      $scope.showNextSecondBtn = false;
+      $scope.showNextBtnSecondHidden = true;
+    }
+  };
+
+  /**
+   *@autor: caolei
    *@disc: the first step in finding a password
    */
   $scope.findPwdFirstStep = function(){
 
-    alert("in--");
     var account = $scope.accountInfo.account;
     if(isEmailAddress(account) || phoneNumber(account)){
 
@@ -63,8 +92,20 @@ angular.module('loginModule').controller('forgetPasswordCtrl', ['$scope', '$stat
 
   };
 
+  /**
+   *@autor: caolei
+   *@disc:go back first page
+   */
   $scope.goback = function(){
     $ionicHistory.goBack();
+  };
+
+  /**
+   *@autor: caolei
+   *@disc: get security code
+   */
+  $scope.sendPhoneCode = function(){
+    sendCode();
   };
 
   var sendCode = function(){
@@ -83,6 +124,72 @@ angular.module('loginModule').controller('forgetPasswordCtrl', ['$scope', '$stat
         second--;
       }
     },1000,100);
+  };
+
+  /**
+   *@autor: caolei
+   *@disc:check security code
+   */
+  $scope.findPwdSecondStep = function(){
+    var securityCode = $scope.findInfo.securityCode;
+    if(securityCode.length == 4){
+      if($scope.findInfo.securityCode){
+        //check code from interface
+        //$state.go('tab.indexPage');
+        if(true){
+          $scope.isFirstStep = false;
+          $scope.isSecondStep = false;
+          $scope.isThirdStep = true;
+        }
+      }
+    }else{
+      hmsPopup.showPopup('<span translate="alertMsg.scfie"></span>');
+    }
+  };
+
+  /**
+   *@autor: caolei
+   *@disc: submit update password, go index page
+   */
+  $scope.findPwdThirdStep = function(){
+
+    if(checkPwd()){
+      $state.go('tab.indexPage');
+    }
+
+  };
+
+  /**
+   *@autor: caolei
+   *@disc: check password format
+   */
+  var checkPwd = function(){
+    var password = $scope.accountInfo.password;
+    if(password){
+      var wordLength = password.length;
+      if(wordLength < 6){
+        hmsPopup.showPopup('<span translate="alertMsg.pwdIsLess"></span>');
+        return false;
+      }else if(wordLength > 18){
+        hmsPopup.showPopup('<span translate="alertMsg.pwdIsMore"></span>');
+        return false;
+      }
+    }
+    return true;
+  };
+
+  /**
+   *@autor: caolei
+   *@disc: show submit button
+   */
+  var showSubmitBtn = function(){
+    if($scope.accountInfo.password){
+      $scope.showNextThirdBtn = true;
+      $scope.showNextBtnThirdHidden = false;
+    }else{
+      $scope.showNextThirdBtn = false;
+      $scope.showNextBtnThirdHidden = true;
+    }
   };
 
 }]);
