@@ -1,43 +1,43 @@
-<ion-view view-title="我的" class="myinfo">
+<ion-view view-title="我的" class="myInfo">
   <!-- <ion-header-bar align-title="center" class="bar-stable">
 <h1 class="title">我的</h1>
   </ion-header-bar>-->
   <ion-content>
     <ion-list>
       <li class="item">
-        <div class="col myhome">我家</div>
+        <div class="col myhome" translate="my-info.myhome">我家</div>
         <div class="row">
           <div class="col col-67" >
             <i class="circle1"></i>
             <i class="circle2"></i>
             <i class="circle2"></i>
           </div>
-          <i class="col addbutton" ng-click="goToaddMember()">添加成员</i>
+          <i class="col addbutton" ui-sref="addMembers" translate="my-info.addMember">添加成员</i>
 
         </div>
-        <div class="col personality">个性签名:<span></span></div>
+        <div class="col personality" translate="my-info.personality">个性签名:<span></span></div>
       </li>
       <li class="item item-icon-right" >
-        <span class="leftword">我的BOX</span>  <span class="rightword">已添加4个</span> <i class="icon ion-ios-arrow-right"></i>
+        <span translate="my-info.myBox">我的BOX</span>  <span class="rightword" translate="my-info.myBox">已添加4个</span> <i class="icon ion-ios-arrow-right iconSize"></i>
       </li>
 
-      <li class="item item-icon-right">
-        <span class="leftword">个人资料设置</span> <i class="icon ion-ios-arrow-right"></i>
+      <li class="item item-icon-right" ui-sref="personalSetting">
+        <span translate="my-info.personalSetting">个人资料设置</span> <i class="icon ion-ios-arrow-right iconSize"></i>
       </li>
       <li class="item item-icon-right">
-        <span class="leftword">关联家庭</span>  <span class="rightword">已关联2个</span><i class="icon ion-ios-arrow-right"></i>
+        <span class="leftword" translate="my-info.relatedFamily">关联家庭</span>  <span class="rightword">已关联2个</span><i class="icon ion-ios-arrow-right iconSize"></i>
       </li>
-      <div class="item item-divider item-icon-right">
+      <div class="item item-divider cusdivide">
 
       </div>
-      <li class="item item-icon-right">
-        <span class="leftword">绿色生活</span><i class="icon ion-ios-arrow-right"></i>
+      <li class="item  item-icon-right" ui-sref="greenLife">
+        <span translate="my-info.greenLife">绿色生活</span><i class="icon ion-ios-arrow-right iconSize"></i>
       </li>
       <li class="item item-icon-right">
-        <span class="leftword">智能联动</span><span class="rightword">已开启2个</span><i class="icon ion-ios-arrow-right"></i>
+        <span translate="my-info.intelligentLinkage">智能联动</span><span class="rightword" translate="my-info.openNumber">已开启2个</span><i class="icon ion-ios-arrow-right iconSize"></i>
       </li>
-      <li class="item item-icon-right">
-       <span class="leftword"> 设置 </span><i class="icon ion-ios-arrow-right"></i>
+      <li class="item item-icon-right" ui-sref="setting" >
+       <span  translate="my-info.setting" > 设置 </span><i class="icon ion-ios-arrow-right iconSize"></i>
       </li>
 
     </ion-list>

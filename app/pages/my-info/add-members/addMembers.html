@@ -1,32 +1,31 @@
 <ion-view view-title="添加成员" class="addMembers">
-<ion-header-bar align-title="center" >
-  <i class="icon ion-ios-arrow-left"></i><h1 class="title">添加成员</h1>
+  <ion-header-bar align-title="center" >
+    <div class="item-icon-left" >
+      <div class="title">添&nbsp;加&nbsp;成&nbsp;员&nbsp;</div>
+      <i class="icon ion-ios-arrow-back" ui-sref="tab.myInfo"></i>
+    </div>
   </ion-header-bar>
   <ion-content>
 
     <div class="list list-inset">
-      <div class="font">*&nbsp;角&nbsp;色</div>
-
-     <label class="item item-input item-select">
-        <input type="text" placeholder="儿子">
-     </label>
-     <br>
-      <div class="font">*&nbsp;手&nbsp;机&nbsp;号&nbsp;码</div>
- <label class="item item-input">
-        <input type="text" placeholder="请输入关联家庭成员的手机号"><i class="icon ion-ios-close-empty"></i>
-      </label>
-      <br>
       <div class="font">&nbsp;&nbsp;昵&nbsp;称&nbsp;</div>
       <label class="item item-input">
-        <input type="text" placeholder="请输入添加成员的昵称">
+        <input type="text" placeholder="儿子"><i class="icon ion-ios-arrow-down cusicon"></i>
       </label>
+     <br>
+      <div class="font">&nbsp;手&nbsp;机&nbsp;号&nbsp;码</div>
+      <label class="item item-input">
+        <input type="text" placeholder="请输入关联家庭成员的手机号"><i class="icon ion-ios-close-empty cusicon"></i>
+    </label>
+      <br>
+
     </div>
 
 
 
 </ion-content>
 
-  <ion-footer-bar  class="bar-calm">
+  <ion-footer-bar class="bar bar-calm">
     <div class="title">添加成员</div>
   </ion-footer-bar>
 </ion-view>
