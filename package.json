@@ -17,7 +17,8 @@
   "license": "MIT",
   "contributors": [],
   "dependencies": {
-    "gulp-notify": "^2.2.0"
+    "gulp-notify": "^2.2.0",
+    "stream-combiner": "^0.2.2"
   },
   "devDependencies": {
     "angular-translate": "^2.13.1",
