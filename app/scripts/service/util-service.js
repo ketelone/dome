@@ -279,5 +279,34 @@ angular.module('HmsModule')
           );
         }
       };
+      //弹出wifi的的窗口
+      this.prompt = function (title, text, okText, cancelText, okFunc, cancelFunc) {
+        if (!baseConfig.nativeScreenFlag) {
+          var confirmPopup = $ionicPopup.confirm({
+            template: message,
+            cancelText: '取消',
+            cancelType: 'button-cux-popup-cancel',
+            okText: '确定',
+            okType: 'button-cux-popup-confirm'
+          });
+          confirmPopup.then(function(res){
+            if(res){
+              onConfirm(res);
+            }else{
+
+            }
+          });
+        } else {
+          $cordovaDialogs.confirm(text, title, [okText, cancelText])
+            .then(function (buttonIndex) {
+              // no button = 0, 'OK' = 1, 'Cancel' = 2
+              console.log("wsConfirm   buttonIndex: "+buttonIndex);
+              var btnIndex = buttonIndex;
+              if (btnIndex == 1) {
+                okFunc();
+              }
+            });
+        }
+      };
     }
   ]);
