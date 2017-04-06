@@ -33,6 +33,7 @@ angular.module('myApp')
         cordova.plugins.Keyboard.disableScroll(true);
 
       }
+      window.plugins.AzurePlugin.receiveNotificationInIOSCallback(data)
       if (window.StatusBar) {
         // org.apache.cordova.statusbar required
         StatusBar.styleDefault();
