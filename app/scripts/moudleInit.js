@@ -4,7 +4,7 @@
 
 var utilModule = angular.module('utilModule',[]);
 var utilsModule = angular.module('utilsModule',[]);
-// var HmsModule = angular.module('HmsModule',[]);//汉得公用模块
+var HmsModule = angular.module('HmsModule',[]);//汉得公用模块
 var serviceModule=angular.module('serviceModule', []);
 var loginModule = angular.module('loginModule', []);
 var messageModule = angular.module('messageModule', []);

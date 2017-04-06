@@ -132,6 +132,12 @@ angular.module('myApp')
           controller: 'registeredCtrl'
         })
 
+        .state('forgetPassword', {
+          url: '/forgetPassword',
+          templateUrl: 'build/pages/login/forget-password/forgetPassword.html',
+          controller: 'forgetPasswordCtrl'
+        })
+
         .state('login', {
           url: '/login',
           templateUrl: 'build/pages/login/login.html',
