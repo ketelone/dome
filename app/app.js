@@ -20,7 +20,7 @@ var myApp = angular.module('myApp', [
   'serviceModule',
   'HmsModule',
   'productModule',
-
+  'pascalprecht.translate'
 ]);
 
 angular.module('myApp')
