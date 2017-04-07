@@ -23,7 +23,8 @@ angular.module('myApp')
   function ($scope, $state,publicMethod,$ionicModal,$ionicPopover,$timeout,$ionicHistory) {
     $scope.goBack = function(){
       console.log('1212');
-      $ionicHistory.goBack();
+      // $ionicHistory.goBack();
+      window.history.go(-1);window.location.reload()
     }
     $ionicPopover.fromTemplateUrl('my-popover.html', {
       scope: $scope,

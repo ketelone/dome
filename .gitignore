@@ -10,3 +10,5 @@ package.json
 www/build/
 app/scripts/baseConfig.js
 gulpfile.js
+/gulpfile.js
+
