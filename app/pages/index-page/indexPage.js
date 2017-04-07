@@ -18,13 +18,42 @@ angular.module('indexPageModule')
               $timeout,
               $ionicScrollDelegate) {
 
+      $scope.isSceneModel = true;
+      $scope.isDeviceModel = false;
+      $scope.isOneLine = true;
+      $scope.isSecondLine = false;
+
+      $scope.changeModel = function(modelType){
+        if(modelType == "场景模式"){
+          $scope.isSceneModel = true;
+          $scope.isDeviceModel = false;
+          //$scope.isOneLine = true;
+          //$scope.isSecondLine = false;
+          $("#line").removeClass('height-light2');
+          $("#line").addClass('height-light');
+        }else{
+          $scope.isSceneModel = false;
+          $scope.isDeviceModel = true;
+          $("#line").removeClass('height-light');
+          $("#line").addClass('height-light2');
+        }
+      };
+
+      $scope.getSwitchStatus = function(item){
+        console.log(item);
+        if(item){
+          alert("on");
+        }else{
+          alert("off");
+        }
+      };
 
       $scope.goNumiProduct = function(){
         $state.go('toilet');
-      }
+      };
       $scope.goBigAunt = function(){
         $state.go('bigAunt');
-      }
+      };
 
       $scope.animationsEnabled = false;
       $scope.openDoor = 0;
@@ -275,7 +304,7 @@ angular.module('indexPageModule')
         $scope.events = new SimplePubSub();
         $scope.slideHasChanged = function (index) {
           //切换页面时触发方法来切换标签
-          console.log(222)
+          console.log(222);
           $scope.events.trigger("slideChange", {"index": index});
         };
         //当repeat结束时，触发初始化方法

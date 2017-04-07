@@ -22,14 +22,16 @@
     </div>
     <hms-tab-slide-box class="hms">
       <div class="tsb-icons">
-        <div class="tsb-ic-wrp">
-          <ion-scroll direction="x" style="white-space: nowrap;width: 100%;overflow:hidden;text-align: left">
-            <a href="javascript:;" ng-repeat="tab in tabs" on-finish-render> {{tab.text}}</a>
-            <span class="heightLight"></span>
+        <div class="tsb-ic-wrp text-center">
+          <ion-scroll direction="x" style="white-space: nowrap;width: 100%;overflow:hidden;text-align: center">
+            <a href="javascript:;" ng-repeat="tab in tabs" on-finish-render ng-click="changeModel(tab.text)" style="width: 31%;border: none;font-size: 24px"> {{tab.text}}</a>
+            <span id="line" class="height-light" ng-show="isOneLine"></span>
+            <!--<span class="height-light2" ng-show="isSecondLine"></span>-->
           </ion-scroll>
         </div>
       </div>
-      <ion-slide-box show-pager="false" on-slide-changed="slideHasChanged($index)">
+
+      <!--<ion-slide-box show-pager="false" on-slide-changed="slideHasChanged($index)">
         <ion-slide ng-repeat="tab in tabs">
           <ion-list>
             <ion-item>
@@ -43,9 +45,51 @@
             </ion-item>
           </ion-list>
         </ion-slide>
-      </ion-slide-box>
+      </ion-slide-box>-->
 
     </hms-tab-slide-box>
+    <div ng-if="isSceneModel">
+      <div class="text-center interval-line">
+        <p translate="sceneModel.morning"></p>
+        <p translate="sceneModel.startDay"></p>
+        <div>
+          <center>
+            <label class="switch-btn">
+              <input class="checked-switch" type="checkbox" ng-model="switchOne"  ng-click="getSwitchStatus(switchOne)"/>
+              <span class="text-switch" data-yes="off" data-no="on"></span>
+              <span class="toggle-btn"></span>
+            </label>
+          </center>
+        </div>
+      </div>
+      <br>
+      <div class="text-center interval-line">
+        <center>
+          <p translate="sceneModel.goHome"></p>
+          <p translate="sceneModel.startDevice"></p>
+          <div>
+            <label class="switch-btn">
+              <input class="checked-switch" type="checkbox" ng-model="switchTwo"  ng-click="getSwitchStatus(switchTwo)"/>
+              <span class="text-switch" data-yes="off" data-no="on"></span>
+              <span class="toggle-btn"></span>
+            </label>
+          </div>
+        </center>
+      </div>
+    </div>
+
+    <div ng-if="isDeviceModel">
+        <div class="list">
+          <a class="item item-thumbnail-left" href="#">
+            <img src="build/img/username.png">
+            <h2>Pretty Hate Machine</h2>
+            <p>Nine Inch Nails</p>
+            <div class="ion-chevron-right position-chevron">
+            </div>
+          </a>
+        </div>
+      <br>
+    </div>
   </ion-content>
 </ion-view>
 
