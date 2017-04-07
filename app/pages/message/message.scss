@@ -1,7 +1,24 @@
 .message{
+  .whiteword
+  {
+    color: white;
 
+  }
+  .redpoint{
+
+    line-height:20px ;
+    text-align: center;
+    border-radius:40px;
+    background: #d43838;
+    width: 30px;
+    height: 20px;
+ margin-right: 20%;
+  float: right;
+
+
+  }
 .row{padding-bottom:0px}
-.item{padding-left:0px;padding-right:0px}
+.item{padding-left:0px;padding-right:0px;padding-bottom: 0px;}
 
 .headmessage{
     padding-top:40px;
@@ -15,7 +32,6 @@
   width: 100%;
   flex: 0 0 25%;
   max-width: 25%;
-
   padding-top:50px;border-bottom:solid 3px #000
 
 }
@@ -23,6 +39,7 @@
   white-space:nowrap;
   font-weight: bold;
   display: block;
+
   padding-bottom: 3px;
 }
   .exceptionword{
@@ -51,22 +68,34 @@
     background: #d8d8d8;
     width: 30px;
     height: 30px;
-    display: inline-block;
-   display: inline-block;
-  margin-right: 20px;
+   float: left;
+    margin-right: 5px;
   }
 .bigword{
   heignt:20px;
   display: inline-block;
-  padding: 0px 0px 20px 2px;
+  padding: 0px 0px 2px 2px;
+  position: relative;
+  display: inline-block;
 }
 
 .smallword{
-  margin-top: 10px;
+float: left;
+  color:#cecece;
+ display:inline-block;
 }
 
+.time{
 
 
+  color:#cecece;
+
+float:right;
+
+}
+  .iconSize{
+    font-size: 20px ;
+  }
 
 
 
