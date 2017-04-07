@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    id="cordova.plugin.Azure" version="0.0.1">
+    <name>AzurePlugin</name>
+    <author>wangsheng</author>
+    <description>AzurePlugin</description>
+    <keywords>AzurePlugin</keywords>
+    <license>Apache 2.0</license>
+    
+    <js-module charset="utf-8" name="AzurePlugin" src="www/AzurePlugin.js">
+        <clobbers target="cordova.plugins.AzurePlugin" />
+    </js-module>
+    
+
+    
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="AzurePlugin">
+                <param name="ios-package" value="AzurePlugin"/>
+            </feature>
+        </config-file>
+        <header-file src="src/ios/HubInfo.h" />
+        
+        <header-file src="src/ios/AppDelegate+AzurePush.h" />
+        <source-file src="src/ios/AppDelegate+AzurePush.m" />
+        
+        <header-file src="src/ios/AzurePlugin.h" />
+        <source-file src="src/ios/AzurePlugin.m" />
+        
+        <framework src="src/ios/WindowsAzureMessaging.framework" custom="true" />
+        <framework src="src/ios/WindowsAzureMobileServices.framework"  custom="true" />
+    </platform>
+</plugin>

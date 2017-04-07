@@ -33,12 +33,12 @@
     });
 }
 
--(void)stopPush
+-(void)stopPush:(CDVInvokedUrlCommand *)cmd
 {
     [(AppDelegate *)[UIApplication sharedApplication].delegate unRegisterNotificationSetting];
 }
 
--(void)resumePush
+-(void)resumePush:(CDVInvokedUrlCommand *)cmd
 {
     [(AppDelegate *)[UIApplication sharedApplication].delegate registerNotificationSettting];
 }

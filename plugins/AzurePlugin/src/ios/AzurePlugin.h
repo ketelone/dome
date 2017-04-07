@@ -12,11 +12,11 @@
 /*
  *!重启推送
  */
-- (void)resumePush;
+- (void)resumePush:(CDVInvokedUrlCommand *)cmd;
 
 /*
  *!关闭推送
  */
 
-- (void)stopPush;
+- (void)stopPush:(CDVInvokedUrlCommand *)cmd;
 @end

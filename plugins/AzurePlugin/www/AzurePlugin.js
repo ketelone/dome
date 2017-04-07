@@ -1,4 +1,5 @@
 var exec = require('cordova/exec');
+
 //开启通知
 exports.resumePush = function(arg0, success, error) {
     exec(success, error, "AzurePlugin", "resumePush", [arg0]);
