@@ -14,7 +14,7 @@
       <div class="col headmessage">消息</div>
     </div>
     <div class="row">
-      <div class="col col-33	status" ng-click="showStatus()"><span ng-class="statusword">状态及提醒</span></div>
+      <div class="col col-33	status" ng-click="showStatus()"><span style="white-space:nowrap;" ng-class="statusword">状态及提醒</span></div>
       <div class="col exception" ng-click="showException()"><span ng-class="exceptionword">异常及保修</span></div>
     </div>
     <div ng-if="swStaus">
@@ -22,12 +22,14 @@
 
       <li class="item item-icon-right">
         <div class="row">
-          <div class="col  col-50">
+          <div class="col  col-75">
             <i class="circle"></i>
               <div class="bigword">马桶4</div>
+            <div class="chang">box2</div>
+            <div class="chang">卫生间</div>
             </div>
-            <div class="col col-50">
-              <div class="redpoint"><span class="whiteword">2</span>
+            <div class="col col-25">
+              <div id="redpoint"><span class="whiteword">2</span>
               </div>
           </div></div>
           <div class="row">

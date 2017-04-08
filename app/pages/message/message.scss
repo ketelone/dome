@@ -5,7 +5,7 @@
 
   }
 
-  .redpoint{
+  #redpoint{
 
     line-height:20px ;
     text-align: center;
@@ -13,11 +13,20 @@
     background: #d43838;
     width: 30px;
     height: 20px;
- margin-right: 18%;
-  float: right;
-
+  position: relative;
+    left:50%;
+  bottom:5%;
 
   }
+  @media screen and (max-width: 700px) {
+    #redpoint {
+      left:20%;
+    }}
+
+
+
+
+
 .row{padding-bottom:0px}
 .item{padding-left:0px;padding-right:0px;padding-bottom: 0px;}
 
@@ -63,7 +72,13 @@
 
 }
 
-
+.chang{
+  display: inline-block;
+  float: left;position: relative;
+ border: 1px solid ;
+ padding:2px 5px 2px 5px;
+  margin-left:5%
+}
 
   .circle{
     border-radius:30px;
