@@ -160,7 +160,7 @@ angular.module('myApp')
           url: '/bigAuntSetting',
           templateUrl: 'build/pages/keyscene-aunt/setting-aunt/bigAuntSetting.html',
           controller: 'bigAuntSettingCtrl'
-        });
+        })
         // 设备控制
         // 设备控制-马桶
         .state('toiletContrl', {
