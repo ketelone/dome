@@ -1,5 +1,5 @@
 /**
- * Created by daidongdong on 17/43/20.
+ * Created by chenjiacheng on 17/3/27.
  */
 
 angular.module('messageModule')
@@ -13,6 +13,43 @@ angular.module('messageModule')
               $state,
               $timeout,
               publicMethod) {
+
+
+  $scope.swStaus=true;
+  $scope.swException=false;
+      /**
+       *@author:chenjiacheng
+       *@name:logout
+       *@params:
+       *@return:
+       *@disc:Display status and alert list
+       */
+     $scope.showStatus=function(){
+       $scope.swStaus=true;
+      // console.log( $scope.swStaus);
+       $scope.swException=false;
+       $scope.statusword='statusword';
+       $scope.exceptionword="";
+    };
+      /**
+       *@author:chenjiacheng
+       *@name:logout
+       *@params:
+       *@return:
+       *@disc:Display exception and warranty list
+       */
+      $scope.showException=function(){
+        $scope.swStaus=false;
+        //console.log( $scope.swStatus);
+        $scope.swException=true;
+        $scope.exceptionword='exceptionword';
+        $scope.statusword="";
+      };
+ $scope.statusword='statusword';
+ $scope.exceptionword="";
+
+
+
 
 
 

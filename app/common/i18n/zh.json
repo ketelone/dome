@@ -1,4 +1,6 @@
 {
+
+
   "my-info":{
 
     "myhome":"我家",
@@ -18,7 +20,36 @@
     "intelligentLinkage":"智能联动",
     "openNumber":"已开启2个",
 
-    "setting":"设置"
+    "settingWord":"设置",
+
+    "setting":{
+
+      "setting":"设 置",
+
+      "language":"语言",
+
+      "temperatureUnit":"温度单位",
+
+      "centigrade":"摄氏度",
+      "firmwareUpdate":"固件升级",
+
+      "versionUpdate":"版本更新",
+      "byToupdate":"2个设备待升级",
+      "versionNumber":"版本号1.4.0.17",
+
+      "about":"关于",
+      "logout":"退出当前账号"
+
+
+    },
+
+    "setting-language":{
+
+      "language":"语 言"
+
+
+
+    }
 
   }
   ,
@@ -70,5 +101,14 @@
     "gc": "收到的验证码",
     "pwpnoea": "请输入手机号码或者邮箱账号",
     "submit": "提交"
+  },
+  "sceneModel": {
+    "morning": "晨起",
+    "startDay": "开始您美好的一天",
+    "goHome": "回家",
+    "startDevice": "一键开启指定设备"},
+
+  "bigaunt" :{
+    "bigauntTitle" : "场景详情"
   }
 }

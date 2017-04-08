@@ -35,12 +35,13 @@ angular.module('myInfoModule')
        *@name:chooseLanguage
        *@params:
        *@return:
-       *@disc:选择语言
+       *@disc:Select language
        */
       $scope.chooseLanguage=function(e){
 
     if($(e.target).text().trim()=="中文简体"){
       SettingsService.set("language","中文简体");
+
       publicMethod.goBack();
 
     }
@@ -51,6 +52,7 @@ angular.module('myInfoModule')
         }
         if($(e.target).text().trim()=="English"){
           SettingsService.set("language","English");
+
           publicMethod.goBack();
         }
         if($(e.target).text().trim()=="ภาษาไทย"){

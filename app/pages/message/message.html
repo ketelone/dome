@@ -14,32 +14,67 @@
       <div class="col headmessage">消息</div>
     </div>
     <div class="row">
-      <div class="col col-33	status"><span class="statusword">状态及提醒</span></div>
-      <div class="col exception"><span class="exceptionword">异常及保修</span></div>
+      <div class="col col-33	status" ng-click="showStatus()"><span style="white-space:nowrap;" ng-class="statusword">状态及提醒</span></div>
+      <div class="col exception" ng-click="showException()"><span ng-class="exceptionword">异常及保修</span></div>
     </div>
-    <ion-list>
+    <div ng-if="swStaus">
+    <ion-list >
 
       <li class="item item-icon-right">
         <div class="row">
-          <div class="col">
-            <div><i class="circle"></i>
-              <div class="bigword">卫生间</div>
+          <div class="col  col-75">
+            <i class="circle"></i>
+              <div class="bigword">马桶4</div>
+            <div class="chang">box2</div>
+            <div class="chang">卫生间</div>
             </div>
+            <div class="col col-25">
+              <div id="redpoint"><span class="whiteword">2</span>
+              </div>
+          </div></div>
+          <div class="row">
+         <div class="col">
             <span class="smallword">进水滤芯寿命提醒</span>
           </div>
-          <div class="col">
-            <div></div>
-            <span>2017-02-18 17:25</span>
-          </div>
+            <div>
+          <span class="time">2017-02-18 17:25</span>
+
         </div>
-        <i class="icon ion-ios-arrow-right"></i>
+            </div>
+        <i class="icon ion-ios-arrow-right iconSize"></i>
+
       </li>
-      <li class="item item-icon-right">
-        <i class="icon ion-ios-arrow-right"></i>
-      </li>
-      <li class="item item-icon-right">
-        <i class="icon ion-ios-arrow-right"></i>
-      </li>
+
     </ion-list>
+    </div>
+    <div ng-if="swException">
+      <ion-list >
+
+        <li class="item item-icon-right">
+          <div class="row">
+            <div class="col  col-50">
+              <div><i class="circle"></i></div>
+              <div class="bigword">卫生间</div>
+            </div>
+            <div class="col col-50">
+              <div class="redpoint"><span class="whiteword">2</span>
+              </div>
+            </div></div>
+          <div class="row">
+            <div class="col">
+              <span class="smallword">2个设备异常</span>
+            </div>
+            <div>
+              <span class="time">2017-02-18 17:25</span>
+
+            </div>
+          </div>
+          <i class="icon ion-ios-arrow-right iconSize"></i>
+
+        </li>
+
+      </ion-list>
+
+    </div>
   </ion-content>
 </ion-view>

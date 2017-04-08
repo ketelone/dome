@@ -34,7 +34,6 @@ angular.module('myApp')
         cordova.plugins.Keyboard.disableScroll(true);
 
       }
-      window.plugins.AzurePlugin.receiveNotificationInIOSCallback(data)
       if (window.StatusBar) {
         // org.apache.cordova.statusbar required
         StatusBar.styleDefault();
@@ -151,7 +150,17 @@ angular.module('myApp')
           templateUrl: 'build/pages/login/login.html',
           controller: 'loginCtrl'
         })
+        .state('bigAunt', {
+          url: '/bigAunt',
+          templateUrl: 'build/pages/keyscene-aunt/bigAunt.html',
+          controller: 'bigAuntCtrl'
+        })
 
+        .state('bigAuntSetting', {
+          url: '/bigAuntSetting',
+          templateUrl: 'build/pages/keyscene-aunt/setting-aunt/bigAuntSetting.html',
+          controller: 'bigAuntSettingCtrl'
+        });
         // 设备控制
         // 设备控制-马桶
         .state('toiletContrl', {

@@ -24,8 +24,6 @@ var gulpNgConfig = require('gulp-ng-config');//提示信息
 var tinylr = require('tiny-lr');
 var fs = require('fs');
 var path = require('path');
-var postcss = require('gulp-postcss');
-var px2rem = require('postcss-px2rem');
 var server = tinylr();
 var port = 8000;
 
@@ -38,8 +36,6 @@ var jsFilePath = [
   'app/pages/**/**/**/*.js'];
 
 var cssFilePath = [
-  'app/scss/_Variables.scss',
-  'app/scss/common.scss',
   'app/theme/app.core.scss',
   'app/pages/**/*.scss',
   'app/pages/**/**/*.scss',
@@ -233,10 +229,8 @@ gulp.task('copy-publish-lib', function (callback) {
 
 //合并压缩css文件
 gulp.task('sass', function () {
-  var processors = [px2rem({remUnit: 75})];
   return gulp.src(['app/theme/*.scss'])
     .pipe(sass())
-    .pipe(postcss(processors))
     .pipe(gulp.dest('www/build/css'));
 });
 
