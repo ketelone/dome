@@ -35,7 +35,7 @@ angular.module('myInfoModule')
        *@name:chooseLanguage
        *@params:
        *@return:
-       *@disc:选择语言
+       *@disc:Select language
        */
       $scope.chooseLanguage=function(e){
 

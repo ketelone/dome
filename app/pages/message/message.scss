@@ -4,6 +4,7 @@
     color: white;
 
   }
+
   .redpoint{
 
     line-height:20px ;
@@ -12,7 +13,7 @@
     background: #d43838;
     width: 30px;
     height: 20px;
- margin-right: 20%;
+ margin-right: 18%;
   float: right;
 
 
@@ -32,22 +33,23 @@
   width: 100%;
   flex: 0 0 25%;
   max-width: 25%;
-  padding-top:50px;border-bottom:solid 3px #000
+  padding-top:50px;
 
 }
 .statusword{
   white-space:nowrap;
   font-weight: bold;
-  display: block;
-
+  display: inline-block;
   padding-bottom: 3px;
+  border-bottom:solid 3px #000;
+
 }
   .exceptionword{
     white-space:nowrap;
-
-    display: block;
+     display: inline-block;
     padding-bottom: 3px;
-    //border-bottom:solid 3px #000
+    border-bottom:solid 3px #000;
+    font-weight: bold;
   }
 
 .exception{
@@ -57,7 +59,7 @@
   flex: 0 0 75%;
   max-width: 75%;
   text-align: center;
-  padding-top:50px;border-bottom: 3px
+  padding-top:50px;border-bottom: 3px;
 
 }
 
@@ -69,29 +71,34 @@
     width: 30px;
     height: 30px;
    float: left;
+   position: relative;
+
     margin-right: 5px;
   }
+
+
 .bigword{
-  heignt:20px;
+
   display: inline-block;
-  padding: 0px 0px 2px 2px;
-  position: relative;
-  display: inline-block;
+  float: left;position: relative;
+
+  top:10%
+
 }
 
 .smallword{
 float: left;
   color:#cecece;
  display:inline-block;
+  font-size: $font-size-small;
 }
 
 .time{
-
-
   color:#cecece;
-
+position: relative;
 float:right;
-
+right: 20%;
+top:15%;
 }
   .iconSize{
     font-size: 20px ;

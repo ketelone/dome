@@ -22,26 +22,33 @@ angular.module('messageModule')
        *@name:logout
        *@params:
        *@return:
-       *@disc:显示状态及提醒列表
+       *@disc:Display status and alert list
        */
      $scope.showStatus=function(){
        $scope.swStaus=true;
       // console.log( $scope.swStaus);
        $scope.swException=false;
+       $scope.statusword='statusword';
+       $scope.exceptionword="";
     };
       /**
        *@author:chenjiacheng
        *@name:logout
        *@params:
        *@return:
-       *@disc:显示异常及保修列表
+       *@disc:Display exception and warranty list
        */
       $scope.showException=function(){
         $scope.swStaus=false;
         //console.log( $scope.swStatus);
         $scope.swException=true;
-
+        $scope.exceptionword='exceptionword';
+        $scope.statusword="";
       };
+ $scope.statusword='statusword';
+ $scope.exceptionword="";
+
+
 
 
 
