@@ -1,7 +1,9 @@
 /**
  * Created by daidongdong on 2017/4/3.
  */
-myApp.controller('testCtrl',     [
+angular.module('loginModule')
+
+  .controller('testCtrl',     [
   '$scope',
   '$state',
   'publicMethod','$ionicModal','$ionicPopover','$timeout','$ionicHistory',

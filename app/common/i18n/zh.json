@@ -70,5 +70,8 @@
     "gc": "收到的验证码",
     "pwpnoea": "请输入手机号码或者邮箱账号",
     "submit": "提交"
+  },
+  "bigaunt" :{
+    "bigauntTitle" : "场景详情1"
   }
 }
