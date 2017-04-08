@@ -11,24 +11,49 @@ angular.module('indexPageModule')
     'baseConfig',
     '$timeout',
     '$ionicScrollDelegate',
+    '$http',
     function ($scope,
               $state,
               $ionicGesture,
               baseConfig,
               $timeout,
-              $ionicScrollDelegate) {
+              $ionicScrollDelegate,
+              $http) {
 
       $scope.isSceneModel = true;
       $scope.isDeviceModel = false;
       $scope.isOneLine = true;
       $scope.isSecondLine = false;
+      $scope.homeInfo = {
+        temperature: "",
+        percentage: "",
+        temperatureCh: ""
+      };
 
+      $scope.$watch('homeInfo', function(){
+        var url = "https://api.seniverse.com/v3/weather/now.json?key=oudikeyru8gzhosh&location=beijing&language=zh-Hans&unit=c";
+        var result =  $http({
+          method: 'GET',
+          headers: {
+            'Content-type': "application/x-www-form-urlencoded"
+          },
+          url: url
+        });
+
+        console.log(result);
+
+      }, true);
+
+
+      /**
+       *@autor: caolei
+       *@params: modelType
+       *@disc: change model
+       */
       $scope.changeModel = function(modelType){
         if(modelType == "场景模式"){
           $scope.isSceneModel = true;
           $scope.isDeviceModel = false;
-          //$scope.isOneLine = true;
-          //$scope.isSecondLine = false;
           $("#line").removeClass('height-light2');
           $("#line").addClass('height-light');
         }else{
@@ -39,6 +64,11 @@ angular.module('indexPageModule')
         }
       };
 
+      /**
+       *@autor: caolei
+       *@params: item
+       *@disc: get switch status
+       */
       $scope.getSwitchStatus = function(item){
         console.log(item);
         if(item){
