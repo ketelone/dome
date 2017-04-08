@@ -1,6 +1,7 @@
 # Specifies intentionally untracked files to ignore when using Git
 # http://git-scm.com/docs/gitignore
 /node_modules/
+gulpfile.js
 package.json
 /platforms/
 /plugins/ios.json
@@ -9,6 +10,4 @@ package.json
 .idea
 www/build/
 app/scripts/baseConfig.js
-gulpfile.js
-/gulpfile.js
 

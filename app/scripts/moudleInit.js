@@ -11,4 +11,5 @@ var messageModule = angular.module('messageModule', []);
 var indexPageModule = angular.module('indexPageModule', []);
 var myInfoModule = angular.module('myInfoModule', []);
 var productModule = angular.module('productModule', []);
+var toiletControlModule = angular.module('toiletControlModule', []);
 

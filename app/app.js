@@ -20,7 +20,8 @@ var myApp = angular.module('myApp', [
   'serviceModule',
   'HmsModule',
   'productModule',
-  'pascalprecht.translate'
+  'pascalprecht.translate',
+  'toiletControlModule'
 ]);
 
 angular.module('myApp')
@@ -149,8 +150,15 @@ angular.module('myApp')
           url: '/login',
           templateUrl: 'build/pages/login/login.html',
           controller: 'loginCtrl'
-        });
+        })
 
+        // 设备控制
+        // 设备控制-马桶
+        .state('toiletContrl', {
+          url: '/toiletContrl',
+          templateUrl: 'build/pages/device-controller/toilet-controller/toiletController.html',
+          controller: 'toiletControllerCtrl'
+        });
       // if none of the above states are matched, use this as the fallback
       if (baseConfig.debug) {
         console.log('app.js window.localStorage.appCacheVersion ' + window.localStorage.appCacheVersion);

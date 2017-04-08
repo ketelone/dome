@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 var gulp = require('gulp');
+
 //Include Plugins
 var del = require('del');
 var jshint = require('gulp-jshint');
@@ -22,8 +24,11 @@ var gulpNgConfig = require('gulp-ng-config');//提示信息
 var tinylr = require('tiny-lr');
 var fs = require('fs');
 var path = require('path');
+var postcss = require('gulp-postcss');
+var px2rem = require('postcss-px2rem');
 var server = tinylr();
 var port = 8000;
+
 var jsFilePath = [
   'app/scripts/*.js',
   'app/scripts/*/*.js',
@@ -31,27 +36,32 @@ var jsFilePath = [
   'app/pages/**/*.js',
   'app/pages/**/**/*.js',
   'app/pages/**/**/**/*.js'];
+
 var cssFilePath = [
-  'app/theme/app.core.scss',
   'app/scss/_Variables.scss',
-  'app/theme/common.scss',
+  'app/scss/common.scss',
+  'app/theme/app.core.scss',
   'app/pages/**/*.scss',
   'app/pages/**/**/*.scss',
   'app/pages/**/**/**/*.scss'];
+
 var htmlFilePath = [
   'app/pages/**/*.html',
   'app/pages/**/**/*.html',
   'app/pages/**/**/**/*.html',
   'app/pages/**/**/**/**/*.html'];
+
 var libDevFilePath = [
   'app/lib/**/*.*',
   'app/lib/**/**/*.*',
   'app/lib/**/**/**/*.*'];
+
 var libDevCommonFilePath = [
   'app/common/**/*.*',
   'app/common/**/**/*.*',
   'app/common/**/**/**/*.*'
 ];
+
 var libPublishFilePath = [
   'app/lib/**/css/ionic.min.css',
   'app/lib/**/fonts/*.*',
@@ -62,21 +72,25 @@ var libPublishFilePath = [
   'app/lib/**/angular-translate.js',
   'app/lib/**/angular-translate-loader-static-files.js',
   'app/lib/**/dist/ionic-datepicker.bundle.min.js',
-  'app/lib/**/dist/pouchdb.min.js',
-  'app/lib/**/dist/echarts.common.min.js'
+  'app/lib/**/dist/pouchdb.min.js'
 ];
+
 var imgFilePath = [
   'app/img/**/*.png',
   'app/img/**/**/*.*',
   'app/img/**/**/**/*.png',
   'app/img/*.gif'];
+
 var configDEVPath = [
   'publish/TEST/config.xml'];
+
 var configPRODPath = [
   'publish/PROD/config.xml'];
+
 var configiOSAppStorePath = [
   'publish/IOSAPPSTORE/config.xml'
 ]
+
 var pluginDEVPath = [
   'publish/TEST/plugins/*.*',
   'publish/TEST/plugins/**/*.*',
@@ -91,34 +105,44 @@ var pluginPRODPath = [
   'publish/PROD/plugins/**/**/**/*.*',
   'publish/PROD/plugins/**/**/**/**/*.*',
   'publish/PROD/plugins/**/**/**/**/**/*.*'];
+
 //清除自动生成的目录文件
 gulp.task('clean', function () {
   return gulp.src(['www/build/*', 'app/scripts/baseConfig.js', 'config.xml'
     /*,'plugins/com.handmobile.cordovaplugin.hotpatch/*', 'plugins/hand-im-plugin-device/*'*/]).pipe(clean());
 });
+
 gulp.task('clean-code', function () {
   return gulp.src(['www/build/css/*', 'www/build/img/*', 'www/build/pages/*', 'www/build/app.bundle.js']).pipe(clean());
 });
+
 gulp.task('clean-bundle-js', function () {
   return gulp.src(['www/build/app.bundle.js']).pipe(clean());
 });
+
+
 //动态配置android 即时通讯的
 gulp.task('clean-android-im-config', function () {
   return gulp.src(['plugins/hand-im-plugin-device/plugin.xml']).pipe(clean());
 });
+
 gulp.task('copy-prod-android-im-config', function () {
   return gulp.src('publish/PROD/hand-im-plugin-device/plugin.xml')
     .pipe(gulp.dest('plugins/hand-im-plugin-device'));
 });
+
 gulp.task('config-prod-android-im-config', function (callback) {
   runSequence('clean-android-im-config', 'copy-prod-android-im-config', callback);
 });
+
+
 //语法检查
 gulp.task('lint', function () {
   return gulp.src(jsFilePath)
     .pipe(jshint())
     .pipe(jshint.reporter('default'));
 });
+
 //复制页面到运行目录
 gulp.task('pagesHtml', function () {
   return gulp.src(htmlFilePath)
@@ -126,6 +150,7 @@ gulp.task('pagesHtml', function () {
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('www/build/pages'));
 });
+
 //
 gulp.task('rootHtml', function () {
   return gulp.src('src/*.html')
@@ -133,8 +158,10 @@ gulp.task('rootHtml', function () {
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('www'));
 });
+
 //新建复制页面任务
 gulp.task('html', [/*'rootHtml',*/ 'pagesHtml']);
+
 //复制开发环境的依赖库文件
 gulp.task('copy-dev-libs', function () {
   return gulp.src(libDevFilePath)
@@ -142,6 +169,7 @@ gulp.task('copy-dev-libs', function () {
   //.pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('www/build/lib'));
 });
+
 //复制发布环境的依赖库文件
 gulp.task('copy-publish-libs', function () {
   return gulp.src(libPublishFilePath)
@@ -149,26 +177,31 @@ gulp.task('copy-publish-libs', function () {
   //.pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('www/build/lib'));
 });
+
 //复制图片文件
 gulp.task('copy-img', function () {
   return gulp.src(imgFilePath)
     .pipe(gulp.dest('www/build/img'));
 });
+
 //复制开发环境 config.xml
 gulp.task('copy-dev-config', function () {
   return gulp.src(configDEVPath)
     .pipe(gulp.dest(''));
 });
+
 //复制发布环境 config.xml
 gulp.task('copy-prod-config', function () {
   return gulp.src(configPRODPath)
     .pipe(gulp.dest(''));
 });
+
 //复制发布环境 config.xml
 gulp.task('copy-ios-appStore-config', function () {
   return gulp.src(configiOSAppStorePath)
     .pipe(gulp.dest(''));
 });
+
 /*
  gulp.task('copy-dev-plugin', function () {
  return gulp.src(pluginDEVPath)
@@ -179,26 +212,35 @@ gulp.task('copy-ios-appStore-config', function () {
  .pipe(gulp.dest('plugins'));
  });
  */
+
+
 gulp.task('copy-common-js-libs', function () {
   return gulp.src(libDevCommonFilePath)
   //.pipe(useref({noAssets: true}, lazypipe().pipe(sourcemaps.init, {loadMaps: true})))
   //.pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('www/build/common'));
 });
+
 //定义开发环境的依赖库文件任务
 gulp.task('copy-dev-lib', function (callback) {
   runSequence('copy-dev-libs', 'copy-img', 'copy-common-js-libs', callback);
 });
+
 //定义发布环境的依赖库文件任务
 gulp.task('copy-publish-lib', function (callback) {
   runSequence('copy-publish-libs', 'copy-img', 'copy-common-js-libs', callback);
 });
+
 //合并压缩css文件
 gulp.task('sass', function () {
+  var processors = [px2rem({remUnit: 75})];
   return gulp.src(['app/theme/*.scss'])
     .pipe(sass())
+    .pipe(postcss(processors))
     .pipe(gulp.dest('www/build/css'));
 });
+
+
 //生成开发环境环境配置文件
 gulp.task('config-dev', function () {
   gulp.src('app/config/devConfig.json')
@@ -206,6 +248,7 @@ gulp.task('config-dev', function () {
     .pipe(rename("baseConfig.js"))
     .pipe(gulp.dest('app/scripts'))
 });
+
 //生成发布环境环境配置文件
 gulp.task('config-prod', function () {
   gulp.src('app/config/prodConfig.json')
@@ -213,6 +256,7 @@ gulp.task('config-prod', function () {
     .pipe(rename("baseConfig.js"))
     .pipe(gulp.dest('app/scripts'))
 });
+
 //生成iOS商店发布环境环境配置文件
 gulp.task('config-ios-appStore-prod', function () {
   gulp.src('app/config/iOSAppStoreConfig.json')
@@ -220,6 +264,7 @@ gulp.task('config-ios-appStore-prod', function () {
     .pipe(rename("baseConfig.js"))
     .pipe(gulp.dest('app/scripts'))
 });
+
 //生成iOS发布环境环境配置文件
 gulp.task('config-prod', function () {
   gulp.src('app/config/prodConfig.json')
@@ -227,11 +272,13 @@ gulp.task('config-prod', function () {
     .pipe(rename("baseConfig.js"))
     .pipe(gulp.dest('app/scripts'))
 });
+
 //复制开发环境 config.xml
 gulp.task('copy-iosAppStore-config', function () {
   return gulp.src(configIosAppStorePath)
     .pipe(gulp.dest(''));
 });
+
 //压缩css
 gulp.task('css', function () {
   return gulp.src('src/css/**/*.css')
@@ -244,6 +291,7 @@ gulp.task('css', function () {
     .pipe(sourcemaps.write('.', {includeContent: false, sourceRoot: '.'}))
     .pipe(gulp.dest('www/css'));
 });
+
 //合并压缩丑化Js
 gulp.task('scripts', function () {
   return gulp.src(jsFilePath)
@@ -253,6 +301,7 @@ gulp.task('scripts', function () {
     .pipe(uglify())    //压缩
     .pipe(gulp.dest('www/build'));  //输出
 });
+
 //
 gulp.task('copy-prod', function () {
   return gulp.src([
@@ -267,27 +316,32 @@ gulp.task('copy-prod', function () {
     '!src/scripts/*'])
     .pipe(gulp.dest('www'));
 });
+
 // 创建多层目录
 function mkdirs(dirname, mode, callback) {
+  // console.log(dirname+"abc1");
   fs.exists(dirname, function (exists) {
     if (exists) {
       callback();
     } else {
-      //console.log(path.dirname(dirname));
+      // console.log(path.dirname(dirname)+"abc");
       mkdirs(path.dirname(dirname), mode, function () {
         fs.mkdir(dirname, mode, callback);
       });
     }
   });
 }
+
 //拷贝文件
 function copyfile(oldPath, newPath) {
   //console.log('复制' + oldPath + ' -> ' + newPath);
+
   var stat = fs.lstatSync(oldPath);
   if (stat.isDirectory()) {
     console.log(oldPath + '是目录');
     return false;
   }
+
   var readStream = fs.createReadStream(oldPath);
   var writeStream = fs.createWriteStream(newPath);
   readStream.pipe(writeStream);
@@ -298,24 +352,32 @@ function copyfile(oldPath, newPath) {
     console.log('copy error');
   });
 }
+
+
 function copyPages(e) {
   var oldPath = e.path;
-  console.log(oldPath+"旧");
-  var newPath = oldPath.replace('/app/', '/www/build/');
-  console.log(newPath+"新");
-  var newDirPathTemp = newPath.split("/");
+  /*
+   mac 部分
+   console.log(oldPath+"旧");
+   var newPath = oldPath.replace('/app/', '/www/build/');
+   console.log(newPath+"新");
+   var newDirPathTemp = newPath.split("/");
+   */
+  console.log(oldPath+'旧');
+  var newPath = oldPath.replace('\\app\\', '\\www\\build\\');
+  console.log(newPath+'新');
+  var newDirPathTemp = newPath.split("\\");
+
   var currentPath = fs.realpathSync('.');
+
   var newDirPath = [];
   for (var i = 0; i < newDirPathTemp.length - 1; i++) {
     newDirPath[i] = newDirPathTemp[i];
   }
-  newDirPath = newDirPath.join("/");
-  newDirPath = newDirPath.replace(currentPath, '');
-  newDirPath = newDirPath.replace(/\\/g, "/");
-  newDirPath = newDirPath.replace("/", "./");
-  console.log(newDirPath+"新");
+  newDirPath = newDirPath.join("\\");
   // 修改或增加时
   if ('added' == e.type || 'changed' == e.type || 'renamed' == e.type) {
+
     // 判断目录是否存在，不存在则创建
     fs.exists(newDirPath, function (exists) {
       if (exists) {
@@ -323,7 +385,9 @@ function copyPages(e) {
         copyfile(oldPath, newPath);
       } else {
         console.log("文件夹不存在，则创建目录");
+
         mkdirs(newDirPath);
+
         //延时，等待目录创建完成
         setTimeout(function () {
           copyfile(oldPath, newPath);
@@ -336,48 +400,60 @@ function copyPages(e) {
     });
   }
 }
+
 // 监听任务 运行语句 gulp watch
 gulp.task('watch', function () {
   server.listen(port, function (err) {
     if (err) {
       return console.log(err);
     }
+
     //拷贝修改过的文件
     gulp.watch(htmlFilePath, function (e) {
       console.log('有变动的文件为 oldPath ' + e.path);
       copyPages(e);
     });
+
     gulp.watch('app/img/**/**/**/**', function (e) {
       console.log('有变动的文件为 oldPath ' + e.path);
       copyPages(e);
     });
+
     // 监听sass
     gulp.watch(cssFilePath, function (e) {
       console.log('有变动的文件为 oldPath ' + e.path);
       gulp.run('sass');
     });
+
     // 监听js
     gulp.watch(jsFilePath, function (e) {
       console.log('有变动的文件为 oldPath ' + e.path);
       gulp.run('scripts');
     });
   });
+
 });
+
 //手动更新www/build代码
 gulp.task('rebuild', function (callback) {
   runSequence('clean-code', ['copy-img', 'sass', 'scripts', 'html'], callback);
 });
+
 //生成开发环境代码目录
 gulp.task('run-dev', function (callback) {
   runSequence('clean', 'config-dev', /*'lint',*/ 'copy-dev-config', 'copy-publish-lib', ['sass', 'scripts', 'html'], callback);
 });
+
 //生成发布环境代码目录
 gulp.task('run-prod', function (callback) {
   runSequence('clean', 'config-prod', /*'lint',*/ 'copy-prod-config', 'copy-publish-lib', ['sass', 'scripts', 'html'], callback);
 });
+
 //生成发布环境代码目录
 gulp.task('run-ios-prod', function (callback) {
   runSequence('clean', 'config-ios-appStore-prod', /*'lint',*/ 'copy-ios-appStore-config', 'copy-publish-lib', ['sass', 'scripts', 'html'], callback);
 });
+
+
 //默认任务
 gulp.task('default', ['run-dev']);
