@@ -19,8 +19,8 @@ var nano = require('gulp-cssnano');
 var runSequence = require('gulp-run-sequence');
 var sourcemaps = require('gulp-sourcemaps');
 var clean = require('gulp-clean');
-var notify = require('gulp-notify');//ÌáÊ¾ĞÅÏ¢
-var gulpNgConfig = require('gulp-ng-config');//ÌáÊ¾ĞÅÏ¢
+var notify = require('gulp-notify');//æç¤ºä¿¡æ¯
+var gulpNgConfig = require('gulp-ng-config');//æç¤ºä¿¡æ¯
 var tinylr = require('tiny-lr');
 var fs = require('fs');
 var path = require('path');
@@ -102,11 +102,7 @@ var pluginPRODPath = [
   'publish/PROD/plugins/**/**/**/**/*.*',
   'publish/PROD/plugins/**/**/**/**/**/*.*'];
 
-<<<<<<< HEAD
 //æ¸…é™¤è‡ªåŠ¨ç”Ÿæˆçš„ç›®å½•æ–‡ä»¶
-=======
-//Çå³ı×Ô¶¯Éú³ÉµÄÄ¿Â¼ÎÄ¼ş
->>>>>>> f-9457
 gulp.task('clean', function () {
   return gulp.src(['www/build/*', 'app/scripts/baseConfig.js', 'config.xml'
     /*,'plugins/com.handmobile.cordovaplugin.hotpatch/*', 'plugins/hand-im-plugin-device/*'*/]).pipe(clean());
@@ -121,11 +117,7 @@ gulp.task('clean-bundle-js', function () {
 });
 
 
-<<<<<<< HEAD
 //åŠ¨æ€é…ç½®android å³æ—¶é€šè®¯çš„
-=======
-//¶¯Ì¬ÅäÖÃandroid ¼´Ê±Í¨Ñ¶µÄ
->>>>>>> f-9457
 gulp.task('clean-android-im-config', function () {
   return gulp.src(['plugins/hand-im-plugin-device/plugin.xml']).pipe(clean());
 });
@@ -140,22 +132,14 @@ gulp.task('config-prod-android-im-config', function (callback) {
 });
 
 
-<<<<<<< HEAD
 //è¯­æ³•æ£€æŸ¥
-=======
-//Óï·¨¼ì²é
->>>>>>> f-9457
 gulp.task('lint', function () {
   return gulp.src(jsFilePath)
     .pipe(jshint())
     .pipe(jshint.reporter('default'));
 });
 
-<<<<<<< HEAD
 //å¤åˆ¶é¡µé¢åˆ°è¿è¡Œç›®å½•
-=======
-//¸´ÖÆÒ³Ãæµ½ÔËĞĞÄ¿Â¼
->>>>>>> f-9457
 gulp.task('pagesHtml', function () {
   return gulp.src(htmlFilePath)
     .pipe(useref({noAssets: true}, lazypipe().pipe(sourcemaps.init, {loadMaps: true})))
@@ -171,17 +155,10 @@ gulp.task('rootHtml', function () {
     .pipe(gulp.dest('www'));
 });
 
-<<<<<<< HEAD
 //æ–°å»ºå¤åˆ¶é¡µé¢ä»»åŠ¡
 gulp.task('html', [/*'rootHtml',*/ 'pagesHtml']);
 
 //å¤åˆ¶å¼€å‘ç¯å¢ƒçš„ä¾èµ–åº“æ–‡ä»¶
-=======
-//ĞÂ½¨¸´ÖÆÒ³ÃæÈÎÎñ
-gulp.task('html', [/*'rootHtml',*/ 'pagesHtml']);
-
-//¸´ÖÆ¿ª·¢»·¾³µÄÒÀÀµ¿âÎÄ¼ş
->>>>>>> f-9457
 gulp.task('copy-dev-libs', function () {
   return gulp.src(libDevFilePath)
     //.pipe(useref({noAssets: true}, lazypipe().pipe(sourcemaps.init, {loadMaps: true})))
@@ -189,11 +166,7 @@ gulp.task('copy-dev-libs', function () {
     .pipe(gulp.dest('www/build/lib'));
 });
 
-<<<<<<< HEAD
 //å¤åˆ¶å‘å¸ƒç¯å¢ƒçš„ä¾èµ–åº“æ–‡ä»¶
-=======
-//¸´ÖÆ·¢²¼»·¾³µÄÒÀÀµ¿âÎÄ¼ş
->>>>>>> f-9457
 gulp.task('copy-publish-libs', function () {
   return gulp.src(libPublishFilePath)
     //.pipe(useref({noAssets: true}, lazypipe().pipe(sourcemaps.init, {loadMaps: true})))
@@ -201,41 +174,25 @@ gulp.task('copy-publish-libs', function () {
     .pipe(gulp.dest('www/build/lib'));
 });
 
-<<<<<<< HEAD
 //å¤åˆ¶å›¾ç‰‡æ–‡ä»¶
-=======
-//¸´ÖÆÍ¼Æ¬ÎÄ¼ş
->>>>>>> f-9457
 gulp.task('copy-img', function () {
   return gulp.src(imgFilePath)
     .pipe(gulp.dest('www/build/img'));
 });
 
-<<<<<<< HEAD
 //å¤åˆ¶å¼€å‘ç¯å¢ƒ config.xml
-=======
-//¸´ÖÆ¿ª·¢»·¾³ config.xml
->>>>>>> f-9457
 gulp.task('copy-dev-config', function () {
   return gulp.src(configDEVPath)
     .pipe(gulp.dest(''));
 });
 
-<<<<<<< HEAD
 //å¤åˆ¶å‘å¸ƒç¯å¢ƒ config.xml
-=======
-//¸´ÖÆ·¢²¼»·¾³ config.xml
->>>>>>> f-9457
 gulp.task('copy-prod-config', function () {
   return gulp.src(configPRODPath)
     .pipe(gulp.dest(''));
 });
 
-<<<<<<< HEAD
 //å¤åˆ¶å‘å¸ƒç¯å¢ƒ config.xml
-=======
-//¸´ÖÆ·¢²¼»·¾³ config.xml
->>>>>>> f-9457
 gulp.task('copy-ios-appStore-config', function () {
   return gulp.src(configiOSAppStorePath)
     .pipe(gulp.dest(''));
@@ -260,29 +217,17 @@ gulp.task('copy-common-js-libs', function () {
     .pipe(gulp.dest('www/build/common'));
 });
 
-<<<<<<< HEAD
 //å®šä¹‰å¼€å‘ç¯å¢ƒçš„ä¾èµ–åº“æ–‡ä»¶ä»»åŠ¡
-=======
-//¶¨Òå¿ª·¢»·¾³µÄÒÀÀµ¿âÎÄ¼şÈÎÎñ
->>>>>>> f-9457
 gulp.task('copy-dev-lib', function (callback) {
   runSequence('copy-dev-libs', 'copy-img', 'copy-common-js-libs', callback);
 });
 
-<<<<<<< HEAD
 //å®šä¹‰å‘å¸ƒç¯å¢ƒçš„ä¾èµ–åº“æ–‡ä»¶ä»»åŠ¡
-=======
-//¶¨Òå·¢²¼»·¾³µÄÒÀÀµ¿âÎÄ¼şÈÎÎñ
->>>>>>> f-9457
 gulp.task('copy-publish-lib', function (callback) {
   runSequence('copy-publish-libs', 'copy-img', 'copy-common-js-libs', callback);
 });
 
-<<<<<<< HEAD
 //åˆå¹¶å‹ç¼©cssæ–‡ä»¶
-=======
-//ºÏ²¢Ñ¹ËõcssÎÄ¼ş
->>>>>>> f-9457
 gulp.task('sass', function () {
   return gulp.src(['app/theme/*.scss'])
     .pipe(sass())
@@ -290,11 +235,7 @@ gulp.task('sass', function () {
 });
 
 
-<<<<<<< HEAD
 //ç”Ÿæˆå¼€å‘ç¯å¢ƒç¯å¢ƒé…ç½®æ–‡ä»¶
-=======
-//Éú³É¿ª·¢»·¾³»·¾³ÅäÖÃÎÄ¼ş
->>>>>>> f-9457
 gulp.task('config-dev', function () {
   gulp.src('app/config/devConfig.json')
     .pipe(gulpNgConfig('baseConfig'))
@@ -302,11 +243,7 @@ gulp.task('config-dev', function () {
     .pipe(gulp.dest('app/scripts'))
 });
 
-<<<<<<< HEAD
 //ç”Ÿæˆå‘å¸ƒç¯å¢ƒç¯å¢ƒé…ç½®æ–‡ä»¶
-=======
-//Éú³É·¢²¼»·¾³»·¾³ÅäÖÃÎÄ¼ş
->>>>>>> f-9457
 gulp.task('config-prod', function () {
   gulp.src('app/config/prodConfig.json')
     .pipe(gulpNgConfig('baseConfig'))
@@ -314,11 +251,7 @@ gulp.task('config-prod', function () {
     .pipe(gulp.dest('app/scripts'))
 });
 
-<<<<<<< HEAD
 //ç”ŸæˆiOSå•†åº—å‘å¸ƒç¯å¢ƒç¯å¢ƒé…ç½®æ–‡ä»¶
-=======
-//Éú³ÉiOSÉÌµê·¢²¼»·¾³»·¾³ÅäÖÃÎÄ¼ş
->>>>>>> f-9457
 gulp.task('config-ios-appStore-prod', function () {
   gulp.src('app/config/iOSAppStoreConfig.json')
     .pipe(gulpNgConfig('baseConfig'))
@@ -326,11 +259,7 @@ gulp.task('config-ios-appStore-prod', function () {
     .pipe(gulp.dest('app/scripts'))
 });
 
-<<<<<<< HEAD
 //ç”ŸæˆiOSå‘å¸ƒç¯å¢ƒç¯å¢ƒé…ç½®æ–‡ä»¶
-=======
-//Éú³ÉiOS·¢²¼»·¾³»·¾³ÅäÖÃÎÄ¼ş
->>>>>>> f-9457
 gulp.task('config-prod', function () {
   gulp.src('app/config/prodConfig.json')
     .pipe(gulpNgConfig('baseConfig'))
@@ -338,21 +267,13 @@ gulp.task('config-prod', function () {
     .pipe(gulp.dest('app/scripts'))
 });
 
-<<<<<<< HEAD
 //å¤åˆ¶å¼€å‘ç¯å¢ƒ config.xml
-=======
-//¸´ÖÆ¿ª·¢»·¾³ config.xml
->>>>>>> f-9457
 gulp.task('copy-iosAppStore-config', function () {
   return gulp.src(configIosAppStorePath)
     .pipe(gulp.dest(''));
 });
 
-<<<<<<< HEAD
 //å‹ç¼©css
-=======
-//Ñ¹Ëõcss
->>>>>>> f-9457
 gulp.task('css', function () {
   return gulp.src('src/css/**/*.css')
     .pipe(sourcemaps.init())
@@ -365,18 +286,14 @@ gulp.task('css', function () {
     .pipe(gulp.dest('www/css'));
 });
 
-<<<<<<< HEAD
 //åˆå¹¶å‹ç¼©ä¸‘åŒ–Js
-=======
-//ºÏ²¢Ñ¹Ëõ³ó»¯Js
->>>>>>> f-9457
 gulp.task('scripts', function () {
   return gulp.src(jsFilePath)
     .pipe(concat('app.bundle.js'))
     .pipe(gulp.dest('www/build')) // write source file for debug
-    .pipe(rename({suffix: '.min'}))   //renameÑ¹ËõºóµÄÎÄ¼şÃû
-    .pipe(uglify())    //Ñ¹Ëõ
-    .pipe(gulp.dest('www/build'));  //Êä³ö
+    .pipe(rename({suffix: '.min'}))   //renameå‹ç¼©åçš„æ–‡ä»¶å
+    .pipe(uglify())    //å‹ç¼©
+    .pipe(gulp.dest('www/build'));  //è¾“å‡º
 });
 
 //
@@ -394,38 +311,28 @@ gulp.task('copy-prod', function () {
     .pipe(gulp.dest('www'));
 });
 
-<<<<<<< HEAD
 // åˆ›å»ºå¤šå±‚ç›®å½•
-=======
-// ´´½¨¶à²ãÄ¿Â¼
->>>>>>> f-9457
 function mkdirs(dirname, mode, callback) {
- // console.log(dirname+"abc1");
+  // console.log(dirname+"abc1");
   fs.exists(dirname, function (exists) {
     if (exists) {
       callback();
     } else {
-    // console.log(path.dirname(dirname)+"abc");
+      // console.log(path.dirname(dirname)+"abc");
       mkdirs(path.dirname(dirname), mode, function () {
-     fs.mkdir(dirname, mode, callback);
-     });
+        fs.mkdir(dirname, mode, callback);
+      });
     }
   });
 }
 
-<<<<<<< HEAD
 //æ‹·è´æ–‡ä»¶
 function copyfile(oldPath, newPath) {
   //console.log('å¤åˆ¶' + oldPath + ' -> ' + newPath);
-=======
-//¿½±´ÎÄ¼ş
-function copyfile(oldPath, newPath) {
-  //console.log('¸´ÖÆ' + oldPath + ' -> ' + newPath);
->>>>>>> f-9457
 
   var stat = fs.lstatSync(oldPath);
   if (stat.isDirectory()) {
-    console.log(oldPath + 'ÊÇÄ¿Â¼');
+    console.log(oldPath + 'æ˜¯ç›®å½•');
     return false;
   }
 
@@ -444,27 +351,15 @@ function copyfile(oldPath, newPath) {
 function copyPages(e) {
   var oldPath = e.path;
   /*
-<<<<<<< HEAD
-  mac éƒ¨åˆ†
+   mac éƒ¨åˆ†
    console.log(oldPath+"æ—§");
    var newPath = oldPath.replace('/app/', '/www/build/');
    console.log(newPath+"æ–°");
    var newDirPathTemp = newPath.split("/");
-  */
+   */
   console.log(oldPath+'æ—§');
   var newPath = oldPath.replace('\\app\\', '\\www\\build\\');
   console.log(newPath+'æ–°');
-=======
-  mac ²¿·Ö
-   console.log(oldPath+"¾É");
-   var newPath = oldPath.replace('/app/', '/www/build/');
-   console.log(newPath+"ĞÂ");
-   var newDirPathTemp = newPath.split("/");
-  */
-  console.log(oldPath+'¾É');
-  var newPath = oldPath.replace('\\app\\', '\\www\\build\\');
-  console.log(newPath+'ĞÂ');
->>>>>>> f-9457
   var newDirPathTemp = newPath.split("\\");
 
   var currentPath = fs.realpathSync('.');
@@ -474,136 +369,85 @@ function copyPages(e) {
     newDirPath[i] = newDirPathTemp[i];
   }
   newDirPath = newDirPath.join("\\");
-<<<<<<< HEAD
   // ä¿®æ”¹æˆ–å¢åŠ æ—¶
   if ('added' == e.type || 'changed' == e.type || 'renamed' == e.type) {
 
     // åˆ¤æ–­ç›®å½•æ˜¯å¦å­˜åœ¨ï¼Œä¸å­˜åœ¨åˆ™åˆ›å»º
-=======
-  // ĞŞ¸Ä»òÔö¼ÓÊ±
-  if ('added' == e.type || 'changed' == e.type || 'renamed' == e.type) {
-
-    // ÅĞ¶ÏÄ¿Â¼ÊÇ·ñ´æÔÚ£¬²»´æÔÚÔò´´½¨
->>>>>>> f-9457
     fs.exists(newDirPath, function (exists) {
       if (exists) {
-        console.log("ÎÄ¼ş¼Ğ´æÔÚ");
+        console.log("æ–‡ä»¶å¤¹å­˜åœ¨");
         copyfile(oldPath, newPath);
       } else {
-<<<<<<< HEAD
         console.log("æ–‡ä»¶å¤¹ä¸å­˜åœ¨ï¼Œåˆ™åˆ›å»ºç›®å½•");
 
-       mkdirs(newDirPath);
+        mkdirs(newDirPath);
 
         //å»¶æ—¶ï¼Œç­‰å¾…ç›®å½•åˆ›å»ºå®Œæˆ
-=======
-        console.log("ÎÄ¼ş¼Ğ²»´æÔÚ£¬Ôò´´½¨Ä¿Â¼");
-
-       mkdirs(newDirPath);
-
-        //ÑÓÊ±£¬µÈ´ıÄ¿Â¼´´½¨Íê³É
->>>>>>> f-9457
         setTimeout(function () {
           copyfile(oldPath, newPath);
         }, 200);
       }
     });
-  } else if ('deleted' == e.type) { //É¾³ı
+  } else if ('deleted' == e.type) { //åˆ é™¤
     fs.unlink(newPath, function (err) {
-      console.log('É¾³ı newPath ' + newPath + err);
+      console.log('åˆ é™¤ newPath ' + newPath + err);
     });
   }
 }
 
-<<<<<<< HEAD
 // ç›‘å¬ä»»åŠ¡ è¿è¡Œè¯­å¥ gulp watch
-=======
-// ¼àÌıÈÎÎñ ÔËĞĞÓï¾ä gulp watch
->>>>>>> f-9457
 gulp.task('watch', function () {
   server.listen(port, function (err) {
     if (err) {
       return console.log(err);
     }
 
-<<<<<<< HEAD
     //æ‹·è´ä¿®æ”¹è¿‡çš„æ–‡ä»¶
-=======
-    //¿½±´ĞŞ¸Ä¹ıµÄÎÄ¼ş
->>>>>>> f-9457
     gulp.watch(htmlFilePath, function (e) {
-      console.log('ÓĞ±ä¶¯µÄÎÄ¼şÎª oldPath ' + e.path);
+      console.log('æœ‰å˜åŠ¨çš„æ–‡ä»¶ä¸º oldPath ' + e.path);
       copyPages(e);
     });
 
     gulp.watch('app/img/**/**/**/**', function (e) {
-      console.log('ÓĞ±ä¶¯µÄÎÄ¼şÎª oldPath ' + e.path);
+      console.log('æœ‰å˜åŠ¨çš„æ–‡ä»¶ä¸º oldPath ' + e.path);
       copyPages(e);
     });
 
-<<<<<<< HEAD
     // ç›‘å¬sass
-=======
-    // ¼àÌısass
->>>>>>> f-9457
     gulp.watch(cssFilePath, function (e) {
-      console.log('ÓĞ±ä¶¯µÄÎÄ¼şÎª oldPath ' + e.path);
+      console.log('æœ‰å˜åŠ¨çš„æ–‡ä»¶ä¸º oldPath ' + e.path);
       gulp.run('sass');
     });
 
-<<<<<<< HEAD
     // ç›‘å¬js
-=======
-    // ¼àÌıjs
->>>>>>> f-9457
     gulp.watch(jsFilePath, function (e) {
-      console.log('ÓĞ±ä¶¯µÄÎÄ¼şÎª oldPath ' + e.path);
+      console.log('æœ‰å˜åŠ¨çš„æ–‡ä»¶ä¸º oldPath ' + e.path);
       gulp.run('scripts');
     });
   });
 
 });
 
-<<<<<<< HEAD
 //æ‰‹åŠ¨æ›´æ–°www/buildä»£ç 
-=======
-//ÊÖ¶¯¸üĞÂwww/build´úÂë
->>>>>>> f-9457
 gulp.task('rebuild', function (callback) {
   runSequence('clean-code', ['copy-img', 'sass', 'scripts', 'html'], callback);
 });
 
-<<<<<<< HEAD
 //ç”Ÿæˆå¼€å‘ç¯å¢ƒä»£ç ç›®å½•
-=======
-//Éú³É¿ª·¢»·¾³´úÂëÄ¿Â¼
->>>>>>> f-9457
 gulp.task('run-dev', function (callback) {
   runSequence('clean', 'config-dev', /*'lint',*/ 'copy-dev-config', 'copy-publish-lib', ['sass', 'scripts', 'html'], callback);
 });
 
-<<<<<<< HEAD
 //ç”Ÿæˆå‘å¸ƒç¯å¢ƒä»£ç ç›®å½•
-=======
-//Éú³É·¢²¼»·¾³´úÂëÄ¿Â¼
->>>>>>> f-9457
 gulp.task('run-prod', function (callback) {
   runSequence('clean', 'config-prod', /*'lint',*/ 'copy-prod-config', 'copy-publish-lib', ['sass', 'scripts', 'html'], callback);
 });
 
-<<<<<<< HEAD
 //ç”Ÿæˆå‘å¸ƒç¯å¢ƒä»£ç ç›®å½•
-=======
-//Éú³É·¢²¼»·¾³´úÂëÄ¿Â¼
->>>>>>> f-9457
 gulp.task('run-ios-prod', function (callback) {
   runSequence('clean', 'config-ios-appStore-prod', /*'lint',*/ 'copy-ios-appStore-config', 'copy-publish-lib', ['sass', 'scripts', 'html'], callback);
 });
 
 
-<<<<<<< HEAD
 //é»˜è®¤ä»»åŠ¡
-=======
-//Ä¬ÈÏÈÎÎñ
->>>>>>> f-9457
 gulp.task('default', ['run-dev']);
