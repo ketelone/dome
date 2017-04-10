@@ -350,13 +350,13 @@ function copyfile(oldPath, newPath) {
 
 function copyPages(e) {
   var oldPath = e.path;
-  /*
-   mac 部分
-   console.log(oldPath+"旧");
-   var newPath = oldPath.replace('/app/', '/www/build/');
-   console.log(newPath+"新");
-   var newDirPathTemp = newPath.split("/");
-   */
+
+
+   // console.log(oldPath+"旧");
+   // var newPath = oldPath.replace('/app/', '/www/build/');
+   // console.log(newPath+"新");
+   // var newDirPathTemp = newPath.split("/");
+
   console.log(oldPath+'旧');
   var newPath = oldPath.replace('\\app\\', '\\www\\build\\');
   console.log(newPath+'新');
@@ -369,6 +369,7 @@ function copyPages(e) {
     newDirPath[i] = newDirPathTemp[i];
   }
   newDirPath = newDirPath.join("\\");
+  // newDirPath = newDirPath.join("/");
   // 修改或增加时
   if ('added' == e.type || 'changed' == e.type || 'renamed' == e.type) {
 
