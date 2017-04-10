@@ -1,17 +1,18 @@
 /**
 * 基础字体大小
 */
-$font-size-small: 14px !default;
-$font-size: 15px !default;
-$font-size-big: 17px !default;
+$font-size-small: 014rem !default;
+$font-size: 0.15rem !default;
+$font-size-big: 0.17 !default;
 $color-base: white !default;
-//字色
-$color-text-key: #363636 !default;
-$color-text-value: #9E9E9E !default;
+
+  //字色
+$color-text-key: #FFFFFF !default;
+$color-text-value: #565A64 !default;
 //界面背景色
 $global-background:#FAFAFA !default;
 //head背景色
-$global-head-bg:#FB8030 !default;
+$global-head-bg:#1A1E28  !default;
 //boder
-$global-border:#E9E9E9 !default;
-
+$global-border: #51D8BD !default;
+//
