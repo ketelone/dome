@@ -56,7 +56,7 @@
               <div ng-if="isSceneModel">
 
                 <div ng-repeat="item in modelData">
-                  <img class="imgll" src="{{item.pictureUrl}}"/>
+                  <img class="imgll" ng-src="{{item.pictureUrl}}"/>
                   <div class="text-center interval-line">
                     <p class="font-color-self-title">{{item.title}}</p>
                     <p class="font-color-self">{{item.context}}</p>
@@ -91,13 +91,12 @@
                     </div>
                   </div>
                   <div class="col-25 deviceStatus text-center">
-                    <img class="error-img" src="{{item.errorPictureUrl}}" ng-if="item.isError"/>
+                    <img class="error-img" ng-src="{{item.errorPictureUrl}}" ng-if="item.isError"/>
                     <span>{{item.deviceDesc}}</span>
                     <span style="color: #565A64"><i class="ion-ios-arrow-forward" ></i></span>
                   </div>
                 </div>
 
-                <br>
               </div>
             </ion-scroll>
           </div>
