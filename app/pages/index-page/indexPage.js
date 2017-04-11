@@ -30,20 +30,138 @@ angular.module('indexPageModule')
         temperatureCh: ""
       };
 
-      $scope.$watch('homeInfo', function(){
-        var url = "https://api.seniverse.com/v3/weather/now.json?key=oudikeyru8gzhosh&location=beijing&language=zh-Hans&unit=c";
-        var result =  $http({
-          method: 'GET',
-          headers: {
-            'Content-type': "application/x-www-form-urlencoded"
-          },
-          url: url
-        });
+      $scope.tabs = [
+        {
+          text: "场景模式",
+        },
+        {
+          text: "设备模式",
+        }
+      ];
 
-        console.log(result);
+      $scope.modelData = [
+        {
+          id: "1",
+          pictureUrl: 'build/img/index/img_home_gohome.png',
+          title: "回家",
+          context: "一键开启指定设备",
+          isOneButton: true,
+          isTwoButton: false,
+          jsonContext: "1",
+          isOff: false,
+          lastUpdateDate: ""
+        },
+        {
+          id: "2",
+          pictureUrl: 'build/img/index/img_home_morning.png',
+          title: "晨起",
+          context: "告别匆忙的晨起洗漱",
+          isOneButton: true,
+          isTwoButton: false,
+          jsonContext: "1",
+          isOff: false,
+          lastUpdateDate: ""
+        },
+        {
+          id: "3",
+          pictureUrl: 'build/img/index/img_home_leavehome.png',
+          title: "离家",
+          context: "一键关闭所有设备",
+          isOneButton: true,
+          isTwoButton: false,
+          jsonContext: "1",
+          isOff: false,
+          lastUpdateDate: ""
+        },
+        {
+          id: "4",
+          pictureUrl: 'build/img/index/img_home_spa.png',
+          title: "家庭SPA",
+          context: "出去SPA不如在家泡澡",
+          isOneButton: false,
+          isTwoButton: true,
+          jsonContext: "1",
+          isOff: false,
+          lastUpdateDate: ""
+        },
+        {
+          id: "5",
+          pictureUrl: 'build/img/index/img_home_veil.png',
+          title: "维亚灯光",
+          context: "开始您美好的一天",
+          isOneButton: false,
+          isTwoButton: true,
+          jsonContext: "1",
+          isOff: false,
+          lastUpdateDate: ""
+        },
+        {
+          id: "6",
+          pictureUrl: 'build/img/index/img_home_period.png',
+          title: "大姨了吗",
+          context: "女性特殊期洗浴关怀方案",
+          isOneButton: false,
+          isTwoButton: true,
+          jsonContext: "1",
+          isOff: false,
+          lastUpdateDate: ""
+        }
+      ];
 
-      }, true);
-
+      $scope.deviceModel = [
+        {
+          id: "1",
+          pictureUrl: "build/img/index/img_home_device_toliet.png",
+          deviceType: "马桶",
+          deviceStatus: "设备在线",
+          deviceDesc: "有人使用",
+          statusPictureUrl: "build/img/index/icon_home_device_signal5.png",
+          errorPictureUrl: "",
+          isStatus: true,
+          isError: false
+        },{
+          id: "2",
+          pictureUrl: "build/img/index/icon_home_device_room.png",
+          deviceType: "卫生间",
+          deviceStatus: "4个设备",
+          deviceDesc: "",
+          statusPictureUrl: "",
+          errorPictureUrl: "",
+          isStatus: false,
+          isError: false
+        },{
+          id: "3",
+          pictureUrl: "build/img/index/img_home_device_heater.png",
+          deviceType: "浴霸",
+          deviceStatus: "设备在线",
+          deviceDesc: "80%",
+          statusPictureUrl: "build/img/index/icon_home_device_signal4.png",
+          errorPictureUrl: "",
+          isStatus: true,
+          isError: false
+        },{
+          id: "4",
+          pictureUrl: "build/img/index/img_home_device_sensor.png",
+          deviceType: "溢水传感器",
+          deviceStatus: "设备在线",
+          deviceDesc: "发生溢水",
+          statusPictureUrl: "build/img/index/icon_home_device_signal3.png",
+          errorPictureUrl: "build/img/index/icon_home_device_warnning.png",
+          isStatus: true,
+          isError: true
+        },
+        {
+          id: "5",
+          pictureUrl: "build/img/index/img_home_device_chushuifa.png",
+          deviceType: "出水阀",
+          deviceStatus: "设备离线",
+          deviceDesc: "",
+          statusPictureUrl: "build/img/index/icon_home_device_no_singal.png",
+          errorPictureUrl: "build/img/index/icon_home_device_warnning.png",
+          isStatus: true,
+          isError: true
+        }
+      ];
 
       /**
        *@autor: caolei
@@ -70,15 +188,40 @@ angular.module('indexPageModule')
        *@disc: get switch status
        */
       $scope.getSwitchStatus = function(item){
-        console.log(item);
-        if(item){
-          alert("on");
+        //console.log(item);
+        alert(item.isOff);
+        if(item.isOff){
+          //alert("on");
+          if(checkIsLinkBox){
+            var netType = network();
+            if(netType == '无网络链接'){
+
+            }else{
+              //do post
+            }
+          }
+
         }else{
           alert("off");
         }
       };
 
-      $scope.goNumiProduct = function(){
+      var checkIsLinkBox = function(){
+        return true;
+      };
+
+      $scope.getDeviceInfo = function(item){
+        console.log(item);
+        alert("in---");
+      };
+
+    }
+  ]);
+
+
+
+
+ /*     $scope.goNumiProduct = function(){
         $state.go('toilet');
       };
       $scope.goBigAunt = function(){
@@ -372,5 +515,5 @@ function SimplePubSub() {
       return this;
     }
   };
-};
+};*/
 

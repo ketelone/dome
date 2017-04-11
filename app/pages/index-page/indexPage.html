@@ -1,28 +1,38 @@
 <div>
-  <ion-view view-title="首页" class="new-application" style="background-image: url('build/img/index/homepage bg@1.5x.png');background-repeat:no-repeat;;width: 100%;background-size: cover;">
-    <!--<div class="application-header" ng-style="headerStyle" ng-if="showHeader">
-      首页1
-    </div>-->
-
-    <!--<img ng-src="build/img/login/logo@3x.png" class="top-bg" ng-style="bgStyle" ng-load="onLoadBg()"/>-->
+  <ion-view view-title="首页" class="new-application" style="background-image: url('build/img/index/img_home_topbackground.png');background-repeat:no-repeat;;width: 100%;background-size: cover;">
 
     <div class="home-info">
-      <p class="my-home">我家</p>
-      <p class="temperature">20℃</p>
-      <p class="percentage">40%</p>
-      <p class="temperature-ch">温度</p>
-      <div class="tree-position">
+      <div class="img-position">
+        <img class="img-size" ng-src="build/img/index/icon_home_avatar1.png"/>
+        <img class="img-size" ng-src="build/img/index/icon_home_avatar2.png"/>
+        <img class="img-size" ng-src="build/img/index/icon_home_avatar3.png"/>
+      </div>
+      <p class="my-home" translate="index.myHome"></p>
+
+    </div>
+
+    <div class="data-info">
+      <div class="temperature">
+        20℃
+      </div>
+      <div class="percentage">
+        40%
+      </div>
+      <div class="temperature-ch">
+        <span translate="index.humidity"></span>
+      </div>
+      <div class="tree">
         <img ng-src="build/img/index/Artboard@1.5x.png" class="tree"/>
-        <p class="temperature-out">5℃</p>
-        <p class="percentage-out">10%</p>
+      </div>
+      <div class="temperature-out">
+        5℃
+      </div>
+      <div class="percentage-out">
+        10%
       </div>
     </div>
 
-    <ion-content class="mainApplication" style="bottom:48px;" scrollbar-y="false" on-drag="onDragContent()"
-                 on-swipe="onSwipeContent()" on-release="onReleaseContent()">
-      <div on-release="onRelease()" class="application-setting-outer"
-           ng-show="animationsEnabled">
-      </div>
+    <ion-content class="mainApplication" style="bottom:48px;" scrollbar-y="false">
 
       <div class="calendar-container">
         <img ng-src="build/img/banner@3x.png" class="calendar-head"/>
@@ -33,94 +43,70 @@
           </div>
         </div>
       </div>
+
       <hms-tab-slide-box class="hms">
         <div class="ion-chevron-up chevron-color"></div>
         <div class="tsb-icons">
           <div class="tsb-ic-wrp text-center">
-            <ion-scroll direction="x" style="white-space: nowrap;width: 100%;overflow:hidden;text-align: center">
-              <a href="javascript:;" ng-repeat="tab in tabs" on-finish-render ng-click="changeModel(tab.text)" style="width: 31%;border: none;font-size: 16px; color: white"> {{tab.text}}</a>
+            <ion-scroll direction="y" style="white-space: nowrap;width: 100%;text-align: center;" scrollbar-y="true">
+              <a href="javascript:;" ng-repeat="tab in tabs" on-finish-render ng-click="changeModel(tab.text)" style="width: 31%;border: none;font-size: 0.16rem; color: white"> {{tab.text}}</a>
               <span id="line" class="height-light" ng-show="isOneLine"></span>
               <!--<span class="height-light2" ng-show="isSecondLine"></span>-->
+
+              <div ng-if="isSceneModel">
+
+                <div ng-repeat="item in modelData">
+                  <img class="imgll" src="{{item.pictureUrl}}"/>
+                  <div class="text-center interval-line">
+                    <p class="font-color-self-title">{{item.title}}</p>
+                    <p class="font-color-self">{{item.context}}</p>
+                    <div>
+                      <center>
+                        <label class="switch-btn">
+                          <input class="checked-switch" type="checkbox" ng-model="item.isOff"  ng-click="getSwitchStatus(item)"/>
+                          <span class="text-switch" data-yes="off" data-no="on" ng-if="item.isTwoButton"></span>
+                          <span class="toggle-btn" ng-if="item.isTwoButton"></span>
+                          <span class="text-switch font-format" ng-if="item.isOneButton">开启</span>
+                          <span class="toggle-btn only-switch" ng-if="item.isOneButton"></span>
+                        </label>
+                      </center>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <div ng-if="isDeviceModel">
+                <div class="deviceStyle row noPadding" ng-repeat="item in deviceModel" ng-click="getDeviceInfo(item)">
+                  <div class="col-25 noPadding">
+                    <img class="deviceImg" ng-src="{{item.pictureUrl}}"/>
+                  </div>
+                  <div class="col-50 noPadding" style="color: white">
+                    <div class="row"><div class="deviceName">{{item.deviceType}}</div></div>
+                    <div class="row noPadding">
+                      <div class="deviceLine col-30 noPadding">{{item.deviceStatus}}</div>
+                      <div class="deviceLine col-70 noPadding">
+                        <img class="imgLine" ng-src="{{item.statusPictureUrl}}" ng-if="item.isStatus"/>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-25 deviceStatus text-center">
+                    <img class="error-img" src="{{item.errorPictureUrl}}" ng-if="item.isError"/>
+                    <span>{{item.deviceDesc}}</span>
+                    <span style="color: #565A64"><i class="ion-ios-arrow-forward" ></i></span>
+                  </div>
+                </div>
+
+                <br>
+              </div>
             </ion-scroll>
           </div>
         </div>
 
-        <!--<ion-slide-box show-pager="false" on-slide-changed="slideHasChanged($index)">
-          <ion-slide ng-repeat="tab in tabs">
-            <ion-list>
-              <ion-item>
-                <div class="row">
-                  <div class="col">{{tab.text}}</div>
-                  <div class="col text-right" ng-click="goBigAunt()"><i class="ion-plus-circled" style="font-size: 20px"></i></div>
-                </div>
-              </ion-item>
-              <ion-item ng-repeat="item in [1,2,3,4,5,6,7,8,9,90,11,12,23,32,323,3232,323221,54,46,232]" ng-click="goNumiProduct()">
-                Hello, {{item}}!
-              </ion-item>
-            </ion-list>
-          </ion-slide>
-        </ion-slide-box>-->
+
 
       </hms-tab-slide-box>
 
-      <div style="margin-top: 20px;margin-bottom: 20px" ng-click="goBigAunt()">
-        <img class="imgll" src="build/img/index/img1@1.5x.png"></img>
-      </div>
-
-      <div ng-if="isSceneModel">
-        <div class="text-center interval-line" style="background-image: url('build/img/index/img1@1.5x.png');background-repeat:no-repeat;width: 100%;background-size: cover;">
-          <p class="font-color-self-title" translate="sceneModel.morning"></p>
-          <p class="font-color-self" translate="sceneModel.startDay"></p>
-          <div>
-            <center>
-              <label class="switch-btn">
-                <input class="checked-switch" type="checkbox" ng-model="switchOne"  ng-click="getSwitchStatus(switchOne)"/>
-                <span class="text-switch" data-yes="off" data-no="on"></span>
-                <span class="toggle-btn"></span>
-              </label>
-            </center>
-          </div>
-        </div>
-        <div class="text-center interval-line" style="background-image: url('build/img/index/img3@1.5x.png');background-repeat:no-repeat;;width: 100%;background-size: cover;">
-          <center>
-            <p class="font-color-self-title" translate="sceneModel.goHome"></p>
-            <p class="font-color-self" translate="sceneModel.startDevice"></p>
-            <div>
-              <label class="switch-btn">
-                <input class="checked-switch" type="checkbox" ng-model="switchTwo"  ng-click="getSwitchStatus(switchTwo)"/>
-                <span class="text-switch" data-yes="off" data-no="on"></span>
-                <span class="toggle-btn"></span>
-              </label>
-            </div>
-          </center>
-        </div>
-        <div class="text-center interval-line" style="background-image: url('build/img/index/img2@1.5x.png');background-repeat:no-repeat;;width: 100%;background-size: cover;">
-          <center>
-            <p class="font-color-self-title" translate="sceneModel.goHome"></p>
-            <p class="font-color-self" translate="sceneModel.startDevice"></p>
-            <div>
-              <label class="switch-btn">
-                <input class="checked-switch" type="checkbox" ng-model="switchTwo"  ng-click="getSwitchStatus(switchTwo)"/>
-                <span class="text-switch" data-yes="off" data-no="on"></span>
-                <span class="toggle-btn"></span>
-              </label>
-            </div>
-          </center>
-        </div>
-      </div>
-
-      <div ng-if="isDeviceModel">
-        <div class="list">
-          <a class="item item-thumbnail-left" href="#">
-            <img src="build/img/username.png">
-            <h2>Pretty Hate Machine</h2>
-            <p>Nine Inch Nails</p>
-            <div class="ion-chevron-right position-chevron">
-            </div>
-          </a>
-        </div>
-        <br>
-      </div>
     </ion-content>
   </ion-view>
 </div>

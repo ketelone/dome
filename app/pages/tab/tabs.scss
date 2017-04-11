@@ -13,14 +13,14 @@
 
 .tabs-icon-top {
   .message-on {
-    background-image: url("../img/tabs/message-f@3x.png");
+    background-image: url("../img/tabs/btn_buttom_message.png");
     background-repeat: no-repeat;
     background-position: center;
     background-size: 20%;
   }
 
   .message-off {
-    background-image: url("../img/tabs/message-G@3x.png");
+    background-image: url("../img/tabs/btn_buttom_message.png");
     background-repeat: no-repeat;
     background-position: center;
     background-size: 20%;
@@ -28,30 +28,34 @@
 
 
   .indexPage-on {
-    background-image: url("../img/tabs/contact-B@3x.png");
+    background-image: url("../img/tabs/btn_buttom_kohler.png");
     background-repeat: no-repeat;
     background-position: center;
     background-size: 20%;
   }
 
   .indexPage-off {
-    background-image: url("../img/tabs/contact-G@3x.png");
+    background-image: url("../img/tabs/icon_home_arrowup.png");
     background-repeat: no-repeat;
     background-position: center;
     background-size: 20%;
   }
 
   .mine-on {
-    background-image: url("../img/tabs/mine-B@3x.png");
+    background-image: url("../img/tabs/btn_buttom_user.png");
     background-repeat: no-repeat;
     background-position: center;
     background-size: 20%;
   }
 
   .mine-off {
-    background-image: url("../img/tabs/mine-G@3x.png");
+    background-image: url("../img/tabs/btn_buttom_user.png");
     background-repeat: no-repeat;
     background-position: center;
     background-size: 20%;
   }
+}
+
+.tabs{
+  background: linear-gradient(90deg, #0F0F0F 0%, #1D2334 50%, #0F0F0F 100%);
 }
