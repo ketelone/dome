@@ -34,9 +34,10 @@ angular.module('myInfoModule')
        *@author:chenjiacheng
        *@name:language
        *@params:
-       *@return:默认语言
-       *@disc:设置默认语言
-       */
+       *@return:default language
+       *@disc:Set default language
+
+      */
       $scope.language=function(){
 
      //  console.log( SettingsService.get("language")+"1");
@@ -50,13 +51,34 @@ angular.module('myInfoModule')
 
 
       }
+      /**
+       *@author:chenjiacheng
+       *@name:default temperature
+       *@params:
+       *@return:
+       *@disc:Set default temperature
+       */
+      $scope.temperatureUnit=function(){
+        if( SettingsService.get("temperature")!=false){
+
+          return SettingsService.get("temperature");
+        }
+        else{
+          SettingsService.set("temperature","摄氏度°C");
+          window.localStorage.temperature="°C";
+          return SettingsService.get("temperature");
+        }
+
+
+      }
+
 
 /**
        *@author:chenjiacheng
        *@name:logout
        *@params:
        *@return:
-       *@disc:退出登录
+       *@disc:logout
        */
       $scope.logout=function() {
 

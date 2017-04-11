@@ -12,6 +12,7 @@ angular.module('myInfoModule')
           controller: 'addMembersCtrl'
         })
         .state('greenLife', {
+
           url: '/greenLife',
           templateUrl: 'build/pages/my-info/green-life/greenLife.html',
           controller: 'greenLifeCtrl'

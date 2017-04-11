@@ -1,8 +1,15 @@
 /**
  * Created by chenjiacheng on 2017/3/28.
  */
-angular.module('myInfoModule')
+//myInfoModule$translateProvider', '$translateStaticFilesLoaderProvider'
+//.config([
+//'$translateProvider', '$translateStaticFilesLoaderProvider',
+//  function (  $translateProvider, $translateStaticFilesLoaderProvider) {
 
+
+ // }])
+
+angular.module('myInfoModule')
   .controller('settingLanguageCtrl', [
     '$scope',
     '$state',
@@ -16,7 +23,7 @@ angular.module('myInfoModule')
     'hmsPopup',
     '$rootScope',
     'publicMethod',
-    '$stateParams','SettingsService',
+    '$stateParams','SettingsService','$translate',
     function ($scope,
               $state,
               baseConfig,
@@ -27,7 +34,12 @@ angular.module('myInfoModule')
               $ionicPlatform,
               $ionicScrollDelegate,
               hmsPopup,
-              $rootScope, publicMethod,$stateParams,SettingsService) {
+              $rootScope, publicMethod,$stateParams,SettingsService,$translate) {
+
+
+
+
+
 
 
       /**
@@ -41,7 +53,7 @@ angular.module('myInfoModule')
 
     if($(e.target).text().trim()=="中文简体"){
       SettingsService.set("language","中文简体");
-
+      $translate.use('zh');
       publicMethod.goBack();
 
     }
@@ -52,6 +64,7 @@ angular.module('myInfoModule')
         }
         if($(e.target).text().trim()=="English"){
           SettingsService.set("language","English");
+          $translate.use('en');
 
           publicMethod.goBack();
         }

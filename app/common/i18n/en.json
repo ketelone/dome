@@ -1,3 +1,56 @@
 {
 
+
+  "my-info":{
+
+    "myhome":"myHome",
+
+    "addMember":"addMember",
+
+    "personality":"personality",
+
+    "myBox":"myBox",
+    "addNumber":"addNumber",
+
+    "personalSetting":"personalSetting",
+    "relatedFamily":"relatedFamily",
+    "relatedNumber":"relatedNumber",
+
+    "greenLife":"greenLife",
+    "intelligentLinkage":"intelligentLinkage",
+    "openNumber":"openNumber",
+
+    "settingWord":"settingWord",
+
+    "setting":{
+
+      "setting":"setting",
+
+      "language":"language",
+
+      "temperatureUnit":"temperatureUnit",
+
+      "centigrade":"centigrade",
+      "firmwareUpdate":"firmwareUpdate",
+
+      "versionUpdate":"versionUpdate",
+      "byToupdate":"byToupdate",
+      "versionNumber":"versionNumber",
+
+      "about":"about",
+      "logout":"logout"
+
+
+    },
+
+    "setting-language":{
+
+      "language":"语 言"
+
+
+
+    }
+
+  }
+
 }
