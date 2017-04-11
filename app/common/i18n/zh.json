@@ -104,9 +104,22 @@
   },
   "sceneModel": {
     "morning": "晨起",
-    "startDay": "开始您美好的一天",
+    "startDay": "告别匆忙的晨起洗漱",
     "goHome": "回家",
-    "startDevice": "一键开启指定设备"},
+    "startDevice": "一键开启指定设备",
+    "leaveHome": "离家",
+    "closeAllDevice": "一键关闭所有设备",
+    "homeSpa": "家庭SPA",
+    "spaDesc": "出去SPA不如在家泡澡",
+    "weiLight": "维亚灯光",
+    "startNiceDay": "开始您美好的一天",
+    "period": "大姨了吗",
+    "periodDesc": "女性特殊期洗浴关怀方案"
+  },
+  "index": {
+    "myHome": "我家",
+    "humidity": "湿度"
+  },
 
   "bigaunt" :{
     "bigauntTitle" : "场景详情"
