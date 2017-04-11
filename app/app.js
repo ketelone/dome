@@ -150,6 +150,8 @@ angular.module('myApp')
           templateUrl: 'build/pages/login/login.html',
           controller: 'loginCtrl'
         })
+        //一键场景
+        //大姨妈了没
         .state('bigAunt', {
           url: '/bigAunt',
           templateUrl: 'build/pages/keyscene-aunt/bigAunt.html',
@@ -160,6 +162,22 @@ angular.module('myApp')
           url: '/bigAuntSetting',
           templateUrl: 'build/pages/keyscene-aunt/setting-aunt/bigAuntSetting.html',
           controller: 'bigAuntSettingCtrl'
+        })
+          //gohome
+        .state('goHome', {
+          url: '/goHome',
+          templateUrl: 'build/pages/keyscene-gohome/goHome.html',
+          controller: 'goHomeCtrl'
+        })
+        .state('leaveHome', {
+          url: '/leaveHome',
+          templateUrl: 'build/pages/keyscene-leavehome/leaveHome.html',
+          controller: 'leaveHomeCtrl'
+        })
+        .state('morning', {
+          url: '/morning',
+          templateUrl: 'build/pages/keyscene-morning/morning.html',
+          controller: 'morningCtrl'
         })
         // 设备控制
         // 设备控制-马桶

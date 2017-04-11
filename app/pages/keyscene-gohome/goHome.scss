@@ -1,0 +1,103 @@
+.viewStyle {
+  background: url("../img/keyscene-morning/img_scenario_morning.png");
+  //background-color: black;
+  background-size: 100% 100%;
+  animation: backgroundTransition 4s linear;
+  -webkit-animation: backgroundTransition 4s linear;
+  .headColor {
+    background-color: $global-head-bg;
+  }
+  .iconColor {
+    color: $color-base
+  }
+  .ionContent {
+    margin-top: 44px;
+    .nameStyle {
+      color: $color-base;
+      font-size: $font-size-big;
+      margin-top: 1.6rem;
+      margin-left: 0.36rem;
+      font-family: PingFangSC-Medium;
+      letter-spacing: 0.025rem;
+      line-height: $font-size-big;
+    }
+    .contentStyle {
+      color: $color-base;
+      margin-top: 0.29rem;
+      margin-left: 0.36rem;
+      opacity: 0.5;
+      font-family: PingFangSC-Regular;
+      font-size: $font-size-small;
+      letter-spacing: 0.015rem;
+      line-height: 0.4rem;
+      width: 4.84rem;
+      height: 1.2rem;
+    }
+    .buttonClick {
+      margin-top: 0.65rem;
+      margin-left: 0.36rem;
+      width: 1.63rem;
+      height: 0.6rem;
+      background: $color-base;
+      font-family: PingFangSC-Medium;
+      font-size: $font-size-button;
+      color: #0F0F10;
+      letter-spacing: 0.0081px;
+    }
+    .noPadding{
+      padding: 0;
+    }
+    .deviceStyle {
+      position: relative;
+      margin-top: 1.21rem;
+      margin-left: 0.36rem;
+      width: 6.78rem;
+      height: 1.4rem;
+      background-color: #1A1E28;
+      border: 0.01rem solid #323436;
+
+      .deviceImg {
+        //position: relative;
+        //top:-0.885rem;
+        //left: 0;
+        width: 1.38rem;
+        height: 1.38rem;
+      }
+      .deviceName {
+        position: relative;
+        top:0.35rem;
+        //left:1.755rem;
+        color: $color-base;
+        width: 1rem;
+        height: 0.32rem;
+        font-family: PingFangSC-Medium;
+        letter-spacing: 0.01rem;
+        line-height: $font-size;
+        font-size: $font-size;
+      }
+      .deviceLine {
+        position: relative;
+        top:0.42rem;
+        color: #565A64;
+        width: 1.21rem;
+        height: 0.28rem;
+        font-family: PingFangSC-Regular;
+        font-size: $font-size-small;
+        letter-spacing: 0.01rem;
+        line-height: 0.28rem;
+      }
+      .deviceStatus{
+        font-family: DINCondensed-Bold;
+        font-size: $font-size-liter;
+        color: #FFFFFF;
+        line-height: 1.4rem;
+      }
+      .imgLine{
+        width: 0.6rem;
+        height: 0.25rem;
+      }
+    }
+  }
+
+}
+

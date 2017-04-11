@@ -355,15 +355,15 @@ function copyPages(e) {
   var oldPath = e.path;
 
 
-   // console.log(oldPath+"旧");
-   // var newPath = oldPath.replace('/app/', '/www/build/');
-   // console.log(newPath+"新");
-   // var newDirPathTemp = newPath.split("/");
+   console.log(oldPath+"旧");
+   var newPath = oldPath.replace('/app/', '/www/build/');
+   console.log(newPath+"新");
+   var newDirPathTemp = newPath.split("/");
 
-  console.log(oldPath+'旧');
-  var newPath = oldPath.replace('\\app\\', '\\www\\build\\');
-  console.log(newPath+'新');
-  var newDirPathTemp = newPath.split("\\");
+  // console.log(oldPath+'旧');
+  // var newPath = oldPath.replace('\\app\\', '\\www\\build\\');
+  // console.log(newPath+'新');
+  // var newDirPathTemp = newPath.split("\\");
 
   var currentPath = fs.realpathSync('.');
 
@@ -371,8 +371,8 @@ function copyPages(e) {
   for (var i = 0; i < newDirPathTemp.length - 1; i++) {
     newDirPath[i] = newDirPathTemp[i];
   }
-  newDirPath = newDirPath.join("\\");
-  // newDirPath = newDirPath.join("/");
+  // newDirPath = newDirPath.join("\\");
+  newDirPath = newDirPath.join("/");
   // 修改或增加时
   if ('added' == e.type || 'changed' == e.type || 'renamed' == e.type) {
 
