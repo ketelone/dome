@@ -1,0 +1,44 @@
+<ion-view view-title="toilet" class="viewStyleMorning">
+  <div class="bar bar-header headColor " style="background-image: none">
+    <button class="button button-icon icon ion-ios-arrow-left iconColor" ng-click="goBack()"></button>
+    <div class="h1 title"><span translate="morning.goHomeTitle" class="iconColor"></span></div>
+  </div>
+
+  <ion-content class="ionContent">
+
+    <div class="nameStyle"><span translate="morning.goHomeName"></span></div>
+    <div class="contentStyle"><span translate="morning.goHomeContent"></span></div>
+    <button class="buttonClick"><span translate="morning.buttonClick"></span></button>
+    <div class="divAll">
+      <div class="deviceStyle row noPadding">
+        <div class="col-25 noPadding">
+          <img class="deviceImg" ng-src="build/img/keyscene-morning/img_home_device_toliet.png"></img>
+        </div>
+        <div class="col-50 noPadding" style="color: white">
+          <div class="row">
+            <div class="deviceName"><span translate="morning.deviceName"></span></div>
+          </div>
+          <div class="row noPadding">
+            <div class="deviceLine col-30 noPadding"><span translate="morning.deviceLineOn"></span></div>
+            <div class="deviceLine col-70 noPadding"><img class="imgLine"
+                                                          ng-src="build/img/keyscene-morning/icon_home_device_signal5.png"/>
+            </div>
+          </div>
+        </div>
+        <div class="col-25 deviceStatus text-center">
+          <span>27℃ &nbsp;&nbsp;&nbsp;</span>
+          <span style="color: #565A64"><i class="ion-ios-arrow-forward"></i></span>
+        </div>
+
+      </div>
+      <div class="deviceStyleTwo row noPadding">
+        <img class="deviceImg" ng-src="build/img/keyscene-morning/img_home_device_toliet.png"></img>
+        <div class="progress" id="progressAnimation">
+
+        </div>
+      </div>
+
+    </div>
+
+  </ion-content>
+</ion-view>

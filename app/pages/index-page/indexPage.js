@@ -11,14 +11,14 @@ angular.module('indexPageModule')
     'baseConfig',
     '$timeout',
     '$ionicScrollDelegate',
-    '$http',
+    '$http','$ionicHistory',
     function ($scope,
               $state,
               $ionicGesture,
               baseConfig,
               $timeout,
               $ionicScrollDelegate,
-              $http) {
+              $http,$ionicHistory) {
 
       $scope.isSceneModel = true;
       $scope.isDeviceModel = false;
@@ -205,6 +205,7 @@ angular.module('indexPageModule')
           alert("off");
         }
       };
+      console.log($ionicHistory);
 
       var checkIsLinkBox = function(){
         return true;
@@ -225,7 +226,7 @@ angular.module('indexPageModule')
         $state.go('toilet');
       };
       $scope.goBigAunt = function(){
-        $state.go('bigAunt');
+        $state.go('goHome');
       };
 
       $scope.animationsEnabled = false;
@@ -331,25 +332,6 @@ angular.module('indexPageModule')
       };
 
 
-      $scope.$on('$ionicView.beforeEnter', function (e) {
-        if (baseConfig.debug) {
-          console.log('applicationCtrl.$ionicView.beforeEnter');
-        }
-        $scope.openDoor = 0;
-      });
-
-      $scope.$on('$ionicView.beforeLeave', function (e) {
-        if (baseConfig.debug) {
-          console.log('applicationCtrl.$ionicView.beforeLeave');
-        }
-        $scope.animationsEnabled = false;
-      });
-
-      $scope.$on('$destroy', function (e) {
-        if (baseConfig.debug) {
-          console.log('applicationCtrl.$destroy');
-        }
-      });
 
       $scope.tabs = [
         {

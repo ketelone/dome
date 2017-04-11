@@ -290,25 +290,6 @@ angular.module('loginModule')
           }
         }
       }
-      $scope.$on('$ionicView.enter', function (e) {
-        if (baseConfig.debug) {
-          console.log('loginCtrl.$ionicView.enter');
-        }
-        $scope.loginInfo = {
-          username: "",
-          password: ""
-        };//登录信息
-      });
 
-      $scope.$on('$ionicView.afterEnter', function () {
-        $ionicHistory.clearCache();
-        $ionicHistory.clearHistory();
-      });
-
-      $scope.$on('$destroy', function (e) {
-        if (baseConfig.debug) {
-          console.log('loginCtrl.$destroy');
-        }
-      });
 
     }]);

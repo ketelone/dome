@@ -1,0 +1,30 @@
+<ion-view view-title="toilet" class="viewStyle">
+  <div class="bar bar-header headColor " style="background-image: none">
+    <button class="button button-icon icon ion-ios-arrow-left iconColor" ng-click="goBack()"></button>
+    <div class="h1 title" ><span translate="goHome.goHomeTitle" class="iconColor"></span></div>
+  </div>
+
+  <ion-content class="ionContent">
+
+    <div class="nameStyle"><span translate="goHome.goHomeName">回家</span></div>
+    <div class="contentStyle"><span translate="goHome.goHomeContent"></span></div>
+    <button class="buttonClick"><span translate="goHome.buttonClick"></span></button>
+
+    <div class="deviceStyle row noPadding">
+      <div class="col-25 noPadding">
+        <img class="deviceImg" ng-src="build/img/keyscene-gohome/img_home_device_toliet.png"></img>
+      </div>
+      <div class="col-50 noPadding" style="color: white">
+        <div class="row"><div class="deviceName"><span translate="goHome.deviceName"></span></div></div>
+        <div class="row noPadding">
+          <div class="deviceLine col-30 noPadding"><span translate="goHome.deviceLineOn"></span></div>
+          <div class="deviceLine col-70 noPadding"><img class="imgLine" ng-src="build/img/keyscene-gohome/icon_home_device_signal5.png"/></div>
+        </div>
+      </div>
+      <div class="col-25 deviceStatus text-center">
+        <span>27℃&nbsp;&nbsp;&nbsp;</span>
+        <span style="color: #565A64"><i class="ion-ios-arrow-forward" ></i></span>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

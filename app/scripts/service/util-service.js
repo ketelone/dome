@@ -61,7 +61,7 @@ angular.module('HmsModule')
           var destUrl = url;
           var startTime = new Date().getTime();
           var post = $http.post(destUrl, paramter,{
-            headers: {timeout: 30000,'Content-Type': 'application/json','Authorization':'Bearer ' + window.localStorage.token}
+            headers: {timeout: 30000,'Content-Type': 'application/json','Authorization':'Bearer ' + 'd6ecb210-e3c3-4c73-b7a8-60522fa99bf5'}
           }).success(function (response) {
             if (baseConfig.debug) {
               console.log(postName + " success");

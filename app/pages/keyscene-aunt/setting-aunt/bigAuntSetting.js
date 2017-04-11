@@ -6,6 +6,9 @@ myApp.controller('bigAuntSettingCtrl',     [
   '$state',
   'publicMethod','$ionicModal','$ionicPopover','$timeout','$ionicHistory',
   function ($scope, $state,publicMethod,$ionicModal,$ionicPopover,$timeout,$ionicHistory) {
+    console.log($ionicHistory);
+    console.log('caocao');
+
     $scope.goBack = function(){
       console.log('1212');
       $ionicHistory.goBack();
