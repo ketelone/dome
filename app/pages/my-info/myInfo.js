@@ -18,6 +18,7 @@ angular.module('myInfoModule')
           controller: 'greenLifeCtrl'
         })
         .state('setting', {
+          cache:false,
           url: '/setting',
           templateUrl: 'build/pages/my-info/setting/setting.html',
           controller: 'settingCtrl'

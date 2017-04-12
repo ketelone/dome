@@ -52,24 +52,48 @@ angular.module('myInfoModule')
       $scope.chooseLanguage=function(e){
 
     if($(e.target).text().trim()=="中文简体"){
-      SettingsService.set("language","中文简体");
+      //SettingsService.set("language","中文简体");
       $translate.use('zh');
+      var  temperature=SettingsService.get("temperature");
+      alert(temperature);
+      if(temperature=='fahrenheit'){
+        SettingsService.set("temperature",'华氏度°F');
+        window.localStorage.temperature="°F";
+      }
+      if(temperature=='centigrade'){
+        SettingsService.set("temperature",'摄氏度°C');
+        window.localStorage.temperature="°C";
+      }
+     // SettingsService.set("temperature",temperature);
+
       publicMethod.goBack();
 
     }
         if($(e.target).text().trim()=="中文繁體"){
-          SettingsService.set("language","中文繁體");
+       //   SettingsService.set("language","中文繁體");
+
+          $translate.use('tw');
           publicMethod.goBack();
 
         }
         if($(e.target).text().trim()=="English"){
-          SettingsService.set("language","English");
+      //    SettingsService.set("language","English");
+          var  temperature=SettingsService.get("temperature");
+          alert(temperature);
+          if(temperature=='华氏度°F'){
+            SettingsService.set("temperature",'fahrenheit');
+            window.localStorage.temperature="°F";
+          }
+          if(temperature=='摄氏度°C'){
+            SettingsService.set("temperature",'centigrade');
+            window.localStorage.temperature="°C";
+          }
           $translate.use('en');
 
           publicMethod.goBack();
         }
         if($(e.target).text().trim()=="ภาษาไทย"){
-          SettingsService.set("language","ภาษาไทย");
+         // SettingsService.set("language","ภาษาไทย");
           publicMethod.goBack();
         }
 

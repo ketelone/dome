@@ -44,11 +44,22 @@ angular.module('myInfoModule')
           publicMethod.goBack();
 
         }
+        if($(e.target).text().trim()=="centigrade"){
+          SettingsService.set("temperature","centigrade");
+          window.localStorage.temperature="°C";
+          publicMethod.goBack();
 
+        }
         if($(e.target).text().trim()=="华氏度°F"){
           SettingsService.set("temperature","华氏度°F");
           window.localStorage.temperature="°F";
          publicMethod.goBack();
+
+
+        }  if($(e.target).text().trim()=="fahrenheit"){
+          SettingsService.set("temperature","fahrenheit");
+          window.localStorage.temperature="°F";
+          publicMethod.goBack();
 
 
         }

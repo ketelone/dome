@@ -10,11 +10,11 @@
     <ion-list>
 
        <li class="item item-icon-right item-divider cutline" ui-sref="settingLanguage" >
-     <span translate="my-info.setting.language">语言</span>  <span class="rightword" ng-bind="language()" ></span> <i class="icon ion-ios-arrow-right iconSize"></i>
+     <span id="sl"translate="my-info.setting.language"></span>  <span class="rightword" translate="my-info.setting.localLanguage" ></span> <i class="icon ion-ios-arrow-right iconSize"></i>
 
 
       <li class="item item-icon-right item-divider"  ui-sref="settingTemperature">
-        <span translate="my-info.setting.temperatureUnit">温度单位</span> <span translate="my-info.setting.centigrade" class="rightword" ng-bind="temperatureUnit()"></span><i class="icon ion-ios-arrow-right iconSize"></i>
+        <span translate="my-info.setting.temperatureUnit">温度单位</span> <span id="temperatureUnit" ng-bind="temperatureUnit()"  translate="my-info.setting.centigrade"  class="rightword"  ></span><i class="icon ion-ios-arrow-right iconSize"></i>
       </li>
       <div class="item  item-icon-right">
 
