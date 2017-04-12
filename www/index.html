@@ -4,10 +4,30 @@
   <meta charset="utf-8">
   <meta name="format-detection" content="telephone=no">
   <!--<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">-->
-  <meta name="viewport" content="initial-scale=1,maximum-scale=1, minimum-scale=1">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
   <!--<script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>-->
   <title></title>
   <!--<link href="build/css/masicon-1.0.0/css/masicon.css" rel="stylesheet">-->
+  <script>
+    (function (doc, win) {
+      var docEl = doc.documentElement,
+        resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+        recalc = function () {
+          var clientWidth = docEl.clientWidth;
+          if (!clientWidth) return;
+          if (clientWidth >= 640) {
+            docEl.style.fontSize = (document.documentElement.clientWidth / 7.5) + 'px';
+          } else {
+            docEl.style.fontSize = (document.documentElement.clientWidth / 7.5) + 'px';
+          }
+        };
+
+      if (!doc.addEventListener) return;
+      win.addEventListener(resizeEvt, recalc, false);
+      doc.addEventListener('DOMContentLoaded', recalc, false);
+    })(document, window);
+//    document.documentElement.style.fontSize = (document.documentElement.clientWidth / 7.5) + 'px';
+  </script>
   <link href="build/lib/ionic/css/ionic.min.css" rel="stylesheet">
   <link href="build/css/app.core.css" rel="stylesheet">
   <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
@@ -15,9 +35,7 @@
   -->
   <!-- 下面的script为内链-->
   <!-- ionic/angularjs js -->
-  <script>
-    document.documentElement.style.fontSize = (document.documentElement.clientWidth / 7.5) + 'px';
-  </script>
+
   <script src="build/lib/jquery/dist/jquery.min.js"></script>
   <script src="build/lib/ionic/js/ionic.bundle.js"></script>
   <!--<script src="build/lib/hmslidb/hms-calendar.js"></script>-->

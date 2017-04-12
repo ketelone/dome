@@ -147,7 +147,10 @@
     "goHomeContent" : "自动为你开启早上所必须的卫浴设备，从此告别早上洗漱的匆忙",
     "goHomeName" : "晨起",
     "buttonClick" : "开启",
-    "deviceName" : "马桶",
+    "deviceName1" : "马桶",
+    "deviceName2" : "浴霸",
+    "deviceName3" : "淋浴",
+    "deviceName4" : "净水",
     "deviceLineOn" : "设备在线",
     "deviceLineOff" : "设备离线"
   }
