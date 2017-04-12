@@ -1,0 +1,18 @@
+.bathroom-info{
+  .item-divider-self{
+    position: relative;
+  }
+  .info-text{
+    height: 1rem;
+    margin-top: 1rem;
+    border: 0.01rem solid gainsboro;
+  }
+  .desc-position{
+    position: absolute;
+    margin-right: 1rem;
+    margin-top: 0.3rem;
+  }
+  .bar.bar-balanced{
+    background-color: white;
+  }
+}

@@ -1,0 +1,237 @@
+.bathroom-controller {
+  .ll{
+    height: 0.6rem;
+  }
+  .font-size{
+    font-size: 0.6rem;
+  }
+  .device-info{
+    position: relative;
+  }
+  .device-info-status{
+    position: absolute;
+  }
+  .signal-img{
+    position: absolute;
+    width: 0.29rem;
+    height: 0.22rem;
+    margin-left: 0.9rem;
+    margin-top: 2.06rem;
+  }
+  .signal-text{
+    position: absolute;
+    margin-left: 1.31rem;
+    margin-top: 2.01rem;
+    width: 1.21rem;
+    height: 0.28rem;
+    font-family: PingFangSC-Regular;
+    font-size: 0.24rem;
+    color: #565A64;
+    letter-spacing: 0.01rem;
+    line-height: 0.28rem;
+  }
+  .error-img{
+    position: absolute;
+    margin-left: 3.06rem;
+    margin-top: 2.08rem;
+    width: 0.235rem;
+    height: 0.2rem;
+  }
+  .msg{
+    position: absolute;
+    width: 1.21rem;
+    height: 0.28rem;
+    margin-left: 3.37rem;
+    margin-top: 2.02rem;
+    font-family: PingFangSC-Semibold;
+    font-size: 0.28rem;
+    color: #D5638E;
+    letter-spacing: 0.0117rem;
+    line-height: 0.28rem;
+  }
+  .time-img{
+    position: absolute;
+    margin-left: 5.5rem;
+    margin-top: 2.02rem;
+    width: 0.48rem;
+    height: 0.48rem;
+  }
+  .scroll-position{
+    margin-top: 8.6rem;
+    .scroll{
+      height: 6rem;
+      background-color: #1D2334;
+    }
+  }
+
+  .optation-div{
+    position: relative;
+    width: 7rem;
+  }
+  .hot-img{
+    position: absolute;
+    width: 0.6rem;
+    height: 0.6rem;
+    margin-left: -0.3rem;
+    margin-top: 0.3rem;
+  }
+  .switch-btn {
+    position: relative;
+    display: block;
+    vertical-align: top;
+    width: 1.5rem;
+    height: 0.56rem;
+    border-radius: 0.18rem;
+    cursor: pointer;
+    margin-top: 6.8%;
+  }
+  .checked-switch {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    background: #00c8ff;
+  }
+  .checkbox-size{
+    width: 100px;
+    height: 100px;
+    //background: url("build/img/bathroom/hot.png");
+  }
+  .text-switch {
+    position: relative;
+    //border-radius: inherit;
+    color: black;
+    display: block;
+    height: 1.5rem;
+    width: 1.5rem;
+    margin-left: 0.5rem;
+  }
+  .text-switch:before,
+  .text-switch:after {
+    position: absolute;
+    top: 50%;
+    margin-top: -.5em;
+    line-height: 1;
+    -webkit-transition: inherit;
+    -moz-transition: inherit;
+    -o-transition: inherit;
+    transition: inherit;
+  }
+  .text-switch:before {
+    content: attr(data-yes);
+    right: 0.11rem;
+    font-family: DINCondensed-Bold;
+    font-size: 0.26rem;
+    border: blue;
+    letter-spacing: 0.81px;
+  }
+  .text-switch:after {
+    content: attr(data-no);
+    left: 0.11rem;
+    color: black;
+    opacity: 0;
+    font-family: DINCondensed-Bold;
+    font-size: 0.26rem;
+    border: blue;
+    letter-spacing: 0.81px;
+  }
+  .checked-switch:checked ~ .text-switch {
+    text-transform: uppercase;
+    border: 0.03rem solid #51D8BD;
+    border-radius: 0.08rem;
+  }
+  .checked-switch:checked ~ .text-switch:before {
+    opacity: 0;
+  }
+  .checked-switch:checked ~ .text-switch:after {
+    opacity: 1;
+  }
+  .switch-size{
+    width: 1.7rem;
+    height:1.7rem;
+    float: left;
+    margin-left: 0rem;
+    margin-top: 0.3rem;
+  }
+  .checkboxFour {
+    width: 0.5rem;
+    height: 0.5rem;
+    background: #ddd;
+    margin: 0.3rem 2.1rem;
+
+    border-radius: 100%;
+    position: relative;
+    //-webkit-box-shadow: 0px 1px 3px rgba(0,0,0,0.5);
+    //-moz-box-shadow: 0px 1px 3px rgba(0,0,0,0.5);
+    //box-shadow: 0px 1px 3px rgba(0,0,0,0.5);
+  }
+  .checkboxFour label {
+    display: block;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 1rem;
+
+    -webkit-transition: all .5s ease;
+    -moz-transition: all .5s ease;
+    -o-transition: all .5s ease;
+    -ms-transition: all .5s ease;
+    transition: all .5s ease;
+    cursor: pointer;
+    position: absolute;
+    top: -0.03rem;
+    left: -0.3rem;
+    z-index: 1;
+
+    background: #ddd;
+
+    //-webkit-box-shadow:inset 0px 1px 3px rgba(0,0,0,0.5);
+    //-moz-box-shadow:inset 0px 1px 3px rgba(0,0,0,0.5);
+    //box-shadow:inset 0px 1px 3px rgba(0,0,0,0.5);
+  }
+  .checkboxFour input[type=checkbox]:checked + label {
+    background: #ddd;
+  }
+  .breath{
+    position: absolute;
+    margin-top: 0.8rem;
+    margin-left: 1rem;
+  }
+  .breath-top{
+    position: absolute;
+    margin-top: -1rem;
+    margin-left: -0.95rem;
+  }
+  .checkbox-position{
+    //position: absolute;
+    //margin-left: 1rem;
+  }
+  .breath-x{
+    position: absolute;
+    margin-top: 0.8rem;
+    margin-left: -1rem;
+  }
+  .is-wind-switch{
+    position: relative;
+    width: 1.7rem;
+    height: 1.7rem;
+  }
+  .is-show-wind-switch{
+    position: absolute;
+    margin-top: 1.6rem;
+  }
+  .switch-desc{
+    font-family: PingFangSC-Medium;
+    font-size: 0.24rem;
+    color: #FFFFFF;
+    letter-spacing: 0.01rem;
+  }
+  .switch-desc{
+    position: absolute;
+    margin-left: 1rem;
+    margin-top: -0.5rem;
+  }
+  .font-position{
+    margin-left: 0rem;
+    margin-buttom: -1rem;
+  }
+}

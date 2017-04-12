@@ -21,7 +21,8 @@ var myApp = angular.module('myApp', [
   'HmsModule',
   'productModule',
   'pascalprecht.translate',
-  'toiletControlModule'
+  'toiletControlModule',
+  'bathroomModule'
 ]);
 
 angular.module('myApp')
@@ -185,7 +186,26 @@ angular.module('myApp')
           url: '/toiletContrl',
           templateUrl: 'build/pages/device-controller/toilet-controller/toiletController.html',
           controller: 'toiletControllerCtrl'
+        })
+
+        .state('bathroom', {
+          url: '/bathroom',
+          templateUrl: 'build/pages/device-controller/bathroom-controller/bathroom.html',
+          controller: 'bathroomCtrl'
+        })
+
+        .state('bathroomSet', {
+          url: '/bathroomSet',
+          templateUrl: 'build/pages/device-controller/bathroom-controller/bathroom-set/bathroomSet.html',
+          controller: 'bathroomSetCtrl'
+        })
+
+        .state('bathroomInfo', {
+          url: '/bathroomInfo',
+          templateUrl: 'build/pages/device-controller/bathroom-controller/bathroom-info/bathroomInfo.html',
+          controller: 'bathroomInfoCtrl'
         });
+
       // if none of the above states are matched, use this as the fallback
       if (baseConfig.debug) {
         console.log('app.js window.localStorage.appCacheVersion ' + window.localStorage.appCacheVersion);

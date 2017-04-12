@@ -1,0 +1,39 @@
+<ion-view view-title="设置" class="bathroom-info">
+  <ion-header-bar align-title="center" class="cusheader" style="height: 1rem">
+    <div class="item-icon-left set">
+      <div class="title" style="height: 0.7rem;line-height:1rem">
+        <span translate="bathroom.deviceInfo" style="font-size: 0.4rem"></span>
+      </div>
+      <i class="icon ion-ios-arrow-back" ui-sref="bathroomSet"></i>
+    </div>
+  </ion-header-bar>
+  <ion-content class="cuscontent" style="top:1rem;">
+    <div>
+      <div class="item item-icon-right item-divider-self" style="position:relative;height: 1rem;padding-top:0.3rem;">
+        <span translate="bathroom.productName" style="position:absolute;font-size: 0.3rem"></span>
+        <span style="position:absolute;font-size: 0.3rem;text-align:right;left: 3.4rem;">{{deciveInfo.deviceName}}</span>
+      </div>
+      <div class="item item-icon-right item-divider-self"  ui-sref="bathroomInfo"  style="position:relative;height: 1rem;padding-top:0.3rem;">
+        <span translate="bathroom.version" style="font-size: 0.3rem"></span>
+        <span style="position:absolute;font-size: 0.3rem;text-align:right;left: 3.4rem;">{{deciveInfo.version}}</span>
+      </div>
+      <div class="item item-icon-right item-divider-self"  ui-sref="bathroomInfo"  style="position:relative;height: 1rem;padding-top:0.3rem;">
+        <span translate="bathroom.sku" style="font-size: 0.3rem"></span>
+        <span style="position:absolute;font-size: 0.3rem;text-align:right;left: 3.4rem;">{{deciveInfo.sku}}</span>
+      </div>
+      <div class="item item-icon-right item-divider-self"  ui-sref="bathroomInfo"  style="position:relative;height: 1rem;padding-top:0.3rem;">
+        <span translate="bathroom.sn" style="font-size: 0.3rem"></span>
+        <span style="position:absolute;font-size: 0.3rem;text-align:right;left: 3.4rem;">{{deciveInfo.sn}}</span>
+      </div>
+      <div class="list">
+        <label class="item item-input" style="height: 1rem">
+          <span translate="bathroom.place" style="font-size: 0.3rem"></span>
+          <input type="text" style="height:1rem;margin-left:2rem;font-size: 0.3rem;text-align:left;" ng-value="deciveInfo.place" ng-model="deciveInfo.place">
+        </label>
+      </div>
+    </div>
+  </ion-content>
+  <div class="bar bar-footer bar-balanced"  style="background-color: gray" ng-click="save(deciveInfo)">
+    <div class="title">保存</div>
+  </div>
+</ion-view>

@@ -153,5 +153,17 @@
     "deviceName4" : "净水",
     "deviceLineOn" : "设备在线",
     "deviceLineOff" : "设备离线"
+  },
+  "bathroom": {
+    "setting": "浴霸设置",
+    "reset": "恢复默认设置",
+    "deviceInfo": "设备信息",
+    "productName": "产品名称",
+    "version": "固件版本号",
+    "sku": "SKU号",
+    "sn": "SN号",
+    "place": "位置信息",
+    "saveAlert": "保存成功",
+    "saveError": "保存失败"
   }
 }
