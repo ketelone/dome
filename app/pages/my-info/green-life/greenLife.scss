@@ -1,69 +1,82 @@
 .greenLife{
 
+  .iconColor {
 
-  .lastworld{
+    color: $color-base
 
-    text-align: center;
+
   }
-.alldevice{
-  font-size:10px;
+
+  .header{
+
+
+    background: #191C23;
+    box-shadow: 0 2px 11px 0 rgba(0,0,0,0.43);
+
+
+  }
+.content{
+
+  color:rgba(255,255,255,1);
+  background: rgba(15,17,18,1);
+}
+
+.row{
+  text-align: center;
+padding-top: 0rem;
+  padding-bottom: 0rem;
+}
+.redWord{
+  display: inline-block;
+  margin-top: 0.73rem;
+color:rgba(213,99,142,1);
+  border-bottom: 0.05rem solid #C16685;
+  width: 0.31rem;
+  font-size: 0.3rem;
+}
+.whiteWord{
+  display: inline-block;
+  margin-top: 0.73rem;
+  font-size: 0.3rem;
+}
+
+  .number{
+    font-family: DINCondensed-Bold;
+    font-size: 0.72rem;
+    color: #FFFFFF;
+
+    line-height: 0.28rem;
+    text-align: center;
+    margin-top:1.13rem;
+  }
+.useWater{
+  font-family: PingFangSC-Regular;
+  font-size: 0.22rem;
+  color: #FFFFFF;
+text-align: center;
+margin-top:0.3rem
+}
+
+.waterImg{
+  width: 1.851rem;
+  height:0.843rem;
+
+ margin-top: 0.328rem;
+}
+.toCenter{
   text-align: center;
 }
-  .divide{
-    margin-top: 50px;
 
-  }
-  .runningCircle {
-    border-radius:100px;
-    background: #f9f9f9;
-    width:130px;
-    height:130px;
-    display: inline-block;
-  }
-  .waterCircle {
 
-    border-radius:100px;
-    background: #d8d8d8;
-    width: 130px;
-    height:130px;
-    display: inline-block;
-  }
-  .electricCircle {
-    border-radius:100px;
-    background: #d8d8d8;
-    width: 130px;
-    height:130px;
-    display: inline-block;
-  }
-  .goCenter{
+  .footer{
+
     text-align: center;
+    background: linear-gradient(to right, #273B5E, #6ACBB3);
+
+    margin: 0rem;
+    font-size: 0.3rem;
+    color: #FFFFFF;
+
+
   }
-  .addbutton{
-    background: #11a7df;
-    width: 80%;
-    height: 40px;
-    display: inline-block;
-    cursor: pointer;
-    color:white;
-    line-height: 30px;
-    text-align: center;
-    border: 0px;
-    margin-top: 20px;
-  }
-  .cusbutton{
-    text-align: center;
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

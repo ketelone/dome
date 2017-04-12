@@ -27,10 +27,11 @@
       "setting":"设 置",
 
       "language":"语言",
+      "localLanguage":"中文简体",
 
       "temperatureUnit":"温度单位",
 
-      "centigrade":"摄氏度",
+      "centigrade":"摄氏度°C",
       "firmwareUpdate":"固件升级",
 
       "versionUpdate":"版本更新",
@@ -49,6 +50,10 @@
 
 
 
+    },
+    "setting-temperature": {
+      "centigrade": "摄氏度°C",
+      "fahrenheit":"华氏度°F"
     }
 
   }

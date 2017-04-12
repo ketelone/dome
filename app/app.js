@@ -26,7 +26,7 @@ var myApp = angular.module('myApp', [
 ]);
 
 angular.module('myApp')
-  .run(function ($ionicPlatform) {
+  .run(function ($ionicPlatform,$translate) {
     $ionicPlatform.ready(function () {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
@@ -39,6 +39,44 @@ angular.module('myApp')
         // org.apache.cordova.statusbar required
         StatusBar.styleDefault();
       }
+     // alert('language:');
+     navigator.globalization.getPreferredLanguage(
+
+       function (language) {
+     //  alert('language: ' + language.value + '\n');
+      //   alert(language.value=='en-US');
+    //     alert(language.value=='zh-CN');
+      // var localLanguage=language.value;
+       if(language.value=='zh-CN'){
+       $translate.use('zh');
+
+      //   alert('zh1');
+       }
+       else  if( language.value=='zh-TW'){
+       $translate.use('tw');
+
+  //   alert('tw1');
+       }
+       else  if( language.value=='en-US'){
+       $translate.use('en');
+
+      // alert('en1');
+
+       }
+       else  if( language.value=='en-TH'){
+       $translate.use('th');
+
+    //   alert('th1');
+       }
+       else {
+         $translate.use('en');
+     //  alert('en1');
+       }
+
+       },
+       function () {
+      // alert('Error getting locale\n');
+       });
 
     });
   });
@@ -67,11 +105,17 @@ angular.module('myApp')
 
       $ionicConfigProvider.platform.ios.views.transition('ios');
       $ionicConfigProvider.platform.android.views.transition('android');
-      $translateProvider.preferredLanguage("zh");
+
+
+
+       $translateProvider.preferredLanguage("zh");
+
       $translateProvider.useStaticFilesLoader({
         prefix: 'build/common/i18n/',
         suffix: '.json'
       });
+
+
       //translate="header.navbar.new.NEW"
       $stateProvider
       // setup an abstract state for the tabs directive
@@ -147,6 +191,7 @@ angular.module('myApp')
         })
 
         .state('login', {
+
           url: '/login',
           templateUrl: 'build/pages/login/login.html',
           controller: 'loginCtrl'

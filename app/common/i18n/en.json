@@ -1,3 +1,73 @@
 {
 
+
+  "my-info": {
+    "myhome": "myHome",
+    "addMember": "addMember",
+    "personality": "personality",
+    "myBox": "myBox",
+    "addNumber": "addNumber",
+    "personalSetting": "personalSetting",
+    "relatedFamily": "relatedFamily",
+    "relatedNumber": "relatedNumber",
+    "greenLife": "greenLife",
+    "intelligentLinkage": "intelligentLinkage",
+    "openNumber": "openNumber",
+    "settingWord": "settingWord",
+    "setting": {
+      "setting": "setting",
+      "language": "language",
+      "localLanguage": "English",
+      "temperatureUnit": "temperatureUnit",
+      "centigrade": "centigrade",
+      "firmwareUpdate": "firmwareUpdate",
+      "versionUpdate": "versionUpdate",
+      "byToupdate": "byToupdate",
+      "versionNumber": "versionNumber",
+      "about": "about",
+      "logout": "logout"
+    },
+    "setting-language": {
+      "language": "language"
+    },
+    "setting-temperature": {
+      "centigrade": "centigrade",
+      "fahrenheit":"fahrenheit"
+    }
+
+
+
+
+
+
+  },
+    "login": {
+      "login": "login",
+      "rememberPassword": "rememberPassword",
+      "usernamePlaceholder": "usernamePlaceholder",
+      "passwordPlaceholder": "passwordPlaceholder",
+      "createNew": {
+        "createAccount": "createAccount",
+        "country": "country",
+        "region": "region",
+        "phoneNumber": "phoneNumber",
+        "nextStep": "nextStep",
+        "email": "email",
+        "password": "password",
+        "enterEmail": "enterEmail",
+        "enterPhoneNum": "enterPhoneNum",
+        "moreSix": "moreSix",
+        "checkNextStep": "checkNextStep",
+        "role": "即代表您同意遵守",
+        "aggrement": "《科勒用户协议》",
+        "phoneRegister": "使用手机号注册",
+        "mailRegister": "使用邮箱注册",
+        "securityCode": "4位",
+        "phonePwd": "6-18位"
+
+
+    }
+
+  }
+
 }

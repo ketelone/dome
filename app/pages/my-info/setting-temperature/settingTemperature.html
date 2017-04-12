@@ -10,11 +10,11 @@
   <ion-content class="cuscontent">
     <ion-list>
 
-      <li class="item item-icon-right item-divider cutline"  >
-        <span >摄氏度&nbsp;&nbsp;°C</span>  </li>
+      <li class="item item-icon-right item-divider cutline" ng-click="chooseTemperature($event)">
+        <span  translate="my-info.setting-temperature.centigrade">摄氏度°C</span>  </li>
 
-      <li class="item item-icon-right item-divider">
-        <span >华氏度&nbsp;&nbsp;°F</span>
+      <li class="item item-icon-right item-divider" ng-click="chooseTemperature($event)">
+        <span  translate="my-info.setting-temperature.fahrenheit">华氏度°F</span>
       </li>
 
     </ion-list>

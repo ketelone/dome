@@ -29,4 +29,8 @@ angular.module('myInfoModule')
               hmsPopup,
               $rootScope, publicMethod,$stateParams) {
 
+
+
+
+
     }]);

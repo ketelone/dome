@@ -12,11 +12,13 @@ angular.module('myInfoModule')
           controller: 'addMembersCtrl'
         })
         .state('greenLife', {
+
           url: '/greenLife',
           templateUrl: 'build/pages/my-info/green-life/greenLife.html',
           controller: 'greenLifeCtrl'
         })
         .state('setting', {
+          cache:false,
           url: '/setting',
           templateUrl: 'build/pages/my-info/setting/setting.html',
           controller: 'settingCtrl'
