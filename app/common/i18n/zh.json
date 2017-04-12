@@ -153,5 +153,18 @@
     "deviceName4" : "净水",
     "deviceLineOn" : "设备在线",
     "deviceLineOff" : "设备离线"
+  },
+  "spa" : {
+    "goHomeTitle" : "场景详情",
+    "goHomeContent" : "您可以在家通过使用智能SPA场景获得根据时令实时调节温度的舒适泡澡体验",
+    "goHomeName" : "家庭SPA",
+    "buttonClick" : "开启",
+    "deviceName1" : "马桶",
+    "deviceName2" : "浴霸",
+    "deviceName3" : "浴缸",
+    "deviceName4" : "净水",
+    "deviceLineOn" : "设备在线",
+    "deviceLineOff" : "设备离线"
   }
+
 }

@@ -179,6 +179,11 @@ angular.module('myApp')
           templateUrl: 'build/pages/keyscene-morning/morning.html',
           controller: 'morningCtrl'
         })
+        .state('spa', {
+          url: '/spa',
+          templateUrl: 'build/pages/keyscene-spa/spa.html',
+          controller: 'spaCtrl'
+        })
         // 设备控制
         // 设备控制-马桶
         .state('toiletContrl', {
