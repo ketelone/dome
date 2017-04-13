@@ -203,6 +203,12 @@ angular.module('myApp')
           templateUrl: 'build/pages/keyscene-spa/spa.html',
           controller: 'spaCtrl'
         })
+
+        .state('period', {
+          url: '/period',
+          templateUrl: 'build/pages/keyscene-period/period.html',
+          controller: 'periodCtrl'
+        })
         // 设备控制
         // 设备控制-马桶
         .state('toiletContrl', {
