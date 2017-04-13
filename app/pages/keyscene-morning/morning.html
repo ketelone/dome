@@ -13,129 +13,138 @@
 
 
     <div class="divAll">
-      <div>
-        <div class="deviceStyle row noPadding" ng-show="config.device1">
-          <div class="col-25 noPadding">
+      <!--马桶-->
+      <div style="margin-top: 15px;width:6.78rem">
+        <div ng-class="{'deviceStyle' : config.device1,'deviceStyleTwo' : !config.device1}" id="progressAnimation1"
+             class="row noPadding">
+          <div class="col-25 col noPadding">
             <img class="deviceImg" ng-src="build/img/keyscene-morning/img_home_device_toliet.png"/>
           </div>
-          <div class="col-50 noPadding" style="color: white">
+          <div class="col col-35 noPadding" style="color: white" ng-show="config.device1">
             <div class="row">
               <div class="deviceName"><span translate="morning.deviceName1"></span></div>
             </div>
             <div class="row noPadding">
-              <div class="deviceLine col-30 noPadding"><span translate="morning.deviceLineOn"></span></div>
-              <div class="deviceLine col-70 noPadding"><img class="imgLine"
-                                                            ng-src="build/img/keyscene-morning/icon_home_device_signal5.png"/>
+              <div class="deviceLine col col-30 noPadding">
+                <span translate="morning.deviceLineOn" ng-show="config.onOrOff1"></span>
+                <span translate="morning.deviceLineOff" ng-hide="config.onOrOff1"></span>
+              </div>
+              <div class="deviceLine col col-70 noPadding">
+                <img class="imgLine" ng-src="{{config.onLinePic1}}"/>
               </div>
             </div>
           </div>
-          <div class="col-25 deviceStatus text-center">
-            <span>27℃ &nbsp;&nbsp;&nbsp;</span>
-            <span style="color: #565A64"><i class="ion-ios-arrow-forward"></i></span>
+          <div class="col col-30 noPadding deviceStatus text-center" ng-show="config.device1">
+            <span translate="morning.deviceWen">温度</span>27℃
           </div>
-
-        </div>
-        <div class="deviceStyleTwo row noPadding" ng-show="!config.device1">
-          <img class="deviceImg" ng-src="build/img/keyscene-morning/img_home_device_toliet.png"></img>
-          <div id="progressAnimation"  class="progress text-left">
-            <!--马桶-->
+          <div class="col col-10 noPadding deviceStatus text-center" ng-show="config.device1">
+            <span class="deviceFontI"><i class="ion-ios-arrow-forward" ></i></span>
+          </div>
+          <div class="col col-75 deviceStatus text-right" ng-show="config.flagDevice1" translate="morning.deviceFlag">
+            未安装
           </div>
         </div>
       </div>
 
-<!--浴霸-->
-      <div style="margin-top: 15px">
-        <div class="deviceStyle row noPadding" ng-show="config.device2">
-          <div class="col-25 noPadding">
+      <!--镜柜-->
+      <div style="margin-top: 15px;width:6.78rem">
+        <div ng-class="{'deviceStyle' : config.device2,'deviceStyleTwo' : !config.device2}" id="progressAnimation2"
+             class="row noPadding">
+          <div class="col-25 col noPadding">
             <img class="deviceImg" ng-src="build/img/keyscene-morning/img_home_device_toliet.png"/>
           </div>
-          <div class="col-50 noPadding" style="color: white">
+          <div class="col col-35 noPadding" style="color: white" ng-show="config.device2">
             <div class="row">
               <div class="deviceName"><span translate="morning.deviceName2"></span></div>
             </div>
             <div class="row noPadding">
-              <div class="deviceLine col-30 noPadding"><span translate="morning.deviceLineOn"></span></div>
-              <div class="deviceLine col-70 noPadding"><img class="imgLine"
-                                                            ng-src="build/img/keyscene-morning/icon_home_device_signal5.png"/>
+              <div class="deviceLine col col-30 noPadding">
+                <span translate="morning.deviceLineOn" ng-show="config.onOrOff2"></span>
+                <span translate="morning.deviceLineOff" ng-hide="config.onOrOff2"></span>
+              </div>
+              <div class="deviceLine col col-70 noPadding">
+                <img class="imgLine" ng-src="{{config.onLinePic2}}"/>
               </div>
             </div>
           </div>
-          <div class="col-25 deviceStatus text-center">
-            <span>27℃ &nbsp;&nbsp;&nbsp;</span>
-            <span style="color: #565A64"><i class="ion-ios-arrow-forward"></i></span>
+          <div class="col col-30 noPadding deviceStatus text-center" ng-show="config.device2">
           </div>
-
-        </div>
-        <div class="deviceStyleTwo row noPadding" ng-show="!config.device2">
-          <img class="deviceImg" ng-src="build/img/keyscene-morning/img_home_device_toliet.png"></img>
-          <div id="progressAnimation2" class="progress ">
-
+          <div class="col col-10 noPadding deviceStatus text-center" ng-show="config.device2">
+            <span class="deviceFontI"><i class="ion-ios-arrow-forward" ></i></span>
+          </div>
+          <div class="col col-75 deviceStatus text-right" ng-show="config.flagDevice2" translate="morning.deviceFlag">
+            未安装
           </div>
         </div>
       </div>
 
-<!--淋浴-->
-      <div style="margin-top: 15px">
-        <div class="deviceStyle row noPadding" ng-show="config.device3">
-          <div class="col-25 noPadding">
+
+      <!--浴霸-->
+      <div style="margin-top: 15px;width:6.78rem">
+        <div ng-class="{'deviceStyle' : config.device3,'deviceStyleTwo' : !config.device3}" id="progressAnimation3"
+             class="row noPadding">
+          <div class="col-25 col noPadding">
             <img class="deviceImg" ng-src="build/img/keyscene-morning/img_home_device_toliet.png"/>
           </div>
-          <div class="col-50 noPadding" style="color: white">
+          <div class="col col-35 noPadding" style="color: white" ng-show="config.device3">
             <div class="row">
               <div class="deviceName"><span translate="morning.deviceName3"></span></div>
             </div>
             <div class="row noPadding">
-              <div class="deviceLine col-30 noPadding"><span translate="morning.deviceLineOn"></span></div>
-              <div class="deviceLine col-70 noPadding"><img class="imgLine"
-                                                            ng-src="build/img/keyscene-morning/icon_home_device_signal5.png"/>
+              <div class="deviceLine col col-30 noPadding">
+                <span translate="morning.deviceLineOn" ng-show="config.onOrOff3"></span>
+                <span translate="morning.deviceLineOff" ng-hide="config.onOrOff3"></span>
+              </div>
+              <div class="deviceLine col col-70 noPadding">
+                <img class="imgLine" ng-src="{{config.onLinePic3}}"/>
               </div>
             </div>
           </div>
-          <div class="col-25 deviceStatus text-center">
-            <span>27℃ &nbsp;&nbsp;&nbsp;</span>
-            <span style="color: #565A64"><i class="ion-ios-arrow-forward"></i></span>
+          <div class="col col-30 noPadding deviceStatus text-center" ng-show="config.device3">
+            <span translate="morning.deviceWen">温度</span>27℃ <span translate="morning.deviceShi">湿度</span>45%
           </div>
-
-        </div>
-        <div class="deviceStyleTwo row noPadding" ng-show="!config.device3">
-          <img class="deviceImg" ng-src="build/img/keyscene-morning/img_home_device_toliet.png"></img>
-          <div id="progressAnimation3" class="progress ">
-
+          <div class="col col-10 noPadding deviceStatus text-center" ng-show="config.device3">
+            <span class="deviceFontI"><i class="ion-ios-arrow-forward" ></i></span>
+          </div>
+          <div class="col col-75 deviceStatus text-right" ng-show="config.flagDevice3" translate="morning.deviceFlag">
+            未安装
           </div>
         </div>
       </div>
 
-<!--净水-->
-      <div style="margin-top: 15px">
-        <div class="deviceStyle row noPadding" ng-show="config.device4">
-          <div class="col-25 noPadding">
+
+      <!--淋浴-->
+      <div style="margin-top: 15px;width:6.78rem">
+        <div ng-class="{'deviceStyle' : config.device4,'deviceStyleTwo' : !config.device4}" id="progressAnimation4"
+             class="row noPadding">
+          <div class="col-25 col noPadding">
             <img class="deviceImg" ng-src="build/img/keyscene-morning/img_home_device_toliet.png"/>
           </div>
-          <div class="col-50 noPadding" style="color: white">
+          <div class="col col-35 noPadding" style="color: white" ng-show="config.device4">
             <div class="row">
               <div class="deviceName"><span translate="morning.deviceName4"></span></div>
             </div>
             <div class="row noPadding">
-              <div class="deviceLine col-30 noPadding"><span translate="morning.deviceLineOn"></span></div>
-              <div class="deviceLine col-70 noPadding"><img class="imgLine"
-                                                            ng-src="build/img/keyscene-morning/icon_home_device_signal5.png"/>
+              <div class="deviceLine col col-30 noPadding">
+                <span translate="morning.deviceLineOn" ng-show="config.onOrOff4"></span>
+                <span translate="morning.deviceLineOff" ng-hide="config.onOrOff4"></span>
+              </div>
+              <div class="deviceLine col col-70 noPadding">
+                <img class="imgLine" ng-src="{{config.onLinePic4}}"/>
               </div>
             </div>
           </div>
-          <div class="col-25 deviceStatus text-center">
-            <span>27℃ &nbsp;&nbsp;&nbsp;</span>
-            <span style="color: #565A64"><i class="ion-ios-arrow-forward"></i></span>
+          <div class="col col-30 noPadding deviceStatus text-center" ng-show="config.device4">
+            <span translate="morning.deviceWen">温度</span>27℃
           </div>
-
-        </div>
-        <div class="deviceStyleTwo row noPadding" ng-show="!config.device4">
-          <img class="deviceImg" ng-src="build/img/keyscene-morning/img_home_device_toliet.png"></img>
-          <div id="progressAnimation4" class="progress ">
-
+          <div class="col col-10 noPadding deviceStatus text-center" ng-show="config.device4">
+            <span class="deviceFontI"><i class="ion-ios-arrow-forward" ></i></span>
+          </div>
+          <div class="col col-75 deviceStatus text-right" ng-show="config.flagDevice4" translate="morning.deviceFlag">
+            未安装
           </div>
         </div>
       </div>
-
     </div>
   </ion-content>
 </ion-view>

@@ -110,28 +110,42 @@
     "buttonClick": "开启",
     "deviceName": "马桶",
     "deviceLineOn": "设备在线",
-    "deviceLineOff": "设备离线"
+    "deviceLineOff": "设备离线",
+    "deviceFlag":"未安装"
   },
   "leaveHome": {
     "goHomeTitle": "场景详情",
-    "goHomeContent": "您可以在月经期间对马桶圈温及女性冲洗温度进行设置，以获得最利于健康的特殊关怀",
+    "goHomeContent": "一键关闭房间内所有的设备",
     "goHomeName": "离家",
     "buttonClick": "开启",
-    "deviceName": "马桶",
+    "deviceName1": "马桶",
+    "deviceName2": "镜柜",
+    "deviceName3": "浴霸",
+    "deviceName4": "净水",
     "deviceLineOn": "设备在线",
-    "deviceLineOff": "设备离线"
+    "deviceLineOff": "设备离线",
+    "deviceFlag":"未安装",
+    "deviceDongOn" : "灯开启",
+    "deviceFengOn" : "风开启",
+    "deviceGaiOn" : "盖板开启",
+    "deviceDongOff" : "灯关闭",
+    "deviceFengOff" : "风关闭",
+    "deviceGaiOff" : "盖板关闭"
   },
   "morning": {
     "goHomeTitle": "场景详情",
-    "goHomeContent": "自动为你开启早上所必须的卫浴设备，从此告别早上洗漱的匆忙",
+    "goHomeContent": "开启您美好的一天",
     "goHomeName": "晨起",
     "buttonClick": "开启",
     "deviceName1": "马桶",
-    "deviceName2": "浴霸",
-    "deviceName3": "淋浴",
-    "deviceName4": "净水",
+    "deviceName2": "镜柜",
+    "deviceName3": "浴霸",
+    "deviceName4": "淋浴",
     "deviceLineOn": "设备在线",
-    "deviceLineOff": "设备离线"
+    "deviceLineOff": "设备离线",
+    "deviceFlag":"未安装",
+    "deviceWen" : "温度",
+    "deviceShi" : "湿度"
   },
   "bathroom": {
     "setting": "浴霸设置",
