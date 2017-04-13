@@ -156,6 +156,18 @@
     "deviceLineOn": "设备在线",
     "deviceLineOff": "设备离线"
   },
+  "veil": {
+    "goHomeTitle": "场景详情",
+    "goHomeContent": "默认根据一天中的时间自动切换冷光、柔和、暖光三种光源模式",
+    "goHomeName": "维亚灯光",
+    "colorTemperature": "当前色温处于2700K,亮度20%",
+    "lampName1": "浴缸灯",
+    "lampName2": "马桶灯",
+    "lampName3": "淋浴灯",
+    "lampName4": "镜柜灯",
+    "lampName5": "顶灯",
+    "lampName6": "镜灯"
+  },
   "bathroom": {
     "setting": "浴霸设置",
     "reset": "恢复默认设置",
