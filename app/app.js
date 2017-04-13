@@ -225,6 +225,11 @@ angular.module('myApp')
           templateUrl: 'build/pages/keyscene-morning/morning.html',
           controller: 'morningCtrl'
         })
+        .state('period', {
+          url: '/period',
+          templateUrl: 'build/pages/keyscene-period/period.html',
+          controller: 'periodCtrl'
+        })
         // 设备控制
         // 设备控制-马桶
         .state('toiletContrl', {
