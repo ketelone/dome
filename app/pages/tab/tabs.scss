@@ -1,61 +1,114 @@
-.bar.bar-stable {
-  border-color: #b2b2b2;
-  //background-color: #f8f8f8;
-  //background-image: linear-gradient(0deg, #b2b2b2, #b2b2b2 50%, transparent 50%);
-  color: white;
-  background-image: url("../img/NaviBar@3x.png");
-  background-size: cover;
+//.bar.bar-stable {
+//  border-color: #b2b2b2;
+//  //background-color: #f8f8f8;
+//  //background-image: linear-gradient(0deg, #b2b2b2, #b2b2b2 50%, transparent 50%);
+//  color: white;
+//  background-image: url("../img/NaviBar@3x.png");
+//  background-size: cover;
+//}
+//
+//.bar.bar-stable .title {
+//  color: white;
+//}
+//
+//.tabs-icon-top {
+//  .message-on {
+//    background-image: url("../img/tabs/btn_buttom_message.png");
+//    background-repeat: no-repeat;
+//    background-position: center;
+//    background-size: 20%;
+//  }
+//
+//  .message-off {
+//    background-image: url("../img/tabs/btn_buttom_message.png");
+//    background-repeat: no-repeat;
+//    background-position: center;
+//    background-size: 20%;
+//  }
+//
+//
+//  .indexPage-on {
+//    background-image: url("../img/tabs/btn_buttom_kohler.png");
+//    background-repeat: no-repeat;
+//    background-position: center;
+//    background-size: 20%;
+//  }
+//
+//  .indexPage-off {
+//    background-image: url("../img/tabs/icon_home_arrowup.png");
+//    background-repeat: no-repeat;
+//    background-position: center;
+//    background-size: 20%;
+//  }
+//
+//  .mine-on {
+//    background-image: url("../img/tabs/btn_buttom_user.png");
+//    background-repeat: no-repeat;
+//    background-position: center;
+//    background-size: 20%;
+//  }
+//
+//  .mine-off {
+//    background-image: url("../img/tabs/btn_buttom_user.png");
+//    background-repeat: no-repeat;
+//    background-position: center;
+//    background-size: 20%;
+//  }
+//}
+//
+//.tabs{
+//  background: linear-gradient(90deg, #0F0F0F 0%, #1D2334 50%, #0F0F0F 100%);
+//}
+
+
+
+@mixin tab-icon($imgUrl) {
+  background: url($imgUrl) no-repeat center;
+  background-size: contain;
+  width: 25px;
 }
-
-.bar.bar-stable .title {
-  color: white;
-}
-
-.tabs-icon-top {
-  .message-on {
-    background-image: url("../img/tabs/btn_buttom_message.png");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 20%;
-  }
-
-  .message-off {
-    background-image: url("../img/tabs/btn_buttom_message.png");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 20%;
-  }
-
-
-  .indexPage-on {
-    background-image: url("../img/tabs/btn_buttom_kohler.png");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 20%;
-  }
-
-  .indexPage-off {
-    background-image: url("../img/tabs/icon_home_arrowup.png");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 20%;
-  }
-
-  .mine-on {
-    background-image: url("../img/tabs/btn_buttom_user.png");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 20%;
-  }
-
-  .mine-off {
-    background-image: url("../img/tabs/btn_buttom_user.png");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 20%;
+.myTab{
+  .scroll{
+    //height:  calc(100% - 49px)
   }
 }
-
-.tabs{
-  background: linear-gradient(90deg, #0F0F0F 0%, #1D2334 50%, #0F0F0F 100%);
+.tabs {
+    background: linear-gradient(90deg, #0F0F0F 0%, #1D2334 50%, #0F0F0F 100%);
+  .tab-item{
+    opacity: 1;
+    background: linear-gradient(90deg, #0F0F0F 0%, #1D2334 50%, #0F0F0F 100%);
+  }
+  .tab-item.activated{
+    height: 100%!important;
+  }
+  .backColor-on {
+    color: #072F65;
+  }
+  .backColor-off{
+    color:#d2d2d2;
+  }
+  .fontColor-on{
+    color:#ffffff;
+  }
+  .fontColor-off{
+    color:#575A64;
+  }
+  .main-on {
+    @include tab-icon("../img/tabs/btn_buttom_kohler.png");
+  }
+  .main-off {
+    @include tab-icon("../img/tabs/icon_home_arrowup.png");
+  }
+  .app-on {
+    @include tab-icon("../img/tabs/btn_buttom_message.png");
+  }
+  .app-off {
+    @include tab-icon("../img/tabs/btn_buttom_message.png");
+  }
+  .my-on {
+    @include tab-icon("../img/tabs/btn_buttom_user.png");
+  }
+  .my-off {
+    @include tab-icon("../img/tabs/btn_buttom_user.png");
+  }
 }

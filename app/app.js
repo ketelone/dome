@@ -26,7 +26,7 @@ var myApp = angular.module('myApp', [
 ]);
 
 angular.module('myApp')
-  .run(function ($ionicPlatform,$translate) {
+  .run(function ($ionicPlatform, $translate) {
     $ionicPlatform.ready(function () {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
@@ -39,53 +39,52 @@ angular.module('myApp')
         // org.apache.cordova.statusbar required
         StatusBar.styleDefault();
       }
-     // alert('language:');
-     navigator.globalization.getPreferredLanguage(
+      // alert('language:');
+      navigator.globalization.getPreferredLanguage(
+        function (language) {
+          //  alert('language: ' + language.value + '\n');
+          //   alert(language.value=='en-US');
+          //     alert(language.value=='zh-CN');
+          // var localLanguage=language.value;
+          if (language.value == 'zh-CN') {
+            $translate.use('zh');
 
-       function (language) {
-     //  alert('language: ' + language.value + '\n');
-      //   alert(language.value=='en-US');
-    //     alert(language.value=='zh-CN');
-      // var localLanguage=language.value;
-       if(language.value=='zh-CN'){
-       $translate.use('zh');
+            //   alert('zh1');
+          }
+          else if (language.value == 'zh-TW') {
+            $translate.use('tw');
 
-      //   alert('zh1');
-       }
-       else  if( language.value=='zh-TW'){
-       $translate.use('tw');
+            //   alert('tw1');
+          }
+          else if (language.value == 'en-US') {
+            $translate.use('en');
 
-  //   alert('tw1');
-       }
-       else  if( language.value=='en-US'){
-       $translate.use('en');
+            // alert('en1');
 
-      // alert('en1');
+          }
+          else if (language.value == 'en-TH') {
+            $translate.use('th');
 
-       }
-       else  if( language.value=='en-TH'){
-       $translate.use('th');
+            //   alert('th1');
+          }
+          else {
+            $translate.use('en');
+            //  alert('en1');
+          }
 
-    //   alert('th1');
-       }
-       else {
-         $translate.use('en');
-     //  alert('en1');
-       }
-
-       },
-       function () {
-      // alert('Error getting locale\n');
-       });
+        },
+        function () {
+          // alert('Error getting locale\n');
+        });
 
     });
   });
 
 angular.module('myApp')
   .config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$ionicConfigProvider',
-    '$translateProvider', '$translateStaticFilesLoaderProvider','baseConfig',
+    '$translateProvider', '$translateStaticFilesLoaderProvider', 'baseConfig',
     function ($stateProvider, $urlRouterProvider, $httpProvider, $ionicConfigProvider,
-              $translateProvider, $translateStaticFilesLoaderProvider,baseConfig) {
+              $translateProvider, $translateStaticFilesLoaderProvider, baseConfig) {
       // Ionic uses AngularUI Router which uses the concept of states
       // Learn more here: https://github.com/angular-ui/ui-router
       // Set up the various states which the app can be in.
@@ -107,63 +106,38 @@ angular.module('myApp')
       $ionicConfigProvider.platform.android.views.transition('android');
 
 
-
-       $translateProvider.preferredLanguage("zh");
+      $translateProvider.preferredLanguage("zh");
 
       $translateProvider.useStaticFilesLoader({
         prefix: 'build/common/i18n/',
         suffix: '.json'
       });
 
-
-      //translate="header.navbar.new.NEW"
       $stateProvider
-      // setup an abstract state for the tabs directive
-        .state('tab', {
-          url: '/tab',
-          abstract: true,
-          templateUrl: 'build/pages/tab/tabs.html'
+        .state('tabs', {
+          url: '/tabs',
+          templateUrl: 'build/pages/tab/tabs.html',
+          controller: 'TabsCtrl'
         })
 
-        // Each tab has its own nav history stack:
-/*
-      .state('tab.addMembers', {
-          url: '/addMembers',
-          views: {
-            'tab-myInfo': {
-          templateUrl: 'build/pages/my-info/add-members/addMembers.html',
-          controller: 'addMembersCtrl'
-        }}})*/
-
-
-        .state('tab.indexPage', {
+        .state('indexPage', {
           url: '/indexPage',
-          views: {
-            'tab-indexPage': {
-              templateUrl: 'build/pages/index-page/indexPage.html',
-              controller: 'indexPageCtrl'
-            }
-          }
+          templateUrl: 'build/pages/index-page/indexPage.html',
+          controller: 'indexPageCtrl'
         })
 
-        .state('tab.message', {
+        .state('message', {
           url: '/message',
-          views: {
-            'tab-message': {
-              templateUrl: 'build/pages/message/message.html',
-              controller: 'messageCtrl'
-            }
-          }
+          templateUrl: 'build/pages/message/message.html',
+          controller: 'messageCtrl'
+
         })
 
-        .state('tab.myInfo', {
+        .state('myInfo', {
           url: '/myInfo',
-          views: {
-            'tab-myInfo': {
-              templateUrl: 'build/pages/my-info/myInfo.html',
-              controller: 'myInfoCtrl'
-            }
-          }
+          templateUrl: 'build/pages/my-info/myInfo.html',
+          controller: 'myInfoCtrl'
+
         })
 
         .state('guide', {
@@ -191,7 +165,6 @@ angular.module('myApp')
         })
 
         .state('login', {
-
           url: '/login',
           templateUrl: 'build/pages/login/login.html',
           controller: 'loginCtrl'
@@ -209,7 +182,7 @@ angular.module('myApp')
           templateUrl: 'build/pages/keyscene-aunt/setting-aunt/bigAuntSetting.html',
           controller: 'bigAuntSettingCtrl'
         })
-          //gohome
+        //gohome
         .state('goHome', {
           url: '/goHome',
           templateUrl: 'build/pages/keyscene-gohome/goHome.html',
