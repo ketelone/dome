@@ -225,6 +225,11 @@ angular.module('myApp')
           templateUrl: 'build/pages/keyscene-morning/morning.html',
           controller: 'morningCtrl'
         })
+        .state('veil', {
+          url: '/veil',
+          templateUrl: 'build/pages/keyscene-veil/veil.html',
+          controller: 'veilCtrl'
+        })
         // 设备控制
         // 设备控制-马桶
         .state('toiletContrl', {

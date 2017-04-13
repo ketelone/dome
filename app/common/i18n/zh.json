@@ -148,16 +148,30 @@
     "deviceLineOff" : "设备离线"
   },
   "morning" : {
+  "goHomeTitle" : "场景详情",
+  "goHomeContent" : "自动为你开启早上所必须的卫浴设备，从此告别早上洗漱的匆忙",
+  "goHomeName" : "晨起",
+  "buttonClick" : "开启",
+  "deviceName1" : "马桶",
+  "deviceName2" : "浴霸",
+  "deviceName3" : "淋浴",
+  "deviceName4" : "净水",
+  "deviceLineOn" : "设备在线",
+  "deviceLineOff" : "设备离线"
+},
+  "veil" : {
     "goHomeTitle" : "场景详情",
-    "goHomeContent" : "自动为你开启早上所必须的卫浴设备，从此告别早上洗漱的匆忙",
-    "goHomeName" : "晨起",
-    "buttonClick" : "开启",
-    "deviceName1" : "马桶",
-    "deviceName2" : "浴霸",
-    "deviceName3" : "淋浴",
-    "deviceName4" : "净水",
-    "deviceLineOn" : "设备在线",
-    "deviceLineOff" : "设备离线"
+    "goHomeContent" : "默认根据一天中的时间自动切换冷光、柔和、暖光三种光源模式",
+    "goHomeName" : "维亚灯光",
+    "colorTemperature":"当前色温处于2700K,亮度20%",
+    "lampName1" : "浴缸灯",
+    "lampName2" : "马桶灯",
+    "lampName3" : "淋浴灯",
+    "lampName4" : "镜柜灯",
+    "lampName5" : "顶灯",
+    "lampName6" : "镜灯"
+
+
   },
   "bathroom": {
     "setting": "浴霸设置",
