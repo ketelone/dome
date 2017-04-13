@@ -16,7 +16,7 @@ angular.module('productModule')
         device3: false,
         device4: false,
         flagDevice1: false,//shifouanzhuang
-        flagDevice2: false,
+      flagDevice2: false,
         flagDevice3: false,
         flagDevice4: false,
         onOrOff1 : true,//shifouzaixian

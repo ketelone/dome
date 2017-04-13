@@ -10,11 +10,19 @@ angular.module('productModule')
 
 
       $scope.config = {
-        openFlag : true,
-        device1 : false,
-        device2 : false,
-        device3 : false,
-        device4 : false
+        openFlag: true,
+
+        device3: false,//shebei
+        device4: false,
+
+        flagDevice3: false,//shifouanzhuang
+        flagDevice4: false,
+
+        onOrOff3 : true,//shifouzaixian
+        onOrOff4 : true,
+
+        onLinePic3 : "build/img/keyscene-spa/icon_home_device_signal5.png",
+        onLinePic4 : "build/img/keyscene-spa/icon_home_device_signal5.png",
       }
 
 
@@ -26,7 +34,7 @@ angular.module('productModule')
        *@params: item
        *@disc: get switch status
        */
-      $scope.getSwitchStatus = function(item){
+     /* $scope.getSwitchStatus = function(item){
         //console.log(item);
         alert(item.isOff);
         if(item.isOff){
@@ -36,7 +44,7 @@ angular.module('productModule')
         }else{
           alert("off1");
         }
-      };
+      };*/
 
 
 
@@ -59,39 +67,52 @@ angular.module('productModule')
        *@disc:openKeysceneSpa
        */
       $scope.openKeyscene = function () {
-        if($scope.config.openFlag == true){
-          $("#progressAnimation").css({
-            "-webkit-animation": "aaa 1.5s linear",
-            "background": "#1a1d28"
-          });
-          $timeout(function(){
-            $scope.config.device1 = true;
-            $scope.config.openFlag = false;
-          },1400);
+        console.log($scope.config.openFlag);
+        if ($scope.config.openFlag == true) {
+          //马桶
+         /* if($scope.config.flagDevice1 != true){
+            console.log($scope.config.flagDevice1);
+            $("#progressAnimation1").css({
+              "-webkit-animation": "aaa 5.5s linear",
+              "background": "#1a1d28"
+            });
+            $timeout(function () {
+              $scope.config.device1 = true;
+              $scope.config.openFlag = false;
+            }, 5700);
+          }*/
+          //镜柜
+        /*  if($scope.config.flagDevice2 != true) {
+            $("#progressAnimation3").css({
+              "-webkit-animation": "aaa 3.0s linear",
+              "background": "#1a1d28"
+            });
+            $timeout(function () {
+              $scope.config.device3 = true;
+            }, 2800);
+          }*/
+          //浴霸
+          if($scope.config.flagDevice3 != true) {
+            $("#progressAnimation3").css({
+              "-webkit-animation": "aaa 6.0s linear",
+              "background": "#1a1d28"
+            });
+            $timeout(function () {
+              $scope.config.device3 = true;
+            }, 5900);
+          }
+          //淋浴
+          if($scope.config.flagDevice4 != true) {
+            $("#progressAnimation4").css({
+              "-webkit-animation": "aaa 1.5s linear",
+              "background": "#1a1d28"
+            });
+            $timeout(function () {
+              $scope.config.device4 = true;
+            }, 1600);
+          }
+        } else {
 
-          $("#progressAnimation3").css({
-            "-webkit-animation": "aaa 3.0s linear",
-            "background": "#1a1d28"
-          });
-          $timeout(function(){
-            $scope.config.device3 = true;
-          },2800);
-        }else{
-          $("#progressAnimation2").css({
-            "-webkit-animation": "aaa 6.0s linear",
-            "background": "#1a1d28"
-          });
-          $timeout(function(){
-            $scope.config.device2 = true;
-          },5900);
-
-          $("#progressAnimation4").css({
-            "-webkit-animation": "aaa 1.5s linear",
-            "background": "#1a1d28"
-          });
-          $timeout(function(){
-            $scope.config.device4 = true;
-          },1400);
         }
       }
 
