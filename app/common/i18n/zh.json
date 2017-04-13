@@ -7,14 +7,12 @@
 
     "addMember":"添加成员",
 
-    "personality":"个性签名",
-
     "myBox":"我的BOX",
     "addNumber":"已添加4个",
-
+    "myRoom":"我的房间",
+    "roomNumber":"3个房间",
+    "familyManager":"亲友授权管理",
     "personalSetting":"个人资料设置",
-    "relatedFamily":"关联家庭",
-    "relatedNumber":"已关联2个",
 
     "greenLife":"绿色生活",
     "intelligentLinkage":"智能联动",
@@ -29,7 +27,7 @@
       "language":"语言",
       "localLanguage":"中文简体",
 
-      "temperatureUnit":"温度单位",
+      "unitSetting":"单位设置",
 
       "centigrade":"摄氏度°C",
       "firmwareUpdate":"固件升级",
@@ -52,8 +50,14 @@
 
     },
     "setting-temperature": {
+      "unitSetting":"单 位 设 置",
+      "temperatureUnit":"温 度 单 位",
       "centigrade": "摄氏度°C",
-      "fahrenheit":"华氏度°F"
+      "fahrenheit":"华氏度°F",
+      "useWaterUnit":"用 水 量 单 位",
+      "litre":"升",
+      "ton":"吨",
+      "useElectricityUnit":"用 电 量 单 位"
     }
 
   }

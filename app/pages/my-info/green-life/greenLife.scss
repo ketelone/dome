@@ -1,20 +1,12 @@
 .greenLife{
 
+  .headColor {
+    background-color: $global-head-bg;
+  }
   .iconColor {
-
     color: $color-base
-
-
   }
 
-  .header{
-
-
-    background: #191C23;
-    box-shadow: 0 2px 11px 0 rgba(0,0,0,0.43);
-
-
-  }
 .content{
 
   color:rgba(255,255,255,1);

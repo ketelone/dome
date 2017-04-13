@@ -99,7 +99,7 @@ angular.module('myInfoModule')
        *@return:
        *@disc:Set default temperature
        */
-$scope.temperatureUnit=function()
+/*$scope.temperatureUnit=function()
      {
         if (SettingsService.get("temperature") != false) {
 
@@ -114,7 +114,7 @@ $scope.temperatureUnit=function()
         }
 
 
-    }
+    }*/
 
 
 /**
