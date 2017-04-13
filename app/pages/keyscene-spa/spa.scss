@@ -37,7 +37,7 @@
 
       margin-top: 0.65rem;
       margin-left: 0.36rem;
-      width: 1.4rem;
+      width: 1.63rem;
       height: 0.6rem;
       background: $color-base;
       font-family: PingFangSC-Medium;
@@ -60,7 +60,11 @@
       height: 1.4rem;
       background-color: #1a1d28;
       border: 0.01rem solid #1a1d28;
-
+    }
+    .deviceFontI{
+      color: #565A64;
+      font-size: 0.36rem;
+    }
       .deviceImg {
         width: 1.38rem;
         height: 1.38rem;
@@ -92,23 +96,25 @@
         font-family: DINCondensed-Bold;
         font-size: $font-size-liter;
         color: #FFFFFF;
+        white-space:nowrap;
         line-height: 1.4rem;
       }
       .imgLine {
         width: 0.6rem;
         height: 0.25rem;
       }
-    }
+
     .deviceStyleTwo {
       width: 6.78rem;
       height: 1.4rem;
+    }
       .deviceImg {
         width: 1.39rem;
         height: 1.39rem;
       }
       @-webkit-keyframes aaa {
         0% {
-          width: 0%;
+          width: 20%;
         }
         30% {
           width: 30%;
@@ -130,7 +136,7 @@
         color: white;
       }
     }
-  }
+
 
 
 

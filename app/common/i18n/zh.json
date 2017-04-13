@@ -165,10 +165,13 @@
     "goHomeName": "家庭SPA",
     "buttonClick": "开启",
     "deviceName1": "马桶",
-    "deviceName2": "浴霸",
-    "deviceName3": "浴缸",
-    "deviceName4": "净水",
+    "deviceName2": "镜柜",
+    "deviceName3": "浴霸",
+    "deviceName4": "淋浴",
     "deviceLineOn": "设备在线",
-    "deviceLineOff": "设备离线"
+    "deviceLineOff": "设备离线",
+    "deviceFlag":"未安装",
+    "deviceWen" : "温度",
+    "deviceShi" : "湿度"
   }
 }
