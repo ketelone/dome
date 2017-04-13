@@ -1,14 +1,14 @@
 <ion-view view-title="toilet" class="viewStyleSpa">
   <div class="bar bar-header headColor " style="background-image: none">
     <button class="button button-icon icon ion-ios-arrow-left iconColor" ng-click="goBack()"></button>
-    <div class="h1 title"><span translate="spa.goHomeTitle" class="iconColor"></span></div>
+    <div class="h1 title"><span translate="period.goHomeTitle" class="iconColor"></span></div>
     <button class="button button-icon icon ion-ios-trash-outline iconColor" ng-click="deleteKeyscene()"></button>
   </div>
 
   <ion-content class="ionContent" >
 
-    <div class="nameStyle"><span translate="spa.goHomeName"></span></div>
-    <div class="contentStyle"><span translate="spa.goHomeContent"></span></div>
+    <div class="nameStyle"><span translate="period.goHomeName"></span></div>
+    <div class="contentStyle"><span translate="period.goHomeContent"></span></div>
    <div class="buttonClick">
       <label class="switch-btn">
           <input class="checked-switch" type="checkbox" ng-model="item.isOff"  ng-click="getSwitchStatus(item)"/>
@@ -22,14 +22,45 @@
 
 
     <div class="divAll">
-      <!--<div>-->
-        <!--<div class="deviceStyle row noPadding" ng-show="config.device1">-->
+      <div>
+        <div class="deviceStyle row noPadding" ng-show="config.device1">
+          <div class="col-25 noPadding">
+            <img class="deviceImg" ng-src="build/img/keyscene-period/img_home_device_toliet.png"/>
+          </div>
+          <div class="col-50 noPadding" style="color: white">
+            <div class="row">
+              <div class="deviceName"><span translate="period.deviceName"></span></div>
+            </div>
+            <div class="row noPadding">
+              <div class="deviceLine col-30 noPadding"><span translate="period.deviceLineOn"></span></div>
+              <div class="deviceLine col-70 noPadding"><img class="imgLine"
+                                                            ng-src="build/img/keyscene-period/icon_home_device_signal5.png"/>
+              </div>
+            </div>
+          </div>
+          <div class="col-25 deviceStatus text-center">
+            <span>38℃ &nbsp;&nbsp;&nbsp;</span>
+            <span style="color: #565A64"><i class="ion-ios-arrow-forward"></i></span>
+          </div>
+
+        </div>
+        <div class="deviceStyleTwo row noPadding" ng-show="!config.device1">
+          <img class="deviceImg" ng-src="build/img/keyscene-morning/img_home_device_toliet.png"></img>
+          <div id="progressAnimation"  class="progress text-left">
+            <!--马桶-->
+          </div>
+        </div>
+      </div>
+
+      <!--&lt;!&ndash;浴霸&ndash;&gt;-->
+      <!--<div style="margin-top: 15px">-->
+        <!--<div class="deviceStyle row noPadding" ng-show="config.device2">-->
           <!--<div class="col-25 noPadding">-->
             <!--<img class="deviceImg" ng-src="build/img/keyscene-morning/img_home_device_toliet.png"/>-->
           <!--</div>-->
           <!--<div class="col-50 noPadding" style="color: white">-->
             <!--<div class="row">-->
-              <!--<div class="deviceName"><span translate="spa.deviceName1"></span></div>-->
+              <!--<div class="deviceName"><span translate="spa.deviceName2"></span></div>-->
             <!--</div>-->
             <!--<div class="row noPadding">-->
               <!--<div class="deviceLine col-30 noPadding"><span translate="spa.deviceLineOn"></span></div>-->
@@ -44,46 +75,15 @@
           <!--</div>-->
 
         <!--</div>-->
-        <!--<div class="deviceStyleTwo row noPadding" ng-show="!config.device1">-->
+        <!--<div class="deviceStyleTwo row noPadding" ng-show="!config.device2">-->
           <!--<img class="deviceImg" ng-src="build/img/keyscene-morning/img_home_device_toliet.png"></img>-->
-          <!--<div id="progressAnimation"  class="progress text-left">-->
-            <!--&lt;!&ndash;马桶&ndash;&gt;-->
+          <!--<div id="progressAnimation2" class="progress ">-->
+
           <!--</div>-->
         <!--</div>-->
       <!--</div>-->
 
-      <!--浴霸-->
-      <div style="margin-top: 15px">
-        <div class="deviceStyle row noPadding" ng-show="config.device2">
-          <div class="col-25 noPadding">
-            <img class="deviceImg" ng-src="build/img/keyscene-morning/img_home_device_toliet.png"/>
-          </div>
-          <div class="col-50 noPadding" style="color: white">
-            <div class="row">
-              <div class="deviceName"><span translate="spa.deviceName2"></span></div>
-            </div>
-            <div class="row noPadding">
-              <div class="deviceLine col-30 noPadding"><span translate="spa.deviceLineOn"></span></div>
-              <div class="deviceLine col-70 noPadding"><img class="imgLine"
-                                                            ng-src="build/img/keyscene-morning/icon_home_device_signal5.png"/>
-              </div>
-            </div>
-          </div>
-          <div class="col-25 deviceStatus text-center">
-            <span>27℃ &nbsp;&nbsp;&nbsp;</span>
-            <span style="color: #565A64"><i class="ion-ios-arrow-forward"></i></span>
-          </div>
-
-        </div>
-        <div class="deviceStyleTwo row noPadding" ng-show="!config.device2">
-          <img class="deviceImg" ng-src="build/img/keyscene-morning/img_home_device_toliet.png"></img>
-          <div id="progressAnimation2" class="progress ">
-
-          </div>
-        </div>
-      </div>
-
-      <!--浴缸-->
+    <!--  &lt;!&ndash;浴缸&ndash;&gt;
       <div style="margin-top: 15px">
         <div class="deviceStyle row noPadding" ng-show="config.device3">
           <div class="col-25 noPadding">
@@ -113,7 +113,7 @@
           </div>
         </div>
       </div>
-
+-->
       <!--净水-->
     <!--  <div style="margin-top: 15px">
         <div class="deviceStyle row noPadding" ng-show="config.device4">

@@ -147,6 +147,15 @@
     "deviceLineOn" : "设备在线",
     "deviceLineOff" : "设备离线"
   },
+  "period" : {
+    "goHomeTitle" : "场景详情",
+    "goHomeContent" : "您可以在月经期间对马桶圈温及女性冲洗温度进行设置，以获得最利于健康的特殊关怀",
+    "goHomeName" : "大姨了吗",
+    "buttonClick" : "开启",
+    "deviceName" : "马桶",
+    "deviceLineOn" : "设备在线",
+    "deviceLineOff" : "设备离线"
+  },
   "morning" : {
     "goHomeTitle" : "场景详情",
     "goHomeContent" : "自动为你开启早上所必须的卫浴设备，从此告别早上洗漱的匆忙",

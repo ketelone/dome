@@ -2,7 +2,7 @@
  * Created by chenjiacheng on 2017/4/3.
  */
 angular.module('productModule')
-  .controller('spaCtrl', [
+  .controller('periodCtrl', [
     '$scope',
     '$state',
     'publicMethod', '$ionicModal', '$ionicPopover', '$timeout', '$ionicHistory', 'hmsHttp','hmsPopup',
