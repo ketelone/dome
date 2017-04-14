@@ -1,7 +1,7 @@
 <ion-view view-title="设备控制-马桶" class="toilet-controller">
   <ion-header-bar style="background-image: none">
     <button class="button button-icon icon ion-ios-arrow-left" ng-click="goBack()"></button>
-    <div class="h1 title">马桶</div>
+    <div class="h1 title" translate="toiletController.title"></div>
     <!--<button class="button button-icon icon ion-more" ng-click="openPopover($event)"></button>-->
   </ion-header-bar>
   <ion-content class="toilet-bg">
@@ -17,21 +17,26 @@
     </div>
     <div id="toilet-parameterctl">
       <canvas id="mycanvas01"></canvas>
-      <div class="toilet-parameterctl-data">
-          <span class="toilet-parameterctl-raddata" translate="toiletController.parameterrad"></span>
-          <span class="toilet-parameterctl-des" translate="toiletController.parameterdes"></span>
-        </div>
+      <canvas id="mycanvas02"></canvas>
+      <canvas id="mycanvas03"></canvas>
+      <div class="toilet-parameterctl-data" ng-if="!parameterctlFlag">
+        <span class="toilet-parameterctl-raddata" translate="toiletController.parameterrad"></span>
+        <span class="toilet-parameterctl-des" translate="toiletController.parameterdes"></span>
+      </div>
+      <div class="toilet-parameterctl-dataimg" ng-if="parameterctlFlag">
+        <img class="conninfo-parameterctl-img" src="build/img/toilet-controller/btn_devicedetail_scoll.png" alt="">
+      </div>
     </div>
-    <div class="toilet-handlenape-selec">
-      <span class="handlenape-selec-des">模式</span>
-      <span class="handlenape-selec-use">正常</span>
+    <div class="toilet-handlenape-selec" ng-click="openModal()">
+      <span class="handlenape-selec-des" translate="toiletController.handleSelecDes"></span>
+      <span class="handlenape-selec-use" translate={{toiletController.modelType}}></span>
       <img class="handlenape-selec-img" src="build/img/toilet-controller/icon_scenario_arrow.png"></img>
     </div>
     <ion-scroll class="toilet-handlenape">
-       <div class="toilet-handlenape-list" ng-repeat="list in handlenapeListNape track by $index">
-         <div class="handlenape-list-napes">
+       <div class="toilet-handlenape-list" ng-repeat="list in handlenapeListNape track by $index" ng-click="selectNapes($index)">
+         <div class="handlenape-list-napes" ng-class="{true: 'napes-border', false: ''}[list.selecFlag]">
            <img class="list-napes-img" ng-src={{list.imgUrl}} alt="">
-           <span class="list-napes-dec">{{list.handleDes}}</span>
+           <span class="list-napes-dec" translate={{list.handleDes}}></span>
          </div>
        </div>
     </ion-scroll>

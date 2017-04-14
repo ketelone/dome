@@ -156,11 +156,31 @@
     "deviceLineOn": "设备在线",
     "deviceLineOff": "设备离线"
   },
-  "toiletController":{
-      "deviceWifiInfo":"信号好",
-      "deviceUseInfo":"使用中",
-    "parameterrad":"3",
-    "parameterdes":"水温档位"
+  "toiletController": {
+    "title":"马桶",
+    "deviceWifiInfo": "信号好",
+    "deviceUseInfo": "使用中",
+    "parameterrad": "3",
+    "parameterdes": "水温档位",
+    "handleSelecDes":"模式",
+    "dachong01":"大冲",
+    "xioachong":"小冲",
+    "nvyong":"女用",
+    "tunxi":"臀洗",
+    "quanwen":"圈温",
+    "nuanfeng":"暖风",
+    "dengguang":"灯光",
+    "nuanjiao":"暖脚",
+    "biangai":"便盖",
+    "fangai":"翻盖",
+    "fanquan":"翻圈",
+    "shezhi":"设置",
+    "gaunbi":"关闭",
+    "maichong":"脉冲",
+    "bodong":"波动",
+    "yidong":"移动",
+    "zhengchang":"正常"
+  },
   "veil": {
     "goHomeTitle": "场景详情",
     "goHomeContent": "默认根据一天中的时间自动切换冷光、柔和、暖光三种光源模式",
