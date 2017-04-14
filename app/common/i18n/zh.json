@@ -169,6 +169,12 @@
     "sn": "SN号",
     "place": "位置信息",
     "saveAlert": "保存成功",
-    "saveError": "保存失败"
+    "saveError": "保存失败",
+    "signalStatus": "信号很好",
+    "boxLink": "box连接",
+    "using": "使用中",
+    "bathroom": "浴霸",
+    "cancel": "取消",
+    "confirm": "确定"
   }
 }
