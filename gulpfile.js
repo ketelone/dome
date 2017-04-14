@@ -428,6 +428,11 @@ gulp.task('watch', function () {
       console.log('有变动的文件为 oldPath ' + e.path);
       gulp.run('scripts');
     });
+    // 监听多语言
+    gulp.watch(libDevCommonFilePath, function (e) {
+      console.log('有变动的文件为 oldPath ' + e.path);
+      gulp.run('copy-common-js-libs');
+    });
   });
 
 });

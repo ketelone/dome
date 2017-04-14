@@ -303,11 +303,23 @@ var storedb = function(collectionName){
         }
         localStorage.setItem(collectionName, JSON.stringify(cache));
       }
-
       if(callback)
         callback(err);
-
     }
-
   };
+};
+// 圆圈
+//根据id拿到canves对象
+var getCanvesObj = function (id) {
+  return document.getElementById(id).getContext('2d');
+};
+//根据角度数换弧度
+var changeAngale = function (n) {
+  return Math.PI*n/180;
+};
+var initCircle = function (x,y,r,color) {
+  this.x=x;
+  this.y=y;
+  this.r=r;
+  this.color=color
 };

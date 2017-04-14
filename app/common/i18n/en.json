@@ -64,10 +64,13 @@
         "mailRegister": "使用邮箱注册",
         "securityCode": "4位",
         "phonePwd": "6-18位"
-
-
     }
 
+  },
+  "toiletController":{
+    "deviceWifiInfo":"a",
+    "deviceUseInfo":""
   }
+
 
 }

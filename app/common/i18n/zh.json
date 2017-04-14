@@ -133,6 +133,12 @@
     "deviceLineOn": "设备在线",
     "deviceLineOff": "设备离线"
   },
+  "toiletController":{
+      "deviceWifiInfo":"信号好",
+      "deviceUseInfo":"使用中",
+    "parameterrad":"3",
+    "parameterdes":"水温档位"
+  },
   "bathroom": {
     "setting": "浴霸设置",
     "reset": "恢复默认设置",

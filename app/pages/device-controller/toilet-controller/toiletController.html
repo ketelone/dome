@@ -2,23 +2,39 @@
   <ion-header-bar style="background-image: none">
     <button class="button button-icon icon ion-ios-arrow-left" ng-click="goBack()"></button>
     <div class="h1 title">马桶</div>
-    <button class="button button-icon icon ion-more" ng-click="openPopover($event)"></button>
+    <!--<button class="button button-icon icon ion-more" ng-click="openPopover($event)"></button>-->
   </ion-header-bar>
-  <ion-content>
-    <div class="ll">
-      <span>使用中</span>
+  <ion-content class="toilet-bg">
+    <div class="toilet-conninfo">
+      <span class="toilet-conninfo-signal">
+        <img class="conninfo-signal-img" src="build/img/toilet-controller/icon_devicedetail_wifi.png" alt="">
+        <span class="conninfo-signal-info" translate="toiletController.deviceWifiInfo"></span>
+      </span>
+      <span class="toilet-conninfo-isues">
+        <img class="conninfo-isues-img" src="build/img/toilet-controller/icon_devicedetail_warning.png" alt="">
+        <span class="conninfo-isues-info" translate="toiletController.deviceUseInfo"></span>
+      </span>
     </div>
-    <ion-slide-box style="height:300px;width:100%">
-      <ion-slide>
-        <div class="box blue"></div>
-      </ion-slide>
-      <ion-slide>
-        <div class="box yellow"></div>
-      </ion-slide>
-      <ion-slide on-slide-changed="slideHasChanged(index)">
-        <div class="box pink"><h1>PINK</h1></div>
-      </ion-slide>
-    </ion-slide-box>
+    <div id="toilet-parameterctl">
+      <canvas id="mycanvas01"></canvas>
+      <div class="toilet-parameterctl-data">
+          <span class="toilet-parameterctl-raddata" translate="toiletController.parameterrad"></span>
+          <span class="toilet-parameterctl-des" translate="toiletController.parameterdes"></span>
+        </div>
+    </div>
+    <div class="toilet-handlenape-selec">
+      <span class="handlenape-selec-des">模式</span>
+      <span class="handlenape-selec-use">正常</span>
+      <img class="handlenape-selec-img" src="build/img/toilet-controller/icon_scenario_arrow.png"></img>
+    </div>
+    <ion-scroll class="toilet-handlenape">
+       <div class="toilet-handlenape-list" ng-repeat="list in handlenapeListNape track by $index">
+         <div class="handlenape-list-napes">
+           <img class="list-napes-img" ng-src={{list.imgUrl}} alt="">
+           <span class="list-napes-dec">{{list.handleDes}}</span>
+         </div>
+       </div>
+    </ion-scroll>
   </ion-content>
 </ion-view>
 

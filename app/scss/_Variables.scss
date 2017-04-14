@@ -2,19 +2,21 @@
 * 基础字体大小
 */
 $font-size-small: 0.24rem !default;
-$font-size-button: 0.24rem !default;
-$font-size-liter: 0.30rem !default;
 $font-size: 0.32rem !default;
 $font-size-big: 0.40rem !default;
+$font-size-bigger:0.72rem;
+$font-size-button: 0.24rem !default;
+$font-size-liter: 0.30rem !default;
 $color-base: white !default;
 
   //字色
 $color-text-key: #FFFFFF !default;
 $color-text-value: #565A64 !default;
+$color-text-deviceinfo: #D5638E !default;
 //界面背景色
 $global-background:#FAFAFA !default;
 //head背景色
 $global-head-bg:#1A1E28  !default;
 //boder
 $global-border: #51D8BD !default;
-//
+
