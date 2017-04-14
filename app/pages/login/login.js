@@ -193,7 +193,7 @@ angular.module('loginModule')
       }
 
       $scope.login = function () {//登录功能
-        $state.go('tab.indexPage');
+        $state.go('tabs');
         return;
         if (window.localStorage.empno != $scope.loginInfo.username) {
           localStorage.removeItem('key_history1');
@@ -219,7 +219,7 @@ angular.module('loginModule')
             hmsPopup.showPopup('<span translate="alertMsg.pwdnn"></span>');
             return;
           }
-          $state.go('tab.indexPage');
+          $state.go('tabs', {}, {location:"replace", reload:"true"});
           hmsPopup.hideLoading();
           return;
 

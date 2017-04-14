@@ -110,26 +110,49 @@
     "buttonClick": "开启",
     "deviceName": "马桶",
     "deviceLineOn": "设备在线",
-    "deviceLineOff": "设备离线"
+    "deviceLineOff": "设备离线",
+    "deviceFlag": "未安装"
   },
   "leaveHome": {
     "goHomeTitle": "场景详情",
-    "goHomeContent": "您可以在月经期间对马桶圈温及女性冲洗温度进行设置，以获得最利于健康的特殊关怀",
+    "goHomeContent": "一键关闭房间内所有的设备",
     "goHomeName": "离家",
     "buttonClick": "开启",
-    "deviceName": "马桶",
+    "deviceName1": "马桶",
+    "deviceName2": "镜柜",
+    "deviceName3": "浴霸",
+    "deviceName4": "净水",
     "deviceLineOn": "设备在线",
-    "deviceLineOff": "设备离线"
+    "deviceLineOff": "设备离线",
+    "deviceFlag": "未安装",
+    "deviceDongOn": "灯开启",
+    "deviceFengOn": "风开启",
+    "deviceGaiOn": "盖板开启",
+    "deviceDongOff": "灯关闭",
+    "deviceFengOff": "风关闭",
+    "deviceGaiOff": "盖板关闭"
   },
   "morning": {
     "goHomeTitle": "场景详情",
-    "goHomeContent": "自动为你开启早上所必须的卫浴设备，从此告别早上洗漱的匆忙",
+    "goHomeContent": "开启您美好的一天",
     "goHomeName": "晨起",
     "buttonClick": "开启",
     "deviceName1": "马桶",
-    "deviceName2": "浴霸",
-    "deviceName3": "淋浴",
-    "deviceName4": "净水",
+    "deviceName2": "镜柜",
+    "deviceName3": "浴霸",
+    "deviceName4": "淋浴",
+    "deviceLineOn": "设备在线",
+    "deviceLineOff": "设备离线",
+    "deviceFlag": "未安装",
+    "deviceWen": "温度",
+    "deviceShi": "湿度"
+  },
+  "period": {
+    "goHomeTitle": "场景详情",
+    "goHomeContent": "您可以在月经期间对马桶圈温及女性冲洗温度进行设置，以获得最利于健康的特殊关怀",
+    "goHomeName": "大姨了吗",
+    "buttonClick": "开启",
+    "deviceName": "马桶",
     "deviceLineOn": "设备在线",
     "deviceLineOff": "设备离线"
   },
@@ -138,6 +161,17 @@
       "deviceUseInfo":"使用中",
     "parameterrad":"3",
     "parameterdes":"水温档位"
+  "veil": {
+    "goHomeTitle": "场景详情",
+    "goHomeContent": "默认根据一天中的时间自动切换冷光、柔和、暖光三种光源模式",
+    "goHomeName": "维亚灯光",
+    "colorTemperature": "当前色温处于2700K,亮度20%",
+    "lampName1": "浴缸灯",
+    "lampName2": "马桶灯",
+    "lampName3": "淋浴灯",
+    "lampName4": "镜柜灯",
+    "lampName5": "顶灯",
+    "lampName6": "镜灯"
   },
   "bathroom": {
     "setting": "浴霸设置",
@@ -157,10 +191,13 @@
     "goHomeName": "家庭SPA",
     "buttonClick": "开启",
     "deviceName1": "马桶",
-    "deviceName2": "浴霸",
-    "deviceName3": "浴缸",
-    "deviceName4": "净水",
+    "deviceName2": "镜柜",
+    "deviceName3": "浴霸",
+    "deviceName4": "淋浴",
     "deviceLineOn": "设备在线",
-    "deviceLineOff": "设备离线"
+    "deviceLineOff": "设备离线",
+    "deviceFlag": "未安装",
+    "deviceWen": "温度",
+    "deviceShi": "湿度"
   }
 }

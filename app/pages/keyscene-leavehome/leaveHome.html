@@ -1,30 +1,119 @@
 <ion-view view-title="toilet" class="viewStyleLeaving">
   <div class="bar bar-header headColor " style="background-image: none">
     <button class="button button-icon icon ion-ios-arrow-left iconColor" ng-click="goBack()"></button>
-    <div class="h1 title" ><span translate="leaveHome.goHomeTitle" class="iconColor"></span></div>
+    <div class="h1 title"><span translate="leaveHome.goHomeTitle" class="iconColor"></span></div>
   </div>
 
   <ion-content class="ionContent">
 
     <div class="nameStyle"><span translate="leaveHome.goHomeName">离家</span></div>
     <div class="contentStyle"><span translate="leaveHome.goHomeContent"></span></div>
-    <button class="buttonClick"><span translate="leaveHome.buttonClick"></span></button>
+    <button class="buttonClick" ng-click="openKeyscene()"><span translate="leaveHome.buttonClick"></span></button>
 
-    <div class="deviceStyle row noPadding">
-      <div class="col-25 noPadding">
-        <img class="deviceImg" ng-src="build/img/keyscene-leavehome/img_home_device_toliet.png"></img>
-      </div>
-      <div class="col-50 noPadding" style="color: white">
-        <div class="row"><div class="deviceName"><span translate="leaveHome.deviceName"></span></div></div>
-        <div class="row noPadding">
-          <div class="deviceLine col-30 noPadding"><span translate="leaveHome.deviceLineOn"></span></div>
-          <div class="deviceLine col-70 noPadding"><img class="imgLine" ng-src="build/img/keyscene-leavehome/icon_home_device_signal5.png"/></div>
+    <div class="divAll">
+      <!--马桶-->
+      <div style="margin-top: 15px;width:6.78rem">
+        <div ng-class="{'deviceStyle' : config.device1,'deviceStyleTwo' : !config.device1}" id="progressAnimation1"
+             class="row noPadding">
+          <div class="col-25 col noPadding">
+            <img class="deviceImg" ng-src="build/img/keyscene-leavehome/img_home_device_toliet.png"/>
+          </div>
+          <div class="col col-35 noPadding" style="color: white" ng-show="config.device1">
+            <div class="row">
+              <div class="deviceName"><span translate="leaveHome.deviceName1"></span></div>
+            </div>
+            <div class="row noPadding">
+              <div class="deviceLine col col-30 noPadding">
+                <span translate="leaveHome.deviceLineOn" ng-show="config.onOrOff1"></span>
+                <span translate="leaveHome.deviceLineOff" ng-hide="config.onOrOff1"></span>
+              </div>
+              <div class="deviceLine col col-70 noPadding">
+                <img class="imgLine" ng-src="{{config.onLinePic1}}"/>
+              </div>
+            </div>
+          </div>
+          <div class="col col-30 noPadding deviceStatus text-center" ng-show="config.device1">
+            <span translate="leaveHome.deviceDongOn" ng-show=""></span><span translate="leaveHome.deviceDongOn" ng-hide=""></span>
+            <span translate="leaveHome.deviceGaiOn" ng-show=""></span><span translate="leaveHome.deviceGaiOn" ng-hide=""></span>
+          </div>
+          <div class="col col-10 noPadding deviceStatus text-center" ng-show="config.device1">
+            <span class="deviceFontI"><i class="ion-ios-arrow-forward" ></i></span>
+          </div>
+          <div class="col col-75 deviceStatus text-right" ng-show="config.flagDevice1" translate="leaveHome.deviceFlag">
+            未安装
+          </div>
         </div>
       </div>
-      <div class="col-25 deviceStatus text-center">
-        <span>27℃&nbsp;&nbsp;&nbsp;</span>
-        <span style="color: #565A64"><i class="ion-ios-arrow-forward" ></i></span>
+
+      <!--镜柜-->
+      <div style="margin-top: 15px;width:6.78rem">
+        <div ng-class="{'deviceStyle' : config.device2,'deviceStyleTwo' : !config.device2}" id="progressAnimation2"
+             class="row noPadding">
+          <div class="col-25 col noPadding">
+            <img class="deviceImg" ng-src="build/img/keyscene-leavehome/img_home_device_toliet.png"/>
+          </div>
+          <div class="col col-35 noPadding" style="color: white" ng-show="config.device2">
+            <div class="row">
+              <div class="deviceName"><span translate="leaveHome.deviceName2"></span></div>
+            </div>
+            <div class="row noPadding">
+              <div class="deviceLine col col-30 noPadding">
+                <span translate="leaveHome.deviceLineOn" ng-show="config.onOrOff2"></span>
+                <span translate="leaveHome.deviceLineOff" ng-hide="config.onOrOff2"></span>
+              </div>
+              <div class="deviceLine col col-70 noPadding">
+                <img class="imgLine" ng-src="{{config.onLinePic2}}"/>
+              </div>
+            </div>
+          </div>
+          <div class="col col-30 noPadding deviceStatus text-center" ng-show="config.device2">
+            <span translate="leaveHome.deviceDongOn" ng-show=""></span><span translate="leaveHome.deviceDongOn" ng-hide=""></span>
+          </div>
+          <div class="col col-10 noPadding deviceStatus text-center" ng-show="config.device2">
+            <span class="deviceFontI"><i class="ion-ios-arrow-forward" ></i></span>
+          </div>
+          <div class="col col-75 deviceStatus text-right" ng-show="config.flagDevice2" translate="leaveHome.deviceFlag">
+            未安装
+          </div>
+        </div>
       </div>
+
+
+      <!--浴霸-->
+      <div style="margin-top: 15px;width:6.78rem">
+        <div ng-class="{'deviceStyle' : config.device3,'deviceStyleTwo' : !config.device3}" id="progressAnimation3"
+             class="row noPadding">
+          <div class="col-25 col noPadding">
+            <img class="deviceImg" ng-src="build/img/keyscene-leavehome/img_home_device_toliet.png"/>
+          </div>
+          <div class="col col-35 noPadding" style="color: white" ng-show="config.device3">
+            <div class="row">
+              <div class="deviceName"><span translate="leaveHome.deviceName3"></span></div>
+            </div>
+            <div class="row noPadding">
+              <div class="deviceLine col col-30 noPadding">
+                <span translate="leaveHome.deviceLineOn" ng-show="config.onOrOff3"></span>
+                <span translate="leaveHome.deviceLineOff" ng-hide="config.onOrOff3"></span>
+              </div>
+              <div class="deviceLine col col-70 noPadding">
+                <img class="imgLine" ng-src="{{config.onLinePic3}}"/>
+              </div>
+            </div>
+          </div>
+          <div class="col col-30 noPadding deviceStatus text-center" ng-show="config.device3">
+            <span translate="leaveHome.deviceDongOn" ng-show=""></span><span translate="leaveHome.deviceDongOn" ng-hide=""></span>
+            <span translate="leaveHome.deviceFengOn" ng-show=""></span><span translate="leaveHome.deviceFengOn" ng-hide=""></span>
+          </div>
+          <div class="col col-10 noPadding deviceStatus text-center" ng-show="config.device3">
+            <span class="deviceFontI"><i class="ion-ios-arrow-forward" ></i></span>
+          </div>
+          <div class="col col-75 deviceStatus text-right" ng-show="config.flagDevice3" translate="leaveHome.deviceFlag">
+            未安装
+          </div>
+        </div>
+      </div>
+
+
     </div>
   </ion-content>
 </ion-view>
