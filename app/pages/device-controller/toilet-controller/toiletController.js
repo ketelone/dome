@@ -19,61 +19,76 @@ angular.module('toiletControlModule')
     $scope.handlenapeListNape = [
       {
         imgUrl: "build/img/toilet-controller/dachong.png",
+        imgSeledUrl: "build/img/toilet-controller/dachongseled.png",
         handleDes: "toiletController.dachong01",
         selecFlag:false
       },
       {
-        imgUrl: "build/img/toilet-controller/dachong.png",
+        imgUrl: "build/img/toilet-controller/xiaochong.png",
+        imgSeledUrl: "build/img/toilet-controller/xiaochongseled.png",
         handleDes: "toiletController.xioachong",
         selecFlag:false
       },
       {
-        imgUrl: "build/img/toilet-controller/dachong.png",
+        imgUrl: "build/img/toilet-controller/nvyong.png",
+        imgSeledUrl: "build/img/toilet-controller/nvyongseled.png",
         handleDes: "toiletController.nvyong",
         selecFlag:false
       },
       {
-        imgUrl: "build/img/toilet-controller/dachong.png",
+        imgUrl: "build/img/toilet-controller/tunxi.png",
+        imgSeledUrl: "build/img/toilet-controller/tunxiseled.png",
         handleDes: "toiletController.tunxi",
         selecFlag:false
       },
       {
-        imgUrl: "build/img/toilet-controller/dachong.png",
+        imgUrl: "build/img/toilet-controller/quanwen.png",
+        imgSeledUrl: "build/img/toilet-controller/quanwenseled.png",
         handleDes: "toiletController.quanwen",
         selecFlag:false
       },
       {
-        imgUrl: "build/img/toilet-controller/dachong.png",
+        imgUrl: "build/img/toilet-controller/nuanfeng.png",
+        imgSeledUrl: "build/img/toilet-controller/nuanfengseled.png",
         handleDes: "toiletController.nuanfeng",
         selecFlag:false
       },
       {
-        imgUrl: "build/img/toilet-controller/dachong.png",
+        imgUrl: "build/img/toilet-controller/nuanfeng.png",
+        imgSeledUrl: "build/img/toilet-controller/nuanfengseled.png",
         handleDes: "toiletController.dengguang",
         selecFlag:false
       },
       {
-        imgUrl: "build/img/toilet-controller/dachong.png",
+        imgUrl: "build/img/toilet-controller/nuanjiao.png",
+        imgSeledUrl: "build/img/toilet-controller/nuanjiaoseled.png",
         handleDes: "toiletController.nuanjiao",
         selecFlag:false
       },
       {
-        imgUrl: "build/img/toilet-controller/dachong.png",
+        imgUrl: "build/img/toilet-controller/biangai.png",
+        imgSeledUrl: "build/img/toilet-controller/biangaiseled.png",
         handleDes: "toiletController.biangai",
         selecFlag:false
       },
       {
-        imgUrl: "build/img/toilet-controller/dachong.png",
+        imgUrl: "build/img/toilet-controller/biangai.png",
+        imgSeledUrl: "build/img/toilet-controller/biangaiseled.png",
+        imgUrlTemp:"",
         handleDes: "toiletController.fangai",
         selecFlag:false
       },
       {
-        imgUrl: "build/img/toilet-controller/dachong.png",
+        imgUrl: "build/img/toilet-controller/fanquan.png",
+        imgSeledUrl: "build/img/toilet-controller/biangaiseled.png",
+        imgUrlTemp:"",
         handleDes: "toiletController.fanquan",
         selecFlag:false
       },
       {
-        imgUrl: "build/img/toilet-controller/dachong.png",
+        imgUrl: "build/img/toilet-controller/shezhi.png",
+        imgSeledUrl: "build/img/toilet-controller/shezhiseled.png",
+        imgUrlTemp:"",
         handleDes: "toiletController.shezhi",
         selecFlag:false
       },
@@ -85,26 +100,17 @@ angular.module('toiletControlModule')
       document.getElementById("mycanvas02").height = canvsscreenHeight;
       document.getElementById("mycanvas03").width = canvsscreenHeight;
       document.getElementById("mycanvas03").height = canvsscreenHeight;
-      var cr1 = getCanvesObj("mycanvas01");
-      var cr2 = getCanvesObj("mycanvas02");
-      var cr3 = getCanvesObj("mycanvas03");
-
+      var cr1 = getCanvesObj("mycanvas01");//档位canves
+      var cr2 = getCanvesObj("mycanvas02");//滑动小球档位canves
+      var cr3 = getCanvesObj("mycanvas03");//颜色填充档位canves
+      //获取canves2对象
       var cr2obj = getIdObj("mycanvas02")
-      var deliverCircle = new initCircle(canvsscreenHeight/2,canvsscreenHeight/2,canvsscreenHeight/2,"#2F3538");
-      var HideCircle = new initCircle(canvsscreenHeight/2,canvsscreenHeight/2,canvsscreenHeight/2-20,"black");
-      var deliverLine = new initCircle(canvsscreenHeight/2,canvsscreenHeight/2,canvsscreenHeight/2,"black");
-      var rollCircle = new initCircle(canvsscreenHeight/2,canvsscreenHeight/2,canvsscreenHeight/2-10,"white");
-      var FillCircle = new initCircle(canvsscreenHeight/2,canvsscreenHeight/2,canvsscreenHeight/2,"#6ACBB3");
+      var deliverCircle = new initCircle(canvsscreenHeight/2,canvsscreenHeight/2,canvsscreenHeight/2,"#2F3538");//档位圆
+      var HideCircle = new initCircle(canvsscreenHeight/2,canvsscreenHeight/2,canvsscreenHeight/2-20,"black");//遮挡圆
+      var deliverLine = new initCircle(canvsscreenHeight/2,canvsscreenHeight/2,canvsscreenHeight/2,"black");//档位线
+      var rollCircle = new initCircle(canvsscreenHeight/2,canvsscreenHeight/2,canvsscreenHeight/2-10,"white");//小球圆
+      var FillCircle = new initCircle(canvsscreenHeight/2,canvsscreenHeight/2,canvsscreenHeight/2,"#6ACBB3");//填充圆
 
-      //画圆弧和圆
-      var drawRadian= function (obj,cicleObj,sangle,fangle,type) {
-        obj.beginPath();
-        obj.fillStyle=cicleObj.color;
-        obj.moveTo(cicleObj.x,cicleObj.y);
-        obj.arc(cicleObj.x,cicleObj.y,cicleObj.r,changeAngale(sangle),changeAngale(fangle),false);
-        obj.fill();
-        obj.closePath();
-      };
       //分档位画圆弧
       var radRange;
       var starRad = 135;
@@ -124,16 +130,7 @@ angular.module('toiletControlModule')
       };
       //画档位圆
       drawDeliverCircle(5,cr1,deliverCircle);
-      //处理选择怎加border
-      var handlenapeListNapeLen = $scope.handlenapeListNape.length;
-      $scope.selectNapes = function (index) {
-        $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
-        for(var i=0;i<handlenapeListNapeLen;i++){
-          if(i !== index){
-            $scope.handlenapeListNape[i].selecFlag = false;
-          }
-        };
-      };
+
       var drawCircleFill = function (obj,changeRad) {
         obj.clearRect(0,0,canvsscreenHeight,canvsscreenHeight);
         drawRadian(obj,FillCircle,starRad,changeRad);
@@ -211,7 +208,7 @@ angular.module('toiletControlModule')
         };
       };
       //画圆球和指示标识
-      var  drawc = function (obj,ancr) {
+      var  drawc = function (obj,ancr,type) {
         if(135<=ancr || ancr<=45){
           var jd =  changeAngale(ancr);
           obj.clearRect(0,0,canvsscreenHeight,canvsscreenHeight);
@@ -239,9 +236,13 @@ angular.module('toiletControlModule')
           obj.fill();//填充颜色
           obj.closePath();
           //随小球和指示画fil填充
-          drawCircleFill(cr3,ancr)
+          if(!type){
+            drawCircleFill(cr3,ancr)
+          }
         };
       };
+      //初始化小球
+      drawc(cr2,starRad,"type");
       var hasTouch = 'ontouchstart' in window;
       var STA_EN = hasTouch ? "touchstart" : "mousedown",
         MV_EV = hasTouch ? "touchmove":"mousemove",
@@ -254,39 +255,11 @@ angular.module('toiletControlModule')
       var endX,endY,bStart = 0;
       var tempX = 0,tempY = 0;
       function start(ev){
-        console.log(1)
         ev.preventDefault();
         bStart = 1;
         var poi = getEvtLocation(ev);
         bginX = poi.x;
         bginY = poi.y;
-      };
-      function getAngle(px,py,mx,my){//获得人物中心和鼠标坐标连线，与y轴正半轴之间的夹角
-        var x = Math.abs(px-mx);
-        var y = Math.abs(py-my);
-        var z = Math.sqrt(Math.pow(x,2)+Math.pow(y,2));
-        var cos = y/z;
-        var radina = Math.acos(cos);//用反三角函数求弧度
-        var angle = 180/(Math.PI/radina);//将弧度转换成角度
-        if(mx>px&&my>py){//鼠标在第四象限
-          angle = 180 - angle;
-        }
-        if(mx==px&&my>py){//鼠标在y轴负方向上
-          angle = 180;
-        }
-        if(mx>px&&my==py){//鼠标在x轴正方向上
-          angle = 90;
-        }
-        if(mx<px&&my>py){//鼠标在第三象限
-          angle = 180+angle;
-        }
-        if(mx<px&&my==py){//鼠标在x轴负方向
-          angle = 270;
-        }
-        if(mx<px&&my<py){//鼠标在第二象限
-          angle = 360 - angle;
-        }
-        return angle-90;
       };
       function move(ev){
         ev.preventDefault();
@@ -320,7 +293,19 @@ angular.module('toiletControlModule')
 
 
 
-
+      //处理选择怎加border
+      var handlenapeListNapeLen = $scope.handlenapeListNape.length;
+      $scope.selectNapes = function (index) {
+        $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
+        for(var i=0;i<handlenapeListNapeLen;i++){
+          if(i !== index){
+            $scope.handlenapeListNape[i].selecFlag = false;
+          }
+        };
+        if($scope.handlenapeListNape[index].selecFlag === true){
+          $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgSeledUrl;
+        };
+      };
       //模式选择
       //获取屏幕高度
       $scope.screenHeig = window.innerHeight;

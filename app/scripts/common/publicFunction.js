@@ -354,35 +354,12 @@ function getAngle(px,py,mx,my){//获得人物中心和鼠标坐标连线，与y�
   }
   return angle-90;
 };
-//画圆球和指示标识
-var  drawc = function (obj,ancr) {
-  if(135<=ancr || ancr<=45){
-    var jd =  changeAngale(ancr);
-    obj.clearRect(0,0,2*(obj.x),2*(obj.y));
-    var x = Math.cos(jd)*(rollCircle.r)+(rollCircle.x);
-    var y = Math.sin(jd)*(rollCircle.r)+(rollCircle.y);
-    //画小球
-    obj.beginPath();
-    obj.fillStyle = rollCircle.color;
-    obj.moveTo(x,y);
-    obj.arc(x,y,10,0,Math.PI*2,false);
-    obj.fill();
-    obj.closePath();
-    //画小球中的指示标识
-    obj.beginPath();
-    obj.fillStyle = "#191C23";
-    obj.lineWidth = 1;//设置线宽
-    obj.moveTo(x,y-(10/4));
-    obj.lineTo(x-(10/4)/Math.sqrt(2)-1,y);
-    obj.lineTo(x,y+(10/4));
-    obj.fill();//填充颜色
-    obj.moveTo(x+1,y-(10/4));
-    obj.lineTo(x+(10/4)/Math.sqrt(2)+2,y);
-    obj.lineTo(x+1,y+(10/4));
-    obj.stroke();//画线框
-    obj.fill();//填充颜色
-    obj.closePath();
-    //随小球和指示画fil填充
-    drawCircleFill(cr3,ancr)
-  };
+//画圆弧和圆
+var drawRadian= function (obj,cicleObj,sangle,fangle) {
+  obj.beginPath();
+  obj.fillStyle=cicleObj.color;
+  obj.moveTo(cicleObj.x,cicleObj.y);
+  obj.arc(cicleObj.x,cicleObj.y,cicleObj.r,changeAngale(sangle),changeAngale(fangle),false);
+  obj.fill();
+  obj.closePath();
 };
