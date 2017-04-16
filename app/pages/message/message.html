@@ -9,72 +9,156 @@
      </div>
    </ion-header-bar>-->
 
-  <ion-content>
-    <div class="row">
-      <div class="col headmessage">消息</div>
-    </div>
-    <div class="row">
-      <div class="col col-33	status" ng-click="showStatus()"><span style="white-space:nowrap;" ng-class="statusword">状态及提醒</span></div>
-      <div class="col exception" ng-click="showException()"><span ng-class="exceptionword">异常及保修</span></div>
-    </div>
-    <div ng-if="swStaus">
-    <ion-list >
+<!--<div class="bar bar-header" style="height: 2rem">-->
+  <!--<div class="row"><span>消息</span></div>-->
+  <!--<div class="row"><span>消息</span></div>-->
 
-      <li class="item item-icon-right">
-        <div class="row">
-          <div class="col  col-75">
-            <i class="circle"></i>
-              <div class="bigword">马桶4</div>
-            <div class="chang">box2</div>
-            <div class="chang">卫生间</div>
+
+<!--</div>-->
+ <div class="cusHeader">
+    <div class="row mesHeader">
+      <span>消息</span>
+    </div>
+<div class="row allMess">
+   <div ng-click="showStatus()" class="col col-33"><span class="status">状态及提醒</span></div>
+  <div ng-click="showException()" class="col col-33"><span>异常及保修</span></div>
+  <div class="col col-33"><span>其它</span></div>
+</div>
+ </div>
+
+  <ion-content class="hasHeader">
+<!--status-->
+   <ion-list ng-show="hasStaus" >
+<li class="item item-icon-right" style="border-style:none" >
+    <div class="row oneModel">
+<div class="col col-75">
+  <div class="row">
+ <div class="col col-60" STYLE="padding-left: 0rem"><span class="leftWord1">进水滤芯寿命提醒</span></div>
+    <div class="col" ><span class="leftWord2">马桶</span></div>
+  </div>
+  <div class="row">
+   <span class="leftWord3">进水滤芯快到使用期限，快去跟换吧!</span>
+  </div>
+  <div class="row addpadding">
+    <span class="time">2017-02-08 17:25</span>
+  </div>
+</div>
+<div class="col ">
+  <i class="icon ion-ios-arrow-right iconSize"></i>
+</div>
+    </div>
+</li>
+
+     <li class="item item-icon-right" style="border-style:none" >
+       <div class="row oneModel">
+         <div class="col col-75">
+           <div class="row">
+             <div class="col col-60" STYLE="padding-left: 0rem"><span class="leftWord1">出水水温达到提醒</span></div>
+             <div class="col" ><span class="leftWord2">淋浴</span></div>
+           </div>
+           <div class="row">
+             <span class="leftWord3">实际出水水温达到37°C</span>
+           </div>
+           <div class="row addpadding">
+             <span class="time">2017-02-08 17:25</span>
+           </div>
+         </div>
+         <div class="col ">
+           <i class="icon ion-ios-arrow-right iconSize"></i>
+         </div>
+       </div>
+     </li>
+
+     <li class="item item-icon-right" style="border-style:none" >
+       <div class="row oneModel">
+         <div class="col col-75">
+           <div class="row">
+             <div class="col col-60" STYLE="padding-left: 0rem"><span class="leftWord1">除臭块更新提醒</span></div>
+             <div class="col" ><span class="leftWord2">马桶</span></div>
+           </div>
+           <div class="row">
+             <span class="leftWord3">实际出水水温达到37°C</span>
+           </div>
+           <div class="row addpadding">
+             <span class="time">2017-02-08 17:25</span>
+           </div>
+         </div>
+         <div class="col" style="text-align: center;">
+           <i class="icon ion-ios-arrow-right iconSize"></i>
+         </div>
+       </div>
+     </li>
+
+</ion-list>
+    <!--nostatus-->
+    <ion-list ng-show="false" >
+
+<div class="noMessage">
+  <span class="noMessageWord">暂无设备消息</span> </div>
+
+    </ion-list>
+<!--exception-->
+    <ion-list ng-show="hasException" >
+      <li class="item item-icon-right" style="border-style:none" >
+        <div class="row oneModel">
+          <div class="col col-75">
+            <div class="row">
+              <div class="col col-60" STYLE="padding-left: 0rem"><span class="leftWord1">自动开盖功能异常</span></div>
+              <div class="col" ><span class="leftWord2">马桶</span></div>
             </div>
-            <div class="col col-25">
-              <div id="redpoint"><span class="whiteword">2</span>
-              </div>
-          </div></div>
-          <div class="row">
-         <div class="col">
-            <span class="smallword">进水滤芯寿命提醒</span>
+            <div class="row addpadding">
+              <span class="time">2017-02-08 17:25</span>
+            </div>
           </div>
-            <div>
-          <span class="time">2017-02-18 17:25</span>
-
+          <div class="col ">
+            <i class="icon ion-ios-arrow-right iconSize"></i>
+          </div>
         </div>
-            </div>
-        <i class="icon ion-ios-arrow-right iconSize"></i>
+      </li>
 
+      <li class="item item-icon-right" style="border-style:none" >
+        <div class="row oneModel">
+          <div class="col col-75">
+            <div class="row">
+              <div class="col col-60" STYLE="padding-left: 0rem"><span class="leftWord1">自动开盖功能异常</span></div>
+              <div class="col" ><span class="leftWord2">淋浴</span></div>
+            </div>
+
+            <div class="row addpadding">
+              <span class="time">2017-02-08 17:25</span>
+            </div>
+          </div>
+          <div class="col ">
+            <i class="icon ion-ios-arrow-right iconSize"></i>
+          </div>
+        </div>
+      </li>
+
+      <li class="item item-icon-right" style="border-style:none" >
+        <div class="row oneModel">
+          <div class="col col-75">
+            <div class="row">
+              <div class="col col-60" STYLE="padding-left: 0rem"><span class="leftWord1">自动开盖功能异常</span></div>
+              <div class="col" ><span class="leftWord2">马桶</span></div>
+            </div>
+       <div class="row addpadding">
+              <span class="time">2017-02-08 17:25</span>
+            </div>
+          </div>
+          <div class="col" >
+            <i class="icon ion-ios-arrow-right iconSize"></i>
+          </div>
+        </div>
       </li>
 
     </ion-list>
-    </div>
-    <div ng-if="swException">
-      <ion-list >
 
-        <li class="item item-icon-right">
-          <div class="row">
-            <div class="col  col-50">
-              <div><i class="circle"></i></div>
-              <div class="bigword">卫生间</div>
-            </div>
-            <div class="col col-50">
-              <div class="redpoint"><span class="whiteword">2</span>
-              </div>
-            </div></div>
-          <div class="row">
-            <div class="col">
-              <span class="smallword">2个设备异常</span>
-            </div>
-            <div>
-              <span class="time">2017-02-18 17:25</span>
 
-            </div>
-          </div>
-          <i class="icon ion-ios-arrow-right iconSize"></i>
+    <!--noexception-->
+    <ion-list ng-show="false" >
 
-        </li>
-
-      </ion-list>
-
-    </div>
+      <div class="noMessage">
+        <span class="noMessageWord">您当前的设备无异常</span> </div>
+    </ion-list>
   </ion-content>
 </ion-view>

@@ -15,8 +15,10 @@ angular.module('messageModule')
               publicMethod) {
 
 
-  $scope.swStaus=true;
-  $scope.swException=false;
+  $scope.hasStaus=true;//defalut no Display
+  $scope.hasException=false;//defalut no Display
+  //$scope.noStaus=false;//defalut no status
+  //$scope.noException=false;//defalut no Exception
       /**
        *@author:chenjiacheng
        *@name:logout
@@ -25,9 +27,9 @@ angular.module('messageModule')
        *@disc:Display status and alert list
        */
      $scope.showStatus=function(){
-       $scope.swStaus=true;
+       $scope.hasStaus=true;
       // console.log( $scope.swStaus);
-       $scope.swException=false;
+       $scope.hasException=false;
        $scope.statusword='statusword';
        $scope.exceptionword="";
     };
@@ -39,14 +41,32 @@ angular.module('messageModule')
        *@disc:Display exception and warranty list
        */
       $scope.showException=function(){
-        $scope.swStaus=false;
+        $scope.hasStaus=false;
         //console.log( $scope.swStatus);
-        $scope.swException=true;
+        $scope.hasException=true;
         $scope.exceptionword='exceptionword';
         $scope.statusword="";
       };
  $scope.statusword='statusword';
  $scope.exceptionword="";
+
+
+
+
+
+      //hmsHttp.post(url, paramter).success(
+      //  function(response){
+      //
+      //  }
+      //).error(
+      //  function (response, status, header, config){
+      //  }
+      //);
+
+
+
+
+
 
 
 
