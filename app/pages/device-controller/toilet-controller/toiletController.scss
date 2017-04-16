@@ -49,19 +49,19 @@
     width: 5.64rem;
     height: 5.64rem;
 
-    #mycanvas01{
+    #nYcanves01{
       position: absolute;
       left: 0;
       top: 0;
       z-index: 1;
     };
-    #mycanvas02{
+    #nYcanves02{
       position: absolute;
       left: 0;
       top: 0;
-      z-index: 3;
+      z-index: 30;
     };
-    #mycanvas03{
+    #nYcanves03{
       position: absolute;
       left: 0;
       top: 0;
@@ -102,7 +102,7 @@
   .toilet-handlenape-selec{
     position: absolute;
     top: 5.9rem;
-    z-index: 10;
+    z-index: 0;
     width: 100%;
     height: 1.08rem;
     line-height: 1.08rem;

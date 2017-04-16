@@ -321,12 +321,6 @@ var getIdObj = function (id) {
 var changeAngale = function (n) {
   return Math.PI*n/180;
 };
-var initCircle = function (x,y,r,color) {
-  this.x=x;
-  this.y=y;
-  this.r=r;
-  this.color=color
-};
 function getAngle(px,py,mx,my){//获得人物中心和鼠标坐标连线，与y轴正半轴之间的夹角
   var x = Math.abs(px-mx);
   var y = Math.abs(py-my);

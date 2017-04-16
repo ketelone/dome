@@ -1,5 +1,4 @@
 angular.module('toiletControlModule')
-
   .controller('toiletControllerCtrl', [
     '$scope',
     '$state',
@@ -12,263 +11,284 @@ angular.module('toiletControlModule')
               baseConfig,
               checkVersionService
     ) {
-    $scope.toiletController = {
-      gear:1,
-      modelType:"toiletController.zhengchang",
-    };
-
-
-    $scope.parameterctlFlag = false;
-    $scope.handlenapeListNape = [
-      {
-        imgUrl: "build/img/toilet-controller/dachong.png",
-        imgSeledUrl: "build/img/toilet-controller/dachongseled.png",
-        imgUrlTemp:"build/img/toilet-controller/dachong.png",
-        handleDes: "toiletController.dachong01",
-        selecFlag:false
-      },
-      {
-        imgUrl: "build/img/toilet-controller/xiaochong.png",
-        imgSeledUrl: "build/img/toilet-controller/xiaochongseled.png",
-        imgUrlTemp:"build/img/toilet-controller/xiaochong.png",
-        handleDes: "toiletController.xioachong",
-        selecFlag:false
-      },
-      {
-        imgUrl: "build/img/toilet-controller/nvyong.png",
-        imgSeledUrl: "build/img/toilet-controller/nvyongseled.png",
-        imgUrlTemp:"build/img/toilet-controller/nvyong.png",
-        handleDes: "toiletController.nvyong",
-        selecFlag:false
-      },
-      {
-        imgUrl: "build/img/toilet-controller/tunxi.png",
-        imgSeledUrl: "build/img/toilet-controller/tunxiseled.png",
-        imgUrlTemp:"build/img/toilet-controller/tunxi.png",
-        handleDes: "toiletController.tunxi",
-        selecFlag:false
-      },
-      {
-        imgUrl: "build/img/toilet-controller/quanwen.png",
-        imgSeledUrl: "build/img/toilet-controller/quanwenseled.png",
-        imgUrlTemp:"build/img/toilet-controller/quanwen.png",
-        handleDes: "toiletController.quanwen",
-        selecFlag:false
-      },
-      {
-        imgUrl: "build/img/toilet-controller/nuanfeng.png",
-        imgSeledUrl: "build/img/toilet-controller/nuanfengseled.png",
-        imgUrlTemp:"build/img/toilet-controller/nuanfeng.png",
-        handleDes: "toiletController.nuanfeng",
-        selecFlag:false
-      },
-      {
-        imgUrl: "build/img/toilet-controller/dengguan.png",
-        imgSeledUrl: "build/img/toilet-controller/dengguanseled.png",
-        imgUrlTemp:"build/img/toilet-controller/dengguan.png",
-        handleDes: "toiletController.dengguang",
-        selecFlag:false
-      },
-      {
-        imgUrl: "build/img/toilet-controller/nuanjiao.png",
-        imgSeledUrl: "build/img/toilet-controller/nuanjiaoseled.png",
-        imgUrlTemp:"build/img/toilet-controller/nuanjiao.png",
-        handleDes: "toiletController.nuanjiao",
-        selecFlag:false
-      },
-      {
-        imgUrl: "build/img/toilet-controller/kaigai.png",
-        imgSeledUrl: "build/img/toilet-controller/kaigaiseled.png",
-        imgUrlTemp:"build/img/toilet-controller/kaigai.png",
-        handleDes: "toiletController.biangai",
-        selecFlag:false
-      },
-      {
-        imgUrl: "build/img/toilet-controller/fangai.png",
-        imgSeledUrl: "build/img/toilet-controller/fangaiseled.png",
-        imgUrlTemp:"build/img/toilet-controller/fangai.png",
-        imgUrlTemp:"",
-        handleDes: "toiletController.fangai",
-        selecFlag:false
-      },
-      {
-        imgUrl: "build/img/toilet-controller/fanquan.png",
-        imgSeledUrl: "build/img/toilet-controller/biangaiseled.png",
-        imgUrlTemp:"build/img/toilet-controller/fanquan.png",
-        handleDes: "toiletController.fanquan",
-        selecFlag:false
-      },
-      {
-        imgUrl: "build/img/toilet-controller/shezhi.png",
-        imgSeledUrl: "build/img/toilet-controller/shezhiseled.png",
-        imgUrlTemp:"build/img/toilet-controller/shezhi.png",
-        handleDes: "toiletController.shezhi",
-        selecFlag:false
-      },
-    ]
-      var canvsscreenHeight = document.getElementById("toilet-parameterctl").offsetHeight;
-      document.getElementById("mycanvas01").width = canvsscreenHeight;
-      document.getElementById("mycanvas01").height = canvsscreenHeight;
-      document.getElementById("mycanvas02").width = canvsscreenHeight;
-      document.getElementById("mycanvas02").height = canvsscreenHeight;
-      document.getElementById("mycanvas03").width = canvsscreenHeight;
-      document.getElementById("mycanvas03").height = canvsscreenHeight;
-      var cr1 = getCanvesObj("mycanvas01");//档位canves
-      var cr2 = getCanvesObj("mycanvas02");//滑动小球档位canves
-      var cr3 = getCanvesObj("mycanvas03");//颜色填充档位canves
-      //获取canves2对象
-      var cr2obj = getIdObj("mycanvas02")
-      var deliverCircle = new initCircle(canvsscreenHeight/2,canvsscreenHeight/2,canvsscreenHeight/2,"#2F3538");//档位圆
-      var HideCircle = new initCircle(canvsscreenHeight/2,canvsscreenHeight/2,canvsscreenHeight/2-20,"black");//遮挡圆
-      var deliverLine = new initCircle(canvsscreenHeight/2,canvsscreenHeight/2,canvsscreenHeight/2,"black");//档位线
-      var rollCircle = new initCircle(canvsscreenHeight/2,canvsscreenHeight/2,canvsscreenHeight/2-10,"white");//小球圆
-      var FillCircle = new initCircle(canvsscreenHeight/2,canvsscreenHeight/2,canvsscreenHeight/2,"#6ACBB3");//填充圆
-
-      //分档位画圆弧
-      var radRange;
-      var starRad = 135;
-      //存储档位分段处的点数
-      var radSectionArr = [];
-      var drawDeliverCircle = function (n,obj,cicleObj) {
-        radRange = (270-(n-1))/n;
-        radSectionArr.push(starRad);
-        var tempstrAngle = starRad;
-        for(var m=1;m<=n;m++){
-          drawRadian(cr1,deliverCircle,tempstrAngle,tempstrAngle+radRange);
-          tempstrAngle = tempstrAngle+radRange+1;
-          radSectionArr.push(tempstrAngle);
-        };
-        //画白色遮挡
-        drawRadian(cr1,HideCircle,0,360);
+      $scope.toiletController = {
+        gear:1,
+        modelType:"toiletController.zhengchang",
       };
-      //画档位圆
-      drawDeliverCircle(4,cr1,deliverCircle);
-      var i=0,j=0,stoPosPoint=0;
-      var drawCircleFill = function (obj,changeRad) {
-        obj.clearRect(0,0,canvsscreenHeight,canvsscreenHeight);
-        drawRadian(obj,FillCircle,starRad,changeRad);
-        //在滑动的时候判断是否经过档位点并重新画档位线
-        if(changeRad<0){
-          var changeRadTemp = Math.abs(changeRad+360);
-        }else{
-          if(changeRad>=0 && changeRad<=45){
+      $scope.parameterctlFlag = false;
+      $scope.handlenapeListNape = [
+        {
+          imgUrl: "build/img/toilet-controller/dachong.png",
+          imgSeledUrl: "build/img/toilet-controller/dachongseled.png",
+          imgUrlTemp:"build/img/toilet-controller/dachong.png",
+          handleDes: "toiletController.dachong01",
+          selecFlag:false
+        },
+        {
+          imgUrl: "build/img/toilet-controller/xiaochong.png",
+          imgSeledUrl: "build/img/toilet-controller/xiaochongseled.png",
+          imgUrlTemp:"build/img/toilet-controller/xiaochong.png",
+          handleDes: "toiletController.xioachong",
+          selecFlag:false
+        },
+        {
+          imgUrl: "build/img/toilet-controller/nvyong.png",
+          imgSeledUrl: "build/img/toilet-controller/nvyongseled.png",
+          imgUrlTemp:"build/img/toilet-controller/nvyong.png",
+          handleDes: "toiletController.nvyong",
+          selecFlag:false
+        },
+        {
+          imgUrl: "build/img/toilet-controller/tunxi.png",
+          imgSeledUrl: "build/img/toilet-controller/tunxiseled.png",
+          imgUrlTemp:"build/img/toilet-controller/tunxi.png",
+          handleDes: "toiletController.tunxi",
+          selecFlag:false
+        },
+        {
+          imgUrl: "build/img/toilet-controller/quanwen.png",
+          imgSeledUrl: "build/img/toilet-controller/quanwenseled.png",
+          imgUrlTemp:"build/img/toilet-controller/quanwen.png",
+          handleDes: "toiletController.quanwen",
+          selecFlag:false
+        },
+        {
+          imgUrl: "build/img/toilet-controller/nuanfeng.png",
+          imgSeledUrl: "build/img/toilet-controller/nuanfengseled.png",
+          imgUrlTemp:"build/img/toilet-controller/nuanfeng.png",
+          handleDes: "toiletController.nuanfeng",
+          selecFlag:false
+        },
+        {
+          imgUrl: "build/img/toilet-controller/dengguan.png",
+          imgSeledUrl: "build/img/toilet-controller/dengguanseled.png",
+          imgUrlTemp:"build/img/toilet-controller/dengguan.png",
+          handleDes: "toiletController.dengguang",
+          selecFlag:false
+        },
+        {
+          imgUrl: "build/img/toilet-controller/nuanjiao.png",
+          imgSeledUrl: "build/img/toilet-controller/nuanjiaoseled.png",
+          imgUrlTemp:"build/img/toilet-controller/nuanjiao.png",
+          handleDes: "toiletController.nuanjiao",
+          selecFlag:false
+        },
+        {
+          imgUrl: "build/img/toilet-controller/kaigai.png",
+          imgSeledUrl: "build/img/toilet-controller/kaigaiseled.png",
+          imgUrlTemp:"build/img/toilet-controller/kaigai.png",
+          handleDes: "toiletController.biangai",
+          selecFlag:false
+        },
+        {
+          imgUrl: "build/img/toilet-controller/fangai.png",
+          imgSeledUrl: "build/img/toilet-controller/fangaiseled.png",
+          imgUrlTemp:"build/img/toilet-controller/fangai.png",
+          imgUrlTemp:"",
+          handleDes: "toiletController.fangai",
+          selecFlag:false
+        },
+        {
+          imgUrl: "build/img/toilet-controller/fanquan.png",
+          imgSeledUrl: "build/img/toilet-controller/biangaiseled.png",
+          imgUrlTemp:"build/img/toilet-controller/fanquan.png",
+          handleDes: "toiletController.fanquan",
+          selecFlag:false
+        },
+        {
+          imgUrl: "build/img/toilet-controller/shezhi.png",
+          imgSeledUrl: "build/img/toilet-controller/shezhiseled.png",
+          imgUrlTemp:"build/img/toilet-controller/shezhi.png",
+          handleDes: "toiletController.shezhi",
+          selecFlag:false
+        },
+      ];
+      //侧滑转档数量json
+      $scope.slideNyData =[{
+        des:"水温档位",
+        gearNum:5,
+        gearInit:1,
+        parameterctlFlag:false,
+        parNodeid:'toilet-parameterctl',
+        canves01:"nYcanves01",
+        canves02:"nYcanves02",
+        canves03:"nYcanves03",
+      }]
+
+      var initCircle = function (slideDataObj) {
+        //获取父元素高度
+        this.canvsscreenHeight = document.getElementById(slideDataObj.parNodeid).offsetHeight;
+        this.canvsscreenWidth = document.getElementById(slideDataObj.parNodeid).offsetWidth;
+        // 设置每个canves的宽高
+        document.getElementById(slideDataObj.canves01).height = this.canvsscreenHeight;
+        document.getElementById(slideDataObj.canves01).width = this.canvsscreenWidth;
+        document.getElementById(slideDataObj.canves02).height = this.canvsscreenHeight;
+        document.getElementById(slideDataObj.canves01).width = this.canvsscreenWidth;
+        document.getElementById(slideDataObj.canves03).height = this.canvsscreenHeight;
+        document.getElementById(slideDataObj.canves03).width = this.canvsscreenWidth;
+        // 获取canvesobj
+        this.cr1 = getCanvesObj(slideDataObj.canves01);//档位canves
+        this.cr2 = getCanvesObj(slideDataObj.canves02);//滑动小球档位canves
+        this.cr3 = getCanvesObj(slideDataObj.canves03);//颜色填充档位canves
+        this.cr2obj = getIdObj(slideDataObj.canves02);
+        //四种圆
+        this.deliverCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2,color:"#2F3538"};//档位圆
+        this.HideCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2-20,color:"black"};//档位圆
+        this.deliverLine = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2,color:"black"};//档位线
+        this.rollCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2-10,color:"white"};//小球圆
+        this.FillCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2,color:"#6ACBB3"};//填充圆
+        //变量
+        this.i=0;this.j=0;
+        this.stoPosPoint=0;
+        this.starRad=135;
+        this.radSectionArr=[];
+        this.radRange;
+        //画档位圆
+        this.drawDeliverCircle = function (n) {
+          this.radRange = (270-(n-1))/n;
+          this.radSectionArr.push(this.starRad);
+          var tempstrAngle = this.starRad;
+          for(var k=1;k<=n;k++){
+            drawRadian(this.cr1,this.deliverCircle,tempstrAngle,tempstrAngle+this.radRange);
+            tempstrAngle = tempstrAngle+this.radRange+1;
+            this.radSectionArr.push(tempstrAngle);
+          };
+          // 画白色遮挡
+          drawRadian(this.cr1,this.HideCircle,0,360);
+        };
+
+        // 画填充圆
+        this.drawCircleFill = function (canvesobj,changeRad) {
+          canvesobj.clearRect(0,0,this.canvsscreenHeight,this.canvsscreenWidth);
+          drawRadian(canvesobj,this.FillCircle,this.starRad,changeRad);
+          //在滑动的时候判断是否经过档位点并重新画档位线
+          if(changeRad<0){
             var changeRadTemp = Math.abs(changeRad+360);
           }else{
-            var changeRadTemp = Math.abs(changeRad);
+            if(changeRad>=0 && changeRad<=45){
+              var changeRadTemp = Math.abs(changeRad+360);
+            }else{
+              var changeRadTemp = Math.abs(changeRad);
+            };
+          };
+          this.radSectionArr.push(changeRadTemp);
+          this.radSectionArr = this.radSectionArr.sort(function(a,b){
+            return a-b});
+          //判断是否滑动过档位点,若有滑过,则画遮挡弧度
+          var radSectionArrLen = this.radSectionArr.length;
+          //判断当前点距离那个档位距离最近
+          this.i=0;this.i=1;
+          for(this.i;this.i<this.radSectionArrLen;this.i++){
+            if(changeRadTemp === this.radSectionArr[i]){
+              if(Math.abs(this.radSectionArr[this.i]-this.radSectionArr[this.i-1]) < Math.abs(this.radSectionArr[this.i]-this.radSectionArr[this.i+1])){
+                this.stoPosPoint = this.i-1;
+                if(this.i<=1){
+                  $scope.toiletController.gear = 1;
+                }else{
+                  $scope.toiletController.gear = this.i;
+                };
+                $scope.$apply();
+                //画档位线
+                this.j=1;
+                for(this.j;this.j<this.i;this.j++){
+                  drawRadian(this.cr3,this.deliverLine,this.radSectionArr[this.i-this.j-1]-1,this.radSectionArr[this.i-this.j-1]);
+                };
+              }else{
+                this.stoPosPoint = this.i;
+                $scope.toiletController.gear = this.i+1;
+                $scope.$apply();
+                //画档位线
+                this.j=1;
+                for(this.j;this.j<this.i+1;this.j++){
+                  drawRadian(this.cr3,this.deliverLine,this.radSectionArr[this.i-this.j]-1,this.radSectionArr[this.i-this.j]);
+                };
+              };
+              this.radSectionArr.splice(this.i,1);
+            }
+          };
+          //画白色遮挡
+          drawRadian(canvesobj,this.HideCircle,0,360);
+        };
+
+        //画圆球和指示
+        this.drawc = function (canvesobj,ancr,type) {
+          if(135<=ancr || ancr<=45){
+            var jd =  changeAngale(ancr);
+            canvesobj.clearRect(0,0,this.canvsscreenHeight,this.canvsscreenWidth);
+            var x = Math.cos(jd)*(this.rollCircle.r)+(this.rollCircle.x);
+            var y = Math.sin(jd)*(this.rollCircle.r)+(this.rollCircle.y);
+            //画小球
+            canvesobj.beginPath();
+            canvesobj.fillStyle = this.rollCircle.color;
+            canvesobj.moveTo(x,y);
+            canvesobj.arc(x,y,10,0,Math.PI*2,false);
+            canvesobj.fill();
+            canvesobj.closePath();
+            //画小球中的指示标识
+            canvesobj.beginPath();
+            canvesobj.fillStyle = "#191C23";
+            canvesobj.lineWidth = 1;//设置线宽
+            canvesobj.moveTo(x,y-(10/4));
+            canvesobj.lineTo(x-(10/4)/Math.sqrt(2)-1,y);
+            canvesobj.lineTo(x,y+(10/4));
+            canvesobj.fill();//填充颜色
+            canvesobj.moveTo(x+1,y-(10/4));
+            canvesobj.lineTo(x+(10/4)/Math.sqrt(2)+2,y);
+            canvesobj.lineTo(x+1,y+(10/4));
+            canvesobj.stroke();//画线框
+            canvesobj.fill();//填充颜色
+            canvesobj.closePath();
+            //随小球和指示画fil填充
+            if(!type){
+              this.drawCircleFill(cr3,ancr)
+            }
           };
         };
-        radSectionArr.push(changeRadTemp);
-        radSectionArr = radSectionArr.sort(function(a,b){
-          return a-b});
-        //判断是否滑动过档位点,若有滑过,则画遮挡弧度
-        var radSectionArrLen = radSectionArr.length;
-        //判断当前点距离那个档位距离最近
-        i=0;j=1;
-        for(i;i<radSectionArrLen;i++){
-          if(changeRadTemp === radSectionArr[i]){
-            if(Math.abs(radSectionArr[i]-radSectionArr[i-1]) < Math.abs(radSectionArr[i]-radSectionArr[i+1])){
-              stoPosPoint = i-1
-              if(i<=1){
-                $scope.toiletController.gear = 1;
-              }else{
-                $scope.toiletController.gear = i;
-              };
-              $scope.$apply();
-              //画档位线
-              j=1;
-              for(j;j<i;j++){
-                drawRadian(cr3,deliverLine,radSectionArr[i-j-1]-1,radSectionArr[i-j-1]);
-              };
-            }else{
-              stoPosPoint = i;
-              $scope.toiletController.gear = i+1;
-              $scope.$apply();
-              //画档位线
-              j=1;
-              for(j;j<i+1;j++){
-                drawRadian(cr3,deliverLine,radSectionArr[i-j]-1,radSectionArr[i-j]);
-              };
-            };
-            radSectionArr.splice(i,1);
+
+        var hasTouch = 'ontouchstart' in window;
+        var STA_EN = hasTouch ? "touchstart" : "mousedown",
+          MV_EV = hasTouch ? "touchmove":"mousemove",
+          END_EV = hasTouch ? "touchend" : "mouseup",
+          END_Cancel = hasTouch ? "touchcancel" : "mouseout";
+        console.log(STA_EN)
+        this.cr2obj.addEventListener(STA_EN,this.start,false);
+        this.cr2obj.addEventListener(MV_EV,this.move,false);
+        this.cr2obj.addEventListener(END_EV,this.end,false);
+        this.cr2obj.addEventListener(END_EV,this.end,false);
+        console.log(this)
+        this.start = function(ev){
+          console.log(ev)
+          ev.preventDefault();
+          // bStart = 1;
+          var poi = this.getEvtLocation(ev);
+          bginX = poi.x;
+          bginY = poi.y;
+        };
+        this.move = function(ev){
+          ev.preventDefault();
+          if(bStart === 0)return;
+          var poi = this.getEvtLocation(ev);
+          this.drawc(this.cr2,getAngle(this.canvsscreenHeight,this.canvsscreenWidth,poi.x,poi.y));
+        };
+        this.end = function(ev) {
+          ev.preventDefault();
+          // bStart = 0;
+          this.drawc(this.cr2,this.radSectionArr[this.stoPosPoint]);
+        };
+        this.getEvtLocation = function(ev){
+          var touch = ev.touches[0];
+          return{
+            x : touch.clientX,
+            y : touch.clientY
           }
         };
-        //画白色遮挡
-        drawRadian(obj,HideCircle,0,360);
-      };
-      //画圆球和指示
-      var  drawc = function (obj,ancr,type) {
-        if(135<=ancr || ancr<=45){
-          var jd =  changeAngale(ancr);
-          obj.clearRect(0,0,canvsscreenHeight,canvsscreenHeight);
-          var x = Math.cos(jd)*(rollCircle.r)+(rollCircle.x);
-          var y = Math.sin(jd)*(rollCircle.r)+(rollCircle.y);
-          //画小球
-          obj.beginPath();
-          obj.fillStyle = rollCircle.color;
-          obj.moveTo(x,y);
-          obj.arc(x,y,10,0,Math.PI*2,false);
-          obj.fill();
-          obj.closePath();
-          //画小球中的指示标识
-          obj.beginPath();
-          obj.fillStyle = "#191C23";
-          obj.lineWidth = 1;//设置线宽
-          obj.moveTo(x,y-(10/4));
-          obj.lineTo(x-(10/4)/Math.sqrt(2)-1,y);
-          obj.lineTo(x,y+(10/4));
-          obj.fill();//填充颜色
-          obj.moveTo(x+1,y-(10/4));
-          obj.lineTo(x+(10/4)/Math.sqrt(2)+2,y);
-          obj.lineTo(x+1,y+(10/4));
-          obj.stroke();//画线框
-          obj.fill();//填充颜色
-          obj.closePath();
-          //随小球和指示画fil填充
-          if(!type){
-            drawCircleFill(cr3,ancr)
-          }
-        };
-      };
-      //初始化小球
-      drawc(cr2,starRad,"type");
-      var hasTouch = 'ontouchstart' in window;
-      var STA_EN = hasTouch ? "touchstart" : "mousedown",
-        MV_EV = hasTouch ? "touchmove":"mousemove",
-        END_EV = hasTouch ? "touchend" : "mouseup",
-        END_Cancel = hasTouch ? "touchcancel" : "mouseout";
-      cr2obj.addEventListener(STA_EN,start,false);
-      cr2obj.addEventListener(MV_EV,move,false);
-      cr2obj.addEventListener(END_EV,end,false);
-      cr2obj.addEventListener(END_EV,end,false);
-      var endX,endY,bStart = 0;
-      function start(ev){
-        ev.preventDefault();
-        bStart = 1;
-        var poi = getEvtLocation(ev);
-        bginX = poi.x;
-        bginY = poi.y;
-      };
-      function move(ev){
-        ev.preventDefault();
-        if(bStart === 0)return;
-        var poi = getEvtLocation(ev);
-        drawc(cr2,getAngle(canvsscreenHeight,canvsscreenHeight,poi.x,poi.y));
-      };
-      function end (ev) {
-        ev.preventDefault();
-        bStart = 0;
-        drawc(cr2,radSectionArr[stoPosPoint]);
-      };
-      function getEvtLocation(ev){
-        var touch = ev.touches[0];
-        return{
-          x : touch.clientX,
-          y : touch.clientY
-        }
-      };
 
-
-
+      };
+      setTimeout(function () {
+        var  ll = new initCircle($scope.slideNyData[0])
+        ll.drawDeliverCircle($scope.slideNyData[0].gearNum);
+        ll.drawc(ll.cr2,230,"type");
+      },40)
 
       //处理选择怎加border
       var handlenapeListNapeLen = $scope.handlenapeListNape.length;

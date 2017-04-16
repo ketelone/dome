@@ -15,32 +15,48 @@
         <span class="conninfo-isues-info" translate="toiletController.deviceUseInfo"></span>
       </span>
     </div>
-    <div id="toilet-parameterctl">
-      <canvas id="mycanvas01"></canvas>
-      <canvas id="mycanvas02"></canvas>
-      <canvas id="mycanvas03"></canvas>
-      <div class="toilet-parameterctl-data" ng-if="!parameterctlFlag">
-        <span class="toilet-parameterctl-raddata" ng-bind=toiletController.gear></span>
-        <span class="toilet-parameterctl-des" translate="toiletController.parameterdes"></span>
-      </div>
-      <div class="toilet-parameterctl-dataimg" ng-if="parameterctlFlag">
-        <img class="conninfo-parameterctl-img" src="build/img/toilet-controller/btn_devicedetail_scoll.png" alt="">
-      </div>
-    </div>
+
+    <ion-slide-box on-slide-changed="slideHasChanged($index)">
+      <ion-slide ng-repeat="list in slideNyData track by $index">
+        <div id={{list.parNodeid}}>
+          <canvas id={{list.canves01}}></canvas>
+          <canvas id={{list.canves02}}></canvas>
+          <canvas id={{list.canves03}}></canvas>
+          <div class="toilet-parameterctl-data" ng-if="!list.parameterctlFlag">
+            <span class="toilet-parameterctl-raddata" ng-bind="list.gearInit"></span>
+            <span class="toilet-parameterctl-des" ng-bind="list.des"></span>
+          </div>
+          <div class="toilet-parameterctl-dataimg" ng-if="list.parameterctlFlag">
+            <img class="conninfo-parameterctl-img" src="build/img/toilet-controller/btn_devicedetail_scoll.png" alt="">
+          </div>
+        </div>
+      </ion-slide>
+    </ion-slide-box>
+
+    <!--<div id="toilet-parameterctl">-->
+    <!--<canvas id="mycanvas01"></canvas>-->
+    <!--<canvas id="mycanvas02"></canvas>-->
+    <!--<canvas id="mycanvas03"></canvas>-->
+    <!--<div class="toilet-parameterctl-data" ng-if="!parameterctlFlag">-->
+    <!--<span class="toilet-parameterctl-raddata" ng-bind=toiletController.gear></span>-->
+    <!--<span class="toilet-parameterctl-des" translate="toiletController.parameterdes"></span>-->
+    <!--</div>-->
+    <!--<div class="toilet-parameterctl-dataimg" ng-if="parameterctlFlag">-->
+    <!--<img class="conninfo-parameterctl-img" src="build/img/toilet-controller/btn_devicedetail_scoll.png" alt="">-->
+    <!--</div>-->
+    <!--</div>-->
     <div class="toilet-handlenape-selec" ng-click="openModal()">
       <span class="handlenape-selec-des" translate="toiletController.handleSelecDes"></span>
       <span class="handlenape-selec-use" translate={{toiletController.modelType}}></span>
       <img class="handlenape-selec-img" src="build/img/toilet-controller/icon_scenario_arrow.png"></img>
     </div>
     <ion-scroll class="toilet-handlenape">
-       <div class="toilet-handlenape-list" ng-repeat="list in handlenapeListNape track by $index" ng-click="selectNapes($index)">
-         <div class="handlenape-list-napes" ng-class="{true: 'napes-border', false: ''}[list.selecFlag]">
-           <img class="list-napes-img" ng-src={{list.imgUrl}} alt="">
-           <span class="list-napes-dec" translate={{list.handleDes}}></span>
-         </div>
-       </div>
+      <div class="toilet-handlenape-list" ng-repeat="list in handlenapeListNape track by $index" ng-click="selectNapes($index)">
+        <div class="handlenape-list-napes" ng-class="{true: 'napes-border', false: ''}[list.selecFlag]">
+          <img class="list-napes-img" ng-src={{list.imgUrl}} alt="">
+          <span class="list-napes-dec" translate={{list.handleDes}}></span>
+        </div>
+      </div>
     </ion-scroll>
   </ion-content>
 </ion-view>
-
-
