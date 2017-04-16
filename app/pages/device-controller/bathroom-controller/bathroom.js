@@ -5,7 +5,10 @@ angular.module('bathroomModule')
   .controller('bathroomCtrl',[
     '$scope',
     '$state',
-    function($scope, $state){
+    '$interval',
+    '$window',
+    '$ionicModal',
+    function($scope, $state, $interval, $window, $ionicModal){
 
       $scope.bathroomData = [
         {
@@ -16,6 +19,7 @@ angular.module('bathroomModule')
           isSetting: false,
           isBreathSwitch: false,
           isOpenTimer: false,
+          setTime: "",
           switchType: "Hot",
           desc: "热风"
         },
@@ -27,6 +31,7 @@ angular.module('bathroomModule')
           isSetting: false,
           isBreathSwitch: false,
           isOpenTimer: false,
+          setTime: "",
           switchType: "Cool",
           desc: "凉风"
         },
@@ -38,6 +43,7 @@ angular.module('bathroomModule')
           isSetting: false,
           isBreathSwitch: false,
           isOpenTimer: false,
+          setTime: "",
           switchType: "Dryer",
           desc: "冷干"
         },
@@ -49,6 +55,7 @@ angular.module('bathroomModule')
           isSetting: false,
           isBreathSwitch: false,
           isOpenTimer: false,
+          setTime: "",
           switchType: "Hot drying",
           desc: "热干"
         },
@@ -60,6 +67,7 @@ angular.module('bathroomModule')
           isSetting: false,
           isBreathSwitch: true,
           isOpenTimer: false,
+          setTime: "",
           switchType: "Breath",
           desc: "换气"
         },
@@ -71,6 +79,7 @@ angular.module('bathroomModule')
           isSetting: false,
           isBreathSwitch: false,
           isOpenTimer: false,
+          setTime: "",
           switchType: "Purify",
           desc: "空气净化"
         },
@@ -82,6 +91,7 @@ angular.module('bathroomModule')
           isSetting: false,
           isBreathSwitch: false,
           isOpenTimer: false,
+          setTime: "",
           switchType: "Wind direction",
           desc: "风向"
         },
@@ -93,6 +103,7 @@ angular.module('bathroomModule')
           isSetting: false,
           isBreathSwitch: false,
           isOpenTimer: false,
+          setTime: "",
           switchType: "Light",
           desc: "照明"
         },
@@ -104,6 +115,7 @@ angular.module('bathroomModule')
           isSetting: true,
           isBreathSwitch: false,
           isOpenTimer: false,
+          setTime: "",
           switchType: "Setting",
           desc: "设置"
         }
@@ -111,6 +123,24 @@ angular.module('bathroomModule')
       ];
       $scope.isBreath = false;
       $scope.isWindShow = false;
+      $scope.count = 1;
+      $scope.isCountDown = false;
+      $scope.countDown = 0;
+      $scope.temperate = '20℃';
+      $scope.tempPercent = '80%';
+      $scope.isBox = true;
+      $scope.isBig = false;
+      var canvas=document.getElementById("canvas");
+      $scope.setHour = "";
+      $scope.setMinu = "";
+
+      /**
+       *@autor: caolei
+       *@disc: to obtain the information of Yuba
+       */
+      $scope.$watch('', function(){
+
+      }, true);
 
       /**
        *@autor: caolei
@@ -119,20 +149,48 @@ angular.module('bathroomModule')
        *@disc: get relative device is open
        */
       $scope.getInfo = function(item){
-        //热风，凉风，冷干，热干，换气，空气净化功能互斥
 
-        if(item.isOpen){
+        if(item.switchType == 'Light'){
+          if(($scope.count%3) == 1){
+            item.isOpen = true;
+            alert("白灯");
+          }else if(($scope.count%3) == 2){
+            item.isOpen = true;
+            alert("黄灯");
+            changeRingCol('#ff6600');
+          }else if(($scope.count%3) == 0){
+            item.isOpen = false;
+            changeRingCol('#99d5ff');
+          }
+          $scope.count = $scope.count + 1;
 
-          if(checkIsOk(item)){
-            alert("正常打开");
-            return true;
-          }else{
-            if(item.switchType == 'Wind direction'){
-              alert("请打开热风或者凉风或者冷干或者热干的功能");
+        }else{
+          if(item.isOpen){
+            if(checkIsOk(item)){
+              alert("正常打开");
+              if(item.switchType == 'Hot' || item.switchType == 'Hot drying'){
+                changeRingCol('#ff6600');
+              }
+              return true;
             }else{
-              alert("请关闭其它功能");
+              if(item.switchType == 'Wind direction'){
+                alert("请打开热风或者凉风或者冷干或者热干的功能");
+              }else{
+                alert("请关闭其它功能");
+              }
+              return false;
             }
-            return false;
+          }else{
+            if(item.switchType == 'Hot' || item.switchType == 'Cool' || item.switchType == 'Dryer' || item.switchType == 'Hot drying'){
+              angular.forEach($scope.bathroomData, function(data, index, array) {
+                if (data.switchType == 'Wind direction') {
+                  data.isOpen = false;
+                }
+              });
+            }
+            if((item.switchType != 'Hot' && item.switchType != 'Hot drying') || (item.switchType == 'Hot' || item.switchType == 'Hot drying')){
+              changeRingCol('#99d5ff');
+            }
           }
         }
       };
@@ -144,9 +202,12 @@ angular.module('bathroomModule')
        *@disc: check device's function is ok
        */
       var checkIsOk = function(item){
+        if(item.switchType == 'Light'){
+          return true;
+        }
         var flag = true;
         angular.forEach($scope.bathroomData, function(data, index, array) {
-          if ((data.switchType != item.switchType) && (item.switchType != 'Wind direction' && item.switchType != 'Light' && item.switchType != 'Setting' && data.isOpen)) {
+          if (data.switchType != 'Light' && (data.switchType != item.switchType) && (item.switchType != 'Wind direction' && item.switchType != 'Light' && item.switchType != 'Setting' && data.isOpen)) {
             item.isOpen = false;
             flag = false;
           }
@@ -216,7 +277,7 @@ angular.module('bathroomModule')
        *@disc: open timer
        */
       $scope.openTimer = function(){
-        alert("in");
+        //alert("in");
 
         var hasOpenCount = 0;
         var deviceInfo = [];
@@ -227,21 +288,325 @@ angular.module('bathroomModule')
             hasOpenCount = hasOpenCount + 1;
             deviceInfo.push(data);
           }
-
-          if(!data.isSetting  && data.isOpen){
-
-          }
-
         });
 
         if(hasOpenCount){
-          alert("可以开启定时功能");
+          //alert("可以开启定时功能");
           console.log(deviceInfo);
-
+          //forEach deviceInfo,set time
+          //getTimer();
+          openModal();
+          console.log($scope.setHour + "    "+$scope.setMinu);
+          angular.forEach(deviceInfo, function(data, index, array){
+            data.setTime = "";
+          });
         }else{
           alert("不能开启定时功能");
         }
+      };
 
+      var  timePromise = undefined;
+      var getTimer = function(){
+        $scope.countDown = 1000*60*6 - 8*60*60*1000;
+        $scope.isCountDown = true;
+        timePromise = $interval(function(){
+          if($scope.countDown<=0){
+            $interval.cancel(timePromise);
+            timePromise = undefined;
+          }else{
+            $scope.countDown -= 60000;
+          }
+        },60000);
+      };
+
+      /**
+       *@autor: caolei
+       *@params: color
+       *@disc: change the color of the ring
+       */
+      var changeRingCol = function(color){
+        var cxt=canvas.getContext("2d");
+        var xLength = $window.innerHeight * 0.28;
+        var yLength = $window.innerWidth * 0.8;
+        var r = $window.innerWidth * 0.4;
+        cxt.beginPath();
+        cxt.arc(xLength,yLength,r,0,360,false);
+        cxt.lineWidth=$window.innerWidth * 0.08;
+        cxt.strokeStyle= color;
+        cxt.stroke();
+        cxt.closePath();
+      };
+
+      var cxt=canvas.getContext("2d");
+      var xLength = $window.innerHeight * 0.28;
+      var yLength = $window.innerWidth * 0.8;
+      var r = $window.innerWidth * 0.4;
+      cxt.beginPath();
+      cxt.arc(xLength,yLength,r,0,360,false);
+      cxt.lineWidth=$window.innerWidth * 0.08;
+      cxt.strokeStyle="#99d5ff";
+      cxt.stroke();
+      cxt.closePath();
+
+
+      $scope.openPopover = function () {
+        console.log($scope.currentHour + "    "+$scope.currentMin);
+        $scope.setHour = $scope.currentHour;
+        $scope.setMinu = $scope.currentMin;
+        $scope.modal.hide();
+      };
+
+      $ionicModal.fromTemplateUrl('my-modal.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+      }).then(function (modal) {
+        $scope.modal = modal;
+      });
+      var openModal = function () {
+        $scope.modal.show();
+      };
+      $scope.closeModal = function () {
+        $scope.modal.hide();
+      };
+
+
+      $scope.listHourData = ['一时', '二时', '三时', '四时', '五时', '六时', '七时', '八时', '九时',
+        '十时', '十一时', '十二时', '十三时', '十四时', '十五时', '十六时', '十七时', '十八时','十九时','二十时','二十一时','二十二时','二十三时','二十四时'];
+
+      $scope.listMinData = ['0分', '十分', '二十分', '三十分', '四十分', '五十分', '六十分'];
+
+      //滚动啊
+      var scope = $scope;
+      $scope.currentHour = "";
+      scope.rotates = [];
+      scope.sourceDeg = 180;
+      scope.hourIndex = [];
+      var weekNum = 5;
+      scope.nowIndex = weekNum / 2;
+      scope.stageRotate = {
+        "transform": "rotateX(" + scope.sourceDeg + "deg)",
+        "-webkit-transform": "rotateX(" + scope.sourceDeg + "deg)"
+      };
+      for (var i = 0; i < weekNum; i++) {
+        scope.hourIndex.push(i);
       }
+      scope.baseDeg = 360 / scope.hourIndex.length;
+
+      for (var i = (weekNum - 1); i >= 0; i--) {
+        var deg = 360 / weekNum * (weekNum - i);
+        scope.rotates[i] = {
+          "transform": "rotateX(" + deg + "deg) translateZ(90px)",
+          "-webkit-transform": "rotateX(" + deg + "deg) translateZ(90px)"
+        };
+      }
+
+      function getLastDeg(deg) {
+        return (Math.round(deg / scope.baseDeg) + 1) * scope.baseDeg;
+      }
+
+      scope.lastDeg = 0;
+      scope.onDragScroll = function ($event) {
+        // console.log(scope.nowIndex);
+        // console.log(scope.weeks[scope.nowIndex]);
+        if (scope.hour[scope.nowIndex] <= min && $event.gesture.deltaY > 0) {
+          return;
+        }
+        if (scope.hour[scope.nowIndex] >= max && $event.gesture.deltaY < 0) {
+          return;
+        }
+        scope.lastDeg = scope.sourceDeg - $event.gesture.deltaY / 2;
+        scope.stageRotate = {
+          "transform": "rotateX(" + scope.lastDeg + "deg)",
+          "-webkit-transform": "rotateX(" + scope.lastDeg + "deg)"
+        };
+        getNowIndex(scope.lastDeg);
+      };
+
+      scope.onReleaseScroll = function ($event) {
+        if ($event.gesture.deltaY > 0)
+          scope.sourceDeg = getLastDeg(scope.lastDeg) - scope.baseDeg;
+        else
+          scope.sourceDeg = getLastDeg(scope.lastDeg - scope.baseDeg);
+        scope.stageRotate = {
+          "transform": "rotateX(" + scope.sourceDeg + "deg)",
+          "-webkit-transform": "rotateX(" + scope.sourceDeg + "deg)"
+        };
+      };
+
+      var min = 1;
+      var max = 24;
+      function getNextIndex(nowIndex) {
+        var temp = nowIndex + 1;
+        if (temp > (weekNum - 1))
+          temp = 0;
+        return temp;
+      }
+
+      function getPrevIndex(nowIndex) {
+        var temp = nowIndex - 1;
+        if (temp < 0)
+          temp = weekNum - 1;
+        return temp;
+      }
+
+      function getNowIndex(deg) {
+        var temp = deg / scope.baseDeg % weekNum;
+        scope.nowIndex = temp < 0 ? (weekNum + temp) : temp;
+        refreshData();
+      }
+
+      function refreshData() {
+        scope.nowIndex = Math.round(scope.nowIndex);
+        if (scope.nowIndex > (weekNum - 1))
+          scope.nowIndex -= weekNum;
+
+        var needChangeUpIndex = scope.nowIndex - weekNum / 4;
+        if (needChangeUpIndex < 0)
+          needChangeUpIndex = weekNum + needChangeUpIndex;
+
+        if (scope.hour[getNextIndex(needChangeUpIndex)] == '' || scope.hour[getNextIndex(needChangeUpIndex)] - 1 < min)
+          scope.hour[needChangeUpIndex] = '';
+        else
+          scope.hour[needChangeUpIndex] = scope.hour[getNextIndex(needChangeUpIndex)] - 1;
+
+        var needChangeDownIndex = scope.nowIndex + weekNum / 4;
+        if (needChangeDownIndex > (weekNum - 1))
+          needChangeDownIndex = needChangeDownIndex - weekNum;
+
+        if (scope.hour[getPrevIndex(needChangeDownIndex)] == '' || scope.hour[getPrevIndex(needChangeDownIndex)] + 1 > max)
+          scope.hour[needChangeDownIndex] = '';
+        else
+          scope.hour[needChangeDownIndex] = scope.hour[getPrevIndex(needChangeDownIndex)] + 1;
+      }
+
+      scope.hour = [];
+      for (var i = 0; i < scope.listHourData.length; i++) {
+        scope.hour.push(i + 1);
+      }
+
+      scope.getShowString = function (item) {
+        return scope.listHourData[item-1];
+      };
+
+      $scope.getCurrentHour = function(item){
+        $scope.currentHour = scope.listHourData[item-1];
+      };
+
+
+      $scope.currentMin = "";
+      scope.rotates2 = [];
+      scope.sourceDeg2 = 180;
+      scope.hourIndex2 = [];
+      var weekNum2 = 5;
+      scope.nowIndex2 = weekNum2 / 2;
+      scope.stageRotate2 = {
+        "transform": "rotateX(" + scope.sourceDeg2 + "deg)",
+        "-webkit-transform": "rotateX(" + scope.sourceDeg2 + "deg)"
+      };
+      for (var i = 0; i < weekNum; i++) {
+        scope.hourIndex2.push(i);
+      }
+      scope.baseDeg2 = 360 / scope.hourIndex2.length;
+
+      for (var i = (weekNum2 - 1); i >= 0; i--) {
+        var deg = 360 / weekNum2 * (weekNum2 - i);
+        scope.rotates2[i] = {
+          "transform": "rotateX(" + deg + "deg) translateZ(90px)",
+          "-webkit-transform": "rotateX(" + deg + "deg) translateZ(90px)"
+        };
+      }
+
+      function getLastDeg2(deg) {
+        return (Math.round(deg / scope.baseDeg2) + 1) * scope.baseDeg2;
+      }
+
+      scope.lastDeg2 = 0;
+
+      scope.onDragScroll2 = function ($event) {
+        // console.log(scope.nowIndex);
+        // console.log(scope.weeks[scope.nowIndex]);
+        if (scope.minute[scope.nowIndex2] <= min2 && $event.gesture.deltaY > 0) {
+          return;
+        }
+        if (scope.minute[scope.nowIndex2] >= max2 && $event.gesture.deltaY < 0) {
+          return;
+        }
+        scope.lastDeg2 = scope.sourceDeg2 - $event.gesture.deltaY / 2;
+        scope.stageRotate2 = {
+          "transform": "rotateX(" + scope.lastDeg2 + "deg)",
+          "-webkit-transform": "rotateX(" + scope.lastDeg2 + "deg)"
+        };
+        getNowIndex2(scope.lastDeg2);
+      };
+
+      scope.onReleaseScroll2 = function ($event) {
+        if ($event.gesture.deltaY > 0)
+          scope.sourceDeg2 = getLastDeg2(scope.lastDeg2) - scope.baseDeg2;
+        else
+          scope.sourceDeg2 = getLastDeg2(scope.lastDeg2 - scope.baseDeg2);
+        scope.stageRotate2 = {
+          "transform": "rotateX(" + scope.sourceDeg2 + "deg)",
+          "-webkit-transform": "rotateX(" + scope.sourceDeg2 + "deg)"
+        };
+      };
+
+      var min2 = 1;
+      var max2 = 7;
+      function getNextIndex2(nowIndex) {
+        var temp = nowIndex + 1;
+        if (temp > (weekNum - 1))
+          temp = 0;
+        return temp;
+      }
+
+      function getPrevIndex2(nowIndex) {
+        var temp = nowIndex - 1;
+        if (temp < 0)
+          temp = weekNum - 1;
+        return temp;
+      }
+
+      function getNowIndex2(deg) {
+        var temp = deg / scope.baseDeg2 % weekNum;
+        scope.nowIndex2 = temp < 0 ? (weekNum + temp) : temp;
+        refreshData2();
+      }
+
+      function refreshData2() {
+        scope.nowIndex2 = Math.round(scope.nowIndex2);
+        if (scope.nowIndex2 > (weekNum - 1))
+          scope.nowIndex2 -= weekNum;
+
+        var needChangeUpIndex = scope.nowIndex2 - weekNum / 4;
+        if (needChangeUpIndex < 0)
+          needChangeUpIndex = weekNum + needChangeUpIndex;
+
+        if (scope.minute[getNextIndex2(needChangeUpIndex)] == '' || scope.minute[getNextIndex2(needChangeUpIndex)] - 1 < min2)
+          scope.minute[needChangeUpIndex] = '';
+        else
+          scope.minute[needChangeUpIndex] = scope.minute[getNextIndex2(needChangeUpIndex)] - 1;
+
+        var needChangeDownIndex = scope.nowIndex2 + weekNum / 4;
+        if (needChangeDownIndex > (weekNum - 1))
+          needChangeDownIndex = needChangeDownIndex - weekNum;
+
+        if (scope.minute[getPrevIndex2(needChangeDownIndex)] == '' || scope.minute[getPrevIndex2(needChangeDownIndex)] + 1 > max2)
+          scope.minute[needChangeDownIndex] = '';
+        else
+          scope.minute[needChangeDownIndex] = scope.minute[getPrevIndex2(needChangeDownIndex)] + 1;
+      }
+
+      scope.minute = [];
+      for (var i = 0; i < scope.listMinData.length; i++) {
+        scope.minute.push(i + 1);
+      }
+
+      scope.getShowMin = function (item) {
+        return scope.listMinData[item-1];
+      };
+
+      $scope.getCurrentMin = function(item){
+        $scope.currentMin = scope.listMinData[item-1];
+      };
 
   }]);

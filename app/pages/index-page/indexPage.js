@@ -216,6 +216,14 @@ angular.module('indexPageModule')
         alert("in---");
       };
 
+      $scope.addModule = function(){
+        alert("in-----addModule");
+      };
+
+      $scope.addDevice = function(){
+        alert("in----addDevice");
+      };
+
     }
   ]);
 

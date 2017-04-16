@@ -685,7 +685,7 @@ $applicationColor: white !default;
   }
   .noPadding{
     padding: 0;
-    margin-top: 0.3rem;
+    //margin-top: 0.3rem;
   }
   .deviceStyle {
     position: relative;
@@ -739,6 +739,37 @@ $applicationColor: white !default;
       width: 0.235rem;
       height: 0.2rem;
     }
+  }
+  .add-module {
+    height: 2.1rem;
+    background-color: #1D2334;
+  }
+  .add-module{
+    font-size: 0.3rem;
+    color: white;
+    padding-top: 0.1rem;
+  }
+  .noPadding-module{
+    padding: 0;
+    margin-top: 0.3rem;
+  }
+  .add{
+    width: 5rem;
+    height: 1rem;
+    margin-top: 0.5rem;
+    padding-top: 0.2rem;
+    border: 0.02rem dashed gray;
+  }
+  .add-font{
+    font-size: 1rem;
+    margin-left: 1.5rem;
+    line-height: 0.28rem;
+  }
+  .add-device{
+    margin-top: -0.5rem;
+    margin-left: 2.3rem;
+    padding-top: 0.24rem;
+    line-height: 0.46rem;
   }
 }
 

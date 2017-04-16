@@ -55,6 +55,16 @@
 
               <div ng-if="isSceneModel">
 
+                <div class="row noPadding-module add-module text-left" ng-click="addModule()">
+                  <span class="add-module" translate="">我的场景</span>
+                  <div class="add">
+                    <div class="add-font">+</div>
+                    <div class="add-device">
+                      <span translate="">添加场景</span>
+                    </div>
+                  </div>
+                </div>
+
                 <div ng-repeat="item in modelData">
                   <img class="imgll" ng-src="{{item.pictureUrl}}"/>
                   <div class="text-center interval-line">
@@ -77,6 +87,16 @@
               </div>
 
               <div ng-if="isDeviceModel">
+                <div class="row noPadding-module add-module text-left" ng-click="addDevice()">
+                  <span class="add-module" translate="">我的设备</span>
+                  <div class="add">
+                    <div class="add-font">+</div>
+                    <div class="add-device">
+                      <span translate="">添加设备</span>
+                    </div>
+                  </div>
+                </div>
+
                 <div class="deviceStyle row noPadding" ng-repeat="item in deviceModel" ng-click="getDeviceInfo(item)">
                   <div class="col-25 noPadding">
                     <img class="deviceImg" ng-src="{{item.pictureUrl}}"/>
