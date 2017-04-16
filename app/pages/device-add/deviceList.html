@@ -1,0 +1,65 @@
+<ion-view view-title="toilet" class="deviceList">
+  <div class="bar bar-header headColor ">
+    <button class="button button-icon icon ion-ios-arrow-left iconColor" ng-click="goBack()"></button>
+    <div class="h1 title"><span translate="morning.goHomeTitle" class="iconColor"></span></div>
+    <button class="button button-icon icon ion-ios-trash-outline iconColor" ng-click="deleteKeyscene()"></button>
+  </div>
+  <ion-content style="margin-top:80px">
+    <button ng-click="selectBox()">
+      获取box列表
+    </button>
+    box列表
+    <div class="list">
+      <div class="item" ng-repeat="item in boxList" >
+          <div class="row" ng-click="boxClick(item)">相应回复:{{item.payload.cmd}}</div>
+        <div class="row" ng-click="boxClick(item)">相应回复:{{item.payload.cmd_properties.device_id}}</div>
+        <div class="row" ng-click="boxClick(item)">相应回复:{{item.payload.cmd_properties.ip}}</div>
+        <div class="row" ng-click="boxClick(item)">相应回复:{{item.payload.cmd_properties.sku}}</div>
+        <div class="row" ng-click="boxClick(item)">相应回复:{{item.payload.cmd_properties.sn}}</div>
+
+        <div class="row" ng-click="closebox(item)">断开box连接</div>
+        <div class="row" ng-click="closebox(item)">断开box连接</div>
+        <div class="row" ng-click="closebox(item)">断开box连接</div>
+        <div class="row" ng-click="closebox(item)">断开box连接</div>
+      </div>
+    </div>
+
+
+    <button ng-click="selectDeviceOn()">
+      获取device已连接列表
+    </button>
+    <div class="list" >
+      <div class="item" ng-repeat="deviceOnItem in deviceOn" >
+        <div class="row" ng-click="open(deviceOnItem)">{{deviceOnItem.device_id}}</div>
+        <div class="row" ng-click="open(deviceOnItem)">{{deviceOnItem.device_mac}}</div>
+        <div class="row" ng-click="open(deviceOnItem)">{{deviceOnItem.device_rssi}}</div>
+        <div class="row" ng-click="close(deviceOnItem)">{{deviceOnItem.device_sku}}</div>
+        <div class="row" ng-click="close(deviceOnItem)">{{deviceOnItem.device_state}}</div>
+        <div class="row" ng-click="close(deviceOnItem)">{{deviceOnItem.device_state}}</div>
+        <div class="row" ng-click="over(deviceOnItem)">解绑</div>
+        <div class="row" ng-click="over(deviceOnItem)">解绑</div>
+        <div class="row" ng-click="over(deviceOnItem)">解绑</div>
+        <div class="row" ng-click="over(deviceOnItem)">解绑</div>
+
+
+      </div>
+    </div>
+
+
+    <button ng-click="selectDeviceOff()">
+      获取device未连接列表
+    </button>
+    <div class="list">
+      <div class="item" ng-repeat="deviceOffItem in deviceOff" ng-click="deviceBang(deviceOffItem)">
+        <div class="row">{{deviceOffItem.device_id}}</div>
+        <div class="row">{{deviceOffItem.device_mac}}</div>
+        <div class="row">{{deviceOffItem.device_rssi}}</div>
+        <div class="row">{{deviceOffItem.device_sku}}</div>
+        <div class="row">{{deviceOffItem.device_state}}</div>
+      </div>
+    </div>
+
+
+
+  </ion-content>
+</ion-view>

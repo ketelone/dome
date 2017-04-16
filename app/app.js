@@ -18,6 +18,7 @@ var myApp = angular.module('myApp', [
   'utilModule',
   'utilsModule',
   'serviceModule',
+  'deviceAddModule',
   'HmsModule',
   'productModule',
   'pascalprecht.translate',
@@ -168,6 +169,11 @@ angular.module('myApp')
           url: '/login',
           templateUrl: 'build/pages/login/login.html',
           controller: 'loginCtrl'
+        })
+        .state('deviceList', {
+          url: '/deviceList',
+          templateUrl: 'build/pages/device-add/deviceList.html',
+          controller: 'deviceListCtrl'
         })
         //一键场景
         //大姨妈了没
