@@ -42,31 +42,17 @@
       }
     }
   }
-  #toilet-parameterctl {
+  .toilet-parameterctl {
     position: relative;
     margin-top: 0.76rem;
     margin-left: 0.93rem;
     width: 5.64rem;
     height: 5.64rem;
-
-    #nYcanves01{
+    .canves-pos{
       position: absolute;
       left: 0;
       top: 0;
-      z-index: 1;
-    };
-    #nYcanves02{
-      position: absolute;
-      left: 0;
-      top: 0;
-      z-index: 30;
-    };
-    #nYcanves03{
-      position: absolute;
-      left: 0;
-      top: 0;
-      z-index: 2;
-    };
+    }
     .toilet-parameterctl-dataimg{
       position: absolute;
       top: 1.35rem;

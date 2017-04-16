@@ -18,10 +18,10 @@
 
     <ion-slide-box on-slide-changed="slideHasChanged($index)">
       <ion-slide ng-repeat="list in slideNyData track by $index">
-        <div id={{list.parNodeid}}>
-          <canvas id={{list.canves01}}></canvas>
-          <canvas id={{list.canves02}}></canvas>
-          <canvas id={{list.canves03}}></canvas>
+        <div id={{list.parNodeid}} class="toilet-parameterctl">
+          <canvas id={{list.canves01}} class="canves-pos"></canvas>
+          <canvas id={{list.canves02}} class="canves-pos"></canvas>
+          <canvas id={{list.canves03}} class="canves-pos"></canvas>
           <div class="toilet-parameterctl-data" ng-if="!list.parameterctlFlag">
             <span class="toilet-parameterctl-raddata" ng-bind="list.gearInit"></span>
             <span class="toilet-parameterctl-des" ng-bind="list.des"></span>

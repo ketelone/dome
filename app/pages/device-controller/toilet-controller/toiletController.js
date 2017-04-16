@@ -12,10 +12,8 @@ angular.module('toiletControlModule')
               checkVersionService
     ) {
       $scope.toiletController = {
-        gear:1,
         modelType:"toiletController.zhengchang",
       };
-      $scope.parameterctlFlag = false;
       $scope.handlenapeListNape = [
         {
           imgUrl: "build/img/toilet-controller/dachong.png",
@@ -113,7 +111,26 @@ angular.module('toiletControlModule')
         canves01:"nYcanves01",
         canves02:"nYcanves02",
         canves03:"nYcanves03",
-      }]
+      },{
+        des:"温度档位",
+        gearNum:6,
+        gearInit:1,
+        parameterctlFlag:false,
+        parNodeid:'toilet-parameterctlyy',
+        canves01:"yYcanves01",
+        canves02:"yYcanves02",
+        canves03:"yYcanves03",
+      },{
+        des:"风力档位",
+        gearNum:3,
+        gearInit:3,
+        parameterctlFlag:false,
+        parNodeid:'toilet-parameterctlyu',
+        canves01:"yucanves01",
+        canves02:"yucanves02",
+        canves03:"yucanves03",
+      }
+      ];
 
       var initCircle = function (slideDataObj) {
         //获取父元素高度
@@ -122,15 +139,19 @@ angular.module('toiletControlModule')
         // 设置每个canves的宽高
         document.getElementById(slideDataObj.canves01).height = this.canvsscreenHeight;
         document.getElementById(slideDataObj.canves01).width = this.canvsscreenWidth;
+        document.getElementById(slideDataObj.canves01).style.zIndex = 1;
         document.getElementById(slideDataObj.canves02).height = this.canvsscreenHeight;
         document.getElementById(slideDataObj.canves01).width = this.canvsscreenWidth;
+        document.getElementById(slideDataObj.canves02).style.zIndex = 3;
+
         document.getElementById(slideDataObj.canves03).height = this.canvsscreenHeight;
         document.getElementById(slideDataObj.canves03).width = this.canvsscreenWidth;
+        document.getElementById(slideDataObj.canves03).style.zIndex = 2;
+
         // 获取canvesobj
         this.cr1 = getCanvesObj(slideDataObj.canves01);//档位canves
         this.cr2 = getCanvesObj(slideDataObj.canves02);//滑动小球档位canves
         this.cr3 = getCanvesObj(slideDataObj.canves03);//颜色填充档位canves
-        this.cr2obj = getIdObj(slideDataObj.canves02);
         //四种圆
         this.deliverCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2,color:"#2F3538"};//档位圆
         this.HideCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2-20,color:"black"};//档位圆
@@ -178,14 +199,14 @@ angular.module('toiletControlModule')
           var radSectionArrLen = this.radSectionArr.length;
           //判断当前点距离那个档位距离最近
           this.i=0;this.i=1;
-          for(this.i;this.i<this.radSectionArrLen;this.i++){
-            if(changeRadTemp === this.radSectionArr[i]){
+          for(this.i;this.i<radSectionArrLen;this.i++){
+            if(changeRadTemp === this.radSectionArr[this.i]){
               if(Math.abs(this.radSectionArr[this.i]-this.radSectionArr[this.i-1]) < Math.abs(this.radSectionArr[this.i]-this.radSectionArr[this.i+1])){
                 this.stoPosPoint = this.i-1;
                 if(this.i<=1){
-                  $scope.toiletController.gear = 1;
+                  slideDataObj.gearInit = 1;
                 }else{
-                  $scope.toiletController.gear = this.i;
+                  slideDataObj.gearInit = this.i;
                 };
                 $scope.$apply();
                 //画档位线
@@ -195,7 +216,7 @@ angular.module('toiletControlModule')
                 };
               }else{
                 this.stoPosPoint = this.i;
-                $scope.toiletController.gear = this.i+1;
+                slideDataObj.gearInit = this.i+1;
                 $scope.$apply();
                 //画档位线
                 this.j=1;
@@ -240,55 +261,55 @@ angular.module('toiletControlModule')
             canvesobj.closePath();
             //随小球和指示画fil填充
             if(!type){
-              this.drawCircleFill(cr3,ancr)
+              this.drawCircleFill(this.cr3,ancr)
             }
           };
         };
-
-        var hasTouch = 'ontouchstart' in window;
-        var STA_EN = hasTouch ? "touchstart" : "mousedown",
-          MV_EV = hasTouch ? "touchmove":"mousemove",
-          END_EV = hasTouch ? "touchend" : "mouseup",
-          END_Cancel = hasTouch ? "touchcancel" : "mouseout";
-        console.log(STA_EN)
-        this.cr2obj.addEventListener(STA_EN,this.start,false);
-        this.cr2obj.addEventListener(MV_EV,this.move,false);
-        this.cr2obj.addEventListener(END_EV,this.end,false);
-        this.cr2obj.addEventListener(END_EV,this.end,false);
-        console.log(this)
-        this.start = function(ev){
-          console.log(ev)
-          ev.preventDefault();
-          // bStart = 1;
-          var poi = this.getEvtLocation(ev);
-          bginX = poi.x;
-          bginY = poi.y;
-        };
-        this.move = function(ev){
-          ev.preventDefault();
-          if(bStart === 0)return;
-          var poi = this.getEvtLocation(ev);
-          this.drawc(this.cr2,getAngle(this.canvsscreenHeight,this.canvsscreenWidth,poi.x,poi.y));
-        };
-        this.end = function(ev) {
-          ev.preventDefault();
-          // bStart = 0;
-          this.drawc(this.cr2,this.radSectionArr[this.stoPosPoint]);
-        };
-        this.getEvtLocation = function(ev){
-          var touch = ev.touches[0];
-          return{
-            x : touch.clientX,
-            y : touch.clientY
-          }
-        };
-
       };
       setTimeout(function () {
-        var  ll = new initCircle($scope.slideNyData[0])
-        ll.drawDeliverCircle($scope.slideNyData[0].gearNum);
-        ll.drawc(ll.cr2,230,"type");
-      },40)
+
+        $scope.objDataTemp = [];
+        $scope.getCurrentObj = function (index) {
+          //当前new实例
+          if($scope.objDataTemp[index]){
+            var currentRadObj = $scope.objDataTemp[index];
+          }else{
+            var currentRadObj = new initCircle($scope.slideNyData[index]);
+          };
+          $scope.objDataTemp.push(currentRadObj);
+          //当前绑定事件对象
+          var currentEventObj = getIdObj($scope.slideNyData[index].canves02);
+          currentRadObj.drawDeliverCircle($scope.slideNyData[index].gearNum);
+          currentRadObj.drawc(currentEventObj.cr2,currentEventObj.starRad,"type");
+          currentEventObj.addEventListener( 'touchstart', function( e ){
+            e.preventDefault();
+            var poi = getEvtLocation(e);
+            bginX = poi.x;
+            bginY = poi.y;
+          }, false );
+          currentEventObj.addEventListener( 'touchmove', function( e ){
+            e.preventDefault();
+            var poi = getEvtLocation(e);
+            currentRadObj.drawc(currentRadObj.cr2,getAngle(currentRadObj.canvsscreenHeight,currentRadObj.canvsscreenWidth,poi.x,poi.y));
+          }, false );
+          currentEventObj.addEventListener( 'touchend', function( e ){
+            e.preventDefault();
+            currentRadObj.drawc(currentRadObj.cr2,currentRadObj.radSectionArr[currentRadObj.stoPosPoint]);
+          }, false );
+          var getEvtLocation = function(e){
+            var touch = e.touches[0];
+            return{
+              x : touch.clientX,
+              y : touch.clientY
+            }
+          };
+        };
+        $scope.getCurrentObj(0)
+        $scope.slideHasChanged = function (index) {
+          $scope.getCurrentObj(index);
+        }
+
+      },20);
 
       //处理选择怎加border
       var handlenapeListNapeLen = $scope.handlenapeListNape.length;
