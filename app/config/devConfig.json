@@ -1,5 +1,6 @@
 {
   "baseConfig": {
+    "isWebSql": true,
     "debug": false,
     "isMobilePlatform": false,
     "nativeScreenFlag": false,
