@@ -224,7 +224,16 @@
     "using": "使用中",
     "bathroom": "浴霸",
     "cancel": "取消",
-    "confirm": "确定"
+    "confirm": "确定",
+    "hot": "热风",
+    "cool": "凉风",
+    "dryer": "冷干",
+    "hotDrying": "热干",
+    "breath": "换气",
+    "purify": "空气净化",
+    "windDirection": "风向",
+    "light": "照明",
+    "setting": "设置"
   },
   "spa": {
     "goHomeTitle": "场景详情",

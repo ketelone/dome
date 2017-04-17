@@ -250,6 +250,7 @@ angular.module('myApp')
 
         .state('bathroom', {
           url: '/bathroom',
+          params: {"deviceSku": null},
           templateUrl: 'build/pages/device-controller/bathroom-controller/bathroom.html',
           controller: 'bathroomCtrl'
         })

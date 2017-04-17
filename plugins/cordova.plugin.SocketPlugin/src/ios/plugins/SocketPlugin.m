@@ -8,7 +8,10 @@
 
 #import "SocketPlugin.h"
 #import "SocketConnectTool.h"
+<<<<<<< HEAD
 #import "CDVLocation.h"
+=======
+>>>>>>> optimze_bathroom
 @interface SocketPlugin ()
 {
     CDVInvokedUrlCommand *udpCmd;
@@ -38,12 +41,17 @@
     NSString *broadCastIp = [arg objectForKey:@"ip"];
     broadCastIp = broadCastIp?broadCastIp:@"255.255.255.255";
     NSDictionary *msg = [arg objectForKey:@"value"];
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> optimze_bathroom
     if (msg==nil||[msg isEqual:[NSNull null]]) {
         CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"udp broadcast cmd can not be null or nil"];
         [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
         return;
     }
+<<<<<<< HEAD
     
     //Initialize
     [self.socketConnect initGCDAsyncUdpSocket];
@@ -58,13 +66,33 @@
     //超时处理
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(timeout/1000.0 * NSEC_PER_SEC)), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     
+=======
+
+    //Initialize
+    [self.socketConnect initGCDAsyncUdpSocket];
+
+    [self.socketConnect broadcast:msg WithHost:broadCastIp WithTag:0];//发送广播
+
+     self.udpRespQueue = [NSMutableArray array];//实例化一个udp消息队列
+
+    __block CDVPluginResult *result = nil;
+    __weak typeof(self)slf = self;
+
+    //超时处理
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(timeout/1000.0 * NSEC_PER_SEC)), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+
+>>>>>>> optimze_bathroom
         result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:_udpRespQueue];
         [slf.commandDelegate sendPluginResult:result callbackId:command.callbackId];
         //超时断开连接
         [self.socketConnect.udpSocket close];
         DLog(@"udpSocketBroad_close");
     });
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> optimze_bathroom
     //udp response
     self.socketConnect.udpResponse = ^(id resp,UdpSocketResponseStatus status){
         if (status == UdpSocketResponseStatusSendFailure) {
@@ -102,7 +130,11 @@
                                          }
                                  };
         [self.socketConnect startAck:tcpAck];//验证指令
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> optimze_bathroom
         __block CDVPluginResult *result = nil;
         __weak typeof(self)slf = self;
         //超时处理
@@ -114,7 +146,11 @@
                 DLog(@"tcpConnect_timeout");
             }
         });
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> optimze_bathroom
         //tcpSocket Response
         self.socketConnect.tcpResponse = ^(id resp,TcpSocketResponseStatus status){
             if (status == TcpSocketResponseStatusInit) {
@@ -127,7 +163,11 @@
         [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
 
     }
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> optimze_bathroom
 }
 
 /**TCP指令**/
@@ -137,17 +177,29 @@
     NSDictionary *arg = command.arguments[0];
     NSTimeInterval timeout = [arg[@"timeout"] doubleValue];
     NSDictionary *tcpAck = arg[@"value"];
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> optimze_bathroom
     if (tcpAck==nil||[tcpAck isEqual:[NSNull null]]) {
         CDVPluginResult  *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{@"error":@"command can not be nill or null"}];
         [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
         return;
     }
+<<<<<<< HEAD
     
     [self.socketConnect startAck:tcpAck];//发送指令
     __block CDVPluginResult *result = nil;
     __weak typeof(self)slf = self;
     
+=======
+
+    [self.socketConnect startAck:tcpAck];//发送指令
+    __block CDVPluginResult *result = nil;
+    __weak typeof(self)slf = self;
+
+>>>>>>> optimze_bathroom
     //超时处理
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(timeout/1000.0 * NSEC_PER_SEC)), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         //超时断开连接
@@ -157,7 +209,11 @@
             DLog(@"tcpConnect_timeout");
         }
     });
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> optimze_bathroom
     //tcp response
     self.socketConnect.tcpResponse = ^(id response,TcpSocketResponseStatus status){
         if (status == TcpSocketResponseStatusOthers) {
@@ -176,7 +232,11 @@
     }else{
           result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"tcp has been disconnect status!"];
     }
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> optimze_bathroom
     [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
 }
 
@@ -186,15 +246,25 @@
 - (void)ReceivedTcpDataNotification:(NSNotification *)notification
 {
     id resp = notification.object;
+<<<<<<< HEAD
     
     NSDictionary *result = resp;
     
+=======
+
+    NSDictionary *result = resp;
+
+>>>>>>> optimze_bathroom
     if (result) {
         //主动调用JS
         NSError *error;
         NSData *jsonStrData = [NSJSONSerialization dataWithJSONObject:result  options:0 error:&error];
         NSString *jsonStr = [[NSString alloc] initWithData:jsonStrData encoding:NSUTF8StringEncoding];
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> optimze_bathroom
         //收到通知
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.commandDelegate evalJs:[NSString stringWithFormat:@"cordova.fireDocumentEvent('SocketPlugin.receiveTcpData',%@)",jsonStr]];
@@ -221,15 +291,25 @@
 - (void)ReceivedTcpStatusNotification:(NSNotification *)notification
 {
     id resp = notification.object;
+<<<<<<< HEAD
     
     NSDictionary *result = (NSDictionary *)resp;
     
+=======
+
+    NSDictionary *result = (NSDictionary *)resp;
+
+>>>>>>> optimze_bathroom
     if (result) {
         //主动调用JS
         NSError *error;
         NSData *jsonStrData = [NSJSONSerialization dataWithJSONObject:result  options:0 error:&error];
         NSString *jsonStr = [[NSString alloc] initWithData:jsonStrData encoding:NSUTF8StringEncoding];
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> optimze_bathroom
         //收到通知
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.commandDelegate evalJs:[NSString stringWithFormat:@"cordova.fireDocumentEvent('SocketPlugin.receiveTcpStatus',%@)",jsonStr]];

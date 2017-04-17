@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package cordova.plugin.socket;
 
 /**
@@ -7,3 +8,14 @@ package cordova.plugin.socket;
 public interface UDPBroadCastCallBack {
     public void UDPResponse(String response);
 }
+=======
+package cordova.plugin.socket;
+
+/**
+ * @author xiang.wang
+ * 广播数据回调接口
+ */
+public interface UDPBroadCastCallBack {
+    public void UDPResponse(String response);
+}
+>>>>>>> optimze_bathroom

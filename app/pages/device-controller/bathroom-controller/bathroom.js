@@ -8,7 +8,9 @@ angular.module('bathroomModule')
     '$interval',
     '$window',
     '$ionicModal',
-    function($scope, $state, $interval, $window, $ionicModal){
+    'hmsPopup',
+    '$stateParams',
+    function($scope, $state, $interval, $window, $ionicModal, hmsPopup, $stateParams){
 
       $scope.bathroomData = [
         {
@@ -21,7 +23,7 @@ angular.module('bathroomModule')
           isOpenTimer: false,
           setTime: "",
           switchType: "Hot",
-          desc: "热风"
+          desc: "bathroom.hot"
         },
         {
           id: "2",
@@ -33,7 +35,7 @@ angular.module('bathroomModule')
           isOpenTimer: false,
           setTime: "",
           switchType: "Cool",
-          desc: "凉风"
+          desc: "bathroom.cool"
         },
         {
           id: "3",
@@ -45,7 +47,7 @@ angular.module('bathroomModule')
           isOpenTimer: false,
           setTime: "",
           switchType: "Dryer",
-          desc: "冷干"
+          desc: "bathroom.dryer"
         },
         {
           id: "4",
@@ -57,7 +59,7 @@ angular.module('bathroomModule')
           isOpenTimer: false,
           setTime: "",
           switchType: "Hot drying",
-          desc: "热干"
+          desc: "bathroom.hotDrying"
         },
         {
           id: "5",
@@ -69,7 +71,7 @@ angular.module('bathroomModule')
           isOpenTimer: false,
           setTime: "",
           switchType: "Breath",
-          desc: "换气"
+          desc: "bathroom.breath"
         },
         {
           id: "6",
@@ -81,7 +83,7 @@ angular.module('bathroomModule')
           isOpenTimer: false,
           setTime: "",
           switchType: "Purify",
-          desc: "空气净化"
+          desc: "bathroom.purify"
         },
         {
           id: "7",
@@ -93,7 +95,7 @@ angular.module('bathroomModule')
           isOpenTimer: false,
           setTime: "",
           switchType: "Wind direction",
-          desc: "风向"
+          desc: "bathroom.windDirection"
         },
         {
           id: "8",
@@ -105,7 +107,7 @@ angular.module('bathroomModule')
           isOpenTimer: false,
           setTime: "",
           switchType: "Light",
-          desc: "照明"
+          desc: "bathroom.light"
         },
         {
           id: "9",
@@ -117,7 +119,7 @@ angular.module('bathroomModule')
           isOpenTimer: false,
           setTime: "",
           switchType: "Setting",
-          desc: "设置"
+          desc: "bathroom.setting"
         }
 
       ];
@@ -134,13 +136,216 @@ angular.module('bathroomModule')
       $scope.setHour = "";
       $scope.setMinu = "";
 
+      $scope.goBack = function(){
+        $ionicHistory.goBack();
+      };
+
+/*      //接受tcp状态
+      document.addEventListener('SocketPlugin.receiveTcpStatus', function (result) {
+
+        hmsPopup.showShortCenterToast("tcp状态"+angular.toJson(result.code));
+      }, false);
+//接受tcp返回数据
+      document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
+        hmsPopup.showShortCenterToast("开始返回数据！");
+        // alert(JSON.stringify(result));
+        // {
+        //   from =     {
+        //     cid = 0xE4;
+        //   "device_id" = 7E66264D;
+        // };
+        //   idx = 0;
+        //   method = RSP;
+        //   payload =     {
+        //     cmd = "LIST_BONDED_DEVICE_RETURN";
+        //   "cmd_properties" =         {
+        //     "device_list" =             (
+        //     {
+        //       "device_id" = 24A93477;
+        //   "device_mac" = "F7:B3:24:A9:34:77";  //固定mac地址  唯一标示
+        //   "device_rssi" = 0;
+        //   "device_sku" = "F7:B3:24:A9:34:77";    、、设备sku
+        //   "device_state" = 1;                      、、设备状态 1已连接 0未连接
+        // }
+        // );
+        //   "device_number" = 1;                、、数组的个数
+        // };
+        //   "device_type" = "BLE_DEVICE";        、、蓝牙 box连接设备的类型   分蓝牙和WiFi  一般为蓝牙
+        // };
+        //   to =     {
+        //     cid = 0xE3;
+        // };
+        //   ts = 1492138779;
+        // }
+        var resultOn = result;
+        if (resultOn.payload.cmd == "LIST_BONDED_DEVICE_RETURN") {
+          $scope.deviceOn = resultOn.payload.cmd_properties.device_list;
+          if ($scope.deviceOn.length == 0) {
+            hmsPopup.showShortCenterToast("没有已连接设备，请搜索未连接设备");//让他去选择连接未设备
+          }
+        }
+
+        if (resultOn.payload.cmd == "SCAN_RETURN") {
+          console.log(resultOn.payload.cmd_properties.device_list);
+          $scope.deviceOff = resultOn.payload.cmd_properties.device_list;
+          if ($scope.deviceOff.length == 0) {
+            hmsPopup.showShortCenterToast("没有设备");//让他去选择连接未设备
+          }
+          $scope.$apply();
+        }
+
+      }, false);*/
+
+      var openLight = function (deviceId) {
+        var cmd = {
+          from: {
+            cid: "0xE3",
+          },
+          idx: 1,
+          method: "CTL",
+          payload: {
+            cmd: "CMD_REQUEST",
+            "device_type": "BLE_DEVICE",
+            value: ["887706010005270221"],
+          },
+          to: {
+            cid: "0xE4",
+            "device_id": deviceId,
+          },
+          ts: "1492146861.217451",
+          ver: 1,
+        }
+        cordova.plugins.SocketPlugin.tcpSendCmd({
+          "timeout": "5000",
+          "value": cmd
+        }, success, error);
+        function success(response) {
+          hmsPopup.showShortCenterToast("开灯");
+        }
+
+        function error() {
+          hmsPopup.showShortCenterToast("开灯失败");
+        }
+      };
+
+      var closeLight = function (deviceId) {
+        var cmd = {
+          from: {
+            cid: "0xE3",
+          },
+          idx: 1,
+          method: "CTL",
+          payload: {
+            cmd: "CMD_REQUEST",
+            "device_type": "BLE_DEVICE",
+            value: ["887706020005270020"],
+          },
+          to: {
+            cid: "0xE4",
+            "device_id": deviceId,
+          },
+          ts: "1492146861.217451",
+          ver: 1,
+        }
+        cordova.plugins.SocketPlugin.tcpSendCmd({
+          "timeout": "5000",
+          "value": cmd
+        }, success, error);
+        function success(response) {
+          hmsPopup.showShortCenterToast("开灯");
+        }
+
+        function error() {
+          hmsPopup.showShortCenterToast("开灯失败");
+        }
+      };
+
+      var openHot = function(deviceId){
+        var cmd = {
+          from: {
+            cid: "0xE3",
+          },
+          idx: 1,
+          method: "CTL",
+          payload: {
+            cmd: "CMD_REQUEST",
+            "device_type": "BLE_DEVICE",
+            value: ["8877080200052101000A2E"],
+          },
+          to: {
+            cid: "0xE4",
+            "device_id": deviceId,
+          },
+          ts: "1492146861.217451",
+          ver: 1,
+        }
+        cordova.plugins.SocketPlugin.tcpSendCmd({
+          "timeout": "5000",
+          "value": cmd
+        }, success, error);
+        function success(response) {
+          hmsPopup.showShortCenterToast("热风");
+        }
+
+        function error() {
+          hmsPopup.showShortCenterToast("热风失败");
+        }
+      };
+
+      var closeHot = function(deviceId){
+        var cmd = {
+          from: {
+            cid: "0xE3",
+          },
+          idx: 1,
+          method: "CTL",
+          payload: {
+            cmd: "CMD_REQUEST",
+            "device_type": "BLE_DEVICE",
+            value: ["8877080200052100000026"],
+          },
+          to: {
+            cid: "0xE4",
+            "device_id": deviceId,
+          },
+          ts: "1492146861.217451",
+          ver: 1,
+        }
+        cordova.plugins.SocketPlugin.tcpSendCmd({
+          "timeout": "5000",
+          "value": cmd
+        }, success, error);
+        function success(response) {
+          hmsPopup.showShortCenterToast("热风");
+        }
+
+        function error() {
+          hmsPopup.showShortCenterToast("热风失败");
+        }
+      };
+
+      var getXOR = function(){
+        var result = 2^0^5^(39^2);
+        return result;
+      };
+
       /**
        *@autor: caolei
        *@disc: to obtain the information of Yuba
        */
       $scope.$watch('', function(){
-
+        //console.log(getXOR());
       }, true);
+
+      var getDeviceId = function(){
+        var deviceList = localStorage.deviceInfo.split(";");
+        angular.forEach(deviceList, function(data, index, array){
+          var deviceInfo = data.split(":");
+          if(deviceInfo[0] == $stateParams.deviceSku){
+            return deviceInfo[1];
+          }
+        });
+      }
 
       /**
        *@autor: caolei
@@ -150,16 +355,23 @@ angular.module('bathroomModule')
        */
       $scope.getInfo = function(item){
 
+        var deviceId = getDeviceId();
+
         if(item.switchType == 'Light'){
+
+
           if(($scope.count%3) == 1){
             item.isOpen = true;
             alert("白灯");
+            openLight(deviceId);
           }else if(($scope.count%3) == 2){
             item.isOpen = true;
             alert("黄灯");
+            //openLight(localStorage.device_id);
             changeRingCol('#ff6600');
           }else if(($scope.count%3) == 0){
             item.isOpen = false;
+            closeLight(deviceId);
             changeRingCol('#99d5ff');
           }
           $scope.count = $scope.count + 1;
@@ -169,6 +381,9 @@ angular.module('bathroomModule')
             if(checkIsOk(item)){
               alert("正常打开");
               if(item.switchType == 'Hot' || item.switchType == 'Hot drying'){
+                if(item.switchType == 'Hot'){
+                  openHot(deviceId);
+                }
                 changeRingCol('#ff6600');
               }
               return true;
@@ -182,6 +397,9 @@ angular.module('bathroomModule')
             }
           }else{
             if(item.switchType == 'Hot' || item.switchType == 'Cool' || item.switchType == 'Dryer' || item.switchType == 'Hot drying'){
+              if(item.switchType == 'Hot'){
+                closeHot(deviceId);
+              }
               angular.forEach($scope.bathroomData, function(data, index, array) {
                 if (data.switchType == 'Wind direction') {
                   data.isOpen = false;
@@ -337,6 +555,7 @@ angular.module('bathroomModule')
         cxt.closePath();
       };
 
+      canvas.height = $window.innerWidth*1.1;
       var cxt=canvas.getContext("2d");
       var xLength = $window.innerHeight * 0.28;
       var yLength = $window.innerWidth * 0.8;
