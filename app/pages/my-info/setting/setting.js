@@ -30,7 +30,9 @@ angular.module('myInfoModule')
               $rootScope, publicMethod,$stateParams,checkVersionService,SettingsService){
 
 
-
+      $scope.goBack = function(){
+        $ionicHistory.goBack();
+      }
  /**
        *@author:chenjiacheng
        *@name:language
@@ -99,7 +101,7 @@ angular.module('myInfoModule')
        *@return:
        *@disc:Set default temperature
        */
-$scope.temperatureUnit=function()
+/*$scope.temperatureUnit=function()
      {
         if (SettingsService.get("temperature") != false) {
 
@@ -114,7 +116,7 @@ $scope.temperatureUnit=function()
         }
 
 
-    }
+    }*/
 
 
 /**

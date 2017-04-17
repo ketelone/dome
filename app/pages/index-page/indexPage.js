@@ -43,17 +43,17 @@ angular.module('indexPageModule')
       ];
 
       $scope.modelData = [
-        {
-          id: "1",
-          pictureUrl: 'build/img/index/img_home_gohome.png',
-          title: "回家",
-          context: "一键开启指定设备",
-          isOneButton: true,
-          isTwoButton: false,
-          jsonContext: "1",
-          isOff: false,
-          lastUpdateDate: ""
-        },
+        // {
+        //   id: "1",
+        //   pictureUrl: 'build/img/index/img_home_gohome.png',
+        //   title: "回家",
+        //   context: "一键开启指定设备",
+        //   isOneButton: true,
+        //   isTwoButton: false,
+        //   jsonContext: "1",
+        //   isOff: false,
+        //   lastUpdateDate: ""
+        // },
         {
           id: "2",
           pictureUrl: 'build/img/index/img_home_morning.png',
@@ -79,7 +79,7 @@ angular.module('indexPageModule')
         {
           id: "4",
           pictureUrl: 'build/img/index/img_home_spa.png',
-          title: "家庭SPA",
+          title: "泡澡",
           context: "出去SPA不如在家泡澡",
           isOneButton: false,
           isTwoButton: true,
@@ -89,6 +89,17 @@ angular.module('indexPageModule')
         },
         {
           id: "5",
+          pictureUrl: 'build/img/index/muyu@3x.png',
+          title: "沐浴",
+          context: "享受沐浴",
+          isOneButton: false,
+          isTwoButton: true,
+          jsonContext: "1",
+          isOff: false,
+          lastUpdateDate: ""
+        },
+        {
+          id: "6",
           pictureUrl: 'build/img/index/img_home_veil.png',
           title: "维亚灯光",
           context: "开始您美好的一天",
@@ -99,7 +110,7 @@ angular.module('indexPageModule')
           lastUpdateDate: ""
         },
         {
-          id: "6",
+          id: "7",
           pictureUrl: 'build/img/index/img_home_period.png',
           title: "大姨了吗",
           context: "女性特殊期洗浴关怀方案",
@@ -110,6 +121,25 @@ angular.module('indexPageModule')
           lastUpdateDate: ""
         }
       ];
+
+      $scope.goKeyscene = function(item){
+        console.log(item);
+        if(item.id == '1'){
+          $state.go('goHome');
+        }else if(item.id == '2'){
+          $state.go('morning');
+        }else if(item.id == '3'){
+          $state.go('leaveHome');
+        }else if(item.id == '4'){
+          $state.go('spa');
+        }else if(item.id == '5'){
+          $state.go('bathing');
+        }else if(item.id == '6'){
+          $state.go('veil');
+        }else if(item.id == '7'){
+          $state.go('period');
+        }
+      }
 
       $scope.deviceModel = [
         {
@@ -144,7 +174,7 @@ angular.module('indexPageModule')
           errorPictureUrl: "",
           isStatus: true,
           isError: false,
-          sku: "F7:B3:24:A9:34:77"
+          sku: "EB:4E:28:49:09:9D"
         },{
           id: "4",
           pictureUrl: "build/img/index/img_home_device_sensor.png",
@@ -174,8 +204,8 @@ angular.module('indexPageModule')
       $scope.boxList = [];
 
       $scope.$watch('', function(){
-        //localStorage.deviceInfo = "1:001;2:002;3:003";
-        searchBox();
+        localStorage.deviceInfo = ";r,1";
+        //searchBox();
       }, true);
 
      /* $scope.$on("$stateChangeSuccess", function (event, toState, toParams, fromState, fromParam){
@@ -192,15 +222,16 @@ angular.module('indexPageModule')
       });*/
 
       document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
-        hmsPopup.showShortCenterToast("开始返回数据！");
+        //hmsPopup.showShortCenterToast("开始返回数据！");
         var resultOn = result;
         $scope.deviceOff = resultOn.payload.cmd_properties.device_list;
         if (resultOn.payload.cmd == "LIST_BONDED_DEVICE_RETURN") {
-          localStorage.device_id = resultOn.payload.cmd_properties.device_list[0].device_id;
+          hmsPopup.showShortCenterToast("开始返回数据");
+          //localStorage.device_id = resultOn.payload.cmd_properties.device_list[0].device_id;
           //循环device list 取出device id，并降deviceid与相应页面的设备做关联
           var deviceLinkInfo = "";
           angular.forEach(resultOn.payload.cmd_properties.device_list, function(data, index, array){
-            deviceLinkInfo = deviceLinkInfo =="" ? (data.device_sku + ":" + data.device_id) : (deviceLinkInfo + ";" + data.device_sku + ":" + data.device_id);
+            deviceLinkInfo = deviceLinkInfo =="" ? (";" + data.device_sku + "," + data.device_id) : (deviceLinkInfo + ";" + data.device_sku + "," + data.device_id);
           });
           //保存device 连接的信息。
           localStorage.deviceInfo = deviceLinkInfo;
@@ -270,8 +301,13 @@ angular.module('indexPageModule')
           $scope.boxList = response;
           hmsPopup.hideLoading();
           $scope.$apply();
+          hmsPopup.showShortCenterToast("searchBox");
           angular.forEach($scope.boxList, function(data, index, array){
-            boxLink(data);
+
+            $timeout(function () {
+              boxLink(data);
+            }, 1000);
+
           });
           //boxLink($scope.boxList[0]);
         }
@@ -287,6 +323,7 @@ angular.module('indexPageModule')
        *@disc: link box
        */
       var boxLink = function (item) {
+        hmsPopup.showShortCenterToast("start boxLink");
         console.log('lian box');
         cordova.plugins.SocketPlugin.tcpConnect({
           "timeout": "5000",
@@ -294,7 +331,11 @@ angular.module('indexPageModule')
         }, success, error);
 
         function success(response) {
-          selectDeviceOn(item.payload.cmd_properties.device_id);
+          hmsPopup.showShortCenterToast("boxLink sucess");
+          $timeout(function () {
+            selectDeviceOn(item.payload.cmd_properties.device_id);
+          }, 1000);
+
         }
 
         function error() {
@@ -308,6 +349,7 @@ angular.module('indexPageModule')
        *@disc: link device
        */
       var selectDeviceOn = function (device_id) {
+        hmsPopup.showShortCenterToast("start  selectDeviceOn");
         var cmd = {
           "from": {"cid": "0xE3"},
           "to": {"cid": "0xE4", "device_id": device_id},
@@ -384,6 +426,9 @@ angular.module('indexPageModule')
       $scope.getDeviceInfo = function(item){
         if(item.deviceType == "浴霸"){
           $state.go('bathroom',{deviceSku: item.sku});
+        }
+        if(item.deviceType == "马桶"){
+          $state.go('toiletContrl');
         }
       };
 

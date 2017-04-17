@@ -222,6 +222,23 @@
         width: 100%;
       }
     }
+    @-webkit-keyframes bbb {
+      100% {
+        width: 100%;
+      }
+      80% {
+        width: 80%;
+      }
+      60% {
+        width: 60%;
+      }
+      40% {
+        width: 40%;
+      }
+      20% {
+        width: 0%;
+      }
+    }
     .progress {
       width: 100%;
       height: 100%;

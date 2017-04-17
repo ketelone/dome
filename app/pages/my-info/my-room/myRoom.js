@@ -1,9 +1,8 @@
 /**
- * Created by chenjiacheng on 2017/3/28.
+ * Created by emillia on 2017/4/17.
  */
 angular.module('myInfoModule')
-
-  .controller('greenLifeCtrl', [
+  .controller('myRoomCtrl', [
     '$scope',
     '$state',
     'baseConfig',
@@ -16,7 +15,7 @@ angular.module('myInfoModule')
     'hmsPopup',
     '$rootScope',
     'publicMethod',
-    '$stateParams',
+    '$stateParams','SettingsService','$translate',
     function ($scope,
               $state,
               baseConfig,
@@ -27,7 +26,7 @@ angular.module('myInfoModule')
               $ionicPlatform,
               $ionicScrollDelegate,
               hmsPopup,
-              $rootScope, publicMethod,$stateParams) {
+              $rootScope, publicMethod,$stateParams,SettingsService,$translate) {
 
 
 
@@ -36,4 +35,7 @@ angular.module('myInfoModule')
       }
 
 
-    }]);
+
+
+    }
+]);
