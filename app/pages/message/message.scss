@@ -38,7 +38,9 @@ color:#FFFFFF;
 }
 
 li{padding: 0rem}
-
+.item-complex.item-icon-right .item-content{
+    padding: 0rem
+  }
   //one message
 .oneModel {
   color: #FFFFFF;
@@ -100,6 +102,15 @@ right: 0.3rem;
   font-size: 0.28rem;
   color: #9B9B9B;
 
+}
+
+  .manyChoose{background: #C8C7CD;
+    font-size: 0.24rem;
+    color: #FFFFFF;}
+.goDetele{
+  background: #FE3B31;
+  font-size: 0.24rem;
+  color: #FFFFFF;
 }
 
 }

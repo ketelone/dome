@@ -47,24 +47,24 @@ angular.module('myApp')
       //   alert(language.value=='en-US');
     //     alert(language.value=='zh-CN');
       // var localLanguage=language.value;
-       if(language.value=='zh-CN'){
+       if(language.value=='zh-CN'||'zh-Hans-CN'){
        $translate.use('zh');
 
       //   alert('zh1');
        }
-       else  if( language.value=='zh-TW'){
+       else  if( language.value=='zh-TW'||'zh-Hans-TW'){
        $translate.use('tw');
 
   //   alert('tw1');
        }
-       else  if( language.value=='en-US'){
+       else  if( language.value=='en-US'||'en-CN'){
        $translate.use('en');
 
       // alert('en1');
 
        }
-       else  if( language.value=='en-TH'){
-       $translate.use('th');
+             else  if( language.value=='en-TH'||'th-CN'){
+           $translate.use('th');
 
     //   alert('th1');
        }

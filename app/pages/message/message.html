@@ -27,20 +27,23 @@
  </div>
 
   <ion-content class="hasHeader">
+
 <!--status-->
    <ion-list ng-show="hasStaus" >
+<!--
+<ion-item ng-repeat="item in items" item="item" href="#/item/{{item.id}}" class="item-remove-animate">
 <li class="item item-icon-right" style="border-style:none" >
     <div class="row oneModel">
 <div class="col col-75">
   <div class="row">
- <div class="col col-60" STYLE="padding-left: 0rem"><span class="leftWord1">进水滤芯寿命提醒</span></div>
-    <div class="col" ><span class="leftWord2">马桶</span></div>
+ <div class="col col-60" STYLE="padding-left: 0rem"><span class="leftWord1">{{item.statusMessage}}</span></div>
+    <div class="col" ><span class="leftWord2">{{item.device}}</span></div>
   </div>
   <div class="row">
-   <span class="leftWord3">进水滤芯快到使用期限，快去跟换吧!</span>
+   <span class="leftWord3">{{item.messageDel}}</span>
   </div>
   <div class="row addpadding">
-    <span class="time">2017-02-08 17:25</span>
+    <span class="time">{{item.time}}</span>
   </div>
 </div>
 <div class="col ">
@@ -48,48 +51,51 @@
 </div>
     </div>
 </li>
+  <ion-option-button class="button-assertive"
+                     ng-click="edit(item)">
+    Edit
+  </ion-option-button>
+  <ion-option-button class="button-calm"
+                     ng-click="share(item)">
+    Share
+  </ion-option-button>
+   </ion-item>
+-->
 
-     <li class="item item-icon-right" style="border-style:none" >
-       <div class="row oneModel">
-         <div class="col col-75">
-           <div class="row">
-             <div class="col col-60" STYLE="padding-left: 0rem"><span class="leftWord1">出水水温达到提醒</span></div>
-             <div class="col" ><span class="leftWord2">淋浴</span></div>
+     <ion-item style="border-style:none;" ng-repeat="item in items" item="item" href="#/item/{{item.id}}" class="item item-icon-right item-remove-animate">
+ <div class="row oneModel">
+           <div class="col col-75">
+             <div class="row">
+               <div class="col col-60" STYLE="padding-left: 0rem"><span class="leftWord1">{{item.statusMessage}}</span></div>
+               <div class="col" ><span class="leftWord2">{{item.device}}</span></div>
+             </div>
+             <div class="row">
+               <span class="leftWord3">{{item.messageDel}}</span>
+             </div>
+             <div class="row addpadding">
+               <span class="time">{{item.time}}</span>
+             </div>
            </div>
-           <div class="row">
-             <span class="leftWord3">实际出水水温达到37°C</span>
-           </div>
-           <div class="row addpadding">
-             <span class="time">2017-02-08 17:25</span>
+           <div class="col ">
+             <i class="icon ion-ios-arrow-right iconSize"></i>
            </div>
          </div>
-         <div class="col ">
-           <i class="icon ion-ios-arrow-right iconSize"></i>
-         </div>
-       </div>
-     </li>
 
-     <li class="item item-icon-right" style="border-style:none" >
-       <div class="row oneModel">
-         <div class="col col-75">
-           <div class="row">
-             <div class="col col-60" STYLE="padding-left: 0rem"><span class="leftWord1">除臭块更新提醒</span></div>
-             <div class="col" ><span class="leftWord2">马桶</span></div>
-           </div>
-           <div class="row">
-             <span class="leftWord3">实际出水水温达到37°C</span>
-           </div>
-           <div class="row addpadding">
-             <span class="time">2017-02-08 17:25</span>
-           </div>
-         </div>
-         <div class="col" style="text-align: center;">
-           <i class="icon ion-ios-arrow-right iconSize"></i>
-         </div>
-       </div>
-     </li>
-
+       <ion-option-button class="manyChoose"
+                          ng-click="manyChoose(item)">
+         多选
+       </ion-option-button>
+       <ion-option-button class="goDetele"
+                          ng-click="goDetele(item)">
+         删除
+       </ion-option-button>
+       <ion-delete-button style="" class="ion-minus-circled"
+                          ng-click="onItemDelete(item)">
+         sdsadasdsad
+       </ion-delete-button>
+     </ion-item>
 </ion-list>
+
     <!--nostatus-->
     <ion-list ng-show="false" >
 
