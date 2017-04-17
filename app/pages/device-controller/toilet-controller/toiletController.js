@@ -3,11 +3,13 @@ angular.module('toiletControlModule')
     '$scope',
     '$state',
     '$ionicModal',
+    '$compile',
     'baseConfig',
     'checkVersionService',
     function ($scope,
               $state,
               $ionicModal,
+              $compile,
               baseConfig,
               checkVersionService
     ) {
@@ -102,36 +104,99 @@ angular.module('toiletControlModule')
         },
       ];
       //侧滑转档数量json
-      $scope.slideNyData =[{
-        des:"水温档位",
+      $scope.slideNvYongData =[{
+        des: "水压档位",
+        gearNum: 5,
+        gearInit: 1,
+        gearInitTemp: 1,
+        parameterctlFlag: false,
+        parNodeid: 'toilet-NvYongSyCtl',
+        canves01: "NvYongSycanves01",
+        canves02: "NvYongSycanves02",
+        canves03: "NvYongSycanves03",
+      },
+        {
+        des:"位置档位",
         gearNum:5,
         gearInit:1,
+        gearInitTemp:1,
         parameterctlFlag:false,
-        parNodeid:'toilet-parameterctl',
-        canves01:"nYcanves01",
-        canves02:"nYcanves02",
-        canves03:"nYcanves03",
+        parNodeid:'toilet-NvYongPosCtl',
+        canves01:"NvYongSyPoscanves01",
+        canves02:"NvYongSyPoscanves02",
+        canves03:"NvYongSyPoscanves03",
       },{
         des:"温度档位",
         gearNum:6,
         gearInit:1,
+        gearInitTemp:1,
         parameterctlFlag:false,
-        parNodeid:'toilet-parameterctlyy',
-        canves01:"yYcanves01",
-        canves02:"yYcanves02",
-        canves03:"yYcanves03",
-      },{
-        des:"风力档位",
-        gearNum:3,
-        gearInit:3,
-        parameterctlFlag:false,
-        parNodeid:'toilet-parameterctlyu',
-        canves01:"yucanves01",
-        canves02:"yucanves02",
-        canves03:"yucanves03",
-      }
-      ];
-
+        parNodeid:'toilet-NvYongTemCtl',
+        canves01:"NvYongTemcanves01",
+        canves02:"NvYongTemcanves02",
+        canves03:"NvYongTemcanves03",
+      }];
+      $scope.slideTunBuData =[{
+        des: "tun水压档位",
+        gearNum: 5,
+        gearInit: 1,
+        gearInitTemp: 1,
+        parameterctlFlag: false,
+        parNodeid: 'toilet-TunBuSyCtl',
+        canves01: "TunBuSycanves01",
+        canves02: "TunBuSycanves02",
+        canves03: "TunBuSycanves03",
+      },
+        {
+          des:"tun位置档位",
+          gearNum:5,
+          gearInit:1,
+          gearInitTemp:1,
+          parameterctlFlag:false,
+          parNodeid:'toilet-TunBuPosCtl',
+          canves01:"TunBuPosPoscanves01",
+          canves02:"TunBuPosPoscanves02",
+          canves03:"TunBuPosPoscanves03",
+        },{
+          des:"tun温度档位",
+          gearNum:6,
+          gearInit:1,
+          gearInitTemp:1,
+          parameterctlFlag:false,
+          parNodeid:'toilet-TunBuTemCtl',
+          canves01:"TunBuTemTemcanves01",
+          canves02:"TunBuTemTemcanves02",
+          canves03:"TunBuTemTemcanves03",
+        }];
+      $scope.currentSlideData = $scope.slideNvYongData;
+      // //初始化当前模板数据
+      $scope.initHtmlTemplate = function (currentSlideData) {
+        // //初始化数据
+        if($('#ionSliderBox').children().length !== 0){
+          $('#ionSliderBox').empty();
+        };
+        var checHtml =
+          "<ion-slide-box on-slide-changed='slideHasChanged($index)'>"+
+          "<ion-slide ng-repeat='list in currentSlideData track by $index'>"+
+          "<div id={{list.parNodeid}} class='toilet-parameterctl'>"+
+          "<canvas id={{list.canves01}} class='canves-pos'></canvas>"+
+          "<canvas id={{list.canves02}} class='canves-pos'></canvas>"+
+          "<canvas id={{list.canves03}} class='canves-pos'></canvas>"+
+          "<canvas id={{list.canves04}} class=''canves-pos'></canvas>"+
+          "<div class='toilet-parameterctl-data' ng-if='!list.parameterctlFlag'>"+
+          "<span class='toilet-parameterctl-raddata' ng-bind='list.gearInit'></span>"+
+          "<span class='toilet-parameterctl-des' ng-bind='list.des'></span>"+
+          "</div>"+
+          "<div class='toilet-parameterctl-dataimg' ng-if='list.parameterctlFlag'>"+
+          "<img class='conninfo-parameterctl-img' src='build/img/toilet-controller/btn_devicedetail_scoll.png' alt=''>"+
+          "</div>"+
+          "</div>"+
+          "</ion-slide>"+
+          "</ion-slide-box>"
+        var $checkhtml = $compile(checHtml)($scope); // 编译
+        $('#ionSliderBox').append($checkhtml[0]);
+      };
+      $scope.initHtmlTemplate($scope.currentSlideData);
       var initCircle = function (slideDataObj) {
         //获取父元素高度
         this.canvsscreenHeight = document.getElementById(slideDataObj.parNodeid).offsetHeight;
@@ -148,16 +213,23 @@ angular.module('toiletControlModule')
         document.getElementById(slideDataObj.canves03).width = this.canvsscreenWidth;
         document.getElementById(slideDataObj.canves03).style.zIndex = 2;
 
+        // document.getElementById(slideDataObj.canves04).height = this.canvsscreenHeight/2;
+        // document.getElementById(slideDataObj.canves04).width = this.canvsscreenWidth/2;
+        // document.getElementById(slideDataObj.canves04).style.zIndex = 4;
+        // document.getElementById(slideDataObj.canves04).style.left = 50+'px';
+        // document.getElementById(slideDataObj.canves04).style.top = 50+'px';
         // 获取canvesobj
         this.cr1 = getCanvesObj(slideDataObj.canves01);//档位canves
         this.cr2 = getCanvesObj(slideDataObj.canves02);//滑动小球档位canves
         this.cr3 = getCanvesObj(slideDataObj.canves03);//颜色填充档位canves
+        // this.cr4 = getCanvesObj(slideDataObj.canves04);//颜色填充档位canves
         //四种圆
         this.deliverCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2,color:"#2F3538"};//档位圆
         this.HideCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2-20,color:"black"};//档位圆
         this.deliverLine = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2,color:"black"};//档位线
         this.rollCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2-10,color:"white"};//小球圆
         this.FillCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2,color:"#6ACBB3"};//填充圆
+        // this.bimianCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2-30,color:"black"};//防触点
         //变量
         this.i=0;this.j=0;
         this.stoPosPoint=0;
@@ -176,8 +248,9 @@ angular.module('toiletControlModule')
           };
           // 画白色遮挡
           drawRadian(this.cr1,this.HideCircle,0,360);
-        };
 
+          // drawRadian(this.cr4,this.bimianCircle,0,360);
+        };
         // 画填充圆
         this.drawCircleFill = function (canvesobj,changeRad) {
           canvesobj.clearRect(0,0,this.canvsscreenHeight,this.canvsscreenWidth);
@@ -230,7 +303,6 @@ angular.module('toiletControlModule')
           //画白色遮挡
           drawRadian(canvesobj,this.HideCircle,0,360);
         };
-
         //画圆球和指示
         this.drawc = function (canvesobj,ancr,type) {
           if(135<=ancr || ancr<=45){
@@ -267,20 +339,18 @@ angular.module('toiletControlModule')
         };
       };
       setTimeout(function () {
-
-        $scope.objDataTemp = [];
         $scope.getCurrentObj = function (index) {
           //当前new实例
-          if($scope.objDataTemp[index]){
-            var currentRadObj = $scope.objDataTemp[index];
-          }else{
-            var currentRadObj = new initCircle($scope.slideNyData[index]);
-          };
-          $scope.objDataTemp.push(currentRadObj);
+          var currentRadObj = new initCircle($scope.currentSlideData[index]);
+          currentRadObj.i=0;
+          currentRadObj.j=0;
+          currentRadObj.stoPosPoint=0;
+          currentRadObj.gearInit = $scope.currentSlideData[index].gearInitTemp;
+          $scope.currentSlideData[index].gearInit = $scope.currentSlideData[index].gearInitTemp;
           //当前绑定事件对象
-          var currentEventObj = getIdObj($scope.slideNyData[index].canves02);
-          currentRadObj.drawDeliverCircle($scope.slideNyData[index].gearNum);
-          currentRadObj.drawc(currentEventObj.cr2,currentEventObj.starRad,"type");
+          var currentEventObj = getIdObj($scope.currentSlideData[index].canves02);
+          currentRadObj.drawDeliverCircle($scope.currentSlideData[index].gearNum);
+          currentRadObj.drawc(currentRadObj.cr2,currentRadObj.starRad,"type");
           currentEventObj.addEventListener( 'touchstart', function( e ){
             e.preventDefault();
             var poi = getEvtLocation(e);
@@ -304,13 +374,12 @@ angular.module('toiletControlModule')
             }
           };
         };
-        $scope.getCurrentObj(0)
+
+        $scope.getCurrentObj(0);
         $scope.slideHasChanged = function (index) {
           $scope.getCurrentObj(index);
-        }
-
+        };
       },20);
-
       //处理选择怎加border
       var handlenapeListNapeLen = $scope.handlenapeListNape.length;
       $scope.selectNapes = function (index) {
@@ -328,6 +397,10 @@ angular.module('toiletControlModule')
             $scope.handlenapeListNape[i].imgUrl = $scope.handlenapeListNape[i].imgUrlTemp;
           }
         };
+        // 根据选择项来初始化选择项的slider
+        $scope.currentSlideData = $scope.slideTunBuData;
+        $scope.initHtmlTemplate($scope.currentSlideData);
+
       };
       //模式选择
       //获取屏幕高度
