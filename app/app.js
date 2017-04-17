@@ -229,8 +229,7 @@ angular.module('myApp')
         })
 
         .state('bathroom', {
-          url: '/bathroom',
-          params: {"deviceSku": null},
+          url: '/bathroom/:deviceSku',
           templateUrl: 'build/pages/device-controller/bathroom-controller/bathroom.html',
           controller: 'bathroomCtrl'
         })

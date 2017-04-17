@@ -270,7 +270,7 @@ angular.module('bathroomModule')
           payload: {
             cmd: "CMD_REQUEST",
             "device_type": "BLE_DEVICE",
-            value: ["8877080200052101000A2E"],
+            value: ["8877080200052101000A2D"],
           },
           to: {
             cid: "0xE4",
@@ -316,16 +316,338 @@ angular.module('bathroomModule')
           "value": cmd
         }, success, error);
         function success(response) {
-          hmsPopup.showShortCenterToast("热风");
+          hmsPopup.showShortCenterToast("热风关闭");
         }
 
         function error() {
-          hmsPopup.showShortCenterToast("热风失败");
+          hmsPopup.showShortCenterToast("热风关闭失败");
+        }
+      };
+
+      var openCool = function(deviceId){
+        var cmd = {
+          from: {
+            cid: "0xE3",
+          },
+          idx: 1,
+          method: "CTL",
+          payload: {
+            cmd: "CMD_REQUEST",
+            "device_type": "BLE_DEVICE",
+            value: ["8877080200052101000A2E"],
+          },
+          to: {
+            cid: "0xE4",
+            "device_id": deviceId,
+          },
+          ts: "1492146861.217451",
+          ver: 1,
+        }
+        cordova.plugins.SocketPlugin.tcpSendCmd({
+          "timeout": "5000",
+          "value": cmd
+        }, success, error);
+        function success(response) {
+          hmsPopup.showShortCenterToast("凉风");
+        }
+
+        function error() {
+          hmsPopup.showShortCenterToast("凉风失败");
+        }
+      };
+
+      var closeCool = function(deviceId){
+        var cmd = {
+          from: {
+            cid: "0xE3",
+          },
+          idx: 1,
+          method: "CTL",
+          payload: {
+            cmd: "CMD_REQUEST",
+            "device_type": "BLE_DEVICE",
+            value: ["8877080200052100000026"],
+          },
+          to: {
+            cid: "0xE4",
+            "device_id": deviceId,
+          },
+          ts: "1492146861.217451",
+          ver: 1,
+        }
+        cordova.plugins.SocketPlugin.tcpSendCmd({
+          "timeout": "5000",
+          "value": cmd
+        }, success, error);
+        function success(response) {
+          hmsPopup.showShortCenterToast("凉风关闭");
+        }
+
+        function error() {
+          hmsPopup.showShortCenterToast("凉风关闭失败");
+        }
+      };
+
+      var openDryer = function(deviceId){
+        var cmd = {
+          from: {
+            cid: "0xE3",
+          },
+          idx: 1,
+          method: "CTL",
+          payload: {
+            cmd: "CMD_REQUEST",
+            "device_type": "BLE_DEVICE",
+            value: ["8877080200052105000A29"],
+          },
+          to: {
+            cid: "0xE4",
+            "device_id": deviceId,
+          },
+          ts: "1492146861.217451",
+          ver: 1,
+        }
+        cordova.plugins.SocketPlugin.tcpSendCmd({
+          "timeout": "5000",
+          "value": cmd
+        }, success, error);
+        function success(response) {
+          hmsPopup.showShortCenterToast("冷干");
+        }
+
+        function error() {
+          hmsPopup.showShortCenterToast("冷干失败");
+        }
+      };
+
+      var closeDryer = function(deviceId){
+        var cmd = {
+          from: {
+            cid: "0xE3",
+          },
+          idx: 1,
+          method: "CTL",
+          payload: {
+            cmd: "CMD_REQUEST",
+            "device_type": "BLE_DEVICE",
+            value: ["8877080200052100000026"],
+          },
+          to: {
+            cid: "0xE4",
+            "device_id": deviceId,
+          },
+          ts: "1492146861.217451",
+          ver: 1,
+        }
+        cordova.plugins.SocketPlugin.tcpSendCmd({
+          "timeout": "5000",
+          "value": cmd
+        }, success, error);
+        function success(response) {
+          hmsPopup.showShortCenterToast("冷干关闭");
+        }
+
+        function error() {
+          hmsPopup.showShortCenterToast("冷干关闭失败");
+        }
+      };
+
+      var openHotDrying = function(deviceId){
+        var cmd = {
+          from: {
+            cid: "0xE3",
+          },
+          idx: 1,
+          method: "CTL",
+          payload: {
+            cmd: "CMD_REQUEST",
+            "device_type": "BLE_DEVICE",
+            value: ["8877080200052103000A2F"],
+          },
+          to: {
+            cid: "0xE4",
+            "device_id": deviceId,
+          },
+          ts: "1492146861.217451",
+          ver: 1,
+        }
+        cordova.plugins.SocketPlugin.tcpSendCmd({
+          "timeout": "5000",
+          "value": cmd
+        }, success, error);
+        function success(response) {
+          hmsPopup.showShortCenterToast("热干");
+        }
+
+        function error() {
+          hmsPopup.showShortCenterToast("热干失败");
+        }
+      };
+
+      var closeHotDrying = function(deviceId){
+        var cmd = {
+          from: {
+            cid: "0xE3",
+          },
+          idx: 1,
+          method: "CTL",
+          payload: {
+            cmd: "CMD_REQUEST",
+            "device_type": "BLE_DEVICE",
+            value: ["8877080200052100000026"],
+          },
+          to: {
+            cid: "0xE4",
+            "device_id": deviceId,
+          },
+          ts: "1492146861.217451",
+          ver: 1,
+        }
+        cordova.plugins.SocketPlugin.tcpSendCmd({
+          "timeout": "5000",
+          "value": cmd
+        }, success, error);
+        function success(response) {
+          hmsPopup.showShortCenterToast("热干关闭");
+        }
+
+        function error() {
+          hmsPopup.showShortCenterToast("热干关闭失败");
+        }
+      };
+
+      //Breath
+      var openBreath = function(deviceId){
+        var cmd = {
+          from: {
+            cid: "0xE3",
+          },
+          idx: 1,
+          method: "CTL",
+          payload: {
+            cmd: "CMD_REQUEST",
+            "device_type": "BLE_DEVICE",
+            value: ["8877080200052104000A28"],
+          },
+          to: {
+            cid: "0xE4",
+            "device_id": deviceId,
+          },
+          ts: "1492146861.217451",
+          ver: 1,
+        }
+        cordova.plugins.SocketPlugin.tcpSendCmd({
+          "timeout": "5000",
+          "value": cmd
+        }, success, error);
+        function success(response) {
+          hmsPopup.showShortCenterToast("换气");
+        }
+
+        function error() {
+          hmsPopup.showShortCenterToast("换气失败");
+        }
+      };
+
+      var closeBreath = function(deviceId){
+        var cmd = {
+          from: {
+            cid: "0xE3",
+          },
+          idx: 1,
+          method: "CTL",
+          payload: {
+            cmd: "CMD_REQUEST",
+            "device_type": "BLE_DEVICE",
+            value: ["8877080200052100000026"],
+          },
+          to: {
+            cid: "0xE4",
+            "device_id": deviceId,
+          },
+          ts: "1492146861.217451",
+          ver: 1,
+        }
+        cordova.plugins.SocketPlugin.tcpSendCmd({
+          "timeout": "5000",
+          "value": cmd
+        }, success, error);
+        function success(response) {
+          hmsPopup.showShortCenterToast("换气关闭");
+        }
+
+        function error() {
+          hmsPopup.showShortCenterToast("换气关闭失败");
+        }
+      };
+
+      //Wind direction
+      var openWindDirection = function (deviceId) {
+        var cmd = {
+          from: {
+            cid: "0xE3",
+          },
+          idx: 1,
+          method: "CTL",
+          payload: {
+            cmd: "CMD_REQUEST",
+            "device_type": "BLE_DEVICE",
+            value: ["887706020005030105"],
+          },
+          to: {
+            cid: "0xE4",
+            "device_id": deviceId,
+          },
+          ts: "1492146861.217451",
+          ver: 1,
+        }
+        cordova.plugins.SocketPlugin.tcpSendCmd({
+          "timeout": "5000",
+          "value": cmd
+        }, success, error);
+        function success(response) {
+          hmsPopup.showShortCenterToast("风向");
+        }
+
+        function error() {
+          hmsPopup.showShortCenterToast("风向失败");
+        }
+      };
+
+      var closeWindDirection = function (deviceId) {
+        var cmd = {
+          from: {
+            cid: "0xE3",
+          },
+          idx: 1,
+          method: "CTL",
+          payload: {
+            cmd: "CMD_REQUEST",
+            "device_type": "BLE_DEVICE",
+            value: ["887706020005030104"],
+          },
+          to: {
+            cid: "0xE4",
+            "device_id": deviceId,
+          },
+          ts: "1492146861.217451",
+          ver: 1,
+        }
+        cordova.plugins.SocketPlugin.tcpSendCmd({
+          "timeout": "5000",
+          "value": cmd
+        }, success, error);
+        function success(response) {
+          hmsPopup.showShortCenterToast("风向关闭");
+        }
+
+        function error() {
+          hmsPopup.showShortCenterToast("风向关闭失败");
         }
       };
 
       var getXOR = function(){
-        var result = 2^0^5^(39^2);
+        var result = 2^0^5^(3^0);
         return result;
       };
 
@@ -334,18 +656,23 @@ angular.module('bathroomModule')
        *@disc: to obtain the information of Yuba
        */
       $scope.$watch('', function(){
-        //console.log(getXOR());
+        console.log(getXOR());
       }, true);
 
+      /**
+       *@autor: caolei
+       *@return: device id
+       *@disc: get device id
+       */
       var getDeviceId = function(){
         var deviceList = localStorage.deviceInfo.split(";");
-        angular.forEach(deviceList, function(data, index, array){
-          var deviceInfo = data.split(":");
+        for(var i = 0; i < deviceList.length; i ++){
+          var deviceInfo = deviceList[i].split(",");
           if(deviceInfo[0] == $stateParams.deviceSku){
             return deviceInfo[1];
           }
-        });
-      }
+        }
+      };
 
       /**
        *@autor: caolei
@@ -359,14 +686,13 @@ angular.module('bathroomModule')
 
         if(item.switchType == 'Light'){
 
-
           if(($scope.count%3) == 1){
             item.isOpen = true;
-            alert("白灯");
+            alert("白灯"+deviceId);
             openLight(deviceId);
           }else if(($scope.count%3) == 2){
             item.isOpen = true;
-            alert("黄灯");
+            //alert("黄灯");
             //openLight(localStorage.device_id);
             changeRingCol('#ff6600');
           }else if(($scope.count%3) == 0){
@@ -384,8 +710,24 @@ angular.module('bathroomModule')
                 if(item.switchType == 'Hot'){
                   openHot(deviceId);
                 }
+                if(item.switchType == 'Hot drying'){
+                  openHotDrying(deviceId);
+                }
                 changeRingCol('#ff6600');
               }
+              if(item.switchType == 'Cool'){
+                openCool(deviceId);
+              }
+              if(item.switchType == 'Dryer'){
+                openDryer(deviceId);
+              }
+              if(item.switchType == 'Breath'){
+                openBreath(deviceId);
+              }
+              if(item.switchType == 'Wind direction'){
+                openWindDirection(deviceId);
+              }
+
               return true;
             }else{
               if(item.switchType == 'Wind direction'){
@@ -400,11 +742,27 @@ angular.module('bathroomModule')
               if(item.switchType == 'Hot'){
                 closeHot(deviceId);
               }
+              if(item.switchType == 'Cool'){
+                closeCool(deviceId);
+              }
+              if(item.switchType == 'Dryer'){
+                closeDryer(deviceId);
+              }
+              if(item.switchType == 'Hot drying'){
+                closeHotDrying(deviceId);
+              }
               angular.forEach($scope.bathroomData, function(data, index, array) {
                 if (data.switchType == 'Wind direction') {
+                  closeWindDirection(deviceId);
                   data.isOpen = false;
                 }
               });
+            }
+            if(item.switchType == 'Breath'){
+              closeBreath(deviceId);
+            }
+            if(item.switchType == 'Wind direction'){
+              closeWindDirection(deviceId);
             }
             if((item.switchType != 'Hot' && item.switchType != 'Hot drying') || (item.switchType == 'Hot' || item.switchType == 'Hot drying')){
               changeRingCol('#99d5ff');
@@ -486,7 +844,8 @@ angular.module('bathroomModule')
        *@autor: caolei
        *@disc: go to barthroomSet page
        */
-      $scope.getBathroomInfo = function(){
+      $scope.getBathroomInfo = function(item){
+        item.isOpen = false;
         $state.go('bathroomSet');
       };
 

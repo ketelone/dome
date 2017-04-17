@@ -174,7 +174,6 @@ angular.module('indexPageModule')
       $scope.boxList = [];
 
       $scope.$watch('', function(){
-        //localStorage.deviceInfo = "1:001;2:002;3:003";
         searchBox();
       }, true);
 
@@ -192,15 +191,16 @@ angular.module('indexPageModule')
       });*/
 
       document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
-        hmsPopup.showShortCenterToast("开始返回数据！");
+        //hmsPopup.showShortCenterToast("开始返回数据！");
         var resultOn = result;
         $scope.deviceOff = resultOn.payload.cmd_properties.device_list;
         if (resultOn.payload.cmd == "LIST_BONDED_DEVICE_RETURN") {
-          localStorage.device_id = resultOn.payload.cmd_properties.device_list[0].device_id;
+          hmsPopup.showShortCenterToast("开始返回数据");
+          //localStorage.device_id = resultOn.payload.cmd_properties.device_list[0].device_id;
           //循环device list 取出device id，并降deviceid与相应页面的设备做关联
           var deviceLinkInfo = "";
           angular.forEach(resultOn.payload.cmd_properties.device_list, function(data, index, array){
-            deviceLinkInfo = deviceLinkInfo =="" ? (data.device_sku + ":" + data.device_id) : (deviceLinkInfo + ";" + data.device_sku + ":" + data.device_id);
+            deviceLinkInfo = deviceLinkInfo =="" ? (data.device_sku + "," + data.device_id) : (deviceLinkInfo + ";" + data.device_sku + "," + data.device_id);
           });
           //保存device 连接的信息。
           localStorage.deviceInfo = deviceLinkInfo;
@@ -270,8 +270,13 @@ angular.module('indexPageModule')
           $scope.boxList = response;
           hmsPopup.hideLoading();
           $scope.$apply();
+          hmsPopup.showShortCenterToast("searchBox");
           angular.forEach($scope.boxList, function(data, index, array){
-            boxLink(data);
+
+            $timeout(function () {
+              boxLink(data);
+            }, 1000);
+
           });
           //boxLink($scope.boxList[0]);
         }
@@ -287,6 +292,7 @@ angular.module('indexPageModule')
        *@disc: link box
        */
       var boxLink = function (item) {
+        hmsPopup.showShortCenterToast("start boxLink");
         console.log('lian box');
         cordova.plugins.SocketPlugin.tcpConnect({
           "timeout": "5000",
@@ -294,7 +300,11 @@ angular.module('indexPageModule')
         }, success, error);
 
         function success(response) {
-          selectDeviceOn(item.payload.cmd_properties.device_id);
+          hmsPopup.showShortCenterToast("boxLink sucess");
+          $timeout(function () {
+            selectDeviceOn(item.payload.cmd_properties.device_id);
+          }, 1000);
+
         }
 
         function error() {
@@ -308,6 +318,7 @@ angular.module('indexPageModule')
        *@disc: link device
        */
       var selectDeviceOn = function (device_id) {
+        hmsPopup.showShortCenterToast("start  selectDeviceOn");
         var cmd = {
           "from": {"cid": "0xE3"},
           "to": {"cid": "0xE4", "device_id": device_id},
@@ -384,6 +395,9 @@ angular.module('indexPageModule')
       $scope.getDeviceInfo = function(item){
         if(item.deviceType == "浴霸"){
           $state.go('bathroom',{deviceSku: item.sku});
+        }
+        if(item.deviceType == "马桶"){
+          $state.go('toiletContrl');
         }
       };
 
