@@ -1,6 +1,6 @@
 <ion-view view-title="设备控制-浴霸" class="bathroom-controller">
   <div class="bar bar-header header">
-    <button class="button button-icon icon ion-ios-arrow-left header_buttonRig" ng-click="goBack()"></button>
+    <button class="button button-icon icon ion-ios-arrow-left header_buttonRig" ng-click="goBack();"></button>
     <div class="h1 title header_title">
       <span translate="bathroom.bathroom"></span>
     </div>
@@ -54,7 +54,7 @@
         <span class="text-switch">
           <img ng-src="{{item.switchPictureUrl}}" class="hot-img"/>
         </span>
-          <p class="switch-desc">{{item.desc}}</p>
+          <p class="switch-desc" translate="{{item.desc}}"></p>
         </label>
       </div>
       <div class="is-show-wind-switch" ng-if="isWindShow">
@@ -217,7 +217,7 @@
   </ion-scroll>
   <script id="my-modal.html" type="text/ng-template">
     <div style="position: relative">
-      <div class="modal" style="position:absolute;top:0;border: 1px solid gray;border-radius: 0.3rem 0.3rem 0 0;width: 100%;bottom: 0rem;margin-top:10rem;height: 5.3rem;">
+      <div class="modal" style="position:absolute;left:0;top:0;border: 1px solid gray;border-radius: 0.3rem 0.3rem 0 0;width: 100%;bottom: 0rem;margin-top:10rem;height: 5.3rem;">
         <ion-header-bar class="bar bar-border-bottom">
           <button class="button button-icon icon  header_buttonRig" ng-click="closeModal()"><span  style="font-size: 0.4rem;" translate="bathroom.cancel"></span></button>
           <button class="button button-icon icon  header_buttonRig" ng-click="openPopover()"><span style="font-size: 0.4rem;" translate="bathroom.confirm"></span></button>

@@ -5,8 +5,16 @@
   .iconSize{
     font-size: 0.2rem ;
   }
-  .cuscontent{
-
+  .setting-color{
+    font-family: PingFangSC-Regular;
+    font-size: 0.36rem;
+    color: #FFFFFF;
+    letter-spacing: 0.0225px;
+    line-height: 0.32rem;
+  }
+  .bar-color{
+    background: #1A1E28;
+    box-shadow: 0 0.02rem 0.11rem 0 rgba(0,0,0,0.43);
   }
   li{height: 1rem}
   .rightword{font-size:10px;float:right;color:#c6c6c6;padding-top:0px}

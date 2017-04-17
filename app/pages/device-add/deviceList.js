@@ -10,6 +10,24 @@ angular.module('deviceAddModule')
       $scope.goBack = function () {
         $ionicHistory.goBack();
       }
+      /**
+      *@autor:daidongdong
+      *@name:
+      *@params:
+      *@return:
+      *@disc:
+      */
+      $scope.goAddBox = function(){
+          $state.go('boxList');
+      }
+
+
+      $scope.goAddOnLineBox = function(){
+        $state.go('boxOnLine');
+      }
+
+
+
 //寻找box
       $scope.selectBox = function () {
         hmsPopup.showLoading('<span translate="alertMsg.loading"></span>');

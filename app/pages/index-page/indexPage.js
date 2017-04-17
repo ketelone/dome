@@ -11,14 +11,17 @@ angular.module('indexPageModule')
     'baseConfig',
     '$timeout',
     '$ionicScrollDelegate',
-    '$http','$ionicHistory',
+    '$http',
+    '$ionicHistory',
+    'hmsPopup',
     function ($scope,
               $state,
               $ionicGesture,
               baseConfig,
               $timeout,
               $ionicScrollDelegate,
-              $http,$ionicHistory) {
+              $http,$ionicHistory,
+              hmsPopup) {
 
       $scope.isSceneModel = true;
       $scope.isDeviceModel = false;
@@ -118,7 +121,8 @@ angular.module('indexPageModule')
           statusPictureUrl: "build/img/index/icon_home_device_signal5.png",
           errorPictureUrl: "",
           isStatus: true,
-          isError: false
+          isError: false,
+          sku: "1"
         },{
           id: "2",
           pictureUrl: "build/img/index/icon_home_device_room.png",
@@ -128,7 +132,8 @@ angular.module('indexPageModule')
           statusPictureUrl: "",
           errorPictureUrl: "",
           isStatus: false,
-          isError: false
+          isError: false,
+          sku: "2"
         },{
           id: "3",
           pictureUrl: "build/img/index/img_home_device_heater.png",
@@ -138,7 +143,8 @@ angular.module('indexPageModule')
           statusPictureUrl: "build/img/index/icon_home_device_signal4.png",
           errorPictureUrl: "",
           isStatus: true,
-          isError: false
+          isError: false,
+          sku: "F7:B3:24:A9:34:77"
         },{
           id: "4",
           pictureUrl: "build/img/index/img_home_device_sensor.png",
@@ -148,7 +154,8 @@ angular.module('indexPageModule')
           statusPictureUrl: "build/img/index/icon_home_device_signal3.png",
           errorPictureUrl: "build/img/index/icon_home_device_warnning.png",
           isStatus: true,
-          isError: true
+          isError: true,
+          sku: "4"
         },
         {
           id: "5",
@@ -159,9 +166,172 @@ angular.module('indexPageModule')
           statusPictureUrl: "build/img/index/icon_home_device_no_singal.png",
           errorPictureUrl: "build/img/index/icon_home_device_warnning.png",
           isStatus: true,
-          isError: true
+          isError: true,
+          sku: "5"
         }
       ];
+
+      $scope.boxList = [];
+
+      $scope.$watch('', function(){
+        //localStorage.deviceInfo = "1:001;2:002;3:003";
+        searchBox();
+      }, true);
+
+     /* $scope.$on("$stateChangeSuccess", function (event, toState, toParams, fromState, fromParam){
+
+        if(toState.name == 'tabs'){
+          searchBox();
+          if($scope.boxList.length > 0){
+            angular.forEach($scope.boxList, function(data, index, array) {
+              boxLink(data);
+              selectDeviceOn(data.payload.cmd_properties.device_id);
+            });
+          }
+        }
+      });*/
+
+      document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
+        hmsPopup.showShortCenterToast("开始返回数据！");
+        var resultOn = result;
+        $scope.deviceOff = resultOn.payload.cmd_properties.device_list;
+        if (resultOn.payload.cmd == "LIST_BONDED_DEVICE_RETURN") {
+          localStorage.device_id = resultOn.payload.cmd_properties.device_list[0].device_id;
+          //循环device list 取出device id，并降deviceid与相应页面的设备做关联
+          var deviceLinkInfo = "";
+          angular.forEach(resultOn.payload.cmd_properties.device_list, function(data, index, array){
+            deviceLinkInfo = deviceLinkInfo =="" ? (data.device_sku + ":" + data.device_id) : (deviceLinkInfo + ";" + data.device_sku + ":" + data.device_id);
+          });
+          //保存device 连接的信息。
+          localStorage.deviceInfo = deviceLinkInfo;
+
+          if ($scope.deviceOn.length == 0) {
+            hmsPopup.showShortCenterToast("没有已连接设备，请搜索未连接设备");
+          }
+        }
+
+        if (resultOn.payload.cmd == "SCAN_RETURN") {
+          console.log(resultOn.payload.cmd_properties.device_list);
+          if ($scope.deviceOff.length == 0) {
+            hmsPopup.showShortCenterToast("没有设备");
+          }
+          $scope.$apply();
+        }
+
+      }, false);
+
+      /**
+       *@autor: caolei
+       *@return: box ip
+       *@disc: search box
+       */
+      var searchBox = function () {
+        var cmd = {
+          "from": {"cid": "0xE3"},
+          "to": {"cid": "0xE4"},
+          "ts": Date.parse(new Date()) / 1000,
+          "idx": 0,
+          "method": "CTL",
+          "payload": {
+            "cmd": "SCAN_BOX_REQUEST",
+            "cmd_properties": {
+              "scan_box_request": "KOHLER_BOX_SEARCH"
+            }
+          }
+        };
+        cordova.plugins.SocketPlugin.udpBroadCast({
+          "timeout": "5000",
+          "ip": "255.255.255.255",
+          "value": cmd//指令json
+        }, success, error);
+        function success(response) {
+          // {
+          //   from =     {
+          //     cid = 0xE4;   表示来自box
+          //   "device_id" = F9DA70C8;  box id
+          // };
+          //   idx = 0;          、指令的id
+          //   method = RSP;     、指令的方式  写死
+          //   payload =     {   、相应体
+          //     cmd = "SCAN_BOX_RESPONSE";  、相应回复
+          //   "cmd_properties" =         {  、设备box属性
+          //     "device_id" = F9DA70C8;      、 box id
+          //   ip = "192.168.1.172";          、box ip
+          //   sku = "K-BOX";                  、sku号
+          //   sn = 0123456789abcdef;           、对应云端id
+          // };
+          // };
+          //   to =     {                 、目标
+          //     cid = 0xE3;                、app
+          // };
+          //   ts = 1492136310;             、时间戳
+          // }
+          //localStorage.boxIp = response.payload.cmd_properties.ip;
+          $scope.boxList = response;
+          hmsPopup.hideLoading();
+          $scope.$apply();
+          angular.forEach($scope.boxList, function(data, index, array){
+            boxLink(data);
+          });
+          //boxLink($scope.boxList[0]);
+        }
+
+        function error(error) {
+          hmsPopup.showShortCenterToast("广播失败" + error);
+        }
+      };
+
+      /**
+       *@autor: caolei
+       *@params: object box
+       *@disc: link box
+       */
+      var boxLink = function (item) {
+        console.log('lian box');
+        cordova.plugins.SocketPlugin.tcpConnect({
+          "timeout": "5000",
+          "ip": item.payload.cmd_properties.ip,
+        }, success, error);
+
+        function success(response) {
+          selectDeviceOn(item.payload.cmd_properties.device_id);
+        }
+
+        function error() {
+          hmsPopup.showShortCenterToast("连接失败");
+        }
+      };
+
+      /**
+       *@autor: caolei
+       *@params: device id
+       *@disc: link device
+       */
+      var selectDeviceOn = function (device_id) {
+        var cmd = {
+          "from": {"cid": "0xE3"},
+          "to": {"cid": "0xE4", "device_id": device_id},
+          "ts": Date.parse(new Date()) / 1000,
+          "idx": 0,
+          "method": "CTL",
+          "payload": {
+            "cmd": "LIST_BONDED_DEVICE_REQUEST",
+            "cmd_properties": ""
+          }
+        };
+        cordova.plugins.SocketPlugin.tcpSendCmd({
+          "timeout": "5000",
+          "value": cmd
+        }, success, error);
+
+        function success(response) {
+          hmsPopup.showShortCenterToast("搜索已连接设备成功");
+        }
+
+        function error() {
+          hmsPopup.showShortCenterToast("搜索已连接设备失败");
+        }
+      };
 
       /**
        *@autor: caolei
@@ -212,8 +382,9 @@ angular.module('indexPageModule')
       };
 
       $scope.getDeviceInfo = function(item){
-        console.log(item);
-        alert("in---");
+        if(item.deviceType == "浴霸"){
+          $state.go('bathroom',{deviceSku: item.sku});
+        }
       };
 
       $scope.addModule = function(){
@@ -221,7 +392,7 @@ angular.module('indexPageModule')
       };
 
       $scope.addDevice = function(){
-        alert("in----addDevice");
+        $state.go('deviceList');
       };
 
     }

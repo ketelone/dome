@@ -175,6 +175,21 @@ angular.module('myApp')
           templateUrl: 'build/pages/device-add/deviceList.html',
           controller: 'deviceListCtrl'
         })
+        .state('boxList', {
+          url: '/boxList',
+          templateUrl: 'build/pages/device-add/box-add/boxList.html',
+          controller: 'boxListCtrl'
+        })
+        .state('boxOnLine', {
+          url: '/boxOnLine',
+          templateUrl: 'build/pages/device-add/box-online-List/boxOnLine.html',
+          controller: 'boxOnLineCtrl'
+        })
+        .state('boxAddDevice', {
+          url: '/boxAddDevice',
+          templateUrl: 'build/pages/device-add/box-add-device/boxAddDevice.html',
+          controller: 'boxAddDeviceCtrl'
+        })
         //一键场景
         //大姨妈了没
         .state('bigAunt', {
@@ -204,6 +219,11 @@ angular.module('myApp')
           templateUrl: 'build/pages/keyscene-morning/morning.html',
           controller: 'morningCtrl'
         })
+        .state('bathing', {
+          url: '/bathing',
+          templateUrl: 'build/pages/keyscene-bathing/bathing.html',
+          controller: 'bathingCtrl'
+        })
         .state('spa', {
           url: '/spa',
           templateUrl: 'build/pages/keyscene-spa/spa.html',
@@ -230,6 +250,7 @@ angular.module('myApp')
 
         .state('bathroom', {
           url: '/bathroom',
+          params: {"deviceSku": null},
           templateUrl: 'build/pages/device-controller/bathroom-controller/bathroom.html',
           controller: 'bathroomCtrl'
         })
