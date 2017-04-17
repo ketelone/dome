@@ -15,13 +15,13 @@ angular.module('productModule')
         device4: false,
         flagDevice3: false,
         flagDevice4: false,
-        onOrOff3 : true,
-        onOrOff4 : true,
-        onLinePic3 : "build/img/keyscene-morning/icon_home_device_signal5.png",
-        onLinePic4 : "build/img/keyscene-morning/icon_home_device_signal5.png",
-        isOneButton : true,
-        isTwoButton : false,
-        isOff : false
+        onOrOff3: true,
+        onOrOff4: true,
+        onLinePic3: "build/img/keyscene-morning/icon_home_device_signal5.png",
+        onLinePic4: "build/img/keyscene-morning/icon_home_device_signal5.png",
+        isOneButton: true,
+        isTwoButton: false,
+        isOff: false
       }
       /**
        *@autor:daidongdong
@@ -31,16 +31,14 @@ angular.module('productModule')
        *@disc:goback
        */
       $scope.goBack = function () {
-        window.history.go();
+        $ionicHistory.goback();
       }
 
-      $scope.getSwitchStatus = function(item){
-        //console.log(item);
-        alert(item);
-        if(item){
-        console.log(item);
-        }else{
-          alert("off");
+      $scope.getSwitchStatus = function (item) {
+        if (item) {
+          $scope.openKeyscene();
+        } else {
+          $scope.closeKeyscene();
         }
       };
       /**
@@ -54,7 +52,7 @@ angular.module('productModule')
         console.log($scope.config.openFlag);
         if ($scope.config.openFlag == true) {
           //浴霸
-          if($scope.config.flagDevice3 != true) {
+          if ($scope.config.flagDevice3 != true) {
             $("#progressAnimation3").css({
               "-webkit-animation": "aaa 6.0s linear",
               "background": "#1a1d28"
@@ -64,7 +62,7 @@ angular.module('productModule')
             }, 5900);
           }
           //淋浴
-          if($scope.config.flagDevice4 != true) {
+          if ($scope.config.flagDevice4 != true) {
             $("#progressAnimation4").css({
               "-webkit-animation": "aaa 1.5s linear",
               "background": "#1a1d28"
@@ -77,6 +75,32 @@ angular.module('productModule')
 
         }
       }
+
+
+      $scope.closeKeyscene = function () {
+        console.log($scope.config.openFlag);
+        if ($scope.config.openFlag == true) {
+          //浴霸
+          if ($scope.config.flagDevice3 != true) {
+            $scope.config.device3 = false;
+            $("#progressAnimation3").css({
+              "-webkit-animation": "bbb 6.0s linear",
+              "background": ''
+            });
+          }
+          //淋浴
+          if ($scope.config.flagDevice4 != true) {
+            $scope.config.device4 = false;
+            $("#progressAnimation4").css({
+              "-webkit-animation": "bbb 1.5s linear",
+              "background": ''
+            });
+          }
+        } else {
+
+        }
+      }
+
 
       /**
        *@autor:daidongdong

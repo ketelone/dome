@@ -43,17 +43,17 @@ angular.module('indexPageModule')
       ];
 
       $scope.modelData = [
-        {
-          id: "1",
-          pictureUrl: 'build/img/index/img_home_gohome.png',
-          title: "回家",
-          context: "一键开启指定设备",
-          isOneButton: true,
-          isTwoButton: false,
-          jsonContext: "1",
-          isOff: false,
-          lastUpdateDate: ""
-        },
+        // {
+        //   id: "1",
+        //   pictureUrl: 'build/img/index/img_home_gohome.png',
+        //   title: "回家",
+        //   context: "一键开启指定设备",
+        //   isOneButton: true,
+        //   isTwoButton: false,
+        //   jsonContext: "1",
+        //   isOff: false,
+        //   lastUpdateDate: ""
+        // },
         {
           id: "2",
           pictureUrl: 'build/img/index/img_home_morning.png',
@@ -79,7 +79,7 @@ angular.module('indexPageModule')
         {
           id: "4",
           pictureUrl: 'build/img/index/img_home_spa.png',
-          title: "家庭SPA",
+          title: "泡澡",
           context: "出去SPA不如在家泡澡",
           isOneButton: false,
           isTwoButton: true,
@@ -89,6 +89,17 @@ angular.module('indexPageModule')
         },
         {
           id: "5",
+          pictureUrl: 'build/img/index/muyu@3x.png',
+          title: "沐浴",
+          context: "享受沐浴",
+          isOneButton: false,
+          isTwoButton: true,
+          jsonContext: "1",
+          isOff: false,
+          lastUpdateDate: ""
+        },
+        {
+          id: "6",
           pictureUrl: 'build/img/index/img_home_veil.png',
           title: "维亚灯光",
           context: "开始您美好的一天",
@@ -99,7 +110,7 @@ angular.module('indexPageModule')
           lastUpdateDate: ""
         },
         {
-          id: "6",
+          id: "7",
           pictureUrl: 'build/img/index/img_home_period.png',
           title: "大姨了吗",
           context: "女性特殊期洗浴关怀方案",
@@ -110,6 +121,25 @@ angular.module('indexPageModule')
           lastUpdateDate: ""
         }
       ];
+
+      $scope.goKeyscene = function(item){
+        console.log(item);
+        if(item.id == '1'){
+          $state.go('goHome');
+        }else if(item.id == '2'){
+          $state.go('morning');
+        }else if(item.id == '3'){
+          $state.go('leaveHome');
+        }else if(item.id == '4'){
+          $state.go('spa');
+        }else if(item.id == '5'){
+          $state.go('bathing');
+        }else if(item.id == '6'){
+          $state.go('veil');
+        }else if(item.id == '7'){
+          $state.go('period');
+        }
+      }
 
       $scope.deviceModel = [
         {

@@ -36,7 +36,7 @@ angular.module('productModule')
        *@disc:goback
        */
       $scope.goBack = function () {
-        window.history.go();
+        $ionicHistory.goBack();
       }
 
       /**
@@ -119,5 +119,25 @@ angular.module('productModule')
         }
 
       }
+
+
+      //连接box
+      $scope.boxClick = function (item) {
+        $scope.boxItem = item;
+        console.log('lian box');
+        cordova.plugins.SocketPlugin.tcpConnect({
+          "timeout": "5000",
+          "ip": item.payload.cmd_properties.ip,
+        }, success, error);
+
+        function success(response) {
+          hmsPopup.showShortCenterToast("连接成功");
+        }
+
+        function error() {
+          hmsPopup.showShortCenterToast("连接失败");
+        }
+      }
+
 
     }]);

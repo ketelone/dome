@@ -65,7 +65,7 @@
                   </div>
                 </div>
 
-                <div ng-repeat="item in modelData">
+                <div ng-repeat="item in modelData" ng-click="goKeyscene(item)">
                   <img class="imgll" ng-src="{{item.pictureUrl}}"/>
                   <div class="text-center interval-line">
                     <p class="font-color-self-title">{{item.title}}</p>
