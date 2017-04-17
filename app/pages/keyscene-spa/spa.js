@@ -56,7 +56,7 @@ angular.module('productModule')
        *@disc:goback
        */
       $scope.goBack = function () {
-        window.history.go();
+        $ionicHistory.goBack();
       }
 
       /**
