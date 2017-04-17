@@ -103,6 +103,8 @@ right: 0.3rem;
   color: #9B9B9B;
 
 }
+//animate
+
 
   .manyChoose{background: #C8C7CD;
     font-size: 0.24rem;
@@ -112,5 +114,32 @@ right: 0.3rem;
   font-size: 0.24rem;
   color: #FFFFFF;
 }
+.button:after{
+  background: #212121;
+  z-index: -1;
+}
 
+  .bottomWord {
+    font-family: PingFangSC-Regular;
+    font-size: 0.32rem;
+    color: #FFFFFF;
+    text-align: center;
+    position:absolute;
+   bottom:44px;
+  }
+
+
+  .allChoose{
+    background: #3F3F3F;
+padding: 0.24rem 0.77rem 0.24rem 0.77rem;
+  }
+
+.cancal{
+  background: #A2A2A2;
+  padding: 0.24rem 0.77rem 0.24rem 0.77rem;
+}
+.delete{
+  background: #FE3B31;
+  padding: 0.24rem 0.77rem 0.24rem 0.77rem;
+}
 }

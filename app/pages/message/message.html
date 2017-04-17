@@ -29,72 +29,69 @@
   <ion-content class="hasHeader">
 
 <!--status-->
-   <ion-list ng-show="hasStaus" >
-<!--
-<ion-item ng-repeat="item in items" item="item" href="#/item/{{item.id}}" class="item-remove-animate">
-<li class="item item-icon-right" style="border-style:none" >
-    <div class="row oneModel">
-<div class="col col-75">
-  <div class="row">
- <div class="col col-60" STYLE="padding-left: 0rem"><span class="leftWord1">{{item.statusMessage}}</span></div>
-    <div class="col" ><span class="leftWord2">{{item.device}}</span></div>
-  </div>
-  <div class="row">
-   <span class="leftWord3">{{item.messageDel}}</span>
-  </div>
-  <div class="row addpadding">
-    <span class="time">{{item.time}}</span>
-  </div>
-</div>
-<div class="col ">
-  <i class="icon ion-ios-arrow-right iconSize"></i>
-</div>
-    </div>
-</li>
-  <ion-option-button class="button-assertive"
-                     ng-click="edit(item)">
-    Edit
-  </ion-option-button>
-  <ion-option-button class="button-calm"
-                     ng-click="share(item)">
-    Share
-  </ion-option-button>
-   </ion-item>
--->
-
-     <ion-item style="border-style:none;" ng-repeat="item in items" item="item" href="#/item/{{item.id}}" class="item item-icon-right item-remove-animate">
+   <ion-list ng-show="hasStaus" show-delete="data.showDelete" >
+     <ion-item style="border-style:none;" ng-repeat="statusitem in statusitems" item="statusitem"  class="item item-icon-right item-remove-animate">
  <div class="row oneModel">
+  <!-- <img  ng-show="show-delete" style="width: 0.44rem;height: 0.45rem" ng-src="build/img/message/radio_bg.png"/>-->
            <div class="col col-75">
              <div class="row">
-               <div class="col col-60" STYLE="padding-left: 0rem"><span class="leftWord1">{{item.statusMessage}}</span></div>
-               <div class="col" ><span class="leftWord2">{{item.device}}</span></div>
+               <div class="col col-60" STYLE="padding-left: 0rem"><span class="leftWord1">{{statusitem.statusMessage}}</span></div>
+               <div class="col" ><span class="leftWord2">{{statusitem.device}}</span></div>
              </div>
              <div class="row">
-               <span class="leftWord3">{{item.messageDel}}</span>
+               <span class="leftWord3">{{statusitem.messageDel}}</span>
              </div>
              <div class="row addpadding">
-               <span class="time">{{item.time}}</span>
+               <span class="time">{{statusitem.time}}</span>
              </div>
            </div>
            <div class="col ">
              <i class="icon ion-ios-arrow-right iconSize"></i>
            </div>
-         </div>
-
-       <ion-option-button class="manyChoose"
-                          ng-click="manyChoose(item)">
+      </div>
+    <ion-option-button class="manyChoose"
+                          ng-click="manyChoose()">
          多选
        </ion-option-button>
        <ion-option-button class="goDetele"
-                          ng-click="goDetele(item)">
+                          ng-click="goDeteleStatusitem(statusitem)">
          删除
        </ion-option-button>
-       <ion-delete-button style="" class="ion-minus-circled"
-                          ng-click="onItemDelete(item)">
-         sdsadasdsad
-       </ion-delete-button>
+       <ion-delete-button   ng-click="onChoose(statusitem)">
+
+    <img  style="width: 0.44rem;height: 0.45rem" ng-src="build/img/message/radio_bg.png"/>
+     <img ng-show="statusitem.showCircle" style="" ng-src="build/img/message/radio_dot.png"/>
+
+      </ion-delete-button>
+
      </ion-item>
 </ion-list>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <!--nostatus-->
     <ion-list ng-show="false" >
@@ -105,57 +102,34 @@
     </ion-list>
 <!--exception-->
     <ion-list ng-show="hasException" >
-      <li class="item item-icon-right" style="border-style:none" >
+      <ion-item style="border-style:none;" ng-repeat="exceptionitem in exceptionitems" item="statusitem"  class="item item-icon-right item-remove-animate">
         <div class="row oneModel">
           <div class="col col-75">
             <div class="row">
-              <div class="col col-60" STYLE="padding-left: 0rem"><span class="leftWord1">自动开盖功能异常</span></div>
-              <div class="col" ><span class="leftWord2">马桶</span></div>
+              <div class="col col-60" STYLE="padding-left: 0rem"><span class="leftWord1">{{exceptionitem.exceptionMessage}}</span></div>
+              <div class="col" ><span class="leftWord2">{{exceptionitem.device}}</span></div>
             </div>
-            <div class="row addpadding">
-              <span class="time">2017-02-08 17:25</span>
+           <div class="row addpadding">
+              <span class="time">{{exceptionitem.time}}</span>
             </div>
           </div>
           <div class="col ">
             <i class="icon ion-ios-arrow-right iconSize"></i>
           </div>
         </div>
-      </li>
 
-      <li class="item item-icon-right" style="border-style:none" >
-        <div class="row oneModel">
-          <div class="col col-75">
-            <div class="row">
-              <div class="col col-60" STYLE="padding-left: 0rem"><span class="leftWord1">自动开盖功能异常</span></div>
-              <div class="col" ><span class="leftWord2">淋浴</span></div>
-            </div>
-
-            <div class="row addpadding">
-              <span class="time">2017-02-08 17:25</span>
-            </div>
-          </div>
-          <div class="col ">
-            <i class="icon ion-ios-arrow-right iconSize"></i>
-          </div>
-        </div>
-      </li>
-
-      <li class="item item-icon-right" style="border-style:none" >
-        <div class="row oneModel">
-          <div class="col col-75">
-            <div class="row">
-              <div class="col col-60" STYLE="padding-left: 0rem"><span class="leftWord1">自动开盖功能异常</span></div>
-              <div class="col" ><span class="leftWord2">马桶</span></div>
-            </div>
-       <div class="row addpadding">
-              <span class="time">2017-02-08 17:25</span>
-            </div>
-          </div>
-          <div class="col" >
-            <i class="icon ion-ios-arrow-right iconSize"></i>
-          </div>
-        </div>
-      </li>
+        <ion-option-button class="manyChoose"
+                           ng-click="manyChoose(exceptionitem)">
+          多选
+        </ion-option-button>
+        <ion-option-button class="goDetele"
+                           ng-click="goDeteleExceptionitem(exceptionitem)">
+          删除
+        </ion-option-button>
+        <ion-delete-button style="" class="ion-minus-circled"
+                           ng-click="onItemDelete(exceptionitem)">
+        </ion-delete-button>
+      </ion-item>
 
     </ion-list>
 
@@ -166,5 +140,24 @@
       <div class="noMessage">
         <span class="noMessageWord">您当前的设备无异常</span> </div>
     </ion-list>
+
+
+
+
+
+
   </ion-content>
+
+  <div ng-show="threeBottom" class="row bottomWord">
+    <div ng-click="bottomManychoose()" class="col col-33 allChoose"><span >全选</span></div>
+    <div ng-click="bottomGocancel()" class="col col-33 cancal"><span >取消</span></div>
+    <div ng-click="bottomGodetele()" class="col col-33 delete"><span >删除</span></div>
+  </div>
+
+
+
+
 </ion-view>
+
+
+
