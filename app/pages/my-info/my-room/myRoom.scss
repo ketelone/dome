@@ -1,0 +1,64 @@
+.myRoom{
+
+  .headColor {
+    background-color: $global-head-bg;
+  }
+  .iconColor {
+    color: $color-base
+  }
+  .content{
+
+    color:rgba(255,255,255,1);
+    background: rgba(15,17,18,1);
+  }
+//one row
+.oneRow{
+  padding:0.4rem 0rem 0.36rem 0.357rem;
+}
+  .threeWord{
+    padding-top:0.54rem
+  }
+  .device{
+    padding-top:0.15rem
+  }
+  .bathroom{
+
+    padding-top:0.25rem;
+  }
+.bathroomWord{
+
+  font-size: 0.32rem;
+  color: #FFFFFF;
+}
+.deviceWord{
+
+  font-size: 0.24rem;
+  color: #565A64;
+}
+.roomImg{
+  width:1.4rem;
+  height:1.4rem;
+}
+.rename{
+
+  font-size: 0.32rem;
+  color: #41FCDC;
+  white-space: nowrap;
+}
+.divide{
+
+  font-size: 0.32rem;
+  color: #FF687A;
+  white-space: nowrap;
+}
+.manager{
+
+  font-size: 0.32rem;
+  color: #FFFFFF;
+  white-space: nowrap;
+}
+
+
+
+
+}
