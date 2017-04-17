@@ -1,20 +1,43 @@
 <ion-view view-title="设置" class="settingTemperature">
   <ion-header-bar align-title="center" class="cusheader" >
     <div class="item-icon-left set">
-      <div class="title">温&nbsp;度&nbsp;单&nbsp;位</div>
-      <i class="icon ion-ios-arrow-back" ui-sref="setting"></i>
+      <div translate="my-info.setting-temperature.unitSetting" class="title">单&nbsp;位&nbsp;设&nbsp;置</div>
+      <i class="icon ion-ios-arrow-back" ng-click="goBack()"></i>
     </div>
   </ion-header-bar>
 
 
   <ion-content class="cuscontent">
     <ion-list>
+      <li class="item item-icon-right item-divider cutline" >
+        <span  translate="my-info.setting-temperature.temperatureUnit">温度单位</span>  </li>
 
       <li class="item item-icon-right item-divider cutline" ng-click="chooseTemperature($event)">
         <span  translate="my-info.setting-temperature.centigrade">摄氏度°C</span>  </li>
 
       <li class="item item-icon-right item-divider" ng-click="chooseTemperature($event)">
         <span  translate="my-info.setting-temperature.fahrenheit">华氏度°F</span>
+      </li>
+
+
+      <li class="item item-icon-right item-divider cutline" >
+        <span  translate="my-info.setting-temperature.useWaterUnit">用水量单位</span>  </li>
+
+      <li class="item item-icon-right item-divider cutline" >
+        <span  translate="my-info.setting-temperature.litre">升</span>  </li>
+
+      <li class="item item-icon-right item-divider" >
+        <span  translate="my-info.setting-temperature.ton">吨</span>
+      </li>
+
+      <li class="item item-icon-right item-divider cutline" >
+        <span  translate="my-info.setting-temperature.useElectricityUnit">用电量单位</span>  </li>
+
+      <li class="item item-icon-right item-divider cutline" >
+        <span >KwH</span>  </li>
+
+      <li class="item item-icon-right item-divider" >
+        <span  >Kwmin</span>
       </li>
 
     </ion-list>

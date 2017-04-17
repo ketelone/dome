@@ -47,23 +47,23 @@ angular.module('myApp')
           //   alert(language.value=='en-US');
           //     alert(language.value=='zh-CN');
           // var localLanguage=language.value;
-          if (language.value == 'zh-CN') {
+          if (language.value == 'zh-CN' || 'zh-Hans-CN') {
             $translate.use('zh');
 
             //   alert('zh1');
           }
-          else if (language.value == 'zh-TW') {
+          else if (language.value == 'zh-TW' || 'zh-Hans-TW') {
             $translate.use('tw');
 
             //   alert('tw1');
           }
-          else if (language.value == 'en-US') {
+          else if (language.value == 'en-US' || 'en-CN') {
             $translate.use('en');
 
             // alert('en1');
 
           }
-          else if (language.value == 'en-TH') {
+          else if (language.value == 'en-TH' || 'th-CN') {
             $translate.use('th');
 
             //   alert('th1');
@@ -191,18 +191,6 @@ angular.module('myApp')
           controller: 'boxAddDeviceCtrl'
         })
         //一键场景
-        //大姨妈了没
-        .state('bigAunt', {
-          url: '/bigAunt',
-          templateUrl: 'build/pages/keyscene-aunt/bigAunt.html',
-          controller: 'bigAuntCtrl'
-        })
-
-        .state('bigAuntSetting', {
-          url: '/bigAuntSetting',
-          templateUrl: 'build/pages/keyscene-aunt/setting-aunt/bigAuntSetting.html',
-          controller: 'bigAuntSettingCtrl'
-        })
         //gohome
         .state('goHome', {
           url: '/goHome',

@@ -38,6 +38,11 @@ angular.module('myInfoModule')
           templateUrl: 'build/pages/my-info/personal-setting/personalSetting.html',
           controller: 'personalSettingCtrl'
         })
+        .state('myRoom', {
+          url: '/myRoom',
+          templateUrl: 'build/pages/my-info/my-room/myRoom.html',
+          controller: 'myRoomCtrl'
+        })
     }
   ]).controller('myInfoCtrl', [
     '$scope',

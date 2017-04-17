@@ -39,27 +39,27 @@ angular.module('myInfoModule')
       $scope.chooseTemperature=function(e){
 
         if($(e.target).text().trim()=="摄氏度°C"){
-          SettingsService.set("temperature","摄氏度°C");
+        //  SettingsService.set("temperature","摄氏度°C");
           window.localStorage.temperature="°C";
-          publicMethod.goBack();
+         // publicMethod.goBack();
 
         }
         if($(e.target).text().trim()=="centigrade"){
-          SettingsService.set("temperature","centigrade");
+       //   SettingsService.set("temperature","centigrade");
           window.localStorage.temperature="°C";
-          publicMethod.goBack();
+        //  publicMethod.goBack();
 
         }
         if($(e.target).text().trim()=="华氏度°F"){
-          SettingsService.set("temperature","华氏度°F");
+       //   SettingsService.set("temperature","华氏度°F");
           window.localStorage.temperature="°F";
-         publicMethod.goBack();
+        // publicMethod.goBack();
 
 
         }  if($(e.target).text().trim()=="fahrenheit"){
-          SettingsService.set("temperature","fahrenheit");
+       //   SettingsService.set("temperature","fahrenheit");
           window.localStorage.temperature="°F";
-          publicMethod.goBack();
+         // publicMethod.goBack();
 
 
         }

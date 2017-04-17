@@ -40,7 +40,9 @@ angular.module('myInfoModule')
 
 
 
-
+      $scope.goBack = function(){
+        $ionicHistory.goBack();
+      }
 
       /**
        *@autor:chenjiacheng

@@ -1,20 +1,12 @@
 .greenLife{
 
+  .headColor {
+    background-color: $global-head-bg;
+  }
   .iconColor {
-
     color: $color-base
-
-
   }
 
-  .header{
-
-
-    background: #191C23;
-    box-shadow: 0 2px 11px 0 rgba(0,0,0,0.43);
-
-
-  }
 .content{
 
   color:rgba(255,255,255,1);
@@ -30,10 +22,18 @@ padding-top: 0rem;
   display: inline-block;
   margin-top: 0.73rem;
 color:rgba(213,99,142,1);
-  border-bottom: 0.05rem solid #C16685;
-  width: 0.31rem;
+  border-bottom: 0.03rem solid #C16685;
+  width: 0.35rem;
   font-size: 0.3rem;
+  padding-bottom:0.2rem;
+
 }
+  /*.one{
+    display: inline-block;
+    border-bottom:2px solid #C16685;
+    color:rgba(213,99,142,1);
+  width: 1px;
+  }*/
 .whiteWord{
   display: inline-block;
   margin-top: 0.73rem;
@@ -47,7 +47,7 @@ color:rgba(213,99,142,1);
 
     line-height: 0.28rem;
     text-align: center;
-    margin-top:1.13rem;
+    margin-top:1rem;
   }
 .useWater{
   font-family: PingFangSC-Regular;

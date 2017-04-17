@@ -4,12 +4,14 @@
   "my-info": {
     "myhome": "myHome",
     "addMember": "addMember",
-    "personality": "personality",
+
     "myBox": "myBox",
     "addNumber": "addNumber",
     "personalSetting": "personalSetting",
-    "relatedFamily": "relatedFamily",
-    "relatedNumber": "relatedNumber",
+    "myRoom":"myRoom",
+    "roomNumber":"roomNumber",
+    "familyManager":"familyManager",
+
     "greenLife": "greenLife",
     "intelligentLinkage": "intelligentLinkage",
     "openNumber": "openNumber",
@@ -18,7 +20,7 @@
       "setting": "setting",
       "language": "language",
       "localLanguage": "English",
-      "temperatureUnit": "temperatureUnit",
+      "unitSetting": "unitSetting",
       "centigrade": "centigrade",
       "firmwareUpdate": "firmwareUpdate",
       "versionUpdate": "versionUpdate",

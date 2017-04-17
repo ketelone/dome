@@ -1,53 +1,58 @@
 <ion-view view-title="我的" class="myInfo">
-  <!-- <ion-header-bar align-title="center" class="bar-stable">
-<h1 class="title">我的</h1>
-  </ion-header-bar>-->
-  <ion-content>
-    <ion-list>
-      <li class="item">
+ <!--<ion-header-bar align-title="center" class="bar-stable">-->
+
+  <!--</ion-header-bar>-->
+  <div class="cusHeader">
+    <div class="row setP">
+      <div class="col col-40">
+        <span class="myHome">我家</span>
+      </div>
+      <div class="col">
+        <img class="img1" ng-src="../build/img/my-info/icon_home_avatar1.png"/>
+        <img class="img1" ng-src="../build/img/my-info/icon_home_avatar2.png"/>
+        <img  class="img1" ng-src="../build/img/my-info/icon_home_avatar3.png"/>
+      </div>
+    </div>
+    <div class="row" >
+<span class="personal">个性签名</span>
+    </div>
+    <div class="row">
+ <span class="personalValue">团结就是胜利</span>
+    </div>
+  </div>
 
 
-        <div class="col myhome" translate="my-info.myhome">我的develop</div>
 
-
-        <div class="row">
-          <div class="col col-67" >
-            <i class="circle1"></i>
-            <i class="circle2"></i>
-            <i class="circle2"></i>
-          </div>
-          <i class="col addbutton" ui-sref="addMembers" translate="my-info.addMember">添加成员</i>
-
-        </div>
-        <div class="col personality" translate="my-info.personality">个性签名:<span></span></div>
+  <ion-content class="hasHeader" >
+<ion-list  class="setBak">
+<li class="item item-icon-right onerow"   >
+        <span class="leftWord" translate="my-info.personalSetting">个人资料设置</span>   <i class="icon ion-ios-arrow-right iconSize"></i>
       </li>
-      <li class="item item-icon-right" >
-        <span translate="my-info.myBox">我的BOX</span>  <span class="rightword" translate="my-info.myBox">已添加4个</span> <i class="icon ion-ios-arrow-right iconSize"></i>
-      </li>
 
-      <li class="item item-icon-right" ui-sref="personalSetting">
-        <span translate="my-info.personalSetting">个人资料设置</span> <i class="icon ion-ios-arrow-right iconSize"></i>
+      <li class="item item-icon-right onerow"  >
+        <span class="leftWord" translate="my-info.myBox">我的BOX</span> <span class="rightword" translate="my-info.addNumber">已添加4个</span><i class="icon ion-ios-arrow-right iconSize"></i>
       </li>
-      <li class="item item-icon-right">
-        <span class="leftword" translate="my-info.relatedFamily">关联家庭</span>  <span class="rightword"  translate="my-info.relatedNumber">已关联2个</span><i class="icon ion-ios-arrow-right iconSize"></i>
+      <li class="item item-icon-right onerow"  ui-sref="myRoom">
+        <span  class="leftWord" translate="my-info.myRoom" >我的房间</span><span class="rightword"  translate="my-info.roomNumber">3个房间</span> <i class="icon ion-ios-arrow-right iconSize"></i>
+      </li>
+      <li class="item item-icon-right onerow">
+        <span class="leftWord" translate="my-info.familyManager">亲友授权管理</span> <i class="icon ion-ios-arrow-right iconSize"></i>
       </li>
       <div class="item item-divider cusdivide">
 
       </div>
-      <li class="item  item-icon-right" ui-sref="greenLife">
-        <span translate="my-info.greenLife">绿色生活</span><i class="icon ion-ios-arrow-right iconSize"></i>
+      <li class="item item-icon-right onerow" ui-sref="greenLife">
+        <span class="leftWord" translate="my-info.greenLife">绿色生活</span><i class="icon ion-ios-arrow-right iconSize"></i>
       </li>
-      <li class="item item-icon-right">
-        <span translate="my-info.intelligentLinkage">智能联动</span><span class="rightword" translate="my-info.openNumber">已开启2个</span><i class="icon ion-ios-arrow-right iconSize"></i>
+      <li class="item item-icon-right onerow">
+        <span class="leftWord" translate="my-info.intelligentLinkage">智能联动</span><span class="rightword" translate="my-info.openNumber">已开启2个</span><i class="icon ion-ios-arrow-right iconSize"></i>
       </li>
-      <li class="item item-icon-right" ui-sref="setting" >
-       <span  translate="my-info.settingWord" > 设置 </span><i class="icon ion-ios-arrow-right iconSize"></i>
+      <li class="item item-icon-right onerow" ui-sref="setting" >
+       <span class="leftWord"  translate="my-info.settingWord" > 设置 </span><i class="icon ion-ios-arrow-right iconSize"></i>
       </li>
 
     </ion-list>
-    <div class="bottom">
 
-    </div>
   </ion-content>
 
 </ion-view>

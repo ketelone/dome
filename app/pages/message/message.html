@@ -9,72 +9,155 @@
      </div>
    </ion-header-bar>-->
 
-  <ion-content>
-    <div class="row">
-      <div class="col headmessage">消息</div>
+<!--<div class="bar bar-header" style="height: 2rem">-->
+  <!--<div class="row"><span>消息</span></div>-->
+  <!--<div class="row"><span>消息</span></div>-->
+
+
+<!--</div>-->
+ <div class="cusHeader">
+    <div class="row mesHeader">
+      <span>消息</span>
     </div>
-    <div class="row">
-      <div class="col col-33	status" ng-click="showStatus()"><span style="white-space:nowrap;" ng-class="statusword">状态及提醒</span></div>
-      <div class="col exception" ng-click="showException()"><span ng-class="exceptionword">异常及保修</span></div>
-    </div>
-    <div ng-if="swStaus">
-    <ion-list >
+<div class="row allMess">
+   <div ng-click="showStatus()" class="col col-33"><span class="status">状态及提醒</span></div>
+  <div ng-click="showException()" class="col col-33"><span>异常及保修</span></div>
+  <div class="col col-33"><span>其它</span></div>
+</div>
+ </div>
 
-      <li class="item item-icon-right">
-        <div class="row">
-          <div class="col  col-75">
-            <i class="circle"></i>
-              <div class="bigword">马桶4</div>
-            <div class="chang">box2</div>
-            <div class="chang">卫生间</div>
-            </div>
-            <div class="col col-25">
-              <div id="redpoint"><span class="whiteword">2</span>
-              </div>
-          </div></div>
-          <div class="row">
-         <div class="col">
-            <span class="smallword">进水滤芯寿命提醒</span>
-          </div>
-            <div>
-          <span class="time">2017-02-18 17:25</span>
+  <ion-content class="hasHeader">
 
-        </div>
-            </div>
-        <i class="icon ion-ios-arrow-right iconSize"></i>
+<!--status-->
+   <ion-list ng-show="hasStaus" show-delete="data.showDelete" >
+     <ion-item style="border-style:none;" ng-repeat="statusitem in statusitems" item="statusitem"  class="item item-icon-right item-remove-animate">
+ <div class="row oneModel">
+  <!-- <img  ng-show="show-delete" style="width: 0.44rem;height: 0.45rem" ng-src="build/img/message/radio_bg.png"/>-->
+           <div class="col col-75">
+             <div class="row">
+               <div class="col col-60" STYLE="padding-left: 0rem"><span class="leftWord1">{{statusitem.statusMessage}}</span></div>
+               <div class="col" ><span class="leftWord2">{{statusitem.device}}</span></div>
+             </div>
+             <div class="row">
+               <span class="leftWord3">{{statusitem.messageDel}}</span>
+             </div>
+             <div class="row addpadding">
+               <span class="time">{{statusitem.time}}</span>
+             </div>
+           </div>
+           <div class="col ">
+             <i class="icon ion-ios-arrow-right iconSize"></i>
+           </div>
+      </div>
+    <ion-option-button class="manyChoose"
+                          ng-click="manyChoose()">
+         多选
+       </ion-option-button>
+       <ion-option-button class="goDelete"
+                          ng-click="goDeteleStatusitem(statusitem)">
+         删除
+       </ion-option-button>
+       <ion-delete-button   ng-click="onChoose(statusitem)">
 
-      </li>
+    <img  style="width: 0.44rem;height: 0.45rem" ng-src="build/img/message/radio_bg.png"/>
+     <img ng-show="statusitem.showCircle" style="" ng-src="build/img/message/radio_dot.png"/>
+
+      </ion-delete-button>
+
+     </ion-item>
+</ion-list>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--nostatus-->
+    <ion-list ng-show="false" >
+
+<div class="noMessage">
+  <span class="noMessageWord">暂无设备消息</span> </div>
 
     </ion-list>
-    </div>
-    <div ng-if="swException">
-      <ion-list >
-
-        <li class="item item-icon-right">
-          <div class="row">
-            <div class="col  col-50">
-              <div><i class="circle"></i></div>
-              <div class="bigword">卫生间</div>
+<!--exception-->
+    <ion-list ng-show="hasException" >
+      <ion-item style="border-style:none;" ng-repeat="exceptionitem in exceptionitems" item="statusitem"  class="item item-icon-right item-remove-animate">
+        <div class="row oneModel">
+          <div class="col col-75">
+            <div class="row">
+              <div class="col col-60" STYLE="padding-left: 0rem"><span class="leftWord1">{{exceptionitem.exceptionMessage}}</span></div>
+              <div class="col" ><span class="leftWord2">{{exceptionitem.device}}</span></div>
             </div>
-            <div class="col col-50">
-              <div class="redpoint"><span class="whiteword">2</span>
-              </div>
-            </div></div>
-          <div class="row">
-            <div class="col">
-              <span class="smallword">2个设备异常</span>
-            </div>
-            <div>
-              <span class="time">2017-02-18 17:25</span>
-
+           <div class="row addpadding">
+              <span class="time">{{exceptionitem.time}}</span>
             </div>
           </div>
-          <i class="icon ion-ios-arrow-right iconSize"></i>
+          <div class="col ">
+            <i class="icon ion-ios-arrow-right iconSize"></i>
+          </div>
+        </div>
 
-        </li>
+        <ion-option-button class="manyChoose"
+                           ng-click="manyChoose(exceptionitem)">
+          多选
+        </ion-option-button>
+        <ion-option-button class="goDetele"
+                           ng-click="goDeteleExceptionitem(exceptionitem)">
+          删除
+        </ion-option-button>
+        <ion-delete-button style="" class="ion-minus-circled"
+                           ng-click="onItemDelete(exceptionitem)">
+        </ion-delete-button>
+      </ion-item>
 
-      </ion-list>
+    </ion-list>
 
-    </div>
+
+    <!--noexception-->
+    <ion-list ng-show="false" >
+
+      <div class="noMessage">
+        <span class="noMessageWord">您当前的设备无异常</span> </div>
+    </ion-list>
+
+
+
+
+
+
   </ion-content>
+
+  <div ng-show="threeBottom" class="row bottomWord">
+    <div ng-click="bottomManychoose()" class="col col-33 allChoose"><span >全选</span></div>
+    <div ng-click="bottomGocancel()" class="col col-33 cancal"><span >取消</span></div>
+    <div ng-click="bottomGodetele()" class="col col-33 delete"><span >删除</span></div>
+  </div>
+
+
+
+
 </ion-view>
+
+
+
