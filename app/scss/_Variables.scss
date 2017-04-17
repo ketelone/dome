@@ -20,3 +20,20 @@ $global-head-bg:#1A1E28  !default;
 //boder
 $global-border: #51D8BD !default;
 
+.slider-pager {
+  position: absolute;
+  z-index: 1;
+  bottom: 1.5rem;
+  left: 0.05rem;
+  width: 100%;
+  height: 15px;
+  text-align: center;
+}
+.slider-pager .slider-pager-page {
+  display: inline-block;
+  margin: 0 3px;
+  width: 15px;
+  color: $global-border;
+  text-decoration: none;
+  opacity: .3;
+}

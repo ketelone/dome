@@ -16,97 +16,33 @@ angular.module('toiletControlModule')
       $scope.toiletController = {
         modelType:"toiletController.zhengchang",
       };
-      $scope.handlenapeListNape = [
-        {
-          imgUrl: "build/img/toilet-controller/dachong.png",
-          imgSeledUrl: "build/img/toilet-controller/dachongseled.png",
-          imgUrlTemp:"build/img/toilet-controller/dachong.png",
-          handleDes: "toiletController.dachong01",
-          selecFlag:false
-        },
-        {
-          imgUrl: "build/img/toilet-controller/xiaochong.png",
-          imgSeledUrl: "build/img/toilet-controller/xiaochongseled.png",
-          imgUrlTemp:"build/img/toilet-controller/xiaochong.png",
-          handleDes: "toiletController.xioachong",
-          selecFlag:false
-        },
-        {
-          imgUrl: "build/img/toilet-controller/nvyong.png",
-          imgSeledUrl: "build/img/toilet-controller/nvyongseled.png",
-          imgUrlTemp:"build/img/toilet-controller/nvyong.png",
-          handleDes: "toiletController.nvyong",
-          selecFlag:false
-        },
-        {
-          imgUrl: "build/img/toilet-controller/tunxi.png",
-          imgSeledUrl: "build/img/toilet-controller/tunxiseled.png",
-          imgUrlTemp:"build/img/toilet-controller/tunxi.png",
-          handleDes: "toiletController.tunxi",
-          selecFlag:false
-        },
-        {
-          imgUrl: "build/img/toilet-controller/quanwen.png",
-          imgSeledUrl: "build/img/toilet-controller/quanwenseled.png",
-          imgUrlTemp:"build/img/toilet-controller/quanwen.png",
-          handleDes: "toiletController.quanwen",
-          selecFlag:false
-        },
-        {
-          imgUrl: "build/img/toilet-controller/nuanfeng.png",
-          imgSeledUrl: "build/img/toilet-controller/nuanfengseled.png",
-          imgUrlTemp:"build/img/toilet-controller/nuanfeng.png",
-          handleDes: "toiletController.nuanfeng",
-          selecFlag:false
-        },
-        {
-          imgUrl: "build/img/toilet-controller/dengguan.png",
-          imgSeledUrl: "build/img/toilet-controller/dengguanseled.png",
-          imgUrlTemp:"build/img/toilet-controller/dengguan.png",
-          handleDes: "toiletController.dengguang",
-          selecFlag:false
-        },
-        {
-          imgUrl: "build/img/toilet-controller/nuanjiao.png",
-          imgSeledUrl: "build/img/toilet-controller/nuanjiaoseled.png",
-          imgUrlTemp:"build/img/toilet-controller/nuanjiao.png",
-          handleDes: "toiletController.nuanjiao",
-          selecFlag:false
-        },
-        {
-          imgUrl: "build/img/toilet-controller/kaigai.png",
-          imgSeledUrl: "build/img/toilet-controller/kaigaiseled.png",
-          imgUrlTemp:"build/img/toilet-controller/kaigai.png",
-          handleDes: "toiletController.biangai",
-          selecFlag:false
-        },
-        {
-          imgUrl: "build/img/toilet-controller/fangai.png",
-          imgSeledUrl: "build/img/toilet-controller/fangaiseled.png",
-          imgUrlTemp:"build/img/toilet-controller/fangai.png",
-          imgUrlTemp:"",
-          handleDes: "toiletController.fangai",
-          selecFlag:false
-        },
-        {
-          imgUrl: "build/img/toilet-controller/fanquan.png",
-          imgSeledUrl: "build/img/toilet-controller/biangaiseled.png",
-          imgUrlTemp:"build/img/toilet-controller/fanquan.png",
-          handleDes: "toiletController.fanquan",
-          selecFlag:false
-        },
-        {
-          imgUrl: "build/img/toilet-controller/shezhi.png",
-          imgSeledUrl: "build/img/toilet-controller/shezhiseled.png",
-          imgUrlTemp:"build/img/toilet-controller/shezhi.png",
-          handleDes: "toiletController.shezhi",
-          selecFlag:false
-        },
-      ];
       //侧滑转档数量json
+      $scope.slideInitData =[{
+        des: "init",
+        gearNum: 1,
+        gearInit: 1,
+        gearInitTemp: 1,
+        parameterctlFlag: true,
+        parNodeid: 'toilet-initCtl',
+        canves01: "initcanves01",
+        canves02: "initcanves02",
+        canves03: "initcanves03",
+      }]
+      //暖脚
+      $scope.slideNuanjioaData =[{
+        des: "风力档位",
+        gearNum: 9,
+        gearInit: 1,
+        gearInitTemp: 1,
+        parameterctlFlag: false,
+        parNodeid: 'toilet-NuanjioaFlCtl',
+        canves01: "NuanjioaFlcanves01",
+        canves02: "NuanjioaFlcanves02",
+        canves03: "NuanjioaFlcanves03",
+      }]
       $scope.slideNvYongData =[{
         des: "水压档位",
-        gearNum: 5,
+        gearNum: 4,
         gearInit: 1,
         gearInitTemp: 1,
         parameterctlFlag: false,
@@ -117,7 +53,7 @@ angular.module('toiletControlModule')
       },
         {
         des:"位置档位",
-        gearNum:5,
+        gearNum:4,
         gearInit:1,
         gearInitTemp:1,
         parameterctlFlag:false,
@@ -127,7 +63,7 @@ angular.module('toiletControlModule')
         canves03:"NvYongSyPoscanves03",
       },{
         des:"温度档位",
-        gearNum:6,
+        gearNum:5,
         gearInit:1,
         gearInitTemp:1,
         parameterctlFlag:false,
@@ -168,10 +104,104 @@ angular.module('toiletControlModule')
           canves02:"TunBuTemTemcanves02",
           canves03:"TunBuTemTemcanves03",
         }];
-      $scope.currentSlideData = $scope.slideNvYongData;
-      // //初始化当前模板数据
+      $scope.handlenapeListNape = [
+        {
+          imgUrl: "build/img/toilet-controller/dachong.png",
+          imgSeledUrl: "build/img/toilet-controller/dachongseled.png",
+          imgUrlTemp:"build/img/toilet-controller/dachong.png",
+          handleDes: "toiletController.dachong01",
+          selecFlag:false,
+          handledata:$scope.slideInitData
+        },
+        {
+          imgUrl: "build/img/toilet-controller/xiaochong.png",
+          imgSeledUrl: "build/img/toilet-controller/xiaochongseled.png",
+          imgUrlTemp:"build/img/toilet-controller/xiaochong.png",
+          handleDes: "toiletController.xioachong",
+          selecFlag:false,
+          handledata:$scope.slideInitData
+        },
+        {
+          imgUrl: "build/img/toilet-controller/nvyong.png",
+          imgSeledUrl: "build/img/toilet-controller/nvyongseled.png",
+          imgUrlTemp:"build/img/toilet-controller/nvyong.png",
+          handleDes: "toiletController.nvyong",
+          selecFlag:false,
+          handledata:$scope.slideNvYongData
+        },
+        {
+          imgUrl: "build/img/toilet-controller/tunxi.png",
+          imgSeledUrl: "build/img/toilet-controller/tunxiseled.png",
+          imgUrlTemp:"build/img/toilet-controller/tunxi.png",
+          handleDes: "toiletController.tunxi",
+          selecFlag:false,
+          handledata:$scope.slideTunBuData
+        },
+        {
+          imgUrl: "build/img/toilet-controller/quanwen.png",
+          imgSeledUrl: "build/img/toilet-controller/quanwenseled.png",
+          imgUrlTemp:"build/img/toilet-controller/quanwen.png",
+          handleDes: "toiletController.quanwen",
+          selecFlag:false
+        },
+        {
+          imgUrl: "build/img/toilet-controller/nuanfeng.png",
+          imgSeledUrl: "build/img/toilet-controller/nuanfengseled.png",
+          imgUrlTemp:"build/img/toilet-controller/nuanfeng.png",
+          handleDes: "toiletController.nuanfeng",
+          selecFlag:false
+        },
+        {
+          imgUrl: "build/img/toilet-controller/dengguan.png",
+          imgSeledUrl: "build/img/toilet-controller/dengguanseled.png",
+          imgUrlTemp:"build/img/toilet-controller/dengguan.png",
+          handleDes: "toiletController.dengguang",
+          selecFlag:false
+        },
+        {
+          imgUrl: "build/img/toilet-controller/nuanjiao.png",
+          imgSeledUrl: "build/img/toilet-controller/nuanjiaoseled.png",
+          imgUrlTemp:"build/img/toilet-controller/nuanjiao.png",
+          handleDes: "toiletController.nuanjiao",
+          selecFlag:false,
+          handledata:$scope.slideNuanjioaData
+        },
+        {
+          imgUrl: "build/img/toilet-controller/kaigai.png",
+          imgSeledUrl: "build/img/toilet-controller/kaigaiseled.png",
+          imgUrlTemp:"build/img/toilet-controller/kaigai.png",
+          handleDes: "toiletController.biangai",
+          selecFlag:false
+        },
+        {
+          imgUrl: "build/img/toilet-controller/fangai.png",
+          imgSeledUrl: "build/img/toilet-controller/fangaiseled.png",
+          imgUrlTemp:"build/img/toilet-controller/fangai.png",
+          imgUrlTemp:"",
+          handleDes: "toiletController.fangai",
+          selecFlag:false
+        },
+        {
+          imgUrl: "build/img/toilet-controller/fanquan.png",
+          imgSeledUrl: "build/img/toilet-controller/biangaiseled.png",
+          imgUrlTemp:"build/img/toilet-controller/fanquan.png",
+          handleDes: "toiletController.fanquan",
+          selecFlag:false
+        },
+        {
+          imgUrl: "build/img/toilet-controller/shezhi.png",
+          imgSeledUrl: "build/img/toilet-controller/shezhiseled.png",
+          imgUrlTemp:"build/img/toilet-controller/shezhi.png",
+          handleDes: "toiletController.shezhi",
+          selecFlag:false
+        },
+      ];
+
+
+      $scope.currentSlideData = $scope.slideInitData;
+        //初始化当前模板数据
       $scope.initHtmlTemplate = function (currentSlideData) {
-        // //初始化数据
+        //初始化数据
         if($('#ionSliderBox').children().length !== 0){
           $('#ionSliderBox').empty();
         };
@@ -188,13 +218,14 @@ angular.module('toiletControlModule')
           "<span class='toilet-parameterctl-des' ng-bind='list.des'></span>"+
           "</div>"+
           "<div class='toilet-parameterctl-dataimg' ng-if='list.parameterctlFlag'>"+
-          "<img class='conninfo-parameterctl-img' src='build/img/toilet-controller/btn_devicedetail_scoll.png' alt=''>"+
+          "<img class='conninfo-parameterctl-img' ng-src='build/img/toilet-controller/btn_devicedetail_scoll.png' alt=''>"+
           "</div>"+
           "</div>"+
           "</ion-slide>"+
           "</ion-slide-box>"
         var $checkhtml = $compile(checHtml)($scope); // 编译
         $('#ionSliderBox').append($checkhtml[0]);
+        console.log(1)
       };
       $scope.initHtmlTemplate($scope.currentSlideData);
       var initCircle = function (slideDataObj) {
@@ -212,12 +243,6 @@ angular.module('toiletControlModule')
         document.getElementById(slideDataObj.canves03).height = this.canvsscreenHeight;
         document.getElementById(slideDataObj.canves03).width = this.canvsscreenWidth;
         document.getElementById(slideDataObj.canves03).style.zIndex = 2;
-
-        // document.getElementById(slideDataObj.canves04).height = this.canvsscreenHeight/2;
-        // document.getElementById(slideDataObj.canves04).width = this.canvsscreenWidth/2;
-        // document.getElementById(slideDataObj.canves04).style.zIndex = 4;
-        // document.getElementById(slideDataObj.canves04).style.left = 50+'px';
-        // document.getElementById(slideDataObj.canves04).style.top = 50+'px';
         // 获取canvesobj
         this.cr1 = getCanvesObj(slideDataObj.canves01);//档位canves
         this.cr2 = getCanvesObj(slideDataObj.canves02);//滑动小球档位canves
@@ -350,31 +375,40 @@ angular.module('toiletControlModule')
           //当前绑定事件对象
           var currentEventObj = getIdObj($scope.currentSlideData[index].canves02);
           currentRadObj.drawDeliverCircle($scope.currentSlideData[index].gearNum);
-          currentRadObj.drawc(currentRadObj.cr2,currentRadObj.starRad,"type");
-          currentEventObj.addEventListener( 'touchstart', function( e ){
-            e.preventDefault();
-            var poi = getEvtLocation(e);
-            bginX = poi.x;
-            bginY = poi.y;
-          }, false );
-          currentEventObj.addEventListener( 'touchmove', function( e ){
-            e.preventDefault();
-            var poi = getEvtLocation(e);
-            currentRadObj.drawc(currentRadObj.cr2,getAngle(currentRadObj.canvsscreenHeight,currentRadObj.canvsscreenWidth,poi.x,poi.y));
-          }, false );
-          currentEventObj.addEventListener( 'touchend', function( e ){
-            e.preventDefault();
-            currentRadObj.drawc(currentRadObj.cr2,currentRadObj.radSectionArr[currentRadObj.stoPosPoint]);
-          }, false );
-          var getEvtLocation = function(e){
-            var touch = e.touches[0];
-            return{
-              x : touch.clientX,
-              y : touch.clientY
-            }
-          };
-        };
 
+
+          if($scope.currentSlideData[index].des === "init"){
+            currentRadObj.drawc(currentRadObj.cr2,405,"type");
+            currentRadObj.drawCircleFill(currentRadObj.cr2,405);
+            //初始化数据
+            $('.slider-pager').empty();
+          }else{
+            currentRadObj.drawc(currentRadObj.cr2,currentRadObj.starRad,"type");
+            currentEventObj.addEventListener( 'touchstart', function( e ){
+              e.preventDefault();
+              var poi = getEvtLocation(e);
+              bginX = poi.x;
+              bginY = poi.y;
+            }, false );
+            currentEventObj.addEventListener( 'touchmove', function( e ){
+              e.preventDefault();
+              var poi = getEvtLocation(e);
+              currentRadObj.drawc(currentRadObj.cr2,getAngle(currentRadObj.canvsscreenHeight,currentRadObj.canvsscreenWidth,poi.x,poi.y));
+            }, false );
+            currentEventObj.addEventListener( 'touchend', function( e ){
+              e.preventDefault();
+              currentRadObj.drawc(currentRadObj.cr2,currentRadObj.radSectionArr[currentRadObj.stoPosPoint]);
+            }, false );
+            var getEvtLocation = function(e){
+              var touch = e.touches[0];
+              return{
+                x : touch.clientX,
+                y : touch.clientY
+              }
+            };
+
+          }
+        };
         $scope.getCurrentObj(0);
         $scope.slideHasChanged = function (index) {
           $scope.getCurrentObj(index);
@@ -397,10 +431,14 @@ angular.module('toiletControlModule')
             $scope.handlenapeListNape[i].imgUrl = $scope.handlenapeListNape[i].imgUrlTemp;
           }
         };
-        // 根据选择项来初始化选择项的slider
-        $scope.currentSlideData = $scope.slideTunBuData;
-        $scope.initHtmlTemplate($scope.currentSlideData);
-
+        // 根据选择项来初始化选择项的
+        if($scope.handlenapeListNape[index].handledata){
+          $scope.currentSlideData = $scope.handlenapeListNape[index].handledata;
+          $scope.initHtmlTemplate($scope.currentSlideData);
+          setTimeout(function () {
+            $scope.getCurrentObj(0);
+          },20)
+        }
       };
       //模式选择
       //获取屏幕高度
@@ -411,7 +449,7 @@ angular.module('toiletControlModule')
       }).then(function (modal) {
         $scope.modal = modal;
       });
-      $scope.value = [{id:0, des:"toiletController.gaunbi"},{id:2,des:'toiletController.maichong'},
+      $scope.value = [{id:2,des:'toiletController.maichong'},
         {id:3,des:'toiletController.bodong'},{id:4,des:'toiletController.yidong'},{id:5,des:'toiletController.zhengchang'}
       ];
       $scope.openModal = function () {
@@ -419,6 +457,7 @@ angular.module('toiletControlModule')
           $scope.modal.show();
           setTimeout(function () {
             var ele = document.getElementsByClassName("hmsModal");
+            ele[0].style.top = 68 + '%';
             ele[0].style.minHeight = 61 + '%';
           }, 10)
         }
