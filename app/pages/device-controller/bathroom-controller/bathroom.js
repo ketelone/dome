@@ -656,7 +656,8 @@ angular.module('bathroomModule')
        *@disc: to obtain the information of Yuba
        */
       $scope.$watch('', function(){
-        console.log(getXOR());
+        //console.log(getXOR());
+        console.log(localStorage.deviceInfo.split(";"));
       }, true);
 
       /**
@@ -666,9 +667,11 @@ angular.module('bathroomModule')
        */
       var getDeviceId = function(){
         var deviceList = localStorage.deviceInfo.split(";");
+
         for(var i = 0; i < deviceList.length; i ++){
           var deviceInfo = deviceList[i].split(",");
           if(deviceInfo[0] == $stateParams.deviceSku){
+
             return deviceInfo[1];
           }
         }

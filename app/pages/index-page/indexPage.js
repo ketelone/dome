@@ -144,7 +144,7 @@ angular.module('indexPageModule')
           errorPictureUrl: "",
           isStatus: true,
           isError: false,
-          sku: "F7:B3:24:A9:34:77"
+          sku: "EB:4E:28:49:09:9D"
         },{
           id: "4",
           pictureUrl: "build/img/index/img_home_device_sensor.png",
@@ -174,7 +174,8 @@ angular.module('indexPageModule')
       $scope.boxList = [];
 
       $scope.$watch('', function(){
-        searchBox();
+        localStorage.deviceInfo = ";r,1";
+        //searchBox();
       }, true);
 
      /* $scope.$on("$stateChangeSuccess", function (event, toState, toParams, fromState, fromParam){
@@ -200,7 +201,7 @@ angular.module('indexPageModule')
           //循环device list 取出device id，并降deviceid与相应页面的设备做关联
           var deviceLinkInfo = "";
           angular.forEach(resultOn.payload.cmd_properties.device_list, function(data, index, array){
-            deviceLinkInfo = deviceLinkInfo =="" ? (data.device_sku + "," + data.device_id) : (deviceLinkInfo + ";" + data.device_sku + "," + data.device_id);
+            deviceLinkInfo = deviceLinkInfo =="" ? (";" + data.device_sku + "," + data.device_id) : (deviceLinkInfo + ";" + data.device_sku + "," + data.device_id);
           });
           //保存device 连接的信息。
           localStorage.deviceInfo = deviceLinkInfo;
