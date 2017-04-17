@@ -247,7 +247,11 @@ angular.module('myApp')
           templateUrl: 'build/pages/device-controller/toilet-controller/toiletController.html',
           controller: 'toiletControllerCtrl'
         })
-
+        .state('toiletSetting', {
+          url: '/toiletSetting',
+          templateUrl: 'build/pages/device-controller/toilet-controller/toiletSetting/toiletSetting.html',
+          controller: 'toiletSettingCtrl'
+        })
         .state('bathroom', {
           url: '/bathroom',
           params: {"deviceSku": null},
@@ -260,7 +264,6 @@ angular.module('myApp')
           templateUrl: 'build/pages/device-controller/bathroom-controller/bathroom-set/bathroomSet.html',
           controller: 'bathroomSetCtrl'
         })
-
         .state('bathroomInfo', {
           url: '/bathroomInfo',
           templateUrl: 'build/pages/device-controller/bathroom-controller/bathroom-info/bathroomInfo.html',

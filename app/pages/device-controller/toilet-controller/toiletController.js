@@ -111,7 +111,20 @@ angular.module('toiletControlModule')
           imgUrlTemp:"build/img/toilet-controller/dachong.png",
           handleDes: "toiletController.dachong01",
           selecFlag:false,
-          handledata:$scope.slideInitData
+          handledata:$scope.slideInitData,
+          cmdDes:"大冲",
+          cmd:{
+            "from":{"cid":"0xE4","device_id":"12345678"},
+            "to":{"cid":"0xE3"},
+            "ts":1487213048,
+            "idx":0,
+            "method":"RSP",
+            "payload":
+              {
+                "cmd":"CMD_RETURN",
+                "value":["88770a01000171030004000177"]
+              }
+          }
         },
         {
           imgUrl: "build/img/toilet-controller/xiaochong.png",
@@ -119,7 +132,20 @@ angular.module('toiletControlModule')
           imgUrlTemp:"build/img/toilet-controller/xiaochong.png",
           handleDes: "toiletController.xioachong",
           selecFlag:false,
-          handledata:$scope.slideInitData
+          handledata:$scope.slideInitData,
+          cmdDes:"小冲",
+          cmd:{
+            "from":{"cid":"0xE4","device_id":"12345678"},
+            "to":{"cid":"0xE3"},
+            "ts":1487213048,
+            "idx":0,
+            "method":"RSP",
+            "payload":
+              {
+                "cmd":"CMD_RETURN",
+                "value":["88770a01000171030004000177"]
+              }
+          }
         },
         {
           imgUrl: "build/img/toilet-controller/nvyong.png",
@@ -196,8 +222,6 @@ angular.module('toiletControlModule')
           selecFlag:false
         },
       ];
-
-
       $scope.currentSlideData = $scope.slideInitData;
         //初始化当前模板数据
       $scope.initHtmlTemplate = function (currentSlideData) {
@@ -225,7 +249,6 @@ angular.module('toiletControlModule')
           "</ion-slide-box>"
         var $checkhtml = $compile(checHtml)($scope); // 编译
         $('#ionSliderBox').append($checkhtml[0]);
-        console.log(1)
       };
       $scope.initHtmlTemplate($scope.currentSlideData);
       var initCircle = function (slideDataObj) {
@@ -273,7 +296,6 @@ angular.module('toiletControlModule')
           };
           // 画白色遮挡
           drawRadian(this.cr1,this.HideCircle,0,360);
-
           // drawRadian(this.cr4,this.bimianCircle,0,360);
         };
         // 画填充圆
@@ -406,39 +428,60 @@ angular.module('toiletControlModule')
                 y : touch.clientY
               }
             };
-
-          }
+          };
         };
         $scope.getCurrentObj(0);
         $scope.slideHasChanged = function (index) {
           $scope.getCurrentObj(index);
         };
       },20);
+
+      //发送指令
+      $scope.sendCmd = function (cmd,des) {
+        cordova.plugins.SocketPlugin.tcpSendCmd({
+          "timeout": "5000",
+          "value": cmd
+        }, success, error);
+        function success(response) {
+          hmsPopup.showShortCenterToast(des+" "+"success");
+        };
+        function error() {
+          hmsPopup.showShortCenterToast(des+" "+"error");
+        }
+      };
+
       //处理选择怎加border
       var handlenapeListNapeLen = $scope.handlenapeListNape.length;
       $scope.selectNapes = function (index) {
-        $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
-        for(var i=0;i<handlenapeListNapeLen;i++){
-          if(i !== index){
-            $scope.handlenapeListNape[i].selecFlag = false;
+        if($scope.handlenapeListNape[index].handleDes === "设置"){
+          $state.go("toiletSetting")
+        }else {
+          $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
+          for(var i=0;i<handlenapeListNapeLen;i++){
+            if(i !== index){
+              $scope.handlenapeListNape[i].selecFlag = false;
+            };
           };
-        };
-        if($scope.handlenapeListNape[index].selecFlag === true){
-          $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgSeledUrl;
-        };
-        for(var i=0;i<handlenapeListNapeLen;i++){
-          if(i !== index){
-            $scope.handlenapeListNape[i].imgUrl = $scope.handlenapeListNape[i].imgUrlTemp;
+          if($scope.handlenapeListNape[index].selecFlag === true){
+            $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgSeledUrl;
+          };
+          for(var i=0;i<handlenapeListNapeLen;i++){
+            if(i !== index){
+              $scope.handlenapeListNape[i].imgUrl = $scope.handlenapeListNape[i].imgUrlTemp;
+            }
+          };
+          // 根据选择项来初始化选择项的
+          if($scope.handlenapeListNape[index].handledata){
+            $scope.currentSlideData = $scope.handlenapeListNape[index].handledata;
+            $scope.initHtmlTemplate($scope.currentSlideData);
+            setTimeout(function () {
+              $scope.getCurrentObj(0);
+              // 发送指令
+              $scope.sendCmd($scope.handlenapeListNape[index].cmd,$scope.handlenapeListNape[index].cmdDes);
+            },20)
+
           }
         };
-        // 根据选择项来初始化选择项的
-        if($scope.handlenapeListNape[index].handledata){
-          $scope.currentSlideData = $scope.handlenapeListNape[index].handledata;
-          $scope.initHtmlTemplate($scope.currentSlideData);
-          setTimeout(function () {
-            $scope.getCurrentObj(0);
-          },20)
-        }
       };
       //模式选择
       //获取屏幕高度

@@ -196,6 +196,9 @@
     "yidong":"移动",
     "zhengchang":"正常"
   },
+  "toiletSetting":{
+    "title":"马桶设置"
+  },
   "veil": {
     "goHomeTitle": "场景详情",
     "goHomeContent": "默认根据一天中的时间自动切换冷光、柔和、暖光三种光源模式",
