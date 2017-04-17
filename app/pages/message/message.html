@@ -20,14 +20,14 @@
       <span>消息</span>
     </div>
 <div class="row allMess">
-   <div ng-click="showStatus()" class="col col-33"><span class="status">状态及提醒</span></div>
-  <div ng-click="showException()" class="col col-33"><span>异常及保修</span></div>
+   <div ng-click="showStatus()" class="col col-33"><span ng-class="statusword">状态及提醒</span></div>
+  <div ng-click="showException()" class="col col-33"><span ng-class="exceptionword">异常及保修</span></div>
   <div class="col col-33"><span>其它</span></div>
 </div>
  </div>
 
   <ion-content class="hasHeader">
-
+    <ion-scroll direction="y" style="white-space: nowrap;width: 100%;text-align: center;" scrollbar-y="true">
 <!--status-->
    <ion-list ng-show="hasStaus" show-delete="data.showDelete" >
      <ion-item style="border-style:none;" ng-repeat="statusitem in statusitems" item="statusitem"  class="item item-icon-right item-remove-animate">
@@ -144,7 +144,7 @@
 
 
 
-
+</ion-scroll>
 
   </ion-content>
 

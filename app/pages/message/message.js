@@ -24,8 +24,7 @@ angular.module('messageModule')
   //$scope.noStaus=false;//defalut no status
   //$scope.noException=false;//defalut no Exception
  $scope.statusword='statusword';
-$scope.exceptionword="";
-
+$scope.exceptionword='exceptionword';
 
       $scope.exceptionitems= [
         {
@@ -94,7 +93,7 @@ $scope.exceptionword="";
        $scope.hasStaus=true;
       // console.log( $scope.swStaus);
        $scope.hasException=false;
-       $scope.statusword='statusword';
+     $scope.statusword='statusword';
        $scope.exceptionword="";
     };
       /**
@@ -108,7 +107,7 @@ $scope.exceptionword="";
         $scope.hasStaus=false;
         //console.log( $scope.swStatus);
         $scope.hasException=true;
-        $scope.exceptionword='exceptionword';
+        $scope.exceptionword='statusword';
         $scope.statusword="";
       };
       /**
