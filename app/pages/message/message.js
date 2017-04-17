@@ -79,6 +79,70 @@ $scope.exceptionword='exceptionword';
           time:"2017-02-08 17:25",
           showCircle:false
         },
+        {
+          id: "3",
+          statusMessage:"进水滤芯寿命提醒",
+          device:"马桶",
+          messageDel:"进水滤芯快到使用期限，快去跟换吧!",
+          time:"2017-02-08 17:25",
+          showCircle:false
+        },
+        {
+          id: "3",
+          statusMessage:"进水滤芯寿命提醒",
+          device:"马桶",
+          messageDel:"进水滤芯快到使用期限，快去跟换吧!",
+          time:"2017-02-08 17:25",
+          showCircle:false
+        },
+        {
+          id: "3",
+          statusMessage:"进水滤芯寿命提醒",
+          device:"马桶",
+          messageDel:"进水滤芯快到使用期限，快去跟换吧!",
+          time:"2017-02-08 17:25",
+          showCircle:false
+        },
+        {
+          id: "3",
+          statusMessage:"进水滤芯寿命提醒",
+          device:"马桶",
+          messageDel:"进水滤芯快到使用期限，快去跟换吧!",
+          time:"2017-02-08 17:25",
+          showCircle:false
+        },
+        {
+          id: "3",
+          statusMessage:"进水滤芯寿命提醒",
+          device:"马桶",
+          messageDel:"进水滤芯快到使用期限，快去跟换吧!",
+          time:"2017-02-08 17:25",
+          showCircle:false
+        },
+        {
+          id: "3",
+          statusMessage:"进水滤芯寿命提醒",
+          device:"马桶",
+          messageDel:"进水滤芯快到使用期限，快去跟换吧!",
+          time:"2017-02-08 17:25",
+          showCircle:false
+        },
+        {
+          id: "3",
+          statusMessage:"进水滤芯寿命提醒",
+          device:"马桶",
+          messageDel:"进水滤芯快到使用期限，快去跟换吧!",
+          time:"2017-02-08 17:25",
+          showCircle:false
+        },
+        {
+          id: "3",
+          statusMessage:"进水滤芯寿命提醒",
+          device:"马桶",
+          messageDel:"进水滤芯快到使用期限，快去跟换吧!",
+          time:"2017-02-08 17:25",
+          showCircle:false
+        },
       ]
 
 
