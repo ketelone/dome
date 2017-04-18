@@ -203,7 +203,18 @@
     "zhengchang": "正常"
   },
   "toiletSetting":{
-    "title":"马桶设置"
+    "title":"马桶设置",
+    "autofangai":"自动翻盖设置",
+    "autochongshui":"冲水自动",
+    "autochuchou":"自动除臭(空气净化)",
+    "autoanjianvoice":"按键声音",
+    "welcomemodoe":"欢迎模式",
+    "dengguanset":"灯光设置",
+    "jiedianset":"节点设置",
+    "toiletclear":"马桶清洁",
+    "errortotal":"异常情况统计",
+    "recoverset":"恢复默认设置",
+    "checkdeviceInfo":"查看设备信息"
   },
   "veil": {
     "goHomeTitle": "场景详情",

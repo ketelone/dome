@@ -219,6 +219,7 @@ angular.module('toiletControlModule')
           imgSeledUrl: "build/img/toilet-controller/shezhiseled.png",
           imgUrlTemp:"build/img/toilet-controller/shezhi.png",
           handleDes: "toiletController.shezhi",
+          hanleDesTemp:"设置",
           selecFlag:false
         },
       ];
@@ -449,11 +450,10 @@ angular.module('toiletControlModule')
           hmsPopup.showShortCenterToast(des+" "+"error");
         }
       };
-
       //处理选择怎加border
       var handlenapeListNapeLen = $scope.handlenapeListNape.length;
       $scope.selectNapes = function (index) {
-        if($scope.handlenapeListNape[index].handleDes === "设置"){
+        if($scope.handlenapeListNape[index].hanleDesTemp === "设置"){
           $state.go("toiletSetting")
         }else {
           $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
@@ -472,6 +472,7 @@ angular.module('toiletControlModule')
           };
           // 根据选择项来初始化选择项的
           if($scope.handlenapeListNape[index].handledata){
+
             $scope.currentSlideData = $scope.handlenapeListNape[index].handledata;
             $scope.initHtmlTemplate($scope.currentSlideData);
             setTimeout(function () {

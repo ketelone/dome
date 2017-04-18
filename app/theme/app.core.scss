@@ -7,6 +7,7 @@
 // App Shared Sass variables belong in app.variables.scss.
 @import "../scss/_Variables.scss";
 @import "../scss/animate.scss";
+@import "../scss/col.min.scss";
 @import "../scss/common";
 @import "../pages/index-page/indexPage";
 @import "../pages/login/login";
@@ -43,7 +44,8 @@
 
 
 //设备控制
-@import "../pages/model/hmsModal.scss";
+@import "../pages/model/hmsModal";
+@import "../pages/model/hmsiot-setSelect";
 @import "../pages/device-controller/toilet-controller/toiletController";
 @import "../pages/device-controller/toilet-controller/toiletSetting/toiletSetting";
 @import "../pages/device-controller/bathroom-controller/bathroom";
