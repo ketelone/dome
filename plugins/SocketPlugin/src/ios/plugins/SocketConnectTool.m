@@ -40,6 +40,8 @@ static const uint16_t TCPPort = 5036;
         //实例化
         self.socket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
         
+        [self.socket setIPv6Enabled:YES];//优先级ipv6
+        
         _host = tcpHost;
         NSError *error = nil;
         
@@ -72,6 +74,8 @@ static const uint16_t TCPPort = 5036;
     //实例化
     self.udpSocket = [[GCDAsyncUdpSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
     
+    [self.udpSocket setIPv6Enabled:YES];//优先级ipv6
+    
     NSError *error = nil;
     
     if (![self.udpSocket enableBroadcast:YES error:&error]) {
@@ -102,7 +106,7 @@ static const uint16_t TCPPort = 5036;
 }
 
 #pragma makr - udp发送广播
--(void)broadcast:(NSDictionary *)ackMessage WithHost:(NSString *)udpHost WithTag:(NSInteger)tag
+-(void)broadcast:(NSDictionary *)ackMessage WithHost:(NSString *)udpHost  WithPort:(uint16_t)port
 {
     //获取BOX详细信息请求格式
     NSError *err;
@@ -111,8 +115,8 @@ static const uint16_t TCPPort = 5036;
     if (!host) {
         host = @"255.255.255.255"; //如果udp为nil，则广播ip默认是255.255.255.255
     }
-    
-    [self.udpSocket sendData:data toHost:host port:UDPPort withTimeout:-1 tag:tag];
+    uint16_t tempPort = port?port:UDPPort;
+    [self.udpSocket sendData:data toHost:host port:tempPort withTimeout:-1 tag:0];
     
     DLog(@"prepare to broadcast!");
 }

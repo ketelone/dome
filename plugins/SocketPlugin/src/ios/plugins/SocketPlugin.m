@@ -8,7 +8,6 @@
 
 #import "SocketPlugin.h"
 #import "SocketConnectTool.h"
-#import "CDVLocation.h"
 @interface SocketPlugin ()
 {
     CDVInvokedUrlCommand *udpCmd;
@@ -33,9 +32,11 @@
 -(void)udpBroadCast:(CDVInvokedUrlCommand *)command
 {
     udpCmd  =command;
+    
     NSDictionary *arg = [command.arguments firstObject];
     NSTimeInterval timeout = [[arg objectForKey:@"timeout"] doubleValue];
     NSString *broadCastIp = [arg objectForKey:@"ip"];
+    NSInteger port = [[arg objectForKey:@"port"] integerValue];
     broadCastIp = broadCastIp?broadCastIp:@"255.255.255.255";
     NSDictionary *msg = [arg objectForKey:@"value"];
     
@@ -48,7 +49,7 @@
     //Initialize
     [self.socketConnect initGCDAsyncUdpSocket];
     
-    [self.socketConnect broadcast:msg WithHost:broadCastIp WithTag:0];//发送广播
+    [self.socketConnect broadcast:msg WithHost:broadCastIp WithPort:port];//发送广播
     
      self.udpRespQueue = [NSMutableArray array];//实例化一个udp消息队列
     

@@ -62,7 +62,7 @@ typedef void(^TcpReadResponse)(NSInteger tag);
 
 //UDP
 - (void)initGCDAsyncUdpSocket;  //udp协议初始化
--(void)broadcast:(NSDictionary *)ackMessage WithHost:(NSString *)udpHost WithTag:(NSInteger)tag;//发送udp广播
+-(void)broadcast:(NSDictionary *)ackMessage WithHost:(NSString *)udpHost  WithPort:(uint16_t)port;//发送udp广播
 
 //TCP
 - (BOOL)initGCDAsyncSocket:(NSString *)tcpHost; //tcp协议初始化
