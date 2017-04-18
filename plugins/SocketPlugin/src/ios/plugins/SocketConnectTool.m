@@ -40,6 +40,8 @@ static const uint16_t TCPPort = 5036;
         //实例化
         self.socket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
         
+        [self.socket setIPv6Enabled:YES];//优先级ipv6
+        
         _host = tcpHost;
         NSError *error = nil;
         
@@ -71,6 +73,8 @@ static const uint16_t TCPPort = 5036;
 {
     //实例化
     self.udpSocket = [[GCDAsyncUdpSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
+    
+    [self.udpSocket setIPv6Enabled:YES];//优先级ipv6
     
     NSError *error = nil;
     
