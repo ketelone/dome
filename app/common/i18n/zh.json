@@ -255,5 +255,22 @@
     "deviceFlag": "未安装",
     "deviceWen": "温度",
     "deviceShi": "湿度"
+  },
+  "nextgen": {
+    "title": "next gen shower",
+    "deviceWifiInfo": "信号好",
+    "deviceUseInfo": "使用中",
+    "parameterrad": "0",
+    "parameterdes": "水温档位",
+    "handleSelecDes": "出水方式",
+    "linyu": "淋浴",
+    "stop": "一键停止",
+    "jieneng": "节能",
+    "shezhi": "设置",
+    "gaunbi": "关闭",
+    "maichong": "头顶花洒",
+    "bodong": "头顶摆动",
+    "yidong": "手持花洒",
+    "zhengchang": "Spout"
   }
 }

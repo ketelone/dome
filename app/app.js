@@ -23,7 +23,8 @@ var myApp = angular.module('myApp', [
   'productModule',
   'pascalprecht.translate',
   'toiletControlModule',
-  'bathroomModule'
+  'bathroomModule',
+  'nextgenModule'
 ]);
 
 angular.module('myApp')
@@ -235,7 +236,16 @@ angular.module('myApp')
           templateUrl: 'build/pages/device-controller/toilet-controller/toiletController.html',
           controller: 'toiletControllerCtrl'
         })
-
+        .state('nextgenSet', {
+          url: '/nextgenSet',
+          templateUrl: 'build/pages/device-controller/nextgen-controller/nextgen-set/nextgenSet.html',
+          controller: 'nextgenSetCtrl'
+        })
+        .state('nextgen', {
+          url: '/nextgen',
+          templateUrl: 'build/pages/device-controller/nextgen-controller/nextgen.html',
+          controller: 'nextgenCtrl'
+        })
         .state('bathroom', {
           url: '/bathroom/:deviceSku',
           templateUrl: 'build/pages/device-controller/bathroom-controller/bathroom.html',
@@ -253,6 +263,7 @@ angular.module('myApp')
           templateUrl: 'build/pages/device-controller/bathroom-controller/bathroom-info/bathroomInfo.html',
           controller: 'bathroomInfoCtrl'
         });
+
 
       // if none of the above states are matched, use this as the fallback
       if (baseConfig.debug) {
