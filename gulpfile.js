@@ -36,6 +36,8 @@ var jsFilePath = [
   'app/pages/**/**/**/*.js'];
 
 var cssFilePath = [
+  'app/scss/_Variables.scss',
+  'app/scss/common.scss',
   'app/theme/app.core.scss',
   'app/pages/**/*.scss',
   'app/pages/**/**/*.scss',
@@ -68,7 +70,8 @@ var libPublishFilePath = [
   'app/lib/**/angular-translate.js',
   'app/lib/**/angular-translate-loader-static-files.js',
   'app/lib/**/dist/ionic-datepicker.bundle.min.js',
-  'app/lib/**/dist/pouchdb.min.js'
+  'app/lib/**/dist/pouchdb.min.js',
+  'app/lib/**/dist/echarts.common.min.js'
 ];
 
 var imgFilePath = [
@@ -161,16 +164,16 @@ gulp.task('html', [/*'rootHtml',*/ 'pagesHtml']);
 //复制开发环境的依赖库文件
 gulp.task('copy-dev-libs', function () {
   return gulp.src(libDevFilePath)
-    //.pipe(useref({noAssets: true}, lazypipe().pipe(sourcemaps.init, {loadMaps: true})))
-    //.pipe(sourcemaps.write('.'))
+  //.pipe(useref({noAssets: true}, lazypipe().pipe(sourcemaps.init, {loadMaps: true})))
+  //.pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('www/build/lib'));
 });
 
 //复制发布环境的依赖库文件
 gulp.task('copy-publish-libs', function () {
   return gulp.src(libPublishFilePath)
-    //.pipe(useref({noAssets: true}, lazypipe().pipe(sourcemaps.init, {loadMaps: true})))
-    //.pipe(sourcemaps.write('.'))
+  //.pipe(useref({noAssets: true}, lazypipe().pipe(sourcemaps.init, {loadMaps: true})))
+  //.pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('www/build/lib'));
 });
 
@@ -212,8 +215,8 @@ gulp.task('copy-ios-appStore-config', function () {
 
 gulp.task('copy-common-js-libs', function () {
   return gulp.src(libDevCommonFilePath)
-    //.pipe(useref({noAssets: true}, lazypipe().pipe(sourcemaps.init, {loadMaps: true})))
-    //.pipe(sourcemaps.write('.'))
+  //.pipe(useref({noAssets: true}, lazypipe().pipe(sourcemaps.init, {loadMaps: true})))
+  //.pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('www/build/common'));
 });
 
@@ -299,29 +302,29 @@ gulp.task('scripts', function () {
 //
 gulp.task('copy-prod', function () {
   return gulp.src([
-      'src/**/*',
-      '!src/index.html',
-      '!src/**/*.ts',
-      '!src/**/*.less',
-      '!src/**/*.sass',
-      '!src/**/*.styl',
-      '!src/css/*',
-      '!src/**/*.md',
-      '!src/scripts/*'])
+    'src/**/*',
+    '!src/index.html',
+    '!src/**/*.ts',
+    '!src/**/*.less',
+    '!src/**/*.sass',
+    '!src/**/*.styl',
+    '!src/css/*',
+    '!src/**/*.md',
+    '!src/scripts/*'])
     .pipe(gulp.dest('www'));
 });
 
 // 创建多层目录
 function mkdirs(dirname, mode, callback) {
- // console.log(dirname+"abc1");
+  // console.log(dirname+"abc1");
   fs.exists(dirname, function (exists) {
     if (exists) {
       callback();
     } else {
-    // console.log(path.dirname(dirname)+"abc");
+      // console.log(path.dirname(dirname)+"abc");
       mkdirs(path.dirname(dirname), mode, function () {
-     fs.mkdir(dirname, mode, callback);
-     });
+        fs.mkdir(dirname, mode, callback);
+      });
     }
   });
 }
@@ -350,17 +353,17 @@ function copyfile(oldPath, newPath) {
 
 function copyPages(e) {
   var oldPath = e.path;
-  /*
-  mac 部分
-   console.log(oldPath+"旧");
+
+
+/*   console.log(oldPath+"旧");
    var newPath = oldPath.replace('/app/', '/www/build/');
    console.log(newPath+"新");
-   var newDirPathTemp = newPath.split("/");
-  */
-  console.log(oldPath+'旧');
-  var newPath = oldPath.replace('\\app\\', '\\www\\build\\');
-  console.log(newPath+'新');
-  var newDirPathTemp = newPath.split("\\");
+   var newDirPathTemp = newPath.split("/");*/
+
+   console.log(oldPath+'旧');
+   var newPath = oldPath.replace('\\app\\', '\\www\\build\\');
+   console.log(newPath+'新');
+   var newDirPathTemp = newPath.split("\\");
 
   var currentPath = fs.realpathSync('.');
 
@@ -368,7 +371,8 @@ function copyPages(e) {
   for (var i = 0; i < newDirPathTemp.length - 1; i++) {
     newDirPath[i] = newDirPathTemp[i];
   }
-  newDirPath = newDirPath.join("\\");
+   newDirPath = newDirPath.join("\\");
+  newDirPath = newDirPath.join("/");
   // 修改或增加时
   if ('added' == e.type || 'changed' == e.type || 'renamed' == e.type) {
 
@@ -380,7 +384,7 @@ function copyPages(e) {
       } else {
         console.log("文件夹不存在，则创建目录");
 
-       mkdirs(newDirPath);
+        mkdirs(newDirPath);
 
         //延时，等待目录创建完成
         setTimeout(function () {
@@ -423,6 +427,11 @@ gulp.task('watch', function () {
     gulp.watch(jsFilePath, function (e) {
       console.log('有变动的文件为 oldPath ' + e.path);
       gulp.run('scripts');
+    });
+    // 监听多语言
+    gulp.watch(libDevCommonFilePath, function (e) {
+      console.log('有变动的文件为 oldPath ' + e.path);
+      gulp.run('copy-common-js-libs');
     });
   });
 
