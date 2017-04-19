@@ -30,7 +30,7 @@
     <ion-scroll zooming="true" direction="y" >
 <!--status-->
    <ion-list ng-show="hasStaus" show-delete="data.showDelete" >
-     <ion-item style="border-style:none;" ng-repeat="statusitem in statusitems " item="statusitem"  class="item item-icon-right item-remove-animate">
+     <ion-item style="background: #212121;border-style:none;" ng-repeat="statusitem in statusitems " item="statusitem"  class="item item-icon-right item-remove-animate">
    <div class="row oneModel">
   <!-- <img  ng-show="show-delete" style="width: 0.44rem;height: 0.45rem" ng-src="build/img/message/radio_bg.png"/>-->
            <div class="col col-75">
@@ -59,10 +59,10 @@
        </ion-option-button>
        <ion-delete-button   ng-click="onChoose(statusitem)">
 
-    <img  style="width: 0.44rem;height: 0.45rem" ng-src="build/img/message/radio_bg.png"/>
-     <img ng-show="statusitem.showCircle" style="" ng-src="build/img/message/radio_dot.png"/>
+         <img  style=" width: 0.5rem;height:0.5rem" ng-src={{statusitem.circleUrl1}} />
 
-      </ion-delete-button>
+
+       </ion-delete-button>
 
      </ion-item>
 </ion-list>

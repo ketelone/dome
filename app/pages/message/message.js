@@ -188,8 +188,8 @@ $scope.exceptionword='exceptionword';
        *@disc:choose you click
        */
       $scope.onChoose=function(statusitem){
-    statusitem.showCircle=!statusitem.showCircle;
-
+  //  statusitem.showCircle=!statusitem.showCircle;
+     
       }
       /**
        *@author:chenjiacheng
