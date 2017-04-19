@@ -23,11 +23,13 @@ var myApp = angular.module('myApp', [
   'productModule',
   'pascalprecht.translate',
   'toiletControlModule',
-  'bathroomModule'
+  'bathroomModule',
+  'karessControlModule'
 ]);
 
+var db = null;
 angular.module('myApp')
-  .run(function ($ionicPlatform, $translate) {
+  .run(function ($ionicPlatform, $translate, baseConfig) {
     $ionicPlatform.ready(function () {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
@@ -77,7 +79,303 @@ angular.module('myApp')
         function () {
           // alert('Error getting locale\n');
         });
+    });
 
+    document.addEventListener('deviceready', function() {
+      console.log('openDatabase');
+      db = window.sqlitePlugin.openDatabase({name: 'ko.db', location: 'default'});
+
+      //T_CTM_PARTY
+      db.transaction(function(tx) {
+        tx.executeSql("CREATE TABLE IF NOT EXISTS T_CTM_PARTY ("+
+          "[PARTY_ID] bigint NOT NULL ,"+
+          "[PARTY_TYPE] nvarchar(30) NULL ,"+
+          "[PARTY_ACCOUNT] nvarchar(30) NULL ,"+
+          "[PASSWORD] nvarchar(30) NULL ,"+
+          "[HEAD_PORTRAIT] nvarchar(240) NULL ,"+
+          "[PARTY_NAME] nvarchar(30) NULL ,"+
+          "[SEX] nvarchar(30) NULL ,"+
+          "[PHONE_NUMBER] nvarchar(30) NULL ,"+
+          "[EMAIL_ADDRESS] nvarchar(30) NULL ,"+
+          "[ROLE_ID] bigint NULL ,"+
+          "[PARTY_STATUS] nvarchar(30) NULL ,"+
+          "[REFERENCE_SOURCE] nvarchar(30) NULL ,"+
+          "[CREATION_DATE] datetime NOT NULL DEFAULT (sysdatetime()) ,"+
+          "[CREATED_BY] nvarchar(100) NOT NULL DEFAULT ('-1') ,"+
+          "[LAST_UPDATE_DATE] datetime NOT NULL DEFAULT (sysdatetime()) ,"+
+          "[LAST_UPDATED_BY] nvarchar(100) NOT NULL DEFAULT ('-1') ,"+
+          "[LAST_UPDATE_LOGIN] nvarchar(100) NOT NULL DEFAULT ('-1') ,"+
+          "[OBJECT_VERSION_NUMBER] bigint NOT NULL DEFAULT ((1)) ,"+
+          "[REQUEST_ID] bigint NULL ,"+
+          "[PROGRAM_ID] bigint NULL ,"+
+          "[ATTRIBUTE_CATEGORY] nvarchar(100) NULL ,"+
+          "[ATTRIBUTE1] nvarchar(240) NULL ,"+
+          "[ATTRIBUTE2] nvarchar(240) NULL ,"+
+          "[ATTRIBUTE3] nvarchar(240) NULL ,"+
+          "[ATTRIBUTE4] nvarchar(240) NULL ,"+
+          "[ATTRIBUTE5] nvarchar(240) NULL ,"+
+          "[ATTRIBUTE6] nvarchar(240) NULL ,"+
+          "[ATTRIBUTE7] nvarchar(240) NULL ,"+
+          "[ATTRIBUTE8] nvarchar(240) NULL ,"+
+          "[ATTRIBUTE9] nvarchar(240) NULL ,"+
+          "[ATTRIBUTE10] nvarchar(240) NULL ,"+
+          "[ATTRIBUTE11] nvarchar(240) NULL ,"+
+          "[ATTRIBUTE12] nvarchar(240) NULL ,"+
+          "[ATTRIBUTE13] nvarchar(240) NULL ,"+
+          "[ATTRIBUTE14] nvarchar(240) NULL ,"+
+          "[ATTRIBUTE15] nvarchar(240) NULL ,"+
+          "PRIMARY KEY ([PARTY_ID]),"+
+          "UNIQUE ([PARTY_ID] ASC)"+
+        ")");
+
+        tx.executeSql("CREATE TABLE IF NOT EXISTS T_CTM_PARTY_BOX (" +
+          "[PARTY_BOX_DEVICE_ID] bigint NOT NULL ," +
+          "[PARTY_ID] bigint NULL ," +
+          "[BOX_ID] bigint NULL ," +
+          "[REFERENCE_SOURCE] nvarchar(30) NULL ," +
+          "[CREATION_DATE] datetime NOT NULL DEFAULT (sysdatetime()) ," +
+          "[CREATED_BY] nvarchar(100) NOT NULL DEFAULT ('-1') ," +
+          "[LAST_UPDATE_DATE] datetime NOT NULL DEFAULT (sysdatetime()) ," +
+          "[LAST_UPDATED_BY] nvarchar(100) NOT NULL DEFAULT ('-1') ," +
+          "[LAST_UPDATE_LOGIN] nvarchar(100) NOT NULL DEFAULT ('-1') ," +
+          "[OBJECT_VERSION_NUMBER] bigint NOT NULL DEFAULT ((1)) ," +
+          "[REQUEST_ID] bigint NULL ," +
+          "[PROGRAM_ID] bigint NULL ," +
+          "[ATTRIBUTE_CATEGORY] nvarchar(100) NULL ," +
+          "[ATTRIBUTE1] nvarchar(240) NULL ," +
+          "[ATTRIBUTE2] nvarchar(240) NULL ," +
+          "[ATTRIBUTE3] nvarchar(240) NULL ," +
+          "[ATTRIBUTE4] nvarchar(240) NULL ," +
+          "[ATTRIBUTE5] nvarchar(240) NULL ," +
+          "[ATTRIBUTE6] nvarchar(240) NULL ," +
+          "[ATTRIBUTE7] nvarchar(240) NULL ," +
+          "[ATTRIBUTE8] nvarchar(240) NULL ," +
+          "[ATTRIBUTE9] nvarchar(240) NULL ," +
+          "[ATTRIBUTE10] nvarchar(240) NULL ," +
+          "[ATTRIBUTE11] nvarchar(240) NULL ," +
+          "[ATTRIBUTE12] nvarchar(240) NULL ," +
+          "[ATTRIBUTE13] nvarchar(240) NULL ," +
+          "[ATTRIBUTE14] nvarchar(240) NULL ," +
+          "[ATTRIBUTE15] nvarchar(240) NULL ," +
+          "PRIMARY KEY ([PARTY_BOX_DEVICE_ID])" +
+        ")");
+
+        tx.executeSql("CREATE TABLE IF NOT EXISTS T_CTM_PARTY_BOX_DEVICE ("  +
+          "[PARTY_BOX_DEVICE_ID] bigint NOT NULL ," +
+          "[PARTY_ID] bigint NULL ," +
+          "[BOX_ID] bigint NULL ," +
+          "[DEVICE_ID] bigint NULL ," +
+          "[REFERENCE_SOURCE] nvarchar(30) NULL ," +
+          "[CREATION_DATE] datetime NOT NULL DEFAULT (sysdatetime()) ," +
+          "[CREATED_BY] nvarchar(100) NOT NULL DEFAULT ('-1') ," +
+          "[LAST_UPDATE_DATE] datetime NOT NULL DEFAULT (sysdatetime()) ," +
+          "[LAST_UPDATED_BY] nvarchar(100) NOT NULL DEFAULT ('-1') ," +
+          "[LAST_UPDATE_LOGIN] nvarchar(100) NOT NULL DEFAULT ('-1') ," +
+          "[OBJECT_VERSION_NUMBER] bigint NOT NULL DEFAULT ((1)) ," +
+          "[REQUEST_ID] bigint NULL ," +
+          "[PROGRAM_ID] bigint NULL ," +
+          "[ATTRIBUTE_CATEGORY] nvarchar(100) NULL ," +
+          "[ATTRIBUTE1] nvarchar(240) NULL ," +
+          "[ATTRIBUTE2] nvarchar(240) NULL ," +
+          "[ATTRIBUTE3] nvarchar(240) NULL ," +
+          "[ATTRIBUTE4] nvarchar(240) NULL ," +
+          "[ATTRIBUTE5] nvarchar(240) NULL ," +
+          "[ATTRIBUTE6] nvarchar(240) NULL ," +
+          "[ATTRIBUTE7] nvarchar(240) NULL ," +
+          "[ATTRIBUTE8] nvarchar(240) NULL ," +
+          "[ATTRIBUTE9] nvarchar(240) NULL ," +
+          "[ATTRIBUTE10] nvarchar(240) NULL ," +
+          "[ATTRIBUTE11] nvarchar(240) NULL ," +
+          "[ATTRIBUTE12] nvarchar(240) NULL ," +
+          "[ATTRIBUTE13] nvarchar(240) NULL ," +
+          "[ATTRIBUTE14] nvarchar(240) NULL ," +
+          "[ATTRIBUTE15] nvarchar(240) NULL ," +
+          "PRIMARY KEY ([PARTY_BOX_DEVICE_ID])" +
+        ")");
+
+        tx.executeSql("CREATE TABLE IF NOT EXISTS T_CTM_PARTY_DEVICE (" +
+          "[PARTY_DEVICE_ID] bigint NOT NULL ," +
+          "[PARTY_ID] bigint NULL ," +
+          "[DEVICE_ID] bigint NULL ," +
+          "[REFERENCE_SOURCE] nvarchar(30) NULL ," +
+          "[CREATION_DATE] datetime NOT NULL DEFAULT (sysdatetime()) ," +
+          "[CREATED_BY] nvarchar(100) NOT NULL DEFAULT ('-1') ," +
+          "[LAST_UPDATE_DATE] datetime NOT NULL DEFAULT (sysdatetime()) ," +
+          "[LAST_UPDATED_BY] nvarchar(100) NOT NULL DEFAULT ('-1') ," +
+          "[LAST_UPDATE_LOGIN] nvarchar(100) NOT NULL DEFAULT ('-1') ," +
+          "[OBJECT_VERSION_NUMBER] bigint NOT NULL DEFAULT ((1)) ," +
+          "[REQUEST_ID] bigint NULL ," +
+          "[PROGRAM_ID] bigint NULL ," +
+          "[ATTRIBUTE_CATEGORY] nvarchar(100) NULL ," +
+          "[ATTRIBUTE1] nvarchar(240) NULL ," +
+          "[ATTRIBUTE2] nvarchar(240) NULL ," +
+          "[ATTRIBUTE3] nvarchar(240) NULL ," +
+          "[ATTRIBUTE4] nvarchar(240) NULL ," +
+          "[ATTRIBUTE5] nvarchar(240) NULL ," +
+          "[ATTRIBUTE6] nvarchar(240) NULL ," +
+          "[ATTRIBUTE7] nvarchar(240) NULL ," +
+          "[ATTRIBUTE8] nvarchar(240) NULL ," +
+          "[ATTRIBUTE9] nvarchar(240) NULL ," +
+          "[ATTRIBUTE10] nvarchar(240) NULL ," +
+          "[ATTRIBUTE11] nvarchar(240) NULL ," +
+          "[ATTRIBUTE12] nvarchar(240) NULL ," +
+          "[ATTRIBUTE13] nvarchar(240) NULL ," +
+          "[ATTRIBUTE14] nvarchar(240) NULL ," +
+          "[ATTRIBUTE15] nvarchar(240) NULL ," +
+          "PRIMARY KEY ([PARTY_DEVICE_ID])" +
+        ")");
+
+        tx.executeSql("CREATE TABLE IF NOT EXISTS T_CTM_PARTY_GROUP (" +
+          "[PARTY_GROUP_ID] bigint NOT NULL ," +
+          "[PARTY_ID] bigint NULL ," +
+          "[GROUP_ID] bigint NULL ," +
+          "[ROOT_FLAG] nvarchar(30) NULL ," +
+          "[DEFAULT_FLAG] nvarchar(30) NULL ," +
+          "[REFERENCE_SOURCE] nvarchar(30) NULL ," +
+          "[CREATION_DATE] datetime NOT NULL DEFAULT (sysdatetime()) ," +
+          "[CREATED_BY] nvarchar(100) NOT NULL DEFAULT ('-1') ," +
+          "[LAST_UPDATE_DATE] datetime NOT NULL DEFAULT (sysdatetime()) ," +
+          "[LAST_UPDATED_BY] nvarchar(100) NOT NULL DEFAULT ('-1') ," +
+          "[LAST_UPDATE_LOGIN] nvarchar(100) NOT NULL DEFAULT ('-1') ," +
+          "[OBJECT_VERSION_NUMBER] bigint NOT NULL DEFAULT ((1)) ," +
+          "[REQUEST_ID] bigint NULL ," +
+          "[PROGRAM_ID] bigint NULL ," +
+          "[ATTRIBUTE_CATEGORY] nvarchar(100) NULL ," +
+          "[ATTRIBUTE1] nvarchar(240) NULL ," +
+          "[ATTRIBUTE2] nvarchar(240) NULL ," +
+          "[ATTRIBUTE3] nvarchar(240) NULL ," +
+          "[ATTRIBUTE4] nvarchar(240) NULL ," +
+          "[ATTRIBUTE5] nvarchar(240) NULL ," +
+          "[ATTRIBUTE6] nvarchar(240) NULL ," +
+          "[ATTRIBUTE7] nvarchar(240) NULL ," +
+          "[ATTRIBUTE8] nvarchar(240) NULL ," +
+          "[ATTRIBUTE9] nvarchar(240) NULL ," +
+          "[ATTRIBUTE10] nvarchar(240) NULL ," +
+          "[ATTRIBUTE11] nvarchar(240) NULL ," +
+          "[ATTRIBUTE12] nvarchar(240) NULL ," +
+          "[ATTRIBUTE13] nvarchar(240) NULL ," +
+          "[ATTRIBUTE14] nvarchar(240) NULL ," +
+          "[ATTRIBUTE15] nvarchar(240) NULL ," +
+          "PRIMARY KEY ([PARTY_GROUP_ID])" +
+        ")");
+
+        tx.executeSql("CREATE TABLE IF NOT EXISTS T_CTM_PARTY_GROUP_DEVICE (" +
+          "[GROUP_DEVICE_ID] bigint NOT NULL ," +
+          "[PARTY_ID] bigint NULL ," +
+          "[GROUP_ID] bigint NULL ," +
+          "[DEVICE_ID] bigint NULL ," +
+          "[REFERENCE_SOURCE] nvarchar(30) NULL ," +
+          "[CREATION_DATE] datetime NOT NULL DEFAULT (sysdatetime()) ," +
+          "[CREATED_BY] nvarchar(100) NOT NULL DEFAULT ('-1') ," +
+          "[LAST_UPDATE_DATE] datetime NOT NULL DEFAULT (sysdatetime()) ," +
+          "[LAST_UPDATED_BY] nvarchar(100) NOT NULL DEFAULT ('-1') ," +
+          "[LAST_UPDATE_LOGIN] nvarchar(100) NOT NULL DEFAULT ('-1') ," +
+          "[OBJECT_VERSION_NUMBER] bigint NOT NULL DEFAULT ((1)) ," +
+          "[REQUEST_ID] bigint NULL ," +
+          "[PROGRAM_ID] bigint NULL ," +
+          "[ATTRIBUTE_CATEGORY] nvarchar(100) NULL ," +
+          "[ATTRIBUTE1] nvarchar(240) NULL ," +
+          "[ATTRIBUTE2] nvarchar(240) NULL ," +
+          "[ATTRIBUTE3] nvarchar(240) NULL ," +
+          "[ATTRIBUTE4] nvarchar(240) NULL ," +
+          "[ATTRIBUTE5] nvarchar(240) NULL ," +
+          "[ATTRIBUTE6] nvarchar(240) NULL ," +
+          "[ATTRIBUTE7] nvarchar(240) NULL ," +
+          "[ATTRIBUTE8] nvarchar(240) NULL ," +
+          "[ATTRIBUTE9] nvarchar(240) NULL ," +
+          "[ATTRIBUTE10] nvarchar(240) NULL ," +
+          "[ATTRIBUTE11] nvarchar(240) NULL ," +
+          "[ATTRIBUTE12] nvarchar(240) NULL ," +
+          "[ATTRIBUTE13] nvarchar(240) NULL ," +
+          "[ATTRIBUTE14] nvarchar(240) NULL ," +
+          "[ATTRIBUTE15] nvarchar(240) NULL ," +
+          "PRIMARY KEY ([GROUP_DEVICE_ID])" +
+        ")");
+
+        tx.executeSql("CREATE TABLE IF NOT EXISTS T_DVM_DEVICE (" +
+          "[DEVICE_ID] bigint NOT NULL ," +
+          "[PRODUCT_ID] bigint NULL ," +
+          "[SKU_ID] bigint NULL ," +
+          "[DEVICE_SN] nvarchar(30) NULL ," +
+          "[DEVICE_NAME] nvarchar(30) NULL ," +
+          "[LOCATION] nvarchar(240) NULL ," +
+          "[CONNECT_MODE] nvarchar(30) NULL ," +
+          "[REFERENCE_SOURCE] nvarchar(30) NULL ," +
+          "[CREATION_DATE] datetime NOT NULL DEFAULT (sysdatetime()) ," +
+          "[CREATED_BY] nvarchar(100) NOT NULL DEFAULT ('-1') ," +
+          "[LAST_UPDATE_DATE] datetime NOT NULL DEFAULT (sysdatetime()) ," +
+          "[LAST_UPDATED_BY] nvarchar(100) NOT NULL DEFAULT ('-1') ," +
+          "[LAST_UPDATE_LOGIN] nvarchar(100) NOT NULL DEFAULT ('-1') ," +
+          "[OBJECT_VERSION_NUMBER] bigint NOT NULL DEFAULT ((1)) ," +
+          "[REQUEST_ID] bigint NULL ," +
+          "[PROGRAM_ID] bigint NULL ," +
+          "[ATTRIBUTE_CATEGORY] nvarchar(100) NULL ," +
+          "[ATTRIBUTE1] nvarchar(240) NULL ," +
+          "[ATTRIBUTE2] nvarchar(240) NULL ," +
+          "[ATTRIBUTE3] nvarchar(240) NULL ," +
+          "[ATTRIBUTE4] nvarchar(240) NULL ," +
+          "[ATTRIBUTE5] nvarchar(240) NULL ," +
+          "[ATTRIBUTE6] nvarchar(240) NULL ," +
+          "[ATTRIBUTE7] nvarchar(240) NULL ," +
+          "[ATTRIBUTE8] nvarchar(240) NULL ," +
+          "[ATTRIBUTE9] nvarchar(240) NULL ," +
+          "[ATTRIBUTE10] nvarchar(240) NULL ," +
+          "[ATTRIBUTE11] nvarchar(240) NULL ," +
+          "[ATTRIBUTE12] nvarchar(240) NULL ," +
+          "[ATTRIBUTE13] nvarchar(240) NULL ," +
+          "[ATTRIBUTE14] nvarchar(240) NULL ," +
+          "[ATTRIBUTE15] nvarchar(240) NULL ," +
+          "PRIMARY KEY ([DEVICE_ID])" +
+        ")");
+
+        tx.executeSql("CREATE TABLE T_CTM_PARTY_SCENARIO (" +
+          "[SCENARIO_ID] [bigint] IDENTITY(1,1) NOT NULL," +
+          "[PARTY_ID] [bigint] NOT NULL," +
+          "[PLUGIN_ID] [bigint] NOT NULL," +
+          "[SCENARIO_TYPE] [nvarchar](30) NULL," +
+          "[SCENARIO_CODE] [nvarchar](30) NULL," +
+          "[SCENARIO_NAME] [nvarchar](30) NULL," +
+          "[IMAGE_ADDRESS] [nvarchar](30) NULL," +
+          "[REFERENCE_SOURCE] [nvarchar](30) NULL," +
+          "[SCENARIO_status] [nvarchar](30) NULL," +
+          "[DEFAULT_FLAG] [nvarchar](30) NULL," +
+          "[ACTIVE_FLAG] [nvarchar](30) NULL," +
+          "[DESCRIPTION] [nvarchar](240) NULL," +
+          "[CREATION_DATE] [datetime] NOT NULL," +
+          "[CREATED_BY] [nvarchar](100) NOT NULL," +
+          "[LAST_UPDATE_DATE] [datetime] NOT NULL," +
+          "[LAST_UPDATED_BY] [nvarchar](100) NOT NULL," +
+          "[LAST_UPDATE_LOGIN] [nvarchar](100) NOT NULL," +
+          "[OBJECT_VERSION_NUMBER] [bigint] NOT NULL," +
+          "[REQUEST_ID] [bigint] NULL," +
+          "[PROGRAM_ID] [bigint] NULL," +
+          "[ATTRIBUTE_CATEGORY] [nvarchar](100) NULL," +
+          "[ATTRIBUTE1] [nvarchar](240) NULL," +
+          "[ATTRIBUTE2] [nvarchar](240) NULL," +
+          "[ATTRIBUTE3] [nvarchar](240) NULL," +
+          "[ATTRIBUTE4] [nvarchar](240) NULL," +
+          "[ATTRIBUTE5] [nvarchar](240) NULL," +
+          "[ATTRIBUTE6] [nvarchar](240) NULL," +
+          "[ATTRIBUTE7] [nvarchar](240) NULL," +
+          "[ATTRIBUTE8] [nvarchar](240) NULL," +
+          "[ATTRIBUTE9] [nvarchar](240) NULL," +
+          "[ATTRIBUTE10] [nvarchar](240) NULL," +
+          "[ATTRIBUTE11] [nvarchar](240) NULL," +
+          "[ATTRIBUTE12] [nvarchar](240) NULL," +
+          "[ATTRIBUTE13] [nvarchar](240) NULL," +
+          "[ATTRIBUTE14] [nvarchar](240) NULL," +
+          "[ATTRIBUTE15] [nvarchar](240) NULL," +
+          "PRIMARY KEY ([SCENARIO_ID] ASC)" +
+        ")");
+      });
+      /*db.close(successcb, errorcb);
+      //
+      var successcb = function(){
+
+      };
+      var errorcb = function(msg){
+
+      };*/
     });
   });
 
@@ -247,6 +545,22 @@ angular.module('myApp')
           templateUrl: 'build/pages/device-controller/toilet-controller/lightSetting/lightSetting.html',
           controller: 'lightSettingCtrl'
         })
+        //设备控制-karess
+        .state('karess', {
+          url: '/karess',
+          templateUrl: 'build/pages/device-controller/karess-controller/karessController.html',
+          controller: 'karessControllerCtrl'
+        })
+        .state('karessSetting', {
+          url: '/karessSetting',
+          templateUrl: 'build/pages/device-controller/karess-controller/setting-karess/karessSet.html',
+          controller: 'karessSettingControllerCtrl'
+        })
+        .state('karessInfo', {
+          url: '/karessInfo',
+          templateUrl: 'build/pages/device-controller/karess-controller/info-karess/karessInfo.html',
+          controller: 'karessInfoControllerCtrl'
+        })
         .state('bathroom', {
           url: '/bathroom/:deviceSku',
           templateUrl: 'build/pages/device-controller/bathroom-controller/bathroom.html',
@@ -263,7 +577,6 @@ angular.module('myApp')
           templateUrl: 'build/pages/device-controller/bathroom-controller/bathroom-info/bathroomInfo.html',
           controller: 'bathroomInfoCtrl'
         });
-
       // if none of the above states are matched, use this as the fallback
       if (baseConfig.debug) {
         console.log('app.js window.localStorage.appCacheVersion ' + window.localStorage.appCacheVersion);

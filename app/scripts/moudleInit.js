@@ -15,4 +15,5 @@ var myInfoModule = angular.module('myInfoModule', []);
 var productModule = angular.module('productModule', []);
 var toiletControlModule = angular.module('toiletControlModule', []);
 var bathroomModule = angular.module('bathroomModule', []);
+var karessControlModule = angular.module('karessControlModule', []);
 
