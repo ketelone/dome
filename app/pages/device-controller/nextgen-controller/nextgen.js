@@ -16,13 +16,12 @@ angular.module('nextgenModule')
 
       $scope.goBack = function(){
         $ionicHistory.goBack();
-      }
 
-
+    }
 
       //初始模式选择
       $scope.toiletController = {
-        modelType:"nextgen.zhengchang",
+        modelType:"nextgen.Spout",
       };
       //侧滑转档数量json
    //   $scope.slideInitData =[{
@@ -48,7 +47,7 @@ angular.module('nextgenModule')
    //     canves02: "NuanjioaFlcanves02",
    //     canves03: "NuanjioaFlcanves03",
    //   }]
-     $scope.slideNvYongData =[
+     $scope.slideLinYuData =[
        {
         des: "水温",
         gearNum: 4,
@@ -138,7 +137,7 @@ angular.module('nextgenModule')
           imgUrlTemp:"build/img/nextgen/linyu.png",
           handleDes: "nextgen.linyu",
           selecFlag:false,
-          handledata:$scope.slideNvYongData //cjc初始canves
+          handledata:$scope.slideLinYuData //cjc初始canves
         },
         {
           imgUrl: "build/img/nextgen/tunxi.png",
@@ -146,7 +145,7 @@ angular.module('nextgenModule')
           imgUrlTemp:"build/img/nextgen/tunxi.png",
           handleDes: "nextgen.stop",
           selecFlag:false,
-          handledata:$scope.slideTunBuData
+       //   handledata:$scope.slideTunBuData
         },
         {
           imgUrl: "build/img/nextgen/quanwen.png",
@@ -453,9 +452,14 @@ angular.module('nextgenModule')
 
         if(index==2)
         {
-
-            $scope.value = [{id:6,des:'nextgen.close'},
-              {id:7,des:'nextgen.powerFailure'},{id:8,des:'nextgen.sleep'},{id:9,des:'nextgen.lowPower'}];
+           if($scope.value[0].ionCheck==undefined) {//是否有ioncheck属性
+             $scope.value = [{id: 6, des: 'nextgen.close', ionCheck: true},
+               {id: 7, des: 'nextgen.powerFailure', ionCheck: false}, {
+                 id: 8,
+                 des: 'nextgen.sleep',
+                 ionCheck: false
+               }, {id: 9, des: 'nextgen.lowPower', ionCheck: false}];
+           }
 
        $scope.modal.show();
           setTimeout(function () {
@@ -504,12 +508,12 @@ angular.module('nextgenModule')
         $scope.modal = modal;
       });
       $scope.value = [{id:2,des:'nextgen.maichong'},
-        {id:3,des:'nextgen.bodong'},{id:4,des:'nextgen.yidong'},{id:5,des:'nextgen.zhengchang'}
+        {id:3,des:'nextgen.bodong'},{id:4,des:'nextgen.yidong'},{id:5,des:'nextgen.Spout'}
       ];
       $scope.openModal = function () {
         if($scope.value.length!==0) {
           $scope.value = [{id:2,des:'nextgen.maichong'},
-            {id:3,des:'nextgen.bodong'},{id:4,des:'nextgen.yidong'},{id:5,des:'nextgen.zhengchang'}
+            {id:3,des:'nextgen.bodong'},{id:4,des:'nextgen.yidong'},{id:5,des:'nextgen.Spout'}
           ];
           $scope.modal.show();
           setTimeout(function () {
@@ -526,28 +530,17 @@ angular.module('nextgenModule')
   if(val.id<6) {
 
          $scope.modal.hide();
-          for (var i = 0; i < $scope.value.length; i++) {
-            if ($scope.value[i].id === val.id) {
-              $scope.toiletController.modelType = $scope.value[i].des;
-            }
-            if(val.id==2){
-
-              //  alert(3);
-             // $scope.$apply();
-
-            }
-
-
-
-
-
-          };
-
-
+         $scope.toiletController.modelType = val.des;
 
  }
         else{
+
           $scope.modal.hide();
+    for (var i = 0; i < $scope.value.length; i++) {
+      $scope.value[i].ionCheck=false;
+      val.ionCheck = true;
+
+    }
     $scope.handlenapeListNape[2].selecFlag = false;
     $scope.handlenapeListNape[2].imgUrl = $scope.handlenapeListNape[2].imgUrlTemp;
         }

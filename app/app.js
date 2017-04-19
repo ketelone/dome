@@ -246,6 +246,11 @@ angular.module('myApp')
           templateUrl: 'build/pages/device-controller/nextgen-controller/nextgen.html',
           controller: 'nextgenCtrl'
         })
+        .state('nextgenInfo', {
+          url: '/nextgenInfo',
+          templateUrl: 'build/pages/device-controller/nextgen-controller/nextgen-info/nextgenInfo.html',
+          controller: 'nextgenInfoCtrl'
+        })
         .state('bathroom', {
           url: '/bathroom/:deviceSku',
           templateUrl: 'build/pages/device-controller/bathroom-controller/bathroom.html',
