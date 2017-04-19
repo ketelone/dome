@@ -17,6 +17,7 @@
 
     <div class="list">
       <div class="item" ng-repeat="item in boxList">
+
         <div class="row" ng-click="boxClick(item)">cmd:{{item.payload.cmd}}</div>
         <div class="row" ng-click="boxClick(item)">device_id:{{item.payload.cmd_properties.device_id}}</div>
         <div class="row" ng-click="boxClick(item)">ip:{{item.payload.cmd_properties.ip}}</div>

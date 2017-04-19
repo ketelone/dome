@@ -68,12 +68,10 @@ angular.module('deviceAddModule')
           hmsPopup.showShortCenterToast("广播失败" + error);
         }
       }
-      $scope.box = [];
 
 //连接box
       $scope.boxClick = function (item) {
-        $scope.box.push(item);
-        localStorage.box = $scope.box;
+        localStorage.box =item;
         $scope.boxItem = item;
         console.log('lian box');
         cordova.plugins.SocketPlugin.tcpConnect({

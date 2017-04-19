@@ -16,15 +16,15 @@
   <ion-content style="margin-top:100px">
     <div class="list">
       <div class="item" ng-repeat="item in boxOnLine">
-        <div class="list">
-          <div class="item" ng-repeat="item in boxList">
+        <!--<div class="list">-->
+          <!--<div class="item" ng-repeat="item in boxList">-->
             <div class="row" ng-click="boxClick(item)">cmd:{{item.payload.cmd}}</div>
             <div class="row" ng-click="boxClick(item)">device_id:{{item.payload.cmd_properties.device_id}}</div>
             <div class="row" ng-click="boxClick(item)">ip:{{item.payload.cmd_properties.ip}}</div>
             <div class="row" ng-click="boxClick(item)">sku:{{item.payload.cmd_properties.sku}}</div>
             <div class="row" ng-click="boxClick(item)">sn:{{item.payload.cmd_properties.sn}}</div>
-          </div>
-        </div>
+          <!--</div>-->
+        <!--</div>-->
       </div>
     </div>
 

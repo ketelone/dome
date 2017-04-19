@@ -17,15 +17,15 @@ angular.module('deviceAddModule')
       *@return:
       *@disc:
       */
-      var a  =localStorage.box.split(',');
-      console.log(a);
-      $scope.boxOnLine = [1,2,3];
+      // var a  =localStorage.box.split(',');
+      // console.log(a);
+      $scope.item =localStorage.box;
 
       $scope.boxClick = function(item){
         SettingsService.set("box",item);
         $state.go('boxAddDevice');
       }
-
+angular.toJson()
     }]);
 
 
