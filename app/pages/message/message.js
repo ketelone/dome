@@ -189,7 +189,19 @@ $scope.exceptionword='exceptionword';
        */
       $scope.onChoose=function(statusitem){
   //  statusitem.showCircle=!statusitem.showCircle;
-     
+        alert(statusitem);
+        if(statusitem.ischecked==false){
+          alert(1);
+          statusitem.ischecked=true;
+          statusitem.circleUrl1=statusitem.circleUrl2;
+          //$scope.$apply();
+
+        }
+        if(statusitem.ischecked==true){
+          statusitem.ischecked=false;
+          statusitem.circleUrl1=statusitem.circleUrltemp;
+
+        }
       }
       /**
        *@author:chenjiacheng
