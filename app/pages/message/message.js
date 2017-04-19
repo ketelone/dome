@@ -32,20 +32,28 @@ $scope.exceptionword='exceptionword';
           exceptionMessage:"自动开盖功能异常",
           device:"马桶",
           time:"2017-02-08 17:25",
-          showCircle:false
+          circleUrl1:"build/img/message/radio_q.png",
+          circleUrl2:"build/img/message/radio_h.png",
+          ischecked:false
         },
         {
           id: "2",
           exceptionMessage:"自动开盖功能异常",
           device:"淋浴",
           time:"2017-02-08 17:25",
-          showCircle:false
+          circleUrl1:"build/img/message/radio_q.png",
+          circleUrl2:"build/img/message/radio_h.png",
+          ischecked:false
         },{
           id: "3",
           exceptionMessage:"自动开盖功能异常",
           device:"马桶",
           time:"2017-02-08 17:25",
-          showCircle:false
+          circleUrl1:"build/img/message/radio_q.png",
+          circleUrl2:"build/img/message/radio_h.png",
+          ischecked:false,
+          circleUrltemp:"build/img/message/radio_q.png"
+
         }
       ];
       $scope.statusitems= [
@@ -55,7 +63,10 @@ $scope.exceptionword='exceptionword';
           device:"马桶",
           messageDel:"进水滤芯快到使用期限，快去跟换吧!",
           time:"2017-02-08 17:25",
-          showCircle:false
+          circleUrl1:"build/img/message/radio_q.png",
+          circleUrl2:"build/img/message/radio_h.png",
+          ischecked:false,
+          circleUrltemp:"build/img/message/radio_q.png"
         },
         {
           id: "2",
@@ -63,85 +74,30 @@ $scope.exceptionword='exceptionword';
           device:"淋浴",
           messageDel:"实际出水水温达到37°C",
           time:"2017-02-08 17:25",
-          showCircle:false
+          circleUrl1:"build/img/message/radio_q.png",
+          circleUrl2:"build/img/message/radio_h.png",
+          ischecked:false,
+          circleUrltemp:"build/img/message/radio_q.png"
         },{
           id: "3",
           statusMessage:"进水滤芯寿命提醒",
           device:"马桶",
           messageDel:"进水滤芯快到使用期限，快去跟换吧!",
           time:"2017-02-08 17:25",
-          showCircle:false
+          circleUrl1:"build/img/message/radio_q.png",
+          circleUrl2:"build/img/message/radio_h.png",
+          ischecked:false,
+          circleUrltemp:"build/img/message/radio_q.png"
         },{
           id: "3",
           statusMessage:"进水滤芯寿命提醒",
           device:"马桶",
           messageDel:"进水滤芯快到使用期限，快去跟换吧!",
           time:"2017-02-08 17:25",
-          showCircle:false
-        },
-        {
-          id: "3",
-          statusMessage:"进水滤芯寿命提醒",
-          device:"马桶",
-          messageDel:"进水滤芯快到使用期限，快去跟换吧!",
-          time:"2017-02-08 17:25",
-          showCircle:false
-        },
-        {
-          id: "3",
-          statusMessage:"进水滤芯寿命提醒",
-          device:"马桶",
-          messageDel:"进水滤芯快到使用期限，快去跟换吧!",
-          time:"2017-02-08 17:25",
-          showCircle:false
-        },
-        {
-          id: "3",
-          statusMessage:"进水滤芯寿命提醒",
-          device:"马桶",
-          messageDel:"进水滤芯快到使用期限，快去跟换吧!",
-          time:"2017-02-08 17:25",
-          showCircle:false
-        },
-        {
-          id: "3",
-          statusMessage:"进水滤芯寿命提醒",
-          device:"马桶",
-          messageDel:"进水滤芯快到使用期限，快去跟换吧!",
-          time:"2017-02-08 17:25",
-          showCircle:false
-        },
-        {
-          id: "3",
-          statusMessage:"进水滤芯寿命提醒",
-          device:"马桶",
-          messageDel:"进水滤芯快到使用期限，快去跟换吧!",
-          time:"2017-02-08 17:25",
-          showCircle:false
-        },
-        {
-          id: "3",
-          statusMessage:"进水滤芯寿命提醒",
-          device:"马桶",
-          messageDel:"进水滤芯快到使用期限，快去跟换吧!",
-          time:"2017-02-08 17:25",
-          showCircle:false
-        },
-        {
-          id: "3",
-          statusMessage:"进水滤芯寿命提醒",
-          device:"马桶",
-          messageDel:"进水滤芯快到使用期限，快去跟换吧!",
-          time:"2017-02-08 17:25",
-          showCircle:false
-        },
-        {
-          id: "3",
-          statusMessage:"进水滤芯寿命提醒",
-          device:"马桶",
-          messageDel:"进水滤芯快到使用期限，快去跟换吧!",
-          time:"2017-02-08 17:25",
-          showCircle:false
+          circleUrl1:"build/img/message/radio_q.png",
+          circleUrl2:"build/img/message/radio_h.png",
+          ischecked:false,
+          circleUrltemp:"build/img/message/radio_q.png"
         },
       ]
 
