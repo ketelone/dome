@@ -472,6 +472,8 @@ angular.module('nextgenModule')
 
         if(index==0) {
   alert("淋浴");
+
+          shower(1);
         }
        if(index==3){
 
@@ -600,7 +602,8 @@ angular.module('nextgenModule')
         }
         cordova.plugins.SocketPlugin.tcpSendCmd({
           "timeout": "5000",
-          "value": cmd
+          "value": cmd,
+          "ip":"255,255,255,255"
         }, success, error);
         function success(response) {
           hmsPopup.showShortCenterToast("淋浴");
