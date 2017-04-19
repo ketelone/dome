@@ -1,5 +1,5 @@
 <ion-view view-title="设备控制-浴霸" class="bathroom-controller">
-  <div class="bar bar-header header">
+  <div class="bar bar-header header" style="background-image: none;">
     <button class="button button-icon icon ion-ios-arrow-left header_buttonRig" ng-click="goBack();"></button>
     <div class="h1 title header_title">
       <span translate="bathroom.bathroom"></span>
@@ -19,8 +19,8 @@
         <span class="signal-text" translate="bathroom.signalStatus"></span>
         <img ng-src="build/img/bathroom/icon_devicedetail_warning.png" class="error-img"/>
         <span class="msg" translate="bathroom.using"></span>
-        <span class="font-col">{{temperate}}</span>
-        <span class="font-col-per">{{tempPercent}}</span>
+        <p class="font-col" translate="{{temperate}}"></p>
+        <p class="font-col-per" translate="{{tempPercent}}"></p>
       </div>
     </div>
 
