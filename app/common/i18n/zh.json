@@ -277,6 +277,15 @@
     "Spout": "Spout",
     "exceptSta":"异常情况统计",
     "restoreDefaults":"恢复默认设置",
-    "lookupMess":"查看设备信息"
+    "lookupMess":"查看设备信息",
+    "deiveceMess":{
+      "deiveceMess":"设备信息",
+      "productName":"产品名称",
+      "firmwareVersion":"固件版本号",
+      "SKUnumber":"SKU号",
+      "SNnumber":"SN号",
+      "positionMess":"位置信息"
+
+    }
   }
 }

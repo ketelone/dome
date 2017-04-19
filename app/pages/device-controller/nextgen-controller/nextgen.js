@@ -471,13 +471,13 @@ angular.module('nextgenModule')
         };
 
         if(index==0) {
-
+  alert("淋浴");
         }
        if(index==3){
 
          $state.go("nextgenSet");
-        // $scope.handlenapeListNape[3].selecFlag = false;
-      //   $scope.handlenapeListNape[3].imgUrl = $scope.handlenapeListNape[3].imgUrlTemp;
+         $scope.handlenapeListNape[3].selecFlag = false;
+       $scope.handlenapeListNape[3].imgUrl = $scope.handlenapeListNape[3].imgUrlTemp;
        }
         // 根据选择项来初始化选择项的
       /*  if($scope.handlenapeListNape[index].handledata){
@@ -531,19 +531,49 @@ angular.module('nextgenModule')
 
          $scope.modal.hide();
          $scope.toiletController.modelType = val.des;
+    if(val.id==2){
+      alert("头顶花洒");
+    };
+    if(val.id==3){
+      alert("头顶摆动");
+    };
 
- }
+    if(val.id==4){
+      alert("头持花洒");
+    };
+    if(val.id==5){
+      alert("Spout");
+    };
+
+
+  }
         else{
 
           $scope.modal.hide();
     for (var i = 0; i < $scope.value.length; i++) {
       $scope.value[i].ionCheck=false;
       val.ionCheck = true;
-
     }
     $scope.handlenapeListNape[2].selecFlag = false;
     $scope.handlenapeListNape[2].imgUrl = $scope.handlenapeListNape[2].imgUrlTemp;
         }
+
+        if(val.id==6){
+         alert("关闭");
+        };
+        if(val.id==7){
+          alert("断电");
+        };
+
+        if(val.id==8){
+          alert("睡眠");
+        };
+        if(val.id==9){
+          alert("低用电");
+        };
+
+
+
       };
 
 
