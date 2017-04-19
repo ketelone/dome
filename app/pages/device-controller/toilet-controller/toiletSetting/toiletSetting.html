@@ -5,11 +5,11 @@
   </ion-header-bar>
   <ion-content class="toilet-bg">
     <div class="modestyle">
-        <div class="row">
+        <div class="row" ng-click="setopenModal()">
           <div class="col col-30 col-center font-sizekey">
                 <span translate="toiletSetting.autofangai"></span>
           </div>
-          <div class="col col-70 col-center textright auto-fangai-col70" ng-click="setopenModal()">
+          <div class="col col-70 col-center textright auto-fangai-col70">
             <span class="fangai-col70-reaction font-sizevalue" ng-bind="toilteSetting.gaiganyin"></span>
             <span class="font-sizevalue" ng-bind="toilteSetting.gaiganyinDistance"></span>
             <img src="build/img/toilet-controller/icon_scenario_arrow.png" class="auto-fangai-img" alt="">
@@ -21,7 +21,7 @@
             </div>
             <div class="col col-70 col-center textright auto-fangai-col70">
               <label class="toggle toggle-dark">
-                <input type="checkbox" checked="">
+                <input type="checkbox" ng-checked="chongshuisetval">
                 <div class="track">
                   <div class="handle"></div>
                 </div>
@@ -34,7 +34,7 @@
           </div>
           <div class="col col-50 col-center textright auto-fangai-col70">
             <label class="toggle toggle-dark">
-              <input type="checkbox" checked="">
+              <input type="checkbox" ng-checked="chuchousetval">
               <div class="track">
                 <div class="handle"></div>
               </div>
@@ -49,7 +49,7 @@
         </div>
         <div class="col col-70 col-center textright auto-fangai-col70">
           <label class="toggle toggle-dark">
-            <input type="checkbox" checked="">
+            <input type="checkbox" ng-checked="anjianvoicesetval">
             <div class="track">
               <div class="handle"></div>
             </div>
@@ -62,24 +62,24 @@
         </div>
         <div class="col col-50 col-center textright auto-fangai-col70">
           <label class="toggle toggle-dark">
-            <input type="checkbox" checked="">
+            <input type="checkbox" ng-checked="welcomemsetval">
             <div class="track">
               <div class="handle"></div>
             </div>
           </label>
         </div>
       </div>
-      <div class="row">
+      <div class="row" ng-click="goSettingInfo('lightSetting')">
         <div class="col col-30 col-center font-sizekey">
           <span translate="toiletSetting.dengguanset"></span>
         </div>
-        <div class="col col-70 col-center textright auto-fangai-col70" ng-click="openModal()">
+        <div class="col col-70 col-center textright auto-fangai-col70">
           <img src="build/img/toilet-controller/icon_scenario_arrow.png" class="auto-fangai-img" alt="">
         </div>
       </div>
     </div>
     <div class="modestyle">
-      <div class="row">
+      <div class="row" ng-click="openModal()">
         <div class="col col-30 col-center font-sizekey">
           <span translate="toiletSetting.jiedianset"></span>
         </div>
@@ -106,7 +106,7 @@
           <img src="build/img/toilet-controller/icon_scenario_arrow.png" class="auto-fangai-img" alt="">
         </div>
       </div>
-      <div class="row">
+      <div class="row"  ng-click="isCheckDeviceInfoSet()">
         <div class="col col-30 col-center font-sizekey">
           <span translate="toiletSetting.recoverset"></span>
         </div>

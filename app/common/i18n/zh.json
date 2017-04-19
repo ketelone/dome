@@ -192,7 +192,7 @@
     "nuanfeng": "暖风",
     "dengguang": "灯光",
     "nuanjiao": "暖脚",
-    "biangai": "关盖",
+    "guangai": "关盖",
     "fangai": "翻盖",
     "fanquan": "翻圈",
     "shezhi": "设置",
@@ -215,6 +215,11 @@
     "errortotal":"异常情况统计",
     "recoverset":"恢复默认设置",
     "checkdeviceInfo":"查看设备信息"
+  },
+  "lightSetting":{
+    "title":"灯光设置",
+    "lightmode":"夜灯模式",
+    "toiletlamp":"便座灯模式"
   },
   "veil": {
     "goHomeTitle": "场景详情",

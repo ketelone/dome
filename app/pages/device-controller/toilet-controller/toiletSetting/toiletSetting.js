@@ -7,18 +7,24 @@ angular.module('toiletControlModule')
     'baseConfig',
     'checkVersionService',
     '$http',
+    'hmsPopup',
     function ($scope,
               $state,
               $ionicModal,
               $compile,
               baseConfig,
               checkVersionService,
-              $http
+              $http,
+              hmsPopup
     ) {
-    $scope.toilteSetting={
-      gaiganyin:"",
-      gaiganyinDistance:""
-    }
+      $scope.chongshuisetval = false,
+      $scope.chuchousetval = false,
+      $scope.anjianvoicesetval = true,
+      $scope.welcomemsetval = false
+      $scope.toilteSetting={
+        gaiganyin:"",
+        gaiganyinDistance:""
+      };
       $scope.listleft = [{
         name:"关闭",
         flag:false,
@@ -75,7 +81,6 @@ angular.module('toiletControlModule')
           }
         }
       };
-
       //自动翻盖设置
       //获取屏幕高度
       $scope.screenHeig = window.innerHeight;
@@ -128,4 +133,14 @@ angular.module('toiletControlModule')
         $scope.toilteSetting.gaiganyinDistance=$scope.gaiganyinDistanceTemp;
         $scope.setmodal.hide();
       };
+      //确定是否清除设备设置
+      $scope.isCheckDeviceInfoSet = function () {
+        hmsPopup.confirmNoTitle("确定要恢复默认设置吗?</br>恢复默认设置后当前设置会被清空",function () {
+          console.log("你点击了确定")
+        });
+      };
+      //进入各个设置的具体界面
+      $scope.goSettingInfo = function (url) {
+        $state.go(url);
+      }
     }]);

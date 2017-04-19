@@ -235,10 +235,17 @@ angular.module('myApp')
           templateUrl: 'build/pages/device-controller/toilet-controller/toiletController.html',
           controller: 'toiletControllerCtrl'
         })
+        //马桶设置
         .state('toiletSetting', {
           url: '/toiletSetting',
           templateUrl: 'build/pages/device-controller/toilet-controller/toiletSetting/toiletSetting.html',
           controller: 'toiletSettingCtrl'
+        })
+        //灯光设置
+        .state('lightSetting', {
+          url: '/lightSetting',
+          templateUrl: 'build/pages/device-controller/toilet-controller/lightSetting/lightSetting.html',
+          controller: 'lightSettingCtrl'
         })
         .state('bathroom', {
           url: '/bathroom/:deviceSku',
