@@ -524,13 +524,27 @@ angular.module('nextgenModule')
       });
       $scope.choose = function (val) {
   if(val.id<6) {
+
          $scope.modal.hide();
           for (var i = 0; i < $scope.value.length; i++) {
             if ($scope.value[i].id === val.id) {
               $scope.toiletController.modelType = $scope.value[i].des;
             }
-          }
-          ;
+            if(val.id==2){
+
+              //  alert(3);
+             // $scope.$apply();
+
+            }
+
+
+
+
+
+          };
+
+
+
  }
         else{
           $scope.modal.hide();
