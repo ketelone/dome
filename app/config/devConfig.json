@@ -5,7 +5,7 @@
     "isMobilePlatform": false,
     "nativeScreenFlag": false,
     "clearTable": true,
-    "basePath": "http://wechat.hand-china.com/hmbms_hand/api",
+    "basePath": "https://139.219.186.43/residential/r/api",
     "weatherPath": "https://api.seniverse.com/v3/weather/now.json?key=oudikeyru8gzhosh&location=beijing&language=zh-Hans&unit=c",
     "currentVersion": "2.0.01",
     "url": "",

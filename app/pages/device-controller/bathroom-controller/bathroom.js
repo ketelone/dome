@@ -137,7 +137,7 @@ angular.module('bathroomModule')
       $scope.setMinu = "";
 
       $scope.goBack = function(){
-        $ionicHistory.goBack();
+        $state.go('indexPage');
       };
 
 /*      //接受tcp状态
@@ -334,7 +334,7 @@ angular.module('bathroomModule')
           payload: {
             cmd: "CMD_REQUEST",
             "device_type": "BLE_DEVICE",
-            value: ["8877080200052101000A2E"],
+            value: ["8877080300052102000A2F"],
           },
           to: {
             cid: "0xE4",
@@ -548,6 +548,37 @@ angular.module('bathroomModule')
           hmsPopup.showShortCenterToast("换气失败");
         }
       };
+      var open24HBreath = function(deviceId){
+        var cmd = {
+          from: {
+            cid: "0xE3",
+          },
+          idx: 1,
+          method: "CTL",
+          payload: {
+            cmd: "CMD_REQUEST",
+            "device_type": "BLE_DEVICE",
+            value: ["8877090200052104FF0A0F22"],
+          },
+          to: {
+            cid: "0xE4",
+            "device_id": deviceId,
+          },
+          ts: "1492146861.217451",
+          ver: 1,
+        }
+        cordova.plugins.SocketPlugin.tcpSendCmd({
+          "timeout": "5000",
+          "value": cmd
+        }, success, error);
+        function success(response) {
+          hmsPopup.showShortCenterToast("换气");
+        }
+
+        function error() {
+          hmsPopup.showShortCenterToast("换气失败");
+        }
+      };
 
       var closeBreath = function(deviceId){
         var cmd = {
@@ -647,7 +678,7 @@ angular.module('bathroomModule')
       };
 
       var getXOR = function(){
-        var result = 2^0^5^(3^0);
+        var result = 2^0^5^(33^4^256^10);
         return result;
       };
 
@@ -656,8 +687,8 @@ angular.module('bathroomModule')
        *@disc: to obtain the information of Yuba
        */
       $scope.$watch('', function(){
-        //console.log(getXOR());
-        console.log(localStorage.deviceInfo.split(";"));
+        console.log(getXOR());
+        //console.log(localStorage.deviceInfo.split(";"));
       }, true);
 
       /**
@@ -725,7 +756,7 @@ angular.module('bathroomModule')
                 openDryer(deviceId);
               }
               if(item.switchType == 'Breath'){
-                openBreath(deviceId);
+                //openBreath(deviceId);
               }
               if(item.switchType == 'Wind direction'){
                 openWindDirection(deviceId);
@@ -736,7 +767,7 @@ angular.module('bathroomModule')
               if(item.switchType == 'Wind direction'){
                 alert("请打开热风或者凉风或者冷干或者热干的功能");
               }else{
-                alert("请关闭其它功能");
+
               }
               return false;
             }
@@ -785,10 +816,27 @@ angular.module('bathroomModule')
           return true;
         }
         var flag = true;
+        var deviceId = getDeviceId();
         angular.forEach($scope.bathroomData, function(data, index, array) {
           if (data.switchType != 'Light' && (data.switchType != item.switchType) && (item.switchType != 'Wind direction' && item.switchType != 'Light' && item.switchType != 'Setting' && data.isOpen)) {
-            item.isOpen = false;
+            item.isOpen = true;
+            data.isOpen = false;
             flag = false;
+            if(data.switchType == 'Hot'){
+              closeHot(deviceId);
+            }
+            if(data.switchType == 'Cool'){
+              closeCool(deviceId);
+            }
+            if(data.switchType == 'Dryer'){
+              closeDryer(deviceId);
+            }
+            if(data.switchType == 'Hot drying'){
+              closeHotDrying(deviceId);
+            }
+            if(data.switchType == 'Breath'){
+              closeBreath(deviceId);
+            }
           }
         });
         var isWind = false;
@@ -808,11 +856,11 @@ angular.module('bathroomModule')
       };
 
       $scope.getCommon = function(item){
-        alert("in----");
+        openBreath(getDeviceId());
       };
 
       $scope.getAllDay = function(item){
-        alert("in----all day");
+        open24HBreath(getDeviceId());
       };
 
       /**
