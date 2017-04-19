@@ -5,14 +5,21 @@ angular.module('nextgenModule')
     '$ionicModal',
     '$compile',
     'baseConfig',
-    'checkVersionService',
+    'checkVersionService','$ionicHistory',
     function ($scope,
               $state,
               $ionicModal,
               $compile,
               baseConfig,
-              checkVersionService
+              checkVersionService,$ionicHistory
     ) {
+
+      $scope.goBack = function(){
+        $ionicHistory.goBack();
+      }
+
+
+
       //初始模式选择
       $scope.toiletController = {
         modelType:"nextgen.zhengchang",
@@ -447,8 +454,8 @@ angular.module('nextgenModule')
         if(index==2)
         {
 
-            $scope.value = [{id:6,des:'关闭'},
-              {id:7,des:'低用电'},{id:8,des:'睡眠'},{id:9,des:'断电'}];
+            $scope.value = [{id:6,des:'nextgen.close'},
+              {id:7,des:'nextgen.powerFailure'},{id:8,des:'nextgen.sleep'},{id:9,des:'nextgen.lowPower'}];
 
        $scope.modal.show();
           setTimeout(function () {
@@ -459,11 +466,15 @@ angular.module('nextgenModule')
 
         };
 
-        if(index==0){
-
+        if(index==0) {
 
         }
+       if(index==3){
 
+         $state.go("nextgenSet");
+        // $scope.handlenapeListNape[3].selecFlag = false;
+      //   $scope.handlenapeListNape[3].imgUrl = $scope.handlenapeListNape[3].imgUrlTemp;
+       }
         // 根据选择项来初始化选择项的
       /*  if($scope.handlenapeListNape[index].handledata){
           $scope.currentSlideData = $scope.handlenapeListNape[index].handledata;

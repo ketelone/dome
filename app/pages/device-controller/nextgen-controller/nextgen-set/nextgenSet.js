@@ -5,8 +5,11 @@ angular.module('nextgenModule')
   .controller('nextgenSetCtrl',[
     '$scope',
     '$state',
-    'hmsPopup',
-    function($scope, $state, hmsPopup){
+    'hmsPopup','$ionicHistory',
+    function($scope, $state, hmsPopup,$ionicHistory){
+      $scope.goBack = function(){
+        $ionicHistory.goBack();
+      }
 
       /**
        *@autor: caolei

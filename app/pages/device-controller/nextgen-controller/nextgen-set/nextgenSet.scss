@@ -1,80 +1,37 @@
 .nextgenSet{
-  .cutline{
-    border-top:0px ;
+
+  .headColor {
+    background-color: $global-head-bg;
   }
-  .iconSize{
-    font-size: 0.2rem ;
+  .iconColor {
+    color: $color-base
   }
-  .setting-color{
-    font-family: PingFangSC-Regular;
-    font-size: 0.36rem;
-    color: #FFFFFF;
-    letter-spacing: 0.0225px;
-    line-height: 0.32rem;
-  }
-  .bar-color{
-    background: #1A1E28;
-    box-shadow: 0 0.02rem 0.11rem 0 rgba(0,0,0,0.43);
-  }
-  li{height: 1rem}
-  .rightword{font-size:10px;float:right;color:#c6c6c6;padding-top:0px}
-  .addbutton{
-    //background: #11a7df;
-    width: 80%;
-    height: 40px;
-    display: inline-block;
-    cursor: pointer;
-    color:white;
-    line-height: 30px;
-    text-align: center;
-    border: 0px;
-    margin-top:100px;
-  }
-  .cusbutton{
-    text-align: center;
-  }
-  .redpoint1{
-    border-radius:100px;
-    background: red;
-    width: 5px;
-    height: 5px;
-    display: inline-block;
-    margin-bottom: 10px;
-    position: relative;
-    right: 5px;
-  }
-  .redpoint2{
-    border-radius:100px;
-    background: red;
-    width: 5px;
-    height: 5px;
-    display: inline-block;
-    margin-bottom: 10px;
-  }
-  .reset{
-    height: 1rem;
-  }
-  .item-divider-self{
-    padding-top: 0.08rem;
-    padding-bottom: 0.08rem;
-    min-height: 0.3rem;
-    //background-color: #f5f5f5;
-    //color: #222;
-    font-weight: 500;
-    height: 1rem;
+  .onerow{
+    background:  #0D0F11;
+    padding:0.34rem 0rem 0.34rem 0.4rem;
+    border-bottom: 0.05rem solid #2D3234;
   }
   .item{
-    margin-top: 1rem;
+    border-top:none;
+    border-color: #2D3234;
   }
-  .font-size{
-    height: 1rem;
-    font-size: 1rem;
+  .leftWord{
+    font-family: PingFangSC-Medium;
+    font-size: 0.32rem;
+    color: #FFFFFF;
+    line-height: 0.32rem;
+
   }
-  .item-icon-left{
-    position: relative;
-    padding-left: 0.54rem;
+  .rightword{
+    float: right;
+    padding-right:1rem ;
+    font-size: 0.24rem;
+    color: #565A64;
+
+    line-height: 0.28rem;
   }
-  .scroll{
-    margin-top: -0.6rem;
-  }
+
+
+
+
 }

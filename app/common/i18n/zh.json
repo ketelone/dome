@@ -267,10 +267,16 @@
     "stop": "一键停止",
     "jieneng": "节能",
     "shezhi": "设置",
-    "gaunbi": "关闭",
+    "close": "关闭",
+    "sleep":"睡眠",
+     "powerFailure":"断电",
+     "lowPower":"低用电",
     "maichong": "头顶花洒",
     "bodong": "头顶摆动",
     "yidong": "手持花洒",
-    "zhengchang": "Spout"
+    "zhengchang": "Spout",
+    "exceptSta":"异常情况统计",
+    "restoreDefaults":"恢复默认设置",
+    "lookupMess":"查看设备信息"
   }
 }
