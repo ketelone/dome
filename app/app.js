@@ -23,7 +23,8 @@ var myApp = angular.module('myApp', [
   'productModule',
   'pascalprecht.translate',
   'toiletControlModule',
-  'bathroomModule'
+  'bathroomModule',
+  'karessControlModule'
 ]);
 
 angular.module('myApp')
@@ -240,6 +241,23 @@ angular.module('myApp')
           templateUrl: 'build/pages/device-controller/toilet-controller/toiletSetting/toiletSetting.html',
           controller: 'toiletSettingCtrl'
         })
+        //设备控制-karess
+        .state('karess', {
+          url: '/karess',
+          templateUrl: 'build/pages/device-controller/karess-controller/karessController.html',
+          controller: 'karessControllerCtrl'
+        })
+        .state('karessSetting', {
+          url: '/karessSetting',
+          templateUrl: 'build/pages/device-controller/karess-controller/setting-karess/karessSet.html',
+          controller: 'karessSettingControllerCtrl'
+        })
+        .state('karessInfo', {
+          url: '/karessInfo',
+          templateUrl: 'build/pages/device-controller/karess-controller/info-karess/karessInfo.html',
+          controller: 'karessInfoControllerCtrl'
+        })
+
         .state('bathroom', {
           url: '/bathroom/:deviceSku',
           templateUrl: 'build/pages/device-controller/bathroom-controller/bathroom.html',

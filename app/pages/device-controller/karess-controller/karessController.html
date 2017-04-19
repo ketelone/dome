@@ -1,0 +1,33 @@
+<ion-view view-title="设备控制-karess" class="karess-controller">
+  <div class="bar bar-header header" style="background-image: none">
+    <button class="button button-icon icon ion-ios-arrow-left header_buttonRig" ng-click="goBack()"></button>
+    <div class="h1 title header_title" translate="karessController.title"></div>
+  </div>
+  <ion-content class="toilet-bg">
+    <div class="toilet-conninfo">
+      <span class="toilet-conninfo-signal">
+        <img class="conninfo-signal-img" src="build/img/karess-controller/icon_devicedetail_wifi.png" alt="">
+        <span class="conninfo-signal-info" translate="karessController.deviceWifiInfo"></span>
+      </span>
+      <span class="toilet-conninfo-isues">
+        <img class="conninfo-isues-img" src="build/img/karess-controller/icon_devicedetail_warning.png" alt="">
+        <span class="conninfo-isues-info" translate="karessController.deviceUseInfo"></span>
+      </span>
+    </div>
+    <div id="ionSliderBox">
+    </div>
+    <div class="toilet-handlenape-selec" ng-click="openModal()">
+      <span class="handlenape-selec-des" translate="karessController.handleSelecDes"></span>
+      <span class="handlenape-selec-use" translate={{karessController.modelType}}></span>
+      <img class="handlenape-selec-img" src="build/img/karess-controller/icon_scenario_arrow.png"></img>
+    </div>
+    <ion-scroll class="toilet-handlenape">
+      <div class="toilet-handlenape-list" ng-repeat="list in handlenapeListNape track by $index" ng-click="selectNapes($index)">
+        <div class="handlenape-list-napes" ng-class="{true: 'napes-border', false: ''}[list.selecFlag]">
+          <img class="list-napes-img" ng-src={{list.imgUrl}} alt="">
+          <span class="list-napes-dec" translate={{list.handleDes}}></span>
+        </div>
+      </div>
+    </ion-scroll>
+  </ion-content>
+</ion-view>
