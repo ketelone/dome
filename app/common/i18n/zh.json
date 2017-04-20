@@ -67,7 +67,7 @@
   "alertMsg": {
     "unfr": "用户名格式错误!",
     "loading": "登录中...",
-    "dengdai" : "正在连接...",
+    "dengdai": "正在连接...",
     "unnn": "用户名不能为空",
     "pwdnn": "密码不能为空",
     "lepcpir": "登录失败,请确认密码是否正确!",
@@ -207,24 +207,24 @@
     "clearextend":"伸出喷管",
     "clearinstance":"智感除菌"
   },
-  "toiletSetting":{
-    "title":"马桶设置",
-    "autofangai":"自动翻盖设置",
-    "autochongshui":"冲水自动",
-    "autochuchou":"自动除臭(空气净化)",
-    "autoanjianvoice":"按键声音",
-    "welcomemodoe":"欢迎模式",
-    "dengguanset":"灯光设置",
-    "jiedianset":"节点设置",
-    "toiletclear":"马桶清洁",
-    "errortotal":"异常情况统计",
-    "recoverset":"恢复默认设置",
-    "checkdeviceInfo":"查看设备信息"
+  "toiletSetting": {
+    "title": "马桶设置",
+    "autofangai": "自动翻盖设置",
+    "autochongshui": "冲水自动",
+    "autochuchou": "自动除臭(空气净化)",
+    "autoanjianvoice": "按键声音",
+    "welcomemodoe": "欢迎模式",
+    "dengguanset": "灯光设置",
+    "jiedianset": "节点设置",
+    "toiletclear": "马桶清洁",
+    "errortotal": "异常情况统计",
+    "recoverset": "恢复默认设置",
+    "checkdeviceInfo": "查看设备信息"
   },
-  "lightSetting":{
-    "title":"灯光设置",
-    "lightmode":"夜灯模式",
-    "toiletlamp":"便座灯模式"
+  "lightSetting": {
+    "title": "灯光设置",
+    "lightmode": "夜灯模式",
+    "toiletlamp": "便座灯模式"
   },
   "veil": {
     "goHomeTitle": "场景详情",
@@ -287,6 +287,7 @@
     "deviceUseInfo": "使用中",
     "parameterrad": "0",
     "parameterdes": "水温档位",
+    "handleSelecDes": "出水方式",
     "handleSelecDes": "模式",
     "zhushui": "&nbsp;&nbsp;&nbsp;注水",
     "luoshui": "&nbsp;&nbsp;&nbsp;落水",
@@ -303,14 +304,45 @@
     "zhengchang": "正常",
     "bath": "Bath Faucet",
     "handshower": "Handshower",
-    "settingName1":"异常情况统计",
-    "settingName2":"恢复出场设置",
-    "settingName3":"查看设备信息",
-    "infoTaressName" : "设备信息",
-    "infoTaress1":"产品名称",
-    "infoTaress2":"固件版本号",
-    "infoTaress3":"SKU号",
-    "infoTaress4":"SN号",
-    "infoTaress5":"位置信息"
+    "settingName1": "异常情况统计",
+    "settingName2": "恢复出场设置",
+    "settingName3": "查看设备信息",
+    "infoTaressName": "设备信息",
+    "infoTaress1": "产品名称",
+    "infoTaress2": "固件版本号",
+    "infoTaress3": "SKU号",
+    "infoTaress4": "SN号",
+    "infoTaress5": "位置信息"
+  },
+  "nextgen": {
+    "title": "next gen shower",
+    "deviceWifiInfo": "信号好",
+    "deviceUseInfo": "使用中",
+    "parameterrad": "0",
+    "parameterdes": "水温档位",
+    "handleSelecDes": "出水方式",
+    "linyu": "淋浴",
+    "stop": "一键停止",
+    "jieneng": "节能",
+    "shezhi": "设置",
+    "close": "关闭",
+    "sleep": "睡眠",
+    "powerFailure": "断电",
+    "lowPower": "低用电",
+    "maichong": "头顶花洒",
+    "bodong": "头顶摆动",
+    "yidong": "手持花洒",
+    "Spout": "Spout",
+    "exceptSta": "异常情况统计",
+    "restoreDefaults": "恢复默认设置",
+    "lookupMess": "查看设备信息",
+    "deiveceMess": {
+      "deiveceMess": "设备信息",
+      "productName": "产品名称",
+      "firmwareVersion": "固件版本号",
+      "SKUnumber": "SKU号",
+      "SNnumber": "SN号",
+      "positionMess": "位置信息"
+    }
   }
 }

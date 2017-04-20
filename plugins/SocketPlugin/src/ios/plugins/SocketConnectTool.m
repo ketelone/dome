@@ -40,7 +40,7 @@ static const uint16_t TCPPort = 5036;
         //实例化
         self.socket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
         
-        [self.socket setIPv6Enabled:YES];//优先级ipv6
+        [self.socket setIPv4PreferredOverIPv6:NO];//优先级ipv6
         
         _host = tcpHost;
         NSError *error = nil;
@@ -74,7 +74,7 @@ static const uint16_t TCPPort = 5036;
     //实例化
     self.udpSocket = [[GCDAsyncUdpSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
     
-    [self.udpSocket setIPv6Enabled:YES];//优先级ipv6
+    [self.udpSocket setPreferIPv6];//优先级ipv6
     
     NSError *error = nil;
     
@@ -291,10 +291,34 @@ withFilterContext:(id)filterContext
 -(void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err
 {
     DLog(@"tcp_socketDidDisconnect:%@",err);
+    if (err.code==7) {
+        //锁屏重连
+        [self keepLongConnection];
+        return;
+    }
     NSDictionary *respDict = @{@"code":@(0),
                                @"error":@"socketDidDisconnect"
                                };
     [[NSNotificationCenter defaultCenter] postNotificationName:TcpStatusNotification object:respDict];
+}
+
+- (void)keepLongConnection
+{
+    if ([self.socket isDisconnected]) {
+        NSDictionary *reConnectAck = @{
+                                       @"from":@{@"cid":@"0xE3"},
+                                       @"to":@{@"cid":@"0xE4",@"device_id":@""},
+                                       @"ts":@([[NSDate date] timeIntervalSince1970]),
+                                       @"idx":@0,
+                                       @"method":@"CTL",
+                                       @"payload": @{
+                                               @"device_type":@"BLE_DEVICE",
+                                               @"cmd":@"",
+                                               @"cmd_properties":@""
+                                               }
+                                       };
+        [self startAck:reConnectAck];
+    }
 }
 
 @end

@@ -1,7 +1,15 @@
-.karess-controller {
-   .toilet-bg{
-     background-color: $global-head-bg;
-   }
+.nextgen {
+
+  .headColor {
+    background-color: $global-head-bg;
+  }
+  .iconColor {
+    color: $color-base
+  }
+
+  .toilet-bg{
+    background-color: $global-head-bg;
+  }
   .toilet-conninfo{
     margin-top: 0.86rem;
     width: 100%;
@@ -77,6 +85,7 @@
       .toilet-parameterctl-raddata{
         font-size: $font-size-bigger;
         color: $color-base;
+        white-space: nowrap;
       }
       .toilet-parameterctl-des{
         display: block;
@@ -100,14 +109,19 @@
       color: $color-base;
     }
     .handlenape-selec-use{
-      margin-left: 3.34rem;
+      //margin-left: 3rem;
       color: $global-border;
+      white-space: nowrap;
+
     }
     .handlenape-selec-img{
-      display: inline-block;
+     // display: inline-block;
+      position:relative;
+
       width: 0.193rem;
       height: 0.308rem;
-      right: 0.607rem;
+      //right: 0rem;
+      left:0.2rem;
     }
   }
   .toilet-handlenape{
@@ -134,11 +148,13 @@
         height: 0.6rem;
       }
       .list-napes-dec{
-        position: absolute;
-        top: 0.35rem;
-        left: 0.45rem;
+      //  position: absolute;
+       // top: 0.35rem;
+       // left: 0.65rem;
         font-size: $font-size-small;
         color: white;
+        position: relative;
+        bottom: 1rem;
       }
     }
     .toilet-handlenape-list:last-child .handlenape-list-napes{

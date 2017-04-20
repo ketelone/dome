@@ -1,0 +1,28 @@
+<ion-view view-title="设备信息" class="nextgenInfo" style="background: #1A1E28;">
+<div class="bar bar-header headColor " style="background-image: none">
+  <button class="button button-icon icon ion-ios-arrow-left iconColor" ng-click="goBack()" ></button>
+  <div class="h1 title"><span translate="nextgen.deiveceMess.deiveceMess"  class="iconColor">设备信息</span></div>
+  <button class="button button-icon icon iconColor" ></button>
+</div>
+<ion-content class="has-header">
+  <ion-list  class="setBak">
+    <li class="item item-icon-right onerow"   >
+      <span class="leftWord" translate="nextgen.deiveceMess.productName" >产品名称</span>   <span style="font-size: 0.24rem;color:#565A64;float:right;margin-right: 1rem">{{deciveInfo.deviceName}}</span>
+    </li>
+
+    <li class="item item-icon-right onerow"  >
+    <span class="leftWord"  translate="nextgen.deiveceMess.firmwareVersion">固定版本号</span><span style="font-size: 0.24rem;color:#565A64;float:right;margin-right: 1rem">{{deciveInfo.version}}</span>
+    </li>
+  </li>
+    <li class="item item-icon-right onerow" ui-sref="nextgenInfo" >
+      <span  class="leftWord" translate="nextgen.deiveceMess.SKUnumber" >SKU号</span><span style="font-size: 0.24rem;color:#565A64;float:right;margin-right: 1rem">{{deciveInfo.sku}}</span>
+    </li>
+    <li class="item item-icon-right onerow"  >
+      <span class="leftWord"  translate="nextgen.deiveceMess.SNnumber" >SN号</span>  <span style="font-size: 0.24rem;color:#565A64;float:right;margin-right: 1rem">{{deciveInfo.sn}}</span>
+    </li>
+    <li class="item item-icon-right onerow" ui-sref="nextgenInfo" >
+      <span  class="leftWord"  translate="nextgen.deiveceMess.positionMess" >位置信息</span><span style="font-size: 0.24rem;color:#565A64;float:right;margin-right: 1rem">{{deciveInfo.place}}</span>
+    </li>
+  </ion-list>
+  </ion-content>
+</ion-view>
