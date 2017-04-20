@@ -5,15 +5,16 @@ angular.module('karessControlModule')
     '$ionicModal',
     '$compile',
     'baseConfig',
-    'checkVersionService',
+    'checkVersionService','SettingsService',
     function ($scope,
               $state,
               $ionicModal,
               $compile,
               baseConfig,
-              checkVersionService) {
+              checkVersionService,SettingsService) {
+      var deviceId = SettingsService.get('sku')
       $scope.karessController = {
-        modelType: "karessController.zhengchang",
+        modelType: "karessController.bath",
       };
       //侧滑转档数量json
       $scope.slideInitData = [{
@@ -397,7 +398,22 @@ angular.module('karessControlModule')
       //处理选择怎加border
       var handlenapeListNapeLen = $scope.handlenapeListNape.length;
       $scope.selectNapes = function (index) {
-        if(index == 7){
+        if (index == 1) {
+          sendCmd(deviceId, value, '落水成功！', '落水失败！');
+        }
+        if (index == 3) {
+          sendCmd(deviceId, value, '头部按摩开启成功！', '头部按摩开启失败！');
+        }
+        if (index == 4) {
+          sendCmd(deviceId, value, '背部加热开启成功！', '背部加热开启失败！');
+        }
+        if (index == 5) {
+          sendCmd(deviceId, value, '一键停止开启成功！', '一键停止开启失败！');
+        }
+        if (index == 6) {
+          sendCmd(deviceId, value, '管道除菌开启成功！', '管道除菌开启成功！');
+        }
+        if (index == 7) {
           $state.go('karessSetting');
           return;
         }
@@ -461,5 +477,37 @@ angular.module('karessControlModule')
           }
         }
         ;
+      };
+      var sendCmd = function(deviceId, value, successMsg, errorMsg){
+        var cmd = {
+          from: {
+            cid: "0xE3",
+          },
+          idx: 1,
+          method: "CTL",
+          payload: {
+            cmd: "CMD_REQUEST",
+            "device_type": "BLE_DEVICE",
+            value: [value],
+          },
+          to: {
+            cid: "0xE4",
+            "device_id": deviceId,
+          },
+          ts: Date.parse(new Date()) / 1000,
+          ver: 1,
+        }
+        cordova.plugins.SocketPlugin.tcpSendCmd({
+          "timeout": "5000",
+          "value": cmd,
+          "ip": localStorage.boxIp
+        }, success, error);
+        function success(response) {
+          hmsPopup.showShortCenterToast(successMsg);
+        }
+
+        function error() {
+          hmsPopup.showShortCenterToast(errorMsg);
+        }
       };
     }]);
