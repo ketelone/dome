@@ -26,8 +26,8 @@
 </div>
  </div>
 
-  <ion-content class="hasHeader">
-    <ion-scroll zooming="true" direction="y" >
+  <ion-content class="hasHeader" style="overflow-y:scroll; ">
+
 <!--status-->
    <ion-list ng-show="hasStaus" show-delete="data.showDelete" >
      <ion-item style="background: #212121;border-style:none;" ng-repeat="statusitem in statusitems " item="statusitem"  class="item item-icon-right item-remove-animate">
@@ -144,7 +144,6 @@
 
 
 
-</ion-scroll>
 
   </ion-content>
 
