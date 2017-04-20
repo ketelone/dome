@@ -36,6 +36,19 @@ angular.module('serviceModule', []).
         //时间的转换 年月日时分
         getDateTimeString: function (date) {
           return $filter('date')(date, 'yyyy-MM-dd HH:mm');
+        },
+
+
+  //温度转换  symbol当前温度单位°C或°F
+        temperatureConv:function(x,symbol){
+
+          if(symbol=='°C'){
+
+            return  32 +1.8*x;//返回华氏度
+          }
+          else{  //°F
+            return  (x-32) /1.8;//返回摄氏度
+          }
         }
       };
 

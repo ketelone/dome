@@ -7,7 +7,13 @@
   <!--</div>-->
   <ion-content class="contentCase" direction="y" scrollbar-y="false">
     <div>
-      <ion-item class="listItem" ng-repeat="i in value track by $index" ng-click="choose(i)" translate={{i.des}}></ion-item>
+      <ion-item class="listItem" ng-repeat="i in value track by $index " ng-click="choose(i)" >
+
+          <span  translate={{i.des}}></span>
+          <img ng-show="i.ionCheck" style="width:0.439rem;height:0.36rem;position: absolute;left: 4.5rem; " ng-src="build/img/nextgen/icon_check.png"/>
+
+       </ion-item>
+
     </div>
   </ion-content>
 </ion-modal-view>

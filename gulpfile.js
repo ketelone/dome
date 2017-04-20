@@ -365,14 +365,16 @@ function copyPages(e) {
   console.log(newPath+'新');
   var newDirPathTemp = newPath.split("\\");
 
+
   var currentPath = fs.realpathSync('.');
 
   var newDirPath = [];
   for (var i = 0; i < newDirPathTemp.length - 1; i++) {
     newDirPath[i] = newDirPathTemp[i];
   }
-  newDirPath = newDirPath.join("\\");
-  // newDirPath = newDirPath.join("/");
+
+   newDirPath = newDirPath.join("\\");
+ /* newDirPath = newDirPath.join("/");*/
   // 修改或增加时
   if ('added' == e.type || 'changed' == e.type || 'renamed' == e.type) {
 

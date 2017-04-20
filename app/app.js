@@ -24,7 +24,8 @@ var myApp = angular.module('myApp', [
   'pascalprecht.translate',
   'toiletControlModule',
   'bathroomModule',
-  'karessControlModule'
+  'karessControlModule',
+  'nextgenModule'
 ]);
 
 var db = null;
@@ -560,6 +561,22 @@ angular.module('myApp')
           url: '/karessInfo',
           templateUrl: 'build/pages/device-controller/karess-controller/info-karess/karessInfo.html',
           controller: 'karessInfoControllerCtrl'
+
+        })
+        .state('nextgenSet', {
+          url: '/nextgenSet',
+          templateUrl: 'build/pages/device-controller/nextgen-controller/nextgen-set/nextgenSet.html',
+          controller: 'nextgenSetCtrl'
+        })
+        .state('nextgen', {
+          url: '/nextgen',
+          templateUrl: 'build/pages/device-controller/nextgen-controller/nextgen.html',
+          controller: 'nextgenCtrl'
+        })
+        .state('nextgenInfo', {
+          url: '/nextgenInfo',
+          templateUrl: 'build/pages/device-controller/nextgen-controller/nextgen-info/nextgenInfo.html',
+          controller: 'nextgenInfoCtrl'
         })
         .state('bathroom', {
           url: '/bathroom/:deviceSku',
