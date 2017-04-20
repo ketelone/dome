@@ -30,7 +30,7 @@ $scope.exceptionword='exceptionword';
         {
           id: "1",
           exceptionMessage:"自动开盖功能异常",
-          device:"马桶",
+          device:"马桶1",
           time:"2017-02-08 17:25",
           circleUrl1:"build/img/message/radio_q.png",
           circleUrl2:"build/img/message/radio_h.png",
@@ -39,7 +39,7 @@ $scope.exceptionword='exceptionword';
         {
           id: "2",
           exceptionMessage:"自动开盖功能异常",
-          device:"淋浴",
+          device:"淋浴1",
           time:"2017-02-08 17:25",
           circleUrl1:"build/img/message/radio_q.png",
           circleUrl2:"build/img/message/radio_h.png",
@@ -47,7 +47,7 @@ $scope.exceptionword='exceptionword';
         },{
           id: "3",
           exceptionMessage:"自动开盖功能异常",
-          device:"马桶",
+          device:"马桶2",
           time:"2017-02-08 17:25",
           circleUrl1:"build/img/message/radio_q.png",
           circleUrl2:"build/img/message/radio_h.png",
@@ -60,7 +60,7 @@ $scope.exceptionword='exceptionword';
         {
           id: "1",
           statusMessage:"进水滤芯寿命提醒",
-          device:"马桶",
+          device:"马桶1",
           messageDel:"进水滤芯快到使用期限，快去跟换吧!",
           time:"2017-02-08 17:25",
           circleUrl1:"build/img/message/radio_q.png",
@@ -71,7 +71,7 @@ $scope.exceptionword='exceptionword';
         {
           id: "2",
           statusMessage:"出水水温达到提醒",
-          device:"淋浴",
+          device:"淋浴1",
           messageDel:"实际出水水温达到37°C",
           time:"2017-02-08 17:25",
           circleUrl1:"build/img/message/radio_q.png",
@@ -81,7 +81,7 @@ $scope.exceptionword='exceptionword';
         },{
           id: "3",
           statusMessage:"进水滤芯寿命提醒",
-          device:"马桶",
+          device:"马桶2",
           messageDel:"进水滤芯快到使用期限，快去跟换吧!",
           time:"2017-02-08 17:25",
           circleUrl1:"build/img/message/radio_q.png",
@@ -89,9 +89,9 @@ $scope.exceptionword='exceptionword';
           ischecked:false,
           circleUrltemp:"build/img/message/radio_q.png"
         },{
-          id: "3",
+          id: "4",
           statusMessage:"进水滤芯寿命提醒",
-          device:"马桶",
+          device:"马桶3",
           messageDel:"进水滤芯快到使用期限，快去跟换吧!",
           time:"2017-02-08 17:25",
           circleUrl1:"build/img/message/radio_q.png",
@@ -188,13 +188,28 @@ $scope.exceptionword='exceptionword';
        *@disc:choose you click
        */
       $scope.onChoose=function(statusitem){
-  //  statusitem.showCircle=!statusitem.showCircle;
-        alert(statusitem);
+        //  statusitem.showCircle=!statusitem.showCircle;
+        alert(statusitem.ischecked);
         if(statusitem.ischecked==false){
-          alert(1);
           statusitem.ischecked=true;
           statusitem.circleUrl1=statusitem.circleUrl2;
-          //$scope.$apply();
+          $scope.$apply();
+          for(var i=0;i<$scope.statusitems.length;i++) {
+
+         //   alert($scope.statusitems[i].device);
+           // alert(statusitem.id);
+      //if($scope.statusitems[i].id==statusitem.id){
+        //     $scope.statusitems[i].ischecked = true;
+            // $scope.statusitems[i].circleUrl1 =$scope.statusitems[i].circleUrl2;
+             // alert($scope.statusitems[i].circleUrl1);
+              //$scope.$apply();
+            //};
+
+
+
+           // });
+
+          }
 
         }
         if(statusitem.ischecked==true){
