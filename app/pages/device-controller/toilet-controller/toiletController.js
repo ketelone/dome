@@ -2,6 +2,7 @@ angular.module('toiletControlModule')
   .controller('toiletControllerCtrl', [
     '$scope',
     '$state',
+    '$ionicSlideBoxDelegate',
     'publicMethod',
     'hmsPopup',
     '$ionicModal',
@@ -10,6 +11,7 @@ angular.module('toiletControlModule')
     'checkVersionService',
     function ($scope,
               $state,
+              $ionicSlideBoxDelegate,
               publicMethod,
               hmsPopup,
               $ionicModal,
@@ -454,6 +456,7 @@ angular.module('toiletControlModule')
         },
       ];
       /**
+       *
        set dang qian ce hau shu ju zhi
        设置当前侧滑数据为侧滑初始化数据
        */
@@ -462,6 +465,9 @@ angular.module('toiletControlModule')
        init dang qian mo ban shu ju
        初始化当前模板数据
        */
+      $scope.lockSlide = function () {
+        $ionicSlideBoxDelegate.enableSlide( false );
+      };
       $scope.initHtmlTemplate = function (currentSlideData) {
         /**
          init silde-box data
@@ -470,9 +476,10 @@ angular.module('toiletControlModule')
         if($('#ionSliderBox').children().length !== 0){
           $('#ionSliderBox').empty();
         };
+        // on-slide-changed='slideHasChanged($index)'>
         var checHtml =
-          "<ion-slide-box overflow-scroll='false' on-slide-changed='slideHasChanged($index)'>"+
-          "<ion-slide overflow-scroll='false' ng-repeat='list in currentSlideData track by $index'>"+
+          "<ion-slide-box ng-init='lockSlide()' does-continue = 'true' ng-click='nextSlide($index)'>"+
+          "<ion-slide ng-repeat='list in currentSlideData track by $index'>"+
           "<div id={{list.parNodeid}} class='toilet-parameterctl'>"+
           "<canvas id={{list.canves01}} class='canves-pos'></canvas>"+
           "<canvas id={{list.canves02}} class='canves-pos'></canvas>"+
@@ -493,8 +500,9 @@ angular.module('toiletControlModule')
          编译html数据
          */
         var $checkhtml = $compile(checHtml)($scope); // 编译
-        $('#ionSliderBox').append($checkhtml[0]);
+        $('#ionSliderBox').append($checkhtml[0])
       };
+
       $scope.initHtmlTemplate($scope.currentSlideData);
       /**
        *@autor:gongke
@@ -512,8 +520,9 @@ angular.module('toiletControlModule')
         document.getElementById(slideDataObj.canves01).height = this.canvsscreenHeight;
         document.getElementById(slideDataObj.canves01).width = this.canvsscreenWidth;
         document.getElementById(slideDataObj.canves01).style.zIndex = 1;
+
         document.getElementById(slideDataObj.canves02).height = this.canvsscreenHeight;
-        document.getElementById(slideDataObj.canves01).width = this.canvsscreenWidth;
+        document.getElementById(slideDataObj.canves02).width = this.canvsscreenWidth;
         document.getElementById(slideDataObj.canves02).style.zIndex = 3;
 
         document.getElementById(slideDataObj.canves03).height = this.canvsscreenHeight;
@@ -656,7 +665,6 @@ angular.module('toiletControlModule')
           var currentEventObj = getIdObj($scope.currentSlideData[index].canves02);
           currentRadObj.drawDeliverCircle($scope.currentSlideData[index].gearNum);
 
-
           if($scope.currentSlideData[index].des === "init"){
             currentRadObj.drawc(currentRadObj.cr2,405,"type");
             currentRadObj.drawCircleFill(currentRadObj.cr2,405);
@@ -691,15 +699,14 @@ angular.module('toiletControlModule')
           };
         };
         $scope.getCurrentObj(0);
-        $scope.slideHasChanged = function (index) {
-
-          $scope.getCurrentObj(index);
+        $scope.nextSlide = function() {
+           var sliderLenght = document.querySelectorAll('ion-slide').length;
+           if(sliderLenght !== 1){
+            $ionicSlideBoxDelegate.next();
+            $scope.getCurrentObj($ionicSlideBoxDelegate.currentIndex());
+          };
         };
       },20);
-
-
-
-
       //发送指令
       var cmd = {
         from: {
@@ -748,9 +755,8 @@ angular.module('toiletControlModule')
           var diedes = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].des;
           var cmdvalue = dirinfo;
           // 发送指令
-          $scope.sendCmd(cmdvalue,diedes);
+          // $scope.sendCmd(cmdvalue,diedes);
         }
-        // objdir.payload.value.push(dirinfo);
       };
       //处理选择怎加border
       var handlenapeListNapeLen = $scope.handlenapeListNape.length;
@@ -800,23 +806,14 @@ angular.module('toiletControlModule')
               }else{
                 if($scope.handlenapeListNape[index])
                   if(!$scope.handlenapeListNape[index].isManyDirective){
-                    // $scope.handlenapeListNape[index].handledata[0].onceactionDir.cmd.payload.value =[];
-                    // $scope.handlenapeListNape[index].handledata[0].onceactionDir.cmd.payload.value.push($scope.handlenapeListNape[index].directive);
-                    // var dirinfo = $scope.handlenapeListNape[index].handledata[0].onceactionDir;
                     var cmdvalue = $scope.handlenapeListNape[index].directive;
                     var dirdes = "";
                   }else {
                     // 初始化
-                    // $scope.handlenapeListNape[index].handleInitdata[0].allopendirective.cmd.payload.value =[];
-                    // $scope.handlenapeListNape[index].handleInitdata[0].allclosedirective.cmd.payload.value =[];
                     if($scope.handlenapeListNape[index].selecFlag){
-                      // $scope.handlenapeListNape[index].handleInitdata[0].allopendirective.cmd.payload.value.push($scope.handlenapeListNape[index].handledata[0].open);
-                      // var dirinfo = $scope.handlenapeListNape[index].handleInitdata[0].allopendirective;
                       var cmdvalue = $scope.handlenapeListNape[index].handledata[0].open;
                       var dirdes = "";
                     }else{
-                      // $scope.handlenapeListNape[index].handleInitdata[0].allclosedirective.cmd.payload.value.push($scope.handlenapeListNape[index].handledata[0].close);
-                      // var dirinfo = $scope.handlenapeListNape[index].handleInitdata[0].allclosedirective;
                       var cmdvalue = $scope.handlenapeListNape[index].handledata[0].close;
                       var dirdes = "";
 
@@ -832,12 +829,11 @@ angular.module('toiletControlModule')
                     $scope.handlenapeSelectedIndex = undefined;
                   },3000)
                 }
-                $scope.sendCmd(cmdvalue,"");
+                // $scope.sendCmd(cmdvalue,"");
                 //发送默认值指令
                 if($scope.handlenapeListNape[index].isManyDirective){
-                  // var dirinfo = $scope.handlenapeListNape[index].handledata[$scope.handleRadSelected].directive.init;
                   var cmdvalue = $scope.handlenapeListNape[index].handledata[$scope.handleRadSelected].directive.init;
-                  $scope.sendCmd(cmdvalue,"");
+                  // $scope.sendCmd(cmdvalue,"");
                 }
               }
             },20)
