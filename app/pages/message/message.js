@@ -17,7 +17,7 @@ angular.module('messageModule')
       $scope.data = {
         showDelete: false
       };
-
+      $scope.hasCheckall=false;
       $scope.threeBottom=false;
   $scope.hasStaus=true;//defalut no Display
   $scope.hasException=false;//defalut no Display
@@ -25,8 +25,7 @@ angular.module('messageModule')
   //$scope.noException=false;//defalut no Exception
  $scope.statusword='statusword';
 $scope.exceptionword='exceptionword';
-
-      $scope.exceptionitems= [
+     $scope.exceptionitems= [
         {
           id: "1",
           exceptionMessage:"自动开盖功能异常",
@@ -189,34 +188,18 @@ $scope.exceptionword='exceptionword';
        */
       $scope.onChoose=function(statusitem){
         //  statusitem.showCircle=!statusitem.showCircle;
-        alert(statusitem.ischecked);
+       // alert(statusitem.ischecked);
         if(statusitem.ischecked==false){
           statusitem.ischecked=true;
           statusitem.circleUrl1=statusitem.circleUrl2;
           $scope.$apply();
-          for(var i=0;i<$scope.statusitems.length;i++) {
-
-         //   alert($scope.statusitems[i].device);
-           // alert(statusitem.id);
-      //if($scope.statusitems[i].id==statusitem.id){
-        //     $scope.statusitems[i].ischecked = true;
-            // $scope.statusitems[i].circleUrl1 =$scope.statusitems[i].circleUrl2;
-             // alert($scope.statusitems[i].circleUrl1);
-              //$scope.$apply();
-            //};
-
-
-
-           // });
-
-          }
-
         }
+
+
         if(statusitem.ischecked==true){
           statusitem.ischecked=false;
           statusitem.circleUrl1=statusitem.circleUrltemp;
-
-        }
+  }
       }
       /**
        *@author:chenjiacheng
@@ -227,11 +210,59 @@ $scope.exceptionword='exceptionword';
        */
       $scope.bottomGocancel=function(){
 
-        $scope.threeBottom=false;
 
+        for (var i = 0; i < $scope.statusitems.length; i++) {
+          $scope.statusitems[i].ischecked = false;
+          $scope.statusitems[i].circleUrl1 = $scope.statusitems[i].circleUrltemp;
+        }
+        $scope.threeBottom=false;
         $scope.data.showDelete =false;
 
-    }
+
+      }
+
+      /**
+       *@author:chenjiacheng
+       *@name:bottomManychoose
+       *@params:
+       *@return:
+       *@disc:bottomManychoose
+       */
+
+      $scope.bottomManychoose=function() {
+
+
+     for (var i = 0; i < $scope.statusitems.length; i++) {
+          if( $scope.statusitems[i].ischecked == false) {
+
+            $scope.statusitems[i].ischecked = true;
+            $scope.statusitems[i].circleUrl1 = $scope.statusitems[i].circleUrl2;
+          }
+     }
+
+
+  }
+      /**
+       *@author:chenjiacheng
+       *@name:bottomGodetele
+       *@params:
+       *@return:
+       *@disc:bottomGodetele
+       */
+
+$scope.bottomGodetele=function(){
+        for(var i=0;i<$scope.statusitems.length;i++){
+          if($scope.statusitems[i].ischecked==true) {
+          //  $scope.statusitems[i].id
+  $scope.statusitems.splice($scope.statusitems.indexOf($scope.statusitems[i]), 1);
+            //$scope.statusitems[i]=null;
+          }
+        }
+
+
+
+
+      }
       //hmsHttp.post(url, paramter).success(
       //  function(response){
       //

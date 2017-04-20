@@ -255,5 +255,11 @@
     "deviceFlag": "未安装",
     "deviceWen": "温度",
     "deviceShi": "湿度"
+  },
+  "message":{
+    "all":"全选",
+    "delete":"删除",
+    "cancel":"取消",
+    "allOff":"全不选"
   }
 }
