@@ -184,7 +184,7 @@
     "deviceUseInfo": "使用中",
     "parameterrad": "0",
     "parameterdes": "水温档位",
-    "handleSelecDes": "模式",
+    "handleSelecMode": "模式",
     "dachong01": "大冲",
     "xioachong": "小冲",
     "nvyong": "女用",
@@ -196,12 +196,16 @@
     "guangai": "关盖",
     "fangai": "翻盖",
     "fanquan": "翻圈",
+    "qingjie":"清洁",
     "shezhi": "设置",
     "gaunbi": "关闭",
     "maichong": "脉冲",
     "bodong": "波动",
     "yidong": "移动",
-    "zhengchang": "正常"
+    "zhengchang": "正常",
+    "clearopen":"打开阀门",
+    "clearextend":"伸出喷管",
+    "clearinstance":"智感除菌"
   },
   "toiletSetting":{
     "title":"马桶设置",

@@ -2,21 +2,24 @@ angular.module('toiletControlModule')
   .controller('toiletSettingCtrl', [
     '$scope',
     '$state',
+    'publicMethod',
     '$ionicModal',
     '$compile',
     'baseConfig',
     'checkVersionService',
-    '$http',
     'hmsPopup',
     function ($scope,
               $state,
+              publicMethod,
               $ionicModal,
               $compile,
               baseConfig,
               checkVersionService,
-              $http,
               hmsPopup
     ) {
+      $scope.goBack = function () {
+        publicMethod.goBack();
+      }
       $scope.chongshuisetval = false,
       $scope.chuchousetval = false,
       $scope.anjianvoicesetval = true,

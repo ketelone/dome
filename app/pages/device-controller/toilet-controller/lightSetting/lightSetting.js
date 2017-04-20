@@ -2,24 +2,26 @@ angular.module('toiletControlModule')
   .controller('lightSettingCtrl', [
     '$scope',
     '$state',
+    'publicMethod',
     '$ionicModal',
-    '$compile',
     'baseConfig',
     'checkVersionService',
-    'publicMethod',
     'hmsPopup',
     function ($scope,
               $state,
+              publicMethod,
               $ionicModal,
-              $compile,
               baseConfig,
               checkVersionService,
-              publicMethod,
               hmsPopup
     ) {
-    $scope.lightSetting={
-      gaiganyin:"",
-      gaiganyinDistance:""
-    }
+      $scope.lightSetting={
+        gaiganyin:"",
+        gaiganyinDistance:"",
+        ll:""
+      };
+      $scope.goBack = function () {
+        publicMethod.goBack();
+      }
 
     }]);
