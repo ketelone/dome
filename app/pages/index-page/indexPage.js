@@ -13,7 +13,7 @@ angular.module('indexPageModule')
     '$ionicScrollDelegate',
     '$http',
     '$ionicHistory',
-    'hmsPopup',
+    'hmsPopup','SettingsService',
     function ($scope,
               $state,
               $ionicGesture,
@@ -21,7 +21,7 @@ angular.module('indexPageModule')
               $timeout,
               $ionicScrollDelegate,
               $http,$ionicHistory,
-              hmsPopup) {
+              hmsPopup,SettingsService) {
 
       $scope.isSceneModel = true;
       $scope.isDeviceModel = false;
@@ -198,6 +198,18 @@ angular.module('indexPageModule')
           isStatus: true,
           isError: true,
           sku: "5"
+        },
+        {
+          id: "6",
+          pictureUrl: "build/img/index/img_home_device_chushuifa.png",
+          deviceType: "karess",
+          deviceStatus: "设备离线",
+          deviceDesc: "",
+          statusPictureUrl: "build/img/index/icon_home_device_no_singal.png",
+          errorPictureUrl: "build/img/index/icon_home_device_warnning.png",
+          isStatus: true,
+          isError: true,
+          sku: "D2:3D:19:2C:A9:89"
         }
       ];
 
@@ -430,6 +442,10 @@ angular.module('indexPageModule')
         if(item.deviceType == "马桶"){
           $state.go('toiletContrl');
         }
+        if(item.deviceType == "karess"){
+          $state.go('karess');
+          SettingsService.set("sku",item.sku);
+        }
       };
 
       $scope.addModule = function(){
@@ -442,5 +458,6 @@ angular.module('indexPageModule')
 
     }
   ]);
+
 
 

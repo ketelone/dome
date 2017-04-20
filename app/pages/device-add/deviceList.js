@@ -324,6 +324,7 @@ angular.module('deviceAddModule')
         }
         cordova.plugins.SocketPlugin.tcpSendCmd({
           "timeout": "5000",
+          "ip":"255.255.255.255",
           "value": cmd
         }, success, error);
         function success(response) {
@@ -336,7 +337,11 @@ angular.module('deviceAddModule')
       }
 
       $scope.closebox = function () {
-        cordova.plugins.SocketPlugin.tcpClose ('',success,error);
+        cordova.plugins.SocketPlugin.tcpClose ({
+          "timeout": "5000",
+          "ip":"255.255.255.255",
+          "value": ''
+        },success,error);
         function success(response) {
           hmsPopup.showShortCenterToast("断开box成功");
         }
