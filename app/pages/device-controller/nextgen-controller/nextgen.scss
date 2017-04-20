@@ -148,12 +148,13 @@
         height: 0.6rem;
       }
       .list-napes-dec{
-        position: absolute;
-        top: 0.35rem;
-        left: 0.65rem;
+      //  position: absolute;
+       // top: 0.35rem;
+       // left: 0.65rem;
         font-size: $font-size-small;
         color: white;
-
+        position: relative;
+        bottom: 1rem;
       }
     }
     .toilet-handlenape-list:last-child .handlenape-list-napes{
