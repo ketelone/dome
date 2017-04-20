@@ -338,7 +338,9 @@
       "firmwareVersion": "固件版本号",
       "SKUnumber": "SKU号",
       "SNnumber": "SN号",
-      "positionMess": "位置信息"
+      "positionMess": "位置信息",
+      "saveAlert": "保存成功",
+      "saveError": "保存失败"
     }
   }
 }

@@ -21,8 +21,16 @@
       <span class="leftWord"  translate="nextgen.deiveceMess.SNnumber" >SN号</span>  <span style="font-size: 0.24rem;color:#565A64;float:right;margin-right: 1rem">{{deciveInfo.sn}}</span>
     </li>
     <li class="item item-icon-right onerow" ui-sref="nextgenInfo" >
-      <span  class="leftWord"  translate="nextgen.deiveceMess.positionMess" >位置信息</span><span style="font-size: 0.24rem;color:#565A64;float:right;margin-right: 1rem">{{deciveInfo.place}}</span>
+      <span  class="leftWord"  translate="nextgen.deiveceMess.positionMess" >位置信息</span>
+      <input type="text"  style="font-size: 0.24rem;
+    color: #565A64;
+    float: right;
+   background: #0D0F11" ng-model="deciveInfo.place">
     </li>
   </ion-list>
+
   </ion-content>
+  <div class="bar bar-footer bar-balanced"  style="background-color: gray" ng-click="save(deciveInfo)">
+    <div class="title">保存</div>
+  </div>
 </ion-view>
