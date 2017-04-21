@@ -25,7 +25,7 @@ angular.module('nextgenModule')
       };
       //侧滑转档数量json
       $scope.slideInitData =[{
-        des: "持续出水",
+        des: "nextgen.chixu",
         gearNum: 1,
         gearInit: 1,
        // gearInitTemp: 1,
@@ -114,7 +114,7 @@ angular.module('nextgenModule')
           "<canvas id={{list.canves04}} class='canves-pos'></canvas>"+
           "<div class='toilet-parameterctl-data' ng-if='!list.parameterctlFlag'>"+
           "<span class='toilet-parameterctl-raddata' ng-bind='list.gearInit'></span>"+
-          "<span class='toilet-parameterctl-des' ng-bind='list.des'></span>"+
+          "<span class='toilet-parameterctl-des'  translate={{list.des}} ></span>"+
           "</div>"+
           "<div class='toilet-parameterctl-dataimg' ng-if='list.parameterctlFlag'>"+
        "<img class='conninfo-parameterctl-img' ng-src='build/img/toilet-controller/btn_devicedetail_scoll.png' alt=''>"+
@@ -127,7 +127,7 @@ angular.module('nextgenModule')
         console.log(1);
       };
       $scope.initHtmlTemplate($scope.currentSlideData);
-      var initCircle = function (slideDataObj) {
+       var initCircle = function (slideDataObj) {
         //获取父元素高度
        this.canvsscreenHeight = document.getElementById(slideDataObj.parNodeid).offsetHeight;
         this.canvsscreenWidth = document.getElementById(slideDataObj.parNodeid).offsetWidth;
@@ -363,11 +363,20 @@ angular.module('nextgenModule')
         };
 
         if(index==0) {
-  alert("持续出水");
+          $scope.slideInitData[0].des="nextgen.chixu";
+        if(
+          $scope.handlenapeListNape[1].selecFlag==true){
+
+          hmsPopup.showPopup("<span translate='bathroom.saveAlert'></span>");
+
+        }
+
+
 
          // shower(1);
         }
         if(index==1) {
+          $scope.slideInitData[0].des="nextgen.paikong";
           alert("排空冷水");
 
           // shower(1);
@@ -376,7 +385,7 @@ angular.module('nextgenModule')
 
          $state.go("nextgenSet");
          $scope.handlenapeListNape[3].selecFlag = false;
-       $scope.handlenapeListNape[3].imgUrl = $scope.handlenapeListNape[3].imgUrlTemp;
+         $scope.handlenapeListNape[3].imgUrl = $scope.handlenapeListNape[3].imgUrlTemp;
        }
         // 根据选择项来初始化选择项的
       /*  if($scope.handlenapeListNape[index].handledata){
