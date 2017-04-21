@@ -24,118 +24,46 @@ angular.module('nextgenModule')
         modelType:"nextgen.Spout",
       };
       //侧滑转档数量json
-   //   $scope.slideInitData =[{
-      /*  des: "init",
+      $scope.slideInitData =[{
+        des: "持续出水",
         gearNum: 1,
         gearInit: 1,
-        gearInitTemp: 1,
-        parameterctlFlag: true,
+       // gearInitTemp: 1,
+        parameterctlFlag: false,
         parNodeid: 'toilet-initCtl',
         canves01: "initcanves01",
-        canves02: "initcanves02",
-        canves03: "initcanves03",*/
-     // }]
-      //暖脚
-   //$scope.slideNuanjioaData =[{
-   //     des: "风力档位",
-   //     gearNum: 9,
-   //     gearInit: 1,
-   //     gearInitTemp: 1,
-   //     parameterctlFlag: false,
-   //     parNodeid: 'toilet-NuanjioaFlCtl',
-   //     canves01: "NuanjioaFlcanves01",
-   //     canves02: "NuanjioaFlcanves02",
-   //     canves03: "NuanjioaFlcanves03",
-   //   }]
-     $scope.slideLinYuData =[
-       {
-        des: "水温",
-        gearNum: 4,
-        gearInit: 1,
-        gearInitTemp: "48°C",
-        parameterctlFlag: false,
-        parNodeid: 'toilet-NvYongSyCtl',
-        canves01: "NvYongSycanves01",
-        canves02: "NvYongSycanves02",
-        canves03: "NvYongSycanves03",
-      },
-        {
-          des:"位置档位",
-          gearNum:4,
-          gearInit:1,
-          gearInitTemp:1,
-          parameterctlFlag:false,
-          parNodeid:'toilet-NvYongPosCtl',
-        canves01:"NvYongSyPoscanves01",
-        canves02:"NvYongSyPoscanves02",
-          canves03:"NvYongSyPoscanves03",
-        },
-      {
-          des:"温度档位",
-          gearNum:5,
-          gearInit:1,
-          gearInitTemp:1,
-          parameterctlFlag:false,
-          parNodeid:'toilet-NvYongTemCtl',
-          canves01:"NvYongTemcanves01",
-          canves02:"NvYongTemcanves02",
-          canves03:"NvYongTemcanves03",
-        }];
-      //$scope.slideTunBuData =[
-       /* {
-        des: "tun水压档位",
-        gearNum: 5,
-        gearInit: 1,
-        gearInitTemp: 1,
-        parameterctlFlag: false,
-        parNodeid: 'toilet-TunBuSyCtl',
-        canves01: "TunBuSycanves01",
-        canves02: "TunBuSycanves02",
-        canves03: "TunBuSycanves03",
-      },*/
-        //{
-        //  des:"tun位置档位",
-        //  gearNum:5,
-        //  gearInit:1,
-        //  gearInitTemp:1,
-        //  parameterctlFlag:false,
-        //  parNodeid:'toilet-TunBuPosCtl',
-        //  canves01:"TunBuPosPoscanves01",
-        //  canves02:"TunBuPosPoscanves02",
-        //  canves03:"TunBuPosPoscanves03",
-        //},{
-        /*  des:"tun温度档位",
-          gearNum:6,
-          gearInit:1,
-          gearInitTemp:1,
-          parameterctlFlag:false,
-          parNodeid:'toilet-TunBuTemCtl',
-          canves01:"TunBuTemTemcanves01",
-          canves02:"TunBuTemTemcanves02",
-          canves03:"TunBuTemTemcanves03",
-        }];*/
+       canves02: "initcanves02",
+       canves03: "initcanves03",
+      }]
+
+     //$scope.slideLinYuData =[
+     //  {
+     //   des: "持续出水",
+     //   gearNum: 4,
+     //    //  gearInit: 1,
+     //   //gearInitTemp: "48°C",
+     //   parameterctlFlag: false,
+     //   parNodeid: 'toilet-NvYongSyCtl',
+     //   canves01: "NvYongSycanves01",
+     //   canves02: "NvYongSycanves02",
+     //   canves03: "NvYongSycanves03",
+     // },
+
       $scope.handlenapeListNape = [
-        //{
-        //  imgUrl: "build/img/toilet-controller/dachong.png",
-        //  imgSeledUrl: "build/img/toilet-controller/dachongseled.png",
-        //  imgUrlTemp:"build/img/toilet-controller/dachong.png",
-        //  handleDes: "toiletController.dachong01",
-        //  selecFlag:false,
-        //  handledata:$scope.slideInitData
-        //},
-        //{
-        //  imgUrl: "build/img/toilet-controller/xiaochong.png",
-        //  imgSeledUrl: "build/img/toilet-controller/xiaochongseled.png",
-        //  imgUrlTemp:"build/img/toilet-controller/xiaochong.png",
-        //  handleDes: "toiletController.xioachong",
-        //  selecFlag:false,
-        //  handledata:$scope.slideInitData
-        //},
+
         {
           imgUrl: "build/img/nextgen/linyu.png",
           imgSeledUrl: "build/img/nextgen/linyuseled.png",
           imgUrlTemp:"build/img/nextgen/linyu.png",
-          handleDes: "nextgen.linyu",
+          handleDes: "nextgen.chixu",
+          selecFlag:false,
+          handledata:$scope.slideLinYuData //cjc初始canves
+        },
+        {
+          imgUrl: "build/img/nextgen/linyu.png",
+          imgSeledUrl: "build/img/nextgen/linyuseled.png",
+          imgUrlTemp:"build/img/nextgen/linyu.png",
+          handleDes: "nextgen.paikong",
           selecFlag:false,
           handledata:$scope.slideLinYuData //cjc初始canves
         },
@@ -154,50 +82,7 @@ angular.module('nextgenModule')
           handleDes: "nextgen.jieneng",
           selecFlag:false
         },
-        //{
-        //  imgUrl: "build/img/toilet-controller/nuanfeng.png",
-        //  imgSeledUrl: "build/img/toilet-controller/nuanfengseled.png",
-        //  imgUrlTemp:"build/img/toilet-controller/nuanfeng.png",
-        //  handleDes: "toiletController.nuanfeng",
-        //  selecFlag:false
-        //},
-        //{
-        //  imgUrl: "build/img/toilet-controller/dengguan.png",
-        //  imgSeledUrl: "build/img/toilet-controller/dengguanseled.png",
-        //  imgUrlTemp:"build/img/toilet-controller/dengguan.png",
-        //  handleDes: "toiletController.dengguang",
-        //  selecFlag:false
-        //},
-        //{
-        //  imgUrl: "build/img/toilet-controller/nuanjiao.png",
-        //  imgSeledUrl: "build/img/toilet-controller/nuanjiaoseled.png",
-        //  imgUrlTemp:"build/img/toilet-controller/nuanjiao.png",
-        //  handleDes: "toiletController.nuanjiao",
-        //  selecFlag:false,
-        //  handledata:$scope.slideNuanjioaData
-        //},
-        //{
-        //  imgUrl: "build/img/toilet-controller/kaigai.png",
-        //  imgSeledUrl: "build/img/toilet-controller/kaigaiseled.png",
-        //  imgUrlTemp:"build/img/toilet-controller/kaigai.png",
-        //  handleDes: "toiletController.biangai",
-        //  selecFlag:false
-        //},
-        //{
-        //  imgUrl: "build/img/toilet-controller/fangai.png",
-        //  imgSeledUrl: "build/img/toilet-controller/fangaiseled.png",
-        //  imgUrlTemp:"build/img/toilet-controller/fangai.png",
-        //  imgUrlTemp:"",
-        //  handleDes: "toiletController.fangai",
-        //  selecFlag:false
-        //},
-        //{
-        //  imgUrl: "build/img/toilet-controller/fanquan.png",
-        //  imgSeledUrl: "build/img/toilet-controller/biangaiseled.png",
-        //  imgUrlTemp:"build/img/toilet-controller/fanquan.png",
-        //  handleDes: "toiletController.fanquan",
-        //  selecFlag:false
-        //},
+
         {
           imgUrl: "build/img/nextgen/shezhi.png",
           imgSeledUrl: "build/img/nextgen/shezhiseled.png",
@@ -207,8 +92,11 @@ angular.module('nextgenModule')
         },
       ];
 
-      $scope.currentSlideData = $scope.handlenapeListNape[0].handledata;
-     // $scope.currentSlideData = $scope.slideInitData;
+
+
+
+    //  $scope.currentSlideData = $scope.handlenapeListNape[0].handledata;
+      $scope.currentSlideData = $scope.slideInitData;
 
       //初始化当前模板数据
       $scope.initHtmlTemplate = function (currentSlideData) {
@@ -236,7 +124,7 @@ angular.module('nextgenModule')
           "</ion-slide-box>"
         var $checkhtml = $compile(checHtml)($scope); // 编译
         $('#ionSliderBox').append($checkhtml[0]);
-        console.log(1)
+        console.log(1);
       };
       $scope.initHtmlTemplate($scope.currentSlideData);
       var initCircle = function (slideDataObj) {
@@ -260,11 +148,13 @@ angular.module('nextgenModule')
         this.cr3 = getCanvesObj(slideDataObj.canves03);//颜色填充档位canves
         // this.cr4 = getCanvesObj(slideDataObj.canves04);//颜色填充档位canves
         //四种圆
-       this.deliverCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2,color:"#2F3538"};//档位圆
-       this.HideCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2-20,color:"black"};//档位圆
+        this.deliverCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2,color:"#6ACBB3"};//档位圆
+        this.HideCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2-20,color:"black"}; //档位圆
         this.deliverLine = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2,color:"black"};//档位线
         this.rollCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2-10,color:"white"};//小球圆
-        this.FillCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2,color:"#6ACBB3"};//填充圆
+        this.FillCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2,color:"#6ACBB3"};
+
+        //填充圆
         // this.bimianCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2-30,color:"black"};//防触点
         //变量
         this.i=0;this.j=0;
@@ -281,66 +171,68 @@ angular.module('nextgenModule')
             drawRadian(this.cr1,this.deliverCircle,tempstrAngle,tempstrAngle+this.radRange);
             tempstrAngle = tempstrAngle+this.radRange+1;
             this.radSectionArr.push(tempstrAngle);
-          };
+           };
           // 画白色遮挡
-          drawRadian(this.cr1,this.HideCircle,0,360);
+         drawRadian(this.cr1,this.HideCircle,0,360);
 
           // drawRadian(this.cr4,this.bimianCircle,0,360);
         };
         // 画填充圆
-        this.drawCircleFill = function (canvesobj,changeRad) {
-          canvesobj.clearRect(0,0,this.canvsscreenHeight,this.canvsscreenWidth);
-          drawRadian(canvesobj,this.FillCircle,this.starRad,changeRad);
-          //在滑动的时候判断是否经过档位点并重新画档位线
-          if(changeRad<0){
-            var changeRadTemp = Math.abs(changeRad+360);
-          }else{
-            if(changeRad>=0 && changeRad<=45){
-              var changeRadTemp = Math.abs(changeRad+360);
-            }else{
-              var changeRadTemp = Math.abs(changeRad);
-            };
-          };
-          this.radSectionArr.push(changeRadTemp);
-          this.radSectionArr = this.radSectionArr.sort(function(a,b){
-            return a-b});
-          //判断是否滑动过档位点,若有滑过,则画遮挡弧度
-          var radSectionArrLen = this.radSectionArr.length;
-          //判断当前点距离那个档位距离最近
-          this.i=0;this.i=1;
-          for(this.i;this.i<radSectionArrLen;this.i++){
-            if(changeRadTemp === this.radSectionArr[this.i]){
-              if(Math.abs(this.radSectionArr[this.i]-this.radSectionArr[this.i-1]) < Math.abs(this.radSectionArr[this.i]-this.radSectionArr[this.i+1])){
-                this.stoPosPoint = this.i-1;
-                if(this.i<=1){
-                  slideDataObj.gearInit = 1;
-                }else{
-                  slideDataObj.gearInit = this.i;
-                };
-                $scope.$apply();
-                //画档位线
-                this.j=1;
-                for(this.j;this.j<this.i;this.j++){
-                  drawRadian(this.cr3,this.deliverLine,this.radSectionArr[this.i-this.j-1]-1,this.radSectionArr[this.i-this.j-1]);
-                };
-              }else{
-                this.stoPosPoint = this.i;
-                slideDataObj.gearInit = this.i+1;
-                $scope.$apply();
-                //画档位线
-                this.j=1;
-                for(this.j;this.j<this.i+1;this.j++){
-                  drawRadian(this.cr3,this.deliverLine,this.radSectionArr[this.i-this.j]-1,this.radSectionArr[this.i-this.j]);
-                };
-              };
-              this.radSectionArr.splice(this.i,1);
-            }
-          };
-          //画白色遮挡
-          drawRadian(canvesobj,this.HideCircle,0,360);
-        };
-        //画圆球和指示
-      this.drawc = function (canvesobj,ancr,type) {
+        //this.drawCircleFill = function (canvesobj,changeRad) {
+        //  canvesobj.clearRect(0,0,this.canvsscreenHeight,this.canvsscreenWidth);
+        //  drawRadian(canvesobj,this.FillCircle,this.starRad,changeRad);
+        //  //在滑动的时候判断是否经过档位点并重新画档位线
+        //  if(changeRad<0){
+        //    var changeRadTemp = Math.abs(changeRad+360);
+        //  }else{
+        //  if(changeRad>=0 && changeRad<=45){
+        //      var changeRadTemp = Math.abs(changeRad+360);
+        //
+        //  }else{
+        //      var changeRadTemp = Math.abs(changeRad);
+        //    };
+        //  };
+        //  this.radSectionArr.push(changeRadTemp);
+        //  this.radSectionArr = this.radSectionArr.sort(function(a,b){
+        //    return a-b});
+        //
+        //  //判断是否滑动过档位点,若有滑过,则画遮挡弧度
+        //  var radSectionArrLen = this.radSectionArr.length;
+        //  //判断当前点距离那个档位距离最近
+        //  this.i=0;this.i=1;
+        //  for(this.i;this.i<radSectionArrLen;this.i++){
+        //    if(changeRadTemp === this.radSectionArr[this.i]){
+        //      if(Math.abs(this.radSectionArr[this.i]-this.radSectionArr[this.i-1]) < Math.abs(this.radSectionArr[this.i]-this.radSectionArr[this.i+1])){
+        //        this.stoPosPoint = this.i-1;
+        //        if(this.i<=1){
+        //          slideDataObj.gearInit = 1;
+        //        }else{
+        //          slideDataObj.gearInit = this.i;
+        //        };
+        //        $scope.$apply();
+        //        //画档位线
+        //        this.j=1;
+        //        for(this.j;this.j<this.i;this.j++){
+        //          drawRadian(this.cr3,this.deliverLine,this.radSectionArr[this.i-this.j-1]-1,this.radSectionArr[this.i-this.j-1]);
+        //        };
+        //      }else{
+        //        this.stoPosPoint = this.i;
+        //        slideDataObj.gearInit = this.i+1;
+        //        $scope.$apply();
+        //        //画档位线
+        //        this.j=1;
+        //        for(this.j;this.j<this.i+1;this.j++){
+        //          drawRadian(this.cr3,this.deliverLine,this.radSectionArr[this.i-this.j]-1,this.radSectionArr[this.i-this.j]);
+        //        };
+        //       };
+        //      this.radSectionArr.splice(this.i,1);
+        //    }
+        //  };
+        //  //画白色遮挡
+        //  drawRadian(canvesobj,this.HideCircle,0,360);
+        //};
+        ////画圆球和指示
+    /*  this.drawc = function (canvesobj,ancr,type) {
           if(135<=ancr || ancr<=45){
             var jd =  changeAngale(ancr);
             canvesobj.clearRect(0,0,this.canvsscreenHeight,this.canvsscreenWidth);
@@ -373,7 +265,7 @@ angular.module('nextgenModule')
             }
           };
         };
-      };
+    */  };
       setTimeout(function () {
         $scope.getCurrentObj = function (index) {
           //当前new实例
@@ -450,7 +342,7 @@ angular.module('nextgenModule')
           }
         };
 
-        if(index==2)
+        if(index==3)
         {
            if($scope.value[0].ionCheck==undefined) {//是否有ioncheck属性
              $scope.value = [{id: 6, des: 'nextgen.close', ionCheck: true},
@@ -471,11 +363,16 @@ angular.module('nextgenModule')
         };
 
         if(index==0) {
-  alert("淋浴");
+  alert("持续出水");
 
-          shower(1);
+         // shower(1);
         }
-       if(index==3){
+        if(index==1) {
+          alert("排空冷水");
+
+          // shower(1);
+        }
+       if(index==4){
 
          $state.go("nextgenSet");
          $scope.handlenapeListNape[3].selecFlag = false;
