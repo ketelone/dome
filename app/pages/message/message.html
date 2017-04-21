@@ -27,7 +27,7 @@
  </div>
 
   <ion-content class="hasHeader" style="overflow-y:scroll; ">
-
+    <ion-scroll zooming="true" direction="y"  class="scroll-view ionic-scroll scroll-y" >
 <!--status-->
    <ion-list ng-show="hasStaus" show-delete="data.showDelete" >
      <ion-item style="background: #212121;border-style:none;" ng-repeat="statusitem in statusitems " item="statusitem"  class="item item-icon-right item-remove-animate">
@@ -54,7 +54,7 @@
          多选
        </ion-option-button>
        <ion-option-button class="goDelete"
-                          ng-click="goDeteleStatusitem(statusitem)">
+                          ng-click="goDeteleitem(statusitem)">
          删除
        </ion-option-button>
        <ion-delete-button   ng-click="onChoose(statusitem)">
@@ -68,32 +68,7 @@
 </ion-list>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <!--nostatus-->
+ <!--nostatus-->
     <ion-list ng-show="false" >
 
 <div class="noMessage">
@@ -101,8 +76,8 @@
 
     </ion-list>
 <!--exception-->
-    <ion-list ng-show="hasException" >
-      <ion-item style="border-style:none;" ng-repeat="exceptionitem in exceptionitems" item="statusitem"  class="item item-icon-right item-remove-animate">
+    <ion-list ng-show="hasException" show-delete="data.showDelete" >
+      <ion-item style="background: #212121;border-style:none;" ng-repeat="exceptionitem in exceptionitems" item="exceptionitem"  class="item item-icon-right item-remove-animate">
         <div class="row oneModel">
           <div class="col col-75">
             <div class="row">
@@ -123,12 +98,14 @@
           多选
         </ion-option-button>
         <ion-option-button class="goDetele"
-                           ng-click="goDeteleExceptionitem(exceptionitem)">
+                           ng-click="goDeteleitem(exceptionitem)">
           删除
         </ion-option-button>
-        <ion-delete-button style="" class="ion-minus-circled"
-                           ng-click="onItemDelete(exceptionitem)">
-        </ion-delete-button>
+        <ion-delete-button   ng-click="onChoose(exceptionitem)">
+
+          <img  style=" width: 0.5rem;height:0.5rem" ng-src={{exceptionitem.circleUrl1}} />
+
+     </ion-delete-button>
       </ion-item>
 
     </ion-list>
@@ -144,7 +121,7 @@
 
 
 
-
+      </ion-scroll>
   </ion-content>
 
   <div ng-show="threeBottom" class="row bottomWord">
