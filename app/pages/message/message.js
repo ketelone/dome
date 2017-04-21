@@ -32,6 +32,7 @@ $scope.exceptionword='exceptionword';
           time:"2017-02-08 17:25",
           circleUrl1:"build/img/message/radio_q.png",
           circleUrl2:"build/img/message/radio_h.png",
+          circleUrltemp:"build/img/message/radio_q.png",
           ischecked:false,
           name:"exception"
         },
@@ -42,6 +43,7 @@ $scope.exceptionword='exceptionword';
           time:"2017-02-08 17:25",
           circleUrl1:"build/img/message/radio_q.png",
           circleUrl2:"build/img/message/radio_h.png",
+          circleUrltemp:"build/img/message/radio_q.png",
           ischecked:false,
           name:"exception"
         },{
@@ -205,7 +207,7 @@ hmsPopup.confirmNoTitle( "<br><br><div ><div>删除后将无法在消息记录�
           }
         }
 
-    if(item.ischecked==false&item.name=="status"){
+    else if(item.ischecked==false&item.name=="status"){
       alert("statusfalse");
       for (var i = 0; i < $scope.statusitems.length; i++) {
         if ($scope.statusitems[i].id == item.id) {
@@ -214,25 +216,26 @@ hmsPopup.confirmNoTitle( "<br><br><div ><div>删除后将无法在消息记录�
         }
       }  }
 
-        if(item.ischecked==true&item.name=="exception") {
+     else   if(item.ischecked==true&item.name=="exception") {
           alert("exceptiontrue");
           for (var i = 0; i < $scope.exceptionitems.length; i++) {
             if ($scope.exceptionitems[i].id ==item.id) {
               $scope.exceptionitems[i].ischecked = false;
               $scope.exceptionitems[i].circleUrl1 = $scope.exceptionitems[i].circleUrltemp;
+           //   alert(  $scope.exceptionitems[i].circleUrltemp +"2");
+         //  alert( $scope.exceptionitems[i].circleUrl1 +"1");
             }
           }
 
         }
-        if(item.ischecked==false&item.name=="exception") {
-          alert("exceptionfalse");
+    else    if(item.ischecked==false&item.name=="exception") {
+       //   alert("exceptionfalse");
           for (var i = 0; i < $scope.exceptionitems.length; i++) {
             if ($scope.exceptionitems[i].id ==item.id) {
               $scope.exceptionitems[i].ischecked = true;
               $scope.exceptionitems[i].circleUrl1 = $scope.exceptionitems[i].circleUrl2;
             }
-          }
-       ;
+          };
         }
  }
       /**
@@ -350,10 +353,11 @@ $scope.bottomGodetele=function(){
     }
     $scope.exceptionitems = tempArry;
 
-    if ($scope.exceptionitems.length == 0) {
-      $scope.threeBottom = false;
-    }
+   // if ($scope.exceptionitems.length == 0) {
+
+    //}
   }
+  $scope.threeBottom = false;
   $scope.data.showDelete =false;
     }
       //hmsHttp.post(url, paramter).success(
