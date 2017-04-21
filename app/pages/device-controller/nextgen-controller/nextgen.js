@@ -128,32 +128,36 @@ angular.module('nextgenModule')
       };
       $scope.initHtmlTemplate($scope.currentSlideData);
        var initCircle = function (slideDataObj) {
-        //获取父元素高度
-       this.canvsscreenHeight = document.getElementById(slideDataObj.parNodeid).offsetHeight;
-        this.canvsscreenWidth = document.getElementById(slideDataObj.parNodeid).offsetWidth;
-        // 设置每个canves的宽高
-        document.getElementById(slideDataObj.canves01).height = this.canvsscreenHeight;
-        document.getElementById(slideDataObj.canves01).width = this.canvsscreenWidth;
-        document.getElementById(slideDataObj.canves01).style.zIndex = 1;
-        document.getElementById(slideDataObj.canves02).height = this.canvsscreenHeight;
-        document.getElementById(slideDataObj.canves01).width = this.canvsscreenWidth;
-        document.getElementById(slideDataObj.canves02).style.zIndex = 3;
+         //获取父元素高度
+         this.canvsscreenHeight = document.getElementById(slideDataObj.parNodeid).offsetHeight;
+         this.canvsscreenWidth = document.getElementById(slideDataObj.parNodeid).offsetWidth;
+         this.rateInit = document.documentElement.clientWidth / 7.5;
 
-        document.getElementById(slideDataObj.canves03).height = this.canvsscreenHeight;
-        document.getElementById(slideDataObj.canves03).width = this.canvsscreenWidth;
-        document.getElementById(slideDataObj.canves03).style.zIndex = 2;
-        // 获取canvesobj
-        this.cr1 = getCanvesObj(slideDataObj.canves01);//档位canves
-        this.cr2 = getCanvesObj(slideDataObj.canves02);//滑动小球档位canves
-        this.cr3 = getCanvesObj(slideDataObj.canves03);//颜色填充档位canves
-        // this.cr4 = getCanvesObj(slideDataObj.canves04);//颜色填充档位canves
-        //四种圆
-        this.deliverCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2,color:"#6ACBB3"};//档位圆
-        this.HideCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2-20,color:"black"}; //档位圆
-        this.deliverLine = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2,color:"black"};//档位线
-        this.rollCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2-10,color:"white"};//小球圆
-        this.FillCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2,color:"#6ACBB3"};
+         // 设置每个canves的宽高
+         document.getElementById(slideDataObj.canves01).height = this.canvsscreenHeight;
+         document.getElementById(slideDataObj.canves01).width = this.canvsscreenWidth;
+         document.getElementById(slideDataObj.canves01).style.zIndex = 1;
 
+         document.getElementById(slideDataObj.canves02).height = this.canvsscreenHeight;
+         document.getElementById(slideDataObj.canves02).width = this.canvsscreenWidth;
+         document.getElementById(slideDataObj.canves02).style.zIndex = 3;
+
+         document.getElementById(slideDataObj.canves03).height = this.canvsscreenHeight;
+         document.getElementById(slideDataObj.canves03).width = this.canvsscreenWidth;
+         document.getElementById(slideDataObj.canves03).style.zIndex = 2;
+         // 获取canvesobj
+         this.cr1 = getCanvesObj(slideDataObj.canves01);//档位canves
+         this.cr2 = getCanvesObj(slideDataObj.canves02);//滑动小球档位canves
+         this.cr3 = getCanvesObj(slideDataObj.canves03);//颜色填充档位canves
+         // this.cr4 = getCanvesObj(slideDataObj.canves04);//颜色填充档位canves
+         //四种圆
+         this.deliverCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2,color:"#2F3538"};//档位圆
+         this.HideCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2-0.4*this.rateInit,color:"black"};//档位圆
+         this.deliverLine = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2,color:"black"};//档位线
+         this.rollCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2-0.2*this.rateInit,color:"white"};//小球圆
+         this.FillCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2,color:"#59a59d"};//填充圆
+         // this.bimianCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2-30,color:"black"};//防触点
+         //变量
         //填充圆
         // this.bimianCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2-30,color:"black"};//防触点
         //变量
