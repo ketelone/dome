@@ -3,6 +3,7 @@ angular.module('toiletControlModule')
     '$scope',
     '$state',
     '$ionicSlideBoxDelegate',
+    '$timeout',
     'publicMethod',
     'hmsPopup',
     '$ionicModal',
@@ -12,6 +13,7 @@ angular.module('toiletControlModule')
     function ($scope,
               $state,
               $ionicSlideBoxDelegate,
+              $timeout,
               publicMethod,
               hmsPopup,
               $ionicModal,
@@ -765,22 +767,49 @@ angular.module('toiletControlModule')
         if($scope.handlenapeListNape[index].matchdataid === 12){
           $state.go("toiletSetting");
         }else {
-          $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
-          for(var i=0;i<handlenapeListNapeLen;i++){
-            if(i !== index){
-              $scope.handlenapeListNape[i].selecFlag = false;
+          $timeout(function () {
+            $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
+            for(var i=0;i<handlenapeListNapeLen;i++){
+              if(i !== index){
+                $scope.handlenapeListNape[i].selecFlag = false;
+              };
             };
-          };
-          if($scope.handlenapeListNape[index].selecFlag === true){
-            $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgSeledUrl;
-             for(var i=0;i<handlenapeListNapeLen;i++){
-               if(i !== index){
-                 $scope.handlenapeListNape[i].imgUrl = $scope.handlenapeListNape[i].imgUrlTemp;
-               }
-             };
-          }else{
-            $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgUrlTemp;
-          };
+            if($scope.handlenapeListNape[index].selecFlag === true){
+              $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgSeledUrl;
+              for(var i=0;i<handlenapeListNapeLen;i++){
+                if(i !== index){
+                  $scope.handlenapeListNape[i].imgUrl = $scope.handlenapeListNape[i].imgUrlTemp;
+                }
+              };
+            }else{
+              $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgUrlTemp;
+            };
+            if(!$scope.handlenapeListNape[index].isManyDirective){
+              $timeout(function () {
+                $scope.handlenapeListNape[index].selecFlag = false;
+                $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgUrlTemp;
+                $scope.$apply()
+                $scope.handlenapeSelectedIndex = undefined;
+              },2000)
+            };
+          },3000)
+
+          // $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
+          // for(var i=0;i<handlenapeListNapeLen;i++){
+          //   if(i !== index){
+          //     $scope.handlenapeListNape[i].selecFlag = false;
+          //   };
+          // };
+          // if($scope.handlenapeListNape[index].selecFlag === true){
+          //   $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgSeledUrl;
+          //    for(var i=0;i<handlenapeListNapeLen;i++){
+          //      if(i !== index){
+          //        $scope.handlenapeListNape[i].imgUrl = $scope.handlenapeListNape[i].imgUrlTemp;
+          //      }
+          //    };
+          // }else{
+          //   $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgUrlTemp;
+          // };
           // 根据选择项来初始化选择项的
           if($scope.handlenapeListNape[index].handledata){
             $scope.currentSlideData = $scope.handlenapeListNape[index].handledata;
@@ -819,16 +848,8 @@ angular.module('toiletControlModule')
 
                     }
                   }
-                // 发送指令
+                // 发送指令l
                 // 一次性动作的指令发出后修改选中的高亮
-                if(!$scope.handlenapeListNape[index].isManyDirective){
-                  setTimeout(function () {
-                    $scope.handlenapeListNape[index].selecFlag = false;
-                    $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgUrlTemp;
-                    $scope.$apply()
-                    $scope.handlenapeSelectedIndex = undefined;
-                  },3000)
-                }
                 // $scope.sendCmd(cmdvalue,"");
                 //发送默认值指令
                 if($scope.handlenapeListNape[index].isManyDirective){
@@ -874,8 +895,7 @@ angular.module('toiletControlModule')
           }
         }else{
           hmsPopup.showShortCenterToast("没有选择项不能使用!");
-        }
-
+        };
       };
       $scope.$on('$destroy', function() {
         $scope.modal.remove();

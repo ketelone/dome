@@ -216,7 +216,7 @@
     "welcomemodoe": "欢迎模式",
     "dengguanset": "灯光设置",
     "jiedianset": "节点设置",
-    "toiletclear": "马桶清洁",
+    "toiletclear": "智能除菌计划",
     "errortotal": "异常情况统计",
     "recoverset": "恢复默认设置",
     "checkdeviceInfo": "查看设备信息"
@@ -224,7 +224,23 @@
   "lightSetting": {
     "title": "灯光设置",
     "lightmode": "夜灯模式",
-    "toiletlamp": "便座灯模式"
+    "toiletlamp": "便座灯模式",
+    "envirentlightset":"环境灯设置",
+    "initcolor":"默认颜色",
+    "initweek":"按周循环",
+    "statsuschange":"动态演绎",
+    "statsusinfo":"环境灯每10s自动变换一种颜色,共8种颜色",
+    "zhoutian":"日",
+    "zhouyi":"一",
+    "zhouer":"二",
+    "zhousan":"三",
+    "zhousi":"四",
+    "zhouwu":"五",
+    "zhouliu":"六"
+  },
+  "cleargearPlan":{
+    "title":"智感除菌计划",
+    "startTimeDes":"开始时间"
   },
   "veil": {
     "goHomeTitle": "场景详情",

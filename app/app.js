@@ -546,6 +546,12 @@ angular.module('myApp')
           templateUrl: 'build/pages/device-controller/toilet-controller/lightSetting/lightSetting.html',
           controller: 'lightSettingCtrl'
         })
+        //智能除菌计划
+        .state('cleargearPlan', {
+          url: '/cleargearPlan',
+          templateUrl: 'build/pages/device-controller/toilet-controller/cleargearPlan/cleargearPlan.html',
+          controller: 'cleargearPlanCtrl'
+        })
         //设备控制-karess
         .state('karess', {
           url: '/karess',

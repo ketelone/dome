@@ -101,8 +101,18 @@ angular.module('toiletControlModule')
           $scope.modal.show();
           setTimeout(function () {
             var ele = document.getElementsByClassName("hmsModal");
-            ele[0].style.top = 60.5 + '%';
-            ele[0].style.minHeight = 61 + '%';
+            if ($scope.value.length === 3) {
+              ele[0].style.top = $scope.screenHeig - 156 + 'px';
+            } else if ($scope.value.length === 4) {
+              ele[0].style.top = $scope.screenHeig - 208 + 'px';
+            } else if ($scope.value.length === 2) {
+              ele[0].style.top = $scope.screenHeig - 104 + 'px';
+            } else if ($scope.value.length === 1) {
+              ele[0].style.top = $scope.screenHeig - 52 + 'px';
+            } else if ($scope.value.length > 4) {
+              ele[0].style.top= 68 + '%';
+              ele[0].style.minHeight = 32 + '%';
+            };
           }, 10)
         }
       };
@@ -112,7 +122,7 @@ angular.module('toiletControlModule')
       $scope.choose = function (val) {
         $scope.modal.hide();
       };
-      //灯光设置
+      //自动翻盖设置
       $ionicModal.fromTemplateUrl('build/pages/model/hmsiot-setSelect.html', {
         scope: $scope,
         animation: 'slide-in-up'
