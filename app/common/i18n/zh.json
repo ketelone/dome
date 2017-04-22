@@ -331,7 +331,8 @@
     "infoTaress2": "固件版本号",
     "infoTaress3": "SKU号",
     "infoTaress4": "SN号",
-    "infoTaress5": "位置信息"
+    "infoTaress5": "位置信息",
+    "jieneng" : "&nbsp;&nbsp;&nbsp;节能"
   },
   "nextgen": {
     "title": "next gen shower",
