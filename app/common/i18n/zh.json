@@ -311,14 +311,6 @@
     "deviceWen": "温度",
     "deviceShi": "湿度"
   },
-  <
-  <
-  <
-  <
-  <
-  <
-  <
-  HEAD
   "karessController": {
     "setting": "设置",
     "title": "karess",
@@ -383,11 +375,12 @@
       "SKUnumber": "SKU号",
       "SNnumber": "SN号",
       "positionMess": "位置信息"
-    },
-    "message": {
-      "all": "全选",
-      "delete": "删除",
-      "cancel": "取消",
-      "allOff": "全不选"
     }
+  },
+  "message": {
+    "all": "全选",
+    "delete": "删除",
+    "cancel": "取消",
+    "allOff": "全不选"
   }
+}

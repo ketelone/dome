@@ -5,13 +5,13 @@ angular.module('karessControlModule')
     '$ionicModal',
     '$compile',
     'baseConfig',
-    'checkVersionService', 'SettingsService',
+    'checkVersionService', 'SettingsService','$ionicHistory',
     function ($scope,
               $state,
               $ionicModal,
               $compile,
               baseConfig,
-              checkVersionService, SettingsService) {
+              checkVersionService, SettingsService, $ionicHistory) {
       var deviceId = SettingsService.get('sku')
       $scope.karessController = {
         modelType: "karessController.bath",
@@ -159,6 +159,9 @@ angular.module('karessControlModule')
         }
       ];
 
+      $scope.goBack = function () {
+        $ionicHistory.goBack();
+      }
 
       $scope.currentSlideData = $scope.slideInitData;
       //初始化当前模板数据

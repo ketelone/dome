@@ -14,14 +14,17 @@ angular.module('indexPageModule')
     '$http',
     '$ionicHistory',
     'hmsPopup',
+    'SettingsService',
     function ($scope,
               $state,
               $ionicGesture,
               baseConfig,
               $timeout,
               $ionicScrollDelegate,
-              $http,$ionicHistory,
-              hmsPopup) {
+              $http,
+              $ionicHistory,
+              hmsPopup,
+              SettingsService) {
 
       $scope.isSceneModel = true;
       $scope.isDeviceModel = false;

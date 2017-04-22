@@ -1,136 +1,128 @@
-<ion-view view-title="消息" class="message">
-  <!-- <ion-header-bar align-title="center" class="bar-stable">
-     <div class="buttons">
-       <button class="button" ng-click="">左侧按钮</button>
-     </div>
-     <div class="title">消息</div>
-     <div class="buttons">
-       <button class="button">右侧按钮</button>
-     </div>
-   </ion-header-bar>-->
+<ion-view view-title="我的" class="myInfo">
+  <!--<ion-header-bar align-title="center" class="bar-stable">-->
 
-  <!--<div class="bar bar-header" style="height: 2rem">-->
-  <!--<div class="row"><span>消息</span></div>-->
-  <!--<div class="row"><span>消息</span></div>-->
-
-
-  <!--</div>-->
+  <!--</ion-header-bar>-->
   <div class="cusHeader">
-    <div class="row mesHeader">
-      <span>消息</span>
+    <div class="row setP">
+      <div class="col col-40">
+        <span class="myHome">我家</span>
+      </div>
+      <div class="col">
+        <img class="img1" ng-src="build/img/my-info/icon_home_avatar1.png"  />
+        <img class="img1" ng-src="build/img/my-info/icon_home_avatar2.png"/>
+        <img  class="img1" ng-src="build/img/my-info/icon_home_avatar3.png"/>
+      </div>
     </div>
-    <div class="row allMess">
-      <div ng-click="showStatus()" class="col col-33"><span ng-class="statusword">状态及提醒</span></div>
-      <div ng-click="showException()" class="col col-33"><span ng-class="exceptionword">异常及保修</span></div>
-      <div class="col col-33"><span>其它</span></div>
+    <div class="row" >
+      <span class="personal">个性签名</span>
+    </div>
+    <div class="row">
+      <span class="personalValue">团结就是胜利</span>
     </div>
   </div>
 
-  <ion-content class="hasHeader" style="overflow-y:scroll; ">
-    <ion-scroll zooming="true" direction="y" class="scroll-view ionic-scroll scroll-y">
-      <!--status-->
-      <ion-list ng-show="hasStaus" show-delete="data.showDelete">
-        <ion-item style="background: #212121;border-style:none;" ng-repeat="statusitem in statusitems "
-                  item="statusitem" class="item item-icon-right item-remove-animate">
-          <div class="row oneModel">
-            <!-- <img  ng-show="show-delete" style="width: 0.44rem;height: 0.45rem" ng-src="build/img/message/radio_bg.png"/>-->
-            <div class="col col-75">
-              <div class="row">
-                <div class="col col-60" STYLE="padding-left: 0rem"><span
-                  class="leftWord1">{{statusitem.statusMessage}}</span></div>
-                <div class="col"><span class="leftWord2">{{statusitem.device}}</span></div>
-              </div>
-              <div class="row">
-                <span class="leftWord3">{{statusitem.messageDel}}</span>
-              </div>
-              <div class="row addpadding">
-                <span class="time">{{statusitem.time}}</span>
-              </div>
-            </div>
-            <div class="col ">
-              <i class="icon ion-ios-arrow-right iconSize"></i>
-            </div>
+
+
+  <ion-content class="hasHeader" >
+    <ion-scroll zooming="true" direction="y" class="scroll-view ionic-scroll scroll-y" >
+      <ion-list  class="setBak">
+
+        <li class="item item-icon-right onerow"   >
+          <div class="row">
+            <div style="text-align: left" class="col col-66 "><span translate="my-info.personalSetting" class="leftWord">个人资料设置</span></div>
+            <div class="col"><i class="icon ion-ios-arrow-right iconSize"></i></div>
           </div>
-          <ion-option-button class="manyChoose"
-                             ng-click="manyChoose()">
-            多选
-          </ion-option-button>
-          <ion-option-button class="goDelete"
-                             ng-click="goDeteleitem(statusitem)">
-            删除
-          </ion-option-button>
-          <ion-delete-button ng-click="onChoose(statusitem)">
-
-            <img style=" width: 0.5rem;height:0.5rem" ng-src={{statusitem.circleUrl1}}/>
+        </li>
 
 
-          </ion-delete-button>
-
-        </ion-item>
-      </ion-list>
-
-
-      <!--nostatus-->
-      <ion-list ng-show="false">
-
-        <div class="noMessage">
-          <span class="noMessageWord">暂无设备消息</span></div>
-
-      </ion-list>
-      <!--exception-->
-      <ion-list ng-show="hasException" show-delete="data.showDelete">
-        <ion-item style="background: #212121;border-style:none;" ng-repeat="exceptionitem in exceptionitems"
-                  item="exceptionitem" class="item item-icon-right item-remove-animate">
-          <div class="row oneModel">
-            <div class="col col-75">
-              <div class="row">
-                <div class="col col-60" STYLE="padding-left: 0rem"><span class="leftWord1">{{exceptionitem.exceptionMessage}}</span>
-                </div>
-                <div class="col"><span class="leftWord2">{{exceptionitem.device}}</span></div>
-              </div>
-              <div class="row addpadding">
-                <span class="time">{{exceptionitem.time}}</span>
-              </div>
-            </div>
-            <div class="col ">
-              <i class="icon ion-ios-arrow-right iconSize"></i>
-            </div>
+        <li class="item item-icon-right onerow"   >
+          <div class="row">
+            <div style="text-align: left" class="col col-66 "><span translate="my-info.myBox" class="leftWord">我的box</span></div>
+            <div  class="col col-20 "><span class="rightword" translate="my-info.addNumber">已添加4个</span></div>
+            <div class="col"><i class="icon ion-ios-arrow-right iconSize"></i></div>
           </div>
+        </li>
 
-          <ion-option-button class="manyChoose"
-                             ng-click="manyChoose(exceptionitem)">
-            多选
-          </ion-option-button>
-          <ion-option-button class="goDelete"
-                             ng-click="goDeteleitem(exceptionitem)">
-            删除
-          </ion-option-button>
-          <ion-delete-button ng-click="onChoose(exceptionitem)">
+        <li class="item item-icon-right onerow" ui-sref="myRoom"   >
+          <div class="row">
+            <div style="text-align: left" class="col col-66 "><span translate="my-info.myRoom" class="leftWord">我的房间</span></div>
+            <div  class="col col-20 "><span class="rightword" translate="my-info.roomNumber">3个房间</span></div>
+            <div class="col"><i class="icon ion-ios-arrow-right iconSize"></i></div>
+          </div>
+        </li>
+        <li class="item item-icon-right onerow"   >
+          <div class="row">
+            <div style="text-align: left" class="col col-66 "><span translate="my-info.familyManager" class="leftWord">亲友授权管理</span></div>
 
-            <img style=" width: 0.5rem;height:0.5rem" ng-src={{exceptionitem.circleUrl1}}/>
+            <div class="col"><i class="icon ion-ios-arrow-right iconSize"></i></div>
+          </div>
+        </li>
 
-          </ion-delete-button>
-        </ion-item>
+        <li class="item item-icon-right onerow"   ui-sref="greenLife" >
+          <div class="row">
+            <div style="text-align: left" class="col col-66 "><span translate="my-info.greenLife" class="leftWord">绿色生活</span></div>
+
+            <div class="col"><i class="icon ion-ios-arrow-right iconSize"></i></div>
+          </div>
+        </li>
+        <div class="item item-divider cusdivide">
+
+        </div>
+        <li class="item item-icon-right onerow"   >
+          <div class="row">
+            <div style="text-align: left" class="col col-66 "><span translate="my-info.intelligentLinkage" class="leftWord">智能联动</span></div>
+            <div  class="col col-20 "><span class="rightword" translate="my-info.openNumber">已开启2个</span></div>
+            <div class="col"><i class="icon ion-ios-arrow-right iconSize"></i></div>
+          </div>
+        </li>
+
+        <li class="item item-icon-right onerow" ui-sref="setting"  >
+          <div class="row">
+            <div style="text-align: left" class="col col-66 "><span translate="my-info.settingWord"  class="leftWord"> 设置</span></div>
+
+            <div class="col"><i class="icon ion-ios-arrow-right iconSize"></i></div>
+          </div>
+        </li>
+
+
+
+
+
+
+
+
+
+
+
+        <li class="item item-icon-right onerow" ui-sref="setting"  >
+          <div class="row">
+            <div style="text-align: left" class="col col-66 "><span translate="my-info.settingWord"  class="leftWord"> 设置</span></div>
+
+            <div class="col"><i class="icon ion-ios-arrow-right iconSize"></i></div>
+          </div>
+        </li><li class="item item-icon-right onerow" ui-sref="setting"  >
+        <div class="row">
+          <div style="text-align: left" class="col col-66 "><span translate="my-info.settingWord"  class="leftWord"> 设置</span></div>
+
+          <div class="col"><i class="icon ion-ios-arrow-right iconSize"></i></div>
+        </div>
+      </li><li class="item item-icon-right onerow" ui-sref="setting"  >
+        <div class="row">
+          <div style="text-align: left" class="col col-66 "><span translate="my-info.settingWord"  class="leftWord"> 设置</span></div>
+
+          <div class="col"><i class="icon ion-ios-arrow-right iconSize"></i></div>
+        </div>
+      </li><li class="item item-icon-right onerow" ui-sref="setting"  >
+        <div class="row">
+          <div style="text-align: left" class="col col-66 "><span translate="my-info.settingWord"  class="leftWord"> 设置</span></div>
+
+          <div class="col"><i class="icon ion-ios-arrow-right iconSize"></i></div>
+        </div>
+      </li>
+
 
       </ion-list>
-
-
-      <!--noexception-->
-      <ion-list ng-show="false">
-
-        <div class="noMessage">
-          <span class="noMessageWord">您当前的设备无异常</span></div>
-      </ion-list>
-
-
     </ion-scroll>
   </ion-content>
-
-  <div ng-show="threeBottom" class="row bottomWord">
-    <div ng-click="bottomManychoose()" class="col col-33 allChoose"><span translate="message.all"></span></div>
-    <div ng-click="bottomGocancel()" class="col col-33 cancal"><span translate="message.cancel"></span></div>
-    <div ng-click="bottomGodetele()" class="col col-33 delete"><span translate="message.delete"></span></div>
-  </div>
-
 
 </ion-view>
