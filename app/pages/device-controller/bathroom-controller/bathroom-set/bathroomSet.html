@@ -4,12 +4,15 @@
       <div class="title">
         <span translate="bathroom.setting" style="color: #FFFFFF;font-family: PingFangSC-Regular;"></span>
       </div>
-      <i class="icon ion-ios-arrow-back" style="color: #FFFFFF;" ui-sref="bathroom"></i>
+      <i class="icon ion-ios-arrow-back" style="color: #FFFFFF;" ng-click="goBack();"></i>
     </div>
   </ion-header-bar>
   <ion-content class="cuscontent">
     <div>
-      <div class="item item-icon-right item-divider-self" ng-click="resetDeviceInfo()" style="border-color:  #0D0F11;height: 1rem;padding-top:0.3rem;background: #0D0F11;">
+      <div class="item item-icon-right item-divider-self" ng-click="" style="border-color:  #0D0F11;height: 1rem;padding-top:0.3rem;background: #0D0F11;border-bottom: 1px solid white;">
+        <span translate="bathroom.exceptionInfo" style="font-size: 0.32rem;font-family: PingFangSC-Medium;color: white;"></span><i class="icon ion-ios-arrow-right iconSize"></i>
+      </div>
+      <div class="item item-icon-right item-divider-self" ng-click="resetDeviceInfo()" style="border-color:  #0D0F11;height: 1rem;padding-top:0.3rem;background: #0D0F11;border-bottom: 1px solid white;">
         <span translate="bathroom.reset" style="font-size: 0.32rem;font-family: PingFangSC-Medium;color: white;"></span><i class="icon ion-ios-arrow-right iconSize"></i>
       </div>
       <div class="item item-icon-right item-divider-self"  ui-sref="bathroomInfo"  style="border-color:  #0D0F11;height: 1rem;padding-top:0.3rem;background: #0D0F11;">
