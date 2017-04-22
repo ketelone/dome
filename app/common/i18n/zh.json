@@ -196,16 +196,16 @@
     "guangai": "关盖",
     "fangai": "翻盖",
     "fanquan": "翻圈",
-    "qingjie":"清洁",
+    "qingjie": "清洁",
     "shezhi": "设置",
     "gaunbi": "关闭",
     "maichong": "脉冲",
     "bodong": "波动",
     "yidong": "移动",
     "zhengchang": "正常",
-    "clearopen":"打开阀门",
-    "clearextend":"伸出喷管",
-    "clearinstance":"智感除菌"
+    "clearopen": "打开阀门",
+    "clearextend": "伸出喷管",
+    "clearinstance": "智感除菌"
   },
   "toiletSetting": {
     "title": "马桶设置",
@@ -225,25 +225,25 @@
     "title": "灯光设置",
     "lightmode": "夜灯模式",
     "toiletlamp": "便座灯模式",
-    "envirentlightset":"环境灯设置",
-    "initcolor":"默认颜色",
-    "initweek":"按周循环",
-    "statsuschange":"动态演绎",
-    "statsusinfo":"环境灯每10s自动变换一种颜色,共8种颜色",
-    "zhoutian":"日",
-    "zhouyi":"一",
-    "zhouer":"二",
-    "zhousan":"三",
-    "zhousi":"四",
-    "zhouwu":"五",
-    "zhouliu":"六"
+    "envirentlightset": "环境灯设置",
+    "initcolor": "默认颜色",
+    "initweek": "按周循环",
+    "statsuschange": "动态演绎",
+    "statsusinfo": "环境灯每10s自动变换一种颜色,共8种颜色",
+    "zhoutian": "日",
+    "zhouyi": "一",
+    "zhouer": "二",
+    "zhousan": "三",
+    "zhousi": "四",
+    "zhouwu": "五",
+    "zhouliu": "六"
   },
-  "cleargearPlan":{
-    "title":"智感除菌计划",
-    "startTimeDes":"开始时间",
-    "hour":"时",
-    "minute":"分",
-    "clearRepeat":"重复"
+  "cleargearPlan": {
+    "title": "智感除菌计划",
+    "startTimeDes": "开始时间",
+    "hour": "时",
+    "minute": "分",
+    "clearRepeat": "重复"
   },
   "cenwatpurifier":{
     "title":"中央净水器",
@@ -267,6 +267,7 @@
   "bathroom": {
     "setting": "浴霸设置",
     "reset": "恢复默认设置",
+    "exceptionInfo": "异常情况统计",
     "deviceInfo": "设备信息",
     "productName": "产品名称",
     "version": "固件版本号",
@@ -281,15 +282,26 @@
     "bathroom": "浴霸",
     "cancel": "取消",
     "confirm": "确定",
-    "hot": "热风",
-    "cool": "凉风",
-    "dryer": "冷干",
-    "hotDrying": "热干",
-    "breath": "换气",
-    "purify": "空气净化",
-    "windDirection": "风向",
-    "light": "照明",
-    "setting": "设置"
+    "hot": "&nbsp;&nbsp;&nbsp;热风",
+    "cool": "&nbsp;&nbsp;&nbsp;凉风",
+    "dryer": "&nbsp;&nbsp;&nbsp;冷干",
+    "hotDrying": "&nbsp;&nbsp;&nbsp;热干",
+    "breath": "&nbsp;&nbsp;&nbsp;换气",
+    "purify": "空气<br>净化",
+    "windDirection": "&nbsp;&nbsp;&nbsp;风向",
+    "light": "&nbsp;&nbsp;&nbsp;照明",
+    "closeAll": "一键关闭",
+    "setting": "&nbsp;&nbsp;&nbsp;设置",
+    "wind": "风向",
+    "fixed": "固定",
+    "rock": "摇摆",
+    "oneHour": "一时",
+    "twoHour": "二时",
+    "threeHour": "三时",
+    "fourHour": "四时",
+    "fiveHour": "五时",
+    "sixHour": "六时",
+    "timeout": "您选择的时间已超出范围，请重新选择"
   },
   "spa": {
     "goHomeTitle": "场景详情",
@@ -338,7 +350,8 @@
     "infoTaress2": "固件版本号",
     "infoTaress3": "SKU号",
     "infoTaress4": "SN号",
-    "infoTaress5": "位置信息"
+    "infoTaress5": "位置信息",
+    "jieneng": "&nbsp;&nbsp;&nbsp;节能"
   },
   "nextgen": {
     "title": "next gen shower",
@@ -370,5 +383,11 @@
       "SNnumber": "SN号",
       "positionMess": "位置信息"
     }
+  },
+  "message": {
+    "all": "全选",
+    "delete": "删除",
+    "cancel": "取消",
+    "allOff": "全不选"
   }
 }

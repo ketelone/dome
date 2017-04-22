@@ -13,8 +13,8 @@
   <ion-content style="background-color: #0F0F0F">
     <div class="device-info">
       <div class="device-info-status">
-        <img ng-src="build/img/bathroom/icon_devicedetail_wifi.png" class="box-img" ng-if="isBox"/>
-        <span class="box-text" translate="bathroom.boxLink"  ng-if="isBox"></span>
+        <img ng-src="build/img/bathroom/icon_devicedetail_warning.png" class="box-img" ng-if="isBox"/>
+        <span class="box-text" translate="bathroom.using"  ng-if="isBox"></span>
         <img ng-src="build/img/bathroom/icon_devicedetail_wifi.png" class="signal-img"/>
         <span class="signal-text" translate="bathroom.signalStatus"></span>
         <img ng-src="build/img/bathroom/icon_devicedetail_warning.png" class="error-img"/>
@@ -25,25 +25,28 @@
     </div>
 
     <div class="temp-info" style="height: 6.5rem;width:100%;">
-
-      <canvas id="canvas" width="1024" height="1200"></canvas>
-
-      <!--<ion-slide class="icon ion-minus-round">-->
-        <!--&lt;!&ndash;<div class="box blue"></div>&ndash;&gt;-->
-      <!--</ion-slide>-->
-      <!--<ion-slide>-->
-        <!--&lt;!&ndash;<div class="box yellow"></div>&ndash;&gt;-->
-      <!--</ion-slide>-->
-      <!--<ion-slide on-slide-changed="slideHasChanged(index)">-->
-        <!--&lt;!&ndash;<div class="box pink"><h1>PINK</h1></div>&ndash;&gt;-->
-        <!--&lt;!&ndash;<i class="icon ion-minus-round"></i>&ndash;&gt;-->
-      <!--</ion-slide>-->
+      <center>
+        <canvas id="canvas" width="1800" height="1200"></canvas>
+      </center>
     </div>
   </ion-content>
 
-  <div class="timer-div text-center">
-    <span ng-if="isCountDown">{{countDown |  date:'HH:mm'}}</span>
+  <div class="toilet-handlenape-selec" ng-click="openModal();">
   </div>
+  <div class="toilet-handlenape-selec" ng-click="openModal();" ng-if="isWind">
+    <span class="handlenape-selec-des" translate="bathroom.wind"></span>
+    <span class="handlenape-selec-use" translate="{{windType.type}}"></span>
+    <img class="handlenape-selec-img" src="build/img/karess-controller/icon_scenario_arrow.png"/>
+  </div>
+  <div class="toilet-handlenape-selec timer-div text-center" ng-click="openModal();" ng-if="isTime">
+    <span ng-if="isCountDown">{{countDown |  date:'HH:mm:ss'}}</span>
+    <!--<span class="handlenape-selec-des" translate="bathroom.wind"></span>-->
+    <!--<span class="handlenape-selec-use" translate="{{windType.type}}"></span>-->
+    <!--<img class="handlenape-selec-img" src="build/img/karess-controller/icon_scenario_arrow.png"/>-->
+  </div>
+ <!-- <div class="timer-div text-center">
+    <span ng-if="isCountDown">{{countDown |  date:'HH:mm'}}</span>
+  </div>-->
   <ion-scroll direction="y" style="white-space: nowrap;width: 100%;text-align: center;height: 5.4rem;" class="scroll-position">
     <div class="optation-div" style="background-color: #1D2334">
       <div class="switch-size" ng-repeat="item in bathroomData">
@@ -54,8 +57,11 @@
         <span class="text-switch">
           <img ng-src="{{item.switchPictureUrl}}" class="hot-img"/>
         </span>
-          <p class="switch-desc" translate="{{item.desc}}"></p>
+          <div class="text-center">
+              <p class="switch-desc" translate="{{item.desc}}"></p>
+          </div>
         </label>
+
       </div>
       <div class="is-show-wind-switch" ng-if="isWindShow">
         <div class="breath" ng-if="isBreath">
@@ -81,173 +87,7 @@
       </div>
     </div>
 
-    <!--<div style="height: 3rem;">
-
-      <div>
-        <div class="switch-size">
-          <label class="switch-btn">
-            <input class="checked-switch" type="checkbox" ng-model="ab" ng-click="getInfo(ab)"/>
-            <span class="text-switch">
-              <img ng-src="build/img/bathroom/hot.png" class="hot-img"/>
-            </span>
-            <p class="switch-desc">热风</p>
-          </label>
-        </div>
-      </div>
-
-      <div>
-        <div class="switch-size">
-          <label class="switch-btn">
-            <input class="checked-switch" type="checkbox" ng-model="b" ng-click="getInfo(b)"/>
-          <span class="text-switch">
-            <img ng-src="build/img/bathroom/hot.png" class="hot-img"/>
-          </span>
-            <p class="switch-desc">凉风</p>
-          </label>
-        </div>
-      </div>
-
-      <div>
-        <div class="switch-size">
-          <label class="switch-btn">
-            <input class="checked-switch" type="checkbox" ng-model="c" ng-click="getInfo(c)"/>
-          <span class="text-switch">
-            <img ng-src="build/img/bathroom/hot.png" class="hot-img"/>
-          </span>
-            <p class="switch-desc">冷干</p>
-          </label>
-        </div>
-      </div>
-
-      <div>
-        <div class="switch-size">
-          <label class="switch-btn">
-            <input class="checked-switch" type="checkbox" ng-model="j" ng-click="getInfo(j)"/>
-          <span class="text-switch">
-            <img ng-src="build/img/bathroom/hot.png" class="hot-img"/>
-          </span>
-            <p class="switch-desc">热干</p>
-          </label>
-        </div>
-      </div>
-
-      <div>
-        <div class="switch-size">
-          <label class="switch-btn">
-            <input class="checked-switch" type="checkbox" ng-model="e" ng-click="showType(e)"/>
-          <span class="text-switch">
-            <img ng-src="build/img/bathroom/hot.png" class="hot-img"/>
-          </span>
-            <p class="switch-desc">换气</p>
-          </label>
-        </div>
-
-        <div class="is-show-wind-switch" ng-if="isWindShow">
-          <div class="breath" ng-if="isBreath">
-            <div class="checkboxFour">
-              <input type="checkbox" id="checkboxFourInput"  ng-model="t" ng-click="getV(t)"/>
-              <label for="checkboxFourInput"><span class="font-position">普通</span><p class="font-position">模式</p></label>
-            </div>
-          </div>
-
-          <div class="breath-top" ng-if="isBreath">
-            <div class="checkboxFour">
-              <input type="checkbox" class="checkbox-position"  id="checkboxFourInput2" ng-model="m" ng-click="getV(m)"/>
-              <label for="checkboxFourInput2"><br><span class="font-position">24H</span></label>
-            </div>
-          </div>
-          <div class="breath-x" ng-if="isBreath">
-            <div class="checkboxFour">
-              <input type="checkbox" class="checkbox-position"  id="checkboxFourInput3" ng-model="m" ng-click="closeNav(m)"/>
-              <label for="checkboxFourInput3"><br><span class="font-position">关闭</span></label>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div>
-        <div class="switch-size">
-          <label class="switch-btn">
-            <input class="checked-switch" type="checkbox" ng-model="d" ng-click="getInfo(d)"/>
-          <span class="text-switch">
-            <img ng-src="build/img/bathroom/hot.png" class="hot-img"/>
-          </span>
-            <p class="switch-desc">空气净化</p>
-          </label>
-        </div>
-      </div>
-
-      <div>
-        <div class="switch-size">
-          <label class="switch-btn">
-            <input class="checked-switch" type="checkbox" ng-model="d" ng-click="getInfo(d)"/>
-          <span class="text-switch">
-            <img ng-src="build/img/bathroom/hot.png" class="hot-img"/>
-          </span>
-            <p class="switch-desc">风向</p>
-          </label>
-        </div>
-      </div>
-
-      <div>
-        <div class="switch-size">
-          <label class="switch-btn">
-            <input class="checked-switch" type="checkbox" ng-model="h" ng-click="getInfo(h)"/>
-          <span class="text-switch">
-            <img ng-src="build/img/bathroom/hot.png" class="hot-img"/>
-          </span>
-            <p class="switch-desc">照明</p>
-          </label>
-        </div>
-      </div>
-
-      <div>
-        <div class="switch-size">
-          <label class="switch-btn">
-            <input class="checked-switch" type="checkbox" ng-model="q" ng-click="getBathroomInfo(q)"/>
-          <span class="text-switch">
-            <img ng-src="build/img/bathroom/hot.png" class="hot-img"/>
-          </span>
-            <p class="switch-desc">设置</p>
-          </label>
-        </div>
-      </div>
-
-    </div>-->
   </ion-scroll>
-  <script id="my-modal.html" type="text/ng-template">
-    <div style="position: relative">
-      <div class="modal" style="position:absolute;left:0;top:0;border: 1px solid gray;border-radius: 0.3rem 0.3rem 0 0;width: 100%;bottom: 0rem;margin-top:10rem;height: 5.3rem;">
-        <ion-header-bar class="bar bar-border-bottom">
-          <button class="button button-icon icon  header_buttonRig" ng-click="closeModal()"><span  style="font-size: 0.4rem;" translate="bathroom.cancel"></span></button>
-          <button class="button button-icon icon  header_buttonRig" ng-click="openPopover()"><span style="font-size: 0.4rem;" translate="bathroom.confirm"></span></button>
-        </ion-header-bar>
-        <ion-content overflow-scroll="true" on-scroll="false">
-          <div class="row noPadding" style="position: absolute;">
-            <div class="col noPadding">
-              <div class="scroll-container" on-drag="onDragScroll($event)" on-release="onReleaseScroll($event)" style="height: 2.6rem;">
-                <div class="stage" ng-style="stageRotate">
-                  <div class="scroll-item" style="font-size: 0.4rem;"  ng-repeat="time in hour track by $index" ng-style="rotates[$index]" ng-class="{true:'selected'}[nowIndex == $index]" ng-click="getCurrentHour(time);">
-                    {{getShowString(time)}}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col noPadding">
-              <div class="scroll-container" on-drag="onDragScroll2($event)" on-release="onReleaseScroll2($event)" style="height: 2.6rem;">
-                <div class="stage" ng-style="stageRotate2">
-                  <div class="scroll-item" style="font-size: 0.4rem;" ng-repeat="minu in minute track by $index" ng-style="rotates2[$index]" ng-class="{true:'selected'}[nowIndex2 == $index]"  ng-click="getCurrentMin(minu);">
-                    {{getShowMin(minu)}}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </ion-content>
-      </div>
-    </div>
-
-  </script>
 </ion-view>
 
 

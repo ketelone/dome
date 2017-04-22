@@ -25,7 +25,7 @@
     width: 1.21rem;
     height: 0.28rem;
     font-family: PingFangSC-Regular;
-    font-size: 0.24rem;
+    font-size: 0.32rem;
     color: #565A64;
     letter-spacing: 0.01rem;
     line-height: 0.28rem;
@@ -81,7 +81,7 @@
   .scroll-position{
     margin-top: 8.9rem;
     .scroll{
-      height: 6.5rem;
+      height: 8rem;
       background-color: #1D2334;
     }
   }
@@ -249,7 +249,7 @@
   }
   .switch-desc{
     position: absolute;
-    margin-left: 1rem;
+    margin-left: 0.8rem;
     margin-top: -0.5rem;
   }
   .font-position{
@@ -292,7 +292,7 @@
     width: 3rem;
     height: 0.28rem;
     margin-left: 3.2rem;
-    margin-top: 5.5rem;
+    margin-top: 4.94rem;
     font-size: 0.72rem;
     color: white;
   }
@@ -401,6 +401,31 @@
   }
   .modal-backdrop{
     top: 7rem;
+  }
+
+  .toilet-handlenape-selec{
+    position: absolute;
+    top: 7.9rem;
+    z-index: 0;
+    width: 100%;
+    height: 1.08rem;
+    line-height: 1.08rem;
+    background-color: #1C202C;
+    font-size: $font-size-liter;
+    .handlenape-selec-des{
+      margin-left: 0.9rem;
+      color: $color-base;
+    }
+    .handlenape-selec-use{
+      margin-left: 4.8rem;
+      color: $global-border;
+    }
+    .handlenape-selec-img{
+      display: inline-block;
+      width: 0.193rem;
+      height: 0.308rem;
+      right: 0.607rem;
+    }
   }
 
 }

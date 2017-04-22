@@ -10,13 +10,34 @@ angular.module('bathroomModule')
     'baseConfig',
     function($scope, $state, hmsPopup, hmsHttp, baseConfig){
 
+      $scope.location = "";
+
+      $scope.$watch('', function(){
+        var url = baseConfig.basePath + "/dvm/location/query";
+        var paramter = {
+          "lat": "39",
+          "lng": "116"
+        };
+        hmsHttp.post(url, paramter).success(
+          function(response){
+            console.log(response.rows[0]);
+            $scope.deciveInfo.place = response.rows[0];
+            //hmsPopup.showPopup("<span translate='bathroom.saveAlert'></span>");
+          }
+        ).error(
+          function (response, status, header, config){
+            //hmsPopup.showPopup("<span translate='bathroom.saveError'></span>");
+          }
+        );
+      },false);
+
       $scope.deciveInfo = {
         id: "3",
         deviceName: "Bathroom Header",
         version: "1.2.6-133.0139",
         sku: "1.2.6-133.0139",
         sn: "1.2.6-133.0139",
-        place: "上海市闵行区1234567"
+        place: $scope.location
       };
 
       /**

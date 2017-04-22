@@ -52,6 +52,7 @@ angular.module('myInfoModule')
               $state,
               publicMethod) {
 
+$scope.a="build/img/my-info/icon_home_avatar2.png";
 
 
 

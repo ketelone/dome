@@ -5,13 +5,13 @@ angular.module('karessControlModule')
     '$ionicModal',
     '$compile',
     'baseConfig',
-    'checkVersionService','SettingsService',
+    'checkVersionService', 'SettingsService','$ionicHistory',
     function ($scope,
               $state,
               $ionicModal,
               $compile,
               baseConfig,
-              checkVersionService,SettingsService) {
+              checkVersionService, SettingsService, $ionicHistory) {
       var deviceId = SettingsService.get('sku')
       $scope.karessController = {
         modelType: "karessController.bath",
@@ -30,7 +30,18 @@ angular.module('karessControlModule')
       }]
 
       $scope.shuilianmoData = [{
-        des: "水压档位",
+        des: "温度",
+        gearNum: 1,
+        gearInit: 1,
+        gearInitTemp: 1,
+        parameterctlFlag: false,
+        parNodeid: 'toilet-NvYongSyCtl',
+        canves01: "NvYongSycanves01",
+        canves02: "NvYongSycanves02",
+        canves03: "NvYongSycanves03",
+      }];
+      $scope.shuiBeiBuData = [{
+        des: "按摩档位",
         gearNum: 1,
         gearInit: 1,
         gearInitTemp: 1,
@@ -41,7 +52,7 @@ angular.module('karessControlModule')
         canves03: "NvYongSycanves03",
       }];
       $scope.slideTunBuData = [{
-        des: "tun水压档位",
+        des: "水温",
         gearNum: 5,
         gearInit: 1,
         gearInitTemp: 1,
@@ -52,7 +63,7 @@ angular.module('karessControlModule')
         canves03: "TunBuSycanves03",
       },
         {
-          des: "tun位置档位",
+          des: "水位",
           gearNum: 5,
           gearInit: 1,
           gearInitTemp: 1,
@@ -113,7 +124,7 @@ angular.module('karessControlModule')
           imgUrlTemp: "build/img/karess-controller/quanwen.png",
           handleDes: "karessController.beibujiare",
           selecFlag: false,
-          handledata: $scope.slideInitData
+          handledata: $scope.shuiBeiBuData
         },
         {
           imgUrl: "build/img/karess-controller/nuanfeng.png",
@@ -132,6 +143,14 @@ angular.module('karessControlModule')
           handledata: $scope.slideInitData
         },
         {
+          imgUrl: "build/img/karess-controller/dengguan.png",
+          imgSeledUrl: "build/img/karess-controller/dengguanseled.png",
+          imgUrlTemp: "build/img/karess-controller/dengguan.png",
+          handleDes: "karessController.jieneng",
+          selecFlag: false,
+          handledata: $scope.slideInitData
+        },
+        {
           imgUrl: "build/img/karess-controller/nuanjiao.png",
           imgSeledUrl: "build/img/karess-controller/nuanjiaoseled.png",
           imgUrlTemp: "build/img/karess-controller/nuanjiao.png",
@@ -140,6 +159,9 @@ angular.module('karessControlModule')
         }
       ];
 
+      $scope.goBack = function () {
+        $ionicHistory.goBack();
+      }
 
       $scope.currentSlideData = $scope.slideInitData;
       //初始化当前模板数据
@@ -344,8 +366,10 @@ angular.module('karessControlModule')
           ;
         };
       };
+      $scope.handleRadSelected;
       setTimeout(function () {
         $scope.getCurrentObj = function (index) {
+          $scope.handleRadSelected = index;
           //当前new实例
           var currentRadObj = new initCircle($scope.currentSlideData[index]);
           currentRadObj.i = 0;
@@ -379,6 +403,8 @@ angular.module('karessControlModule')
             currentEventObj.addEventListener('touchend', function (e) {
               e.preventDefault();
               currentRadObj.drawc(currentRadObj.cr2, currentRadObj.radSectionArr[currentRadObj.stoPosPoint]);
+              //档位滑动执行发指令操作
+              $scope.radScrollSendDir();
             }, false);
             var getEvtLocation = function (e) {
               var touch = e.touches[0];
@@ -398,25 +424,30 @@ angular.module('karessControlModule')
       //处理选择怎加border
       var handlenapeListNapeLen = $scope.handlenapeListNape.length;
       $scope.selectNapes = function (index) {
-        if (index == 1) {
-          sendCmd(deviceId, value, '落水成功！', '落水失败！');
-        }
-        if (index == 3) {
-          sendCmd(deviceId, value, '头部按摩开启成功！', '头部按摩开启失败！');
-        }
-        if (index == 4) {
-          sendCmd(deviceId, value, '背部加热开启成功！', '背部加热开启失败！');
-        }
-        if (index == 5) {
-          sendCmd(deviceId, value, '一键停止开启成功！', '一键停止开启失败！');
-        }
-        if (index == 6) {
-          sendCmd(deviceId, value, '管道除菌开启成功！', '管道除菌开启成功！');
-        }
-        if (index == 7) {
-          $state.go('karessSetting');
-          return;
-        }
+        $scope.handlenapeSelectedIndex = index;
+
+        // if (index == 1) {
+        //   sendCmd(deviceId, value, '落水成功！', '落水失败！');
+        // }
+        // if (index == 3) {
+        //   sendCmd(deviceId, value, '头部按摩开启成功！', '头部按摩开启失败！');
+        // }
+        // if (index == 4) {
+        //   sendCmd(deviceId, value, '背部加热开启成功！', '背部加热开启失败！');
+        // }
+        // if (index == 5) {
+        //   sendCmd(deviceId, value, '一键停止开启成功！', '一键停止开启失败！');
+        // }
+        // if (index == 6) {
+        //   sendCmd(deviceId, value, '管道除菌开启成功！', '管道除菌开启成功！');
+        // }
+        // if (index == 7) {
+        //   sendCmd(deviceId, value, '节能开启成功！', '节能开启成功！');
+        // }
+        // if (index == 8) {
+        //   $state.go('karessSetting');
+        //   return;
+        // }
         $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
         for (var i = 0; i < handlenapeListNapeLen; i++) {
           if (i !== index) {
@@ -478,7 +509,7 @@ angular.module('karessControlModule')
         }
         ;
       };
-      var sendCmd = function(deviceId, value, successMsg, errorMsg){
+      var sendCmd = function (deviceId, value, successMsg, errorMsg) {
         var cmd = {
           from: {
             cid: "0xE3",
@@ -509,5 +540,38 @@ angular.module('karessControlModule')
         function error() {
           hmsPopup.showShortCenterToast(errorMsg);
         }
+      };
+      //保存选择的数据项
+      $scope.handleRadSelected;
+      $scope.handlenapeSelectedIndex;
+      //档位滑动执行发指令操作
+      $scope.radScrollSendDir = function () {
+        // console.log(currentRadObj）
+        if ($scope.handlenapeListNape[$scope.handlenapeSelectedIndex].isManyDirective) {
+          var selectRad = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].gearInit;
+          var dirinfo = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].directive[selectRad];
+          var diedes = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].des;
+        }
+        var objdir = {
+          from: {
+            cid: "0xE3",
+          },
+          idx: 1,
+          method: "CTL",
+          payload: {
+            cmd: "CMD_REQUEST",
+            "device_type": "BLE_DEVICE",
+            value: [],
+          },
+          to: {
+            cid: "0xE4",
+            "device_id": "29DF7606",
+          },
+          ts: "1492146861.217451",
+          ver: 1,
+        };
+        objdir.payload.value.push(dirinfo);
+        // 发送指令
+        $scope.sendCmd(objdir, diedes);
       };
     }]);

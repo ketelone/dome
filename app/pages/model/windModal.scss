@@ -1,0 +1,15 @@
+.windModal {
+  .contentCase {
+    background-color:#4F5C79;
+    z-index:-1;
+  }
+  .listItem{
+    margin: 0;
+    background-color:#4F5C79;
+    color:$color-base;
+    border-width: 0px;
+    border-bottom: 1px solid black;
+    text-align: center;
+    font-size: 0.4rem;
+  }
+}

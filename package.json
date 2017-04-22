@@ -72,7 +72,15 @@
       "id": "cordova-plugin-hand-offlineMenu\" version=\"0.0.1",
       "locator": "/Users/daidongdong/Downloads/cordova-plugin-hand-offlinemenu"
     },
-    "cordova-plugin-globalization"
+    "cordova-plugin-globalization",
+    {
+      "id": "cordova.plugin.location\" version=\"0.0.1",
+      "locator": "/Users/daidongdong/Downloads/com.plugin.location"
+    },
+    {
+      "id": "http://schemas.android.com/apk/res/android",
+      "locator": "/Users/daidongdong/Downloads/SocketPlugin"
+    }
   ],
   "cordovaPlatforms": [
     "android",

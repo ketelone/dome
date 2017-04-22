@@ -20,18 +20,18 @@
       <span>消息</span>
     </div>
 <div class="row allMess">
-   <div ng-click="showStatus()" class="col col-33"><span class="status">状态及提醒</span></div>
-  <div ng-click="showException()" class="col col-33"><span>异常及保修</span></div>
+   <div ng-click="showStatus()" class="col col-33"><span ng-class="statusword">状态及提醒</span></div>
+  <div ng-click="showException()" class="col col-33"><span ng-class="exceptionword">异常及保修</span></div>
   <div class="col col-33"><span>其它</span></div>
 </div>
  </div>
 
-  <ion-content class="hasHeader">
-
+  <ion-content class="hasHeader" style="overflow-y:scroll; ">
+    <ion-scroll zooming="true" direction="y"  class="scroll-view ionic-scroll scroll-y" >
 <!--status-->
    <ion-list ng-show="hasStaus" show-delete="data.showDelete" >
-     <ion-item style="border-style:none;" ng-repeat="statusitem in statusitems" item="statusitem"  class="item item-icon-right item-remove-animate">
- <div class="row oneModel">
+     <ion-item style="background: #212121;border-style:none;" ng-repeat="statusitem in statusitems " item="statusitem"  class="item item-icon-right item-remove-animate">
+   <div class="row oneModel">
   <!-- <img  ng-show="show-delete" style="width: 0.44rem;height: 0.45rem" ng-src="build/img/message/radio_bg.png"/>-->
            <div class="col col-75">
              <div class="row">
@@ -54,46 +54,21 @@
          多选
        </ion-option-button>
        <ion-option-button class="goDelete"
-                          ng-click="goDeteleStatusitem(statusitem)">
+                          ng-click="goDeteleitem(statusitem)">
          删除
        </ion-option-button>
        <ion-delete-button   ng-click="onChoose(statusitem)">
 
-    <img  style="width: 0.44rem;height: 0.45rem" ng-src="build/img/message/radio_bg.png"/>
-     <img ng-show="statusitem.showCircle" style="" ng-src="build/img/message/radio_dot.png"/>
+         <img  style=" width: 0.5rem;height:0.5rem" ng-src={{statusitem.circleUrl1}} />
 
-      </ion-delete-button>
+
+       </ion-delete-button>
 
      </ion-item>
 </ion-list>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <!--nostatus-->
+ <!--nostatus-->
     <ion-list ng-show="false" >
 
 <div class="noMessage">
@@ -101,8 +76,8 @@
 
     </ion-list>
 <!--exception-->
-    <ion-list ng-show="hasException" >
-      <ion-item style="border-style:none;" ng-repeat="exceptionitem in exceptionitems" item="statusitem"  class="item item-icon-right item-remove-animate">
+    <ion-list ng-show="hasException" show-delete="data.showDelete" >
+      <ion-item style="background: #212121;border-style:none;" ng-repeat="exceptionitem in exceptionitems" item="exceptionitem"  class="item item-icon-right item-remove-animate">
         <div class="row oneModel">
           <div class="col col-75">
             <div class="row">
@@ -122,13 +97,15 @@
                            ng-click="manyChoose(exceptionitem)">
           多选
         </ion-option-button>
-        <ion-option-button class="goDetele"
-                           ng-click="goDeteleExceptionitem(exceptionitem)">
+        <ion-option-button class="goDelete"
+                           ng-click="goDeteleitem(exceptionitem)">
           删除
         </ion-option-button>
-        <ion-delete-button style="" class="ion-minus-circled"
-                           ng-click="onItemDelete(exceptionitem)">
-        </ion-delete-button>
+        <ion-delete-button   ng-click="onChoose(exceptionitem)">
+
+          <img  style=" width: 0.5rem;height:0.5rem" ng-src={{exceptionitem.circleUrl1}} />
+
+     </ion-delete-button>
       </ion-item>
 
     </ion-list>
@@ -144,14 +121,13 @@
 
 
 
-
-
+      </ion-scroll>
   </ion-content>
 
   <div ng-show="threeBottom" class="row bottomWord">
-    <div ng-click="bottomManychoose()" class="col col-33 allChoose"><span >全选</span></div>
-    <div ng-click="bottomGocancel()" class="col col-33 cancal"><span >取消</span></div>
-    <div ng-click="bottomGodetele()" class="col col-33 delete"><span >删除</span></div>
+    <div ng-click="bottomManychoose()" class="col col-33 allChoose"><span translate="message.all" ></span></div>
+    <div ng-click="bottomGocancel()" class="col col-33 cancal"><span translate="message.cancel"></span></div>
+    <div ng-click="bottomGodetele()" class="col col-33 delete"><span translate="message.delete"></span></div>
   </div>
 
 
