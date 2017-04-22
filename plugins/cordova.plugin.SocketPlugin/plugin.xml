@@ -49,6 +49,7 @@ xmlns:android="http://schemas.android.com/apk/res/android">
         <source-file src="src/android/cordova/plugin/socket/TcpSocket.java" target-dir="src/cordova/plugin/socket/"/>
         <source-file src="src/android/cordova/plugin/socket/UDPBroadCast.java" target-dir="src/cordova/plugin/socket/"/>
         <source-file src="src/android/cordova/plugin/socket/UDPBroadCastCallBack.java" target-dir="src/cordova/plugin/socket/"/>
+	<source-file src="src/android/cordova/plugin/socket/SocketManager.java" target-dir="src/cordova/plugin/socket/"/>
     </platform>
 
 </plugin>

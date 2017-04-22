@@ -40,7 +40,11 @@ static const uint16_t TCPPort = 5036;
         //实例化
         self.socket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
         
-        [self.socket setIPv4PreferredOverIPv6:NO];//优先级ipv6
+        if (self.socket.isIPv4) {
+            [self.socket setIPv4Enabled:YES];
+        }else{
+            [self.socket setIPv6Enabled:YES];
+        }//优先级ipv6
         
         _host = tcpHost;
         NSError *error = nil;
@@ -74,7 +78,11 @@ static const uint16_t TCPPort = 5036;
     //实例化
     self.udpSocket = [[GCDAsyncUdpSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
     
-    [self.udpSocket setPreferIPv6];//优先级ipv6
+    if (self.udpSocket.isIPv4) {
+        [self.udpSocket setIPv4Enabled:YES];
+    }else{
+        [self.udpSocket setIPv6Enabled:YES];
+    }//优先级ipv6
     
     NSError *error = nil;
     
@@ -162,7 +170,8 @@ static const uint16_t TCPPort = 5036;
         ackTimer = nil;
         
         NSDictionary *respDict = @{@"error":@"tcp reConnect failure!",
-                                   @"code":@(-1)
+                                   @"code":@(-1),
+                                   @"ip":_host?_host:@""
                                    };
         [[NSNotificationCenter defaultCenter] postNotificationName:TcpStatusNotification object:respDict];
     }
@@ -193,7 +202,7 @@ static const uint16_t TCPPort = 5036;
 - (void)udpSocket:(GCDAsyncUdpSocket *)sock didConnectToAddress:(NSData *)address
 {
     DLog(@"broadcast_didConnectToAddress");
-
+    
 }
 //UDP连接失败回调
 - (void)udpSocket:(GCDAsyncUdpSocket *)sock didNotConnect:(NSError *)error
@@ -212,8 +221,8 @@ static const uint16_t TCPPort = 5036;
     DLog(@"broadcast_didNotSendDataWithTag:%lu,err:%@",tag,error);
     NSDictionary *errorDesp = @{
                                 @"error":[NSString stringWithFormat:@"%@",error.description]
-                               };
-
+                                };
+    
     if (self.udpResponse) self.udpResponse(errorDesp,UdpSocketResponseStatusSendFailure);
 }
 
@@ -251,7 +260,8 @@ withFilterContext:(id)filterContext
 {
     DLog(@"tcp_didConnectToHost:%@:%u",host,port);
     NSDictionary *respDict = @{@"message":@"didConnectToHost",
-                               @"code":@(1)
+                               @"code":@(1),
+                               @"ip":host?host:@""
                                };
     [[NSNotificationCenter defaultCenter] postNotificationName:TcpStatusNotification object:respDict];
 }
@@ -297,7 +307,8 @@ withFilterContext:(id)filterContext
         return;
     }
     NSDictionary *respDict = @{@"code":@(0),
-                               @"error":@"socketDidDisconnect"
+                               @"error":@"socketDidDisconnect",
+                               @"ip":sock.connectedHost?sock.connectedHost:@""
                                };
     [[NSNotificationCenter defaultCenter] postNotificationName:TcpStatusNotification object:respDict];
 }
