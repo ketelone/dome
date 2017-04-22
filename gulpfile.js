@@ -375,6 +375,7 @@ function copyPages(e) {
 
    newDirPath = newDirPath.join("\\");
  /* newDirPath = newDirPath.join("/");*/
+
   // 修改或增加时
   if ('added' == e.type || 'changed' == e.type || 'renamed' == e.type) {
 
