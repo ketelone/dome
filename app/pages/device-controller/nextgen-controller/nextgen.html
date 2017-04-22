@@ -33,7 +33,7 @@
     <!--</div>-->
     <div  class="toilet-handlenape-selec " ng-click="openModal()">
       <div class="row" style="padding: 0rem">
-     <div class="col col-66"><span  class="handlenape-selec-des" translate="nextgen.handleSelecDes"></span> </div>
+     <div class="col col-66"><span  class="handlenape-selec-des" translate={{toiletController.way}}></span> </div>
         <div class="col col-20"><span  class="handlenape-selec-use" translate={{toiletController.modelType}}></span></div>
         <div class="col"> <img class="handlenape-selec-img" src="build/img/nextgen/icon_scenario_arrow.png"></img></div>
       </div>
@@ -41,7 +41,7 @@
     <ion-scroll class="toilet-handlenape">
       <div class="toilet-handlenape-list" ng-repeat="list in handlenapeListNape track by $index" ng-click="selectNapes($index)">
         <div class="handlenape-list-napes" ng-class="{true: 'napes-border', false: ''}[list.selecFlag]">
-          <img class="list-napes-img" ng-src={{list.imgUrl}} alt="">
+          <img  class="list-napes-img" ng-src={{list.imgUrl}} alt="">
           <div class="list-napes-dec" translate={{list.handleDes}}></div>
         </div>
       </div>

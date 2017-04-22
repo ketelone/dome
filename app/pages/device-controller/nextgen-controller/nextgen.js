@@ -5,13 +5,13 @@ angular.module('nextgenModule')
     '$ionicModal',
     '$compile',
     'baseConfig',
-    'checkVersionService','$ionicHistory',
+    'checkVersionService','$ionicHistory','hmsPopup','$timeout',
     function ($scope,
               $state,
               $ionicModal,
               $compile,
               baseConfig,
-              checkVersionService,$ionicHistory
+              checkVersionService,$ionicHistory,hmsPopup,$timeout
     ) {
 
       $scope.goBack = function(){
@@ -22,8 +22,10 @@ angular.module('nextgenModule')
       //初始模式选择
       $scope.toiletController = {
         modelType:"nextgen.Spout",
+        way:"nextgen.handleSelecDes"
       };
-      //侧滑转档数量json
+
+       //侧滑转档数量json
       $scope.slideInitData =[{
         des: "nextgen.chixu",
         gearNum: 1,
@@ -52,33 +54,33 @@ angular.module('nextgenModule')
       $scope.handlenapeListNape = [
 
         {
-          imgUrl: "build/img/nextgen/linyu.png",
-          imgSeledUrl: "build/img/nextgen/linyuseled.png",
-          imgUrlTemp:"build/img/nextgen/linyu.png",
+          imgUrl: "build/img/nextgen/chixu.png",
+          imgSeledUrl: "build/img/nextgen/chixuseled.png",
+          imgUrlTemp:"build/img/nextgen/chixu.png",
           handleDes: "nextgen.chixu",
           selecFlag:false,
           handledata:$scope.slideLinYuData //cjc初始canves
         },
         {
-          imgUrl: "build/img/nextgen/linyu.png",
-          imgSeledUrl: "build/img/nextgen/linyuseled.png",
-          imgUrlTemp:"build/img/nextgen/linyu.png",
+          imgUrl: "build/img/nextgen/paikong.png",
+          imgSeledUrl: "build/img/nextgen/paikongseled.png",
+          imgUrlTemp:"build/img/nextgen/paikong.png",
           handleDes: "nextgen.paikong",
           selecFlag:false,
           handledata:$scope.slideLinYuData //cjc初始canves
         },
         {
-          imgUrl: "build/img/nextgen/tunxi.png",
-          imgSeledUrl: "build/img/nextgen/tunxiseled.png",
-          imgUrlTemp:"build/img/nextgen/tunxi.png",
+          imgUrl: "build/img/nextgen/stop.png",
+          imgSeledUrl: "build/img/nextgen/stopseled.png",
+          imgUrlTemp:"build/img/nextgen/stop.png",
           handleDes: "nextgen.stop",
           selecFlag:false,
        //   handledata:$scope.slideTunBuData
         },
         {
-          imgUrl: "build/img/nextgen/quanwen.png",
-          imgSeledUrl: "build/img/nextgen/quanwenseled.png",
-          imgUrlTemp:"build/img/nextgen/quanwen.png",
+          imgUrl: "build/img/nextgen/jieneng.png",
+          imgSeledUrl: "build/img/nextgen/jienengseled.png",
+          imgUrlTemp:"build/img/nextgen/jieneng.png",
           handleDes: "nextgen.jieneng",
           selecFlag:false
         },
@@ -151,7 +153,7 @@ angular.module('nextgenModule')
          this.cr3 = getCanvesObj(slideDataObj.canves03);//颜色填充档位canves
          // this.cr4 = getCanvesObj(slideDataObj.canves04);//颜色填充档位canves
          //四种圆
-         this.deliverCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2,color:"#2F3538"};//档位圆
+         this.deliverCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2,color:"#67c6b0"};//档位圆
          this.HideCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2-0.4*this.rateInit,color:"black"};//档位圆
          this.deliverLine = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2,color:"black"};//档位线
          this.rollCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2-0.2*this.rateInit,color:"white"};//小球圆
@@ -270,10 +272,11 @@ angular.module('nextgenModule')
           };
         };
     */  };
+      var currentRadObj;
       setTimeout(function () {
         $scope.getCurrentObj = function (index) {
           //当前new实例
-          var currentRadObj = new initCircle($scope.currentSlideData[index]);
+          currentRadObj = new initCircle($scope.currentSlideData[index]);
           currentRadObj.i=0;
           currentRadObj.j=0;
           currentRadObj.stoPosPoint=0;
@@ -316,7 +319,7 @@ angular.module('nextgenModule')
 
           }
         };
-        $scope.getCurrentObj(0);
+      $scope.getCurrentObj(0);
         $scope.slideHasChanged = function (index) {
           $scope.getCurrentObj(index);
         };
@@ -326,7 +329,8 @@ angular.module('nextgenModule')
 
 
       $scope.selectNapes = function (index) {
-        $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
+
+     $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
 
         for(var i=0;i<handlenapeListNapeLen;i++){
           if(i !== index){
@@ -346,50 +350,81 @@ angular.module('nextgenModule')
           }
         };
 
-        if(index==3)
-        {
-           if($scope.value[0].ionCheck==undefined) {//是否有ioncheck属性
-             $scope.value = [{id: 6, des: 'nextgen.close', ionCheck: true},
-               {id: 7, des: 'nextgen.powerFailure', ionCheck: false}, {
-                 id: 8,
-                 des: 'nextgen.sleep',
-                 ionCheck: false
-               }, {id: 9, des: 'nextgen.lowPower', ionCheck: false}];
-           }
-
-       $scope.modal.show();
-          setTimeout(function () {
-            var ele = document.getElementsByClassName("hmsModal");
-            ele[0].style.top = 68 + '%';
-            ele[0].style.minHeight = 61 + '%';
-          }, 10);
-
-        };
-
-        if(index==0) {
-          $scope.slideInitData[0].des="nextgen.chixu";
-        if(
-          $scope.handlenapeListNape[1].selecFlag==true){
-
-          hmsPopup.showPopup("<span translate='bathroom.saveAlert'></span>");
-
-        }
+  if (index == 0) {
 
 
+     $scope.slideInitData[0].des = "nextgen.chixu";
+      $scope.toiletController = {
+        modelType: "nextgen.Spout",
+        way: "nextgen.handleSelecDes"
+      };
+      $scope.value = [{id: 2, des: 'nextgen.maichong'},
+        {id: 3, des: 'nextgen.bodong'}, {id: 4, des: 'nextgen.yidong'}, {id: 5, des: 'nextgen.Spout'}
+      ];
 
-         // shower(1);
-        }
-        if(index==1) {
-          $scope.slideInitData[0].des="nextgen.paikong";
-          alert("排空冷水");
+
 
           // shower(1);
         }
-       if(index==4){
+        if(index==1) {
+
+
+            $scope.slideInitData[0].des = "nextgen.paikong";
+            $scope.toiletController = {
+              modelType: "nextgen.Spout",
+              way: "nextgen.handleSelecDes"
+            };
+            $scope.value = [{id: 2, des: 'nextgen.maichong'},
+              {id: 3, des: 'nextgen.bodong'}, {id: 4, des: 'nextgen.yidong'}, {id: 5, des: 'nextgen.Spout'}
+            ];
+          //alert("排空冷水");
+
+
+          // shower(1);
+        }
+        if(index==2){
+
+
+
+          /*$timeout(function () {
+            $scope.myHeader = "How are you today?";
+          }, 2000);
+        };*/
+
+
+
+        }
+        if(index==3)
+        {
+ 
+          $scope.slideInitData[0].des="nextgen.close";
+          $scope.toiletController = {
+            modelType:"nextgen.close",
+            way:"nextgen.jieneng"
+          };
+          if($scope.value[0].ionCheck==undefined) {//是否有ioncheck属性
+            $scope.value = [{id: 6, des: 'nextgen.close', ionCheck: true},
+              {id: 7, des: 'nextgen.powerFailure', ionCheck: false}, {
+                id: 8,
+                des: 'nextgen.sleep',
+                ionCheck: false
+              }, {id: 9, des: 'nextgen.lowPower', ionCheck: false}];
+          }
+
+          //$scope.modal.show();
+          //setTimeout(function () {
+          //  var ele = document.getElementsByClassName("hmsModal");
+          //  ele[0].style.top = 68 + '%';
+          //  ele[0].style.minHeight = 61 + '%';
+          //}, 10);
+
+        };
+
+        if(index==4){
 
          $state.go("nextgenSet");
-         $scope.handlenapeListNape[3].selecFlag = false;
-         $scope.handlenapeListNape[3].imgUrl = $scope.handlenapeListNape[3].imgUrlTemp;
+         $scope.handlenapeListNape[4].selecFlag = false;
+         $scope.handlenapeListNape[4].imgUrl = $scope.handlenapeListNape[4].imgUrlTemp;
        }
         // 根据选择项来初始化选择项的
       /*  if($scope.handlenapeListNape[index].handledata){
@@ -423,10 +458,13 @@ angular.module('nextgenModule')
         {id:3,des:'nextgen.bodong'},{id:4,des:'nextgen.yidong'},{id:5,des:'nextgen.Spout'}
       ];
       $scope.openModal = function () {
-        if($scope.value.length!==0) {
-          $scope.value = [{id:2,des:'nextgen.maichong'},
-            {id:3,des:'nextgen.bodong'},{id:4,des:'nextgen.yidong'},{id:5,des:'nextgen.Spout'}
-          ];
+
+        //if($scope.value.length!==0) {
+        //  $scope.value = [{id:2,des:'nextgen.maichong'},
+        //    {id:3,des:'nextgen.bodong'},{id:4,des:'nextgen.yidong'},{id:5,des:'nextgen.Spout'}
+        //  ];
+        //
+        if( $scope.handlenapeListNape[0].selecFlag==true||$scope.handlenapeListNape[3].selecFlag==true||$scope.handlenapeListNape[1].selecFlag==true) {
           $scope.modal.show();
           setTimeout(function () {
             var ele = document.getElementsByClassName("hmsModal");
@@ -434,13 +472,16 @@ angular.module('nextgenModule')
             ele[0].style.minHeight = 61 + '%';
           }, 10)
         }
+
+       //  }
+
+
       };
       $scope.$on('$destroy', function() {
         $scope.modal.remove();
       });
       $scope.choose = function (val) {
   if(val.id<6) {
-
          $scope.modal.hide();
          $scope.toiletController.modelType = val.des;
     if(val.id==2){
@@ -460,27 +501,30 @@ angular.module('nextgenModule')
 
   }
         else{
-
+    $scope.toiletController.modelType = val.des;
           $scope.modal.hide();
     for (var i = 0; i < $scope.value.length; i++) {
       $scope.value[i].ionCheck=false;
       val.ionCheck = true;
     }
-    $scope.handlenapeListNape[2].selecFlag = false;
-    $scope.handlenapeListNape[2].imgUrl = $scope.handlenapeListNape[2].imgUrlTemp;
+
         }
 
         if(val.id==6){
+          $scope.slideInitData[0].des="nextgen.close";
          alert("关闭");
         };
         if(val.id==7){
+          $scope.slideInitData[0].des="nextgen.powerFailure";
           alert("断电");
         };
 
         if(val.id==8){
+          $scope.slideInitData[0].des="nextgen.sleep";
           alert("睡眠");
         };
         if(val.id==9){
+          $scope.slideInitData[0].des="nextgen.lowPower";
           alert("低用电");
         };
 
