@@ -8,14 +8,17 @@ angular.module('bathroomModule')
     '$interval',
     '$window',
     '$ionicModal',
+    '$ionicHistory',
     'hmsPopup',
     '$stateParams',
-    function($scope, $state, $interval, $window, $ionicModal, hmsPopup, $stateParams){
+    'bathroomService',
+    'bathroomCmdService',
+    function($scope, $state, $interval, $window, $ionicModal, $ionicHistory, hmsPopup, $stateParams, bathroomService, bathroomCmdService){
 
       $scope.bathroomData = [
         {
           id: "1",
-          switchPictureUrl: "build/img/bathroom/hot.png",
+          switchPictureUrl: "build/img/bathroom/hot_wind_nor.png",
           isOpen: false,
           isCommon: true,
           isSetting: false,
@@ -27,7 +30,7 @@ angular.module('bathroomModule')
         },
         {
           id: "2",
-          switchPictureUrl: "build/img/bathroom/hot.png",
+          switchPictureUrl: "build/img/bathroom/cool_wind_nor.png",
           isOpen: false,
           isCommon: true,
           isSetting: false,
@@ -39,7 +42,7 @@ angular.module('bathroomModule')
         },
         {
           id: "3",
-          switchPictureUrl: "build/img/bathroom/hot.png",
+          switchPictureUrl: "build/img/bathroom/cool_nor.png",
           isOpen: false,
           isCommon: true,
           isSetting: false,
@@ -51,7 +54,7 @@ angular.module('bathroomModule')
         },
         {
           id: "4",
-          switchPictureUrl: "build/img/bathroom/hot.png",
+          switchPictureUrl: "build/img/bathroom/hot_drying_nor.png",
           isOpen: false,
           isCommon: true,
           isSetting: false,
@@ -63,7 +66,7 @@ angular.module('bathroomModule')
         },
         {
           id: "5",
-          switchPictureUrl: "build/img/bathroom/hot.png",
+          switchPictureUrl: "build/img/bathroom/breath_nor.png",
           isOpen: false,
           isCommon: false,
           isSetting: false,
@@ -83,7 +86,7 @@ angular.module('bathroomModule')
           isOpenTimer: false,
           setTime: "",
           switchType: "Purify",
-          desc: "bathroom.purify"
+          desc: "空气净化"
         },
         {
           id: "7",
@@ -94,20 +97,32 @@ angular.module('bathroomModule')
           isBreathSwitch: false,
           isOpenTimer: false,
           setTime: "",
-          switchType: "Wind direction",
-          desc: "bathroom.windDirection"
+          switchType: "Light",
+          desc: "bathroom.light"
         },
         {
           id: "8",
-          switchPictureUrl: "build/img/bathroom/hot.png",
+          switchPictureUrl: "build/img/bathroom/stop_nor.png",
           isOpen: false,
           isCommon: true,
           isSetting: false,
           isBreathSwitch: false,
           isOpenTimer: false,
           setTime: "",
-          switchType: "Light",
-          desc: "bathroom.light"
+          switchType: "Wind direction",
+          desc: "bathroom.windDirection"
+        },
+        {
+          id: "9",
+          switchPictureUrl: "build/img/bathroom/stop_nor.png",
+          isOpen: false,
+          isCommon: true,
+          isSetting: false,
+          isBreathSwitch: false,
+          isOpenTimer: false,
+          setTime: "",
+          switchType: "CloseAll",
+          desc: "bathroom.closeAll"
         },
         {
           id: "9",
@@ -132,553 +147,180 @@ angular.module('bathroomModule')
       $scope.tempPercent = '80%';
       $scope.isBox = true;
       $scope.isBig = false;
+      $scope.isWind = false;
+      $scope.isTime = false;
+      $scope.isTouchSwitch = false;
+      $scope.bathroomItem = {};
       var canvas=document.getElementById("canvas");
       $scope.setHour = "";
       $scope.setMinu = "";
+      $scope.windType = {'type': "bathroom.rock"};
 
       $scope.goBack = function(){
-        $state.go('indexPage');
+        closebox();
+        $ionicHistory.goBack();
       };
 
-/*      //接受tcp状态
-      document.addEventListener('SocketPlugin.receiveTcpStatus', function (result) {
-
-        hmsPopup.showShortCenterToast("tcp状态"+angular.toJson(result.code));
-      }, false);
-//接受tcp返回数据
-      document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
-        hmsPopup.showShortCenterToast("开始返回数据！");
-        // alert(JSON.stringify(result));
-        // {
-        //   from =     {
-        //     cid = 0xE4;
-        //   "device_id" = 7E66264D;
-        // };
-        //   idx = 0;
-        //   method = RSP;
-        //   payload =     {
-        //     cmd = "LIST_BONDED_DEVICE_RETURN";
-        //   "cmd_properties" =         {
-        //     "device_list" =             (
-        //     {
-        //       "device_id" = 24A93477;
-        //   "device_mac" = "F7:B3:24:A9:34:77";  //固定mac地址  唯一标示
-        //   "device_rssi" = 0;
-        //   "device_sku" = "F7:B3:24:A9:34:77";    、、设备sku
-        //   "device_state" = 1;                      、、设备状态 1已连接 0未连接
-        // }
-        // );
-        //   "device_number" = 1;                、、数组的个数
-        // };
-        //   "device_type" = "BLE_DEVICE";        、、蓝牙 box连接设备的类型   分蓝牙和WiFi  一般为蓝牙
-        // };
-        //   to =     {
-        //     cid = 0xE3;
-        // };
-        //   ts = 1492138779;
-        // }
-        var resultOn = result;
-        if (resultOn.payload.cmd == "LIST_BONDED_DEVICE_RETURN") {
-          $scope.deviceOn = resultOn.payload.cmd_properties.device_list;
-          if ($scope.deviceOn.length == 0) {
-            hmsPopup.showShortCenterToast("没有已连接设备，请搜索未连接设备");//让他去选择连接未设备
-          }
+      /**
+       *@autor: caolei
+       *@disc: close box link
+       */
+      var closebox = function () {
+        cordova.plugins.SocketPlugin.tcpClose ({
+          "ip": localStorage.boxIp
+        },success,error);
+        function success(response) {
+          hmsPopup.showShortCenterToast("断开box成功");
         }
 
-        if (resultOn.payload.cmd == "SCAN_RETURN") {
-          console.log(resultOn.payload.cmd_properties.device_list);
-          $scope.deviceOff = resultOn.payload.cmd_properties.device_list;
+        function error() {
+          hmsPopup.showShortCenterToast("断开box");
+        }
+      };
+
+      var sendCmd = function(deviceId, value, successMsg, errorMsg){
+        var cmd = bathroomService.getCmd(value, deviceId);
+        cordova.plugins.SocketPlugin.tcpSendCmd({
+          "timeout": "5000",
+          "value": cmd,
+          "ip": localStorage.boxIp
+        }, success, error);
+        function success(response) {
+          hmsPopup.showShortCenterToast(successMsg);
+        }
+
+        function error() {
+          hmsPopup.showShortCenterToast(errorMsg);
+        }
+      };
+
+      var getCurrentTemplate = function(){
+        sendCmd(deviceId,"887706010005721563","获取温度","获取温度失败");
+      };
+
+      var flag = false;
+      document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
+        //hmsPopup.showShortCenterToast("开始返回数据！");
+        var resultOn = result;
+
+        if (resultOn.payload.cmd == "CMD_RETURN") {
           if ($scope.deviceOff.length == 0) {
-            hmsPopup.showShortCenterToast("没有设备");//让他去选择连接未设备
+            hmsPopup.showShortCenterToast("没有设备");
+          }
+          alert("resultOn.payload.value1:  "+resultOn.payload.value);
+          if(resultOn.payload.value.contains("fa72")){
+            flag = true;
           }
           $scope.$apply();
         }
 
-      }, false);*/
+        if(flag){
+          if (resultOn.payload.cmd == "CMD_RETURN") {
+            alert("resultOn.payload.value2:  "+resultOn.payload.value);
+           if(resultOn.payload.value.substring(12,14) == '91'){
+             resultOn.payload.value.substring(15,17);
+             resultOn.payload.value.substring(17,19);
+           }
+            $scope.$apply();
+          }
+        }
+
+      }, false);
 
       var openLight = function (deviceId) {
-        var cmd = {
-          from: {
-            cid: "0xE3",
-          },
-          idx: 1,
-          method: "CTL",
-          payload: {
-            cmd: "CMD_REQUEST",
-            "device_type": "BLE_DEVICE",
-            value: ["887706010005270221"],
-          },
-          to: {
-            cid: "0xE4",
-            "device_id": deviceId,
-          },
-          ts: "1492146861.217451",
-          ver: 1,
-        }
-        cordova.plugins.SocketPlugin.tcpSendCmd({
-          "timeout": "5000",
-          "value": cmd
-        }, success, error);
-        function success(response) {
-          hmsPopup.showShortCenterToast("开灯");
-        }
-
-        function error() {
-          hmsPopup.showShortCenterToast("开灯失败");
-        }
+        var data = bathroomCmdService.operateLighting("ON");
+        console.log("data: "+data);
+        var vaule = bathroomCmdService.getCmd('8877','01', data, '00', '05');
+        console.log("value: " + vaule);
+        sendCmd(deviceId, vaule ,"开灯","开灯失败");
       };
 
       var closeLight = function (deviceId) {
-        var cmd = {
-          from: {
-            cid: "0xE3",
-          },
-          idx: 1,
-          method: "CTL",
-          payload: {
-            cmd: "CMD_REQUEST",
-            "device_type": "BLE_DEVICE",
-            value: ["887706020005270020"],
-          },
-          to: {
-            cid: "0xE4",
-            "device_id": deviceId,
-          },
-          ts: "1492146861.217451",
-          ver: 1,
-        }
-        cordova.plugins.SocketPlugin.tcpSendCmd({
-          "timeout": "5000",
-          "value": cmd
-        }, success, error);
-        function success(response) {
-          hmsPopup.showShortCenterToast("开灯");
-        }
-
-        function error() {
-          hmsPopup.showShortCenterToast("开灯失败");
-        }
+        var data = bathroomCmdService.operateLighting("OFF");
+        console.log("data: "+data);
+        var vaule = bathroomCmdService.getCmd('8877','01', data, '00', '05');
+        console.log("value: " + vaule);
+        sendCmd(deviceId,vaule,"关灯","关灯失败");
       };
 
       var openHot = function(deviceId){
-        var cmd = {
-          from: {
-            cid: "0xE3",
-          },
-          idx: 1,
-          method: "CTL",
-          payload: {
-            cmd: "CMD_REQUEST",
-            "device_type": "BLE_DEVICE",
-            value: ["8877080200052101000A2D"],
-          },
-          to: {
-            cid: "0xE4",
-            "device_id": deviceId,
-          },
-          ts: "1492146861.217451",
-          ver: 1,
-        }
-        cordova.plugins.SocketPlugin.tcpSendCmd({
-          "timeout": "5000",
-          "value": cmd
-        }, success, error);
-        function success(response) {
-          hmsPopup.showShortCenterToast("热风");
-        }
-
-        function error() {
-          hmsPopup.showShortCenterToast("热风失败");
-        }
+        $scope.isWind = true;
+        $scope.isTime = false;
+        //sendCmd(deviceId,"8877080200052101000A2D","热风","热风失败");
       };
 
       var closeHot = function(deviceId){
-        var cmd = {
-          from: {
-            cid: "0xE3",
-          },
-          idx: 1,
-          method: "CTL",
-          payload: {
-            cmd: "CMD_REQUEST",
-            "device_type": "BLE_DEVICE",
-            value: ["8877080200052100000026"],
-          },
-          to: {
-            cid: "0xE4",
-            "device_id": deviceId,
-          },
-          ts: "1492146861.217451",
-          ver: 1,
-        }
-        cordova.plugins.SocketPlugin.tcpSendCmd({
-          "timeout": "5000",
-          "value": cmd
-        }, success, error);
-        function success(response) {
-          hmsPopup.showShortCenterToast("热风关闭");
-        }
-
-        function error() {
-          hmsPopup.showShortCenterToast("热风关闭失败");
-        }
+        $scope.isWind = false;
+        $scope.isTime = false;
+        //sendCmd(deviceId,"8877080200052100000026","热风关闭","热风关闭失败");
       };
 
       var openCool = function(deviceId){
-        var cmd = {
-          from: {
-            cid: "0xE3",
-          },
-          idx: 1,
-          method: "CTL",
-          payload: {
-            cmd: "CMD_REQUEST",
-            "device_type": "BLE_DEVICE",
-            value: ["8877080300052102000A2F"],
-          },
-          to: {
-            cid: "0xE4",
-            "device_id": deviceId,
-          },
-          ts: "1492146861.217451",
-          ver: 1,
-        }
-        cordova.plugins.SocketPlugin.tcpSendCmd({
-          "timeout": "5000",
-          "value": cmd
-        }, success, error);
-        function success(response) {
-          hmsPopup.showShortCenterToast("凉风");
-        }
-
-        function error() {
-          hmsPopup.showShortCenterToast("凉风失败");
-        }
+        $scope.isWind = true;
+        $scope.isTime = false;
+        //sendCmd(deviceId,"8877080300052102000A2F","凉风","凉风失败");
       };
 
       var closeCool = function(deviceId){
-        var cmd = {
-          from: {
-            cid: "0xE3",
-          },
-          idx: 1,
-          method: "CTL",
-          payload: {
-            cmd: "CMD_REQUEST",
-            "device_type": "BLE_DEVICE",
-            value: ["8877080200052100000026"],
-          },
-          to: {
-            cid: "0xE4",
-            "device_id": deviceId,
-          },
-          ts: "1492146861.217451",
-          ver: 1,
-        }
-        cordova.plugins.SocketPlugin.tcpSendCmd({
-          "timeout": "5000",
-          "value": cmd
-        }, success, error);
-        function success(response) {
-          hmsPopup.showShortCenterToast("凉风关闭");
-        }
-
-        function error() {
-          hmsPopup.showShortCenterToast("凉风关闭失败");
-        }
+        $scope.isWind = false;
+        $scope.isTime = false;
+        //sendCmd(deviceId,"8877080200052100000026","凉风关闭","凉风关闭失败");
       };
 
       var openDryer = function(deviceId){
-        var cmd = {
-          from: {
-            cid: "0xE3",
-          },
-          idx: 1,
-          method: "CTL",
-          payload: {
-            cmd: "CMD_REQUEST",
-            "device_type": "BLE_DEVICE",
-            value: ["8877080200052105000A29"],
-          },
-          to: {
-            cid: "0xE4",
-            "device_id": deviceId,
-          },
-          ts: "1492146861.217451",
-          ver: 1,
-        }
-        cordova.plugins.SocketPlugin.tcpSendCmd({
-          "timeout": "5000",
-          "value": cmd
-        }, success, error);
-        function success(response) {
-          hmsPopup.showShortCenterToast("冷干");
-        }
-
-        function error() {
-          hmsPopup.showShortCenterToast("冷干失败");
-        }
+        $scope.isWind = true;
+        $scope.isTime = false;
+        //sendCmd(deviceId,"8877080200052105000A29","冷干","冷干失 败");
       };
 
       var closeDryer = function(deviceId){
-        var cmd = {
-          from: {
-            cid: "0xE3",
-          },
-          idx: 1,
-          method: "CTL",
-          payload: {
-            cmd: "CMD_REQUEST",
-            "device_type": "BLE_DEVICE",
-            value: ["8877080200052100000026"],
-          },
-          to: {
-            cid: "0xE4",
-            "device_id": deviceId,
-          },
-          ts: "1492146861.217451",
-          ver: 1,
-        }
-        cordova.plugins.SocketPlugin.tcpSendCmd({
-          "timeout": "5000",
-          "value": cmd
-        }, success, error);
-        function success(response) {
-          hmsPopup.showShortCenterToast("冷干关闭");
-        }
-
-        function error() {
-          hmsPopup.showShortCenterToast("冷干关闭失败");
-        }
+        $scope.isWind = false;
+        $scope.isTime = false;
+        //sendCmd(deviceId,"8877080200052100000026","冷干关闭","冷干关闭失败");
       };
 
       var openHotDrying = function(deviceId){
-        var cmd = {
-          from: {
-            cid: "0xE3",
-          },
-          idx: 1,
-          method: "CTL",
-          payload: {
-            cmd: "CMD_REQUEST",
-            "device_type": "BLE_DEVICE",
-            value: ["8877080200052103000A2F"],
-          },
-          to: {
-            cid: "0xE4",
-            "device_id": deviceId,
-          },
-          ts: "1492146861.217451",
-          ver: 1,
-        }
-        cordova.plugins.SocketPlugin.tcpSendCmd({
-          "timeout": "5000",
-          "value": cmd
-        }, success, error);
-        function success(response) {
-          hmsPopup.showShortCenterToast("热干");
-        }
-
-        function error() {
-          hmsPopup.showShortCenterToast("热干失败");
-        }
+        $scope.isWind = true;
+        $scope.isTime = false;
+        //sendCmd(deviceId,"8877080200052103000A2F","热干","热干失败");
       };
 
       var closeHotDrying = function(deviceId){
-        var cmd = {
-          from: {
-            cid: "0xE3",
-          },
-          idx: 1,
-          method: "CTL",
-          payload: {
-            cmd: "CMD_REQUEST",
-            "device_type": "BLE_DEVICE",
-            value: ["8877080200052100000026"],
-          },
-          to: {
-            cid: "0xE4",
-            "device_id": deviceId,
-          },
-          ts: "1492146861.217451",
-          ver: 1,
-        }
-        cordova.plugins.SocketPlugin.tcpSendCmd({
-          "timeout": "5000",
-          "value": cmd
-        }, success, error);
-        function success(response) {
-          hmsPopup.showShortCenterToast("热干关闭");
-        }
-
-        function error() {
-          hmsPopup.showShortCenterToast("热干关闭失败");
-        }
+        $scope.isWind = false;
+        $scope.isTime = false;
+        //sendCmd(deviceId,"8877080200052100000026","热干关闭","热干关闭失败");
       };
 
       //Breath
       var openBreath = function(deviceId){
-        var cmd = {
-          from: {
-            cid: "0xE3",
-          },
-          idx: 1,
-          method: "CTL",
-          payload: {
-            cmd: "CMD_REQUEST",
-            "device_type": "BLE_DEVICE",
-            value: ["8877080200052104000A28"],
-          },
-          to: {
-            cid: "0xE4",
-            "device_id": deviceId,
-          },
-          ts: "1492146861.217451",
-          ver: 1,
-        }
-        cordova.plugins.SocketPlugin.tcpSendCmd({
-          "timeout": "5000",
-          "value": cmd
-        }, success, error);
-        function success(response) {
-          hmsPopup.showShortCenterToast("换气");
-        }
-
-        function error() {
-          hmsPopup.showShortCenterToast("换气失败");
-        }
+        //sendCmd(deviceId,"8877080200052104000A28","换气","换气失败");
       };
       var open24HBreath = function(deviceId){
-        var cmd = {
-          from: {
-            cid: "0xE3",
-          },
-          idx: 1,
-          method: "CTL",
-          payload: {
-            cmd: "CMD_REQUEST",
-            "device_type": "BLE_DEVICE",
-            value: ["8877090200052104FF0A0F22"],
-          },
-          to: {
-            cid: "0xE4",
-            "device_id": deviceId,
-          },
-          ts: "1492146861.217451",
-          ver: 1,
-        }
-        cordova.plugins.SocketPlugin.tcpSendCmd({
-          "timeout": "5000",
-          "value": cmd
-        }, success, error);
-        function success(response) {
-          hmsPopup.showShortCenterToast("换气");
-        }
-
-        function error() {
-          hmsPopup.showShortCenterToast("换气失败");
-        }
+        //sendCmd(deviceId,"8877090200052104FF0A0F22","换气","换气失败");
       };
 
       var closeBreath = function(deviceId){
-        var cmd = {
-          from: {
-            cid: "0xE3",
-          },
-          idx: 1,
-          method: "CTL",
-          payload: {
-            cmd: "CMD_REQUEST",
-            "device_type": "BLE_DEVICE",
-            value: ["8877080200052100000026"],
-          },
-          to: {
-            cid: "0xE4",
-            "device_id": deviceId,
-          },
-          ts: "1492146861.217451",
-          ver: 1,
-        }
-        cordova.plugins.SocketPlugin.tcpSendCmd({
-          "timeout": "5000",
-          "value": cmd
-        }, success, error);
-        function success(response) {
-          hmsPopup.showShortCenterToast("换气关闭");
-        }
-
-        function error() {
-          hmsPopup.showShortCenterToast("换气关闭失败");
-        }
+        //sendCmd(deviceId,"8877080200052100000026","换气关闭","换气关闭失败");
       };
 
-      //Wind direction
       var openWindDirection = function (deviceId) {
-        var cmd = {
-          from: {
-            cid: "0xE3",
-          },
-          idx: 1,
-          method: "CTL",
-          payload: {
-            cmd: "CMD_REQUEST",
-            "device_type": "BLE_DEVICE",
-            value: ["887706020005030105"],
-          },
-          to: {
-            cid: "0xE4",
-            "device_id": deviceId,
-          },
-          ts: "1492146861.217451",
-          ver: 1,
-        }
-        cordova.plugins.SocketPlugin.tcpSendCmd({
-          "timeout": "5000",
-          "value": cmd
-        }, success, error);
-        function success(response) {
-          hmsPopup.showShortCenterToast("风向");
-        }
-
-        function error() {
-          hmsPopup.showShortCenterToast("风向失败");
-        }
+        //sendCmd(deviceId,"887706020005030105","风向","风向失败");
       };
 
       var closeWindDirection = function (deviceId) {
-        var cmd = {
-          from: {
-            cid: "0xE3",
-          },
-          idx: 1,
-          method: "CTL",
-          payload: {
-            cmd: "CMD_REQUEST",
-            "device_type": "BLE_DEVICE",
-            value: ["887706020005030104"],
-          },
-          to: {
-            cid: "0xE4",
-            "device_id": deviceId,
-          },
-          ts: "1492146861.217451",
-          ver: 1,
-        }
-        cordova.plugins.SocketPlugin.tcpSendCmd({
-          "timeout": "5000",
-          "value": cmd
-        }, success, error);
-        function success(response) {
-          hmsPopup.showShortCenterToast("风向关闭");
-        }
+        sendCmd(deviceId,"887706020005030004","风向关闭","风向关闭失败");
+      };
 
-        function error() {
-          hmsPopup.showShortCenterToast("风向关闭失败");
-        }
+      var closeAllFunction = function(deviceId){
+        sendCmd(deviceId,"8877050200050007","一键关闭","一键关闭失败");
+      };
+
+      var openPurity = function(deviceId){
+        sendCmd(deviceId,"8877080200050401000A08","打开空气净化","空气净化打开失败");
       };
 
       var getXOR = function(){
-        var result = 2^0^5^(33^4^256^10);
+        var result = 2^0^5^(114^1);
         return result;
       };
 
@@ -687,8 +329,10 @@ angular.module('bathroomModule')
        *@disc: to obtain the information of Yuba
        */
       $scope.$watch('', function(){
+        changeRingCol('#99d5ff');
         console.log(getXOR());
         //console.log(localStorage.deviceInfo.split(";"));
+        //getCurrentTemplate();
       }, true);
 
       /**
@@ -702,24 +346,23 @@ angular.module('bathroomModule')
         for(var i = 0; i < deviceList.length; i ++){
           var deviceInfo = deviceList[i].split(",");
           if(deviceInfo[0] == $stateParams.deviceSku){
-
             return deviceInfo[1];
           }
         }
       };
 
-      /**
-       *@autor: caolei
-       *@params: object device
-       *@return: true or false
-       *@disc: get relative device is open
-       */
-      $scope.getInfo = function(item){
+      var startCommand = function(item){
 
         var deviceId = getDeviceId();
 
+        if(item.switchType == 'CloseAll'){
+          item.isOpen = false;
+          closeAllFunction(deviceId);
+        }
+
         if(item.switchType == 'Light'){
 
+          alert($scope.count);
           if(($scope.count%3) == 1){
             item.isOpen = true;
             alert("白灯"+deviceId);
@@ -728,7 +371,7 @@ angular.module('bathroomModule')
             item.isOpen = true;
             //alert("黄灯");
             //openLight(localStorage.device_id);
-            changeRingCol('#ff6600');
+            //changeRingCol('#ff6600');
           }else if(($scope.count%3) == 0){
             item.isOpen = false;
             closeLight(deviceId);
@@ -742,24 +385,33 @@ angular.module('bathroomModule')
               alert("正常打开");
               if(item.switchType == 'Hot' || item.switchType == 'Hot drying'){
                 if(item.switchType == 'Hot'){
+                  item.switchPictureUrl = 'build/img/bathroom/hot_wind.png';
                   openHot(deviceId);
                 }
                 if(item.switchType == 'Hot drying'){
+                  item.switchPictureUrl = 'build/img/bathroom/hot_drying.png';
                   openHotDrying(deviceId);
                 }
                 changeRingCol('#ff6600');
               }
               if(item.switchType == 'Cool'){
+                item.switchPictureUrl = 'build/img/bathroom/cool_wind.png';
                 openCool(deviceId);
               }
               if(item.switchType == 'Dryer'){
+                item.switchPictureUrl = 'build/img/bathroom/cool.png';
                 openDryer(deviceId);
               }
               if(item.switchType == 'Breath'){
                 //openBreath(deviceId);
               }
               if(item.switchType == 'Wind direction'){
-                openWindDirection(deviceId);
+                $scope.isWind = true;
+                $scope.isTime = false;
+                //openWindDirection(deviceId);
+              }
+              if(item.switchType == 'Purify'){
+                openPurity(deviceId);
               }
 
               return true;
@@ -774,20 +426,26 @@ angular.module('bathroomModule')
           }else{
             if(item.switchType == 'Hot' || item.switchType == 'Cool' || item.switchType == 'Dryer' || item.switchType == 'Hot drying'){
               if(item.switchType == 'Hot'){
+                item.switchPictureUrl = 'build/img/bathroom/hot_wind_nor.png';
                 closeHot(deviceId);
               }
               if(item.switchType == 'Cool'){
+                item.switchPictureUrl = 'build/img/bathroom/cool_wind_nor.png';
                 closeCool(deviceId);
               }
               if(item.switchType == 'Dryer'){
+                item.switchPictureUrl = 'build/img/bathroom/cool_nor.png';
                 closeDryer(deviceId);
               }
               if(item.switchType == 'Hot drying'){
+                item.switchPictureUrl = 'build/img/bathroom/hot_drying_nor.png';
                 closeHotDrying(deviceId);
               }
               angular.forEach($scope.bathroomData, function(data, index, array) {
                 if (data.switchType == 'Wind direction') {
-                  closeWindDirection(deviceId);
+                  //closeWindDirection(deviceId);
+                  $scope.isWind = false;
+                  $scope.isTime = true;
                   data.isOpen = false;
                 }
               });
@@ -796,13 +454,29 @@ angular.module('bathroomModule')
               closeBreath(deviceId);
             }
             if(item.switchType == 'Wind direction'){
-              closeWindDirection(deviceId);
+              $scope.isWind = false;
+              $scope.isTime = true;
+              //closeWindDirection(deviceId);
             }
             if((item.switchType != 'Hot' && item.switchType != 'Hot drying') || (item.switchType == 'Hot' || item.switchType == 'Hot drying')){
               changeRingCol('#99d5ff');
             }
           }
         }
+      };
+
+      /**
+       *@autor: caolei
+       *@params: object device
+       *@return: true or false
+       *@disc: get relative device is open
+       */
+      $scope.getInfo = function(item){
+
+        //$scope.isTouchSwitch = true;
+        //$scope.bathroomItem = item;
+        startCommand(item);
+
       };
 
       /**
@@ -821,17 +495,35 @@ angular.module('bathroomModule')
           if (data.switchType != 'Light' && (data.switchType != item.switchType) && (item.switchType != 'Wind direction' && item.switchType != 'Light' && item.switchType != 'Setting' && data.isOpen)) {
             item.isOpen = true;
             data.isOpen = false;
-            flag = false;
+            //flag = false;
+
+            if(item.switchType == 'Hot'){
+              item.switchPictureUrl = 'build/img/bathroom/hot_wind.png';
+            }
+            if(item.switchType == 'Hot drying'){
+              item.switchPictureUrl = 'build/img/bathroom/hot_drying.png';
+            }
+            if(item.switchType == 'Cool'){
+              item.switchPictureUrl = 'build/img/bathroom/cool_wind.png';
+            }
+            if(item.switchType == 'Dryer'){
+              item.switchPictureUrl = 'build/img/bathroom/cool.png';
+            }
+
             if(data.switchType == 'Hot'){
+              data.switchPictureUrl = 'build/img/bathroom/hot_wind_nor.png';
               closeHot(deviceId);
             }
             if(data.switchType == 'Cool'){
+              data.switchPictureUrl = 'build/img/bathroom/cool_wind_nor.png';
               closeCool(deviceId);
             }
             if(data.switchType == 'Dryer'){
+              data.switchPictureUrl = 'build/img/bathroom/cool_nor.png';
               closeDryer(deviceId);
             }
             if(data.switchType == 'Hot drying'){
+              data.switchPictureUrl = 'build/img/bathroom/hot_drying_nor.png';
               closeHotDrying(deviceId);
             }
             if(data.switchType == 'Breath'){
@@ -839,6 +531,7 @@ angular.module('bathroomModule')
             }
           }
         });
+
         var isWind = false;
         if(item.switchType == 'Wind direction'){
           angular.forEach($scope.bathroomData, function(data, index, array) {
@@ -852,6 +545,7 @@ angular.module('bathroomModule')
           }
           return isWind;
         }
+
         return flag;
       };
 
@@ -921,12 +615,29 @@ angular.module('bathroomModule')
         if(hasOpenCount){
           //alert("可以开启定时功能");
           console.log(deviceInfo);
-          //forEach deviceInfo,set time
-          //getTimer();
-          openModal();
-          console.log($scope.setHour + "    "+$scope.setMinu);
+
+          $scope.isWind = false;
+          $scope.isTime = true;
+          openTimeModal();
+          var deviceId = getDeviceId();
+          var alltime = $scope.timeHour.substring(0,$scope.timeHour.length-1) + $scope.timeMinu.substring (0,$scope.timeMinu.length-1);
           angular.forEach(deviceInfo, function(data, index, array){
-            data.setTime = "";
+            //根据deviceid对开启的功能添加定时功能
+            if(data.switchType == 'Hot'){
+              //openHot(deviceId);
+            }
+            if(data.switchType == 'Hot drying'){
+              //openHotDrying(deviceId);
+            }
+            if(data.switchType == 'Cool'){
+              //openCool(deviceId);
+            }
+            if(data.switchType == 'Dryer'){
+              //openDryer(deviceId);
+            }
+            if(data.switchType == 'Breath'){
+              //openBreath(deviceId);
+            }
           });
         }else{
           alert("不能开启定时功能");
@@ -934,11 +645,12 @@ angular.module('bathroomModule')
       };
 
       var  timePromise = undefined;
-      var getTimer = function(){
-        $scope.countDown = 1000*60*6 - 8*60*60*1000;
+      var getTimer = function(hour, minu){
+        $scope.countDown = hour.substring (0,hour.length-1)*60*60*1000 + minu.substring (0,minu.length-1)*60*1000 - 8*60*60*1000;
         $scope.isCountDown = true;
         timePromise = $interval(function(){
-          if($scope.countDown<=0){
+          console.log("time: "+$scope.countDown);
+          if($scope.countDown == -28800000){
             $interval.cancel(timePromise);
             timePromise = undefined;
           }else{
@@ -954,7 +666,7 @@ angular.module('bathroomModule')
        */
       var changeRingCol = function(color){
         var cxt=canvas.getContext("2d");
-        var xLength = $window.innerHeight * 0.28;
+        var xLength = $window.innerWidth * 0.5;
         var yLength = $window.innerWidth * 0.8;
         var r = $window.innerWidth * 0.4;
         cxt.beginPath();
@@ -966,8 +678,10 @@ angular.module('bathroomModule')
       };
 
       canvas.height = $window.innerWidth*1.1;
+      canvas.width = $window.innerWidth*1;
       var cxt=canvas.getContext("2d");
-      var xLength = $window.innerHeight * 0.28;
+      console.log();
+      var xLength = $window.innerWidth * 0.5;
       var yLength = $window.innerWidth * 0.8;
       var r = $window.innerWidth * 0.4;
       cxt.beginPath();
@@ -977,265 +691,163 @@ angular.module('bathroomModule')
       cxt.stroke();
       cxt.closePath();
 
-
-      $scope.openPopover = function () {
-        console.log($scope.currentHour + "    "+$scope.currentMin);
-        $scope.setHour = $scope.currentHour;
-        $scope.setMinu = $scope.currentMin;
-        $scope.modal.hide();
-      };
-
-      $ionicModal.fromTemplateUrl('my-modal.html', {
+      $scope.screenHeig = window.innerHeight;
+      $ionicModal.fromTemplateUrl('build/pages/model/windModal.html', {
         scope: $scope,
         animation: 'slide-in-up'
       }).then(function (modal) {
         $scope.modal = modal;
       });
-      var openModal = function () {
-        $scope.modal.show();
+      $scope.value = [{id:2,des:'bathroom.fixed'}, {id:3,des:'bathroom.rock'}];
+      $scope.openModal = function () {
+        if($scope.value.length!==0) {
+          $scope.modal.show();
+          setTimeout(function () {
+            var ele = document.getElementsByClassName("windModal");
+            ele[0].style.top = '10rem';
+            ele[0].style.minHeight = 61 + '%';
+          }, 10)
+        }
       };
-      $scope.closeModal = function () {
+      $scope.$on('$destroy', function() {
+        $scope.modal.remove();
+      });
+      $scope.choose = function (val) {
         $scope.modal.hide();
-      };
-
-
-      $scope.listHourData = ['一时', '二时', '三时', '四时', '五时', '六时', '七时', '八时', '九时',
-        '十时', '十一时', '十二时', '十三时', '十四时', '十五时', '十六时', '十七时', '十八时','十九时','二十时','二十一时','二十二时','二十三时','二十四时'];
-
-      $scope.listMinData = ['0分', '十分', '二十分', '三十分', '四十分', '五十分', '六十分'];
-
-      //滚动啊
-      var scope = $scope;
-      $scope.currentHour = "";
-      scope.rotates = [];
-      scope.sourceDeg = 180;
-      scope.hourIndex = [];
-      var weekNum = 5;
-      scope.nowIndex = weekNum / 2;
-      scope.stageRotate = {
-        "transform": "rotateX(" + scope.sourceDeg + "deg)",
-        "-webkit-transform": "rotateX(" + scope.sourceDeg + "deg)"
-      };
-      for (var i = 0; i < weekNum; i++) {
-        scope.hourIndex.push(i);
-      }
-      scope.baseDeg = 360 / scope.hourIndex.length;
-
-      for (var i = (weekNum - 1); i >= 0; i--) {
-        var deg = 360 / weekNum * (weekNum - i);
-        scope.rotates[i] = {
-          "transform": "rotateX(" + deg + "deg) translateZ(90px)",
-          "-webkit-transform": "rotateX(" + deg + "deg) translateZ(90px)"
-        };
-      }
-
-      function getLastDeg(deg) {
-        return (Math.round(deg / scope.baseDeg) + 1) * scope.baseDeg;
-      }
-
-      scope.lastDeg = 0;
-      scope.onDragScroll = function ($event) {
-        // console.log(scope.nowIndex);
-        // console.log(scope.weeks[scope.nowIndex]);
-        if (scope.hour[scope.nowIndex] <= min && $event.gesture.deltaY > 0) {
-          return;
+        for(var i=0;i<$scope.value.length;i++){
+          if($scope.value[i].id == val.id){
+            $scope.windType.type = $scope.value[i].des;
+            if($scope.value[i].des != 'bathroom.fixed'){
+              openWindDirection(getDeviceId());
+            }else{
+              closeWindDirection(getDeviceId());
+            }
+          }
         }
-        if (scope.hour[scope.nowIndex] >= max && $event.gesture.deltaY < 0) {
-          return;
+      };
+
+      $scope.toilteSetting={
+        gaiganyin:"",
+        gaiganyinDistance:""
+      };
+      $scope.listleft = [{
+        name:"0时",
+        flag:false,
+        towdata:[{
+          name: "0分",
+          flag:false
+        },{
+          name: "10分",
+          flag:false
+        },{
+          name: "20分",
+          flag:false
+        },{
+          name: "30分",
+          flag:false
+        },{
+          name: "40分",
+          flag:false
+        },{
+          name: "50分",
+          flag:false
+        },{
+          name: "59分",
+          flag:false
+        }]
+      },{
+        name:"1时",
+        flag:false,
+        towdata:[{
+          name: "无",
+          flag:false
+        }]
+      },{
+        name:"2时",
+          flag:false,
+          towdata:[{
+          name: "无",
+          flag:false
+        }]
+      },{
+        name:"3时",
+          flag:false,
+          towdata:[{
+          name: "无",
+          flag:false
+        }]
+      },{
+        name:"4时",
+          flag:false,
+          towdata:[{
+          name: "无",
+          flag:false
+        }]
+      },{
+        name:"5时",
+        flag:false,
+        towdata:[{
+          name: "无",
+          flag:false
+        }]
+      },{
+        name:"6时",
+        flag:false,
+        towdata:[{
+          name: "无",
+          flag:false
+        }]
+      }];
+      $scope.timeHour="";
+      $scope.timeMinu="";
+      $scope.listright=$scope.listleft[0].towdata;
+      $scope.silderSeleced = function (index) {
+        $scope.listleft[index].flag = true;
+        $scope.timeHour = $scope.listleft[index].name;
+        //$scope.listright = $scope.listleft[index].towdata;
+        for(var i=0;i<$scope.listleft.length;i++){
+          if(index !== i){
+            $scope.listleft[i].flag = false;
+          }
         }
-        scope.lastDeg = scope.sourceDeg - $event.gesture.deltaY / 2;
-        scope.stageRotate = {
-          "transform": "rotateX(" + scope.lastDeg + "deg)",
-          "-webkit-transform": "rotateX(" + scope.lastDeg + "deg)"
-        };
-        getNowIndex(scope.lastDeg);
       };
-
-      scope.onReleaseScroll = function ($event) {
-        if ($event.gesture.deltaY > 0)
-          scope.sourceDeg = getLastDeg(scope.lastDeg) - scope.baseDeg;
-        else
-          scope.sourceDeg = getLastDeg(scope.lastDeg - scope.baseDeg);
-        scope.stageRotate = {
-          "transform": "rotateX(" + scope.sourceDeg + "deg)",
-          "-webkit-transform": "rotateX(" + scope.sourceDeg + "deg)"
-        };
-      };
-
-      var min = 1;
-      var max = 24;
-      function getNextIndex(nowIndex) {
-        var temp = nowIndex + 1;
-        if (temp > (weekNum - 1))
-          temp = 0;
-        return temp;
-      }
-
-      function getPrevIndex(nowIndex) {
-        var temp = nowIndex - 1;
-        if (temp < 0)
-          temp = weekNum - 1;
-        return temp;
-      }
-
-      function getNowIndex(deg) {
-        var temp = deg / scope.baseDeg % weekNum;
-        scope.nowIndex = temp < 0 ? (weekNum + temp) : temp;
-        refreshData();
-      }
-
-      function refreshData() {
-        scope.nowIndex = Math.round(scope.nowIndex);
-        if (scope.nowIndex > (weekNum - 1))
-          scope.nowIndex -= weekNum;
-
-        var needChangeUpIndex = scope.nowIndex - weekNum / 4;
-        if (needChangeUpIndex < 0)
-          needChangeUpIndex = weekNum + needChangeUpIndex;
-
-        if (scope.hour[getNextIndex(needChangeUpIndex)] == '' || scope.hour[getNextIndex(needChangeUpIndex)] - 1 < min)
-          scope.hour[needChangeUpIndex] = '';
-        else
-          scope.hour[needChangeUpIndex] = scope.hour[getNextIndex(needChangeUpIndex)] - 1;
-
-        var needChangeDownIndex = scope.nowIndex + weekNum / 4;
-        if (needChangeDownIndex > (weekNum - 1))
-          needChangeDownIndex = needChangeDownIndex - weekNum;
-
-        if (scope.hour[getPrevIndex(needChangeDownIndex)] == '' || scope.hour[getPrevIndex(needChangeDownIndex)] + 1 > max)
-          scope.hour[needChangeDownIndex] = '';
-        else
-          scope.hour[needChangeDownIndex] = scope.hour[getPrevIndex(needChangeDownIndex)] + 1;
-      }
-
-      scope.hour = [];
-      for (var i = 0; i < scope.listHourData.length; i++) {
-        scope.hour.push(i + 1);
-      }
-
-      scope.getShowString = function (item) {
-        return scope.listHourData[item-1];
-      };
-
-      $scope.getCurrentHour = function(item){
-        $scope.currentHour = scope.listHourData[item-1];
-      };
-
-
-      $scope.currentMin = "";
-      scope.rotates2 = [];
-      scope.sourceDeg2 = 180;
-      scope.hourIndex2 = [];
-      var weekNum2 = 5;
-      scope.nowIndex2 = weekNum2 / 2;
-      scope.stageRotate2 = {
-        "transform": "rotateX(" + scope.sourceDeg2 + "deg)",
-        "-webkit-transform": "rotateX(" + scope.sourceDeg2 + "deg)"
-      };
-      for (var i = 0; i < weekNum; i++) {
-        scope.hourIndex2.push(i);
-      }
-      scope.baseDeg2 = 360 / scope.hourIndex2.length;
-
-      for (var i = (weekNum2 - 1); i >= 0; i--) {
-        var deg = 360 / weekNum2 * (weekNum2 - i);
-        scope.rotates2[i] = {
-          "transform": "rotateX(" + deg + "deg) translateZ(90px)",
-          "-webkit-transform": "rotateX(" + deg + "deg) translateZ(90px)"
-        };
-      }
-
-      function getLastDeg2(deg) {
-        return (Math.round(deg / scope.baseDeg2) + 1) * scope.baseDeg2;
-      }
-
-      scope.lastDeg2 = 0;
-
-      scope.onDragScroll2 = function ($event) {
-        // console.log(scope.nowIndex);
-        // console.log(scope.weeks[scope.nowIndex]);
-        if (scope.minute[scope.nowIndex2] <= min2 && $event.gesture.deltaY > 0) {
-          return;
+      $scope.silderRightSeleced = function (index) {
+        $scope.listright[index].flag = true;
+        $scope.timeMinu = $scope.listright[index].name;
+        for(var i=0;i<$scope.listright.length;i++){
+          if(index !== i){
+            $scope.listright[i].flag = false;
+          }
         }
-        if (scope.minute[scope.nowIndex2] >= max2 && $event.gesture.deltaY < 0) {
-          return;
+      };
+
+      $ionicModal.fromTemplateUrl('build/pages/model/hmsiot-setSelect.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+      }).then(function (modal) {
+        $scope.setmodal = modal;
+      });
+      openTimeModal = function () {
+        $scope.listright=$scope.listleft[0].towdata;
+        $scope.setmodal.show();
+        setTimeout(function () {
+          var ele = document.getElementsByClassName("hmsiot-setSelect");
+          ele[0].style.top = 68 + '%';
+          ele[0].style.minHeight = 61 + '%';
+        }, 10)
+      };
+      $scope.$on('$destroy', function() {
+        $scope.setmodal.remove();
+      });
+      $scope.setchoose = function () {
+        if($scope.timeHour.substring(0,$scope.timeHour.length-1) == 0 && $scope.timeMinu.substring (0,$scope.timeMinu.length-1) == 0){
+          hmsPopup.showPopup('<span translate="bathroom.timeout"></span>');
         }
-        scope.lastDeg2 = scope.sourceDeg2 - $event.gesture.deltaY / 2;
-        scope.stageRotate2 = {
-          "transform": "rotateX(" + scope.lastDeg2 + "deg)",
-          "-webkit-transform": "rotateX(" + scope.lastDeg2 + "deg)"
-        };
-        getNowIndex2(scope.lastDeg2);
-      };
-
-      scope.onReleaseScroll2 = function ($event) {
-        if ($event.gesture.deltaY > 0)
-          scope.sourceDeg2 = getLastDeg2(scope.lastDeg2) - scope.baseDeg2;
-        else
-          scope.sourceDeg2 = getLastDeg2(scope.lastDeg2 - scope.baseDeg2);
-        scope.stageRotate2 = {
-          "transform": "rotateX(" + scope.sourceDeg2 + "deg)",
-          "-webkit-transform": "rotateX(" + scope.sourceDeg2 + "deg)"
-        };
-      };
-
-      var min2 = 1;
-      var max2 = 7;
-      function getNextIndex2(nowIndex) {
-        var temp = nowIndex + 1;
-        if (temp > (weekNum - 1))
-          temp = 0;
-        return temp;
-      }
-
-      function getPrevIndex2(nowIndex) {
-        var temp = nowIndex - 1;
-        if (temp < 0)
-          temp = weekNum - 1;
-        return temp;
-      }
-
-      function getNowIndex2(deg) {
-        var temp = deg / scope.baseDeg2 % weekNum;
-        scope.nowIndex2 = temp < 0 ? (weekNum + temp) : temp;
-        refreshData2();
-      }
-
-      function refreshData2() {
-        scope.nowIndex2 = Math.round(scope.nowIndex2);
-        if (scope.nowIndex2 > (weekNum - 1))
-          scope.nowIndex2 -= weekNum;
-
-        var needChangeUpIndex = scope.nowIndex2 - weekNum / 4;
-        if (needChangeUpIndex < 0)
-          needChangeUpIndex = weekNum + needChangeUpIndex;
-
-        if (scope.minute[getNextIndex2(needChangeUpIndex)] == '' || scope.minute[getNextIndex2(needChangeUpIndex)] - 1 < min2)
-          scope.minute[needChangeUpIndex] = '';
-        else
-          scope.minute[needChangeUpIndex] = scope.minute[getNextIndex2(needChangeUpIndex)] - 1;
-
-        var needChangeDownIndex = scope.nowIndex2 + weekNum / 4;
-        if (needChangeDownIndex > (weekNum - 1))
-          needChangeDownIndex = needChangeDownIndex - weekNum;
-
-        if (scope.minute[getPrevIndex2(needChangeDownIndex)] == '' || scope.minute[getPrevIndex2(needChangeDownIndex)] + 1 > max2)
-          scope.minute[needChangeDownIndex] = '';
-        else
-          scope.minute[needChangeDownIndex] = scope.minute[getPrevIndex2(needChangeDownIndex)] + 1;
-      }
-
-      scope.minute = [];
-      for (var i = 0; i < scope.listMinData.length; i++) {
-        scope.minute.push(i + 1);
-      }
-
-      scope.getShowMin = function (item) {
-        return scope.listMinData[item-1];
-      };
-
-      $scope.getCurrentMin = function(item){
-        $scope.currentMin = scope.listMinData[item-1];
+        if($scope.timeHour.substring(0,$scope.timeHour.length-1) == 6 && $scope.timeMinu.substring (0,$scope.timeMinu.length-1) != 0){
+          hmsPopup.showPopup('<span translate="bathroom.timeout"></span>');
+        }
+        getTimer($scope.timeHour, $scope.timeMinu);
+        $scope.setmodal.hide();
       };
 
   }]);

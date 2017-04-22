@@ -13,7 +13,7 @@ angular.module('indexPageModule')
     '$ionicScrollDelegate',
     '$http',
     '$ionicHistory',
-    'hmsPopup','SettingsService',
+    'hmsPopup',
     function ($scope,
               $state,
               $ionicGesture,
@@ -21,7 +21,7 @@ angular.module('indexPageModule')
               $timeout,
               $ionicScrollDelegate,
               $http,$ionicHistory,
-              hmsPopup,SettingsService) {
+              hmsPopup) {
 
       $scope.isSceneModel = true;
       $scope.isDeviceModel = false;
@@ -220,18 +220,18 @@ angular.module('indexPageModule')
         searchBox();
       }, true);
 
-     /* $scope.$on("$stateChangeSuccess", function (event, toState, toParams, fromState, fromParam){
+      /* $scope.$on("$stateChangeSuccess", function (event, toState, toParams, fromState, fromParam){
 
-        if(toState.name == 'tabs'){
-          searchBox();
-          if($scope.boxList.length > 0){
-            angular.forEach($scope.boxList, function(data, index, array) {
-              boxLink(data);
-              selectDeviceOn(data.payload.cmd_properties.device_id);
-            });
-          }
-        }
-      });*/
+       if(toState.name == 'tabs'){
+       searchBox();
+       if($scope.boxList.length > 0){
+       angular.forEach($scope.boxList, function(data, index, array) {
+       boxLink(data);
+       selectDeviceOn(data.payload.cmd_properties.device_id);
+       });
+       }
+       }
+       });*/
 
       document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
         //hmsPopup.showShortCenterToast("开始返回数据！");
@@ -345,9 +345,9 @@ angular.module('indexPageModule')
         function success(response) {
           hmsPopup.showShortCenterToast("boxLink sucess");
           $timeout(function () {
-            selectDeviceOn(item.payload.cmd_properties.device_id);
+            localStorage.boxIp = item.payload.cmd_properties.ip;
+            selectDeviceOn(item.payload.cmd_properties.device_id, item.payload.cmd_properties.ip);
           }, 1000);
-
         }
 
         function error() {
@@ -360,7 +360,7 @@ angular.module('indexPageModule')
        *@params: device id
        *@disc: link device
        */
-      var selectDeviceOn = function (device_id) {
+      var selectDeviceOn = function (device_id, boxIp) {
         hmsPopup.showShortCenterToast("start  selectDeviceOn");
         var cmd = {
           "from": {"cid": "0xE3"},
@@ -375,7 +375,8 @@ angular.module('indexPageModule')
         };
         cordova.plugins.SocketPlugin.tcpSendCmd({
           "timeout": "5000",
-          "value": cmd
+          "value": cmd,
+          "ip": boxIp
         }, success, error);
 
         function success(response) {
@@ -458,6 +459,5 @@ angular.module('indexPageModule')
 
     }
   ]);
-
 
 
