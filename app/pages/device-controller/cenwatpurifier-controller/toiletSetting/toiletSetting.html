@@ -1,0 +1,128 @@
+<ion-view class="toiletSetting">
+  <ion-header-bar style="background-image: none">
+    <button class="button button-icon icon ion-ios-arrow-left header_buttonRig" ng-click="goBack()"></button>
+    <div class="h1 title header_title" translate="toiletSetting.title"></div>
+    <button class="button button-icon icon ion-qr-scanner header_buttonRig" ng-click="openPopover($event)"></button>
+  </ion-header-bar>
+  <ion-content class="toilet-bg">
+    <div class="modestyle">
+        <div class="row" ng-click="setopenModal()">
+          <div class="col col-30 col-center font-sizekey">
+                <span translate="toiletSetting.autofangai"></span>
+          </div>
+          <div class="col col-70 col-center textright auto-fangai-col70">
+            <span class="fangai-col70-reaction font-sizevalue" ng-bind="toilteSetting.gaiganyin"></span>
+            <span class="font-sizevalue" ng-bind="toilteSetting.gaiganyinDistance"></span>
+            <img src="build/img/toilet-controller/icon_scenario_arrow.png" class="auto-fangai-img" alt="">
+          </div>
+        </div>
+        <div class="row">
+            <div class="col col-30 col-center font-sizekey">
+              <span translate="toiletSetting.autochongshui"></span>
+            </div>
+            <div class="col col-70 col-center textright auto-fangai-col70">
+              <label class="toggle toggle-dark">
+                <input type="checkbox" ng-checked="chongshuisetval">
+                <div class="track">
+                  <div class="handle"></div>
+                </div>
+              </label>
+            </div>
+        </div>
+        <div class="row">
+          <div class="col col-50 col-center font-sizekey">
+            <span translate="toiletSetting.autochuchou"></span>
+          </div>
+          <div class="col col-50 col-center textright auto-fangai-col70">
+            <label class="toggle toggle-dark">
+              <input type="checkbox" ng-checked="chuchousetval">
+              <div class="track">
+                <div class="handle"></div>
+              </div>
+            </label>
+          </div>
+        </div>
+    </div>
+    <div class="modestyle">
+      <div class="row">
+        <div class="col col-30 col-center font-sizekey">
+          <span translate="toiletSetting.autoanjianvoice"></span>
+        </div>
+        <div class="col col-70 col-center textright auto-fangai-col70">
+          <label class="toggle toggle-dark">
+            <input type="checkbox" ng-checked="anjianvoicesetval">
+            <div class="track">
+              <div class="handle"></div>
+            </div>
+          </label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col col-50 col-center font-sizekey">
+          <span translate="toiletSetting.welcomemodoe"></span>
+        </div>
+        <div class="col col-50 col-center textright auto-fangai-col70">
+          <label class="toggle toggle-dark">
+            <input type="checkbox" ng-checked="welcomemsetval">
+            <div class="track">
+              <div class="handle"></div>
+            </div>
+          </label>
+        </div>
+      </div>
+      <div class="row" ng-click="goSettingInfo('lightSetting')">
+        <div class="col col-30 col-center font-sizekey">
+          <span translate="toiletSetting.dengguanset"></span>
+        </div>
+        <div class="col col-70 col-center textright auto-fangai-col70">
+          <img src="build/img/toilet-controller/icon_scenario_arrow.png" class="auto-fangai-img" alt="">
+        </div>
+      </div>
+    </div>
+    <div class="modestyle">
+      <div class="row" ng-click="openModal()">
+        <div class="col col-30 col-center font-sizekey">
+          <span translate="toiletSetting.jiedianset"></span>
+        </div>
+        <div class="col col-70 col-center textright auto-fangai-col70">
+          <span class="fangai-col70-reaction font-sizevalue">从不</span>
+          <img src="build/img/toilet-controller/icon_scenario_arrow.png" class="auto-fangai-img" alt="">
+        </div>
+      </div>
+    </div>
+    <div class="modestyle modelast">
+      <div class="row" ng-click="goSettingInfo('cleargearPlan')">
+        <div class="col col-30 col-center font-sizekey">
+          <span translate="toiletSetting.toiletclear"></span>
+        </div>
+        <div class="col col-70 col-center textright auto-fangai-col70">
+          <img src="build/img/toilet-controller/icon_scenario_arrow.png" class="auto-fangai-img" alt="">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col col-30 col-center font-sizekey">
+          <span translate="toiletSetting.errortotal"></span>
+        </div>
+        <div class="col col-70 col-center textright auto-fangai-col70">
+          <img src="build/img/toilet-controller/icon_scenario_arrow.png" class="auto-fangai-img" alt="">
+        </div>
+      </div>
+      <div class="row"  ng-click="isCheckDeviceInfoSet()">
+        <div class="col col-30 col-center font-sizekey">
+          <span translate="toiletSetting.recoverset"></span>
+        </div>
+        <div class="col col-70 col-center textright auto-fangai-col70">
+          <img src="build/img/toilet-controller/icon_scenario_arrow.png" class="auto-fangai-img" alt="">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col col-30 col-center font-sizekey">
+          <span translate="toiletSetting.checkdeviceInfo"></span>
+        </div>
+        <div class="col col-70 col-center textright auto-fangai-col70">
+          <img src="build/img/toilet-controller/icon_scenario_arrow.png" class="auto-fangai-img" alt="">
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

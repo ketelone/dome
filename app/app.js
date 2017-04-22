@@ -527,7 +527,6 @@ angular.module('myApp')
           templateUrl: 'build/pages/keyscene-veil/veil.html',
           controller: 'veilCtrl'
         })
-        // 设备控制
         // 设备控制-马桶
         .state('toiletContrl', {
           url: '/toiletContrl',
@@ -551,6 +550,12 @@ angular.module('myApp')
           url: '/cleargearPlan',
           templateUrl: 'build/pages/device-controller/toilet-controller/cleargearPlan/cleargearPlan.html',
           controller: 'cleargearPlanCtrl'
+        })
+        // 设备控制-中央净水器
+        .state('cenwatpurifierContrl', {
+          url: '/cenwatpurifierContrl',
+          templateUrl: 'build/pages/device-controller/cenwatpurifier-controller/cenwatpurifierContrl.html',
+          controller: 'cenwatpurifierCtrl'
         })
         //设备控制-karess
         .state('karess', {

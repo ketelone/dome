@@ -245,6 +245,13 @@
     "minute":"分",
     "clearRepeat":"重复"
   },
+  "cenwatpurifier":{
+    "title":"中央净水器",
+    "autoclear":"自动清洗",
+    "handleclear":"手动清洗",
+    "onekeystop":"一键停止",
+    "setting":"设置"
+  },
   "veil": {
     "goHomeTitle": "场景详情",
     "goHomeContent": "默认根据一天中的时间自动切换冷光、柔和、暖光三种光源模式",
