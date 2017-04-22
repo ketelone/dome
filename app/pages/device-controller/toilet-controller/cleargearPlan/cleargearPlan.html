@@ -12,22 +12,28 @@
         </div>
         <div class="col col-70 col-center textright auto-fangai-col70">
           <label class="toggle toggle-dark">
-            <input type="checkbox" ng-checked="clearGearPlan">
+            <input type="checkbox" ng-model="clearGearPlanCheck" ng-checked="clearGearPlanCheck" ng-click="clearChangeSatus()">
             <div class="track">
               <div class="handle"></div>
             </div>
           </label>
         </div>
       </div>
-    </div>
-
-    <div class="modestyle">
-      <div class="row">
-        <div class="col col-30 col-center font-sizekey">
+      <div class="bggray" ng-if="clearGearPlanCheckBg"></div>
+      <div class="row" ng-click="setopenModal()">
+        <div class="col col-30 col-center font-sizekey" ng-style="fontsizgray">
           <span translate="cleargearPlan.startTimeDes"></span>
         </div>
         <div class="col col-70 col-center textright auto-fangai-col70">
-          <span class="fangai-col70-reaction font-sizevalue">18:00</span>
+          <span class="fangai-col70-reaction font-sizevalue" ng-bind="cleargearPlan.dataTime"></span>
+        </div>
+      </div>
+      <div class="row" ng-click="setSingalOpenModal()">
+        <div class="col col-30 col-center font-sizekey" ng-style="fontsizgray">
+          <span translate="cleargearPlan.clearRepeat"></span>
+        </div>
+        <div class="col col-70 col-center textright auto-fangai-col70">
+          <span class="fangai-col70-reaction font-sizevalue" ng-bind="cleargearPlan.clearRepeatVal"></span>
         </div>
       </div>
     </div>

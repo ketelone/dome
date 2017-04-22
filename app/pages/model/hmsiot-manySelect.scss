@@ -1,0 +1,58 @@
+.hmsiot-manySelect{
+  height: 4.26rem;
+  width: 100%;
+  background: #4F5C79;
+  .hmsiot-select-head{
+    width: 100%;
+    height: 1.3rem;
+    line-height:1.3rem;
+    padding-left: 0.4rem;
+    padding-right: 0.4rem;
+    border-bottom: 0.01rem solid #4e4848;
+  }
+  .select-head-spancanl{
+    font-size: 0.3rem;
+    color: #af9999;
+  }
+  .select-head-spanok{
+    float: right;
+    font-size: 0.3rem;
+    color: #FFFFFF;
+  }
+  .hmsiot-select-content{
+    width: 100%;
+    margin-bottom: 0.2rem;
+    text-align: center;
+  }
+  .hmsiot-slider-left{
+    width: 100%;
+    padding-top: 5px;
+  }
+  .slider-list{
+    position: relative;
+    height: 0.92rem;
+    line-height: 0.92rem;
+    color: #af9999;
+    font-size: 0.32rem;
+    border-bottom: 0.01rem solid #4e4848;
+  }
+  .slider-span{
+    display: inline-block;
+    height: inherit;
+  }
+
+  .slider-span-dotimg{
+    position: absolute;
+    height: 0.2rem;
+    width: 0.2rem;
+    top: 0.38rem;
+    left: 2.95rem;
+  }
+  .slider-span-img{
+    position: absolute;
+    width: 0.3rem;
+    height: 0.3rem;
+    top: 0.35rem;
+    left: 2.9rem;
+  }
+}

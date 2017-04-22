@@ -429,7 +429,7 @@ angular.module('toiletControlModule')
           directive:"887709010001084000000048",
         },{
           imgUrl: "build/img/toilet-controller/fanquan.png",
-          imgSeledUrl: "build/img/toilet-controller/biangaiseled.png",
+          imgSeledUrl: "build/img/toilet-controller/fanquanseled.png",
           imgUrlTemp:"build/img/toilet-controller/fanquan.png",
           handleDes: "toiletController.fanquan",
           matchdataid:10,
@@ -439,8 +439,8 @@ angular.module('toiletControlModule')
           directive:"887709010001088000000088",
         },
         {
-          imgUrl: "build/img/toilet-controller/fangai.png",
-          imgSeledUrl: "build/img/toilet-controller/fangaiseled.png",
+          imgUrl: "build/img/toilet-controller/qingjie.png",
+          imgSeledUrl: "build/img/toilet-controller/qingjieseled.png",
           imgUrlTemp:"build/img/toilet-controller/fangai.png",
           handleDes: "toiletController.qingjie",
           matchdataid:"clear",

@@ -240,7 +240,10 @@
   },
   "cleargearPlan":{
     "title":"智感除菌计划",
-    "startTimeDes":"开始时间"
+    "startTimeDes":"开始时间",
+    "hour":"时",
+    "minute":"分",
+    "clearRepeat":"重复"
   },
   "veil": {
     "goHomeTitle": "场景详情",

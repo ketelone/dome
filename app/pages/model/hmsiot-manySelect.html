@@ -1,0 +1,21 @@
+<ion-modal-view class="hmsiot-manySelect">
+  <ion-content>
+    <div class="hmsiot-select-head">
+      <span class="select-head-spancanl" ng-click="setSingalModal.hide()">取消</span>
+      <span class="select-head-spanok" ng-click="setSingalChoose()">确定</span>
+    </div>
+    <div class="hmsiot-select-content">
+      <div class="hmsiot-select-contentinner hmsiot-select-contentleft">
+        <ion-scroll class="hmsiot-slider-left" scrollbar-y="false" scrollbar-x="false">
+          <div class="slider-list" ng-repeat="i in listleftRepeat track by $index" ng-click="silderRepeatSeleced($index)">
+            <span>
+              <img class="slider-span-img" ng-if="i.reflag" src="build/img/toilet-controller/radio_bg.png" alt="">
+              <img class="slider-span-dotimg" ng-if="i.dotflag" src="build/img/toilet-controller/radio_dot.png" alt="">
+            </span>
+            <span class="slider-span" ng-class="{true: 'sliderselected', false: ''}[i.flag]">{{i.name}}</span>
+          </div>
+        </ion-scroll>
+      </div>
+    </div>
+  </ion-content>
+</ion-modal-view>

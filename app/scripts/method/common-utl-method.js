@@ -199,3 +199,17 @@ Date.prototype.format = function(format){
   }
   return format;
 };
+/**
+ *@disc:remove time and minute
+ */
+function filterTimeMinute(data,type){
+  if(type==="hour"){
+    if(data.indexOf("时") > 0){
+      return data.substring(data.indexOf("时"),0)
+    }
+  }else if(type==="minute"){
+    if(data.indexOf("分") > 0){
+      return data.substring(data.indexOf("分"),0)
+    }
+  }
+}
