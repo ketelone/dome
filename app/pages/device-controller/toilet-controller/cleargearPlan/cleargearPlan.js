@@ -105,8 +105,7 @@ angular.module('toiletControlModule')
         $scope.setmodal.show();
         setTimeout(function () {
           var ele = document.getElementsByClassName("hmsiot-setSelect");
-          ele[0].style.top = 68 + '%';
-          ele[0].style.minHeight = 61 + '%';
+          ele[0].style.top = 68 + '%'
         }, 10)
       };
       $scope.$on('$destroy', function() {

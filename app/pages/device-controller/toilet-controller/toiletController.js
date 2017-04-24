@@ -441,7 +441,7 @@ angular.module('toiletControlModule')
         {
           imgUrl: "build/img/toilet-controller/qingjie.png",
           imgSeledUrl: "build/img/toilet-controller/qingjieseled.png",
-          imgUrlTemp:"build/img/toilet-controller/fangai.png",
+          imgUrlTemp:"build/img/toilet-controller/qingjie.png",
           handleDes: "toiletController.qingjie",
           matchdataid:"clear",
           isManyDirective:false,
