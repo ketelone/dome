@@ -23,7 +23,37 @@ angular.module('toiletControlModule')
     ) {
       $scope.goBack = function () {
         publicMethod.goBack();
-      }
+      };
+      //选择模式和清洁方式
+      $scope.ModelvalueNvYTunX = [{
+        id:0,
+        des:'toiletController.maichong'
+      },{
+        id:1,
+        des:'toiletController.bodong'
+      },{
+        id:2,
+        des:'toiletController.yidong'
+      },{
+        id:3,
+        des:'toiletController.zhengchang'
+      }];
+      //选择模式和清洁方式
+      $scope.Clearvalue = [{
+        id:"clearopen",des:'toiletController.clearopen',
+      },{
+        id:"clearextend",des:'toiletController.clearextend',
+      },{
+        id:"clearinstance",des:'toiletController.clearinstance',
+      }];
+      $scope.value = [];
+      var header = "8877";
+      var idx = 1;
+      // var ctrId = "E3";
+      var ctrId = "00";
+      var devId = "01";
+      var nimi = new NIMI()
+
       /*
        tongyishujuji
        */
@@ -35,31 +65,6 @@ angular.module('toiletControlModule')
         handleSelecDes:"toiletController.handleSelecMode",
         qingjie:"toiletController.qingjie"
       };
-      //选择模式和清洁方式
-      $scope.ModelvalueNvyong = [{
-        id:0,directive:"887709010001014336000074",des:'toiletController.maichong'
-      },{id:1,directive:"88770901000101433e00007C",des:'toiletController.bodong'
-      },{id:2,directive:"88770901000101433a000078",des:'toiletController.yidong'
-      },{id:3,directive:"887709010001014332000070",des:'toiletController.zhengchang'
-      }];
-      $scope.Modelvaluetunxi= [{
-        id:0,irective:"887709040001024336000072",des:'toiletController.maichong'
-      },{id:1,directive:"88770902000102433e00007C",des:'toiletController.bodong'
-      },{id:2,directive:"88770903000102433a000079",des:'toiletController.yidong'
-      },{id:3,directive:"887709010001024352000013",des:'toiletController.zhengchang'
-      }];
-      //选择模式和清洁方式
-      $scope.Clearvalue = [{
-        id:"clearopen",directiveopen:"887709060001178000000090",directiveclose:"887709050001170000000013",des:'toiletController.clearopen',
-      },{
-        id:"clearextend",directiveopen:"887709070001158000000093",directiveclose:"88770908000115000000001C",des:'toiletController.clearextend',
-      },{
-        id:"clearinstance",directiveopen:"8877090900010E8000000086",directiveclose:"8877090A00010E0000000005",des:'toiletController.clearinstance',
-      },{
-        id:"guanbi",
-        des:'toiletController.gaunbi',
-      }];
-      $scope.value = [];
        /*
        cehuashuliangdangshu-json
        侧滑转档数量json
@@ -108,16 +113,6 @@ angular.module('toiletControlModule')
         canves01: "NvYongSycanves01",
         canves02: "NvYongSycanves02",
         canves03: "NvYongSycanves03",
-        open:'887709010001012332000010',
-        close:'887709010001011332000020',
-        directive:{
-          init:'887709010001014432000077',
-          1:'887709010001014232000071',
-          2:'887709010001014432000077',
-          3:'887709010001014632000075',
-          4:'88770901000101483200007B',
-          5:'887709010001014a32000079',
-        }
       },
         {
         des:"位置档位",
@@ -129,14 +124,6 @@ angular.module('toiletControlModule')
         canves01:"NvYongSyPoscanves01",
         canves02:"NvYongSyPoscanves02",
         canves03:"NvYongSyPoscanves03",
-        directive:{
-          init:'887709010001014342000000',
-          1:'887709010001014322000060',
-          2:'887709010001014342000000',
-          3:'887709010001014362000020',
-          4:'8877090100010143820000C0',
-          5:'8877090100010143a20000E0',
-        }
       },{
         des:"温度档位",
         gearNum:5,
@@ -147,15 +134,6 @@ angular.module('toiletControlModule')
         canves01:"NvYongTemcanves01",
         canves02:"NvYongTemcanves02",
         canves03:"NvYongTemcanves03",
-        directive:{
-          init:'887709010001015332000060',
-          1:'887709010001011332000020',
-          2:'887709010001013332000000',
-          3:'887709010001015332000060',
-          4:'887709010001017332000040',
-          5:'8877090100010193320000A0',
-          6:'88770901000101a332000090',
-        }
       }];
       /*
        tunxi-json
@@ -171,16 +149,6 @@ angular.module('toiletControlModule')
         canves01: "TunBuSycanves01",
         canves02: "TunBuSycanves02",
         canves03: "TunBuSycanves03",
-        open:'887709010001022332000013',
-        close:'887709010001021332000023',
-        directive:{
-          init:'887709030001024432000076',
-          1:'887709020001024232000071',
-          2:'887709010001024432000074',
-          3:'887709010001024632000076',
-          4:'887709010001024832000078',
-          5:'887709010001024a3200007A',
-        }
       },
         {
           des:"位置档位",
@@ -192,14 +160,6 @@ angular.module('toiletControlModule')
           canves01:"TunBuPosPoscanves01",
           canves02:"TunBuPosPoscanves02",
           canves03:"TunBuPosPoscanves03",
-          directive:{
-            init:'887709010001024342000003',
-            1:'88770908000102432200006A',
-            2:'887709070001024342000005',
-            3:'887709060001024362000024',
-            4:'8877090500010243820000C7',
-            5:'8877090400010243a20000E6',
-          }
         },{
           des:"温度档位",
           gearNum:5,
@@ -210,16 +170,32 @@ angular.module('toiletControlModule')
           canves01:"TunBuTemTemcanves01",
           canves02:"TunBuTemTemcanves02",
           canves03:"TunBuTemTemcanves03",
-          directive:{
-            init:'887709010001025332000063',
-            1:'887709010001021332000023',
-            2:'887709010001023332000003',
-            3:'887709010001025332000063',
-            4:'887709010001027332000043',
-            5:'8877090100010293320000A3',
-            6:'88770901000102a332000093',
-          }
         }];
+      /*
+       light-json
+       灯光
+       */
+      $scope.slidelightData = [{
+        des: "环境灯档位",
+        gearNum: 3,
+        gearInit: 1,
+        gearInitTemp: 1,
+        parameterctlFlag: false,
+        parNodeid: 'toilet-lightCtl',
+        canves01: "lightcanves01",
+        canves02: "lightcanves02",
+        canves03: "lightcanves03",
+      },{
+          des: "便座灯档位",
+          gearNum: 9,
+          gearInit: 1,
+          gearInitTemp: 1,
+          parameterctlFlag: false,
+          parNodeid: 'toilet-contioCtl',
+          canves01: "contiocanves01",
+          canves02: "contiocanves02",
+          canves03: "contiocanves03",
+        }]
       /*
        nuanfeng-json
        暖风
@@ -234,16 +210,6 @@ angular.module('toiletControlModule')
         canves01: "dryerFlcanves01",
         canves02: "dryerFlcanves02",
         canves03: "dryerFlcanves03",
-        open:'887709010001032302000022',
-        close:'887709020001031302000011',
-        directive:{
-          init:'88770908000103440200004C',
-          1:'887709070001034202000045',
-          2:'887709060001034402000042',
-          3:'887709050001034602000043',
-          4:'88770904000103480200004C',
-          5:'887709030001034a02000049',
-        }
       },{
         des: "风温档位",
         gearNum: 5,
@@ -254,15 +220,6 @@ angular.module('toiletControlModule')
         canves01: "dryerFwcanves01",
         canves02: "dryerFwcanves02",
         canves03: "dryerFwcanves03",
-        directive:{
-          init:'887709040001035302000057',
-          1:'887709030001031302000010',
-          2:'887709020001033302000031',
-          3:'887709010001035302000052',
-          4:'8877090B0001037302000078',
-          5:'8877090A0001039302000099',
-          6:'88770909000103a3020000AA',
-        }
       }]
       /*
        nuanjiao-json
@@ -278,16 +235,6 @@ angular.module('toiletControlModule')
         canves01: "warmjcanves01",
         canves02: "warmjcanves02",
         canves03: "warmjcanves03",
-        open:'887709010001032302000022',
-        close:'887709020001031302000011',
-        directive:{
-          // init:'88770908000103440200004C',
-          // 1:'887709070001034202000045',
-          // 2:'887709060001034402000042',
-          // 3:'887709050001034602000043',
-          // 4:'88770904000103480200004C',
-          // 5:'887709030001034a02000049',
-        }
       }];
       /*
        quanwen-json
@@ -303,16 +250,6 @@ angular.module('toiletControlModule')
         canves01: "quanwencanves01",
         canves02: "quanwencanves02",
         canves03: "quanwencanves03",
-        open:'887709010001032302000022',
-        close:'887709020001031302000011',
-        directive:{
-          // init:'88770908000103440200004C',
-          // 1:'887709070001034202000045',
-          // 2:'887709060001034402000042',
-          // 3:'887709050001034602000043',
-          // 4:'88770904000103480200004C',
-          // 5:'887709030001034a02000049',
-        }
       }]
       /**
        gongnenglist-json
@@ -326,9 +263,8 @@ angular.module('toiletControlModule')
           handleDes: "toiletController.dachong01",
           selecFlag:false,
           isManyDirective:false,
-          matchdataid:0,
+          dataname:"bigFlush",
           handledata:$scope.slideInitData,
-          directive:"887709010001078000000087",
         },
         {
           imgUrl: "build/img/toilet-controller/xiaochong.png",
@@ -336,10 +272,9 @@ angular.module('toiletControlModule')
           imgUrlTemp:"build/img/toilet-controller/xiaochong.png",
           handleDes: "toiletController.xioachong",
           selecFlag:false,
-          matchdataid:1,
+          dataname:"smallFlush",
           isManyDirective:false,
           handledata:$scope.slideInitData,
-          directive:"887709010001070000000007",
         },
         {
           imgUrl: "build/img/toilet-controller/nvyong.png",
@@ -349,9 +284,7 @@ angular.module('toiletControlModule')
           selecFlag:false,
           matchdataid:"nvyong",
           isManyDirective:true,
-          opendirective:"887709010001012332000010",
-          closedirective:"887709010001011332000020",
-          handleInitdata:$scope.slideInitData,
+          dataname:"smallFlush",
           handledata:$scope.slideNvYongData
         },
         {
@@ -362,7 +295,6 @@ angular.module('toiletControlModule')
           selecFlag:false,
           matchdataid:"tunxi",
           isManyDirective:true,
-          handleInitdata:$scope.slideInitData,
           handledata:$scope.slideTunBuData
         },
         {
@@ -372,8 +304,7 @@ angular.module('toiletControlModule')
           handleDes: "toiletController.quanwen",
           isManyDirective:true,
           selecFlag:false,
-          matchdataid:4,
-          handleInitdata:$scope.slideInitData,
+          matchdataid:"quanwen",
           handledata:$scope.slidequanwenData
         },
         {
@@ -383,8 +314,7 @@ angular.module('toiletControlModule')
           handleDes: "toiletController.nuanfeng",
           isManyDirective:true,
           selecFlag:false,
-          matchdataid:5,
-          handleInitdata:$scope.slideInitData,
+          matchdataid:"nuanfen",
           handledata:$scope.slidedryerData
         },
         {
@@ -392,9 +322,10 @@ angular.module('toiletControlModule')
           imgSeledUrl: "build/img/toilet-controller/dengguanseled.png",
           imgUrlTemp:"build/img/toilet-controller/dengguan.png",
           handleDes: "toiletController.dengguang",
-          isManyDirective:false,
+          isManyDirective:true,
           selecFlag:false,
-          matchdataid:6,
+          matchdataid:"dengguang",
+          handledata:$scope.slidelightData
         },
         {
           imgUrl: "build/img/toilet-controller/nuanjiao.png",
@@ -402,9 +333,8 @@ angular.module('toiletControlModule')
           imgUrlTemp:"build/img/toilet-controller/nuanjiao.png",
           handleDes: "toiletController.nuanjiao",
           selecFlag:false,
-          matchdataid:7,
+          matchdataid:"nuanjiao",
           isManyDirective:true,
-          handleInitdata:$scope.slideInitData,
           handledata:$scope.slidewarmjData
         },
         {
@@ -416,7 +346,7 @@ angular.module('toiletControlModule')
           isManyDirective:false,
           selecFlag:false,
           handledata:$scope.slideInitData,
-          directive:"887709010001080000000008",
+          dataname:"closeLid",
         },{
           imgUrl: "build/img/toilet-controller/fangai.png",
           imgSeledUrl: "build/img/toilet-controller/fangaiseled.png",
@@ -426,19 +356,17 @@ angular.module('toiletControlModule')
           isManyDirective:false,
           selecFlag:false,
           handledata:$scope.slideInitData,
-          directive:"887709010001084000000048",
+          dataname:"openLid",
         },{
           imgUrl: "build/img/toilet-controller/fanquan.png",
           imgSeledUrl: "build/img/toilet-controller/fanquanseled.png",
           imgUrlTemp:"build/img/toilet-controller/fanquan.png",
           handleDes: "toiletController.fanquan",
-          matchdataid:10,
           isManyDirective:false,
           selecFlag:false,
           handledata:$scope.slideInitData,
-          directive:"887709010001088000000088",
-        },
-        {
+          dataname:"openRing",
+        },{
           imgUrl: "build/img/toilet-controller/qingjie.png",
           imgSeledUrl: "build/img/toilet-controller/qingjieseled.png",
           imgUrlTemp:"build/img/toilet-controller/qingjie.png",
@@ -453,7 +381,7 @@ angular.module('toiletControlModule')
           imgSeledUrl: "build/img/toilet-controller/shezhiseled.png",
           imgUrlTemp:"build/img/toilet-controller/shezhi.png",
           handleDes: "toiletController.shezhi",
-          matchdataid:12,
+          matchdataid:"setting",
           selecFlag:false
         },
       ];
@@ -506,12 +434,6 @@ angular.module('toiletControlModule')
       };
 
       $scope.initHtmlTemplate($scope.currentSlideData);
-      /**
-       *@autor:gongke
-       *@name:
-       *@params:
-       *@disc:goback
-       */
       var initCircle = function (slideDataObj) {
         //获取父元素高度
         this.canvsscreenHeight = document.getElementById(slideDataObj.parNodeid).offsetHeight;
@@ -661,6 +583,7 @@ angular.module('toiletControlModule')
           currentRadObj.i=0;
           currentRadObj.j=0;
           currentRadObj.stoPosPoint=0;
+          // currentRadObj.gearInit = $scope.currentSlideData[index].gearInitTemp;
           currentRadObj.gearInit = $scope.currentSlideData[index].gearInitTemp;
           $scope.currentSlideData[index].gearInit = $scope.currentSlideData[index].gearInitTemp;
           //当前绑定事件对象
@@ -743,6 +666,80 @@ angular.module('toiletControlModule')
           hmsPopup.showShortCenterToast(des+" "+"error");
         }
       };
+      /**
+       *@params:flushOptions(nvyong mode) mSwitchType(turn or off)
+       *@disc:use nvyong Instruction create
+       */
+      $scope.onceTimeIntionCreate = function () {
+        var selectedDataTemp = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex];
+        var cmdvalue = getCmd(header, idx,nimi._data[selectedDataTemp.dataname],ctrId,devId);
+        //send instructin
+        console.log(cmdvalue)
+        // $scope.sendCmd(cmdvalue,"");
+      };
+      /**
+       *@params:type(use type),flushOptions(nvyong mode) mSwitchType(turn or off)
+       *@disc:use nvyong and tunxi Instruction create
+       */
+      $scope.nvyongIntionCreate = function (type,flushOptions,mSwitchType) {
+        var selectedDataTemp = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex];
+        var handleOriginData = selectedDataTemp.handledata;
+        var temperature = handleOriginData[2].gearInit;
+        var volume = handleOriginData[0].gearInit*2;
+        var place = handleOriginData[1].gearInit*2;
+        if(temperature === 3){
+          temperature = 4;
+        }else if(temperature === 4){
+          temperature = 6;
+        }else if(temperature === 5){
+          temperature = 8;
+        }else if(temperature === 6){
+          temperature = 10;
+        };
+        var cmdvalue = getCmd(header, idx,nimi.frontRearDry(type,temperature,volume,place,flushOptions,mSwitchType),ctrId,devId);
+        //send instructin
+        console.log(cmdvalue)
+        // $scope.sendCmd(cmdvalue,"");
+      };
+      /**
+       *@params:flushOptions(nvyong mode) mSwitchType(turn or off)
+       *@disc:use nuamfen Instruction create
+       */
+      $scope.nuamfenIntionCreate = function (mSwitchType) {
+        var selectedDataTemp = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex];
+        var handleOriginData = selectedDataTemp.handledata;
+        var temperature = handleOriginData[1].gearInit;
+        var volume = handleOriginData[0].gearInit*2;
+        if(temperature === 3){
+          temperature = 4;
+        }else if(temperature === 4){
+          temperature = 6;
+        }else if(temperature === 5){
+          temperature = 8;
+        }else if(temperature === 6){
+          temperature = 10;
+        };
+        var cmdvalue = getCmd(header, idx,nimi.frontRearDry(type,temperature,volume,1,"正常",mSwitchType),ctrId,devId);
+        //send instructin
+        console.log(cmdvalue)
+
+        // $scope.sendCmd(cmdvalue,"");
+      };
+      /**
+       *@params:flushOptions(nvyong mode) mSwitchType(turn or off)
+       *@disc:use nuamfen Instruction create
+       */
+      $scope.feetSeatIntionCreate = function (temperature) {
+        var selectedDataTemp = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex];
+        var handleOriginData = selectedDataTemp.handledata;
+        if(!temperature){
+          var temperature = handleOriginData[0].gearInit;
+        }
+        var cmdvalue = getCmd(header, idx,nimi.feetSeatHeater(temperature),ctrId,devId);
+        //send instructin
+        console.log(cmdvalue)
+        // $scope.sendCmd(cmdvalue,"");
+      }
 
 
 
@@ -751,22 +748,64 @@ angular.module('toiletControlModule')
       $scope.handlenapeSelectedIndex;
       //档位滑动执行发指令操作
       $scope.radScrollSendDir = function () {
-        if($scope.handlenapeListNape[$scope.handlenapeSelectedIndex].isManyDirective){
-          var selectRad = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].gearInit;
-          var dirinfo = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].directive[selectRad];
-          var diedes = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].des;
-          var cmdvalue = dirinfo;
-          // 发送指令
-          // $scope.sendCmd(cmdvalue,diedes);
-        }
+        if($scope.handlenapeListNape[$scope.handlenapeSelectedIndex].matchdataid === "nvyong"){
+          $scope.nvyongIntionCreate("女用","正常","ON");
+        }else if($scope.handlenapeListNape[index].matchdataid === "tunxi"){
+          $scope.nvyongIntionCreate("臀洗","正常","ON");
+        }else if($scope.handlenapeListNape[index].matchdataid === "nuanfen"){
+          $scope.nvyongIntionCreate("ON");
+        }else if($scope.handlenapeListNape[index].matchdataid === "nuanjiao" || $scope.handlenapeListNape[index].matchdataid === "quanwen"){
+          $scope.feetSeatIntionCreate("")
+        };
       };
+      /**
+       *@params:index(selected index)
+       *@disc:handle light or gary
+       */
+      $scope.hanleLightGray = function (index) {
+
+      };
+
       //处理选择怎加border
       var handlenapeListNapeLen = $scope.handlenapeListNape.length;
       $scope.selectNapes = function (index) {
         $scope.handlenapeSelectedIndex = index;
-        if($scope.handlenapeListNape[index].matchdataid === 12){
+        if($scope.handlenapeListNape[index].matchdataid === "setting"){
           $state.go("toiletSetting");
         }else {
+          if(!$scope.handlenapeListNape[index].isManyDirective){
+            $scope.onceTimeIntionCreate();
+          }else{
+            //use instruction create
+            if($scope.handlenapeListNape[index].matchdataid === "nvyong"){
+              if($scope.handlenapeListNape[index].selecFlag){
+                $scope.nvyongIntionCreate("女用","正常","OFF");
+              }else{
+                $scope.nvyongIntionCreate("女用","正常","ON");
+              };
+            }else if($scope.handlenapeListNape[index].matchdataid === "tunxi"){
+              if($scope.handlenapeListNape[index].selecFlag){
+                $scope.nvyongIntionCreate("臀洗","正常","OFF");
+              }else{
+                $scope.nvyongIntionCreate("臀洗","正常","ON");
+              };
+            }else if($scope.handlenapeListNape[index].matchdataid === "nuanfen"){
+              if($scope.handlenapeListNape[index].selecFlag){
+                $scope.nvyongIntionCreate("OFF");
+              }else{
+                $scope.nvyongIntionCreate("ON");
+              };
+            }else if($scope.handlenapeListNape[index].matchdataid === "nuanjiao" || $scope.handlenapeListNape[index].matchdataid === "quanwen"){
+              if($scope.handlenapeListNape[index].selecFlag){
+                $scope.feetSeatIntionCreate(1);
+              }else{
+                $scope.feetSeatIntionCreate(2);
+              };
+            };
+          };
+          if(!$scope.handlenapeListNape[index].selecFlag){
+
+          }
           $timeout(function () {
             $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
             for(var i=0;i<handlenapeListNapeLen;i++){
@@ -791,74 +830,43 @@ angular.module('toiletControlModule')
                 $scope.$apply()
                 $scope.handlenapeSelectedIndex = undefined;
               },2000)
-            };
-          },3000)
+            }else{
+              if(!$scope.handlenapeListNape[index].selecFlag){
 
-          // $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
-          // for(var i=0;i<handlenapeListNapeLen;i++){
-          //   if(i !== index){
-          //     $scope.handlenapeListNape[i].selecFlag = false;
-          //   };
-          // };
-          // if($scope.handlenapeListNape[index].selecFlag === true){
-          //   $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgSeledUrl;
-          //    for(var i=0;i<handlenapeListNapeLen;i++){
-          //      if(i !== index){
-          //        $scope.handlenapeListNape[i].imgUrl = $scope.handlenapeListNape[i].imgUrlTemp;
-          //      }
-          //    };
-          // }else{
-          //   $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgUrlTemp;
-          // };
+              }
+            }
+
+          },3000);
           // 根据选择项来初始化选择项的
-          if($scope.handlenapeListNape[index].handledata){
+          if($scope.handlenapeListNape[index].isManyDirective){
+            if(!$scope.handlenapeListNape[index].selecFlag){
+              $scope.currentSlideData = $scope.slideInitData;
+            }else{
+              $scope.currentSlideData = $scope.handlenapeListNape[index].handledata;
+            }
+          }else{
             $scope.currentSlideData = $scope.handlenapeListNape[index].handledata;
-            $scope.initHtmlTemplate($scope.currentSlideData);
-            setTimeout(function () {
-              $scope.getCurrentObj(0);
-               //处理指令数据
-              //处理女用和臀洗的模式选择
-              if($scope.handlenapeListNape[index].matchdataid === "nvyong" || $scope.handlenapeListNape[index].matchdataid === "tunxi"){
-                  if($scope.handlenapeListNape[index].matchdataid === "nvyong"){
-                    $scope.value = $scope.ModelvalueNvyong;
-                  }else{
-                    $scope.value = $scope.Modelvaluetunxi;
-                  };
-                  $scope.toiletController.handleSelecDes = $scope.toiletController.selectMode;
-                  $scope.toiletController.modelType = $scope.toiletController.modelTypeNv;
-              };
-              if($scope.handlenapeListNape[index].matchdataid === "clear"){
+          }
+          $scope.initHtmlTemplate($scope.currentSlideData);
+          setTimeout(function () {
+            //init every gearInitTemp
+            $scope.currentSlideData.forEach(function (item,index) {
+              item.gearInit = item.gearInitTemp;
+            });
+            $scope.getCurrentObj(0);
+             //处理指令数据
+            //处理女用和臀洗的模式选择
+            if($scope.handlenapeListNape[index].matchdataid === "nvyong" || $scope.handlenapeListNape[index].matchdataid === "tunxi"){
+                $scope.value = $scope.ModelvalueNvYTunX;
+                $scope.toiletController.handleSelecDes = $scope.toiletController.selectMode;
+                $scope.toiletController.modelType = $scope.toiletController.modelTypeNv;
+            }else if($scope.handlenapeListNape[index].matchdataid === "clear"){
                 $scope.value = $scope.Clearvalue;
                 $scope.toiletController.handleSelecDes = $scope.toiletController.qingjie;
                 $scope.toiletController.modelType = $scope.toiletController.modelTypeClear;
                 $scope.$apply();
-              }else{
-                if($scope.handlenapeListNape[index])
-                  if(!$scope.handlenapeListNape[index].isManyDirective){
-                    var cmdvalue = $scope.handlenapeListNape[index].directive;
-                    var dirdes = "";
-                  }else {
-                    // 初始化
-                    if($scope.handlenapeListNape[index].selecFlag){
-                      var cmdvalue = $scope.handlenapeListNape[index].handledata[0].open;
-                      var dirdes = "";
-                    }else{
-                      var cmdvalue = $scope.handlenapeListNape[index].handledata[0].close;
-                      var dirdes = "";
-
-                    }
-                  }
-                // 发送指令l
-                // 一次性动作的指令发出后修改选中的高亮
-                // $scope.sendCmd(cmdvalue,"");
-                //发送默认值指令
-                if($scope.handlenapeListNape[index].isManyDirective){
-                  var cmdvalue = $scope.handlenapeListNape[index].handledata[$scope.handleRadSelected].directive.init;
-                  // $scope.sendCmd(cmdvalue,"");
-                }
-              }
-            },20)
-          }
+            }
+          },20)
         };
       };
       //模式选择
@@ -901,6 +909,30 @@ angular.module('toiletControlModule')
         $scope.modal.remove();
       });
 
+
+      //选择模式和清洁方式
+      $scope.ModelvalueNvYTunX = [{
+        id:0,
+        des:'toiletController.maichong'
+      },{
+        id:1,
+        des:'toiletController.bodong'
+      },{
+        id:2,
+        des:'toiletController.yidong'
+      },{
+        id:3,
+        des:'toiletController.zhengchang'
+      }];
+      //选择模式和清洁方式
+      $scope.Clearvalue = [{
+        id:"clearopen",des:'toiletController.clearopen',
+      },{
+        id:"clearextend",des:'toiletController.clearextend',
+      },{
+        id:"clearinstance",des:'toiletController.clearinstance',
+      }];
+
       $scope.valueTemp = "";
       $scope.choose = function (val) {
         for(var i=0;i<$scope.value.length;i++){
@@ -910,25 +942,44 @@ angular.module('toiletControlModule')
         };
         if($scope.handlenapeListNape[$scope.handlenapeSelectedIndex].matchdataid === "nvyong" || $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].matchdataid === "tunxi"){
           if(val.id !== $scope.valueTemp.id){
-            $scope.sendCmd(val.directive,"");
+            var desTemp="";
+            $scope.ModelvalueNvYTunX.forEach(function (item,index) {
+              if(val.id === 0){
+                desTemp = "脉冲";
+              }else if(val.id === 1){
+                desTemp = "波动";
+              }else if(val.id === 2){
+                desTemp = "移动";
+              }else if(val.id === 3){
+                desTemp = "正常";
+              }
+            })
+            if($scope.handlenapeListNape[$scope.handlenapeSelectedIndex].matchdataid === "nvyong"){
+              $scope.nvyongIntionCreate("女用",desTemp,"ON");
+            }else{
+              $scope.nvyongIntionCreate("臀洗",desTemp,"ON");
+            }
           }
-          // $scope.sendCmd(val.directive,"");
           $scope.valueTemp = val;
         }else if($scope.handlenapeListNape[$scope.handlenapeSelectedIndex].matchdataid === "clear"){
-          if(val.id==="guanbi"){
-            if($scope.valueTemp.directiveclose){
-              // console.log("colse")
-              // console.log($scope.valueTemp.directiveclose)
-              $scope.sendCmd($scope.valueTemp.directiveclose,"")
-            };
-          }else{
-            // console.log("open")
-            // console.log(val.directiveclose)
-            $scope.sendCmd(val.directiveopen,"");
-          };
-          // if(val.id !=="guanbi"){
-            $scope.valueTemp = val;
-          // }
+          if(val.id !== $scope.valueTemp.id){
+            var desTemp="";
+            $scope.ModelvalueNvYTunX.forEach(function (item,index) {
+              if(val.id === "clearopen"){
+                desTemp = "打开阀门";
+              }else if(val.id === "clearextend"){
+                desTemp = "喷管手动清洁";
+              }else if(val.id === "clearinstance"){
+                desTemp = "智能除菌";
+              }
+            })
+
+            var cmdvalue = getCmd(header, idx,nimi._data[val.des],ctrId,devId);
+            //send instructin
+            console.log(cmdvalue)
+            // scope.sendCmd(cmdvalue,"");
+          }
+          $scope.valueTemp = val;
         };
         $scope.modal.hide();
       };
