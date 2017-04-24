@@ -5,13 +5,13 @@ angular.module('karessControlModule')
     '$ionicModal',
     '$compile',
     'baseConfig',
-    'checkVersionService', 'SettingsService','$ionicHistory',
+    'checkVersionService', 'SettingsService','$ionicHistory','$ionicSlideBoxDelegate','karessService',
     function ($scope,
               $state,
               $ionicModal,
               $compile,
               baseConfig,
-              checkVersionService, SettingsService, $ionicHistory) {
+              checkVersionService, SettingsService, $ionicHistory,$ionicSlideBoxDelegate,karessService) {
       var deviceId = SettingsService.get('sku')
       $scope.karessController = {
         modelType: "karessController.bath",
@@ -30,17 +30,6 @@ angular.module('karessControlModule')
       }]
 
       $scope.shuilianmoData = [{
-        des: "温度",
-        gearNum: 1,
-        gearInit: 1,
-        gearInitTemp: 1,
-        parameterctlFlag: false,
-        parNodeid: 'toilet-NvYongSyCtl',
-        canves01: "NvYongSycanves01",
-        canves02: "NvYongSycanves02",
-        canves03: "NvYongSycanves03",
-      }];
-      $scope.shuiBeiBuData = [{
         des: "按摩档位",
         gearNum: 1,
         gearInit: 1,
@@ -50,10 +39,23 @@ angular.module('karessControlModule')
         canves01: "NvYongSycanves01",
         canves02: "NvYongSycanves02",
         canves03: "NvYongSycanves03",
+        flag : '4'
+      }];
+      $scope.shuiBeiBuData = [{
+        des: "温度",
+        gearNum: 1,
+        gearInit: 1,
+        gearInitTemp: 1,
+        parameterctlFlag: false,
+        parNodeid: 'toilet-NvYongSyCtl',
+        canves01: "NvYongSycanves01",
+        canves02: "NvYongSycanves02",
+        canves03: "NvYongSycanves03",
+        flag : '5'
       }];
       $scope.slideTunBuData = [{
         des: "水温",
-        gearNum: 5,
+        gearNum: 19,
         gearInit: 1,
         gearInitTemp: 1,
         parameterctlFlag: false,
@@ -61,10 +63,11 @@ angular.module('karessControlModule')
         canves01: "TunBuSycanves01",
         canves02: "TunBuSycanves02",
         canves03: "TunBuSycanves03",
+        flag : "1"
       },
         {
           des: "水位",
-          gearNum: 5,
+          gearNum: 3,
           gearInit: 1,
           gearInitTemp: 1,
           parameterctlFlag: false,
@@ -72,88 +75,92 @@ angular.module('karessControlModule')
           canves01: "TunBuPosPoscanves01",
           canves02: "TunBuPosPoscanves02",
           canves03: "TunBuPosPoscanves03",
-        }, {
-          des: "tun温度档位",
-          gearNum: 5,
-          gearInit: 1,
-          gearInitTemp: 1,
-          parameterctlFlag: false,
-          parNodeid: 'toilet-TunBuTemCtl',
-          canves01: "TunBuTemTemcanves01",
-          canves02: "TunBuTemTemcanves02",
-          canves03: "TunBuTemTemcanves03",
-        }];
+          flag : "2"
+        }
+        // , {
+        //   des: "流量",
+        //   gearNum: 5,
+        //   gearInit: 1,
+        //   gearInitTemp: 1,
+        //   parameterctlFlag: false,
+        //   parNodeid: 'toilet-TunBuTemCtl',
+        //   canves01: "TunBuTemTemcanves01",
+        //   canves02: "TunBuTemTemcanves02",
+        //   canves03: "TunBuTemTemcanves03",
+        //   flag : "3"
+        // }
+        ];
 
 
       $scope.handlenapeListNape = [
         {
-          imgUrl: "build/img/karess-controller/dachong.png",
-          imgSeledUrl: "build/img/karess-controller/dachongseled.png",
-          imgUrlTemp: "build/img/karess-controller/dachong.png",
+          imgUrl: "build/img/karess-controller/icon_zhushuinor.png",
+          imgSeledUrl: "build/img/karess-controller/icon_zhushui.png",
+          imgUrlTemp: "build/img/karess-controller/icon_zhushuinor.png",
           handleDes: "karessController.zhushui",
           selecFlag: false,
           handledata: $scope.slideTunBuData
         },
         {
-          imgUrl: "build/img/karess-controller/xiaochong.png",
-          imgSeledUrl: "build/img/karess-controller/xiaochongseled.png",
-          imgUrlTemp: "build/img/karess-controller/xiaochong.png",
+          imgUrl: "build/img/karess-controller/icon_luoshuinor.png",
+          imgSeledUrl: "build/img/karess-controller/icon_luoshui.png",
+          imgUrlTemp: "build/img/karess-controller/icon_luoshuinor.png",
           handleDes: "karessController.luoshui",
           selecFlag: false,
           handledata: $scope.slideInitData
         },
         {
-          imgUrl: "build/img/karess-controller/nvyong.png",
-          imgSeledUrl: "build/img/karess-controller/nvyongseled.png",
-          imgUrlTemp: "build/img/karess-controller/nvyong.png",
+          imgUrl: "build/img/karess-controller/icon_shuilinor.png",
+          imgSeledUrl: "build/img/karess-controller/icon_shuili.png",
+          imgUrlTemp: "build/img/karess-controller/icon_shuilinor.png",
           handleDes: "karessController.shuilianmo",
           selecFlag: false,
           handledata: $scope.shuilianmoData
         },
         {
-          imgUrl: "build/img/karess-controller/tunxi.png",
-          imgSeledUrl: "build/img/karess-controller/tunxiseled.png",
-          imgUrlTemp: "build/img/karess-controller/tunxi.png",
+          imgUrl: "build/img/karess-controller/icon_touzhennor.png",
+          imgSeledUrl: "build/img/karess-controller/icon_touzhen.png",
+          imgUrlTemp: "build/img/karess-controller/icon_touzhennor.png",
           handleDes: "karessController.toubuanmo",
           selecFlag: false,
           handledata: $scope.slideInitData
         },
         {
-          imgUrl: "build/img/karess-controller/quanwen.png",
-          imgSeledUrl: "build/img/karess-controller/quanwenseled.png",
-          imgUrlTemp: "build/img/karess-controller/quanwen.png",
+          imgUrl: "build/img/karess-controller/icon_beibujiarenor.png",
+          imgSeledUrl: "build/img/karess-controller/icon_beibujiare.png",
+          imgUrlTemp: "build/img/karess-controller/icon_beibujiarenor.png",
           handleDes: "karessController.beibujiare",
           selecFlag: false,
           handledata: $scope.shuiBeiBuData
         },
         {
-          imgUrl: "build/img/karess-controller/nuanfeng.png",
-          imgSeledUrl: "build/img/karess-controller/nuanfengseled.png",
-          imgUrlTemp: "build/img/karess-controller/nuanfeng.png",
+          imgUrl: "build/img/karess-controller/icon_yijiantingzhinor.png",
+          imgSeledUrl: "build/img/karess-controller/icon_yijiantingzhi.png",
+          imgUrlTemp: "build/img/karess-controller/icon_yijiantingzhinor.png",
           handleDes: "karessController.yijiantingzhi",
           selecFlag: false,
           handledata: $scope.slideInitData
         },
         {
-          imgUrl: "build/img/karess-controller/dengguan.png",
-          imgSeledUrl: "build/img/karess-controller/dengguanseled.png",
-          imgUrlTemp: "build/img/karess-controller/dengguan.png",
+          imgUrl: "build/img/karess-controller/icon_guandaochujunnor.png",
+          imgSeledUrl: "build/img/karess-controller/icon_guandaochujun.png",
+          imgUrlTemp: "build/img/karess-controller/icon_guandaochujunnor.png",
           handleDes: "karessController.guandaochujun",
           selecFlag: false,
           handledata: $scope.slideInitData
         },
         {
-          imgUrl: "build/img/karess-controller/dengguan.png",
-          imgSeledUrl: "build/img/karess-controller/dengguanseled.png",
-          imgUrlTemp: "build/img/karess-controller/dengguan.png",
+          imgUrl: "build/img/karess-controller/icon_jienengnor.png",
+          imgSeledUrl: "build/img/karess-controller/icon_jieneng.png",
+          imgUrlTemp: "build/img/karess-controller/icon_jienengnor.png",
           handleDes: "karessController.jieneng",
           selecFlag: false,
           handledata: $scope.slideInitData
         },
         {
-          imgUrl: "build/img/karess-controller/nuanjiao.png",
-          imgSeledUrl: "build/img/karess-controller/nuanjiaoseled.png",
-          imgUrlTemp: "build/img/karess-controller/nuanjiao.png",
+          imgUrl: "build/img/karess-controller/icon_shezhinor.png",
+          imgSeledUrl: "build/img/karess-controller/icon_shezhi.png",
+          imgUrlTemp: "build/img/karess-controller/icon_shezhinor.png",
           handleDes: "karessController.shezhi",
           selecFlag: false,
         }
@@ -162,36 +169,51 @@ angular.module('karessControlModule')
       $scope.goBack = function () {
         $ionicHistory.goBack();
       }
-
+      /**
+       init dang qian mo ban shu ju
+       初始化当前模板数据
+       */
+      $scope.lockSlide = function () {
+        $ionicSlideBoxDelegate.enableSlide( false );
+      };
       $scope.currentSlideData = $scope.slideInitData;
       //初始化当前模板数据
       $scope.initHtmlTemplate = function (currentSlideData) {
+        console.log(currentSlideData);
         //初始化数据
         if ($('#ionSliderBox').children().length !== 0) {
           $('#ionSliderBox').empty();
         }
         ;
         var checHtml =
-          "<ion-slide-box on-slide-changed='slideHasChanged($index)'>" +
-          "<ion-slide ng-repeat='list in currentSlideData track by $index'>" +
-          "<div id={{list.parNodeid}} class='toilet-parameterctl'>" +
-          "<canvas id={{list.canves01}} class='canves-pos'></canvas>" +
-          "<canvas id={{list.canves02}} class='canves-pos'></canvas>" +
-          "<canvas id={{list.canves03}} class='canves-pos'></canvas>" +
-          "<canvas id={{list.canves04}} class=''canves-pos'></canvas>" +
-          "<div class='toilet-parameterctl-data' ng-if='!list.parameterctlFlag'>" +
-          "<span class='toilet-parameterctl-raddata' ng-bind='list.gearInit'></span>" +
-          "<span class='toilet-parameterctl-des' ng-bind='list.des'></span>" +
-          "</div>" +
-          "<div class='toilet-parameterctl-dataimg' ng-if='list.parameterctlFlag'>" +
-          "<img class='conninfo-parameterctl-img' ng-src='build/img/karess-controller/btn_devicedetail_scoll.png' alt=''>" +
-          "</div>" +
-          "</div>" +
-          "</ion-slide>" +
+          "<ion-slide-box ng-init='lockSlide()' does-continue = 'true' ng-click='nextSlide($index)'>"+
+          "<ion-slide ng-repeat='list in currentSlideData track by $index'>"+
+          "<div id={{list.parNodeid}} class='toilet-parameterctl'>"+
+          "<canvas id={{list.canves01}} class='canves-pos'></canvas>"+
+          "<canvas id={{list.canves02}} class='canves-pos'></canvas>"+
+          "<canvas id={{list.canves03}} class='canves-pos'></canvas>"+
+          "<canvas id={{list.canves04}} class=''canves-pos'></canvas>"+
+          "<div class='toilet-parameterctl-data' ng-if='!list.parameterctlFlag'>"+
+          "<span class='toilet-parameterctl-raddata' ng-bind='list.gearInit+29' ng-if='list.flag == 1'></span>"+
+          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 2  && list.gearInit == 1'>25%</span>"+
+          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 2  && list.gearInit == 2'>50%</span>"+
+          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 2  && list.gearInit == 3'>75%</span>"+
+          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 2  && list.gearInit == 4'>95%</span>"+
+          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 4  && list.gearInit == 1'>L1</span>"+
+          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 4  && list.gearInit == 2'>L2</span>"+
+          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 5  && list.gearInit == 1'>低档</span>"+
+          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 5  && list.gearInit == 2'>高档</span>"+
+          "<span class='toilet-parameterctl-des' ng-bind='list.des'></span>"+
+          "<span class='toilet-parameterctl-des' ng-bind='list.gearInit+29' ng-if='list.flag == 1'></span>"+
+          "</div>"+
+          "<div class='toilet-parameterctl-dataimg' ng-if='list.parameterctlFlag'>"+
+          "<img class='conninfo-parameterctl-img' ng-src='build/img/toilet-controller/btn_devicedetail_scoll.png' alt=''>"+
+          "</div>"+
+          "</div>"+
+          "</ion-slide>"+
           "</ion-slide-box>"
         var $checkhtml = $compile(checHtml)($scope); // 编译
         $('#ionSliderBox').append($checkhtml[0]);
-        console.log(1)
       };
       $scope.initHtmlTemplate($scope.currentSlideData);
       var initCircle = function (slideDataObj) {
@@ -420,34 +442,45 @@ angular.module('karessControlModule')
         $scope.slideHasChanged = function (index) {
           $scope.getCurrentObj(index);
         };
+        $scope.nextSlide = function() {
+          var sliderLenght = document.querySelectorAll('ion-slide').length;
+          console.log($scope.currentSlideData);
+          console.log(sliderLenght);
+          if(sliderLenght !== 1){
+            $ionicSlideBoxDelegate.next();
+            $scope.getCurrentObj($ionicSlideBoxDelegate.currentIndex());
+          };
+        };
       }, 20);
       //处理选择怎加border
       var handlenapeListNapeLen = $scope.handlenapeListNape.length;
       $scope.selectNapes = function (index) {
         $scope.handlenapeSelectedIndex = index;
+        var value = karessService.Karess;
 
-        // if (index == 1) {
-        //   sendCmd(deviceId, value, '落水成功！', '落水失败！');
-        // }
-        // if (index == 3) {
-        //   sendCmd(deviceId, value, '头部按摩开启成功！', '头部按摩开启失败！');
-        // }
-        // if (index == 4) {
-        //   sendCmd(deviceId, value, '背部加热开启成功！', '背部加热开启失败！');
-        // }
-        // if (index == 5) {
-        //   sendCmd(deviceId, value, '一键停止开启成功！', '一键停止开启失败！');
-        // }
-        // if (index == 6) {
-        //   sendCmd(deviceId, value, '管道除菌开启成功！', '管道除菌开启成功！');
-        // }
-        // if (index == 7) {
-        //   sendCmd(deviceId, value, '节能开启成功！', '节能开启成功！');
-        // }
-        // if (index == 8) {
-        //   $state.go('karessSetting');
-        //   return;
-        // }
+        console.log(value);
+        if (index == 1) {
+          sendCmd(deviceId, value, '落水成功！', '落水失败！');
+        }
+        if (index == 3) {
+          sendCmd(deviceId, value, '头部按摩开启成功！', '头部按摩开启失败！');
+        }
+        if (index == 4) {
+          sendCmd(deviceId, value, '背部加热开启成功！', '背部加热开启失败！');
+        }
+        if (index == 5) {
+          sendCmd(deviceId, value, '一键停止开启成功！', '一键停止开启失败！');
+        }
+        if (index == 6) {
+          sendCmd(deviceId, value, '管道除菌开启成功！', '管道除菌开启成功！');
+        }
+        if (index == 7) {
+          sendCmd(deviceId, value, '节能开启成功！', '节能开启成功！');
+        }
+        if (index == 8) {
+          $state.go('karessSetting');
+          return;
+        }
         $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
         for (var i = 0; i < handlenapeListNapeLen; i++) {
           if (i !== index) {

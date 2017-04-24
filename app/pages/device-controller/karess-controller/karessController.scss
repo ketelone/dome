@@ -77,6 +77,7 @@
       .toilet-parameterctl-raddata{
         font-size: $font-size-bigger;
         color: $color-base;
+        white-space:nowrap;
       }
       .toilet-parameterctl-des{
         display: block;
@@ -112,7 +113,7 @@
   }
   .toilet-handlenape{
     position: absolute;
-    top: 6.68rem;
+    top: 7rem;
     width: 96%;
     margin-left: 2%;
     margin-right: 2%;
