@@ -43,7 +43,9 @@ angular.module('myApp')
         // org.apache.cordova.statusbar required
         StatusBar.styleDefault();
       }
-      // alert('language:');
+
+
+
       navigator.globalization.getPreferredLanguage(
         function (language) {
           //  alert('language: ' + language.value + '\n');
@@ -52,12 +54,10 @@ angular.module('myApp')
           // var localLanguage=language.value;
           if (language.value == 'zh-CN' || 'zh-Hans-CN') {
             $translate.use('zh');
-
             //   alert('zh1');
           }
           else if (language.value == 'zh-TW' || 'zh-Hans-TW') {
             $translate.use('tw');
-
             //   alert('tw1');
           }
           else if (language.value == 'en-US' || 'en-CN') {
@@ -73,6 +73,7 @@ angular.module('myApp')
           }
           else {
             $translate.use('en');
+
             //  alert('en1');
           }
 

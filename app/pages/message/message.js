@@ -30,9 +30,9 @@ $scope.exceptionword='exceptionword';
           exceptionMessage:"自动开盖功能异常",
           device:"马桶",
           time:"2017-02-08 17:25",
-          circleUrl1:"build/img/message/radio_q.png",
-          circleUrl2:"build/img/message/radio_h.png",
-          circleUrltemp:"build/img/message/radio_q.png",
+          circleUrl1:"build/img/common/radio_q.png",
+          circleUrl2:"build/img/common/radio_h.png",
+          circleUrltemp:"build/img/common/radio_q.png",
           ischecked:false,
           name:"exception"
         },
@@ -41,9 +41,9 @@ $scope.exceptionword='exceptionword';
           exceptionMessage:"自动开盖功能异常",
           device:"淋浴",
           time:"2017-02-08 17:25",
-          circleUrl1:"build/img/message/radio_q.png",
-          circleUrl2:"build/img/message/radio_h.png",
-          circleUrltemp:"build/img/message/radio_q.png",
+          circleUrl1:"build/img/common/radio_q.png",
+          circleUrl2:"build/img/common/radio_h.png",
+          circleUrltemp:"build/img/common/radio_q.png",
           ischecked:false,
           name:"exception"
         },{
@@ -51,10 +51,10 @@ $scope.exceptionword='exceptionword';
           exceptionMessage:"自动开盖功能异常",
           device:"马桶",
           time:"2017-02-08 17:25",
-          circleUrl1:"build/img/message/radio_q.png",
-          circleUrl2:"build/img/message/radio_h.png",
+          circleUrl1:"build/img/common/radio_q.png",
+          circleUrl2:"build/img/common/radio_h.png",
           ischecked:false,
-          circleUrltemp:"build/img/message/radio_q.png",
+          circleUrltemp:"build/img/common/radio_q.png",
          name:"exception"
 
         }
@@ -68,10 +68,10 @@ $scope.exceptionword='exceptionword';
           device:"马桶1",
           messageDel:"进水滤芯快到使用期限，快去跟换吧!",
           time:"2017-02-08 17:25",
-          circleUrl1:"build/img/message/radio_q.png",
-          circleUrl2:"build/img/message/radio_h.png",
+          circleUrl1:"build/img/common/radio_q.png",
+          circleUrl2:"build/img/common/radio_h.png",
           ischecked:false,
-          circleUrltemp:"build/img/message/radio_q.png",
+          circleUrltemp:"build/img/common/radio_q.png",
           name:"status"
         },
         {
@@ -80,10 +80,10 @@ $scope.exceptionword='exceptionword';
           device:"淋浴1",
           messageDel:"实际出水水温达到37°C",
           time:"2017-02-08 17:25",
-          circleUrl1:"build/img/message/radio_q.png",
-          circleUrl2:"build/img/message/radio_h.png",
+          circleUrl1:"build/img/common/radio_q.png",
+          circleUrl2:"build/img/common/radio_h.png",
           ischecked:false,
-          circleUrltemp:"build/img/message/radio_q.png",
+          circleUrltemp:"build/img/common/radio_q.png",
           name:"status"
         },{
           id: "3",
@@ -91,10 +91,10 @@ $scope.exceptionword='exceptionword';
           device:"马桶2",
           messageDel:"进水滤芯快到使用期限，快去跟换吧!",
           time:"2017-02-08 17:25",
-          circleUrl1:"build/img/message/radio_q.png",
-          circleUrl2:"build/img/message/radio_h.png",
+          circleUrl1:"build/img/common/radio_q.png",
+          circleUrl2:"build/img/common/radio_h.png",
           ischecked:false,
-          circleUrltemp:"build/img/message/radio_q.png",
+          circleUrltemp:"build/img/common/radio_q.png",
           name:"status"
         },{
           id: "4",
@@ -102,10 +102,10 @@ $scope.exceptionword='exceptionword';
           device:"马桶3",
           messageDel:"进水滤芯快到使用期限，快去跟换吧!",
           time:"2017-02-08 17:25",
-          circleUrl1:"build/img/message/radio_q.png",
-          circleUrl2:"build/img/message/radio_h.png",
+          circleUrl1:"build/img/common/radio_q.png",
+          circleUrl2:"build/img/common/radio_h.png",
           ischecked:false,
-          circleUrltemp:"build/img/message/radio_q.png",
+          circleUrltemp:"build/img/common/radio_q.png",
           name:"status"
         },
         {
@@ -114,10 +114,10 @@ $scope.exceptionword='exceptionword';
           device:"马桶3",
           messageDel:"进水滤芯快到使用期限，快去跟换吧!",
           time:"2017-02-08 17:25",
-          circleUrl1:"build/img/message/radio_q.png",
-          circleUrl2:"build/img/message/radio_h.png",
+          circleUrl1:"build/img/common/radio_q.png",
+          circleUrl2:"build/img/common/radio_h.png",
           ischecked:false,
-          circleUrltemp:"build/img/message/radio_q.png",
+          circleUrltemp:"build/img/common/radio_q.png",
           name:"status"
         },
       ]
@@ -197,8 +197,8 @@ hmsPopup.confirmNoTitle( "<br><br><div ><div>删除后将无法在消息记录�
       $scope.onChoose=function(item){
 
 
-        if(item.ischecked==true&item.name=="status") {
-          alert("statustrue");
+        if(item.ischecked==true&& item.name=="status") {
+        //  alert("statustrue");
           for (var i = 0; i < $scope.statusitems.length; i++) {
             if ($scope.statusitems[i].id == item.id) {
               $scope.statusitems[i].ischecked = false;
@@ -207,8 +207,8 @@ hmsPopup.confirmNoTitle( "<br><br><div ><div>删除后将无法在消息记录�
           }
         }
 
-    else if(item.ischecked==false&item.name=="status"){
-      alert("statusfalse");
+    else if(item.ischecked==false&& item.name=="status"){
+      //alert("statusfalse");
       for (var i = 0; i < $scope.statusitems.length; i++) {
         if ($scope.statusitems[i].id == item.id) {
           $scope.statusitems[i].ischecked = true;
@@ -216,20 +216,20 @@ hmsPopup.confirmNoTitle( "<br><br><div ><div>删除后将无法在消息记录�
         }
       }  }
 
-     else   if(item.ischecked==true&item.name=="exception") {
-          alert("exceptiontrue");
+     else   if(item.ischecked==true&& item.name=="exception") {
+         // alert("exceptiontrue");
           for (var i = 0; i < $scope.exceptionitems.length; i++) {
             if ($scope.exceptionitems[i].id ==item.id) {
               $scope.exceptionitems[i].ischecked = false;
               $scope.exceptionitems[i].circleUrl1 = $scope.exceptionitems[i].circleUrltemp;
-           //   alert(  $scope.exceptionitems[i].circleUrltemp +"2");
-         //  alert( $scope.exceptionitems[i].circleUrl1 +"1");
+    //alert(  $scope.exceptionitems[i].circleUrltemp +"2");
+    //alert( $scope.exceptionitems[i].circleUrl1 +"1");
             }
           }
 
         }
-    else    if(item.ischecked==false&item.name=="exception") {
-       //   alert("exceptionfalse");
+    else  if(item.ischecked==false&& item.name=="exception") {
+       //alert("exceptionfalse");
           for (var i = 0; i < $scope.exceptionitems.length; i++) {
             if ($scope.exceptionitems[i].id ==item.id) {
               $scope.exceptionitems[i].ischecked = true;

@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova.plugin.SocketPlugin" version="0.0.1" 
+xmlns="http://apache.org/cordova/ns/plugins/1.0" 
+xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>SocketPlugin</name>
+    <js-module name="SocketPlugin" src="www/SocketPlugin.js">
+        <clobbers target="cordova.plugins.SocketPlugin" />
+    </js-module>
+    
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="SocketPlugin">
+                <param name="ios-package" value="SocketPlugin"/>
+            </feature>
+        </config-file>
+        
+        
+        <!-- 源码    -->
+        <header-file src="src/ios/plugins/SocketPlugin.h"/>
+        <source-file src="src/ios/plugins/SocketPlugin.m"/>
+
+
+        <header-file src="src/ios/plugins/GCDAsyncSocket.h"/>
+        <source-file src="src/ios/plugins/GCDAsyncSocket.m"/>
+
+        <header-file src="src/ios/plugins/GCDAsyncUdpSocket.h"/>
+        <source-file src="src/ios/plugins/GCDAsyncUdpSocket.m"/>
+
+        <header-file src="src/ios/plugins/SocketConnectTool.h"/>
+        <source-file src="src/ios/plugins/SocketConnectTool.m"/>
+
+    </platform>
+    
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="SocketPlugin">
+                <param name="android-package" value="cordova.plugin.socket.SocketPlugin"/>
+            </feature>
+         </config-file>
+        <config-file target="AndroidManifest.xml" parent="/*">
+            <uses-permission android:name="android.permission.INTERNET" />
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+            <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+       </config-file>
+
+        <source-file src="src/android/cordova/plugin/socket/SocketPlugin.java" target-dir="src/cordova/plugin/socket/"/>
+        <source-file src="src/android/cordova/plugin/socket/AppUtil.java" target-dir="src/cordova/plugin/socket/"/>
+        <source-file src="src/android/cordova/plugin/socket/ISocketCallback.java" target-dir="src/cordova/plugin/socket/"/>
+        <source-file src="src/android/cordova/plugin/socket/TcpSocket.java" target-dir="src/cordova/plugin/socket/"/>
+        <source-file src="src/android/cordova/plugin/socket/UDPBroadCast.java" target-dir="src/cordova/plugin/socket/"/>
+        <source-file src="src/android/cordova/plugin/socket/UDPBroadCastCallBack.java" target-dir="src/cordova/plugin/socket/"/>
+    </platform>
+
+</plugin>

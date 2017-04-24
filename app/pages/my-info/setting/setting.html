@@ -7,7 +7,6 @@
     </div>
 
     <ion-content class="content has-header has-footer" >
-      <ion-scroll zooming="true" direction="y" class="scroll-view ionic-scroll scroll-y" >
         <ion-list  class="setBak">
 
           <li class="item item-icon-right onerow"  ui-sref="settingLanguage" >
@@ -31,13 +30,15 @@
           </div>
    <li class="item item-icon-right onerow"   >
             <div class="row">
-              <div style="text-align: left" class="col col-66 "><span class="leftWord" translate="my-info.setting.firmwareUpdate">固件升级</span></div>
-              <div  class="col col-20 "><span class="rightword" translate="my-info.setting.byToupdate" >2个设备待升级</span></div>
-              <div class="col"><i class="icon ion-ios-arrow-right iconSize"></i></div>
-            </div>
+              <i class=" redpoint1"></i>
+     <div style="text-align: left" class="col col-66 "><span class="leftWord" translate="my-info.setting.firmwareUpdate">固件升级</span></div>
+     <div  class="col col-20 "><span class="rightword" translate="my-info.setting.byToupdate" >2个设备待升级</span></div>
+     <div class="col"><i class="icon ion-ios-arrow-right iconSize"></i></div>
+   </div>
           </li>
           <li class="item item-icon-right onerow"   >
             <div class="row">
+               <i class=" redpoint1"></i>
               <div style="text-align: left" class="col col-66 "><span class="leftWord" translate="my-info.setting.versionUpdate">版本更新</span></div>
               <div  class="col col-20 "><span class="rightword" translate="my-info.setting.versionNumber">版本号1.4.0.17</span></div>
               <div class="col"><i class="icon ion-ios-arrow-right iconSize"></i></div>
@@ -56,11 +57,8 @@
 
 
        </ion-list>
-      </ion-scroll>
+
       </ion-content>
-
-
-
 
 
 
@@ -93,8 +91,7 @@
         <!--<span class="leftWord" translate="my-info.setting.about" >关于</span><i class="icon ion-ios-arrow-right iconSize"></i>-->
       <!--</li>-->
     <!--</ion-list>-->
-
-    <!--<div class="cusbutton">-->
+  <!--<div class="cusbutton">-->
       <!--<button  class="addbutton" ng-click="logout()">退出当前账号</button>-->
     <!--</div>-->
     <!--</ion-content>-->
@@ -102,3 +99,6 @@
 
 
 </ion-view>
+  <ion-footer-bar align-title="center" style="background: #546281;">
+<div class="title" style="  font-size: 0.36rem;color: #FFFFFF;" translate="my-info.setting.logout">退出当前账号</div>
+  </ion-footer-bar>

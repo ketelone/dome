@@ -471,7 +471,12 @@ angular.module('nextgenModule')
         };
 
         if(index==0) {
-  alert("淋浴");
+
+
+
+
+
+
 
           shower(1);
         }

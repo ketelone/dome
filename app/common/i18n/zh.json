@@ -26,7 +26,8 @@
       "logout": "退出当前账号"
     },
     "setting-language": {
-      "language": "语 言"
+      "language": "语 言",
+      "followLanguage":"跟随系统语言"
     },
     "setting-temperature": {
       "unitSetting": "单 位 设 置",

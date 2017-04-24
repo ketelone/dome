@@ -30,7 +30,9 @@
       "logout": "logout"
     },
     "setting-language": {
-      "language": "language"
+      "language": "language",
+      "followLanguage":"follow system language "
+
     },
     "setting-temperature": {
       "centigrade": "centigrade",
