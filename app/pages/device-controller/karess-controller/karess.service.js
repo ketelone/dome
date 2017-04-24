@@ -7,8 +7,9 @@ angular.module('karessControlModule')
       function (baseConfig) {
 
         function Karess() {
+          console.log('12');
         };
-        Karess.prototype._data = {
+        var data = {
           closeAll: "00",
           openFiller: "2201",
           closeFiller: "2200",
@@ -57,7 +58,7 @@ angular.module('karessControlModule')
          * 设置水力按摩(massage-back)的按摩水压
          * HIGH，LOW
          */
-        Karess.prototype.setHeatParam = function (temp) {
+        var setHeatParam = function (temp) {
           return "07" + temp;
         };
 
@@ -65,7 +66,7 @@ angular.module('karessControlModule')
          * 设置背部加热参数
          * HIGH，LOW
          */
-        Karess.prototype.setMassageBackPressure = function (flow, mode) {
+        var setMassageBackPressure = function (flow, mode) {
           return "01" + flow + "00" + mode;
         };
 
@@ -76,7 +77,7 @@ angular.module('karessControlModule')
          * flow: _data._paramFiller.flow.*
          * outlet _data._paramFiller.outlet.*
          */
-        Karess.prototype.setFillerParams = function (temp, level, flow, outlet) {
+        var setFillerParams = function (temp, level, flow, outlet) {
           var t = doStr(temp.toString(16));
           var l = doStr(level.toString(16));
           return "02" + t + l + outlet + flow;
@@ -131,16 +132,15 @@ angular.module('karessControlModule')
          * 测试
          */
 
-        var k = new Karess();
-        var allData = k._data.closeFiller;
+        var allData = data.closeFiller;
         console.log(getCmd("8877", 1, allData, 0, 5));  //关闭所有
 
-        var setFiller = k.setFillerParams(50, 50, k._data._paramFiller.flow.HIGH, k._data._paramFiller.outlet.BATH_FAUCET);
+        var setFiller = setFillerParams(50, 50, data._paramFiller.flow.HIGH, data._paramFiller.outlet.BATH_FAUCET);
         console.log(getCmd("8877", 1, setFiller, 0, 5));
 
-        var setHeatBack = k.setHeatParam(k._data._paramHeadBack.temp.HIGH);
+        var setHeatBack = setHeatParam(data._paramHeadBack.temp.HIGH);
         console.log(getCmd("8877", 1, setHeatBack, 0, 5));
 
-        var setHeatBack = k.setMassageBackPressure(k._data._paramMassageBack.flow.HIGH, k._data._paramMassageBack.mode.NORMAL);
+        var setHeatBack = setMassageBackPressure(data._paramMassageBack.flow.HIGH, data._paramMassageBack.mode.NORMAL);
         console.log(getCmd("8877", 1, setHeatBack, 0, 5));
       }]);
