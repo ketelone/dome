@@ -28,7 +28,7 @@ $scope.exceptionword='exceptionword';
         {
           id: "1",
           exceptionMessage:"自动开盖功能异常",
-          device:"马桶1",
+          device:"马桶",
           time:"2017-02-08 17:25",
           circleUrl1:"build/img/message/radio_q.png",
           circleUrl2:"build/img/message/radio_h.png",
@@ -39,7 +39,7 @@ $scope.exceptionword='exceptionword';
         {
           id: "2",
           exceptionMessage:"自动开盖功能异常",
-          device:"淋浴1",
+          device:"淋浴",
           time:"2017-02-08 17:25",
           circleUrl1:"build/img/message/radio_q.png",
           circleUrl2:"build/img/message/radio_h.png",
@@ -49,7 +49,7 @@ $scope.exceptionword='exceptionword';
         },{
           id: "3",
           exceptionMessage:"自动开盖功能异常",
-          device:"马桶2",
+          device:"马桶",
           time:"2017-02-08 17:25",
           circleUrl1:"build/img/message/radio_q.png",
           circleUrl2:"build/img/message/radio_h.png",
