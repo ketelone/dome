@@ -37,19 +37,13 @@ angular.module('myInfoModule')
               $rootScope, publicMethod,$stateParams,SettingsService,$translate) {
 
 
-    // alert(window.localStorage.locallanguage);
-if( window.localStorage.locallanguage==undefined) {
-  window.localStorage.ischecked=true;
-  window.localStorage.radioImg1="build/img/common/radio_h.png";
-  window.localStorage.radioImg2="build/img/common/radio_q.png";
-  window.localStorage.radioTemp="build/img/common/radio_h.png";
 
  $scope.languageItems = [{
     ischecked: true,
     language: "my-info.setting-language.followLanguage",
-    radioImg1: "build/img/common/radio_h.png",
-    radioImg2: "build/img/common/radio_q.png",
-    radioTemp: "build/img/common/radio_h.png"
+    radioImg1: "build/img/common/radio_q.png",
+    radioImg2: "build/img/common/radio_h.png",
+    radioTemp: "build/img/common/radio_q.png"
   }, {
     ischecked: false,
     language: "中文简体",
@@ -86,7 +80,35 @@ if( window.localStorage.locallanguage==undefined) {
       radioTemp: "build/img/common/radio_q.png"
     }
   ];
-}
+   $scope.initLanguage=function() {
+     alert(window.localStorage.language+" a");
+      if (window.localStorage.language =="default") {
+       $scope.languageItems[0].ischecked = true;
+       $scope.languageItems[0].radioImg1 = "build/img/common/radio_h.png";
+
+     }
+    if (window.localStorage.language == '中文简体') {
+        $scope.languageItems[1].ischecked = true;
+        $scope.languageItems[1].radioImg1 = "build/img/common/radio_h.png";
+
+      }
+      if (window.localStorage.language == '中文繁体') {
+        $scope.languageItems[2].ischecked = true;
+        $scope.languageItems[2].radioImg1 = "build/img/common/radio_h.png";
+      }
+      if (window.localStorage.language == 'English') {
+       $scope.languageItems[3].ischecked = true;
+       $scope.languageItems[3].radioImg1 = "build/img/common/radio_h.png";
+     }
+      if (window.localStorage.language == 'ภาษาไทย') {
+        $scope.languageItems[4].ischecked = true;
+        $scope.languageItems[4].radioImg1 = "build/img/common/radio_h.png";
+      }
+
+
+    }
+      $scope.initLanguage();
+
 
       $scope.goBack = function(){
         $ionicHistory.goBack();
@@ -101,7 +123,10 @@ if( window.localStorage.locallanguage==undefined) {
        */
       $scope.chooseLanguage=function(item){
         item.ischecked=true;
-        item.radioImg1="build/img/common/radio_h.png";
+         item.radioImg1="build/img/common/radio_h.png";
+      window.localStorage.language=item.language;
+
+
         for(var i=0;i<$scope.languageItems.length;i++){
        if($scope.languageItems[i].language!=item.language){
          $scope.languageItems[i].ischecked=false;
@@ -110,29 +135,30 @@ if( window.localStorage.locallanguage==undefined) {
         }
 
  if(item.language=='my-info.setting-language.followLanguage'){
-alert(1);
+
+   window.localStorage.language ="default";
    navigator.globalization.getPreferredLanguage(
      function (language) {
 
-       if (language.value == 'zh-CN' || 'zh-Hans-CN') {
+       if (language.value == 'zh-CN' ||language.value ==  'zh-Hans-CN') {
          $translate.use('zh');
 
  }
-       else if (language.value == 'zh-TW' || 'zh-Hans-TW') {
+       else if (language.value == 'zh-TW' || language.value == 'zh-Hans-TW') {
          $translate.use('tw');
 
  }
-       else if (language.value == 'en-US' || 'en-CN') {
+       else if (language.value == 'en-US' || language.value == 'en-CN') {
          $translate.use('en');
 }
-       else if (language.value == 'en-TH' || 'th-CN') {
+       else if (language.value == 'en-TH' || language.value == 'th-CN') {
          $translate.use('th');
 
     }
 
      },
      function () {
-       // alert('Error getting locale\n');
+
      });
     publicMethod.goBack();
         }
@@ -142,18 +168,18 @@ alert(1);
 
      publicMethod.goBack();
    }
-        if(item.language=='中文繁体'){
+      else  if(item.language=='中文繁体'){
 
           $translate.use('tw');
        publicMethod.goBack();
         }
-        if(item.language=='English'){
+   else  if(item.language=='English'){
 
           $translate.use('en');
           publicMethod.goBack();
 
         }
-
+else{$translate.use('en');}
 
 
 

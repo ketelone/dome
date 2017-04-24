@@ -12,7 +12,7 @@
           <li class="item item-icon-right onerow"  ui-sref="settingLanguage" >
             <div class="row">
               <div style="text-align: left" class="col col-66 "><span  translate="my-info.setting.language"  class="leftWord">语言</span></div>
-              <div  class="col col-20 "><span class="rightword" translate="my-info.setting.localLanguage">中文简体</span></div>
+              <div  class="col col-20 "><span class="rightword" >{{thisLanguage}}</span></div>
               <div class="col"><i class="icon ion-ios-arrow-right iconSize"></i></div>
             </div>
           </li>
@@ -99,6 +99,6 @@
 
 
 </ion-view>
-  <ion-footer-bar align-title="center" style="background: #546281;">
+  <ion-footer-bar align-title="center" style="background: #546281;" ng-click="logout()">
 <div class="title" style="  font-size: 0.36rem;color: #FFFFFF;" translate="my-info.setting.logout">退出当前账号</div>
   </ion-footer-bar>
