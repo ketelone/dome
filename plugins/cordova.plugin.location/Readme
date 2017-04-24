@@ -1,0 +1,32 @@
+﻿function openLocation()
+{
+   
+   cordova.plugins.location.openLocation({"timeout":"3000"},success , error);
+
+}
+
+
+
+
+function success(msg)
+{
+    console.log(msg);
+   
+     alert(JSON.stringify(msg));
+
+}
+返回值 {"latitude":"1231231","longitude":"1231231"}
+
+
+
+function error(msg)
+{
+    console.log(msg);
+
+    alert(JSON.stringify(msg));
+
+}
+返回值
+{"error":"1000"} 表示未授权
+{"error":"1001"} 表示未打开GPS
+
