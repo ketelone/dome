@@ -45,57 +45,25 @@ angular.module('toiletControlModule')
         canves01: "initcanves01",
         canves03: "initcanves03",
       }]
-      $scope.slideNvYongData =[{
-        des: "水压档位",
-        parameterctlFlag: false,
-        parNodeid: 'toilet-NvYongSyCtl',
-        canves01: "NvYongSycanves01",
-        canves03: "NvYongSycanves03",
-      },
-        {
-        des:"位置档位",
-        parameterctlFlag:false,
-        parNodeid:'toilet-NvYongPosCtl',
-        canves01:"NvYongSyPoscanves01",
-        canves03:"NvYongSyPoscanves03",
-      },{
-        des:"温度档位",
-        parameterctlFlag:false,
-        parNodeid:'toilet-NvYongTemCtl',
-        canves01:"NvYongTemcanves01",
-        canves03:"NvYongTemcanves03",
-      }];
       /**
        gongnenglist-json
        功能列表数据
        **/
       $scope.handlenapeListNape = [
         {
-          imgUrl: "build/img/toilet-controller/dachong.png",
-          imgSeledUrl: "build/img/cenwatpurifier-controller/dachongseled.png",
-          imgUrlTemp:"build/img/cenwatpurifier-controller/dachong.png",
+          imgUrl: "build/img/cenwatpurifier-controller/icon_handleclear.png",
+          imgSeledUrl: "build/img/cenwatpurifier-controller/icon_handlecleared.png",
+          imgUrlTemp:"build/img/cenwatpurifier-controller/icon_handleclear.png",
           handleDes: "cenwatpurifier.autoclear",
+          matchdataid:"clear",
           selecFlag:false,
         },
         {
-          imgUrl: "build/img/toilet-controller/dachong.png",
-          imgSeledUrl: "build/img/cenwatpurifier-controller/dachongseled.png",
-          imgUrlTemp:"build/img/cenwatpurifier-controller/dachong.png",
+          imgUrl: "build/img/cenwatpurifier-controller/icon_setting.png",
+          imgSeledUrl: "build/img/cenwatpurifier-controller/icon_settinged.png",
+          imgUrlTemp:"build/img/cenwatpurifier-controller/icon_setting.png",
           handleDes: "cenwatpurifier.handleclear",
-          selecFlag:false,
-        },
-        {
-          imgUrl: "build/img/toilet-controller/dachong.png",
-          imgSeledUrl: "build/img/cenwatpurifier-controller/dachongseled.png",
-          imgUrlTemp:"build/img/cenwatpurifier-controller/dachong.png",
-          handleDes: "cenwatpurifier.onekeystop",
-          selecFlag:false,
-        },
-        {
-          imgUrl: "build/img/toilet-controller/dachong.png",
-          imgSeledUrl: "build/img/cenwatpurifier-controller/dachongseled.png",
-          imgUrlTemp:"build/img/cenwatpurifier-controller/dachong.png",
-          handleDes: "cenwatpurifier.setting",
+          matchdataid:"setting",
           selecFlag:false,
         }
       ];
@@ -104,7 +72,7 @@ angular.module('toiletControlModule')
        set dang qian ce hau shu ju zhi
        设置当前侧滑数据为侧滑初始化数据
        */
-      $scope.currentSlideData = $scope.slideNvYongData;
+      $scope.currentSlideData = $scope.slideInitData;
       /**
        init dang qian mo ban shu ju
        初始化当前模板数据
@@ -122,13 +90,11 @@ angular.module('toiletControlModule')
         };
         // on-slide-changed='slideHasChanged($index)'>
         var checHtml =
-          "<ion-slide-box ng-init='lockSlide()' does-continue = 'true' ng-click='nextSlide($index)'>"+
+          "<ion-slide-box ng-init='lockSlide()' show-pager='false'>"+
           "<ion-slide ng-repeat='list in currentSlideData track by $index'>"+
           "<div id={{list.parNodeid}} class='toilet-parameterctl'>"+
           "<canvas id={{list.canves01}} class='canves-pos'></canvas>"+
-          "<canvas id={{list.canves02}} class='canves-pos'></canvas>"+
           "<canvas id={{list.canves03}} class='canves-pos'></canvas>"+
-          "<canvas id={{list.canves04}} class=''canves-pos'></canvas>"+
           "<div class='toilet-parameterctl-data' ng-if='!list.parameterctlFlag'>"+
           "<span class='toilet-parameterctl-raddata' ng-bind='list.gearInit'></span>"+
           "<span class='toilet-parameterctl-des' ng-bind='list.des'></span>"+
@@ -148,12 +114,6 @@ angular.module('toiletControlModule')
       };
 
       $scope.initHtmlTemplate($scope.currentSlideData);
-      /**
-       *@autor:gongke
-       *@name:
-       *@params:
-       *@disc:goback
-       */
       var initCircle = function (slideDataObj) {
         //获取父元素高度
         this.canvsscreenHeight = document.getElementById(slideDataObj.parNodeid).offsetHeight;
@@ -171,7 +131,6 @@ angular.module('toiletControlModule')
         // 获取canvesobj
         this.cr1 = getCanvesObj(slideDataObj.canves01);//档位canves
         this.cr3 = getCanvesObj(slideDataObj.canves03);//颜色填充档位canves
-        // this.cr4 = getCanvesObj(slideDataObj.canves04);//颜色填充档位canves
         //四种圆
         this.deliverCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2,color:"#6ACBB3"};//档位圆
         this.HideCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2-0.4*this.rateInit,color:"black"};//档位圆
@@ -194,13 +153,6 @@ angular.module('toiletControlModule')
           currentRadObj.drawDeliverCircle();
         };
         $scope.getCurrentObj(0);
-        $scope.nextSlide = function() {
-           var sliderLenght = document.querySelectorAll('ion-slide').length;
-           if(sliderLenght !== 1){
-            $ionicSlideBoxDelegate.next();
-            $scope.getCurrentObj($ionicSlideBoxDelegate.currentIndex());
-          };
-        };
       },20);
       //发送指令
       var cmd = {
@@ -240,10 +192,10 @@ angular.module('toiletControlModule')
       var handlenapeListNapeLen = $scope.handlenapeListNape.length;
       $scope.selectNapes = function (index) {
         $scope.handlenapeSelectedIndex = index;
-        if($scope.handlenapeListNape[index].matchdataid === 12){
+        if($scope.handlenapeListNape[index].matchdataid === "setting"){
           $state.go("toiletSetting");
         }else {
-          $timeout(function () {
+          // $timeout(function () {
             $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
             for(var i=0;i<handlenapeListNapeLen;i++){
               if(i !== index){
@@ -268,7 +220,7 @@ angular.module('toiletControlModule')
             //     $scope.handlenapeSelectedIndex = undefined;
             //   },2000)
             // };
-          },500);
+          // },500);
         };
       };
     }]);

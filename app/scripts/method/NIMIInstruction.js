@@ -139,7 +139,8 @@ NIMI.prototype.frontRearDry = function (method, temperature, volume, place, flus
  * @returns {string} 指令中的 data串
  */
 NIMI.prototype.feetSeatHeater = function (temperature) {
-    var cmd = "05" + getHex(fourBitToCheck(temperature.toString(2))) + "0" + "00" + "00" + "00";
+  console.log("temperature" + " "+temperature)
+  var cmd = "05" + getHex(fourBitToCheck(temperature.toString(2))) + "0" + "00" + "00" + "00";
     return cmd;
 };
 
