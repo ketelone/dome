@@ -38,6 +38,76 @@ angular.module('myInfoModule')
 
 
 
+ $scope.languageItems = [{
+    ischecked: true,
+    language: "my-info.setting-language.followLanguage",
+    radioImg1: "build/img/common/radio_q.png",
+    radioImg2: "build/img/common/radio_h.png",
+    radioTemp: "build/img/common/radio_q.png"
+  }, {
+    ischecked: false,
+    language: "中文简体",
+    radioImg1: "build/img/common/radio_q.png",
+    radioImg2: "build/img/common/radio_h.png",
+    radioTemp: "build/img/common/radio_q.png"
+  },
+    {
+      ischecked: false,
+      language: "中文繁体",
+      radioImg1: "build/img/common/radio_q.png",
+      radioImg2: "build/img/common/radio_h.png",
+      radioTemp: "build/img/common/radio_q.png"
+    },
+    {
+      ischecked: false,
+      language: "English",
+      radioImg1: "build/img/common/radio_q.png",
+      radioImg2: "build/img/common/radio_h.png",
+      radioTemp: "build/img/common/radio_q.png"
+    },
+    {
+      ischecked: false,
+      language: "한국어",
+      radioImg1: "build/img/common/radio_q.png",
+      radioImg2: "build/img/common/radio_h.png",
+      radioTemp: "build/img/common/radio_q.png"
+    },
+    {
+      ischecked: false,
+      language: "ภาษาไทย",
+      radioImg1: "build/img/common/radio_q.png",
+      radioImg2: "build/img/common/radio_h.png",
+      radioTemp: "build/img/common/radio_q.png"
+    }
+  ];
+   $scope.initLanguage=function() {
+     alert(window.localStorage.language+" a");
+      if (window.localStorage.language =="default") {
+       $scope.languageItems[0].ischecked = true;
+       $scope.languageItems[0].radioImg1 = "build/img/common/radio_h.png";
+
+     }
+    if (window.localStorage.language == '中文简体') {
+        $scope.languageItems[1].ischecked = true;
+        $scope.languageItems[1].radioImg1 = "build/img/common/radio_h.png";
+
+      }
+      if (window.localStorage.language == '中文繁体') {
+        $scope.languageItems[2].ischecked = true;
+        $scope.languageItems[2].radioImg1 = "build/img/common/radio_h.png";
+      }
+      if (window.localStorage.language == 'English') {
+       $scope.languageItems[3].ischecked = true;
+       $scope.languageItems[3].radioImg1 = "build/img/common/radio_h.png";
+     }
+      if (window.localStorage.language == 'ภาษาไทย') {
+        $scope.languageItems[4].ischecked = true;
+        $scope.languageItems[4].radioImg1 = "build/img/common/radio_h.png";
+      }
+
+
+    }
+      $scope.initLanguage();
 
 
       $scope.goBack = function(){
@@ -51,53 +121,113 @@ angular.module('myInfoModule')
        *@return:
        *@disc:Select language
        */
-      $scope.chooseLanguage=function(e){
+      $scope.chooseLanguage=function(item){
+        item.ischecked=true;
+         item.radioImg1="build/img/common/radio_h.png";
+      window.localStorage.language=item.language;
 
-    if($(e.target).text().trim()=="中文简体"){
-      //SettingsService.set("language","中文简体");
-      $translate.use('zh');
-      var  temperature=SettingsService.get("temperature");
-      alert(temperature);
-      if(temperature=='fahrenheit'){
-        SettingsService.set("temperature",'华氏度°F');
-        window.localStorage.temperature="°F";
-      }
-      if(temperature=='centigrade'){
-        SettingsService.set("temperature",'摄氏度°C');
-        window.localStorage.temperature="°C";
-      }
-     // SettingsService.set("temperature",temperature);
 
-      publicMethod.goBack();
+        for(var i=0;i<$scope.languageItems.length;i++){
+       if($scope.languageItems[i].language!=item.language){
+         $scope.languageItems[i].ischecked=false;
+         $scope.languageItems[i].radioImg1="build/img/common/radio_q.png";
+       }
+        }
+
+ if(item.language=='my-info.setting-language.followLanguage'){
+
+   window.localStorage.language ="default";
+   navigator.globalization.getPreferredLanguage(
+     function (language) {
+
+       if (language.value == 'zh-CN' ||language.value ==  'zh-Hans-CN') {
+         $translate.use('zh');
+
+ }
+       else if (language.value == 'zh-TW' || language.value == 'zh-Hans-TW') {
+         $translate.use('tw');
+
+ }
+       else if (language.value == 'en-US' || language.value == 'en-CN') {
+         $translate.use('en');
+}
+       else if (language.value == 'en-TH' || language.value == 'th-CN') {
+         $translate.use('th');
 
     }
-        if($(e.target).text().trim()=="中文繁體"){
-       //   SettingsService.set("language","中文繁體");
+
+     },
+     function () {
+
+     });
+    publicMethod.goBack();
+        }
+   if(item.language=='中文简体'){
+
+     $translate.use('zh');
+
+     publicMethod.goBack();
+   }
+      else  if(item.language=='中文繁体'){
 
           $translate.use('tw');
-          publicMethod.goBack();
-
+       publicMethod.goBack();
         }
-        if($(e.target).text().trim()=="English"){
-      //    SettingsService.set("language","English");
-          var  temperature=SettingsService.get("temperature");
-          alert(temperature);
-          if(temperature=='华氏度°F'){
-            SettingsService.set("temperature",'fahrenheit');
-            window.localStorage.temperature="°F";
-          }
-          if(temperature=='摄氏度°C'){
-            SettingsService.set("temperature",'centigrade');
-            window.localStorage.temperature="°C";
-          }
+   else  if(item.language=='English'){
+
           $translate.use('en');
+          publicMethod.goBack();
 
-          publicMethod.goBack();
         }
-        if($(e.target).text().trim()=="ภาษาไทย"){
-         // SettingsService.set("language","ภาษาไทย");
-          publicMethod.goBack();
-        }
+else{$translate.use('en');}
+
+
+
+    //if($(e.target).text().trim()=="中文简体"){
+    //
+    //  $translate.use('zh');
+    //  var  temperature=SettingsService.get("temperature");
+    //  alert(temperature);
+    //  if(temperature=='fahrenheit'){
+    //    SettingsService.set("temperature",'华氏度°F');
+    //    window.localStorage.temperature="°F";
+    //  }
+    //  if(temperature=='centigrade'){
+    //    SettingsService.set("temperature",'摄氏度°C');
+    //    window.localStorage.temperature="°C";
+    //  }
+    // // SettingsService.set("temperature",temperature);
+    //
+    //  publicMethod.goBack();
+    //
+    //}
+    //    if($(e.target).text().trim()=="中文繁體"){
+    //   //   SettingsService.set("language","中文繁體");
+    //
+    //      $translate.use('tw');
+    //      publicMethod.goBack();
+    //
+    //    }
+    //    if($(e.target).text().trim()=="English"){
+    //  //    SettingsService.set("language","English");
+    //      var  temperature=SettingsService.get("temperature");
+    //      alert(temperature);
+    //      if(temperature=='华氏度°F'){
+    //        SettingsService.set("temperature",'fahrenheit');
+    //        window.localStorage.temperature="°F";
+    //      }
+    //      if(temperature=='摄氏度°C'){
+    //        SettingsService.set("temperature",'centigrade');
+    //        window.localStorage.temperature="°C";
+    //      }
+    //      $translate.use('en');
+    //
+    //      publicMethod.goBack();
+    //    }
+    //    if($(e.target).text().trim()=="ภาษาไทย"){
+    //     // SettingsService.set("language","ภาษาไทย");
+    //      publicMethod.goBack();
+    //    }
 
    }
 

@@ -43,43 +43,60 @@ angular.module('myApp')
         // org.apache.cordova.statusbar required
         StatusBar.styleDefault();
       }
-      // alert('language:');
-      navigator.globalization.getPreferredLanguage(
-        function (language) {
-          //  alert('language: ' + language.value + '\n');
-          //   alert(language.value=='en-US');
-          //     alert(language.value=='zh-CN');
-          // var localLanguage=language.value;
-          if (language.value == 'zh-CN' || 'zh-Hans-CN') {
+
+
+         if(window.localStorage.languageFlag==undefined||window.localStorage.language=="default") {
+
+          navigator.globalization.getPreferredLanguage(
+            function (language) {
+              alert(language.value == 'zh-Hans-CN');
+              alert(language.value == 'zh-CN' ||language.value ==  'zh-Hans-CN');
+              if (language.value == 'zh-CN' ||language.value ==  'zh-Hans-CN') {
+                alert(language.value+'1');
+                $translate.use('zh');
+
+              }
+              else if (language.value == 'zh-TW' ||language.value ==  'zh-Hans-TW') {
+                $translate.use('tw');
+
+              }
+              else if (language.value == 'en-US' ||language.value ==  'en-CN') {
+                alert(language.value+'2');
+                $translate.use('en');
+               }
+              else if (language.value == 'en-TH' ||language.value ==  'th-CN') {
+                $translate.use('th');
+
+              }
+              else {
+                $translate.use('en');
+                alert(language.value+"a");
+
+              }
+              window.localStorage.languageFlag=true;
+              window.localStorage.language="default";
+            },
+            function () {
+              // alert('Error getting locale\n');
+            });
+        }
+      else{
+
+          if (window.localStorage.language == '中文简体') {
             $translate.use('zh');
 
-            //   alert('zh1');
           }
-          else if (language.value == 'zh-TW' || 'zh-Hans-TW') {
+        else  if (window.localStorage.language == '中文繁体') {
             $translate.use('tw');
-
-            //   alert('tw1');
           }
-          else if (language.value == 'en-US' || 'en-CN') {
+          else if (window.localStorage.language == 'English') {
             $translate.use('en');
-
-            // alert('en1');
-
           }
-          else if (language.value == 'en-TH' || 'th-CN') {
+          else  if (window.localStorage.language == 'ภาษาไทย') {
             $translate.use('th');
-
-            //   alert('th1');
           }
-          else {
-            $translate.use('en');
-            //  alert('en1');
-          }
-
-        },
-        function () {
-          // alert('Error getting locale\n');
-        });
+          else{ $translate.use('en');}
+        }
     });
 
     document.addEventListener('deviceready', function() {
