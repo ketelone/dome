@@ -5,18 +5,19 @@ angular.module('nextgenModule')
     '$ionicModal',
     '$compile',
     'baseConfig',
-    'checkVersionService','$ionicHistory','hmsPopup','$timeout','nextgenService',
+    'checkVersionService','$ionicHistory','hmsPopup','nextgenService','$timeout',
     function ($scope,
               $state,
               $ionicModal,
               $compile,
               baseConfig,
-              checkVersionService,$ionicHistory,hmsPopup,$timeout,nextgenService
+              checkVersionService,$ionicHistory,hmsPopup,nextgenService,$timeout
     ) {
       var ctrId="00";
       var header="8877";
       var idx="00";
-      var devId="E8:91:E0:DC:20:F1";
+      var devId="03";//E8:91:E0:DC:20:F1
+      var deveiceId="E0DC20F1";
 
       function getValue(data){
         return nextgenService.getCmdvalue(header,idx, data, ctrId,devId);
@@ -25,13 +26,17 @@ angular.module('nextgenModule')
 
 
   function chixuWater(){
+
     var argment = {
       'mode': '01'    //00表示stop，01表示Start continuous outlet 02表示Start evacuate cold water (turn on, and off when reach 37 degree,Start evacuate cold water 如果5分钟后水温仍达不到37度则自动停止) ,other表示内置设定
    }
-    var data = nextgenService.operateShower(argment);
-    var value = getValue(data);
 
-    nextgenService.sendCmd(devId,value,"持续出水","持续出水失败");
+    var  data= nextgenService.operateShower(argment);
+
+    var value = getValue(data);
+  alert(value);
+    nextgenService.sendCmd(deveiceId,value,"持续出水","持续出水失败");
+
   }
 
   function paikongWater(){
@@ -40,8 +45,8 @@ angular.module('nextgenModule')
     }
     var data = nextgenService.operateShower(argment);
     var value = getValue(data);
-
-    nextgenService.sendCmd(devId,value,"排空冷水","排空冷水失败");
+    alert(value);
+    nextgenService.sendCmd(deveiceId,value,"排空冷水","排空冷水失败");
 
 }
 
@@ -51,15 +56,16 @@ angular.module('nextgenModule')
         }
         var data = nextgenService.operateShower(argment);
         var value = getValue(data);
-
-        nextgenService.sendCmd(devId,value,"关闭","关闭失败");
+        alert(value);
+        nextgenService.sendCmd(deveiceId,value,"关闭","关闭失败");
 
       }
 
   function closeAll(){
         var data = nextgenService.stopAll();
         var value = getValue(data);
-        sendCmd(devId,value,"一键关闭","一键关闭失败");
+       alert(value);
+        sendCmd(deveiceId,value,"一键关闭","一键关闭失败");
       };
 
       //头顶花洒
@@ -71,7 +77,8 @@ angular.module('nextgenModule')
         }
         var data = nextgenService.setShowerPara(argment);
         var value = getValue(data);
-       nextgenService.sendCmd(devId,value,"头顶花洒","头顶花洒失败");
+        alert(value);
+       nextgenService.sendCmd(deveiceId,value,"头顶花洒","头顶花洒失败");
 
 
       }
@@ -84,7 +91,8 @@ angular.module('nextgenModule')
         }
         var data = nextgenService.setShowerPara(argment);
         var value = getValue(data);
-        nextgenService.sendCmd(devId,value,"头顶花洒","头顶花洒失败");
+        alert(value);
+        nextgenService.sendCmd(deveiceId,value,"头顶花洒","头顶花洒失败");
 
 
       }
@@ -96,7 +104,8 @@ angular.module('nextgenModule')
         }
         var data = nextgenService.setShowerPara(argment);
         var value = getValue(data);
-        nextgenService.sendCmd(devId,value,"手持花洒","手持花洒");
+        alert(value);
+        nextgenService.sendCmd(deveiceId,value,"手持花洒","手持花洒");
 
 
       }
@@ -108,58 +117,52 @@ angular.module('nextgenModule')
         }
         var data = nextgenService.setShowerPara(argment);
         var value = getValue(data);
-        nextgenService.sendCmd(devId,value,"Spout","Spout失败");
+  alert(value);
+        nextgenService.sendCmd(deveiceId,value,"Spout","Spout失败");
 
     }
 
-//3.进入节能状态 n	相关作业未停止，不能进入节能状态。
-      var argment = {
-        'mode': '00-03' //00表示关闭，01表示低电量，02表示休眠，03表示断电
-      }
 
-      function enterPowerSave() {
-        var data = '31';
-        data = data + arg.mode;
-        return data;
-      }
+ function closeJieneng(){
 
-
-      function colseJieneng(){
-        var argment = {
-          'mode': '00' //00表示关闭，01表示低电量，02表示休眠，03表示断电
-        }
-        var data = nextgenService.enterPowerSave(argment);
+        var data = nextgenService.exitPowerSave();
         var value = getValue(data);
-        nextgenService.sendCmd(devId,value,"休眠","休眠失败");
+   alert(value);
+        nextgenService.sendCmd(deveiceId,value,"关闭节能","关闭节能失败");
 
       }
       function goSleep(){
+
         var argment = {
           'mode': '02' //00表示关闭，01表示低电量，02表示休眠，03表示断电
         }
         var data = nextgenService.enterPowerSave(argment);
+
         var value = getValue(data);
-        nextgenService.sendCmd(devId,value,"关闭节能","关闭节能失败");
+        alert(value);
+        nextgenService.sendCmd(deveiceId,value,"关闭节能","关闭节能失败");
 
       }
-      function goPowerfailure(){
+      /*function goPowerfailure(){
         var argment = {
           'mode': '03' //00表示关闭，01表示低电量，02表示休眠，03表示断电
         }
         var data = nextgenService.enterPowerSave(argment);
         var value = getValue(data);
-        nextgenService.sendCmd(devId,value,"断电","断电失败");
+        alert(value);
+        nextgenService.sendCmd(deveiceId,value,"断电","断电失败");
 
-      }
-      function goLowPower(){
+      }*/
+      /*function goLowPower(){
         var argment = {
           'mode': '01' //00表示关闭，01表示低电量，02表示休眠，03表示断电
         }
         var data = nextgenService.enterPowerSave(argment);
         var value = getValue(data);
-        nextgenService.sendCmd(devId,value,"低电量","低电量失败");
+        alert(value);
+        nextgenService.sendCmd(deveiceId,value,"低电量","低电量失败");
 
-      }
+      }*/
 
 
 
@@ -184,13 +187,13 @@ angular.module('nextgenModule')
 
       //初始模式选择
       $scope.toiletController = {
-         modelType:"nextgen.maichong",
+         modelType:"nextgen.yidong",
         way:"nextgen.handleSelecDes"
       };
 
   //侧滑转档数量json
       $scope.slideInitData =[{
-        des: "nextgen.chixu",
+        des: "nextgen.yidong",
         gearNum: 1,
         gearInit: 1,
        // gearInitTemp: 1,
@@ -226,7 +229,7 @@ angular.module('nextgenModule')
           imgSeledUrl: "build/img/nextgen/stopseled.png",
           imgUrlTemp:"build/img/nextgen/stop.png",
           handleDes: "nextgen.stop",
-          selecFlag:false,
+          selecFlag:false
 
         },
         {
@@ -426,10 +429,14 @@ angular.module('nextgenModule')
       $scope.value = [{id: 2, des: 'nextgen.maichong'},
         {id: 3, des: 'nextgen.bodong'}, {id: 4, des: 'nextgen.yidong'}, {id: 5, des: 'nextgen.Spout'}
       ];
+
   if($scope.handlenapeListNape[index].selecFlag ==true){
-    chixuWater();
+    handHuasa();//先选择手持花洒
+    chixuWater();//再持续出水
+
   }
     else{
+
     closeWater();
   }
 
@@ -446,7 +453,8 @@ angular.module('nextgenModule')
               {id: 3, des: 'nextgen.bodong'}, {id: 4, des: 'nextgen.yidong'}, {id: 5, des: 'nextgen.Spout'}
             ];
           if($scope.handlenapeListNape[index].selecFlag ==true){
-            paikong();
+            handHuasa();//先选择手持花洒
+            paikongWater(); //再排空冷水
           }
           else{
             closeWater();
@@ -454,24 +462,32 @@ angular.module('nextgenModule')
         }
         if(index==2){
 
-          closeAllFunction();
+          closeAll();
     }
         if(index==3)
         {
-
-          $scope.slideInitData[0].des="nextgen.close";
-          $scope.toiletController = {
-            modelType:"nextgen.close",
-            way:"nextgen.jieneng"
-          };
-          if($scope.value[0].ionCheck==undefined) {//是否有ioncheck属性
-            $scope.value = [{id: 6, des: 'nextgen.close', ionCheck: true},
-              {id: 7, des: 'nextgen.powerFailure', ionCheck: false}, {
-                id: 8,
-                des: 'nextgen.sleep',
-                ionCheck: false
-              }, {id: 9, des: 'nextgen.lowPower', ionCheck: false}];
+          //目前只能选睡眠模式
+          $scope.slideInitData[0].des="nextgen.sleep";
+          if($scope.handlenapeListNape[index].selecFlag ==true){
+            alert("sleep");
+            goSleep();
           }
+          else{
+            closeJieneng();
+          }
+
+          //$scope.toiletController = {
+          //  modelType:"nextgen.sleep",
+          //  way:"nextgen.jieneng"
+          //};
+          //if($scope.value[0].ionCheck==undefined) {//是否有ioncheck属性
+          //  $scope.value = [{id: 6, des: 'nextgen.close', ionCheck: true},
+          //    {id: 7, des: 'nextgen.powerFailure', ionCheck: false}, {
+          //      id: 8,
+          //      des: 'nextgen.sleep',
+          //      ionCheck: false
+          //    }, {id: 9, des: 'nextgen.lowPower', ionCheck: false}];
+          //}
 
 
            //$scope.modal.show();
@@ -480,8 +496,7 @@ angular.module('nextgenModule')
           //  ele[0].style.top = 68 + '%';
           //  ele[0].style.minHeight = 61 + '%';
           //}, 10);
-
-        };
+      };
 
         if(index==4){
 
@@ -523,7 +538,7 @@ angular.module('nextgenModule')
       $scope.openModal = function () {
 
 
-        if( $scope.handlenapeListNape[0].selecFlag==true||$scope.handlenapeListNape[3].selecFlag==true||$scope.handlenapeListNape[1].selecFlag==true) {
+        if( $scope.handlenapeListNape[0].selecFlag==true||$scope.handlenapeListNape[1].selecFlag==true) {
           $scope.modal.show();
           setTimeout(function () {
             var ele = document.getElementsByClassName("hmsModal");
@@ -563,7 +578,7 @@ angular.module('nextgenModule')
 
 
   }
-        else{
+       /* else{
     $scope.toiletController.modelType = val.des;
           $scope.modal.hide();
     for (var i = 0; i < $scope.value.length; i++) {
@@ -595,7 +610,7 @@ angular.module('nextgenModule')
           goLowPower();
         };
 
-
+*/
 
       };
 
