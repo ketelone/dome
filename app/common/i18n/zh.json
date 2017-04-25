@@ -26,7 +26,8 @@
       "logout": "退出当前账号"
     },
     "setting-language": {
-      "language": "语 言"
+      "language": "语 言",
+      "followLanguage":"跟随系统语言"
     },
     "setting-temperature": {
       "unitSetting": "单 位 设 置",
@@ -277,6 +278,7 @@
     "saveAlert": "保存成功",
     "saveError": "保存失败",
     "signalStatus": "信号很好",
+    "signalBadStatus": "信号不好",
     "boxLink": "box连接",
     "using": "使用中",
     "bathroom": "浴霸",
@@ -301,7 +303,9 @@
     "fourHour": "四时",
     "fiveHour": "五时",
     "sixHour": "六时",
-    "timeout": "您选择的时间已超出范围，请重新选择"
+    "timeout": "您选择的时间已超出范围，请重新选择",
+    "twentyModel": "24小时<br>模式",
+    "commonModel": "普通模式"
   },
   "spa": {
     "goHomeTitle": "场景详情",
@@ -360,7 +364,8 @@
     "parameterrad": "0",
     "parameterdes": "水温档位",
     "handleSelecDes": "出水方式",
-    "linyu": "淋浴",
+    "chixu": "持续出水",
+    "paikong": "排空冷水",
     "stop": "一键停止",
     "jieneng": "节能",
     "shezhi": "设置",
@@ -381,7 +386,9 @@
       "firmwareVersion": "固件版本号",
       "SKUnumber": "SKU号",
       "SNnumber": "SN号",
-      "positionMess": "位置信息"
+      "positionMess": "位置信息",
+      "saveAlert": "保存成功",
+      "saveError": "保存失败"
     }
   },
   "message": {

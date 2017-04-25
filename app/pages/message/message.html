@@ -30,12 +30,12 @@
     <ion-scroll zooming="true" direction="y"  class="scroll-view ionic-scroll scroll-y" >
 <!--status-->
    <ion-list ng-show="hasStaus" show-delete="data.showDelete" >
-     <ion-item style="background: #212121;border-style:none;" ng-repeat="statusitem in statusitems " item="statusitem"  class="item item-icon-right item-remove-animate">
-   <div class="row oneModel">
+     <ion-item  style="background: #212121;border-style:none;" ng-repeat="statusitem in statusitems " item="statusitem"  class="item item-icon-right item-remove-animate">
+   <div class="row oneModel"  >
   <!-- <img  ng-show="show-delete" style="width: 0.44rem;height: 0.45rem" ng-src="build/img/message/radio_bg.png"/>-->
            <div class="col col-75">
              <div class="row">
-               <div class="col col-60" STYLE="padding-left: 0rem"><span class="leftWord1">{{statusitem.statusMessage}}</span></div>
+               <div class="col col-60" style="padding-left: 0rem"><span class="leftWord1">{{statusitem.statusMessage}}</span></div>
                <div class="col" ><span class="leftWord2">{{statusitem.device}}</span></div>
              </div>
              <div class="row">
@@ -78,7 +78,7 @@
 <!--exception-->
     <ion-list ng-show="hasException" show-delete="data.showDelete" >
       <ion-item style="background: #212121;border-style:none;" ng-repeat="exceptionitem in exceptionitems" item="exceptionitem"  class="item item-icon-right item-remove-animate">
-        <div class="row oneModel">
+        <div class="row oneModel" >
           <div class="col col-75">
             <div class="row">
               <div class="col col-60" STYLE="padding-left: 0rem"><span class="leftWord1">{{exceptionitem.exceptionMessage}}</span></div>
@@ -101,9 +101,9 @@
                            ng-click="goDeteleitem(exceptionitem)">
           删除
         </ion-option-button>
-        <ion-delete-button   ng-click="onChoose(exceptionitem)">
+        <ion-delete-button  ng-click="onChoose(exceptionitem)" >
 
-          <img  style=" width: 0.5rem;height:0.5rem" ng-src={{exceptionitem.circleUrl1}} />
+          <img  style=" width: 0.42rem;height:0.42rem" ng-src={{exceptionitem.circleUrl1}} />
 
      </ion-delete-button>
       </ion-item>

@@ -22,7 +22,7 @@
       <img class="handlenape-selec-img" src="build/img/karess-controller/icon_scenario_arrow.png"></img>
     </div>
     <ion-scroll class="toilet-handlenape">
-      <div class="toilet-handlenape-list" ng-repeat="list in handlenapeListNape track by $index" ng-click="selectNapes($index)">
+      <div class="toilet-handlenape-list" ng-repeat="list in handlenapeListNape track by $index" ng-click="selectNapes($index,list)">
         <div class="handlenape-list-napes" ng-class="{true: 'napes-border', false: ''}[list.selecFlag]">
           <img class="list-napes-img" ng-src={{list.imgUrl}} alt="">
           <span class="list-napes-dec" translate={{list.handleDes}}></span>

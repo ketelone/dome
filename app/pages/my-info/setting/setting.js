@@ -16,7 +16,7 @@ angular.module('myInfoModule')
     'hmsPopup',
     '$rootScope',
     'publicMethod',
-    '$stateParams','checkVersionService','SettingsService',
+    '$stateParams','checkVersionService','SettingsService','$translate',
     function ($scope,
               $state,
               baseConfig,
@@ -27,7 +27,7 @@ angular.module('myInfoModule')
               $ionicPlatform,
               $ionicScrollDelegate,
               hmsPopup,
-              $rootScope, publicMethod,$stateParams,checkVersionService,SettingsService){
+              $rootScope, publicMethod,$stateParams,checkVersionService,SettingsService,$translate){
 
 
       $scope.goBack = function(){
@@ -41,51 +41,60 @@ angular.module('myInfoModule')
        *@disc:Set default language
 
       */
-//$scope.language=function(){
+
+ $scope.thisLanguage="";
 
 
- // if( SettingsService.get("language")!=false){
-  //  return SettingsService.get("language");
- // }
- //else{
+$scope.currentLanguage=function(){
 
-   //   var language=angular.element('#sl').text();
-   // alert(language);
- //   SettingsService.set("language",language);
+  if (window.localStorage.language == '中文简体') {
+    $scope.thisLanguage="中文简体";
+  }
+  else if(window.localStorage.language =="default"){
+    navigator.globalization.getPreferredLanguage(
+      function (language) {
 
- //navigator.globalization.getPreferredLanguage(
- //     function (language)
- //     {
- //       //alert('language1: ' + language.value + '\n');
- //       var localLanguage=language.value;
- //       if( localLanguage=='zh-CN'){
- //         SettingsService.set("language","中文简体");
- //         return SettingsService.get("language");
- //       }
- //       else  if( localLanguage=='zh-TW'){
- //         SettingsService.set("language","中文繁体");
- //         return SettingsService.get("language");
- //       }
- //       else  if( localLanguage=='en-US'){
- //         SettingsService.set("language","English");
- //         return SettingsService.get("language");
- //       }
- //       else  if( localLanguage=='en-TH'){
- //         SettingsService.set("language","ภาษาไทย");
- //         return SettingsService.get("language");
- //       }
- //       else {
- //         SettingsService.set("language","English");
- //         return SettingsService.get("language");
- //       }
- //     },
- //     function ()
- //     {
+        if (language.value == 'zh-CN' ||language.value ==  'zh-Hans-CN') {
+          $scope.thisLanguage="中文简体";
 
-  //alert('Error getting language\n');
+        }
+        else if (language.value == 'zh-TW' || language.value == 'zh-Hans-TW') {
+          $scope.thisLanguage="中文繁体";
 
-     // }
- // );
+        }
+        else if (language.value == 'en-US' || language.value == 'en-CN') {
+          $scope.thisLanguage="English";
+        }
+        else if (language.value == 'en-TH' || language.value == 'th-CN') {
+          $translate.use('th');
+          $scope.thisLanguage="ภาษาไทย";
+        }
+       else{
+          $scope.thisLanguage="English";
+        }
+      },
+      function () {
+
+      });
+  }
+  else  if (window.localStorage.language == '中文繁体') {
+    $scope.thisLanguage="中文繁体";
+  }
+  else if (window.localStorage.language == 'English') {
+    $scope.thisLanguage="English";
+  }
+  else  if (window.localStorage.language == 'ภาษาไทย') {
+    $scope.thisLanguage="ภาษาไทย";
+  }
+  else{
+    $scope.thisLanguage="English";
+  }
+
+
+ }
+
+      $scope.currentLanguage();
+//);
 
 
 

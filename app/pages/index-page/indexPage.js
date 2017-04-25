@@ -220,6 +220,8 @@ angular.module('indexPageModule')
 
       $scope.$watch('', function(){
         //localStorage.deviceInfo = ";r,1";
+
+        //hmsPopup.showLoading();
         searchBox();
       }, true);
 
@@ -245,11 +247,15 @@ angular.module('indexPageModule')
           //localStorage.device_id = resultOn.payload.cmd_properties.device_list[0].device_id;
           //循环device list 取出device id，并降deviceid与相应页面的设备做关联
           var deviceLinkInfo = "";
+          var deviceStatus = [];
           angular.forEach(resultOn.payload.cmd_properties.device_list, function(data, index, array){
             deviceLinkInfo = deviceLinkInfo =="" ? (";" + data.device_sku + "," + data.device_id) : (deviceLinkInfo + ";" + data.device_sku + "," + data.device_id);
+            deviceStatus.push({'deviceSku': data.device_sku, 'deviceRssi': data.device_rssi, 'deviceState': data.device_state});
           });
           //保存device 连接的信息。
           localStorage.deviceInfo = deviceLinkInfo;
+          localStorage.deviceStatus = JSON.stringify(deviceStatus);
+          hmsPopup.hideLoading();
 
           if ($scope.deviceOn.length == 0) {
             hmsPopup.showShortCenterToast("没有已连接设备，请搜索未连接设备");

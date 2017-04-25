@@ -1,14 +1,14 @@
 .nextgen {
 
   .headColor {
-    background-color: $global-head-bg;
+   background-color: $global-head-bg;
   }
   .iconColor {
     color: $color-base
   }
 
   .toilet-bg{
-    background-color: $global-head-bg;
+   background-color: $global-head-bg;
   }
   .toilet-conninfo{
     margin-top: 0.86rem;
@@ -90,8 +90,11 @@
       .toilet-parameterctl-des{
         display: block;
         margin-top: 0.15rem;
-        font-size: 0.30rem;
+        font-size: 0.5rem;
+        white-space: nowrap;
         color: white;
+        position: relative;
+        right:0.1rem
       }
     }
   }

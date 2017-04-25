@@ -6,10 +6,8 @@ angular.module('karessControlModule')
     ['baseConfig',
       function (baseConfig) {
 
-        function Karess() {
-          console.log('12');
-        };
-        var data = {
+
+        this.data = {
           closeAll: "00",
           openFiller: "2201",
           closeFiller: "2200",
@@ -23,6 +21,7 @@ angular.module('karessControlModule')
           closeHeatBack: "2700",
           openDrain: "2501",
           closeDrain: "2500",
+          quitSaveMode: "32", //退出节能模式
           _paramMassageBack: {
             flow: {
               LOW: "1",
@@ -51,22 +50,65 @@ angular.module('karessControlModule')
               LOW: "00",
               HIGH: "01"
             }
+          },
+          _paramPowerSaveMode: {
+            _header: "31",
+            LOW_POWER: "01",
+            SLEEP: "02",
+            POWER_OFF: "03"
+          },
+          _returnCmdType: {
+            DEVICE_STATUS:{
+              CODE:"80",
+              Initialize:"0",
+              Work:"1",
+              Diagnostic:"7",
+              Aging:"9"
+            },
+            ERROR_STATUS:{
+              NO_ERROR:"0",
+              ERROR_OCCURRED:"1"
+            },
+            MASSAGE_PILLOW_STATUS:{
+              CODE:"83",
+              Init:"0",
+              Idle:"1",
+              Run_Massage_Pillow:"2",
+              Diagnostic:"B"
+            },
+            MASSAGE_BACK_STATUS:4,
+            SANTIZE_STATUS:7,
+            DRAIN_STATUS:8,
+            HEAT_BACK_STATUS:{
+              CODE:"89",
+              Init:"0",
+              Idle:"1",
+              Run:"2",
+              Diagostic:"A"
+
+            },
+            FILLER_STATUS:10,
+            WATER_TEMPERATURE_STATUS:26,
+            WATER_LEVEL_STATUS:{
+              CODE:"A7"
+            }
           }
         };
 
         /**
-         * 设置水力按摩(massage-back)的按摩水压
-         * HIGH，LOW
+         *
+         *设置背部加热参数
          */
-        var setHeatParam = function (temp) {
+        this.setHeatParam =function(temp) {
           return "07" + temp;
         };
 
+
         /**
-         * 设置背部加热参数
-         * HIGH，LOW
+         *
+         *设置水力按摩(massage-back)的按摩水压
          */
-        var setMassageBackPressure = function (flow, mode) {
+        this.setMassageBackPressure =function(flow, mode) {
           return "01" + flow + "00" + mode;
         };
 
@@ -77,14 +119,77 @@ angular.module('karessControlModule')
          * flow: _data._paramFiller.flow.*
          * outlet _data._paramFiller.outlet.*
          */
-        var setFillerParams = function (temp, level, flow, outlet) {
+        this.setFillerParams=function(temp, level, flow, outlet) {
           var t = doStr(temp.toString(16));
           var l = doStr(level.toString(16));
           return "02" + t + l + outlet + flow;
         };
 
+        this.enterPowerSaveMode=function(mode) {
+          return this.data._paramPowerSaveMode._header + mode;
+        };
 
-        function getHex(bin) {
+
+        /**
+         * 解析返回的json数据
+         * 传入cmd字段，传出json数据
+         */
+        this.resolveCmd=function(cmd) {
+          var cmdLen = cmd.length;
+          //    var header = cmd.substring(0,4);
+          //   var length = cmd.substring(4,6);
+          var idx = cmd.substring(6, 8);
+          //    var ctlId = cmd.substring(8,10);
+          var devId = cmd.substring(10, 12);
+          var data = cmd.substring(12, cmdLen - 2);
+          //    var checksum = cmd.substring(cmdLen -2);
+          if (devId == "05") {
+            var code = data.substring(0, 2).toUpperCase();
+            var out = {
+              devId:"05",
+              type:code,
+              error:0,
+              value:{}
+            };
+            var type = this.data._returnCmdType;
+            switch(code){
+              //返回设备状态
+              case type.DEVICE_STATUS.CODE:
+                var valStatus = {state:""};
+                out.error = data[2];
+                valStatus.state = data[3];
+                out.value = valStatus;
+                break;
+              //返回按摩枕状态
+              case type.MASSAGE_PILLOW_STATUS.CODE:
+                var valStatus = {state:""};
+                valStatus.state = data[3];
+                out.value = valStatus;
+                break;
+              //返回水位。 百分比
+              case type.WATER_LEVEL_STATUS.CODE:
+                var valStatus = {
+                  waterLevel:parseInt(data.substring(2,4),16)
+                };
+                out.value = valStatus;
+                break;
+              //返回背部加热状态
+              case type.HEAT_BACK_STATUS.CODE:
+                var valStatus = {state:""};
+                valStatus.state = data[3];
+                out.value = valStatus;
+                break;
+            }
+
+
+          }
+
+          return out;
+        };
+
+
+
+        this.getHex=function(bin) {
           var hex = "";
           console.log(bin + "  " + bin.length)
           for (var i = 0; i < bin.length; i += 4) {
@@ -95,6 +200,9 @@ angular.module('karessControlModule')
         }
 
 
+
+
+
         /**
          * 返回cmd字段命令
          * @param {*} header 头 16进制
@@ -103,7 +211,7 @@ angular.module('karessControlModule')
          * @param {*} ctrId 控制段 16进制
          * @param {*} devId 设备段 16进制
          */
-        function getCmd(header, idx, data, ctrId, devId) {
+        this.getCmd=function(header, idx, data, ctrId, devId) {
           if (data.length % 2 != 0) {
             data = "0" + data;
           }
@@ -127,20 +235,40 @@ angular.module('karessControlModule')
           return d;
         }
 
-
         /**
          * 测试
          */
 
-        var allData = data.closeFiller;
-        console.log(getCmd("8877", 1, allData, 0, 5));  //关闭所有
+        // var allData = data.closeFiller;
+        // console.log(getCmd("8877", 1, allData, 0, 5));  //关闭所有
+        //
+        // var setFiller = setFillerParams(50, 50, data._paramFiller.flow.HIGH, data._paramFiller.outlet.BATH_FAUCET);
+        // console.log(getCmd("8877", 1, setFiller, 0, 5));
+        //
+        //
+        // var setHeatBack = setMassageBackPressure(data._paramMassageBack.flow.HIGH, data._paramMassageBack.mode.NORMAL);
+        // console.log(getCmd("8877", 1, setHeatBack, 0, 5));
 
-        var setFiller = setFillerParams(50, 50, data._paramFiller.flow.HIGH, data._paramFiller.outlet.BATH_FAUCET);
-        console.log(getCmd("8877", 1, setFiller, 0, 5));
+        // var cmd = "8877060100058001d9";
+        // var data = resolveCmd(cmd);
+        // console.log(JSON.stringify(data)); //{"type":"80","error":"0","value":{"state":"1"}}
+        // if(data.type == _data._returnCmdType.DEVICE_STATUS.CODE){
+        //   if(data.value.state  ==  _data._returnCmdType.DEVICE_STATUS.Work){
+        //     //Working...
+        //     console.log("Working...");
+        //   }
+        // }
+        //
+        // var cmd = "887706010005A705d9";
+        // var data = resolveCmd(cmd);
+        // console.log(JSON.stringify(data)); //{"devId":"05","type":"A7","error":0,"value":{"waterLevel":3}}
+        // if(data.type == _data._returnCmdType.WATER_LEVEL_STATUS.CODE){
+        //   console.log(data.value.waterLevel); // 水温
+        // }
+        //
+        //
+        // var cmd = "8877060100058902d9";
+        // var data = resolveCmd(cmd);
+        // console.log(JSON.stringify(data)); //{"devId":"05","type":"89","error":0,"value":{"state":"2"}} //run
 
-        var setHeatBack = setHeatParam(data._paramHeadBack.temp.HIGH);
-        console.log(getCmd("8877", 1, setHeatBack, 0, 5));
-
-        var setHeatBack = setMassageBackPressure(data._paramMassageBack.flow.HIGH, data._paramMassageBack.mode.NORMAL);
-        console.log(getCmd("8877", 1, setHeatBack, 0, 5));
       }]);
