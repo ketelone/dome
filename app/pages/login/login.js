@@ -172,29 +172,32 @@ angular.module('loginModule')
           } else {
             model = device.model;
           }
-          var url = baseConfig.loginPath + "username=" + encodeURIComponent($scope.loginInfo.username) + "&password=" +
-            encodeURIComponent($scope.loginInfo.password) + "&device_info=" + deviceInfo + "&device_model=" + encodeURIComponent(model) +
-            "&device_version=" + encodeURIComponent(device.version) + "&device_uuid=" + encodeURIComponent(device.uuid);
+          var url =
+          "http://139.219.198.247:8080/residential/oauth/token" + "?username=" + encodeURIComponent($scope.loginInfo.username) + "&password=" +
+          encodeURIComponent($scope.loginInfo.password) + "&client_id=" + 'residential_client' + "&client_secret=" + 'residential_secret' +
+          "&grant_type=" + 'password';
         } catch (e) {
-          url = baseConfig.loginPath + "username=" + encodeURIComponent($scope.loginInfo.username) + "&password=" +
-            encodeURIComponent($scope.loginInfo.password) + "&device_info=" + deviceInfo;
+          var url =
+            "http://139.219.198.247:8080/residential/oauth/token" + "?username=" + encodeURIComponent($scope.loginInfo.username) + "&password=" +
+            encodeURIComponent($scope.loginInfo.password) + "&client_id=" + 'residential_client' + "&client_secret=" + 'residential_secret' +
+            "&grant_type=" + 'password'
+
         }
         if (baseConfig.debug) {
           console.log('loginPost.url ' + url);
         }
-
         return $http({
           method: 'POST',
           headers: {
             'Content-type': "application/x-www-form-urlencoded"
           },
-          url: url
+          url: url,
         })
       }
 
       $scope.login = function () {//登录功能
-        $state.go('tabs');
-        return;
+        // $state.go('tabs');
+        // return;
         if (window.localStorage.empno != $scope.loginInfo.username) {
           localStorage.removeItem('key_history1');
           localStorage.removeItem('common_linkman2');
@@ -219,9 +222,9 @@ angular.module('loginModule')
             hmsPopup.showPopup('<span translate="alertMsg.pwdnn"></span>');
             return;
           }
-          $state.go('tabs', {}, {location:"replace", reload:"true"});
-          hmsPopup.hideLoading();
-          return;
+          // $state.go('tabs', {}, {location: "replace", reload: "true"});
+          // hmsPopup.hideLoading();
+          // return;
 
           loginPost().success(function (result) {
             hmsPopup.hideLoading();
@@ -255,38 +258,38 @@ angular.module('loginModule')
         }, 700);
       };
       /**
-      *@autor:daidongdong
-      *@name:registered
-      *@params:
-      *@return:
-      *@disc:注册
-      */
+       *@autor:daidongdong
+       *@name:registered
+       *@params:
+       *@return:
+       *@disc:注册
+       */
       $scope.registered = function () {
         $state.go('registered');
       }
       /**
-      *@autor:daidongdong
-      *@name:forgetPw
-      *@params:
-      *@return:
-      *@disc:忘记密码
-      */
+       *@autor:daidongdong
+       *@name:forgetPw
+       *@params:
+       *@return:
+       *@disc:忘记密码
+       */
       $scope.forgetPw = function () {
         $state.go('forgetPassword');
       }
       /**
-      *@autor:daidongdong
-      *@name:userNameBlur
-      *@params:
-      *@return:
-      *@disc:用户名验证
-      */
-      $scope.userNameBlur = function(){
-        if(phoneNumber($scope.loginInfo.username)){
-        }else{
-          if(isEmailAddress($scope.loginInfo.username)){
-          }else{
-            if($scope.showUserClearButton){
+       *@autor:daidongdong
+       *@name:userNameBlur
+       *@params:
+       *@return:
+       *@disc:用户名验证
+       */
+      $scope.userNameBlur = function () {
+        if (phoneNumber($scope.loginInfo.username)) {
+        } else {
+          if (isEmailAddress($scope.loginInfo.username)) {
+          } else {
+            if ($scope.showUserClearButton) {
               hmsPopup.showPopup('<span translate="alertMsg.unfr"></span>');
             }
           }

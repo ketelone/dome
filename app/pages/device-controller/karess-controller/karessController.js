@@ -5,13 +5,13 @@ angular.module('karessControlModule')
     '$ionicModal',
     '$compile',
     'baseConfig',
-    'checkVersionService', 'SettingsService','$ionicHistory','$ionicSlideBoxDelegate','karessService',
+    'checkVersionService', 'SettingsService', '$ionicHistory', '$ionicSlideBoxDelegate', 'karessService',
     function ($scope,
               $state,
               $ionicModal,
               $compile,
               baseConfig,
-              checkVersionService, SettingsService, $ionicHistory,$ionicSlideBoxDelegate,karessService) {
+              checkVersionService, SettingsService, $ionicHistory, $ionicSlideBoxDelegate, karessService) {
       var deviceId = SettingsService.get('sku')
       $scope.karessController = {
         modelType: "karessController.bath",
@@ -39,7 +39,7 @@ angular.module('karessControlModule')
         canves01: "NvYongSycanves01",
         canves02: "NvYongSycanves02",
         canves03: "NvYongSycanves03",
-        flag : '4'
+        flag: '4'
       }];
       $scope.shuiBeiBuData = [{
         des: "温度",
@@ -51,7 +51,7 @@ angular.module('karessControlModule')
         canves01: "NvYongSycanves01",
         canves02: "NvYongSycanves02",
         canves03: "NvYongSycanves03",
-        flag : '5'
+        flag: '5'
       }];
       $scope.slideTunBuData = [{
         des: "水温",
@@ -63,7 +63,7 @@ angular.module('karessControlModule')
         canves01: "TunBuSycanves01",
         canves02: "TunBuSycanves02",
         canves03: "TunBuSycanves03",
-        flag : "1"
+        flag: "1"
       },
         {
           des: "水位",
@@ -75,7 +75,7 @@ angular.module('karessControlModule')
           canves01: "TunBuPosPoscanves01",
           canves02: "TunBuPosPoscanves02",
           canves03: "TunBuPosPoscanves03",
-          flag : "2"
+          flag: "2"
         }
         // , {
         //   des: "流量",
@@ -89,7 +89,7 @@ angular.module('karessControlModule')
         //   canves03: "TunBuTemTemcanves03",
         //   flag : "3"
         // }
-        ];
+      ];
 
 
       $scope.handlenapeListNape = [
@@ -99,7 +99,8 @@ angular.module('karessControlModule')
           imgUrlTemp: "build/img/karess-controller/icon_zhushuinor.png",
           handleDes: "karessController.zhushui",
           selecFlag: false,
-          handledata: $scope.slideTunBuData
+          handledata: $scope.slideTunBuData,
+          isManyDirective: true
         },
         {
           imgUrl: "build/img/karess-controller/icon_luoshuinor.png",
@@ -115,7 +116,8 @@ angular.module('karessControlModule')
           imgUrlTemp: "build/img/karess-controller/icon_shuilinor.png",
           handleDes: "karessController.shuilianmo",
           selecFlag: false,
-          handledata: $scope.shuilianmoData
+          handledata: $scope.shuilianmoData,
+          isManyDirective: true
         },
         {
           imgUrl: "build/img/karess-controller/icon_touzhennor.png",
@@ -131,7 +133,8 @@ angular.module('karessControlModule')
           imgUrlTemp: "build/img/karess-controller/icon_beibujiarenor.png",
           handleDes: "karessController.beibujiare",
           selecFlag: false,
-          handledata: $scope.shuiBeiBuData
+          handledata: $scope.shuiBeiBuData,
+          isManyDirective: true
         },
         {
           imgUrl: "build/img/karess-controller/icon_yijiantingzhinor.png",
@@ -174,43 +177,42 @@ angular.module('karessControlModule')
        初始化当前模板数据
        */
       $scope.lockSlide = function () {
-        $ionicSlideBoxDelegate.enableSlide( false );
+        $ionicSlideBoxDelegate.enableSlide(false);
       };
       $scope.currentSlideData = $scope.slideInitData;
       //初始化当前模板数据
       $scope.initHtmlTemplate = function (currentSlideData) {
-        console.log(currentSlideData);
         //初始化数据
         if ($('#ionSliderBox').children().length !== 0) {
           $('#ionSliderBox').empty();
         }
         ;
         var checHtml =
-          "<ion-slide-box ng-init='lockSlide()' does-continue = 'true' ng-click='nextSlide($index)'>"+
-          "<ion-slide ng-repeat='list in currentSlideData track by $index'>"+
-          "<div id={{list.parNodeid}} class='toilet-parameterctl'>"+
-          "<canvas id={{list.canves01}} class='canves-pos'></canvas>"+
-          "<canvas id={{list.canves02}} class='canves-pos'></canvas>"+
-          "<canvas id={{list.canves03}} class='canves-pos'></canvas>"+
-          "<canvas id={{list.canves04}} class=''canves-pos'></canvas>"+
-          "<div class='toilet-parameterctl-data' ng-if='!list.parameterctlFlag'>"+
-          "<span class='toilet-parameterctl-raddata' ng-bind='list.gearInit+29' ng-if='list.flag == 1'></span>"+
-          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 2  && list.gearInit == 1'>25%</span>"+
-          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 2  && list.gearInit == 2'>50%</span>"+
-          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 2  && list.gearInit == 3'>75%</span>"+
-          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 2  && list.gearInit == 4'>95%</span>"+
-          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 4  && list.gearInit == 1'>L1</span>"+
-          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 4  && list.gearInit == 2'>L2</span>"+
-          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 5  && list.gearInit == 1'>低档</span>"+
-          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 5  && list.gearInit == 2'>高档</span>"+
-          "<span class='toilet-parameterctl-des' ng-bind='list.des'></span>"+
-          "<span class='toilet-parameterctl-des' ng-bind='list.gearInit+29' ng-if='list.flag == 1'></span>"+
-          "</div>"+
-          "<div class='toilet-parameterctl-dataimg' ng-if='list.parameterctlFlag'>"+
-          "<img class='conninfo-parameterctl-img' ng-src='build/img/toilet-controller/btn_devicedetail_scoll.png' alt=''>"+
-          "</div>"+
-          "</div>"+
-          "</ion-slide>"+
+          "<ion-slide-box ng-init='lockSlide()' does-continue = 'true' ng-click='nextSlide($index)'>" +
+          "<ion-slide ng-repeat='list in currentSlideData track by $index'>" +
+          "<div id={{list.parNodeid}} class='toilet-parameterctl'>" +
+          "<canvas id={{list.canves01}} class='canves-pos'></canvas>" +
+          "<canvas id={{list.canves02}} class='canves-pos'></canvas>" +
+          "<canvas id={{list.canves03}} class='canves-pos'></canvas>" +
+          "<canvas id={{list.canves04}} class=''canves-pos'></canvas>" +
+          "<div class='toilet-parameterctl-data' ng-if='!list.parameterctlFlag'>" +
+          "<span class='toilet-parameterctl-raddata' ng-bind='list.gearInit+29' ng-if='list.flag == 1'></span>" +
+          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 2  && list.gearInit == 1'>25%</span>" +
+          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 2  && list.gearInit == 2'>50%</span>" +
+          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 2  && list.gearInit == 3'>75%</span>" +
+          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 2  && list.gearInit == 4'>95%</span>" +
+          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 4  && list.gearInit == 1'>L1</span>" +
+          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 4  && list.gearInit == 2'>L2</span>" +
+          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 5  && list.gearInit == 1'>低档</span>" +
+          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 5  && list.gearInit == 2'>高档</span>" +
+          "<span class='toilet-parameterctl-des' ng-bind='list.des'></span>" +
+          "<span class='toilet-parameterctl-des' ng-bind='list.gearInit+29' ng-if='list.flag == 1'></span>" +
+          "</div>" +
+          "<div class='toilet-parameterctl-dataimg' ng-if='list.parameterctlFlag'>" +
+          "<img class='conninfo-parameterctl-img' ng-src='build/img/toilet-controller/btn_devicedetail_scoll.png' alt=''>" +
+          "</div>" +
+          "</div>" +
+          "</ion-slide>" +
           "</ion-slide-box>"
         var $checkhtml = $compile(checHtml)($scope); // 编译
         $('#ionSliderBox').append($checkhtml[0]);
@@ -442,45 +444,107 @@ angular.module('karessControlModule')
         $scope.slideHasChanged = function (index) {
           $scope.getCurrentObj(index);
         };
-        $scope.nextSlide = function() {
+        $scope.nextSlide = function () {
           var sliderLenght = document.querySelectorAll('ion-slide').length;
-          console.log($scope.currentSlideData);
-          console.log(sliderLenght);
-          if(sliderLenght !== 1){
+          if (sliderLenght !== 1) {
             $ionicSlideBoxDelegate.next();
             $scope.getCurrentObj($ionicSlideBoxDelegate.currentIndex());
-          };
+          }
+          ;
         };
       }, 20);
       //处理选择怎加border
       var handlenapeListNapeLen = $scope.handlenapeListNape.length;
-      $scope.selectNapes = function (index) {
+      $scope.selectNapes = function (index,info) {
         $scope.handlenapeSelectedIndex = index;
-        var value = karessService.Karess;
-
-        console.log(value);
+        console.log(info.selecFlag);
+        if (index == 0) {
+          if(info.selecFlag ==false) {
+            var value = karessService.getCmd("8877", 1, karessService.data.openFiller, 0, 5);
+            console.log(value);
+            sendCmd(deviceId, value, '注水开启成功！', '注水开启失败！');
+          }else{
+            var value = karessService.getCmd("8877", 1, karessService.data.closeFiller, 0, 5);
+            console.log(value);
+            sendCmd(deviceId, value, '注水关闭成功！', '注水关闭失败！');
+          }
+        }
         if (index == 1) {
-          sendCmd(deviceId, value, '落水成功！', '落水失败！');
+          if(info.selecFlag ==false){
+            var value = karessService.getCmd("8877", 1, karessService.data.openDrain, 0, 5);
+            console.log(value);
+            sendCmd(deviceId, value, '开启落水成功！', '开启落水失败！');
+          }else{
+            var value = karessService.getCmd("8877", 1, karessService.data.closeDrain, 0, 5);
+            console.log(value);
+            sendCmd(deviceId, value, '关闭落水成功！', '关闭落水失败！');
+          }
+        }
+        if (index == 2) {
+          if(info.selecFlag ==false) {
+            var value = karessService.getCmd("8877", 1, karessService.data.openMassageBack, 0, 5);
+            console.log(value);
+            sendCmd(deviceId, value, '水力按摩开启成功！', '水力按摩开启失败！');
+          }else{
+            var value = karessService.getCmd("8877", 1, karessService.data.closeMassageBack, 0, 5);
+            console.log(value);
+            sendCmd(deviceId, value, '水力按摩关闭成功！', '水力按摩关闭失败！');
+          }
         }
         if (index == 3) {
-          sendCmd(deviceId, value, '头部按摩开启成功！', '头部按摩开启失败！');
+          if(info.selecFlag ==false) {
+            var value = karessService.getCmd("8877", 1, karessService.data.openMassagePillow, 0, 5);
+            console.log(value);
+            sendCmd(deviceId, value, '头部按摩开启成功！', '头部按摩开启失败！');
+          }else{
+            var value = karessService.getCmd("8877", 1, karessService.data.closeMassagePillow, 0, 5);
+            console.log(value);
+            sendCmd(deviceId, value, '头部按摩关闭成功！', '头部按摩关闭失败！');
+          }
         }
         if (index == 4) {
-          sendCmd(deviceId, value, '背部加热开启成功！', '背部加热开启失败！');
+          if(info.selecFlag ==false) {
+            var value = karessService.getCmd("8877", 1, karessService.data.openHeatBack, 0, 5);
+            console.log(value);
+            sendCmd(deviceId, value, '背部加热开启成功！', '背部加热开启失败！');
+          }else{
+            var value = karessService.getCmd("8877", 1, karessService.data.closeHeatBack, 0, 5);
+            console.log(value);
+            sendCmd(deviceId, value, '背部加热关闭成功！', '背部加热关闭失败！');
+          }
         }
         if (index == 5) {
+          var value = karessService.getCmd("8877", 1, karessService.data.closeAll, 0, 5);
+          console.log(value);
           sendCmd(deviceId, value, '一键停止开启成功！', '一键停止开启失败！');
         }
         if (index == 6) {
-          sendCmd(deviceId, value, '管道除菌开启成功！', '管道除菌开启成功！');
+          if(info.selecFlag ==false) {
+            var value = karessService.getCmd("8877", 1, karessService.data.openSanitize, 0, 5);
+            console.log(value);
+            sendCmd(deviceId, value, '管道除菌开启成功！', '管道除菌开启失败！');
+          }else{
+            var value = karessService.getCmd("8877", 1, karessService.data.closeDrain, 0, 5);
+            console.log(value);
+            sendCmd(deviceId, value, '管道除菌关闭成功！', '管道除菌关闭失败！');
+          }
         }
         if (index == 7) {
-          sendCmd(deviceId, value, '节能开启成功！', '节能开启成功！');
+          if(info.selecFlag ==false) {
+            var value = karessService.getCmd("8877", 1, karessService.data.openSanitize, 0, 5);
+            console.log(value);
+            sendCmd(deviceId, value, '节能开启成功！', '节能开启失败！');
+          }else{
+            var value = karessService.getCmd("8877", 1, karessService.data.closeSanitize, 0, 5);
+            console.log(value);
+            sendCmd(deviceId, value, '节能关闭成功！', '节能关闭失败！');
+          }
         }
         if (index == 8) {
           $state.go('karessSetting');
-          return;
         }
+
+
         $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
         for (var i = 0; i < handlenapeListNapeLen; i++) {
           if (i !== index) {
@@ -579,32 +643,20 @@ angular.module('karessControlModule')
       $scope.handlenapeSelectedIndex;
       //档位滑动执行发指令操作
       $scope.radScrollSendDir = function () {
-        // console.log(currentRadObj）
         if ($scope.handlenapeListNape[$scope.handlenapeSelectedIndex].isManyDirective) {
           var selectRad = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].gearInit;
-          var dirinfo = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].directive[selectRad];
+          console.log(selectRad);
           var diedes = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].des;
         }
-        var objdir = {
-          from: {
-            cid: "0xE3",
-          },
-          idx: 1,
-          method: "CTL",
-          payload: {
-            cmd: "CMD_REQUEST",
-            "device_type": "BLE_DEVICE",
-            value: [],
-          },
-          to: {
-            cid: "0xE4",
-            "device_id": "29DF7606",
-          },
-          ts: "1492146861.217451",
-          ver: 1,
-        };
-        objdir.payload.value.push(dirinfo);
-        // 发送指令
-        $scope.sendCmd(objdir, diedes);
+        if ($scope.handlenapeListNape == 0) {
+          var value = karessService.getCmd("8877", 1, karessService.data.closeSanitize, 0, 5);
+          sendCmd(deviceId, value, '注水开启成功！', '注水开启失败！');
+        } else if ($scope.handlenapeListNape == 2) {
+          var value = karessService.getCmd("8877", 1, karessService.data.closeSanitize, 0, 5);
+          sendCmd(deviceId, value, '水力按摩开启成功！', '水力加热开启失败！');
+        } else if ($scope.handlenapeListNape == 4) {
+          var value = karessService.getCmd("8877", 1, karessService.data.closeSanitize, 0, 5);
+          sendCmd(deviceId, value, '背部加热关闭成功！', '背部加热关闭失败！');
+        }
       };
     }]);
