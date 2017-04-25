@@ -364,7 +364,8 @@
     "parameterrad": "0",
     "parameterdes": "水温档位",
     "handleSelecDes": "出水方式",
-    "linyu": "淋浴",
+    "chixu": "持续出水",
+    "paikong": "排空冷水",
     "stop": "一键停止",
     "jieneng": "节能",
     "shezhi": "设置",
@@ -385,7 +386,9 @@
       "firmwareVersion": "固件版本号",
       "SKUnumber": "SKU号",
       "SNnumber": "SN号",
-      "positionMess": "位置信息"
+      "positionMess": "位置信息",
+      "saveAlert": "保存成功",
+      "saveError": "保存失败"
     }
   },
   "message": {

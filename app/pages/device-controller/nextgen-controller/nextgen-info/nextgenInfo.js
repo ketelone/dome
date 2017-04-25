@@ -5,8 +5,8 @@ angular.module('nextgenModule')
   .controller('nextgenInfoCtrl',[
     '$scope',
     '$state',
-    'hmsPopup','$ionicHistory',
-    function($scope, $state, hmsPopup,$ionicHistory){
+    'hmsPopup','$ionicHistory','baseConfig','hmsHttp',
+    function($scope, $state, hmsPopup,$ionicHistory,baseConfig,hmsHttp){
       $scope.goBack = function(){
         $ionicHistory.goBack();
       }
@@ -26,13 +26,25 @@ angular.module('nextgenModule')
        */
       $scope.save = function(item){
         //save device info
-        if(true){
-          hmsPopup.showPopup("<span translate='bathroom.saveAlert'></span>");
-          //$state.go('bathroomSet');
-        }else{
-          hmsPopup.showPopup("<span translate='bathroom.saveError'></span>");
-        }
+        var url = baseConfig.basePath + "/dvm/deviceInfo/update";
+        var paramter = {
+          deviceId: item.id,
+          location: item.place
+        };
+        hmsHttp.post(url, paramter).success(
+          function(response){
+            console.log(response);
+            $scope.deciveInfo.place = response.rows[0].location;
+            hmsPopup.showPopup("<span translate='nextgen.deiveceMess.saveAlert'></span>");
+          }
+        ).error(
+          function (response, status, header, config){
+            alert("-----");
+            hmsPopup.showPopup("<span translate='nextgen.deiveceMess.saveError'></span>");
+          }
+        );
       }
+
 
 
     }]);
