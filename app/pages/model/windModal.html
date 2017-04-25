@@ -1,8 +1,8 @@
-<ion-modal-view class="windModal" style="left: 0;right: 0;width: 100%;height: 2.3rem;margin-top: 1.3rem;">
+<ion-modal-view class="windModal" style="left: 0;right: 0;width: 100%;height: 2.3rem;">
   <ion-list>
       <ion-item class="listItem" ng-repeat="i in value track by $index " style="height: 1rem;padding-top: 0.3rem" ng-click="choose(i)" >
           <span translate={{i.des}}></span>
-          <img ng-show="i.ionCheck" style="width:0.439rem;height:1rem;position: absolute;left: 4.5rem; " ng-src="build/img/nextgen/icon_check.png"/>
+          <img ng-show="i.ionCheck" style="width:0.439rem;height:2rem;position: absolute;left: 4.5rem; " ng-src="build/img/nextgen/icon_check.png"/>
        </ion-item>
   </ion-list>
 </ion-modal-view>
