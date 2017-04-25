@@ -5,27 +5,143 @@ angular.module('nextgenModule')
     '$ionicModal',
     '$compile',
     'baseConfig',
-    'checkVersionService','$ionicHistory','hmsPopup','$timeout',
+    'checkVersionService','$ionicHistory','hmsPopup','$timeout','nextgenService',
     function ($scope,
               $state,
               $ionicModal,
               $compile,
               baseConfig,
-              checkVersionService,$ionicHistory,hmsPopup,$timeout
+              checkVersionService,$ionicHistory,hmsPopup,$timeout,nextgenService
     ) {
+      var ctrId="00";
+      var header="8877";
+      var idx="00";
+      var devId="E8:91:E0:DC:20:F1";
 
-      $scope.goBack = function(){
+      function getValue(data){
+        return nextgenService.getCmdvalue(header,idx, data, ctrId,devId);
+      };
+
+
+
+  function chixuWater(){
+    var argment = {
+      'mode': '01'    //00表示stop，01表示Start continuous outlet 02表示Start evacuate cold water (turn on, and off when reach 37 degree,Start evacuate cold water 如果5分钟后水温仍达不到37度则自动停止) ,other表示内置设定
+   }
+    var data = nextgenService.operateShower(argment);
+    var value = getValue(data);
+
+    nextgenService.sendCmd(devId,value,"持续出水","持续出水失败");
+  }
+
+  function paikongWater(){
+    var argment = {
+      'mode': '02'    //00表示stop，01表示Start continuous outlet 02表示Start evacuate cold water (turn on, and off when reach 37 degree,Start evacuate cold water 如果5分钟后水温仍达不到37度则自动停止) ,other表示内置设定
+    }
+    var data = nextgenService.operateShower(argment);
+    var value = getValue(data);
+
+    nextgenService.sendCmd(devId,value,"排空冷水","排空冷水失败");
+
+}
+
+      function closeWater(){
+        var argment = {
+          'mode': '00'    //00表示stop，01表示Start continuous outlet 02表示Start evacuate cold water (turn on, and off when reach 37 degree,Start evacuate cold water 如果5分钟后水温仍达不到37度则自动停止) ,other表示内置设定
+        }
+        var data = nextgenService.operateShower(argment);
+        var value = getValue(data);
+
+        nextgenService.sendCmd(devId,value,"关闭","关闭失败");
+
+      }
+
+  function closeAllFunction(){
+        var data = nextgenService.stopAll();
+        var value = getValue(data);
+        sendCmd(devId,value,"一键关闭","一键关闭失败");
+      };
+
+      //头顶花洒
+      function headerHuasa(){
+        var argment = {
+          'temperature': '00',    //这个最好传16进制的字符串 比如0 ->00 100->64
+          'out': 'HRS',			  //这个参数是个枚举字符串 HRS，HS，SP，HDS 分别表示 头顶花洒，头顶摇摆，spout，手持花洒，
+
+        }
+        var data = nextgenService.setShowerPara(argment);
+        var value = getValue(data);
+       nextgenService.sendCmd(devId,value,"头顶花洒","头顶花洒失败");
+
+
+      }
+      //头顶摆动
+      function headerBaidong(){
+        var argment = {
+          'temperature': '00',    //这个最好传16进制的字符串 比如0 ->00 100->64
+          'out': 'HS',			  //这个参数是个枚举字符串 HRS，HS，SP，HDS 分别表示 头顶花洒，头顶摇摆，spout，手持花洒，
+
+        }
+        var data = nextgenService.setShowerPara(argment);
+        var value = getValue(data);
+        nextgenService.sendCmd(devId,value,"头顶花洒","头顶花洒失败");
+
+
+      }
+      function handHuasa(){
+        var argment = {
+          'temperature': '00',    //这个最好传16进制的字符串 比如0 ->00 100->64
+          'out': 'HDS',			  //这个参数是个枚举字符串 HRS，HS，SP，HDS 分别表示 头顶花洒，头顶摇摆，spout，手持花洒，
+
+        }
+        var data = nextgenService.setShowerPara(argment);
+        var value = getValue(data);
+        nextgenService.sendCmd(devId,value,"手持花洒","手持花洒");
+
+
+      }
+      function goSpout(){
+        var argment = {
+          'temperature': '00',    //这个最好传16进制的字符串 比如0 ->00 100->64
+          'out': 'SP',			  //这个参数是个枚举字符串 HRS，HS，SP，HDS 分别表示 头顶花洒，头顶摇摆，spout，手持花洒，
+
+        }
+        var data = nextgenService.setShowerPara(argment);
+        var value = getValue(data);
+        nextgenService.sendCmd(devId,value,"Spout","Spout失败");
+
+    }
+
+
+
+
+
+      document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
+        var resultOn = result;
+        if (resultOn.payload.cmd == "CMD_RETURN") {
+          var tempData = nextgenService.explainAck(resultOn.payload.value[0]);
+          if(tempData.ack=='1000'){
+            $scope.handlenapeListNape[2].selecFlag =false;
+            $scope.handlenapeListNape[2].imgUrl = $scope.handlenapeListNape[2].imgUrlTemp;
+
+           }
+
+          $scope.$apply();
+        }
+      }, false);
+
+  $scope.goBack = function(){
         $ionicHistory.goBack();
 
     }
 
       //初始模式选择
       $scope.toiletController = {
-        modelType:"nextgen.Spout",
+         modelType:"nextgen.maichong",
         way:"nextgen.handleSelecDes"
       };
 
-       //侧滑转档数量json
+  //侧滑转档数量json
       $scope.slideInitData =[{
         des: "nextgen.chixu",
         gearNum: 1,
@@ -38,18 +154,7 @@ angular.module('nextgenModule')
        canves03: "initcanves03",
       }]
 
-     //$scope.slideLinYuData =[
-     //  {
-     //   des: "持续出水",
-     //   gearNum: 4,
-     //    //  gearInit: 1,
-     //   //gearInitTemp: "48°C",
-     //   parameterctlFlag: false,
-     //   parNodeid: 'toilet-NvYongSyCtl',
-     //   canves01: "NvYongSycanves01",
-     //   canves02: "NvYongSycanves02",
-     //   canves03: "NvYongSycanves03",
-     // },
+
 
       $scope.handlenapeListNape = [
 
@@ -75,7 +180,7 @@ angular.module('nextgenModule')
           imgUrlTemp:"build/img/nextgen/stop.png",
           handleDes: "nextgen.stop",
           selecFlag:false,
-       //   handledata:$scope.slideTunBuData
+
         },
         {
           imgUrl: "build/img/nextgen/jieneng.png",
@@ -183,95 +288,8 @@ angular.module('nextgenModule')
 
           // drawRadian(this.cr4,this.bimianCircle,0,360);
         };
-        // 画填充圆
-        //this.drawCircleFill = function (canvesobj,changeRad) {
-        //  canvesobj.clearRect(0,0,this.canvsscreenHeight,this.canvsscreenWidth);
-        //  drawRadian(canvesobj,this.FillCircle,this.starRad,changeRad);
-        //  //在滑动的时候判断是否经过档位点并重新画档位线
-        //  if(changeRad<0){
-        //    var changeRadTemp = Math.abs(changeRad+360);
-        //  }else{
-        //  if(changeRad>=0 && changeRad<=45){
-        //      var changeRadTemp = Math.abs(changeRad+360);
-        //
-        //  }else{
-        //      var changeRadTemp = Math.abs(changeRad);
-        //    };
-        //  };
-        //  this.radSectionArr.push(changeRadTemp);
-        //  this.radSectionArr = this.radSectionArr.sort(function(a,b){
-        //    return a-b});
-        //
-        //  //判断是否滑动过档位点,若有滑过,则画遮挡弧度
-        //  var radSectionArrLen = this.radSectionArr.length;
-        //  //判断当前点距离那个档位距离最近
-        //  this.i=0;this.i=1;
-        //  for(this.i;this.i<radSectionArrLen;this.i++){
-        //    if(changeRadTemp === this.radSectionArr[this.i]){
-        //      if(Math.abs(this.radSectionArr[this.i]-this.radSectionArr[this.i-1]) < Math.abs(this.radSectionArr[this.i]-this.radSectionArr[this.i+1])){
-        //        this.stoPosPoint = this.i-1;
-        //        if(this.i<=1){
-        //          slideDataObj.gearInit = 1;
-        //        }else{
-        //          slideDataObj.gearInit = this.i;
-        //        };
-        //        $scope.$apply();
-        //        //画档位线
-        //        this.j=1;
-        //        for(this.j;this.j<this.i;this.j++){
-        //          drawRadian(this.cr3,this.deliverLine,this.radSectionArr[this.i-this.j-1]-1,this.radSectionArr[this.i-this.j-1]);
-        //        };
-        //      }else{
-        //        this.stoPosPoint = this.i;
-        //        slideDataObj.gearInit = this.i+1;
-        //        $scope.$apply();
-        //        //画档位线
-        //        this.j=1;
-        //        for(this.j;this.j<this.i+1;this.j++){
-        //          drawRadian(this.cr3,this.deliverLine,this.radSectionArr[this.i-this.j]-1,this.radSectionArr[this.i-this.j]);
-        //        };
-        //       };
-        //      this.radSectionArr.splice(this.i,1);
-        //    }
-        //  };
-        //  //画白色遮挡
-        //  drawRadian(canvesobj,this.HideCircle,0,360);
-        //};
-        ////画圆球和指示
-    /*  this.drawc = function (canvesobj,ancr,type) {
-          if(135<=ancr || ancr<=45){
-            var jd =  changeAngale(ancr);
-            canvesobj.clearRect(0,0,this.canvsscreenHeight,this.canvsscreenWidth);
-            var x = Math.cos(jd)*(this.rollCircle.r)+(this.rollCircle.x);
-            var y = Math.sin(jd)*(this.rollCircle.r)+(this.rollCircle.y);
-            //画小球
-            canvesobj.beginPath();
-            canvesobj.fillStyle = this.rollCircle.color;
-            canvesobj.moveTo(x,y);
-            canvesobj.arc(x,y,10,0,Math.PI*2,false);
-            canvesobj.fill();
-            canvesobj.closePath();
-            //画小球中的指示标识
-            canvesobj.beginPath();
-            canvesobj.fillStyle = "#191C23";
-            canvesobj.lineWidth = 1;//设置线宽
-            canvesobj.moveTo(x,y-(10/4));
-            canvesobj.lineTo(x-(10/4)/Math.sqrt(2)-1,y);
-            canvesobj.lineTo(x,y+(10/4));
-            canvesobj.fill();//填充颜色
-            canvesobj.moveTo(x+1,y-(10/4));
-            canvesobj.lineTo(x+(10/4)/Math.sqrt(2)+2,y);
-            canvesobj.lineTo(x+1,y+(10/4));
-            canvesobj.stroke();//画线框
-            canvesobj.fill();//填充颜色
-            canvesobj.closePath();
-            //随小球和指示画fil填充
-            if(!type){
-              this.drawCircleFill(this.cr3,ancr)
-            }
-          };
-        };
-    */  };
+
+     };
       var currentRadObj;
       setTimeout(function () {
         $scope.getCurrentObj = function (index) {
@@ -333,7 +351,7 @@ angular.module('nextgenModule')
      $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
 
         for(var i=0;i<handlenapeListNapeLen;i++){
-          if(i !== index){
+          if(i != index){
             $scope.handlenapeListNape[i].selecFlag = false;
           };
         };
@@ -355,48 +373,45 @@ angular.module('nextgenModule')
 
      $scope.slideInitData[0].des = "nextgen.chixu";
       $scope.toiletController = {
-        modelType: "nextgen.Spout",
+        modelType: "nextgen.maichong",
         way: "nextgen.handleSelecDes"
       };
       $scope.value = [{id: 2, des: 'nextgen.maichong'},
         {id: 3, des: 'nextgen.bodong'}, {id: 4, des: 'nextgen.yidong'}, {id: 5, des: 'nextgen.Spout'}
       ];
+  if($scope.handlenapeListNape[index].selecFlag ==true){
+    chixuWater();
+  }
+    else{
+    closeWater();
+  }
 
-
-
-          // shower(1);
-        }
+}
         if(index==1) {
 
 
             $scope.slideInitData[0].des = "nextgen.paikong";
             $scope.toiletController = {
-              modelType: "nextgen.Spout",
+              modelType: "nextgen.maichong",
               way: "nextgen.handleSelecDes"
             };
             $scope.value = [{id: 2, des: 'nextgen.maichong'},
               {id: 3, des: 'nextgen.bodong'}, {id: 4, des: 'nextgen.yidong'}, {id: 5, des: 'nextgen.Spout'}
             ];
-          //alert("排空冷水");
-
-
-          // shower(1);
+          if($scope.handlenapeListNape[index].selecFlag ==true){
+            paikong();
+          }
+          else{
+            closeWater();
+          }
         }
         if(index==2){
 
-
-
-          /*$timeout(function () {
-            $scope.myHeader = "How are you today?";
-          }, 2000);
-        };*/
-
-
-
-        }
+          closeAllFunction();
+    }
         if(index==3)
         {
- 
+
           $scope.slideInitData[0].des="nextgen.close";
           $scope.toiletController = {
             modelType:"nextgen.close",
@@ -411,7 +426,8 @@ angular.module('nextgenModule')
               }, {id: 9, des: 'nextgen.lowPower', ionCheck: false}];
           }
 
-          //$scope.modal.show();
+
+           //$scope.modal.show();
           //setTimeout(function () {
           //  var ele = document.getElementsByClassName("hmsModal");
           //  ele[0].style.top = 68 + '%';
@@ -459,11 +475,7 @@ angular.module('nextgenModule')
       ];
       $scope.openModal = function () {
 
-        //if($scope.value.length!==0) {
-        //  $scope.value = [{id:2,des:'nextgen.maichong'},
-        //    {id:3,des:'nextgen.bodong'},{id:4,des:'nextgen.yidong'},{id:5,des:'nextgen.Spout'}
-        //  ];
-        //
+
         if( $scope.handlenapeListNape[0].selecFlag==true||$scope.handlenapeListNape[3].selecFlag==true||$scope.handlenapeListNape[1].selecFlag==true) {
           $scope.modal.show();
           setTimeout(function () {
