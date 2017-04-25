@@ -56,7 +56,7 @@ angular.module('nextgenModule')
 
       }
 
-  function closeAllFunction(){
+  function closeAll(){
         var data = nextgenService.stopAll();
         var value = getValue(data);
         sendCmd(devId,value,"一键关闭","一键关闭失败");
@@ -112,7 +112,54 @@ angular.module('nextgenModule')
 
     }
 
+//3.进入节能状态 n	相关作业未停止，不能进入节能状态。
+      var argment = {
+        'mode': '00-03' //00表示关闭，01表示低电量，02表示休眠，03表示断电
+      }
 
+      function enterPowerSave() {
+        var data = '31';
+        data = data + arg.mode;
+        return data;
+      }
+
+
+      function colseJieneng(){
+        var argment = {
+          'mode': '00' //00表示关闭，01表示低电量，02表示休眠，03表示断电
+        }
+        var data = nextgenService.enterPowerSave(argment);
+        var value = getValue(data);
+        nextgenService.sendCmd(devId,value,"休眠","休眠失败");
+
+      }
+      function goSleep(){
+        var argment = {
+          'mode': '02' //00表示关闭，01表示低电量，02表示休眠，03表示断电
+        }
+        var data = nextgenService.enterPowerSave(argment);
+        var value = getValue(data);
+        nextgenService.sendCmd(devId,value,"关闭节能","关闭节能失败");
+
+      }
+      function goPowerfailure(){
+        var argment = {
+          'mode': '03' //00表示关闭，01表示低电量，02表示休眠，03表示断电
+        }
+        var data = nextgenService.enterPowerSave(argment);
+        var value = getValue(data);
+        nextgenService.sendCmd(devId,value,"断电","断电失败");
+
+      }
+      function goLowPower(){
+        var argment = {
+          'mode': '01' //00表示关闭，01表示低电量，02表示休眠，03表示断电
+        }
+        var data = nextgenService.enterPowerSave(argment);
+        var value = getValue(data);
+        nextgenService.sendCmd(devId,value,"低电量","低电量失败");
+
+      }
 
 
 
@@ -498,16 +545,20 @@ angular.module('nextgenModule')
          $scope.toiletController.modelType = val.des;
     if(val.id==2){
       alert("头顶花洒");
+      headerHuasa();
     };
     if(val.id==3){
       alert("头顶摆动");
+      headerBaidong();
     };
 
     if(val.id==4){
       alert("头持花洒");
+      handHuasa();
     };
     if(val.id==5){
       alert("Spout");
+      goSpout();
     };
 
 
@@ -525,19 +576,23 @@ angular.module('nextgenModule')
         if(val.id==6){
           $scope.slideInitData[0].des="nextgen.close";
          alert("关闭");
+          colseJieneng();
         };
         if(val.id==7){
           $scope.slideInitData[0].des="nextgen.powerFailure";
           alert("断电");
+          goPowerfailure();
         };
 
         if(val.id==8){
           $scope.slideInitData[0].des="nextgen.sleep";
           alert("睡眠");
+          goSleep();
         };
         if(val.id==9){
           $scope.slideInitData[0].des="nextgen.lowPower";
           alert("低用电");
+          goLowPower();
         };
 
 
