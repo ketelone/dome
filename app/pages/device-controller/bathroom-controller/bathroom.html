@@ -13,10 +13,10 @@
   <ion-content style="background-color: #0F0F0F">
     <div class="device-info">
       <div class="device-info-status">
-        <img ng-src="build/img/bathroom/icon_devicedetail_warning.png" class="box-img" ng-if="isBox"/>
-        <span class="box-text" translate="bathroom.using"  ng-if="isBox"></span>
-        <img ng-src="build/img/bathroom/icon_devicedetail_wifi.png" class="signal-img"/>
-        <span class="signal-text" translate="bathroom.signalStatus"></span>
+        <img ng-src="build/img/bathroom/icon_devicedetail_wifi.png" class="box-img" ng-if="isBox"/>
+        <span class="box-text" translate="{{signalStatus}}"  ng-if="isBox"></span>
+        <img ng-src="build/img/bathroom/icon_devicedetail_warning.png" class="signal-img"/>
+        <span class="signal-text" translate="bathroom.using"></span>
         <img ng-src="build/img/bathroom/icon_devicedetail_warning.png" class="error-img"/>
         <span class="msg" translate="bathroom.using"></span>
         <p class="font-col" translate="{{temperate}}"></p>
@@ -67,14 +67,14 @@
         <div class="breath" ng-if="isBreath">
           <div class="checkboxFour">
             <input type="checkbox" id="checkboxFourInput"  ng-model="t" ng-click="getCommon(t)"/>
-            <label for="checkboxFourInput"><span class="font-position">普通</span><p class="font-position">模式</p></label>
+            <label for="checkboxFourInput" style="background: #D5638E"><span class="font-position" style="color: white;position: absolute;margin-left: -0.5rem;margin-top: 0.4rem;" translate="bathroom.commonModel"></span></label>
           </div>
         </div>
 
         <div class="breath-top" ng-if="isBreath">
           <div class="checkboxFour">
             <input type="checkbox" class="checkbox-position"  id="checkboxFourInput2" ng-model="m" ng-click="getAllDay(m)"/>
-            <label for="checkboxFourInput2"><br><span class="font-position">24H</span></label>
+            <label for="checkboxFourInput2" style="background: #51D8BD"><br><span class="font-position" style="color: white;position: absolute;margin-left: -0.35rem;margin-top: 0rem;" translate="bathroom.twentyModel"></span></label>
           </div>
         </div>
         <div class="breath-x" ng-if="isBreath">

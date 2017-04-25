@@ -277,6 +277,7 @@
     "saveAlert": "保存成功",
     "saveError": "保存失败",
     "signalStatus": "信号很好",
+    "signalBadStatus": "信号不好",
     "boxLink": "box连接",
     "using": "使用中",
     "bathroom": "浴霸",
@@ -301,7 +302,9 @@
     "fourHour": "四时",
     "fiveHour": "五时",
     "sixHour": "六时",
-    "timeout": "您选择的时间已超出范围，请重新选择"
+    "timeout": "您选择的时间已超出范围，请重新选择",
+    "twentyModel": "24小时<br>模式",
+    "commonModel": "普通模式"
   },
   "spa": {
     "goHomeTitle": "场景详情",
