@@ -1,4 +1,4 @@
-/**
+﻿/**
  *@autor: caolei
  */
 angular.module('bathroomModule')
@@ -161,6 +161,7 @@ angular.module('bathroomModule')
       $scope.windType = {'type': "bathroom.rock"};
 
       $scope.goBack = function(){
+        $interval.cancel(timePromise);
         closebox();
         $ionicHistory.goBack();
       };
@@ -182,7 +183,7 @@ angular.module('bathroomModule')
         }
       };
 
-      var sendCmd = function(deviceId, value, successMsg, errorMsg){
+      var pluginToCtrl = function(deviceId, value, successMsg, errorMsg){
         var cmd = bathroomService.getCmd(value, deviceId);
         cordova.plugins.SocketPlugin.tcpSendCmd({
           "timeout": "2000",
@@ -195,37 +196,52 @@ angular.module('bathroomModule')
         function error() {
           hmsPopup.showShortCenterToast(errorMsg);
         }
+      };
 
+      var cloudToCtrl = function(){
         //cloud
-        /*var cmd = bathroomService.getCmdCloud(value, deviceId);
-        var url = baseConfig.basePath + "/message/sendMessage";
+        var url = baseConfig.basePath + "/r/api/message/sendMessage";
         var paramter = {
           "ver":1,
           "from":{
             "ctype":240,
-            "uid":"18611111111"
+            "uid":"13405533206"
           },
           "to":{
             "ctype":229,
-            "uid":"11E7BC66"
+            "uid":"hand-residential"
           },
           "ts":1493013672695,
           "idx":1,
           "mtype":"ctl",
           "data":{
-            "cmd":["88772A0001F0E5310326"]
+            "cmd":["887706010005270221"]
           }
         };
         hmsHttp.post(url, paramter).success(
           function(response){
-            //console.log(response.rows[0]);
-            hmsPopup.showShortCenterToast(successMsg);
+            console.log(response);
+            /*var value = JSON.parse(response.data).payload.value[0];
+             //alert(JSON.stringify(bathroomCmdService.explainAck(value)));
+             alert(bathroomCmdService.explainAck(value).ack);
+             if(bathroomCmdService.explainAck(value).ack){
+             alert("success response");
+             }*/
           }
         ).error(
           function (response, status, header, config){
-            hmsPopup.showShortCenterToast(errorMsg);
+            hmsPopup.showShortCenterToast("");
           }
-        );*/
+        );
+      };
+
+      var sendCmd = function(deviceId, value, successMsg, errorMsg){
+
+        if(baseConfig.isCloudCtrl){
+          cloudToCtrl(deviceId, value, successMsg, errorMsg);
+        }else{
+          pluginToCtrl(deviceId, value, successMsg, errorMsg);
+        }
       };
 
       var getCurrentTemplate = function(deviceId){
@@ -238,12 +254,17 @@ angular.module('bathroomModule')
         if (resultOn.payload.cmd == "CMD_RETURN") {
           var tempData = bathroomCmdService.explainAck(resultOn.payload.value[0]);
           if(tempData.temperature){
+
             $scope.temperate = parseInt(tempData.temperature,16) + "℃";
             $scope.tempPercent = parseInt(tempData.humidity,16) + "%";
           }
 
-          if ($scope.deviceOff.length == 0) {
-            hmsPopup.showShortCenterToast("没有设备");
+          var heater = bathroomCmdService.explainHeaterStatus(resultOn.payload.value[0]);
+          if(heater.status){
+            $scope.isWind = false;
+            $scope.isTime = true;
+            $scope.isCountDown = true;
+            $scope.countDown = parseInt(heater.hour, 16)*60*60*1000 + parseInt(heater.min, 16)*60*1000 - 8*60*60*1000;
           }
 
           $scope.$apply();
@@ -435,7 +456,31 @@ angular.module('bathroomModule')
       var closeAllFunction = function(deviceId){
         angular.forEach($scope.bathroomData, function(data, index, array) {
           data.isOpen = false;
+          if(data.switchType == 'Hot'){
+            data.switchPictureUrl = 'build/img/bathroom/hot_wind_nor.png';
+            closeTimer();
+            closeHot(deviceId);
+          }
+          if(data.switchType == 'Cool'){
+            data.switchPictureUrl = 'build/img/bathroom/cool_wind_nor.png';
+            closeTimer();
+            closeCool(deviceId);
+          }
+          if(data.switchType == 'Dryer'){
+            data.switchPictureUrl = 'build/img/bathroom/cool_nor.png';
+            closeTimer();
+            closeDryer(deviceId);
+          }
+          if(data.switchType == 'Hot drying'){
+            data.switchPictureUrl = 'build/img/bathroom/hot_drying_nor.png';
+            closeTimer();
+            closeHotDrying(deviceId);
+          }
+          if(data.switchType == 'Purity'){
+            data.switchPictureUrl = 'build/img/bathroom/purify_nor.png';
+          }
         });
+        $interval.cancel(timePromise);
         var data = bathroomCmdService.stopAllOperation();
         var value = getValue(data);
         sendCmd(deviceId,value,"一键关闭","一键关闭失败");
@@ -457,15 +502,8 @@ angular.module('bathroomModule')
         var result = 2^0^5^(114^1);
         return result;
       };
-
-      /**
-       *@autor: caolei
-       *@disc: to obtain the information of Yuba
-       */
-      $scope.$watch('', function(){
-
-        //console.log(baseConfig.basePath + "/message/sendMessage");
-        var url = "http://139.219.198.247:8080/residential/r/api/message/sendMessage";
+      var test = function(){
+        var url = baseConfig.basePath + "/r/api/message/sendMessage";
         var paramter = {
           "ver":1,
           "from":{
@@ -480,26 +518,40 @@ angular.module('bathroomModule')
           "idx":1,
           "mtype":"ctl",
           "data":{
-            "cmd":["88772A0001F0E5310326"]
+            "cmd":["887706010005270221"]
           }
         };
         hmsHttp.post(url, paramter).success(
           function(response){
-            console.log(JSON.stringify(response));
-            alert(JSON.stringify(response));
+            console.log(response);
+            /*var value = JSON.parse(response.data).payload.value[0];
+             //alert(JSON.stringify(bathroomCmdService.explainAck(value)));
+             alert(bathroomCmdService.explainAck(value).ack);
+             if(bathroomCmdService.explainAck(value).ack){
+             alert("success response");
+             }*/
           }
         ).error(
           function (response, status, header, config){
             hmsPopup.showShortCenterToast("");
           }
         );
+      };
 
-        /*console.log("json: "+localStorage.deviceStatus);
+      /**
+       *@autor: caolei
+       *@disc: to obtain the information of Yuba
+       */
+      $scope.$watch('', function(){
+
+        //test();
+
+        console.log("json: "+localStorage.deviceStatus);
         changeRingCol('#99d5ff');
-        //console.log(getXOR());
-        //console.log(localStorage.deviceInfo.split(";"));
+        console.log(getXOR());
+        console.log(localStorage.deviceInfo.split(";"));
         getCurrentTemplate(getDeviceId());
-        getDeviceStatus();*/
+        getDeviceStatus();
       }, true);
 
       var getDeviceStatus = function(){
@@ -599,7 +651,7 @@ angular.module('bathroomModule')
               }
               if(item.switchType == 'Purify'){
                 item.switchPictureUrl = "build/img/bathroom/purify.png",
-                openPurity(deviceId, "", "");
+                  openPurity(deviceId, "", "");
               }
 
               return true;
@@ -638,6 +690,7 @@ angular.module('bathroomModule')
                   //closeWindDirection(deviceId);
                   $scope.isWind = false;
                   $scope.isTime = true;
+                  $scope.isCountDown = true;
                   data.isOpen = false;
                 }
               });
@@ -653,6 +706,7 @@ angular.module('bathroomModule')
               item.switchPictureUrl = 'build/img/bathroom/wind_nor.png';
               $scope.isWind = false;
               $scope.isTime = true;
+              $scope.isCountDown = true;
               closeWindDirection(deviceId);
             }
             if((item.switchType != 'Hot' && item.switchType != 'Hot drying') || (item.switchType == 'Hot' || item.switchType == 'Hot drying')){
@@ -677,6 +731,7 @@ angular.module('bathroomModule')
       };
 
       var closeTimer = function(){
+        $scope.isWind = false;
         $scope.isTime = false;
         $interval.cancel(timePromise);
         $scope.countDown = 0 - 8*60*60*1000;
@@ -809,11 +864,11 @@ angular.module('bathroomModule')
        *@autor: caolei
        *@disc: open timer
        */
+      var deviceInfo = [];
       $scope.openTimer = function(){
         //alert("in");
 
         var hasOpenCount = 0;
-        var deviceInfo = [];
 
         angular.forEach($scope.bathroomData, function(data, index, array){
 
@@ -829,38 +884,9 @@ angular.module('bathroomModule')
 
           $scope.isWind = false;
           $scope.isTime = true;
+          $scope.isCountDown = true;
           openTimeModal();
-          var deviceId = getDeviceId();
-          var alltime = $scope.timeHour.substring(0,$scope.timeHour.length-1) + $scope.timeMinu.substring (0,$scope.timeMinu.length-1);
-          var hour = "0" + parseInt($scope.timeHour.substring(0,$scope.timeHour.length-1)).toString(16);
-          var min = "";
-          if(parseInt($scope.timeMinu.substring (0,$scope.timeMinu.length-1)) == 0){
-            min = "0" + parseInt($scope.timeMinu.substring (0,$scope.timeMinu.length-1)).toString(16);
-          }else{
-            min = parseInt($scope.timeMinu.substring (0,$scope.timeMinu.length-1)).toString(16);
-          }
 
-          angular.forEach(deviceInfo, function(data, index, array){
-            //根据deviceid对开启的功能添加定时功能
-            if(data.switchType == 'Hot'){
-              openHot(deviceId, hour, min);
-            }
-            if(data.switchType == 'Hot drying'){
-              openHotDrying(deviceId, hour, min);
-            }
-            if(data.switchType == 'Cool'){
-              openCool(deviceId, hour, min);
-            }
-            if(data.switchType == 'Dryer'){
-              openDryer(deviceId, hour, min);
-            }
-            if(data.switchType == 'Breath'){
-              openBreath(deviceId, hour, min);
-            }
-            if(data.switchType == 'Purify'){
-              openPurity(deviceId, hour, min);
-            }
-          });
         }else{
           alert("不能开启定时功能");
         }
@@ -868,7 +894,44 @@ angular.module('bathroomModule')
 
       var  timePromise = undefined;
       var getTimer = function(hour, minu){
+
+        $scope.isWind = false;
         $scope.isTime = true;
+        $scope.isCountDown = true;
+        var deviceId = getDeviceId();
+        $scope.countDown = $scope.timeHour.substring(0,$scope.timeHour.length-1)*60*60*1000 + $scope.timeMinu.substring(0,$scope.timeMinu.length-1)*60*1000 - 8*60*60*1000;
+        var hour = "0" + parseInt($scope.timeHour.substring(0,$scope.timeHour.length-1)).toString(16);
+        var min = "";
+        if(parseInt($scope.timeMinu.substring (0,$scope.timeMinu.length-1)) == 0){
+          min = "0" + parseInt($scope.timeMinu.substring (0,$scope.timeMinu.length-1)).toString(16);
+        }else{
+          min = parseInt($scope.timeMinu.substring (0,$scope.timeMinu.length-1)).toString(16);
+        }
+
+        angular.forEach(deviceInfo, function(data, index, array){
+          //根据deviceid对开启的功能添加定时功能
+          if(data.switchType == 'Hot'){
+            openHot(deviceId, hour, min);
+          }
+          if(data.switchType == 'Hot drying'){
+            openHotDrying(deviceId, hour, min);
+          }
+          if(data.switchType == 'Cool'){
+            openCool(deviceId, hour, min);
+          }
+          if(data.switchType == 'Dryer'){
+            openDryer(deviceId, hour, min);
+          }
+          if(data.switchType == 'Breath'){
+            openBreath(deviceId, hour, min);
+          }
+          if(data.switchType == 'Purify'){
+            openPurity(deviceId, hour, min);
+          }
+        });
+
+
+        /*$scope.isTime = true;
         $scope.isWind = false;
 
         $scope.countDown = hour.substring (0,hour.length-1)*60*60*1000 + minu.substring (0,minu.length-1)*60*1000 - 8*60*60*1000;
@@ -881,7 +944,7 @@ angular.module('bathroomModule')
           }else{
             $scope.countDown -= 1000;
           }
-        },1000);
+        },1000);*/
       };
 
       /**

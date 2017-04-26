@@ -1,4 +1,4 @@
-angular.module('bathroomModule')
+﻿angular.module('bathroomModule')
   .service('bathroomCmdService',
     ['baseConfig',
       function (baseConfig) {
@@ -10,7 +10,8 @@ angular.module('bathroomModule')
           operateHeater: operateHeater,
           stopAllOperation: stopAllOperation,
           explainEnvironmentStatus: explainEnvironmentStatus,
-          explainAck: explainAck
+          explainAck: explainAck,
+          explainHeaterStatus: explainHeaterStatus
         };
 
         return service;
@@ -23,22 +24,23 @@ angular.module('bathroomModule')
          */
         function explainAck(arg){
           var code ;
-          if (arg.length>=16) {
+          if (arg.length>=16 && arg.length<=40) {
             var ackStr = arg.substring(12,arg.length-2);
-            var ack = ackStr.substring(0,2);
+            var ack = ackStr.substring(0,2).toLowerCase();
             if (ack == 'fa') {
               //valid ack
-              code = {'ack':'1000'};
+              var operate = ackStr.substring(0,4);
+              code = {'ack':operate};
             }else if(ack == 'fd'){
               //invalid ack
-              code = {'ack':'1001'};
+              code = {'ack':'1003'};
             }else if (ack =='fc'){
               //invalid ack
               code = {'ack':'1002'};
             }else if (ack == 'fb'){
               //invalid ack
-              code = {'ack':'1003'};
-            }else if (ack == '8a'||ack == '8A'){
+              code = {'ack':'1001'};
+            }else if (ack == '8a'){
               code = explainLightingStatus(ackStr);
             }else if (ack == '85') {
               code = explainAirCareStatus(ackStr);
@@ -49,6 +51,7 @@ angular.module('bathroomModule')
               code = explainDeviceStatus(ackStr);
             }else if (ack == '81'){
               //返回BathRoom的错误状态
+              code = explainBathRoomErrorStatus(ackStr);
             }else if (ack == '84') {
               //返回BathRoom Heater状态
               code = explainHeaterStatus(ackStr);
@@ -56,6 +59,15 @@ angular.module('bathroomModule')
           }
 
           return code;
+        }
+
+        //返回BathRoom错误状态 cmd +arg1+ arg2 +arg3
+        function explainBathRoomErrorStatus(arg){
+          var error = {
+            'error':'True',
+            'code':arg
+          };
+          return error;
         }
 
         //lighting explain 8a/8A
