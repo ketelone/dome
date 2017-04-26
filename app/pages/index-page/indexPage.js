@@ -213,6 +213,18 @@ angular.module('indexPageModule')
           isStatus: true,
           isError: true,
           sku: "D2:3D:19:2C:A9:89"
+        },
+        {
+          id: "7",
+          pictureUrl: "build/img/index/img_home_device_chushuifa.png",
+          deviceType: "nextgen",
+          deviceStatus: "设备离线",
+          deviceDesc: "",
+          statusPictureUrl: "build/img/index/icon_home_device_no_singal.png",
+          errorPictureUrl: "build/img/index/icon_home_device_warnning.png",
+          isStatus: true,
+          isError: true,
+          sku: "E8:91:E0:DC:20:F1"
         }
       ];
 
@@ -445,7 +457,7 @@ angular.module('indexPageModule')
         return true;
       };
 
-      $scope.getDeviceInfo = function(item){
+        $scope.getDeviceInfo = function(item){
         if(item.deviceType == "浴霸"){
           $state.go('bathroom',{deviceSku: item.sku});
         }
@@ -455,6 +467,10 @@ angular.module('indexPageModule')
         if(item.deviceType == "karess"){
           $state.go('karess');
           SettingsService.set("sku",item.sku);
+        }
+        if(item.deviceType == "nextgen"){
+          $state.go('nextgen');
+
         }
       };
 

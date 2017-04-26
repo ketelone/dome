@@ -9,7 +9,7 @@
   .content{
 
     color:rgba(255,255,255,1);
-    background: #212121;
+    background: $global-background;
   }
   .iconSize{
     font-size: 0.5rem;
@@ -48,5 +48,6 @@
 
     line-height: 0.28rem;
   }
+
 
 }

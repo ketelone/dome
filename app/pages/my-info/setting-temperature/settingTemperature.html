@@ -10,14 +10,29 @@
 
 
 
-       <li class="item item-icon-right onerow"  >
+
+<div  ng-repeat="item in unitItems" item="item">
+<li  class="item item-icon-right onerow1"  >
          <div class="row">
-           <div style="text-align: left" class="col col-66 "><span   class="leftWord">你好</span></div>
+           <div style="text-align: left" class="col col-66 "><span translate="{{item.unitName}}"  class="leftWord1"></span></div>
+         </div>
+</li>
+<li  class="item item-icon-right onerow" ng-click="chooseOne(item)" >
+  <div class="row">
+           <div style="text-align: left" class="col col-66 "><span  translate="{{item.unitValue1}}" class="leftWord"></span></div>
            <div style="text-align: right;padding-right:0.3rem" class="col"><img style=" width: 0.42rem;height:0.42rem"  ng-src={{item.radioImg1}}></div>
          </div>
-       </li>
+</li>
+<li  class="item item-icon-right onerow" ng-click="chooseTwo(item)" >
+         <div class="row">
+           <div style="text-align: left" class="col col-66 "><span  translate="{{item.unitValue2}}" class="leftWord"></span></div>
+           <div style="text-align: right;padding-right:0.3rem" class="col"><img style=" width: 0.42rem;height:0.42rem"  ng-src={{item.radioImg2}}></div>
+         </div>
+</li>
+</div>
 
-     </ion-list>
+
+</ion-list>
 
    </ion-content>
 

@@ -5,18 +5,18 @@ angular.module('nextgenModule')
       function (baseConfig) {
 
         var service = {
-          setShowerPara:setShowerPara,
-          operateShower:operateShower,
+          setShowerPara: setShowerPara,
+          operateShower: operateShower,
           enterPowerSave: enterPowerSave,
-          exitPowerSave:exitPowerSave,
-          stopAll:stopAll,
-          explainAck:explainAck,
-          explainShowerStatus:explainShowerStatus,
-          explainWaterTemperature:explainWaterTemperature,
-          getCmdvalue:getCmdvalue,
-          getCmd:getCmd,
-          sendCmd:sendCmd
-         };
+          exitPowerSave: exitPowerSave,
+          stopAll: stopAll,
+          explainAck: explainAck,
+          explainShowerStatus: explainShowerStatus,
+          explainWaterTemperature: explainWaterTemperature,
+          getCmdvalue: getCmdvalue,
+          getCmd: getCmd,
+          sendCmd: sendCmd
+        };
 
         return service;
 //设置出水参数 cmd + arg1 + arg2 + arg3
@@ -26,26 +26,26 @@ angular.module('nextgenModule')
 //
 //        }//传参格式
 
-       function setShowerPara(arg) {
-           var data = '01';
-           if (arg.out == 'HRS') {
-             data = data + arg.temperature + '01' + 'FF';
-           } else if (arg.out == 'HS') {
-             data = data + arg.temperature + '02' + 'FF';
-           } else if (arg.out == 'SP') {
-             data = data + arg.temperature + '04' + 'FF';
-           } else if (arg.out == 'HDS') {
-             data = data + arg.temperature + '08' + 'FF';
-           }
+        function setShowerPara(arg) {
+          var data = '01';
+          if (arg.out == 'HRS') {
+            data = data + arg.temperature + '01' + 'FF';
+          } else if (arg.out == 'HS') {
+            data = data + arg.temperature + '02' + 'FF';
+          } else if (arg.out == 'SP') {
+            data = data + arg.temperature + '04' + 'FF';
+          } else if (arg.out == 'HDS') {
+            data = data + arg.temperature + '08' + 'FF';
+          }
           return data;
         }
 
 //2.开启或停止shower出水
-       /* var argment = {
-          'mode': '00-02'    //00表示stop，01表示Start continuous outlet 02表示Start evacuate cold water (turn on, and off when reach 37 degree,Start evacuate cold water 如果5分钟后水温仍达不到37度则自动停止) ,other表示内置设定
+        /* var argment = {
+         'mode': '00-02'    //00表示stop，01表示Start continuous outlet 02表示Start evacuate cold water (turn on, and off when reach 37 degree,Start evacuate cold water 如果5分钟后水温仍达不到37度则自动停止) ,other表示内置设定
 
-        }*///参数样式
-     function  operateShower(arg) {
+         }*///参数样式
+        function operateShower(arg) {
           var data = '21';
           data = data + arg.mode;
           return data;
@@ -56,26 +56,26 @@ angular.module('nextgenModule')
 //          'mode': '00-03' //，01表示低电量，02表示休眠，03表示断电
 //        }
 
-     function enterPowerSave(arg) {
+        function enterPowerSave(arg) {
           var data = '31';
           data = data + arg.mode;
           return data;
         }
 
 //4.退出节能模式 退出节能状态，回复到RUN状态。n	无论从何种POWER SAVE状态退出，均回复RUN状态。
-    function  exitPowerSave() {
+        function exitPowerSave() {
           var data = '32';
           return data;
         }
 
 //5.一键停止
-    function stopAll() {
+        function stopAll() {
           var data = '00';
           return data;
         }
 
 //arg 这里 8877-----
-     function explainAck(arg) {
+        function explainAck(arg) {
           var code;
           if (arg.length >= 16) {
             var ackStr = arg.substring(12, arg.length - 2);
@@ -105,7 +105,7 @@ angular.module('nextgenModule')
         }
 
 //5.返回shower的状态 83
-   function explainShowerStatus(arg) {
+        function explainShowerStatus(arg) {
           var cmdStr = arg;
           var status, showerStatus;
           try {
@@ -144,7 +144,7 @@ angular.module('nextgenModule')
         }
 
 //6.返回当前水温（A6）	用于当应答STATUS26 REQ n	当排空冷水完成时，推送STATUS26 返回的温度都是16进制数
-    function explainWaterTemperature(arg) {
+        function explainWaterTemperature(arg) {
           var cmdStr = arg;
           var temperature;
           if (cmdStr.length >= 4) {
@@ -161,14 +161,14 @@ angular.module('nextgenModule')
          * 十六进制补0
          * @param {*字符} d
          */
-         function doStr(d) {
+        function doStr(d) {
           if (d.length % 2 != 0) {
             d = "0" + d;
           }
           return d;
         };
 
-function getCmdvalue(header, idx, data, ctrId, devId) {
+        function getCmdvalue(header, idx, data, ctrId, devId) {
           if (data.length % 2 != 0) {
             data = "0" + data;
           }
@@ -187,8 +187,7 @@ function getCmdvalue(header, idx, data, ctrId, devId) {
         };
 
 
-
-     function getCmd(value, deviceId) {
+        function getCmd(value, deviceId) {
           var cmd = {
             from: {
               cid: "0xE3",
@@ -212,10 +211,13 @@ function getCmdvalue(header, idx, data, ctrId, devId) {
         };
 
 
-  function sendCmd (deviceId, value, successMsg, errorMsg){
+        function sendCmd(deviceId, value, successMsg, errorMsg) {
 
+          if (baseConfig.deviceFlag==false) {
+          return;
+          }
           var cmd = getCmd(value, deviceId);
-      alert("cmd:"+JSON.stringify(cmd));
+          alert("cmd:" + JSON.stringify(cmd));
           cordova.plugins.SocketPlugin.tcpSendCmd({
             "timeout": "2000",
             "value": cmd,
@@ -224,8 +226,10 @@ function getCmdvalue(header, idx, data, ctrId, devId) {
           function success(response) {
             hmsPopup.showShortCenterToast(successMsg);
           }
+
           function error() {
             hmsPopup.showShortCenterToast(errorMsg);
-          }}
+          }
+        }
 
       }]);

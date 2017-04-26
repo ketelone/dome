@@ -80,7 +80,8 @@
     {
       "id": "http://schemas.android.com/apk/res/android",
       "locator": "/Users/daidongdong/Downloads/SocketPlugin"
-    }
+    },
+    "D:\\SocketPlugin2"
   ],
   "cordovaPlatforms": [
     "android",

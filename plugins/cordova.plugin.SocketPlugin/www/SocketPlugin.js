@@ -2,7 +2,7 @@ var exec = require('cordova/exec');
 
 
 exports.udpBroadCast = function(arg, success, error) {
-    exec(success, error, "SocketPlugin", "udpBroadcast", [arg]);
+    exec(success, error, "SocketPlugin", "udpBroadCast", [arg]);
 };
 
 exports.tcpConnect = function(arg, success, error) {
