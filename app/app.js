@@ -44,7 +44,9 @@ angular.module('myApp')
         // org.apache.cordova.statusbar required
         StatusBar.styleDefault();
       }
-
+      window.localStorage.temperature="°C";
+      window.localStorage.useWater="S";
+      window.localStorage.useElectricity="h";
 
       if (window.localStorage.languageFlag == undefined || window.localStorage.language == "default") {
         navigator.globalization.getPreferredLanguage(

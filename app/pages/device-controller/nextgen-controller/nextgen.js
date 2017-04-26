@@ -17,13 +17,26 @@ angular.module('nextgenModule')
       var header="8877";
       var idx="00";
       var devId="03";//E8:91:E0:DC:20:F1
-      var deveiceId="E0DC20F1";
+     // var deveiceId="E0DC20F1";
 
       function getValue(data){
         return nextgenService.getCmdvalue(header,idx, data, ctrId,devId);
       };
 
+      var getDeviceId = function(){
+        var deviceList = localStorage.deviceInfo.split(";");
 
+        for(var i = 0; i < deviceList.length; i ++){
+          var deviceInfo = deviceList[i].split(",");
+          if(deviceInfo[0] == "E8:91:E0:DC:20:F1"){
+            return deviceInfo[1];
+          }
+        }
+      };
+
+
+      var  deveiceId=getDeviceId();
+       alert("OK"+deveiceId);
 
   function chixuWater(){
 

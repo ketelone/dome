@@ -51,31 +51,33 @@ $scope.currentLanguage=function(){
     $scope.thisLanguage="中文简体";
   }
   else if(window.localStorage.language =="default"){
-    navigator.globalization.getPreferredLanguage(
-      function (language) {
+    $scope.thisLanguage="my-info.setting.followLanguage";
 
-        if (language.value == 'zh-CN' ||language.value ==  'zh-Hans-CN') {
-          $scope.thisLanguage="中文简体";
+    //navigator.globalization.getPreferredLanguage(
+    //  function (language) {
 
-        }
-        else if (language.value == 'zh-TW' || language.value == 'zh-Hans-TW') {
-          $scope.thisLanguage="中文繁体";
-
-        }
-        else if (language.value == 'en-US' || language.value == 'en-CN') {
-          $scope.thisLanguage="English";
-        }
-        else if (language.value == 'en-TH' || language.value == 'th-CN') {
-          $translate.use('th');
-          $scope.thisLanguage="ภาษาไทย";
-        }
-       else{
-          $scope.thisLanguage="English";
-        }
-      },
-      function () {
-
-      });
+      //  if (language.value == 'zh-CN' ||language.value ==  'zh-Hans-CN') {
+      //    $scope.thisLanguage="中文简体";
+      //
+      //  }
+      //  else if (language.value == 'zh-TW' || language.value == 'zh-Hans-TW') {
+      //    $scope.thisLanguage="中文繁体";
+      //
+      //  }
+      //  else if (language.value == 'en-US' || language.value == 'en-CN') {
+      //    $scope.thisLanguage="English";
+      //  }
+      //  else if (language.value == 'en-TH' || language.value == 'th-CN') {
+      //    $translate.use('th');
+      //    $scope.thisLanguage="ภาษาไทย";
+      //  }
+      // else{
+      //    $scope.thisLanguage="English";
+      //  }
+      //},
+      //function () {
+      //
+      //});
   }
   else  if (window.localStorage.language == '中文繁体') {
     $scope.thisLanguage="中文繁体";
@@ -141,7 +143,7 @@ $scope.currentLanguage=function(){
           $state.go('login');
         }
 
-        hmsPopup.confirmNoTitle( "<div style='text-align: center'>是否退出当前账号</div>",goLogin);
+        hmsPopup.confirmNoTitle( "<div style='text-align: center' >是否退出当前账号</div>",goLogin);
       }
 
 

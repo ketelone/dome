@@ -196,7 +196,7 @@ angular.module('loginModule')
       }
 
       $scope.login = function () {//登录功能
-        $state.go('tabs');
+         $state.go('tabs');
         return;
         if (window.localStorage.empno != $scope.loginInfo.username) {
           localStorage.removeItem('key_history1');
