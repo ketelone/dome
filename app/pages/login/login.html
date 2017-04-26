@@ -9,8 +9,8 @@
         <div class="login_user_img">
           <img src="build/img/login/user@3x.png">
         </div>
-        <input type="text" autocomplete="off" class="username-input" ng-model="loginInfo.username"
-               ng-change="usernameChange()" translate-attr="{placeholder: 'login.usernamePlaceholder'}" ng-blur="userNameBlur()"/>
+        <input type="text" autocomplete="off" class="username-input-text" ng-model="loginInfo.username"
+               ng-change="usernameChange()" ng-blur="userNameBlur()" style="font-size: 0.5rem;"/>
         <ion-item class="user-clear-item" ng-show="showUserClearButton">
           <button class="button button-block clear-button" ng-click="clearUsername()">
             <img src="build/img/login/cancel@3x.png" class="clear-image"/>
@@ -21,7 +21,7 @@
         <div  class="login_pwd_img">
           <img src="build/img/login/password@3x.png">
         </div>
-        <input type="password" autocomplete="off" class="password-input" ng-model="loginInfo.password" translate-attr="{placeholder: 'login.passwordPlaceholder'}"
+        <input type="password" autocomplete="off" class="password-input"  style="font-size: 0.5rem" ng-model="loginInfo.password"
              ng-change="passwordChange()"/>
         <ion-item class="password-clear-item" ng-show="showPasswordClearButton">
           <button class="button button-block clear-button" ng-click="clearPassword()">

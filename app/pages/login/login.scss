@@ -40,14 +40,14 @@
     background: none;
     margin-top: 25px;
   }
-  .username-input input::-webkit-input-placeholder {
+  .username-input-text input::-webkit-input-placeholder {
     color:  rgba(255, 255, 255, 0.8);
-    font-size: 1rem;
+    font-size: 0.5rem;
     font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
   }
-  .username-input{
+  .username-input-text{
     color: rgba(255, 255, 255, 0.8);
-    font-size: 1rem;
+    font-size: 0.5rem;
     background-color: transparent;
     width:82.6%;
     margin-left:18.7%;
@@ -83,7 +83,7 @@
   }
   .password-input{
     color: rgba(255, 255, 255, 0.8);
-    font-size: 12px;
+    font-size: 0.5rem;
     letter-spacing: -1px;
     background-color: transparent;
     width: 82.6%;
@@ -95,7 +95,7 @@
   }
   input::-webkit-input-placeholder {
     color:  rgba(255, 255, 255, 0.8);
-    font-size: 1rem;
+    font-size: 0.5rem;
     font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
   }
   .login-checkbox-item{

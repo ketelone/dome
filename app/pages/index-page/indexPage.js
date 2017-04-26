@@ -292,7 +292,7 @@ angular.module('indexPageModule')
           }
         };
         cordova.plugins.SocketPlugin.udpBroadCast({
-          "timeout": "5000",
+          "timeout": "3000",
           "ip": "255.255.255.255",
           "value": cmd//指令json
         }, success, error);
