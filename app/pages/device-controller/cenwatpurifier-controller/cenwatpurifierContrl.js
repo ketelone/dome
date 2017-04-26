@@ -25,16 +25,12 @@ angular.module('toiletControlModule')
         publicMethod.goBack();
       }
       /*
-       tongyishujuji
+       Central water purifier shu ju
        */
       $scope.cenwatpurifierCtrl = {
 
       };
-       /*
-       cehuashuliangdangshu-json
-       侧滑转档数量json
-       */
-      /**
+      /*
        moren-json
        init默认
        **/
@@ -46,7 +42,7 @@ angular.module('toiletControlModule')
         canves03: "initcanves03",
       }]
       /**
-       gongnenglist-json
+       gong neng list-json
        功能列表数据
        **/
       $scope.handlenapeListNape = [
