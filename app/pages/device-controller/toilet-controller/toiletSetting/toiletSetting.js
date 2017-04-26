@@ -24,51 +24,60 @@ angular.module('toiletControlModule')
       $scope.chuchousetval = false,
       $scope.anjianvoicesetval = true,
       $scope.welcomemsetval = false
-      $scope.toilteSetting={
-        gaiganyin:"",
-        gaiganyinDistance:""
+      $scope.toilteSettingData={
+        gaiganyin:"toiletSetting.ganyinggai",
+        gaiganyinDistance:"toiletSetting.gaiquangy1",
+        //jiedian setting
+        jieDianSeting:"toiletSetting.never",
+        jiedianDanwei:""
       };
       $scope.listleft = [{
-        name:"关闭",
+        name:"toiletSetting.close",
         flag:false,
         towdata:[{
-          name: "无",
+          name: "toiletSetting.none",
           flag:false
         }]
       },{
-        name:"盖感应",
+        name:"toiletSetting.ganyinggai",
         flag:false,
         towdata:[{
-          name: "近距离",
+          name: "toiletSetting.nearinstance",
           flag:false
         },{
-          name: "中距离",
+          name: "toiletSetting.centerinstance",
           flag:false
         },{
-          name: "远距离",
+          name: "toiletSetting.farinstance",
           flag:false
         }]
       },{
-        name:"盖和圈感应",
+        name:"toiletSetting.gaiquangy",
         flag:false,
         towdata:[{
-          name: "盖和圈感应1",
+          name: "toiletSetting.gaiquangy1",
           flag:false
         },{
-          name: "盖和圈感应2",
+          name: "toiletSetting.gaiquangy2",
           flag:false
         },{
-          name: "盖和圈感应3",
+          name: "toiletSetting.gaiquangy3",
           flag:false
         }]
       }];
-      $scope.gaiganyinTemp="";
-      $scope.gaiganyinDistanceTemp="";
+      $scope.gaiganyinTemp = "";
+      $scope.gaiganyinDistanceTemp = "";
+
       $scope.listright=$scope.listleft[0].towdata;
       $scope.silderSeleced = function (index) {
-        $scope.listleft[index].flag = true;
-        $scope.gaiganyinTemp = $scope.listleft[index].name;
-        $scope.listright = $scope.listleft[index].towdata;
+        $scope.listleft[index].flag = !$scope.listleft[index].flag;
+        if($scope.listleft[index].flag){
+          $scope.gaiganyinTemp = $scope.listleft[index].name;
+          $scope.listright = $scope.listleft[index].towdata;
+        }else{
+          $scope.gaiganyinTemp = "";
+          $scope.listright = [];
+        };
         for(var i=0;i<$scope.listleft.length;i++){
           if(index !== i){
             $scope.listleft[i].flag = false;
@@ -76,16 +85,19 @@ angular.module('toiletControlModule')
         }
       };
       $scope.silderRightSeleced = function (index) {
-        $scope.listright[index].flag = true;
-        $scope.gaiganyinDistanceTemp = $scope.listright[index].name;
+        $scope.listright[index].flag = !$scope.listright[index].flag;
+        if($scope.listright[index].flag){
+          $scope.gaiganyinDistanceTemp = $scope.listright[index].name;
+        }else{
+          $scope.gaiganyinDistanceTemp = "";
+        };
         for(var i=0;i<$scope.listright.length;i++){
           if(index !== i){
             $scope.listright[i].flag = false;
           }
         }
       };
-      //自动翻盖设置
-      //获取屏幕高度
+      //auto cover setting
       $scope.screenHeig = window.innerHeight;
       $ionicModal.fromTemplateUrl('build/pages/model/hmsModal.html', {
         scope: $scope,
@@ -93,8 +105,35 @@ angular.module('toiletControlModule')
       }).then(function (modal) {
         $scope.modal = modal;
       });
-      $scope.value = [{id:2,des:'从不'},
-        {id:3,des:'4小时'},{id:4,des:'8小时'},{id:5,des:'12小时'},{id:5,des:'智能学习'}
+      //自动翻盖设置
+      $ionicModal.fromTemplateUrl('build/pages/model/hmsiot-setSelect.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+      }).then(function (modal) {
+        $scope.setmodal = modal;
+      });
+      $scope.setopenModal = function () {
+        $scope.listright=$scope.listleft[1].towdata;
+        $scope.setmodal.show();
+        setTimeout(function () {
+          var ele = document.getElementsByClassName("hmsiot-setSelect");
+          ele[0].style.top = 68 + '%';
+        },10)
+      };
+      $scope.$on('$destroy', function() {
+        $scope.setmodal.remove();
+      });
+      $scope.setchoose = function () {
+        $scope.setmodal.hide();
+        if($scope.gaiganyinTemp && $scope.gaiganyinDistanceTemp){
+          $scope.toilteSettingData.gaiganyin=$scope.gaiganyinTemp;
+          $scope.toilteSettingData.gaiganyinDistance=$scope.gaiganyinDistanceTemp;
+        }else{
+          hmsPopup.showShortCenterToast("请选择数据项!");
+        };
+      };
+      $scope.value = [{id:2,des:'toiletSetting.never','danwei':""},
+        {id:3,des:'4','danwei':"toiletSetting.danwei"},{id:4,des:'8',danwei:"toiletSetting.danwei"},{id:5,des:'12',danwei:"toiletSetting.danwei"},{id:5,des:'toiletSetting.interngent','danwei':""}
       ];
       $scope.openModal = function () {
         if($scope.value.length!==0) {
@@ -111,7 +150,6 @@ angular.module('toiletControlModule')
               ele[0].style.top = $scope.screenHeig - 52 + 'px';
             } else if ($scope.value.length > 4) {
               ele[0].style.top= 68 + '%';
-              ele[0].style.minHeight = 32 + '%';
             };
           }, 10)
         }
@@ -121,31 +159,10 @@ angular.module('toiletControlModule')
       });
       $scope.choose = function (val) {
         $scope.modal.hide();
+        $scope.toilteSettingData.jieDianSeting=val.des;
+        $scope.toilteSettingData.jiedianDanwei = val.danwei;
       };
-      //自动翻盖设置
-      $ionicModal.fromTemplateUrl('build/pages/model/hmsiot-setSelect.html', {
-        scope: $scope,
-        animation: 'slide-in-up'
-      }).then(function (modal) {
-        $scope.setmodal = modal;
-      });
-      $scope.setopenModal = function () {
-        $scope.listright=$scope.listleft[0].towdata;
-        $scope.setmodal.show();
-        setTimeout(function () {
-          var ele = document.getElementsByClassName("hmsiot-setSelect");
-          ele[0].style.top = 68 + '%';
-          ele[0].style.minHeight = 61 + '%';
-        }, 10)
-      };
-      $scope.$on('$destroy', function() {
-        $scope.setmodal.remove();
-      });
-      $scope.setchoose = function () {
-        $scope.toilteSetting.gaiganyin=$scope.gaiganyinTemp;
-        $scope.toilteSetting.gaiganyinDistance=$scope.gaiganyinDistanceTemp;
-        $scope.setmodal.hide();
-      };
+
       //确定是否清除设备设置
       $scope.isCheckDeviceInfoSet = function () {
         hmsPopup.confirmNoTitle("确定要恢复默认设置吗?</br>恢复默认设置后当前设置会被清空",function () {

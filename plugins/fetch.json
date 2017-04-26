@@ -63,14 +63,6 @@
         "is_top_level": true,
         "variables": {}
     },
-    "cordova-plugin-camera": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-camera"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
     "cordova-plugin-hand-offlineMenu": {
         "source": {
             "type": "local",
@@ -83,14 +75,6 @@
         "source": {
             "type": "registry",
             "id": "cordova-plugin-globalization"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cordova.plugin.location": {
-        "source": {
-            "type": "local",
-            "path": "/Users/daidongdong/Downloads/com.plugin.location"
         },
         "is_top_level": true,
         "variables": {}

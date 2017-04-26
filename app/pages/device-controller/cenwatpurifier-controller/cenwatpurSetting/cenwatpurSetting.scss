@@ -1,0 +1,47 @@
+.cenwatpurSetting {
+  .row,.col{
+    padding:0;
+  }
+  .textleft {
+    text-align: left;
+  }
+  .textright {
+    text-align: right;
+  }
+  .font-sizekey{
+    font-size: $font-size;
+  }
+  .font-sizevalue{
+    color:#565A64;
+    font-size: $font-size-small;
+  }
+   .toilet-bg{
+     background-color: $global-head-bg;
+     color: $color-base;
+   }
+  .modestyle{
+    width: 100%;
+    height: auto;
+    border-bottom: 15px solid #4e4848;
+  }
+  .modelast{
+    border-bottom: 0px solid #4e4848;
+  }
+  .row{
+    height: 1rem;
+    padding-left: 0.4rem;
+    padding-right: 0.369rem;
+    border-bottom: 0.01rem solid #383838;
+    .auto-fangai-img{
+      vertical-align:middle;
+      height: 0.308rem;
+      width: 0.193rem;
+    }
+    .auto-fangai-col70{
+      .fangai-col70-reaction{
+        display: inline-block;
+        margin-right: 0.3rem;
+      }
+    }
+  }
+}

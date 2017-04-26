@@ -28,15 +28,36 @@ angular.module('toiletControlModule')
        Central water purifier shu ju
        */
       $scope.cenwatpurifierCtrl = {
+        //status
+        readyconnected:"cenwatpurifier.readyConnected",
+        unconnected:"cenwatpurifier.unConnected",
+        connectStatus:"cenwatpurifier.readyConnected",
+        // //clear
+        clearSurplus:"cenwatpurifier.surplus",
+        clearComplete:"cenwatpurifier.complete",
+        clearStatus:"cenwatpurifier.surplus",
+        clearData:"1:34",
+        isShwoClearStatus:true
+      }
+      // var myworker= new Worker("work.js");
+      //
+      // // $('#button').on('click',function(e){
+      // //   myworker.postMessage(60);
+      //
+      // // });
+      //
+      //
+      // myworker.addEventListener("message", function(e){
+      //   console.log(e.data)
+      // });
 
-      };
       /*
        moren-json
        init默认
        **/
       $scope.slideInitData =[{
         des: "init",
-        parameterctlFlag: true,
+        parameterctlFlag: false,
         parNodeid: 'toilet-initCtl',
         canves01: "initcanves01",
         canves03: "initcanves03",
@@ -58,7 +79,7 @@ angular.module('toiletControlModule')
           imgUrl: "build/img/cenwatpurifier-controller/icon_setting.png",
           imgSeledUrl: "build/img/cenwatpurifier-controller/icon_settinged.png",
           imgUrlTemp:"build/img/cenwatpurifier-controller/icon_setting.png",
-          handleDes: "cenwatpurifier.handleclear",
+          handleDes: "cenwatpurifier.setting",
           matchdataid:"setting",
           selecFlag:false,
         }
@@ -84,16 +105,21 @@ angular.module('toiletControlModule')
         if($('#cewafiionSliderBox').children().length !== 0){
           $('#cewafiionSliderBox').empty();
         };
+
         // on-slide-changed='slideHasChanged($index)'>
         var checHtml =
-          "<ion-slide-box ng-init='lockSlide()' show-pager='false'>"+
+          "<ion-slide-box ng-init='lockSlide()'>"+
           "<ion-slide ng-repeat='list in currentSlideData track by $index'>"+
           "<div id={{list.parNodeid}} class='toilet-parameterctl'>"+
           "<canvas id={{list.canves01}} class='canves-pos'></canvas>"+
           "<canvas id={{list.canves03}} class='canves-pos'></canvas>"+
           "<div class='toilet-parameterctl-data' ng-if='!list.parameterctlFlag'>"+
-          "<span class='toilet-parameterctl-raddata' ng-bind='list.gearInit'></span>"+
-          "<span class='toilet-parameterctl-des' ng-bind='list.des'></span>"+
+          "<p ng-if='cenwatpurifierCtrl.isShwoClearStatus' class='toilet-parameterctl-raddata' translate={{cenwatpurifierCtrl.connectStatus}}></p>"+
+          "<span ng-if='cenwatpurifierCtrl.isShwoClearStatus' class='toilet-parameterctl-des' translate='cenwatpurifier.status'></span>"+
+
+          "<span ng-if='!cenwatpurifierCtrl.isShwoClearStatus' class='toilet-parameterctl-raddata toilet-parameterct-span' translate={{cenwatpurifierCtrl.clearStatus}}></span>"+
+          "<p ng-if='!cenwatpurifierCtrl.isShwoClearStatus' class='toilet-parameterctl-raddata' style='font-size: 0.6rem;' ng-bind='cenwatpurifierCtrl.clearData'></p>"+
+          "<span ng-if='!cenwatpurifierCtrl.isShwoClearStatus' class='toilet-parameterctl-des' translate='cenwatpurifier.clear'></span>"+
           "</div>"+
           "<div class='toilet-parameterctl-dataimg' ng-if='list.parameterctlFlag'>"+
           "<img class='conninfo-parameterctl-img' ng-src='build/img/toilet-controller/btn_devicedetail_scoll.png' alt=''>"+
@@ -187,10 +213,12 @@ angular.module('toiletControlModule')
       //处理选择怎加border
       var handlenapeListNapeLen = $scope.handlenapeListNape.length;
       $scope.selectNapes = function (index) {
+        // myworker.postMessage(60);
         $scope.handlenapeSelectedIndex = index;
         if($scope.handlenapeListNape[index].matchdataid === "setting"){
-          $state.go("toiletSetting");
+          $state.go("cenwatpurSetting");
         }else {
+          $scope.cenwatpurifierCtrl.isShwoClearStatus = !$scope.cenwatpurifierCtrl.isShwoClearStatus;
           // $timeout(function () {
             $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
             for(var i=0;i<handlenapeListNapeLen;i++){

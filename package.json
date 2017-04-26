@@ -59,7 +59,6 @@
     "webpack": "^1.12.14"
   },
   "cordovaPlugins": [
-    "cordova-plugin-camera",
     "cordova-plugin-console",
     "cordova-plugin-device",
     "cordova-plugin-file",

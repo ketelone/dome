@@ -516,7 +516,13 @@ angular.module('toiletControlModule')
                   if(slideDataObj.parNodeid === "toilet-warmjCtl"){
                     slideDataObj.gearInit = this.i+1;
                   }else if(slideDataObj.parNodeid === "toilet-lightCtl"){
-                    slideDataObj.gearInit = this.i+3;
+                    if(this.i === 2){
+                      slideDataObj.gearInit = 4;
+                    }else if(this.i === 3){
+                      slideDataObj.gearInit = 7;
+                    }else if(this.i === 4){
+                      slideDataObj.gearInit = 10;
+                    }
                   }else{
                     slideDataObj.gearInit = this.i;
                   }
@@ -532,7 +538,13 @@ angular.module('toiletControlModule')
                 if(slideDataObj.parNodeid === "toilet-warmjCtl"){
                   slideDataObj.gearInit = this.i+2;
                 }else if(slideDataObj.parNodeid === "toilet-lightCtl"){
-                  slideDataObj.gearInit = this.i+3;
+                  if(this.i === 2){
+                    slideDataObj.gearInit = 4;
+                  }else if(this.i === 3){
+                    slideDataObj.gearInit = 7;
+                  }else if(this.i === 4){
+                    slideDataObj.gearInit = 10;
+                  }
                 }else{
                   slideDataObj.gearInit = this.i+1;
                 }

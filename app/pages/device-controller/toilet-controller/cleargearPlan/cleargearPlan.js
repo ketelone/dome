@@ -2,6 +2,7 @@ angular.module('toiletControlModule')
   .controller('cleargearPlanCtrl', [
     '$scope',
     '$state',
+    '$translate',
     'publicMethod',
     '$ionicModal',
     'baseConfig',
@@ -9,6 +10,7 @@ angular.module('toiletControlModule')
     'hmsPopup',
     function ($scope,
               $state,
+              $translate,
               publicMethod,
               $ionicModal,
               baseConfig,
@@ -20,11 +22,22 @@ angular.module('toiletControlModule')
       };
       $scope.clearGearPlanCheck = false;
       $scope.clearGearPlanCheckBg = true;
+      $translate.instant("cleargearPlan.zhouyi")
+
+      $scope.weekTemp = [];
+      $scope.weekTemp.push($translate.instant("cleargearPlan.zhouyi"));
+      $scope.weekTemp.push($translate.instant("cleargearPlan.zhouer"));
+      $scope.weekTemp.push($translate.instant("cleargearPlan.zhousan"));
+      $scope.weekTemp.push($translate.instant("cleargearPlan.zhousi"));
+      $scope.weekTemp.push($translate.instant("cleargearPlan.zhouwu"));
+      $scope.weekTemp.push($translate.instant("cleargearPlan.zhouliu"));
+      $scope.weekTemp.push($translate.instant("cleargearPlan.zhoutian"));
+
       $scope.cleargearPlan = {
-        clearRepeatVal:"每周(一,二,三,四,五,六,天)",
-        dataTime:"18:00",
-        hourUnit:"时",
-        minuteUnit:"分"
+        weekValDanwei:"cleargearPlan.weekValDanwei",
+        clearRepeatVal:"("+ $scope.weekTemp.join(",")+")",
+        danweiFlag:true,
+        dataTime:"18:00"
       };
       $scope.fontsizgray={
         "color":"gray"
@@ -40,28 +53,30 @@ angular.module('toiletControlModule')
             "color":"gray"
           }
         }
-      }
+      };
       //data select
       //hour data
       $scope.listleft = [];
       $scope.listright = [];
       $scope.recicleObj = {};
-      $scope.cleardataTime={
+      $scope.clearGeardataTime={
         hour:"",
         minute:""
       }
-      for(var i=1;i<=24;i++){
+      for(var i=0;i<=23;i++){
         $scope.recicleObj = {
-          name:i+$scope.cleargearPlan.hourUnit,
+          name:i,
           flag:false,
+          danwei:"cleargearPlan.hour",
         };
         $scope.listleft.push($scope.recicleObj)
       };
       //minute data
       for(var i=0;i<=6;i++){
         $scope.recicleObj = {
-          name:i*10+$scope.cleargearPlan.minuteUnit,
+          name:i*10,
           flag:false,
+          danwei:"cleargearPlan.minute",
         };
         $scope.listright.push($scope.recicleObj)
       };
@@ -72,8 +87,12 @@ angular.module('toiletControlModule')
        *@disc:add border and bottom line
        */
       $scope.silderSeleced = function (index) {
-        $scope.listleft[index].flag = true;
-        $scope.cleardataTime.hour = $scope.listleft[index].name;
+        $scope.listleft[index].flag = !$scope.listleft[index].flag;
+        if($scope.listleft[index].flag){
+          $scope.clearGeardataTime.hour = $scope.listleft[index].name+"时";
+        }else{
+          $scope.clearGeardataTime.hour = "";
+        }
         for(var i=0;i<$scope.listleft.length;i++){
           if(index !== i){
             $scope.listleft[i].flag = false;
@@ -87,8 +106,12 @@ angular.module('toiletControlModule')
        *@disc:add border and bottom line
        */
       $scope.silderRightSeleced = function (index) {
-        $scope.listright[index].flag = true;
-        $scope.cleardataTime.minute = $scope.listright[index].name;
+        $scope.listright[index].flag = !$scope.listright[index].flag;
+        if($scope.listright[index].flag){
+          $scope.clearGeardataTime.minute = $scope.listright[index].name+"分";
+        }else{
+          $scope.clearGeardataTime.minute = "";
+        }
         for(var i=0;i<$scope.listright.length;i++){
           if(index !== i){
             $scope.listright[i].flag = false;
@@ -105,51 +128,53 @@ angular.module('toiletControlModule')
         $scope.setmodal.show();
         setTimeout(function () {
           var ele = document.getElementsByClassName("hmsiot-setSelect");
-          ele[0].style.top = 68 + '%'
+          ele[0].style.top = 68 + '%';
         }, 10)
       };
       $scope.$on('$destroy', function() {
         $scope.setmodal.remove();
       });
       $scope.setchoose = function () {
-        $scope.cleargearPlan.dataTime = filterTimeMinute($scope.cleardataTime.hour,"hour")+":"+ filterTimeMinute($scope.cleardataTime.minute,"minute")
-        $scope.setmodal.hide();
+        if($scope.clearGeardataTime.hour && $scope.clearGeardataTime.minute){
+          if($scope.clearGeardataTime.hour.length===2){
+            $scope.clearGeardataTime.hour = "0"+$scope.clearGeardataTime.hour;
+          }
+          if($scope.clearGeardataTime.minute.length===2){
+            $scope.clearGeardataTime.minute = "0"+$scope.clearGeardataTime.minute;
+          }
+          $scope.cleargearPlan.dataTime = filterTimeMinute($scope.clearGeardataTime.hour,"hour")+":"+ filterTimeMinute($scope.clearGeardataTime.minute,"minute")
+          $scope.setmodal.hide();
+        }else{
+          $scope.setmodal.hide();
+          hmsPopup.showShortCenterToast("请选择数据项!");
+        }
       };
-
-      //repeat data
       $scope.listleftRepeat = [{
-        name:"每周一",
-        nameid:"一",
+        name:"cleargearPlan.zhouyi",
         reflag:true,
         dotflag:true
       },{
-        name:"每周二",
-        nameid:"二",
+        name:"cleargearPlan.zhouer",
         reflag:true,
         dotflag:true
       },{
-        name:"每周三",
-        nameid:"三",
+        name:"cleargearPlan.zhousan",
         reflag:true,
         dotflag:true
       },{
-        name:"每周四",
-        nameid:"四",
+        name:"cleargearPlan.zhousi",
         reflag:true,
         dotflag:true
       },{
-        name:"每周五",
-        nameid:"五",
+        name:"cleargearPlan.zhouwu",
         reflag:true,
         dotflag:true
       },{
-        name:"每周六",
-        nameid:"六",
+        name:"cleargearPlan.zhouliu",
         reflag:true,
         dotflag:true
       },{
-        name:"每周天",
-        nameid:"天",
+        name:"cleargearPlan.zhoutian",
         reflag:true,
         dotflag:true
       }];
@@ -163,7 +188,7 @@ angular.module('toiletControlModule')
         $scope.setsingalmodal.show();
         setTimeout(function () {
           var ele = document.getElementsByClassName("hmsiot-manySelect");
-          ele[0].style.top = 40 + '%';
+          ele[0].style.top = 39 + '%';
         }, 10)
       };
       $scope.$on('$destroy', function() {
@@ -183,13 +208,15 @@ angular.module('toiletControlModule')
         };
         $scope.listleftRepeat.forEach(function (item,index) {
           if(item.dotflag){
-            $scope.itemSelected.push(item.nameid);
+            $scope.itemSelected.push($translate.instant(item.name))
           }
         });
         if($scope.itemSelected.length===0){
+          $scope.cleargearPlan.danweiFlag =false;
           $scope.cleargearPlan.clearRepeatVal = "无设置重复"
         }else{
-          $scope.cleargearPlan.clearRepeatVal ="每周("+$scope.itemSelected.join(",")+")"
+          $scope.cleargearPlan.danweiFlag =true;
+          $scope.cleargearPlan.clearRepeatVal ="("+$scope.itemSelected.join(",")+")"
         }
         $scope.setsingalmodal.hide();
       };

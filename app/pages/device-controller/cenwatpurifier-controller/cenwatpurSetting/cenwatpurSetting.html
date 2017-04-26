@@ -1,0 +1,55 @@
+<ion-view class="cenwatpurSetting">
+  <ion-header-bar style="background-image: none">
+    <button class="button button-icon icon ion-ios-arrow-left header_buttonRig" ng-click="goBack()"></button>
+    <div class="h1 title header_title" translate="cenwatpurSetting.title"></div>
+    <button class="button button-icon icon ion-qr-scanner header_buttonRig" ng-click="openPopover($event)"></button>
+  </ion-header-bar>
+  <ion-content class="toilet-bg" overflow-scroll="true">
+    <div class="modestyle">
+        <div class="row" ng-click="openModal()">
+          <div class="col col-30 col-center font-sizekey">
+                <span translate="cenwatpurSetting.clearmode"></span>
+          </div>
+          <div class="col col-70 col-center textright auto-fangai-col70">
+            <span class="fangai-col70-reaction font-sizevalue" translate={{cenwatpurSettingData.clearMode}}></span>
+            <img src="build/img/cenwatpurifier-controller/icon_scenario_arrow.png" class="auto-fangai-img" alt="">
+          </div>
+        </div>
+      <div class="row" ng-click="setopenModal()">
+        <div class="col col-70 col-center font-sizekey">
+          <span translate="cenwatpurSetting.clearmodeAutoTime"></span>
+        </div>
+        <div class="col col-30 col-center textright auto-fangai-col70">
+          <span class="fangai-col70-reaction font-sizevalue" ng-bind="cenwatpurSettingData.timeData"></span>
+          <img src="build/img/cenwatpurifier-controller/icon_scenario_arrow.png" class="auto-fangai-img" alt="">
+        </div>
+      </div>
+    </div>
+    <div class="modestyle modelast">
+      <div class="row">
+        <div class="col col-30 col-center font-sizekey">
+          <span translate="cenwatpurifier.errortotal"></span>
+        </div>
+        <div class="col col-70 col-center textright auto-fangai-col70">
+          <img src="build/img/cenwatpurifier-controller/icon_scenario_arrow.png" class="auto-fangai-img" alt="">
+        </div>
+      </div>
+      <div class="row"  ng-click="isCheckDeviceInfoSet()">
+        <div class="col col-30 col-center font-sizekey">
+          <span translate="cenwatpurifier.recoverset"></span>
+        </div>
+        <div class="col col-70 col-center textright auto-fangai-col70">
+          <img src="build/img/cenwatpurifier-controller/icon_scenario_arrow.png" class="auto-fangai-img" alt="">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col col-30 col-center font-sizekey">
+          <span translate="cenwatpurifier.checkdeviceInfo"></span>
+        </div>
+        <div class="col col-70 col-center textright auto-fangai-col70">
+          <img src="build/img/cenwatpurifier-controller/icon_scenario_arrow.png" class="auto-fangai-img" alt="">
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

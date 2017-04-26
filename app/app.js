@@ -574,6 +574,12 @@ angular.module('myApp')
           templateUrl: 'build/pages/device-controller/cenwatpurifier-controller/cenwatpurifierContrl.html',
           controller: 'cenwatpurifierCtrl'
         })
+        // 设备控制-中央净水器设置
+        .state('cenwatpurSetting', {
+          url: '/cenwatpurSetting',
+          templateUrl: 'build/pages/device-controller/cenwatpurifier-controller/cenwatpurSetting/cenwatpurSetting.html',
+          controller: 'cenwatpurSettingCtrl'
+        })
         //设备控制-karess
         .state('karess', {
           url: '/karess',

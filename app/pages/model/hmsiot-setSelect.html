@@ -8,14 +8,20 @@
       <div class="hmsiot-select-contentinner hmsiot-select-contentleft">
         <ion-scroll class="hmsiot-slider-left" scrollbar-y="false" scrollbar-x="false">
           <div class="slider-list" ng-repeat="i in listleft track by $index" ng-click="silderSeleced($index)">
-            <span class="slider-span" ng-class="{true: 'sliderselected', false: ''}[i.flag]">{{i.name}}</span>
+            <span class="slider-span" ng-class="{true: 'sliderselected', false: ''}[i.flag]">
+              <span style="margin-right: 5px" translate={{i.name}}>
+              </span><span translate={{i.danwei}}></span>
+            </span>
           </div>
         </ion-scroll>
       </div>
       <div class="hmsiot-select-contentinner hmsiot-select-contentrig">
         <ion-scroll class="hmsiot-slider-left" scrollbar-y="false" scrollbar-x="false">
           <div class="slider-list" ng-repeat="i in listright track by $index" ng-click="silderRightSeleced($index)">
-            <span class="slider-span" ng-class="{true: 'sliderselected', false: ''}[i.flag]">{{i.name}}</span>
+             <span class="slider-span" ng-class="{true: 'sliderselected', false: ''}[i.flag]">
+              <span style="margin-right: 5px" translate={{i.name}}>
+              </span><span translate={{i.danwei}}></span>
+            </span>
           </div>
         </ion-scroll>
       </div>

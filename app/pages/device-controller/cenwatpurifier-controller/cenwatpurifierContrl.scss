@@ -74,14 +74,19 @@
       width: 1.38rem;
       text-align: center;
       .toilet-parameterctl-raddata{
-        font-size: $font-size-bigger;
+        font-size: 0.42rem;
         color: $color-base;
+      }
+      .toilet-parameterct-span{
+        display: inline-block;
+        margin-bottom: 0.2rem;
+        font-size: 0.30rem;
       }
       .toilet-parameterctl-des{
         display: block;
-        margin-top: 0.15rem;
+        margin-top: 0.4rem;
         font-size: 0.30rem;
-        color: white;
+        color: #51D8BD;
       }
     }
   }
@@ -121,10 +126,6 @@
         font-size: $font-size-small;
         color: white;
       }
-    }
-    .toilet-handlenape-list:last-child .handlenape-list-napes{
-      margin-bottom: 2.8rem;
-      //margin-bottom: 2.8rem;
     }
   }
 }

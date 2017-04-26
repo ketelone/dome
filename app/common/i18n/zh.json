@@ -220,10 +220,25 @@
     "toiletclear": "智能除菌计划",
     "errortotal": "异常情况统计",
     "recoverset": "恢复默认设置",
-    "checkdeviceInfo": "查看设备信息"
+    "checkdeviceInfo": "查看设备信息",
+    "close": "关闭",
+    "ganyinggai": "盖感应",
+    "gaiquangy": "盖和圈感应",
+    "none":"无",
+    "nearinstance": "近距离",
+    "centerinstance": "中距离",
+    "farinstance": "远距离",
+    "gaiquangy1": "盖和圈感应1",
+    "gaiquangy2": "盖和圈感应2",
+    "gaiquangy3": "盖和圈感应3",
+
+    "never": "从不",
+    "danwei": "小时",
+    "interngent": "智能学习"
   },
   "lightSetting": {
     "title": "灯光设置",
+    "lightselect":"灯光颜色",
     "lightmode": "夜灯模式",
     "toiletlamp": "便座灯模式",
     "envirentlightset": "环境灯设置",
@@ -244,14 +259,43 @@
     "startTimeDes": "开始时间",
     "hour": "时",
     "minute": "分",
-    "clearRepeat": "重复"
+    "clearRepeat": "重复",
+    "zhouyi": "周一",
+    "zhouer": "周二",
+    "zhousan": "周三",
+    "zhousi": "周四",
+    "zhouwu": "周五",
+    "zhouliu": "周六",
+    "zhoutian": "周天",
+    "weekValDanwei":"每"
+
   },
   "cenwatpurifier":{
     "title":"中央净水器",
+    "status":"状态",
+    "readyConnected":"已连接",
+    "unConnected":"未连接",
+    "surplus":"剩余",
+    "complete":"完成",
+    "clear":"清洁",
     "autoclear":"自动清洗",
     "handleclear":"手动清洗",
     "onekeystop":"一键停止",
-    "setting":"设置"
+    "setting":"设置",
+    "errortotal": "异常情况统计",
+    "recoverset": "恢复默认设置",
+    "checkdeviceInfo": "查看设备信息",
+    "hour":"时",
+    "minute":"分",
+    "timedelay":"时间延迟",
+    "flowinstance":"流量即时",
+    "flowelay":"流量延迟",
+    "mix":"混合"
+  },
+  "cenwatpurSetting":{
+    "title":"中央净水器设置",
+    "clearmode":"设置冲洗模式",
+    "clearmodeAutoTime":"设置自动冲洗开始时间"
   },
   "veil": {
     "goHomeTitle": "场景详情",

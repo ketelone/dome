@@ -12,7 +12,7 @@
               <img class="slider-span-img" ng-if="i.reflag" src="build/img/toilet-controller/radio_bg.png" alt="">
               <img class="slider-span-dotimg" ng-if="i.dotflag" src="build/img/toilet-controller/radio_dot.png" alt="">
             </span>
-            <span class="slider-span" ng-class="{true: 'sliderselected', false: ''}[i.flag]">{{i.name}}</span>
+            <span class="slider-span" ng-class="{true: 'sliderselected', false: ''}[i.flag]" translate={{i.name}}></span>
           </div>
         </ion-scroll>
       </div>

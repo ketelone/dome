@@ -27,163 +27,53 @@ angular.module('toiletControlModule')
       $scope.lighttoiletlampmode = true;
       $scope.lightnightmode = false;
 
+      $scope.value = [{"background-color":'#563233'},{"background-color":'#6378B4'},{"background-color":'#F0D19F'},{"background-color":'#C39170'},{"background-color":'#EA695B'},
+        {"background-color":'#C1AE49'},{"background-color":'#70A18E'},{"background-color":'#FEFCFD'}];
       //week light color
       $scope.colorWeek = [{
         des:"lightSetting.zhoutian",
         color:{
-          "background-color":"red",
+          "background-color":"#563233",
           "margin-right":"12%"
-        },
-        selectColo:[{
-          id:2,
-          des:'red'
-        },{
-          id:3,
-          des:'blue'
-        },{
-          id:4,
-          des:'green'
-        },{
-          id:5,
-          des:'black'
-        },{
-          id:5,
-          des:'white'
-        }]
+        }
       },{
         des:"lightSetting.zhouyi",
-        color:{
-          "background-color":"Pantone7456",
-          "margin-right":"12%"
-        },
-        selectColo:[{
-          id:2,
-          des:'red'
-        },{
-          id:3,
-          des:'blue'
-        },{
-          id:4,
-          des:'green'
-        },{
-          id:5,
-          des:'black'
-        },{
-          id:5,
-          des:'white'
-        }]
+        color: {
+          "background-color":"#6378B4",
+          "margin-right": "12%"
+        }
       },{
         des:"lightSetting.zhouer",
         color:{
-          "background-color":"Pantone7507",
+          "background-color":"#F0D19F",
           "margin-right":"12%"
-        },
-        selectColo:[{
-          id:2,
-          des:'red'
-        },{
-          id:3,
-          des:'blue'
-        },{
-          id:4,
-          des:'green'
-        },{
-          id:5,
-          des:'black'
-        },{
-          id:5,
-          des:'white'
-        }]
+        }
       },{
         des:"lightSetting.zhousan",
         color:{
-          "background-color":"Pantone7507",
+          "background-color":"#C39170",
         },
-        selectColo:[{
-          id:2,
-          des:'red'
-        },{
-          id:3,
-          des:'blue'
-        },{
-          id:4,
-          des:'green'
-        },{
-          id:5,
-          des:'black'
-        },{
-          id:5,
-          des:'white'
-        }]
       },{
         des:"lightSetting.zhousi",
         color:{
-          "background-color":"Pantone7507",
+          "background-color":"#EA695B",
           "margin-right":"12%",
           "margin-bottom":"0.5rem"
-        },
-        selectColo:[{
-          id:2,
-          des:'red'
-        },{
-          id:3,
-          des:'blue'
-        },{
-          id:4,
-          des:'green'
-        },{
-          id:5,
-          des:'black'
-        },{
-          id:5,
-          des:'white'
-        }]
+        }
       },{
         des:"lightSetting.zhouwu",
         color:{
-          "background-color":"Pantone7507",
+          "background-color":"#C1AE49",
           "margin-right":"12%",
           "margin-bottom":"0.5rem"
-        },
-        selectColo:[{
-          id:2,
-          des:'red'
-        },{
-          id:3,
-          des:'blue'
-        },{
-          id:4,
-          des:'green'
-        },{
-          id:5,
-          des:'black'
-        },{
-          id:5,
-          des:'white'
-        }]
+        }
       },{
         des:"lightSetting.zhouliu",
         color:{
-          "background-color":"Pantone7507",
+          "background-color":"#70A18E",
           "margin-right":"12%",
           "margin-bottom":"0.5rem"
-        },
-        selectColo:[{
-          id:2,
-          des:'red'
-        },{
-          id:3,
-          des:'blue'
-        },{
-          id:4,
-          des:'green'
-        },{
-          id:5,
-          des:'black'
-        },{
-          id:5,
-          des:'white'
-        }]
+        }
       }];
       //gobakc
       $scope.goBack = function () {
@@ -209,39 +99,28 @@ angular.module('toiletControlModule')
       };
       //get scren height
       $scope.screenHeig = window.innerHeight;
-      $ionicModal.fromTemplateUrl('build/pages/model/hmsModal.html', {
+      $ionicModal.fromTemplateUrl('build/pages/model/lightModal.html', {
         scope: $scope,
         animation: 'slide-in-up'
       }).then(function (modal) {
         $scope.modal = modal;
       });
-      $scope.value = [];
-      $scope.selecedtIndex;
+      $scope.value = [{"background-color":'#563233'},{"background-color":'#6378B4'},{"background-color":'#F0D19F'},{"background-color":'#C39170'},{"background-color":'#EA695B'},
+        {"background-color":'#C1AE49'},{"background-color":'#70A18E'},{"background-color":'#FEFCFD'}];
+      $scope.indexSelected;
       $scope.openModal = function (index) {
-        $scope.selecedtIndex = index;
-        $scope.value = $scope.colorWeek[index].selectColo;
+        $scope.indexSelected = index;
         $scope.modal.show();
         setTimeout(function () {
-          var ele = document.getElementsByClassName("hmsModal");
-          if ($scope.value.length === 3) {
-            ele[0].style.top = $scope.screenHeig - 156 + 'px';
-          } else if ($scope.value.length === 4) {
-            ele[0].style.top = $scope.screenHeig - 208 + 'px';
-          } else if ($scope.value.length === 2) {
-            ele[0].style.top = $scope.screenHeig - 104 + 'px';
-          } else if ($scope.value.length === 1) {
-            ele[0].style.top = $scope.screenHeig - 52 + 'px';
-          } else if ($scope.value.length > 4) {
-            ele[0].style.top= 68 + '%';
-            ele[0].style.minHeight = 32 + '%';
-          };
+          var ele = document.getElementsByClassName("lightModal");
+          ele[0].style.top= 68 + '%';
         }, 10)
       };
       $scope.$on('$destroy', function() {
         $scope.modal.remove();
       });
       $scope.choose = function (val) {
-        $scope.colorWeek[$scope.selecedtIndex].color['background-color'] = val.des;
+        $scope.colorWeek[$scope.indexSelected].color['background-color'] = val['background-color'];
         $scope.modal.hide();
       };
 

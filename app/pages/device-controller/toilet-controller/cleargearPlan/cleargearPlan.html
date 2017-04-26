@@ -25,7 +25,7 @@
           <span translate="cleargearPlan.startTimeDes"></span>
         </div>
         <div class="col col-70 col-center textright auto-fangai-col70">
-          <span class="fangai-col70-reaction font-sizevalue" ng-bind="cleargearPlan.dataTime"></span>
+          <span class="fangai-col70-reaction font-sizevalue" ng-bind=cleargearPlan.dataTime></span>
         </div>
       </div>
       <div class="row" ng-click="setSingalOpenModal()">
@@ -33,6 +33,7 @@
           <span translate="cleargearPlan.clearRepeat"></span>
         </div>
         <div class="col col-70 col-center textright auto-fangai-col70">
+          <span ng-if="cleargearPlan.danweiFlag" class="font-sizevalue" translate={{cleargearPlan.weekValDanwei}}></span>
           <span class="fangai-col70-reaction font-sizevalue" ng-bind="cleargearPlan.clearRepeatVal"></span>
         </div>
       </div>

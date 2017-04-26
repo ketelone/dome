@@ -1,0 +1,34 @@
+.lightModal {
+  .headerCase{
+    height: 44px;
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+    .headertitle{
+      line-height: 44px;
+      color: rgb(56,126,245);
+    }
+    .createNewRecord{
+      position: absolute;
+      display: inline-block;
+      right: 20px;
+      top: 3px;
+      width: 30px;
+      height: 40px;
+      line-height: 40px;
+      font-size: 22px;
+    }
+  }
+  .contentCase {
+    background-color:white;
+    margin-top: 44px;
+    z-index:-1;
+  }
+  .node-list{
+    float: left;
+    display: inline-block;
+    width: 0.8rem;
+    height:0.8rem;
+    margin: 0.5rem 0.32rem 0.1rem;
+    background: red;
+  }
+}
