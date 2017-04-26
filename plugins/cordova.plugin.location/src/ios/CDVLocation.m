@@ -29,13 +29,13 @@
         }
         if ([CLLocationManager authorizationStatus]==kCLAuthorizationStatusDenied ||[CLLocationManager authorizationStatus]==kCLAuthorizationStatusRestricted) {
             //@"定位权限被关闭"
-            CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{@"error":@"unAuthorization"}];
+            CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{@"error":@"1000"}];
             [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
         }else{
             [_manager startUpdatingLocation];
         }
     }else{
-        CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{@"error":@"unAuthorization"}];
+        CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{@"error":@"1001"}];
         [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
     }
 }
@@ -73,6 +73,7 @@
                                    };
     CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:locationDict];
     [self.commandDelegate sendPluginResult:result callbackId:self.cmd.callbackId];
+    [manager stopUpdatingLocation];
     manager = nil;
 }
 

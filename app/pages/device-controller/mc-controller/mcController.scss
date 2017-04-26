@@ -1,0 +1,149 @@
+.mc-controller {
+   .toilet-bg{
+     background-color: $global-head-bg;
+   }
+  .toilet-conninfo{
+    margin-top: 0.86rem;
+    width: 100%;
+    height: auto;
+    width: auto;
+    .toilet-conninfo-signal{
+      display: inline-block;
+      margin-left: 0.9rem;
+      height: 0.28rem;
+      line-height: 0.28rem;
+      .conninfo-signal-img{
+        vertical-align: middle;
+        height: 0.25rem;
+        width: 0.354rem;
+        margin-right:0.106rem;
+      }
+      .conninfo-signal-info{
+        display: inline-block;
+        width: 1.21rem;
+        font-size: $font-size-small;
+        color: $color-text-value;
+      }
+    }
+    .toilet-conninfo-isues{
+      display: inline-block;
+      margin-left: 0.49rem;
+      height: 0.28rem;
+      line-height: 0.28rem;
+      .conninfo-isues-img{
+        width: 0.235rem;
+        margin-right:0.075rem;
+      }
+      .conninfo-isues-info{
+        display: inline-block;
+        width: 1.21rem;
+        font-size: $font-size-small;
+        color: $color-text-deviceinfo;
+      }
+    }
+  }
+  .toilet-parameterctl {
+    position: relative;
+    margin-top: 0.76rem;
+    margin-left: 0.93rem;
+    width: 5.64rem;
+    height: 5.64rem;
+    .canves-pos{
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+    .toilet-parameterctl-dataimg{
+      position: absolute;
+      top: 1.35rem;
+      left: 1.70rem;
+      height: 2.6rem;
+      width: 2.6rem;
+      text-align: center;
+      z-index: 10;
+      .conninfo-parameterctl-img{
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .toilet-parameterctl-data {
+      z-index: 4;
+      position: absolute;
+      top: 1.90rem;
+      left: 2.18rem;
+      height: 1.38rem;
+      width: 1.38rem;
+      text-align: center;
+      .toilet-parameterctl-raddata{
+        font-size: $font-size-bigger;
+        color: $color-base;
+        white-space:nowrap;
+      }
+      .toilet-parameterctl-des{
+        display: block;
+        margin-top: 0.15rem;
+        font-size: 0.30rem;
+        color: white;
+      }
+    }
+  }
+  .toilet-handlenape-selec{
+    position: absolute;
+    top: 5.9rem;
+    z-index: 0;
+    width: 100%;
+    height: 1.08rem;
+    line-height: 1.08rem;
+    background-color: #1C202C;
+    font-size: $font-size-liter;
+    .handlenape-selec-des{
+      margin-left: 0.9rem;
+      color: $color-base;
+    }
+    .handlenape-selec-use{
+      margin-left: 3.34rem;
+      color: $global-border;
+    }
+    .handlenape-selec-img{
+      display: inline-block;
+      width: 0.193rem;
+      height: 0.308rem;
+      right: 0.607rem;
+    }
+  }
+  .toilet-handlenape{
+    position: absolute;
+    top: 6.8rem;
+    width: 96%;
+    margin-left: 2%;
+    margin-right: 2%;
+    height: 6.86rem;
+    .napes-border{
+      border:0.03rem solid $global-border;
+      border-radius: 0.08rem;
+    }
+    .handlenape-list-napes{
+      position: relative;
+      float: left;
+      width: 25%;
+      height: 1.5rem;
+      line-height: 1.5rem;
+      margin-top: 0.6rem;
+      text-align: center;
+      .list-napes-img{
+        width: 0.6rem;
+        height: 0.6rem;
+      }
+      .list-napes-dec{
+        position: absolute;
+        top: 0.35rem;
+        left: 0.45rem;
+        font-size: $font-size-small;
+        color: white;
+      }
+    }
+    .toilet-handlenape-list:last-child .handlenape-list-napes{
+      margin-bottom: 2.3rem;
+    }
+  }
+}
