@@ -25,7 +25,8 @@ var myApp = angular.module('myApp', [
   'toiletControlModule',
   'bathroomModule',
   'karessControlModule',
-  'nextgenModule'
+  'nextgenModule',
+  'mcControlModule'
 ]);
 
 var db = null;
@@ -43,108 +44,111 @@ angular.module('myApp')
         // org.apache.cordova.statusbar required
         StatusBar.styleDefault();
       }
+      window.localStorage.temperature="°C";
+      window.localStorage.useWater="S";
+      window.localStorage.useElectricity="h";
 
+      if (window.localStorage.languageFlag == undefined || window.localStorage.language == "default") {
+        navigator.globalization.getPreferredLanguage(
+          function (language) {
+            alert(language.value == 'zh-Hans-CN');
+            alert(language.value == 'zh-CN' || language.value == 'zh-Hans-CN');
+            if (language.value == 'zh-CN' || language.value == 'zh-Hans-CN') {
+              alert(language.value + '1');
+              $translate.use('zh');
 
-         if(window.localStorage.languageFlag==undefined||window.localStorage.language=="default") {
+            }
+            else if (language.value == 'zh-TW' || language.value == 'zh-Hans-TW') {
+              $translate.use('tw');
 
-          navigator.globalization.getPreferredLanguage(
-            function (language) {
-              alert(language.value == 'zh-Hans-CN');
-              alert(language.value == 'zh-CN' ||language.value ==  'zh-Hans-CN');
-              if (language.value == 'zh-CN' ||language.value ==  'zh-Hans-CN') {
-                alert(language.value+'1');
-                $translate.use('zh');
+            }
+            else if (language.value == 'en-US' || language.value == 'en-CN') {
+              alert(language.value + '2');
+              $translate.use('en');
+            }
+            else if (language.value == 'en-TH' || language.value == 'th-CN') {
+              $translate.use('th');
 
-              }
-              else if (language.value == 'zh-TW' ||language.value ==  'zh-Hans-TW') {
-                $translate.use('tw');
+            }
+            else {
+              $translate.use('en');
+              alert(language.value + "a");
 
-              }
-              else if (language.value == 'en-US' ||language.value ==  'en-CN') {
-                alert(language.value+'2');
-                $translate.use('en');
-               }
-              else if (language.value == 'en-TH' ||language.value ==  'th-CN') {
-                $translate.use('th');
+            }
+            window.localStorage.languageFlag = true;
+            window.localStorage.language = "default";
+          },
+          function () {
+            // alert('Error getting locale\n');
+          });
+      }
+      else {
 
-              }
-              else {
-                $translate.use('en');
-                alert(language.value+"a");
+        if (window.localStorage.language == '中文简体') {
+          $translate.use('zh');
 
-              }
-              window.localStorage.languageFlag=true;
-              window.localStorage.language="default";
-            },
-            function () {
-              // alert('Error getting locale\n');
-            });
         }
-      else{
-
-          if (window.localStorage.language == '中文简体') {
-            $translate.use('zh');
-
-          }
-        else  if (window.localStorage.language == '中文繁体') {
-            $translate.use('tw');
-          }
-          else if (window.localStorage.language == 'English') {
-            $translate.use('en');
-          }
-          else  if (window.localStorage.language == 'ภาษาไทย') {
-            $translate.use('th');
-          }
-          else{ $translate.use('en');}
+        else if (window.localStorage.language == '中文繁体') {
+          $translate.use('tw');
         }
+        else if (window.localStorage.language == 'English') {
+          $translate.use('en');
+        }
+        else if (window.localStorage.language == 'ภาษาไทย') {
+          $translate.use('th');
+        }
+        else {
+          $translate.use('en');
+        }
+      }
     });
 
-    document.addEventListener('deviceready', function() {
+    document.addEventListener('deviceready', function () {
       console.log('openDatabase');
       db = window.sqlitePlugin.openDatabase({name: 'ko.db', location: 'default'});
 
       //T_CTM_PARTY
-      db.transaction(function(tx) {
-        tx.executeSql("CREATE TABLE IF NOT EXISTS T_CTM_PARTY ("+
-          "[PARTY_ID] bigint NOT NULL ,"+
-          "[PARTY_TYPE] nvarchar(30) NULL ,"+
-          "[PARTY_ACCOUNT] nvarchar(30) NULL ,"+
-          "[PASSWORD] nvarchar(30) NULL ,"+
-          "[HEAD_PORTRAIT] nvarchar(240) NULL ,"+
-          "[PARTY_NAME] nvarchar(30) NULL ,"+
-          "[SEX] nvarchar(30) NULL ,"+
-          "[PHONE_NUMBER] nvarchar(30) NULL ,"+
-          "[EMAIL_ADDRESS] nvarchar(30) NULL ,"+
-          "[ROLE_ID] bigint NULL ,"+
-          "[PARTY_STATUS] nvarchar(30) NULL ,"+
-          "[REFERENCE_SOURCE] nvarchar(30) NULL ,"+
-          "[CREATION_DATE] datetime NOT NULL DEFAULT (sysdatetime()) ,"+
-          "[CREATED_BY] nvarchar(100) NOT NULL DEFAULT ('-1') ,"+
-          "[LAST_UPDATE_DATE] datetime NOT NULL DEFAULT (sysdatetime()) ,"+
-          "[LAST_UPDATED_BY] nvarchar(100) NOT NULL DEFAULT ('-1') ,"+
-          "[LAST_UPDATE_LOGIN] nvarchar(100) NOT NULL DEFAULT ('-1') ,"+
-          "[OBJECT_VERSION_NUMBER] bigint NOT NULL DEFAULT ((1)) ,"+
-          "[REQUEST_ID] bigint NULL ,"+
-          "[PROGRAM_ID] bigint NULL ,"+
-          "[ATTRIBUTE_CATEGORY] nvarchar(100) NULL ,"+
-          "[ATTRIBUTE1] nvarchar(240) NULL ,"+
-          "[ATTRIBUTE2] nvarchar(240) NULL ,"+
-          "[ATTRIBUTE3] nvarchar(240) NULL ,"+
-          "[ATTRIBUTE4] nvarchar(240) NULL ,"+
-          "[ATTRIBUTE5] nvarchar(240) NULL ,"+
-          "[ATTRIBUTE6] nvarchar(240) NULL ,"+
-          "[ATTRIBUTE7] nvarchar(240) NULL ,"+
-          "[ATTRIBUTE8] nvarchar(240) NULL ,"+
-          "[ATTRIBUTE9] nvarchar(240) NULL ,"+
-          "[ATTRIBUTE10] nvarchar(240) NULL ,"+
-          "[ATTRIBUTE11] nvarchar(240) NULL ,"+
-          "[ATTRIBUTE12] nvarchar(240) NULL ,"+
-          "[ATTRIBUTE13] nvarchar(240) NULL ,"+
-          "[ATTRIBUTE14] nvarchar(240) NULL ,"+
-          "[ATTRIBUTE15] nvarchar(240) NULL ,"+
-          "PRIMARY KEY ([PARTY_ID]),"+
-          "UNIQUE ([PARTY_ID] ASC)"+
-        ")");
+      db.transaction(function (tx) {
+        tx.executeSql("CREATE TABLE IF NOT EXISTS T_CTM_PARTY (" +
+          "[PARTY_ID] bigint NOT NULL ," +
+          "[PARTY_TYPE] nvarchar(30) NULL ," +
+          "[PARTY_ACCOUNT] nvarchar(30) NULL ," +
+          "[PASSWORD] nvarchar(30) NULL ," +
+          "[HEAD_PORTRAIT] nvarchar(240) NULL ," +
+          "[PARTY_NAME] nvarchar(30) NULL ," +
+          "[SEX] nvarchar(30) NULL ," +
+          "[PHONE_NUMBER] nvarchar(30) NULL ," +
+          "[EMAIL_ADDRESS] nvarchar(30) NULL ," +
+          "[ROLE_ID] bigint NULL ," +
+          "[PARTY_STATUS] nvarchar(30) NULL ," +
+          "[REFERENCE_SOURCE] nvarchar(30) NULL ," +
+          "[CREATION_DATE] datetime NOT NULL DEFAULT (sysdatetime()) ," +
+          "[CREATED_BY] nvarchar(100) NOT NULL DEFAULT ('-1') ," +
+          "[LAST_UPDATE_DATE] datetime NOT NULL DEFAULT (sysdatetime()) ," +
+          "[LAST_UPDATED_BY] nvarchar(100) NOT NULL DEFAULT ('-1') ," +
+          "[LAST_UPDATE_LOGIN] nvarchar(100) NOT NULL DEFAULT ('-1') ," +
+          "[OBJECT_VERSION_NUMBER] bigint NOT NULL DEFAULT ((1)) ," +
+          "[REQUEST_ID] bigint NULL ," +
+          "[PROGRAM_ID] bigint NULL ," +
+          "[ATTRIBUTE_CATEGORY] nvarchar(100) NULL ," +
+          "[ATTRIBUTE1] nvarchar(240) NULL ," +
+          "[ATTRIBUTE2] nvarchar(240) NULL ," +
+          "[ATTRIBUTE3] nvarchar(240) NULL ," +
+          "[ATTRIBUTE4] nvarchar(240) NULL ," +
+          "[ATTRIBUTE5] nvarchar(240) NULL ," +
+          "[ATTRIBUTE6] nvarchar(240) NULL ," +
+          "[ATTRIBUTE7] nvarchar(240) NULL ," +
+          "[ATTRIBUTE8] nvarchar(240) NULL ," +
+          "[ATTRIBUTE9] nvarchar(240) NULL ," +
+          "[ATTRIBUTE10] nvarchar(240) NULL ," +
+          "[ATTRIBUTE11] nvarchar(240) NULL ," +
+          "[ATTRIBUTE12] nvarchar(240) NULL ," +
+          "[ATTRIBUTE13] nvarchar(240) NULL ," +
+          "[ATTRIBUTE14] nvarchar(240) NULL ," +
+          "[ATTRIBUTE15] nvarchar(240) NULL ," +
+          "PRIMARY KEY ([PARTY_ID])," +
+          "UNIQUE ([PARTY_ID] ASC)" +
+          ")");
 
         tx.executeSql("CREATE TABLE IF NOT EXISTS T_CTM_PARTY_BOX (" +
           "[PARTY_BOX_DEVICE_ID] bigint NOT NULL ," +
@@ -176,9 +180,9 @@ angular.module('myApp')
           "[ATTRIBUTE14] nvarchar(240) NULL ," +
           "[ATTRIBUTE15] nvarchar(240) NULL ," +
           "PRIMARY KEY ([PARTY_BOX_DEVICE_ID])" +
-        ")");
+          ")");
 
-        tx.executeSql("CREATE TABLE IF NOT EXISTS T_CTM_PARTY_BOX_DEVICE ("  +
+        tx.executeSql("CREATE TABLE IF NOT EXISTS T_CTM_PARTY_BOX_DEVICE (" +
           "[PARTY_BOX_DEVICE_ID] bigint NOT NULL ," +
           "[PARTY_ID] bigint NULL ," +
           "[BOX_ID] bigint NULL ," +
@@ -209,7 +213,7 @@ angular.module('myApp')
           "[ATTRIBUTE14] nvarchar(240) NULL ," +
           "[ATTRIBUTE15] nvarchar(240) NULL ," +
           "PRIMARY KEY ([PARTY_BOX_DEVICE_ID])" +
-        ")");
+          ")");
 
         tx.executeSql("CREATE TABLE IF NOT EXISTS T_CTM_PARTY_DEVICE (" +
           "[PARTY_DEVICE_ID] bigint NOT NULL ," +
@@ -241,7 +245,7 @@ angular.module('myApp')
           "[ATTRIBUTE14] nvarchar(240) NULL ," +
           "[ATTRIBUTE15] nvarchar(240) NULL ," +
           "PRIMARY KEY ([PARTY_DEVICE_ID])" +
-        ")");
+          ")");
 
         tx.executeSql("CREATE TABLE IF NOT EXISTS T_CTM_PARTY_GROUP (" +
           "[PARTY_GROUP_ID] bigint NOT NULL ," +
@@ -275,7 +279,7 @@ angular.module('myApp')
           "[ATTRIBUTE14] nvarchar(240) NULL ," +
           "[ATTRIBUTE15] nvarchar(240) NULL ," +
           "PRIMARY KEY ([PARTY_GROUP_ID])" +
-        ")");
+          ")");
 
         tx.executeSql("CREATE TABLE IF NOT EXISTS T_CTM_PARTY_GROUP_DEVICE (" +
           "[GROUP_DEVICE_ID] bigint NOT NULL ," +
@@ -308,7 +312,7 @@ angular.module('myApp')
           "[ATTRIBUTE14] nvarchar(240) NULL ," +
           "[ATTRIBUTE15] nvarchar(240) NULL ," +
           "PRIMARY KEY ([GROUP_DEVICE_ID])" +
-        ")");
+          ")");
 
         tx.executeSql("CREATE TABLE IF NOT EXISTS T_DVM_DEVICE (" +
           "[DEVICE_ID] bigint NOT NULL ," +
@@ -344,7 +348,7 @@ angular.module('myApp')
           "[ATTRIBUTE14] nvarchar(240) NULL ," +
           "[ATTRIBUTE15] nvarchar(240) NULL ," +
           "PRIMARY KEY ([DEVICE_ID])" +
-        ")");
+          ")");
 
         tx.executeSql("CREATE TABLE T_CTM_PARTY_SCENARIO (" +
           "[SCENARIO_ID] [bigint] IDENTITY(1,1) NOT NULL," +
@@ -384,16 +388,16 @@ angular.module('myApp')
           "[ATTRIBUTE14] [nvarchar](240) NULL," +
           "[ATTRIBUTE15] [nvarchar](240) NULL," +
           "PRIMARY KEY ([SCENARIO_ID] ASC)" +
-        ")");
+          ")");
       });
       /*db.close(successcb, errorcb);
-      //
-      var successcb = function(){
+       //
+       var successcb = function(){
 
-      };
-      var errorcb = function(msg){
+       };
+       var errorcb = function(msg){
 
-      };*/
+       };*/
     });
   });
 
@@ -595,6 +599,23 @@ angular.module('myApp')
           url: '/karessInfo',
           templateUrl: 'build/pages/device-controller/karess-controller/info-karess/karessInfo.html',
           controller: 'karessInfoControllerCtrl'
+
+        })
+        //设备控制-mc
+        .state('mc', {
+          url: '/mc',
+          templateUrl: 'build/pages/device-controller/mc-controller/mcController.html',
+          controller: 'mcControllerCtrl'
+        })
+        .state('mcSetting', {
+          url: '/mcSetting',
+          templateUrl: 'build/pages/device-controller/mc-controller/setting-mc/mcSet.html',
+          controller: 'mcSettingControllerCtrl'
+        })
+        .state('mcInfo', {
+          url: '/mcInfo',
+          templateUrl: 'build/pages/device-controller/mc-controller/info-mc/mcInfo.html',
+          controller: 'mcInfoControllerCtrl'
 
         })
         .state('nextgenSet', {

@@ -1,0 +1,36 @@
+.mc-setting {
+  background-color: $global-head-bg;
+  .ionContent{
+    background-color: $global-background;
+    margin-top: 44px;
+  }
+  .noPadding {
+    padding: 0;
+  }
+  .rowStyle{
+    background-color: $global-Line-bg;
+    height: 1rem;
+    width: 100%;
+  }
+  .colName {
+    color: $color-text-key;
+    font-size: $font-size;
+    white-space: nowrap;
+    line-height: 1rem;
+    padding-left: 20px;
+  }
+  .colContent {
+    color: $color-text-value;
+    font-size: $font-size-small;
+    white-space:nowrap;
+    line-height: 1rem;
+    padding-right: 20px;
+  }
+  .line{
+    background-color: $global-background;
+    height: 1px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+

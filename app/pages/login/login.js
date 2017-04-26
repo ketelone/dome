@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Created by gusenlin on 16/4/24.
  */
 angular.module('loginModule')
@@ -173,12 +173,12 @@ angular.module('loginModule')
             model = device.model;
           }
           var url =
-          "http://139.219.198.247:8080/residential/oauth/token" + "?username=" + encodeURIComponent($scope.loginInfo.username) + "&password=" +
+            baseConfig.basePath + "/oauth/token" + "?username=" + encodeURIComponent($scope.loginInfo.username) + "&password=" +
           encodeURIComponent($scope.loginInfo.password) + "&client_id=" + 'residential_client' + "&client_secret=" + 'residential_secret' +
           "&grant_type=" + 'password';
         } catch (e) {
           var url =
-            "http://139.219.198.247:8080/residential/oauth/token" + "?username=" + encodeURIComponent($scope.loginInfo.username) + "&password=" +
+            baseConfig.basePath + "/oauth/token" + "?username=" + encodeURIComponent($scope.loginInfo.username) + "&password=" +
             encodeURIComponent($scope.loginInfo.password) + "&client_id=" + 'residential_client' + "&client_secret=" + 'residential_secret' +
             "&grant_type=" + 'password'
 
@@ -191,7 +191,7 @@ angular.module('loginModule')
           headers: {
             'Content-type': "application/x-www-form-urlencoded"
           },
-          url: url,
+          url: url
         })
       }
 
@@ -236,6 +236,8 @@ angular.module('loginModule')
               window.localStorage.token = result.access_token;
               window.localStorage.empno = $scope.loginInfo.username;
               window.localStorage.checkboxSavePwd = $scope.rememberPassword;
+              $state.go('tabs');
+
               //imService.initImData();
               if (ionic.Platform.isWebView()) {
                 imService.initImData();

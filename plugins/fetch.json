@@ -82,7 +82,7 @@
     "cordova.plugin.SocketPlugin": {
         "source": {
             "type": "local",
-            "path": "/Users/daidongdong/Downloads/SocketPlugin"
+            "path": "D:\\SocketPlugin2"
         },
         "is_top_level": true,
         "variables": {}
