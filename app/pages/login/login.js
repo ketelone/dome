@@ -196,8 +196,8 @@ angular.module('loginModule')
       }
 
       $scope.login = function () {//登录功能
-        // $state.go('tabs');
-        // return;
+        $state.go('tabs');
+        return;
         if (window.localStorage.empno != $scope.loginInfo.username) {
           localStorage.removeItem('key_history1');
           localStorage.removeItem('common_linkman2');
@@ -236,10 +236,8 @@ angular.module('loginModule')
               window.localStorage.token = result.access_token;
               window.localStorage.empno = $scope.loginInfo.username;
               window.localStorage.checkboxSavePwd = $scope.rememberPassword;
-              //imService.initImData();
-              if (ionic.Platform.isWebView()) {
-                imService.initImData();
-              }
+              $state.go('tabs');
+
 
             } else {
               hmsPopup.showPopup('<span translate="alertMsg.lepcpir"></span>');

@@ -1,30 +1,25 @@
-angular.module('karessControlModule')
-  .controller('karessControllerCtrl', [
+angular.module('mcControlModule')
+  .controller('mcControllerCtrl', [
     '$scope',
     '$state',
     '$ionicModal',
     '$compile',
     'baseConfig',
-    'checkVersionService', 'SettingsService', '$ionicHistory', '$ionicSlideBoxDelegate', 'karessService','hmsPopup',
+    'checkVersionService', 'SettingsService', '$ionicHistory', '$ionicSlideBoxDelegate', 'mcService',
     function ($scope,
               $state,
               $ionicModal,
               $compile,
               baseConfig,
-              checkVersionService, SettingsService, $ionicHistory, $ionicSlideBoxDelegate, karessService,hmsPopup) {
-      var sku = SettingsService.get('sku');
+              checkVersionService, SettingsService, $ionicHistory, $ionicSlideBoxDelegate, mcService) {
+      var sku = SettingsService.get('sku')
       /**
        *@autor: caolei
        *@return: device id
        *@disc: get device id
        */
-      console.log("----"+localStorage.deviceInfo);
       var getDeviceId = function(){
-        if(localStorage.deviceInfo == undefined){
-          return;
-        }
         var deviceList = localStorage.deviceInfo.split(";");
-        console.log("----"+localStorage.deviceInfo);
         for(var i = 0; i < deviceList.length; i ++){
           var deviceInfo = deviceList[i].split(",");
           if(deviceInfo[0] == sku){
@@ -49,45 +44,21 @@ angular.module('karessControlModule')
         canves03: "initcanves03",
       }]
 
-      $scope.shuilianmoData = [{
-        des: "按摩档位",
-        gearNum: 1,
-        gearInit: 1,
-        gearInitTemp: 1,
-        parameterctlFlag: false,
-        parNodeid: 'toilet-NvYongSyCtl',
-        canves01: "NvYongSycanves01",
-        canves02: "NvYongSycanves02",
-        canves03: "NvYongSycanves03",
-        flag: '4'
-      }];
-      $scope.shuiBeiBuData = [{
-        des: "温度",
-        gearNum: 1,
-        gearInit: 1,
-        gearInitTemp: 1,
-        parameterctlFlag: false,
-        parNodeid: 'toilet-NvYongSyCtl',
-        canves01: "NvYongSycanves01",
-        canves02: "NvYongSycanves02",
-        canves03: "NvYongSycanves03",
-        flag: '5'
-      }];
       $scope.slideTunBuData = [{
-        des: "水温",
-        gearNum: 19,
-        gearInit: 1,
-        gearInitTemp: 1,
-        parameterctlFlag: false,
-        parNodeid: 'toilet-TunBuSyCtl',
-        canves01: "TunBuSycanves01",
-        canves02: "TunBuSycanves02",
-        canves03: "TunBuSycanves03",
-        flag: "1"
-      },
+          des: "亮度",
+          gearNum: 2,
+          gearInit: 1,
+          gearInitTemp: 1,
+          parameterctlFlag: false,
+          parNodeid: 'toilet-TunBuSyCtl',
+          canves01: "TunBuSycanves01",
+          canves02: "TunBuSycanves02",
+          canves03: "TunBuSycanves03",
+          flag: "1"
+        },
         {
-          des: "水位",
-          gearNum: 3,
+          des: "色温",
+          gearNum: 2,
           gearInit: 1,
           gearInitTemp: 1,
           parameterctlFlag: false,
@@ -97,94 +68,41 @@ angular.module('karessControlModule')
           canves03: "TunBuPosPoscanves03",
           flag: "2"
         }
-        // , {
-        //   des: "流量",
-        //   gearNum: 5,
-        //   gearInit: 1,
-        //   gearInitTemp: 1,
-        //   parameterctlFlag: false,
-        //   parNodeid: 'toilet-TunBuTemCtl',
-        //   canves01: "TunBuTemTemcanves01",
-        //   canves02: "TunBuTemTemcanves02",
-        //   canves03: "TunBuTemTemcanves03",
-        //   flag : "3"
-        // }
       ];
 
 
       $scope.handlenapeListNape = [
         {
-          imgUrl: "build/img/karess-controller/icon_zhushuinor.png",
-          imgSeledUrl: "build/img/karess-controller/icon_zhushui.png",
-          imgUrlTemp: "build/img/karess-controller/icon_zhushuinor.png",
-          handleDes: "karessController.zhushui",
+          imgUrl: "build/img/mc-controller/icon_dengguangnor.png",
+          imgSeledUrl: "build/img/mc-controller/icon_dengguang.png",
+          imgUrlTemp: "build/img/mc-controller/icon_dengguangnor.png",
+          handleDes: "mcController.zhushui",
           selecFlag: false,
           handledata: $scope.slideTunBuData,
           isManyDirective: true
         },
         {
-          imgUrl: "build/img/karess-controller/icon_luoshuinor.png",
-          imgSeledUrl: "build/img/karess-controller/icon_luoshui.png",
-          imgUrlTemp: "build/img/karess-controller/icon_luoshuinor.png",
-          handleDes: "karessController.luoshui",
+          imgUrl: "build/img/mc-controller/icon_chuwunor.png",
+          imgSeledUrl: "build/img/mc-controller/icon_chuwu.png",
+          imgUrlTemp: "build/img/mc-controller/icon_chuwunor.png",
+          handleDes: "mcController.luoshui",
           selecFlag: false,
           handledata: $scope.slideInitData
         },
         {
-          imgUrl: "build/img/karess-controller/icon_shuilinor.png",
-          imgSeledUrl: "build/img/karess-controller/icon_shuili.png",
-          imgUrlTemp: "build/img/karess-controller/icon_shuilinor.png",
-          handleDes: "karessController.shuilianmo",
+          imgUrl: "build/img/mc-controller/icon_yijiannor.png",
+          imgSeledUrl: "build/img/mc-controller/icon_yijian.png",
+          imgUrlTemp: "build/img/mc-controller/icon_yijiannor.png",
+          handleDes: "mcController.shuilianmo",
           selecFlag: false,
           handledata: $scope.shuilianmoData,
-          isManyDirective: true
+          isManyDirective: false
         },
         {
-          imgUrl: "build/img/karess-controller/icon_touzhennor.png",
-          imgSeledUrl: "build/img/karess-controller/icon_touzhen.png",
-          imgUrlTemp: "build/img/karess-controller/icon_touzhennor.png",
-          handleDes: "karessController.toubuanmo",
-          selecFlag: false,
-          handledata: $scope.slideInitData
-        },
-        {
-          imgUrl: "build/img/karess-controller/icon_beibujiarenor.png",
-          imgSeledUrl: "build/img/karess-controller/icon_beibujiare.png",
-          imgUrlTemp: "build/img/karess-controller/icon_beibujiarenor.png",
-          handleDes: "karessController.beibujiare",
-          selecFlag: false,
-          handledata: $scope.shuiBeiBuData,
-          isManyDirective: true
-        },
-        {
-          imgUrl: "build/img/karess-controller/icon_yijiantingzhinor.png",
-          imgSeledUrl: "build/img/karess-controller/icon_yijiantingzhi.png",
-          imgUrlTemp: "build/img/karess-controller/icon_yijiantingzhinor.png",
-          handleDes: "karessController.yijiantingzhi",
-          selecFlag: false,
-          handledata: $scope.slideInitData
-        },
-        {
-          imgUrl: "build/img/karess-controller/icon_guandaochujunnor.png",
-          imgSeledUrl: "build/img/karess-controller/icon_guandaochujun.png",
-          imgUrlTemp: "build/img/karess-controller/icon_guandaochujunnor.png",
-          handleDes: "karessController.guandaochujun",
-          selecFlag: false,
-          handledata: $scope.slideInitData
-        },
-        {
-          imgUrl: "build/img/karess-controller/icon_jienengnor.png",
-          imgSeledUrl: "build/img/karess-controller/icon_jieneng.png",
-          imgUrlTemp: "build/img/karess-controller/icon_jienengnor.png",
-          handleDes: "karessController.jieneng",
-          selecFlag: false,
-          handledata: $scope.slideInitData
-        },
-        {
-          imgUrl: "build/img/karess-controller/icon_shezhinor.png",
-          imgSeledUrl: "build/img/karess-controller/icon_shezhi.png",
-          imgUrlTemp: "build/img/karess-controller/icon_shezhinor.png",
-          handleDes: "karessController.shezhi",
+          imgUrl: "build/img/mc-controller/icon_shezhinor.png",
+          imgSeledUrl: "build/img/mc-controller/icon_shezhi.png",
+          imgUrlTemp: "build/img/mc-controller/icon_shezhinor.png",
+          handleDes: "mcController.shezhi",
           selecFlag: false,
         }
       ];
@@ -480,87 +398,32 @@ angular.module('karessControlModule')
         console.log(info.selecFlag);
         if (index == 0) {
           if(info.selecFlag ==false) {
-            var value = karessService.getCmd("8877", 1, karessService.data.openFiller, 0, 2);
+            var value = mcService.getCmd("8877", 1, mcService.data.openLight, 0, 5);
             console.log(value);
-            sendCmd(deviceId, value, '注水开启成功！', '注水开启失败！');
+            sendCmd(deviceId, value, '灯光开启成功！', '注水开启失败！');
           }else{
-            var value = karessService.getCmd("8877", 1, karessService.data.closeFiller, 0, 2);
+            var value = mcService.getCmd("8877", 1, mcService.data.closeLight, 0, 5);
             console.log(value);
-            sendCmd(deviceId, value, '注水关闭成功！', '注水关闭失败！');
+            sendCmd(deviceId, value, '灯光关闭成功！', '灯光关闭失败！');
           }
         }
         if (index == 1) {
           if(info.selecFlag ==false){
-            var value = karessService.getCmd("8877", 1, karessService.data.openDrain, 0, 2);
+            var value = mcService.getCmd("8877", 1, mcService.data.openDemist, 0, 5);
             console.log(value);
-            sendCmd(deviceId, value, '开启落水成功！', '开启落水失败！');
+            sendCmd(deviceId, value, '除雾开启成功！', '除雾开启失败！');
           }else{
-            var value = karessService.getCmd("8877", 1, karessService.data.closeDrain, 0, 2);
+            var value = mcService.getCmd("8877", 1, mcService.data.closeDemist, 0, 5);
             console.log(value);
-            sendCmd(deviceId, value, '关闭落水成功！', '关闭落水失败！');
+            sendCmd(deviceId, value, '关闭除雾成功！', '关闭除雾失败！');
           }
         }
         if (index == 2) {
-          if(info.selecFlag ==false) {
-            var value = karessService.getCmd("8877", 1, karessService.data.openMassageBack, 0, 2);
+            var value = mcService.getCmd("8877", 1, mcService.data.closeAll, 0, 5);
             console.log(value);
-            sendCmd(deviceId, value, '水力按摩开启成功！', '水力按摩开启失败！');
-          }else{
-            var value = karessService.getCmd("8877", 1, karessService.data.closeMassageBack, 0, 2);
-            console.log(value);
-            sendCmd(deviceId, value, '水力按摩关闭成功！', '水力按摩关闭失败！');
-          }
+            sendCmd(deviceId, value, '一键停止开启成功！', '一键停止开启失败！');
         }
         if (index == 3) {
-          if(info.selecFlag ==false) {
-            var value = karessService.getCmd("8877", 1, karessService.data.openMassagePillow, 0, 2);
-            console.log(value);
-            sendCmd(deviceId, value, '头部按摩开启成功！', '头部按摩开启失败！');
-          }else{
-            var value = karessService.getCmd("8877", 1, karessService.data.closeMassagePillow, 0, 2);
-            console.log(value);
-            sendCmd(deviceId, value, '头部按摩关闭成功！', '头部按摩关闭失败！');
-          }
-        }
-        if (index == 4) {
-          if(info.selecFlag ==false) {
-            var value = karessService.getCmd("8877", 1, karessService.data.openHeatBack, 0, 2);
-            console.log(value);
-            sendCmd(deviceId, value, '背部加热开启成功！', '背部加热开启失败！');
-          }else{
-            var value = karessService.getCmd("8877", 1, karessService.data.closeHeatBack, 0, 2);
-            console.log(value);
-            sendCmd(deviceId, value, '背部加热关闭成功！', '背部加热关闭失败！');
-          }
-        }
-        if (index == 5) {
-          var value = karessService.getCmd("8877", 1, karessService.data.closeAll, 0, 2);
-          console.log(value);
-          sendCmd(deviceId, value, '一键停止开启成功！', '一键停止开启失败！');
-        }
-        if (index == 6) {
-          if(info.selecFlag ==false) {
-            var value = karessService.getCmd("8877", 1, karessService.data.openSanitize, 0, 2);
-            console.log(value);
-            sendCmd(deviceId, value, '管道除菌开启成功！', '管道除菌开启失败！');
-          }else{
-            var value = karessService.getCmd("8877", 1, karessService.data.closeDrain, 0, 2);
-            console.log(value);
-            sendCmd(deviceId, value, '管道除菌关闭成功！', '管道除菌关闭失败！');
-          }
-        }
-        if (index == 7) {
-          if(info.selecFlag ==false) {
-            var value = karessService.getCmd("8877", 1, karessService.data.openSanitize, 0, 2);
-            console.log(value);
-            sendCmd(deviceId, value, '节能开启成功！', '节能开启失败！');
-          }else{
-            var value = karessService.getCmd("8877", 1, karessService.data.closeSanitize, 0, 2);
-            console.log(value);
-            sendCmd(deviceId, value, '节能关闭成功！', '节能关闭失败！');
-          }
-        }
-        if (index == 8) {
           $state.go('karessSetting');
         }
 
@@ -627,6 +490,7 @@ angular.module('karessControlModule')
         ;
       };
       var sendCmd = function (deviceId, value, successMsg, errorMsg) {
+        return;
         var cmd = {
           from: {
             cid: "0xE3",
@@ -645,7 +509,6 @@ angular.module('karessControlModule')
           ts: Date.parse(new Date()) / 1000,
           ver: 1,
         }
-        console.log(cmd);
         cordova.plugins.SocketPlugin.tcpSendCmd({
           "timeout": "5000",
           "value": cmd,
@@ -670,14 +533,8 @@ angular.module('karessControlModule')
           var diedes = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].des;
         }
         if ($scope.handlenapeListNape == 0) {
-          var value = karessService.getCmd("8877", 1, karessService.data.closeSanitize, 0, 5);
-          sendCmd(deviceId, value, '注水开启成功！', '注水开启失败！');
-        } else if ($scope.handlenapeListNape == 2) {
-          var value = karessService.getCmd("8877", 1, karessService.data.closeSanitize, 0, 5);
-          sendCmd(deviceId, value, '水力按摩开启成功！', '水力加热开启失败！');
-        } else if ($scope.handlenapeListNape == 4) {
-          var value = karessService.getCmd("8877", 1, karessService.data.closeSanitize, 0, 5);
-          sendCmd(deviceId, value, '背部加热关闭成功！', '背部加热关闭失败！');
+          var value = mcService.getCmd("8877", 1, mcService.data.closeSanitize, 0, 5);
+          sendCmd(deviceId, value, '开启成功！', '注水开启失败！');
         }
       };
     }]);
