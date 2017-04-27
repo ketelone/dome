@@ -9,8 +9,8 @@
         <ion-scroll class="hmsiot-slider-left" scrollbar-y="false" scrollbar-x="false">
           <div class="slider-list" ng-repeat="i in listleftRepeat track by $index" ng-click="silderRepeatSeleced($index)">
             <span>
-              <img class="slider-span-img" ng-if="i.reflag" src="build/img/toilet-controller/radio_bg.png" alt="">
-              <img class="slider-span-dotimg" ng-if="i.dotflag" src="build/img/toilet-controller/radio_dot.png" alt="">
+              <img class="slider-span-img" ng-if="i.reflag" src="build/img/toilet-controller/btn_radio_seleted.png" alt="">
+              <img class="slider-span-img" ng-if="!i.reflag" src="build/img/toilet-controller/btn_radio_nor.png" alt="">
             </span>
             <span class="slider-span" ng-class="{true: 'sliderselected', false: ''}[i.flag]" translate={{i.name}}></span>
           </div>

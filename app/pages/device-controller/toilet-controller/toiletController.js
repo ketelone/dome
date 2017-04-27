@@ -52,7 +52,7 @@ angular.module('toiletControlModule')
       // var ctrId = "E3";
       var ctrId = "00";
       var devId = "01";
-      var nimi = new NIMI()
+      var nimi = new NIMI();
 
       /*
        tongyishujuji
@@ -939,6 +939,7 @@ angular.module('toiletControlModule')
       };
       //模式选择
       //获取屏幕高度
+      $scope.setSingalModalTop = "toiletSingalModalTop";
       $scope.screenHeig = window.innerHeight;
       $ionicModal.fromTemplateUrl('build/pages/model/hmsModal.html', {
         scope: $scope,
@@ -952,20 +953,9 @@ angular.module('toiletControlModule')
           if(permitopen === "nvyong" || permitopen === "tunxi" || permitopen === "clear"){
             $scope.modal.show();
             setTimeout(function () {
-              var ele = document.getElementsByClassName("hmsModal");
-              if ($scope.value.length === 3) {
-                ele[0].style.top = $scope.screenHeig - 156 + 'px';
-              } else if ($scope.value.length === 4) {
-                ele[0].style.top = $scope.screenHeig - 208 + 'px';
-              } else if ($scope.value.length === 2) {
-                ele[0].style.top = $scope.screenHeig - 104 + 'px';
-              } else if ($scope.value.length === 1) {
-                ele[0].style.top = $scope.screenHeig - 52 + 'px';
-              } else if ($scope.value.length > 4) {
-                ele[0].style.top= 68 + '%';
-                ele[0].style.minHeight = 32 + '%';
-              };
-            }, 10)
+              var ele = document.getElementsByClassName("toiletSingalModalTop");
+              ele[0].style.top = $scope.screenHeig - 52*$scope.value.length + 'px';
+            },10)
           }else{
             hmsPopup.showShortCenterToast("此选项不能设置此功能!");
           }

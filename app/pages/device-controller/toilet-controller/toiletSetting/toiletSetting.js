@@ -98,6 +98,8 @@ angular.module('toiletControlModule')
         }
       };
       //auto cover setting
+      $scope.setModalTop = "toiletSetModalTop";
+      $scope.setSingalModalTop = "toiletSetSingalModalTop";
       $scope.screenHeig = window.innerHeight;
       $ionicModal.fromTemplateUrl('build/pages/model/hmsModal.html', {
         scope: $scope,
@@ -116,9 +118,9 @@ angular.module('toiletControlModule')
         $scope.listright=$scope.listleft[1].towdata;
         $scope.setmodal.show();
         setTimeout(function () {
-          var ele = document.getElementsByClassName("hmsiot-setSelect");
+          var ele = document.getElementsByClassName("toiletSetModalTop");
           ele[0].style.top = 68 + '%';
-        },10)
+        },20)
       };
       $scope.$on('$destroy', function() {
         $scope.setmodal.remove();
@@ -139,18 +141,8 @@ angular.module('toiletControlModule')
         if($scope.value.length!==0) {
           $scope.modal.show();
           setTimeout(function () {
-            var ele = document.getElementsByClassName("hmsModal");
-            if ($scope.value.length === 3) {
-              ele[0].style.top = $scope.screenHeig - 156 + 'px';
-            } else if ($scope.value.length === 4) {
-              ele[0].style.top = $scope.screenHeig - 208 + 'px';
-            } else if ($scope.value.length === 2) {
-              ele[0].style.top = $scope.screenHeig - 104 + 'px';
-            } else if ($scope.value.length === 1) {
-              ele[0].style.top = $scope.screenHeig - 52 + 'px';
-            } else if ($scope.value.length > 4) {
-              ele[0].style.top= 68 + '%';
-            };
+            var ele = document.getElementsByClassName("toiletSetSingalModalTop");
+            ele[0].style.top = $scope.screenHeig - 52*$scope.value.length + 'px';
           }, 10)
         }
       };

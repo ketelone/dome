@@ -458,6 +458,9 @@ angular.module('indexPageModule')
       };
 
         $scope.getDeviceInfo = function(item){
+        if(item.deviceType == "卫生间"){
+          $state.go('cenwatpurifierContrl',{deviceSku: item.sku});
+        }
         if(item.deviceType == "浴霸"){
           $state.go('bathroom',{deviceSku: item.sku});
         }

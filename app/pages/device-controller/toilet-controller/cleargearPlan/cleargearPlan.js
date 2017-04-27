@@ -118,6 +118,7 @@ angular.module('toiletControlModule')
           }
         }
       };
+      $scope.setModalTop = "clearGearModalTop";
       $ionicModal.fromTemplateUrl('build/pages/model/hmsiot-setSelect.html', {
         scope: $scope,
         animation: 'slide-in-up'
@@ -127,14 +128,15 @@ angular.module('toiletControlModule')
       $scope.setopenModal = function () {
         $scope.setmodal.show();
         setTimeout(function () {
-          var ele = document.getElementsByClassName("hmsiot-setSelect");
+          var ele = document.getElementsByClassName("clearGearModalTop");
           ele[0].style.top = 68 + '%';
-        }, 10)
+        }, 20);
       };
       $scope.$on('$destroy', function() {
         $scope.setmodal.remove();
       });
       $scope.setchoose = function () {
+        $scope.setmodal.hide();
         if($scope.clearGeardataTime.hour && $scope.clearGeardataTime.minute){
           if($scope.clearGeardataTime.hour.length===2){
             $scope.clearGeardataTime.hour = "0"+$scope.clearGeardataTime.hour;
@@ -143,11 +145,9 @@ angular.module('toiletControlModule')
             $scope.clearGeardataTime.minute = "0"+$scope.clearGeardataTime.minute;
           }
           $scope.cleargearPlan.dataTime = filterTimeMinute($scope.clearGeardataTime.hour,"hour")+":"+ filterTimeMinute($scope.clearGeardataTime.minute,"minute")
-          $scope.setmodal.hide();
         }else{
-          $scope.setmodal.hide();
           hmsPopup.showShortCenterToast("请选择数据项!");
-        }
+        };
       };
       $scope.listleftRepeat = [{
         name:"cleargearPlan.zhouyi",
@@ -156,27 +156,21 @@ angular.module('toiletControlModule')
       },{
         name:"cleargearPlan.zhouer",
         reflag:true,
-        dotflag:true
       },{
         name:"cleargearPlan.zhousan",
         reflag:true,
-        dotflag:true
       },{
         name:"cleargearPlan.zhousi",
         reflag:true,
-        dotflag:true
       },{
         name:"cleargearPlan.zhouwu",
         reflag:true,
-        dotflag:true
       },{
         name:"cleargearPlan.zhouliu",
         reflag:true,
-        dotflag:true
       },{
         name:"cleargearPlan.zhoutian",
         reflag:true,
-        dotflag:true
       }];
       $ionicModal.fromTemplateUrl('build/pages/model/hmsiot-manySelect.html', {
         scope: $scope,
@@ -188,11 +182,12 @@ angular.module('toiletControlModule')
         $scope.setsingalmodal.show();
         setTimeout(function () {
           var ele = document.getElementsByClassName("hmsiot-manySelect");
-          ele[0].style.top = 39 + '%';
-        }, 10)
+          ele[0].style.top = 43 + '%';
+        }, 20)
       };
       $scope.$on('$destroy', function() {
         $scope.setsingalmodal.remove();
+        $scope.setmodal.remove();
       });
       /**
        *@autor:gongke
@@ -207,7 +202,7 @@ angular.module('toiletControlModule')
           $scope.cleargearPlan.clearRepeatVal = ""
         };
         $scope.listleftRepeat.forEach(function (item,index) {
-          if(item.dotflag){
+          if(item.reflag){
             $scope.itemSelected.push($translate.instant(item.name))
           }
         });
@@ -221,13 +216,12 @@ angular.module('toiletControlModule')
         $scope.setsingalmodal.hide();
       };
       /**
-       *@autor:gongke
+       *@autor:gongke;
        *@name:silderRepeatSeleced
        *@params:index(selected index)
        *@disc:display or remove img
        */
       $scope.silderRepeatSeleced = function (index) {
-        $scope.listleftRepeat[index].dotflag = !$scope.listleftRepeat[index].dotflag;
-        // $scope.listleftRepeat[index].reflag = !$scope.listleftRepeat[index].reflag;
+        $scope.listleftRepeat[index].reflag = !$scope.listleftRepeat[index].reflag;
       }
     }]);

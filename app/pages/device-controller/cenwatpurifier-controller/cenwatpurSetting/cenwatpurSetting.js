@@ -29,6 +29,7 @@ angular.module('toiletControlModule')
       // console.log($translate.instant($scope.cenwatpurSettingData.clearMode))
       //get scrren hight
       //clear mode
+      $scope.setSingalModalTop = "cenwatpurSetSingalModalTop";
       $scope.screenHeig = window.innerHeight;
       $ionicModal.fromTemplateUrl('build/pages/model/hmsModal.html', {
         scope: $scope,
@@ -42,20 +43,9 @@ angular.module('toiletControlModule')
         if($scope.value.length!==0) {
           $scope.modal.show();
           setTimeout(function () {
-            var ele = document.getElementsByClassName("hmsModal");
-            if ($scope.value.length === 3) {
-              ele[0].style.top = $scope.screenHeig - 156 + 'px';
-            } else if ($scope.value.length === 4) {
-              ele[0].style.top = $scope.screenHeig - 208 + 'px';
-            } else if ($scope.value.length === 2) {
-              ele[0].style.top = $scope.screenHeig - 104 + 'px';
-            } else if ($scope.value.length === 1) {
-              ele[0].style.top = $scope.screenHeig - 52 + 'px';
-            } else if ($scope.value.length > 4) {
-              ele[0].style.top= 68 + '%';
-              ele[0].style.minHeight = 32 + '%';
-            };
-          }, 10)
+            var ele = document.getElementsByClassName("cenwatpurSetSingalModalTop");
+            ele[0].style.top = $scope.screenHeig - 52*$scope.value.length + 'px';
+          }, 20)
         }
       };
       $scope.$on('$destroy', function() {
@@ -64,7 +54,6 @@ angular.module('toiletControlModule')
       $scope.choose = function (val) {
         $scope.modal.hide();
         $scope.cenwatpurSettingData.clearMode = val.des;
-        console.log($translate.instant($scope.cenwatpurSettingData.clearMode))
       };
       //data select
       //hour data
@@ -130,6 +119,7 @@ angular.module('toiletControlModule')
           }
         }
       };
+      $scope.setModalTop = "cenwatpurSetModalTop";
       $ionicModal.fromTemplateUrl('build/pages/model/hmsiot-setSelect.html', {
         scope: $scope,
         animation: 'slide-in-up'
@@ -139,7 +129,7 @@ angular.module('toiletControlModule')
       $scope.setopenModal = function () {
         $scope.setmodal.show();
         setTimeout(function () {
-          var ele = document.getElementsByClassName("hmsiot-setSelect");
+          var ele = document.getElementsByClassName("cenwatpurSetModalTop");
           ele[0].style.top = 68 + '%';
         }, 10)
       };

@@ -113,7 +113,8 @@ angular.module('toiletControlModule')
         $scope.modal.show();
         setTimeout(function () {
           var ele = document.getElementsByClassName("lightModal");
-          ele[0].style.top= 68 + '%';
+          ele[0].style.top= 70 + '%';
+          ele[0].style.minHight= 30 + '%';
         }, 10)
       };
       $scope.$on('$destroy', function() {
