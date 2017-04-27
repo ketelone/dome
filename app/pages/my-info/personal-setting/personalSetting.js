@@ -27,6 +27,6 @@ angular.module('myInfoModule')
               $ionicPlatform,
               $ionicScrollDelegate,
               hmsPopup,
-              $rootScope, publicMethod,$stateParams) {
+              $rootScope, publicMethod, $stateParams) {
 
     }]);

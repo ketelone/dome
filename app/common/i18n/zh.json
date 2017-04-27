@@ -1,6 +1,8 @@
 {
   "my-info": {
     "myhome": "我家",
+    "gexing":"个性签名",
+    "shengli":"团结就是胜利",
     "addMember": "添加成员",
     "myBox": "我的BOX",
     "addNumber": "已添加4个",
@@ -39,8 +41,19 @@
       "litre": "升",
       "ton": "吨",
       "useElectricityUnit": "用 电 量 单 位"
+    },
+    "greenLife":{
+      "greenLife":"绿色生活",
+      "day":"日",
+      "week":"周",
+      "month":"月",
+      "todayUsewater":"当日用水量(L)",
+      "todayUsecleanWater":"当日用纯净水量(L)",
+      "todayUseElectricity":"当日用电量(度)",
+      "fenDevice":"分设备查看用水用电量"
     }
   },
+
   "login": {
     "login": "登录",
     "rememberPassword": "忘记密码?",
@@ -415,7 +428,22 @@
     }
   },
   "message": {
-    "all": "全选",
+      "message":"消息",
+      "status":"状态及提醒",
+      "exception":"异常及保修",
+    "other":"其它",
+      "statusMessage1":"进水滤芯寿命提醒",
+      "messageDel1":"进水滤芯快到使用期限，快去跟换吧!",
+      "device1":"马桶",
+      "time":"2017-02-08 17:25",
+      "statusMessage2":"出水水温达到预警",
+      "messageDel2":"实际出水水温达到37°C",
+      "device2":"淋浴",
+      "exceptionMessage":"自动开盖功能异常",
+      "noMessageWord1":"暂无设备消息",
+      "noMessageWord2":"您当前的设备无异常",
+      "manyChoose":"多选",
+      "all": "全选",
     "delete": "删除",
     "cancel": "取消",
     "allOff": "全不选"

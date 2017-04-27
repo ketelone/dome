@@ -1,104 +1,107 @@
-  <ion-view view-title="设置" class="setting" style="background-image: none">
+<ion-view view-title="设置" class="setting" style="background-image: none">
 
-    <div class="bar bar-header headColor " style="background-image: none">
-      <button class="button button-icon icon ion-ios-arrow-left iconColor" ng-click="goBack()" ></button>
-      <div class="h1 title"><span  class="iconColor" translate="my-info.setting.setting">设&nbsp;置&nbsp;</span></div>
-      <button class="button button-icon icon iconColor" ></button>
-    </div>
+  <div class="bar bar-header headColor " style="background-image: none">
+    <button class="button button-icon icon ion-ios-arrow-left iconColor" ng-click="goBack()"></button>
+    <div class="h1 title"><span class="iconColor" translate="my-info.setting.setting">设&nbsp;置&nbsp;</span></div>
+    <button class="button button-icon icon iconColor"></button>
+  </div>
 
-    <ion-content class="content has-header has-footer" >
-        <ion-list  class="setBak">
+  <ion-content class="content has-header has-footer">
+    <ion-list class="setBak">
 
-          <li class="item item-icon-right onerow"  ui-sref="settingLanguage" >
-            <div class="row">
-              <div style="text-align: left" class="col col-66 "><span  translate="my-info.setting.language"  class="leftWord">语言</span></div>
-              <div  class="col col-20 "><span class="rightword" translate="{{thisLanguage}}"></span></div>
-              <div class="col"><i class="icon ion-ios-arrow-right iconSize"></i></div>
-            </div>
-          </li>
-
-          <li class="item item-icon-right onerow"  ui-sref="settingTemperature"  >
-            <div class="row">
-              <div style="text-align: left" class="col col-66 "><span  class="leftWord" translate="my-info.setting.unitSetting"> 单位设置</span></div>
-   <div class="col"><i class="icon ion-ios-arrow-right iconSize"></i></div>
-            </div>
-          </li>
-
-
-          <div class="item item-divider cusdivide">
-
+      <li class="item item-icon-right onerow" ui-sref="settingLanguage">
+        <div class="row">
+          <div style="text-align: left" class="col col-66 "><span translate="my-info.setting.language" class="leftWord">语言</span>
           </div>
-   <li class="item item-icon-right onerow"   >
-            <div class="row">
-              <i class=" redpoint1"></i>
-     <div style="text-align: left" class="col col-66 "><span class="leftWord" translate="my-info.setting.firmwareUpdate">固件升级</span></div>
-     <div  class="col col-20 "><span class="rightword" translate="my-info.setting.byToupdate" >2个设备待升级</span></div>
-     <div class="col"><i class="icon ion-ios-arrow-right iconSize"></i></div>
-   </div>
-          </li>
-          <li class="item item-icon-right onerow"   >
-            <div class="row">
-               <i class=" redpoint1"></i>
-              <div style="text-align: left" class="col col-66 "><span class="leftWord" translate="my-info.setting.versionUpdate">版本更新</span></div>
-              <div  class="col col-20 "><span class="rightword" translate="my-info.setting.versionNumber">版本号1.4.0.17</span></div>
-              <div class="col"><i class="icon ion-ios-arrow-right iconSize"></i></div>
-            </div>
-          </li>
+          <div class="col col-20 "><span class="rightword" translate="{{thisLanguage}}"></span></div>
+          <div class="col"><i class="icon ion-ios-arrow-right iconSize"></i></div>
+        </div>
+      </li>
 
-          <li class="item item-icon-right onerow"   >
-            <div class="row">
-              <div style="text-align: left" class="col col-66 "><span class="leftWord" translate="my-info.setting.about">关于</span></div>
-               <div class="col"><i class="icon ion-ios-arrow-right iconSize"></i></div>
-            </div>
-          </li>
+      <li class="item item-icon-right onerow" ui-sref="settingTemperature">
+        <div class="row">
+          <div style="text-align: left" class="col col-66 "><span class="leftWord"
+                                                                  translate="my-info.setting.unitSetting"> 单位设置</span>
+          </div>
+          <div class="col"><i class="icon ion-ios-arrow-right iconSize"></i></div>
+        </div>
+      </li>
 
 
+      <div class="item item-divider cusdivide">
+
+      </div>
+      <li class="item item-icon-right onerow">
+        <div class="row">
+          <i class=" redpoint1"></i>
+          <div style="text-align: left" class="col col-66 "><span class="leftWord"
+                                                                  translate="my-info.setting.firmwareUpdate">固件升级</span>
+          </div>
+          <div class="col col-20 "><span class="rightword" translate="my-info.setting.byToupdate">2个设备待升级</span></div>
+          <div class="col"><i class="icon ion-ios-arrow-right iconSize"></i></div>
+        </div>
+      </li>
+      <li class="item item-icon-right onerow">
+        <div class="row">
+          <i class=" redpoint1"></i>
+          <div style="text-align: left" class="col col-66 "><span class="leftWord"
+                                                                  translate="my-info.setting.versionUpdate">版本更新</span>
+          </div>
+          <div class="col col-20 "><span class="rightword" translate="my-info.setting.versionNumber">版本号1.4.0.17</span>
+          </div>
+          <div class="col"><i class="icon ion-ios-arrow-right iconSize"></i></div>
+        </div>
+      </li>
+
+      <li class="item item-icon-right onerow">
+        <div class="row">
+          <div style="text-align: left" class="col col-66 "><span class="leftWord"
+                                                                  translate="my-info.setting.about">关于</span></div>
+          <div class="col"><i class="icon ion-ios-arrow-right iconSize"></i></div>
+        </div>
+      </li>
 
 
+    </ion-list>
 
-       </ion-list>
-
-      </ion-content>
-
-
+  </ion-content>
 
 
   <!--<ion-content class="cuscontent">-->
 
-    <!--<ion-list>-->
+  <!--<ion-list>-->
 
-       <!--<li class="item item-icon-right item-divider cutline" ui-sref="settingLanguage" >-->
-     <!--<span id="sl" class="leftWord" translate="my-info.setting.language"></span>  <span class="rightword" translate="my-info.setting.localLanguage" ></span> <i class="icon ion-ios-arrow-right iconSize"></i>-->
+  <!--<li class="item item-icon-right item-divider cutline" ui-sref="settingLanguage" >-->
+  <!--<span id="sl" class="leftWord" translate="my-info.setting.language"></span>  <span class="rightword" translate="my-info.setting.localLanguage" ></span> <i class="icon ion-ios-arrow-right iconSize"></i>-->
 
 
-      <!--<li class="item item-icon-right item-divider"  ui-sref="settingTemperature">-->
-        <!--<span  class="leftWord" translate="my-info.setting.unitSetting">单位设置</span>-->
-      <!--&lt;!&ndash;<span id="temperatureUnit"  translate="my-info.setting.centigrade"  class="rightword"  >&ndash;&gt;-->
-      <!--&lt;!&ndash;</span>&ndash;&gt;-->
-      <!--<i class="icon ion-ios-arrow-right iconSize"></i>-->
-      <!--</li>-->
-      <!--<div class="item  item-icon-right">-->
+  <!--<li class="item item-icon-right item-divider"  ui-sref="settingTemperature">-->
+  <!--<span  class="leftWord" translate="my-info.setting.unitSetting">单位设置</span>-->
+  <!--&lt;!&ndash;<span id="temperatureUnit"  translate="my-info.setting.centigrade"  class="rightword"  >&ndash;&gt;-->
+  <!--&lt;!&ndash;</span>&ndash;&gt;-->
+  <!--<i class="icon ion-ios-arrow-right iconSize"></i>-->
+  <!--</li>-->
+  <!--<div class="item  item-icon-right">-->
 
-      <!--</div>-->
-      <!--<li class="item item-icon-right item-divider">-->
-        <!--<span class="leftWord" translate="my-info.setting.firmwareUpdate">固件升级</span> <span class="redpoint1"></span> <span translate="my-info.setting.byToupdate" class="rightword">2个设备待升级</span><i class="icon ion-ios-arrow-right iconSize"></i>-->
-      <!--</li>-->
+  <!--</div>-->
+  <!--<li class="item item-icon-right item-divider">-->
+  <!--<span class="leftWord" translate="my-info.setting.firmwareUpdate">固件升级</span> <span class="redpoint1"></span> <span translate="my-info.setting.byToupdate" class="rightword">2个设备待升级</span><i class="icon ion-ios-arrow-right iconSize"></i>-->
+  <!--</li>-->
 
-      <!--<li class="item item-icon-right item-divider" >-->
-        <!--<span class="leftWord" translate="my-info.setting.versionUpdate">版本更新</span><span class="redpoint2"></span> <span translate="my-info.setting.versionNumber" class="rightword">版本号1.4.0.17</span><i class="icon ion-ios-arrow-right iconSize"></i>-->
-      <!--</li>-->
-      <!--<li class="item item-icon-right item-divider">-->
-        <!--<span class="leftWord" translate="my-info.setting.about" >关于</span><i class="icon ion-ios-arrow-right iconSize"></i>-->
-      <!--</li>-->
-    <!--</ion-list>-->
+  <!--<li class="item item-icon-right item-divider" >-->
+  <!--<span class="leftWord" translate="my-info.setting.versionUpdate">版本更新</span><span class="redpoint2"></span> <span translate="my-info.setting.versionNumber" class="rightword">版本号1.4.0.17</span><i class="icon ion-ios-arrow-right iconSize"></i>-->
+  <!--</li>-->
+  <!--<li class="item item-icon-right item-divider">-->
+  <!--<span class="leftWord" translate="my-info.setting.about" >关于</span><i class="icon ion-ios-arrow-right iconSize"></i>-->
+  <!--</li>-->
+  <!--</ion-list>-->
   <!--<div class="cusbutton">-->
-      <!--<button  class="addbutton" ng-click="logout()">退出当前账号</button>-->
-    <!--</div>-->
-    <!--</ion-content>-->
-
+  <!--<button  class="addbutton" ng-click="logout()">退出当前账号</button>-->
+  <!--</div>-->
+  <!--</ion-content>-->
 
 
 </ion-view>
-  <ion-footer-bar align-title="center" style="background: #546281;" ng-click="logout()">
-<div class="title" style="  font-size: 0.36rem;color: #FFFFFF;" translate="my-info.setting.logout">退出当前账号</div>
-  </ion-footer-bar>
+<ion-footer-bar align-title="center" style="background: #546281;" ng-click="logout()">
+  <div class="title" style="  font-size: 0.36rem;color: #FFFFFF;" translate="my-info.setting.logout">退出当前账号</div>
+</ion-footer-bar>

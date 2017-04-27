@@ -4,7 +4,7 @@
 
 angular.module('myInfoModule')
   .config(['$stateProvider',
-    function($stateProvider) {
+    function ($stateProvider) {
       $stateProvider
         .state('addMembers', {
           url: '/addMembers',
@@ -18,7 +18,7 @@ angular.module('myInfoModule')
           controller: 'greenLifeCtrl'
         })
         .state('setting', {
-          cache:false,
+          cache: false,
           url: '/setting',
           templateUrl: 'build/pages/my-info/setting/setting.html',
           controller: 'settingCtrl'
@@ -45,15 +45,14 @@ angular.module('myInfoModule')
         })
     }
   ]).controller('myInfoCtrl', [
-    '$scope',
-    '$state',
-    'publicMethod',
-    function ($scope,
-              $state,
-              publicMethod) {
+  '$scope',
+  '$state',
+  'publicMethod',
+  function ($scope,
+            $state,
+            publicMethod) {
 
-$scope.a="build/img/my-info/icon_home_avatar2.png";
+    $scope.a = "build/img/my-info/icon_home_avatar2.png";
 
 
-
-    }]);
+  }]);

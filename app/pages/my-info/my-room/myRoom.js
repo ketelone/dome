@@ -15,7 +15,7 @@ angular.module('myInfoModule')
     'hmsPopup',
     '$rootScope',
     'publicMethod',
-    '$stateParams','SettingsService','$translate',
+    '$stateParams', 'SettingsService', '$translate',
     function ($scope,
               $state,
               baseConfig,
@@ -26,16 +26,13 @@ angular.module('myInfoModule')
               $ionicPlatform,
               $ionicScrollDelegate,
               hmsPopup,
-              $rootScope, publicMethod,$stateParams,SettingsService,$translate) {
+              $rootScope, publicMethod, $stateParams, SettingsService, $translate) {
 
 
-
-      $scope.goBack = function(){
+      $scope.goBack = function () {
         $ionicHistory.goBack();
       }
 
 
-
-
     }
-]);
+  ]);
