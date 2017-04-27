@@ -29,22 +29,29 @@ angular.module('myInfoModule')
               hmsPopup,
               $rootScope, publicMethod,$stateParams,checkVersionService,SettingsService,$translate){
 
+      /**
+       *@author:chenjiacheng
+       *@name:goBack
+       *@params:
+       *@return:
+       *@disc:Set goBack
 
+       */
       $scope.goBack = function(){
         $ionicHistory.goBack();
       }
- /**
-       *@author:chenjiacheng
-       *@name:language
-       *@params:
-       *@return:default language
-       *@disc:Set default language
 
-      */
 
  $scope.thisLanguage="";
 
+      /**
+       *@author:chenjiacheng
+       *@name:currentLanguage
+       *@params:
+       *@return:
+       *@disc:display currentLanguage
 
+       */
 $scope.currentLanguage=function(){
 
   if (window.localStorage.language == '中文简体') {

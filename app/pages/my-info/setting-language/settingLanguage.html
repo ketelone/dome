@@ -1,29 +1,28 @@
 <ion-view view-title="设置语言" class="settingLanguage" style="background-image: none">
 
-    <div class="bar bar-header headColor " style="background-image: none">
-      <button class="button button-icon icon ion-ios-arrow-left iconColor" ng-click="goBack()" ></button>
-      <div class="h1 title"><span  class="iconColor" translate="my-info.setting-language.language"></span></div>
-      <button class="button button-icon icon iconColor" ></button>
-    </div>
+  <div class="bar bar-header headColor " style="background-image: none">
+    <button class="button button-icon icon ion-ios-arrow-left iconColor" ng-click="goBack()"></button>
+    <div class="h1 title"><span class="iconColor" translate="my-info.setting-language.language"></span></div>
+    <button class="button button-icon icon iconColor"></button>
+  </div>
 
-  <ion-content class="content has-header" >
-    <ion-list  class="setBak">
+  <ion-content class="content has-header">
+    <ion-list class="setBak">
 
 
-
-      <li ng-click="chooseLanguage(item)"class="item item-icon-right onerow"  ng-repeat="item in languageItems" item="item">
+      <li ng-click="chooseLanguage(item)" class="item item-icon-right onerow" ng-repeat="item in languageItems"
+          item="item">
         <div class="row">
-          <div style="text-align: left" class="col col-66 "><span  translate={{item.language}} class="leftWord"></span></div>
-          <div style="text-align: right;padding-right:0.3rem" class="col"><img style=" width: 0.42rem;height:0.42rem"  ng-src={{item.radioImg1}}></div>
+          <div style="text-align: left" class="col col-66 "><span translate={{item.language}} class="leftWord"></span>
+          </div>
+          <div style="text-align: right;padding-right:0.3rem" class="col"><img style=" width: 0.42rem;height:0.42rem"
+                                                                               ng-src={{item.radioImg1}}></div>
         </div>
       </li>
 
     </ion-list>
 
   </ion-content>
-
-
-
 
 
   <!--<ion-content class="cuscontent">

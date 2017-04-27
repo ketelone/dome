@@ -360,10 +360,10 @@ function copyPages(e) {
    // console.log(newPath+"新");
    // var newDirPathTemp = newPath.split("/");
 
-  console.log(oldPath+'旧');
-  var newPath = oldPath.replace('\\app\\', '\\www\\build\\');
-  console.log(newPath+'新');
-  var newDirPathTemp = newPath.split("\\");
+   console.log(oldPath+'旧');
+   var newPath = oldPath.replace('\\app\\', '\\www\\build\\');
+   console.log(newPath+'新');
+   var newDirPathTemp = newPath.split("\\");
 
 
   var currentPath = fs.realpathSync('.');

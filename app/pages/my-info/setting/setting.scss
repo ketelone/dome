@@ -1,4 +1,4 @@
-.setting{
+.setting {
   .headColor {
     background-color: $global-head-bg;
   }
@@ -6,71 +6,57 @@
     color: $color-base
   }
 
-  .content{
+  .content {
 
-    color:rgba(255,255,255,1);
+    color: rgba(255, 255, 255, 1);
     background: $global-background;
   }
-  .iconSize{
+  .iconSize {
     font-size: 0.5rem;
     right: 0.3rem;
   }
-  .onerow{
-    background:  #0D0F11;
-    padding:0.14rem 0rem 0.14rem 0.4rem;
+  .onerow {
+    background: #0D0F11;
+    padding: 0.14rem 0rem 0.14rem 0.4rem;
     border-bottom: 0.05rem solid #2D3234;
   }
-  .item{
-    border-top:none;
+  .item {
+    border-top: none;
     border-color: #2D3234;
   }
 
-  .leftWord{
+  .leftWord {
     font-family: PingFangSC-Medium;
     font-size: 0.32rem;
     color: #FFFFFF;
     line-height: 0.32rem;
 
   }
-  .rightword{
-
+  .rightword {
 
     font-size: 0.24rem;
     color: #565A64;
 
     line-height: 0.28rem;
   }
-  .cusdivide{
+  .cusdivide {
     background-color: $global-background;
-    padding:0rem;
-    height:0.34rem;
+    padding: 0rem;
+    height: 0.34rem;
     border-bottom: 0.05rem solid #2D3234;
 
   }
 
-  .redpoint1{
-    border-radius:6rem;
+  .redpoint1 {
+    border-radius: 6rem;
     background: red;
     width: 0.14rem;
-    height:0.14rem;
+    height: 0.14rem;
     display: inline-block;
-  left: 0.2rem;
-    top:0.3rem;
-    position:absolute;
-
+    left: 0.2rem;
+    top: 0.3rem;
+    position: absolute;
 
   }
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
