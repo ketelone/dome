@@ -8,14 +8,16 @@ angular.module('messageModule')
     '$scope',
     '$state',
     '$timeout',
-    'publicMethod','$ionicPopup','hmsPopup','publicMethod',
+    'publicMethod','$ionicPopup','hmsPopup','publicMethod','hmsHttp',
     function ($scope,
               $state,
               $timeout,
-              publicMethod,$ionicPopup,hmsPopup,publicMethod) {
+              publicMethod,$ionicPopup,hmsPopup,publicMethod,hmsHttp) {
+
+
 
       $scope.data = {
-        showDelete: false
+        showDelete: false //左侧选择框
       };
  $scope.threeBottom=false;
       $scope.hasStaus=true;//defalut no Display
@@ -24,12 +26,14 @@ angular.module('messageModule')
   //$scope.noException=false;//defalut no Exception
  $scope.statusword='statusword';
 $scope.exceptionword='exceptionword';
+
+
      $scope.exceptionitems= [
         {
           id: "1",
-          exceptionMessage:"自动开盖功能异常",
-          device:"马桶",
-          time:"2017-02-08 17:25",
+          exceptionMessage:"message.exceptionMessage",
+          device:"message.device1",
+          time:"message.time",
           circleUrl1:"build/img/common/radio_q.png",
           circleUrl2:"build/img/common/radio_h.png",
           circleUrltemp:"build/img/common/radio_q.png",
@@ -38,9 +42,9 @@ $scope.exceptionword='exceptionword';
         },
         {
           id: "2",
-          exceptionMessage:"自动开盖功能异常",
-          device:"淋浴",
-          time:"2017-02-08 17:25",
+          exceptionMessage:"message.exceptionMessage",
+          device:"message.device2",
+          time:"message.time",
           circleUrl1:"build/img/common/radio_q.png",
           circleUrl2:"build/img/common/radio_h.png",
           circleUrltemp:"build/img/common/radio_q.png",
@@ -48,9 +52,9 @@ $scope.exceptionword='exceptionword';
           name:"exception"
         },{
           id: "3",
-          exceptionMessage:"自动开盖功能异常",
-          device:"马桶",
-          time:"2017-02-08 17:25",
+          exceptionMessage:"message.exceptionMessage",
+          device:"message.device1",
+          time:"message.time",
           circleUrl1:"build/img/common/radio_q.png",
           circleUrl2:"build/img/common/radio_h.png",
           ischecked:false,
@@ -64,10 +68,10 @@ $scope.exceptionword='exceptionword';
       $scope.statusitems= [
         {
           id: "1",
-          statusMessage:"进水滤芯寿命提醒",
-          device:"马桶1",
-          messageDel:"进水滤芯快到使用期限，快去跟换吧!",
-          time:"2017-02-08 17:25",
+          statusMessage:"message.statusMessage1",
+          device:"message.device1",
+          messageDel:"message.messageDel1",
+          time:"message.time",
           circleUrl1:"build/img/common/radio_q.png",
           circleUrl2:"build/img/common/radio_h.png",
           ischecked:false,
@@ -76,10 +80,10 @@ $scope.exceptionword='exceptionword';
         },
         {
           id: "2",
-          statusMessage:"出水水温达到提醒",
-          device:"淋浴1",
-          messageDel:"实际出水水温达到37°C",
-          time:"2017-02-08 17:25",
+          statusMessage:"message.statusMessage2",
+          device:"message.device2",
+          messageDel:"message.messageDel2",
+          time:"message.time",
           circleUrl1:"build/img/common/radio_q.png",
           circleUrl2:"build/img/common/radio_h.png",
           ischecked:false,
@@ -87,10 +91,10 @@ $scope.exceptionword='exceptionword';
           name:"status"
         },{
           id: "3",
-          statusMessage:"进水滤芯寿命提醒",
-          device:"马桶2",
-          messageDel:"进水滤芯快到使用期限，快去跟换吧!",
-          time:"2017-02-08 17:25",
+          statusMessage:"message.statusMessage1",
+          device:"message.device2",
+          messageDel:"message.messageDel1",
+          time:"message.time",
           circleUrl1:"build/img/common/radio_q.png",
           circleUrl2:"build/img/common/radio_h.png",
           ischecked:false,
@@ -98,10 +102,10 @@ $scope.exceptionword='exceptionword';
           name:"status"
         },{
           id: "4",
-          statusMessage:"进水滤芯寿命提醒",
-          device:"马桶3",
-          messageDel:"进水滤芯快到使用期限，快去跟换吧!",
-          time:"2017-02-08 17:25",
+          statusMessage:"message.statusMessage1",
+          device:"message.device1",
+          messageDel:"message.messageDel1",
+          time:"message.time",
           circleUrl1:"build/img/common/radio_q.png",
           circleUrl2:"build/img/common/radio_h.png",
           ischecked:false,
@@ -110,9 +114,9 @@ $scope.exceptionword='exceptionword';
         },
         {
           id: "5",
-          statusMessage:"进水滤芯寿命提醒",
-          device:"马桶3",
-          messageDel:"进水滤芯快到使用期限，快去跟换吧!",
+          statusMessage:"message.statusMessage1",
+          device:"message.device1",
+          messageDel:"message.messageDel1",
           time:"2017-02-08 17:25",
           circleUrl1:"build/img/common/radio_q.png",
           circleUrl2:"build/img/common/radio_h.png",
@@ -122,6 +126,36 @@ $scope.exceptionword='exceptionword';
         },
       ]
 
+
+      /**
+       *@author:chenjiacheng
+       *@name:getException
+       *@params:
+       *@return:
+       *@disc: Get exception information from interface
+       */
+      function getException(){
+        var url = "https://139.219.186.43/residential/r/api/cmm/deviceException/query";
+        var paramter = [
+          {"deviceId":"1"}
+        ];
+        hmsHttp.post(url, paramter).success(
+          function(response){
+            alert("success");
+            alert(response);
+            console.log(response);
+            // console.log(response.rows[0]);
+            // $scope.deciveInfo.place = response.rows[0];
+            //hmsPopup.showPopup("<span translate='bathroom.saveAlert'></span>");
+          }
+        ).error(
+          function (response, status, header, config){
+            //hmsPopup.showPopup("<span translate='bathroom.saveError'></span>");
+            alert("1234");
+          }
+        );
+
+      }
 
       /**
        *@author:chenjiacheng
@@ -139,7 +173,7 @@ $scope.exceptionword='exceptionword';
     };
       /**
        *@author:chenjiacheng
-       *@name:logout
+       *@name:showException
        *@params:
        *@return:
        *@disc:Display exception and warranty list
@@ -156,7 +190,7 @@ $scope.exceptionword='exceptionword';
        *@name:goDetele
        *@params:
        *@return:
-       *@disc:goDetele
+       *@disc:goDetele item
        */
 
 
@@ -179,7 +213,7 @@ hmsPopup.confirmNoTitle( "<br><br><div ><div>删除后将无法在消息记录�
        *@name:manyChoose
        *@params:
        *@return:
-       *@disc:manyChoose
+       *@disc:ClickmanyChoose
        */
       $scope.manyChoose=function(){
       $scope.threeBottom=true;
@@ -196,9 +230,14 @@ hmsPopup.confirmNoTitle( "<br><br><div ><div>删除后将无法在消息记录�
        */
       $scope.onChoose=function(item){
 
+        alert("statustrue");
+        alert($scope.data.showDelete);
+        if($scope.data.showDelete==false){
+          return;
+        }
 
         if(item.ischecked==true&& item.name=="status") {
-        //  alert("statustrue");
+           //alert("statustrue");
           for (var i = 0; i < $scope.statusitems.length; i++) {
             if ($scope.statusitems[i].id == item.id) {
               $scope.statusitems[i].ischecked = false;
@@ -208,7 +247,8 @@ hmsPopup.confirmNoTitle( "<br><br><div ><div>删除后将无法在消息记录�
         }
 
     else if(item.ischecked==false&& item.name=="status"){
-      //alert("statusfalse");
+
+
       for (var i = 0; i < $scope.statusitems.length; i++) {
         if ($scope.statusitems[i].id == item.id) {
           $scope.statusitems[i].ischecked = true;
@@ -218,6 +258,9 @@ hmsPopup.confirmNoTitle( "<br><br><div ><div>删除后将无法在消息记录�
 
      else   if(item.ischecked==true&& item.name=="exception") {
          // alert("exceptiontrue");
+          if($scope.data.showDelete==false){
+            return;
+          }
           for (var i = 0; i < $scope.exceptionitems.length; i++) {
             if ($scope.exceptionitems[i].id ==item.id) {
               $scope.exceptionitems[i].ischecked = false;
@@ -230,6 +273,9 @@ hmsPopup.confirmNoTitle( "<br><br><div ><div>删除后将无法在消息记录�
         }
     else  if(item.ischecked==false&& item.name=="exception") {
        //alert("exceptionfalse");
+          if($scope.data.showDelete==false){
+            return;
+          }
           for (var i = 0; i < $scope.exceptionitems.length; i++) {
             if ($scope.exceptionitems[i].id ==item.id) {
               $scope.exceptionitems[i].ischecked = true;
@@ -243,7 +289,7 @@ hmsPopup.confirmNoTitle( "<br><br><div ><div>删除后将无法在消息记录�
        *@name:bottomGocancel
        *@params:
        *@return:
-       *@disc:bottomGocancel
+       *@disc:clickbottomGocancel
        */
       $scope.bottomGocancel=function(){
 
@@ -266,7 +312,7 @@ hmsPopup.confirmNoTitle( "<br><br><div ><div>删除后将无法在消息记录�
        *@name:bottomManychoose
        *@params:
        *@return:
-       *@disc:bottomManychoose
+       *@disc:clickbottomManychoose
        */
     $scope.hasChooseAllstatus=false;
       $scope.hasChooseAllexception=false;
@@ -322,7 +368,7 @@ if( $scope.hasStaus==true) {
        *@name:bottomGodetele
        *@params:
        *@return:
-       *@disc:bottomGodetele
+       *@disc:clickbottomGodetele
        */
 
 $scope.bottomGodetele=function(){
@@ -360,17 +406,6 @@ $scope.bottomGodetele=function(){
   $scope.threeBottom = false;
   $scope.data.showDelete =false;
     }
-      //hmsHttp.post(url, paramter).success(
-      //  function(response){
-      //
-      //  }
-      //).error(
-      //  function (response, status, header, config){
-      //  }
-      //);
-
-
-
 
 
 

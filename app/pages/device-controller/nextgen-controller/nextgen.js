@@ -13,31 +13,56 @@ angular.module('nextgenModule')
               baseConfig,
               checkVersionService,$ionicHistory,hmsPopup,nextgenService,$timeout
     ) {
-      var ctrId="00";
-      var header="8877";
-      var idx="00";
-      var devId="03";//E8:91:E0:DC:20:F1
-     // var deveiceId="E0DC20F1";
 
+     //var deveiceId="E0DC20F1";
+
+  /**
+       *@author:chenjiacheng
+       *@name:getValue
+       *@params:
+       *@return:getValue
+       *@disc:getValue
+
+       */
       function getValue(data){
+        //The following is the operating equipment parameters
+        var ctrId="00";
+        var header="8877";
+        var idx="00";
+        var devId="03";//E8:91:E0:DC:20:F1
         return nextgenService.getCmdvalue(header,idx, data, ctrId,devId);
       };
+      /**
+       *@author:chenjiacheng
+       *@name:getDeviceId
+       *@params:
+       *@return:
+       *@disc:getDeviceId
 
+       */
       var getDeviceId = function(){
         var deviceList = localStorage.deviceInfo.split(";");
 
         for(var i = 0; i < deviceList.length; i ++){
           var deviceInfo = deviceList[i].split(",");
-          if(deviceInfo[0] == "E8:91:E0:DC:20:F1"){
+          if(deviceInfo[0] == "E8:91:E0:DC:20:F1"){//SKU
             return deviceInfo[1];
           }
         }
       };
 
 
-      var  deveiceId=getDeviceId();
-       alert("OK"+deveiceId);
+    //var deveiceId=getDeviceId();
+    // alert("OK"+deveiceId);
 
+      /**
+       *@author:chenjiacheng
+       *@name:chixuWater
+       *@params:
+       *@return:
+       *@disc:chixuWater
+
+       */
   function chixuWater(){
 
     var argment = {
@@ -45,43 +70,80 @@ angular.module('nextgenModule')
    }
 
     var  data= nextgenService.operateShower(argment);
-
+     var  deveiceId=getDeviceId();
+        alert(deveiceId);
     var value = getValue(data);
   alert(value);
     nextgenService.sendCmd(deveiceId,value,"持续出水","持续出水失败");
 
   }
+      /**
+       *@author:chenjiacheng
+       *@name:paikongWater
+       *@params:
+       *@return:
+       *@disc:paikongWater
 
+       */
   function paikongWater(){
 
     var argment = {
       'mode': '02'    //00表示stop，01表示Start continuous outlet 02表示Start evacuate cold water (turn on, and off when reach 37 degree,Start evacuate cold water 如果5分钟后水温仍达不到37度则自动停止) ,other表示内置设定
     }
     var data = nextgenService.operateShower(argment);
+        var deveiceId=getDeviceId();
+        alert(deveiceId);
     var value = getValue(data);
     alert(value);
     nextgenService.sendCmd(deveiceId,value,"排空冷水","排空冷水失败");
 
 }
+      /**
+       *@author:chenjiacheng
+       *@name:closeWater
+       *@params:
+       *@return:
+       *@disc:closeWater
 
+       */
       function closeWater(){
         var argment = {
           'mode': '00'    //00表示stop，01表示Start continuous outlet 02表示Start evacuate cold water (turn on, and off when reach 37 degree,Start evacuate cold water 如果5分钟后水温仍达不到37度则自动停止) ,other表示内置设定
         }
         var data = nextgenService.operateShower(argment);
+        var deveiceId=getDeviceId();
+        alert(deveiceId);
         var value = getValue(data);
         alert(value);
         nextgenService.sendCmd(deveiceId,value,"关闭","关闭失败");
 
       }
+      /**
+       *@author:chenjiacheng
+       *@name:Key stop
+       *@params:
+       *@return:
+       *@disc:Key stop
 
+       */
   function closeAll(){
+        var deveiceId=getDeviceId();
+        alert(deveiceId);
         var data = nextgenService.stopAll();
-        var value = getValue(data);
-       alert(value);
-        sendCmd(deveiceId,value,"一键关闭","一键关闭失败");
-      };
 
+        var value = getValue(data);
+
+       alert(value);
+    nextgenService.sendCmd(deveiceId,value,"一键关闭","一键关闭失败");
+      };
+      /**
+       *@author:chenjiacheng
+       *@name:headerHuasa
+       *@params:
+       *@return:
+       *@disc:headerHuasa
+
+       */
       //头顶花洒
       function headerHuasa(){
         var argment = {
@@ -90,12 +152,22 @@ angular.module('nextgenModule')
 
         }
         var data = nextgenService.setShowerPara(argment);
+        var deveiceId=getDeviceId();
+        alert(deveiceId);
         var value = getValue(data);
         alert(value);
        nextgenService.sendCmd(deveiceId,value,"头顶花洒","头顶花洒失败");
 
 
       }
+      /**
+       *@author:chenjiacheng
+       *@name:headerBaidong
+       *@params:
+       *@return:
+       *@disc:headerBaidong
+
+       */
       //头顶摆动
       function headerBaidong(){
         var argment = {
@@ -104,12 +176,23 @@ angular.module('nextgenModule')
 
         }
         var data = nextgenService.setShowerPara(argment);
+        var deveiceId=getDeviceId();
+        alert(deveiceId);
         var value = getValue(data);
+
         alert(value);
         nextgenService.sendCmd(deveiceId,value,"头顶花洒","头顶花洒失败");
 
 
       }
+      /**
+       *@author:chenjiacheng
+       *@name:handHuasa
+       *@params:
+       *@return:
+       *@disc:handHuasa
+
+       */
       function handHuasa(){
         var argment = {
           'temperature': '00',    //这个最好传16进制的字符串 比如0 ->00 100->64
@@ -117,12 +200,22 @@ angular.module('nextgenModule')
 
         }
         var data = nextgenService.setShowerPara(argment);
+        var deveiceId=getDeviceId();
+        alert(deveiceId);
         var value = getValue(data);
         alert(value);
         nextgenService.sendCmd(deveiceId,value,"手持花洒","手持花洒");
 
 
       }
+      /**
+       *@author:chenjiacheng
+       *@name:goSpout
+       *@params:
+       *@return:
+       *@disc:goSpout
+
+       */
       function goSpout(){
         var argment = {
           'temperature': '00',    //这个最好传16进制的字符串 比如0 ->00 100->64
@@ -130,6 +223,8 @@ angular.module('nextgenModule')
 
         }
         var data = nextgenService.setShowerPara(argment);
+        var deveiceId=getDeviceId();
+        alert(deveiceId);
         var value = getValue(data);
   alert(value);
         nextgenService.sendCmd(deveiceId,value,"Spout","Spout失败");
@@ -137,15 +232,15 @@ angular.module('nextgenModule')
     }
 
 
- function closeJieneng(){
+ /*function closeJieneng(){
 
         var data = nextgenService.exitPowerSave();
         var value = getValue(data);
    alert(value);
         nextgenService.sendCmd(deveiceId,value,"关闭节能","关闭节能失败");
 
-      }
-      function goSleep(){
+      }*/
+     /* function goSleep(){
 
         var argment = {
           'mode': '02' //00表示关闭，01表示低电量，02表示休眠，03表示断电
@@ -156,7 +251,7 @@ angular.module('nextgenModule')
         alert(value);
         nextgenService.sendCmd(deveiceId,value,"关闭节能","关闭节能失败");
 
-      }
+      }*/
       /*function goPowerfailure(){
         var argment = {
           'mode': '03' //00表示关闭，01表示低电量，02表示休眠，03表示断电
@@ -178,7 +273,14 @@ angular.module('nextgenModule')
 
       }*/
 
+      /**
+       *@author:chenjiacheng
+       *@name:
+       *@params:
+       *@return:
+       *@disc:监听一键停止的返回信息，当tempData.ack=='1000'使图标变灰
 
+       */
 
       document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
         var resultOn = result;
@@ -193,7 +295,14 @@ angular.module('nextgenModule')
           $scope.$apply();
         }
       }, false);
+      /**
+       *@author:chenjiacheng
+       *@name:goBack
+       *@params:
+       *@return:
+       *@disc:goBack
 
+       */
   $scope.goBack = function(){
         $ionicHistory.goBack();
 
@@ -201,8 +310,8 @@ angular.module('nextgenModule')
 
       //初始模式选择
       $scope.toiletController = {
-         modelType:"nextgen.yidong",
-        way:"nextgen.handleSelecDes"
+         modelType:"nextgen.yidong",//初始模式选择默认手持花洒
+        way:"nextgen.handleSelecDes"//出水方式
       };
 
   //侧滑转档数量json
@@ -219,7 +328,7 @@ angular.module('nextgenModule')
       }]
 
 
-
+//Function list
       $scope.handlenapeListNape = [
 
         {
@@ -246,13 +355,13 @@ angular.module('nextgenModule')
           selecFlag:false
 
         },
-        {
+      /*  {
           imgUrl: "build/img/nextgen/jieneng.png",
           imgSeledUrl: "build/img/nextgen/jienengseled.png",
           imgUrlTemp:"build/img/nextgen/jieneng.png",
           handleDes: "nextgen.jieneng",
           selecFlag:false
-        },
+        },*/
 
         {
           imgUrl: "build/img/nextgen/shezhi.png",
@@ -387,7 +496,7 @@ angular.module('nextgenModule')
               var poi = getEvtLocation(e);
               currentRadObj.drawc(currentRadObj.cr2,getAngle(currentRadObj.canvsscreenHeight,currentRadObj.canvsscreenWidth,poi.x,poi.y));
             }, false );
-            currentEventObj.addEventListener( 'touchend', function( e ){
+           currentEventObj.addEventListener( 'touchend', function( e ){
               e.preventDefault();
               currentRadObj.drawc(currentRadObj.cr2,currentRadObj.radSectionArr[currentRadObj.stoPosPoint]);
             }, false );
@@ -406,6 +515,14 @@ angular.module('nextgenModule')
           $scope.getCurrentObj(index);
         };
       },20);
+      /**
+       *@author:chenjiacheng
+       *@name:
+       *@params:
+       *@return:
+       *@disc:Process selection mode
+
+       */
       //处理选择怎加border
       var handlenapeListNapeLen = $scope.handlenapeListNape.length;
 
@@ -480,7 +597,7 @@ angular.module('nextgenModule')
 
           closeAll();
     }
-        if(index==3)
+     /*   if(index==3)
         {
           //目前只能选睡眠模式
           $scope.slideInitData[0].des="nextgen.sleep";
@@ -490,7 +607,7 @@ angular.module('nextgenModule')
           }
           else{
             closeJieneng();
-          }
+          }*/
 
           //$scope.toiletController = {
           //  modelType:"nextgen.sleep",
@@ -512,13 +629,13 @@ angular.module('nextgenModule')
           //  ele[0].style.top = 68 + '%';
           //  ele[0].style.minHeight = 61 + '%';
           //}, 10);
-      };
+     // };
 
-        if(index==4){
+        if(index==3){
 
          $state.go("nextgenSet");
-         $scope.handlenapeListNape[4].selecFlag = false;
-         $scope.handlenapeListNape[4].imgUrl = $scope.handlenapeListNape[4].imgUrlTemp;
+         $scope.handlenapeListNape[3].selecFlag = false;
+         $scope.handlenapeListNape[3].imgUrl = $scope.handlenapeListNape[3].imgUrlTemp;
        }
         // 根据选择项来初始化选择项的
       /*  if($scope.handlenapeListNape[index].handledata){
@@ -536,8 +653,14 @@ angular.module('nextgenModule')
 
 
 
+      /**
+       *@author:chenjiacheng
+       *@name:
+       *@params:
+       *@return:
+       *@disc:Pull selection processing
 
-
+       */
 
       //模式选择
       //获取屏幕高度
