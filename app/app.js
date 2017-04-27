@@ -679,7 +679,7 @@ angular.module('myApp')
 
           if (window.localStorage.getItem('gesturePassword') && window.localStorage.getItem('gesturePassword') != '') {
           } else {
-            $urlRouterProvider.otherwise('/tab/indexPage');
+            $urlRouterProvider.otherwise('/login');
           }
         } else {
 
