@@ -109,6 +109,27 @@
       right: 0.607rem;
     }
   }
+  .slidehandle-left{
+    position: absolute;
+    top: 4.30rem;
+    left: 0.3rem;
+    text-align: center;
+    text-align: center;
+    .slidehandle-left-img{
+      height: 1rem;
+      width: 0.4rem;
+    }
+  }
+  .slidehandle-right{
+    position: absolute;
+    top: 4.30rem;
+    right: 0.3rem;
+    text-align: center;
+    .slidehandle-right-img{
+      height: 1rem;
+      width: 0.4rem;
+    }
+  }
   .toilet-handlenape{
     position: absolute;
     top: 7.54rem;

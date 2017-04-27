@@ -91,6 +91,14 @@ NIMI.prototype._data = {
  * @constructor
  */
 NIMI.prototype.frontRearDry = function (method, temperature, volume, place, flushOptions, mSwitchType) {
+  alert(angular.toJson({
+    method:method,
+    temperature:temperature,
+    volume:volume,
+    place:place,
+    flushOptions:flushOptions,
+    mSwitchType:mSwitchType
+  }))
   var cmd = "";
   if (config.FRONT == method) {
     cmd = "01";
@@ -123,6 +131,10 @@ NIMI.prototype.frontRearDry = function (method, temperature, volume, place, flus
  * @returns {string} 指令中的 data串
  */
 NIMI.prototype.feetSeatHeater = function (temperature) {
+  alert(angular.toJson({
+    method:"暖分",
+    temperature:temperature,
+  }))
   var cmd = "05" + getHex(fourBitToCheck(temperature.toString(2))) + "0" + "00" + "00" + "00";
   return cmd;
 };
@@ -435,6 +447,25 @@ function doStr(d) {
   }
   return d;
 };
+
+function RoController(){};
+RoController.prototype._data={
+  stopAll:"00", //停止所有功能。
+  startOutlet:"2101",  //开启出水
+  stopOutlet:"2100",  //关闭出水
+  requestAllStatus:"70",  //查询设备所有状态
+  _paramPowerSaveMode:{
+    _header:"31",
+    LOW_POWER:"01",
+    SLEEP:"02",
+    POWER_OFF:"03"
+  }
+}
+RoController.prototype.enterPowerSaveMode = function(mode) {
+  return this._data._paramPowerSaveMode._header+mode;
+};
+
+
 
 /**
  * 返回cmd字段命令

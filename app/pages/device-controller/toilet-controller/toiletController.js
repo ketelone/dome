@@ -2,6 +2,7 @@ angular.module('toiletControlModule')
   .controller('toiletControllerCtrl', [
     '$scope',
     '$state',
+    '$translate',
     '$ionicSlideBoxDelegate',
     '$timeout',
     'publicMethod',
@@ -12,6 +13,7 @@ angular.module('toiletControlModule')
     'checkVersionService',
     function ($scope,
               $state,
+              $translate,
               $ionicSlideBoxDelegate,
               $timeout,
               publicMethod,
@@ -408,7 +410,8 @@ angular.module('toiletControlModule')
         };
         // on-slide-changed='slideHasChanged($index)'>
         var checHtml =
-          "<ion-slide-box delegate-handle='slideboximgs' on-slide-changed='slideHasChanged($index)'>"+
+          // "<ion-slide-box ng-init='lockSlide()' on-slide-changed='slideHasChanged($index)'>"+
+          "<ion-slide-box ng-init='lockSlide()' delegate-handle='boxSlider' ng-click='slideHasChangedleft()'>"+
           "<ion-slide ng-repeat='list in currentSlideData track by $index'>"+
           "<div id={{list.parNodeid}} class='toilet-parameterctl'>"+
           "<canvas id={{list.canves01}} class='canves-pos'></canvas>"+
@@ -437,9 +440,9 @@ angular.module('toiletControlModule')
 
       var initCircle = function (slideDataObj) {
         //获取父元素高度
+        this.rateInit = document.documentElement.clientWidth / 7.5;
         this.canvsscreenHeight = document.getElementById(slideDataObj.parNodeid).offsetHeight;
         this.canvsscreenWidth = document.getElementById(slideDataObj.parNodeid).offsetWidth;
-        this.rateInit = document.documentElement.clientWidth / 7.5;
         // 设置每个canves的宽高
         document.getElementById(slideDataObj.canves01).height = this.canvsscreenHeight;
         document.getElementById(slideDataObj.canves01).width = this.canvsscreenWidth;
@@ -457,11 +460,11 @@ angular.module('toiletControlModule')
         this.cr2 = getCanvesObj(slideDataObj.canves02);//滑动小球档位canves
         this.cr3 = getCanvesObj(slideDataObj.canves03);//颜色填充档位canves
         //四种圆
-        this.deliverCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2,color:"#2F3538"};//档位圆
-        this.HideCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2-0.4*this.rateInit,color:"black"};//档位圆
-        this.deliverLine = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2,color:"black"};//档位线
-        this.rollCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2-0.2*this.rateInit,color:"white"};//小球圆
-        this.FillCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2,color:"#6ACBB3"};//填充圆
+        this.deliverCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2-0.1*this.rateInit,color:"#2F3538"};//档位圆
+        this.HideCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2-0.5*this.rateInit,color:"black"};//档位圆
+        this.deliverLine = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2-0.1*this.rateInit,color:"black"};//档位线
+        this.rollCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2-0.3*this.rateInit,color:"white"};//小球圆
+        this.FillCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2-0.1*this.rateInit,color:"#6ACBB3"};//填充圆
         //变量
         this.i=0;this.j=0;
         this.stoPosPoint=0;
@@ -603,7 +606,6 @@ angular.module('toiletControlModule')
         $scope.handleRadSelected;
         $scope.getCurrentObj = function (index) {
           $scope.handleRadSelected = index;
-          console.log($scope.currentSlideData[index])
           //当前new实例
           currentRadObj = new initCircle($scope.currentSlideData[index]);
           currentRadObj.i=0;
@@ -625,7 +627,6 @@ angular.module('toiletControlModule')
             currentRadObj.drawc(currentRadObj.cr2,currentRadObj.starRad+ currentRadObj.radRange * ($scope.currentSlideData[index].gearInit-1),"type");
             currentRadObj.drawCircleFill(currentRadObj.cr3,currentRadObj.starRad+currentRadObj.radRange * ($scope.currentSlideData[index].gearInit-1));
             currentEventObj.addEventListener( 'touchstart', function( e ){
-              $ionicSlideBoxDelegate.$getByHandle("slideboximgs").enableSlide( false );
               e.preventDefault();
               var poi = getEvtLocation(e);
               bginX = poi.x;
@@ -637,7 +638,6 @@ angular.module('toiletControlModule')
               currentRadObj.drawc(currentRadObj.cr2,getAngle(currentRadObj.canvsscreenHeight,currentRadObj.canvsscreenWidth,poi.x,poi.y));
             }, false );
             currentEventObj.addEventListener( 'touchend', function( e ){
-              $ionicSlideBoxDelegate.$getByHandle("slideboximgs").enableSlide(true);
               e.preventDefault();
               currentRadObj.drawc(currentRadObj.cr2,currentRadObj.radSectionArr[currentRadObj.stoPosPoint]);
               //档位滑动执行发指令操作
@@ -653,8 +653,10 @@ angular.module('toiletControlModule')
           };
         };
         $scope.getCurrentObj(0);
-        $scope.slideHasChanged = function (index) {
-          $scope.getCurrentObj(index);
+        $scope.slideHasChangedleft = function () {
+          // console.log($ionicSlideBoxDelegate.$getByHandle('boxSlider').slidesCount())
+          // $ionicSlideBoxDelegate.currentIndex();
+          // $scope.getCurrentObj(index);
         };
       },20);
       //发送指令
@@ -824,7 +826,6 @@ angular.module('toiletControlModule')
           }
         },20)
       };
-
       //处理选择怎加border
       var handlenapeListNapeLen = $scope.handlenapeListNape.length;
       $scope.selectNapes = function (index) {
@@ -834,9 +835,26 @@ angular.module('toiletControlModule')
           $state.go("toiletSetting");
         }else {
           if(!$scope.handlenapeListNape[index].isManyDirective){
-            if(!$scope.handlenapeListNape[index].selecFlag){
+            if($scope.handlenapeListNape[index].selecFlag && $scope.handlenapeListNape[index].matchdataid !== "clear"){
               $scope.onceTimeIntionCreate();
             }
+            if($scope.handlenapeListNape[index].matchdataid === "clear" && $scope.handlenapeListNape[index].selecFlag === false) {
+              //close clear
+              if ($scope.toiletController.modelType !== "toiletController.gaunbi") {
+                if ($scope.toiletController.modelType === "toiletController.clearopen") {
+                  var cmdvalue = getCmd(header, idx, nimi._data["closeTrap"], ctrId, devId);
+                } else if ($scope.toiletController.modelType === "toiletController.clearextend") {
+                  var cmdvalue = getCmd(header, idx, nimi._data["closeExtendWand"], ctrId, devId);
+                } else if ($scope.toiletController.modelType === "oiletController.clearinstance") {
+                  var cmdvalue = getCmd(header, idx, nimi._data["closeIntelligentSterilization"], ctrId, devId);
+                }
+                $scope.handlenapeSelectedIndex = undefined;
+                $scope.toiletController.handleSelecDes = $scope.toiletController.selectMode;
+                $scope.toiletController.modelType = $scope.toiletController.modelTypeNv;
+                console.log(cmdvalue)
+                // $scope.sendCmd(cmdvalue,"");
+              }
+            };
           }else{
             //use instruction create
             if($scope.handlenapeListNape[index].matchdataid === "nvyong"){
@@ -865,9 +883,6 @@ angular.module('toiletControlModule')
               };
             };
           };
-          if(!$scope.handlenapeListNape[index].selecFlag){
-
-          }
           // $timeout(function () {
           //   $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
             for(var i=0;i<handlenapeListNapeLen;i++){
@@ -1031,11 +1046,10 @@ angular.module('toiletControlModule')
                 desTemp = "openIntelligentSterilization";
               }
             })
-
             var cmdvalue = getCmd(header, idx,nimi._data[desTemp],ctrId,devId);
             //send instructin
             console.log(cmdvalue)
-            // scope.sendCmd(cmdvalue,"");
+            //scope.sendCmd(cmdvalue,"");
           }
           $scope.valueTemp = val;
         };
