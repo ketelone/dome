@@ -137,7 +137,7 @@ $scope.exceptionword='exceptionword';
       function getException(){
         var url = "https://139.219.186.43/residential/r/api/cmm/deviceException/query";
         var paramter = [
-          {"deviceId":"1"}
+          {"partyId":"1"}
         ];
         hmsHttp.post(url, paramter).success(
           function(response){
@@ -156,7 +156,7 @@ $scope.exceptionword='exceptionword';
         );
 
       }
-
+      getException();
       /**
        *@author:chenjiacheng
        *@name:logout

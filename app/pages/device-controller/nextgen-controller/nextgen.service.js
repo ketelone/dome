@@ -1,8 +1,8 @@
 //Next gen shower
 angular.module('nextgenModule')
   .service('nextgenService',
-    ['baseConfig',
-      function (baseConfig) {
+    ['baseConfig','hmsPopup',
+      function (baseConfig,hmsPopup) {
 
         var service = {
           setShowerPara: setShowerPara,
