@@ -23,7 +23,18 @@ angular.module('toiletControlModule')
     ) {
       $scope.goBack = function () {
         publicMethod.goBack();
-      }
+      };
+      var header = "8877";
+      var idx = 1;
+      // var ctrId = "E3";
+      var ctrId = "0";
+      var devId = "6";
+      //init zhiling obj
+      var cenwatpurDir = new RoController();
+      //get device status
+      var cmdvalue = getCmd(header, idx,cenwatpurDir._data.requestAllStatus,ctrId,devId);
+      // $scope.sendCmd(cmdvalue,"")
+
       /*
        Central water purifier shu ju
        */
@@ -221,6 +232,15 @@ angular.module('toiletControlModule')
           $scope.cenwatpurifierCtrl.isShwoClearStatus = !$scope.cenwatpurifierCtrl.isShwoClearStatus;
           // $timeout(function () {
             $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
+
+            if($scope.handlenapeListNape[index].selecFlag){
+              var cmdvalue = getCmd(header, idx,cenwatpurDir._data.startOutlet,ctrId,devId);
+              // $scope.sendCmd(cmdvalue,"")
+            }else{
+              var cmdvalue = getCmd(header, idx,cenwatpurDir._data.stopOutlet,ctrId,devId);
+              // $scope.sendCmd(cmdvalue,"")
+            }
+
             for(var i=0;i<handlenapeListNapeLen;i++){
               if(i !== index){
                 $scope.handlenapeListNape[i].selecFlag = false;
