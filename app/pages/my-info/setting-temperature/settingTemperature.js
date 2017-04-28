@@ -116,13 +116,13 @@ alert("OK");
       $scope.chooseTwo=function(item){
         item.radioImg2=radioImg3;
         item.radioImg1=radioTemp;
-        if(item.unitName=="温度单位"){
+        if(item.unitName=="my-info.setting-temperature.temperatureUnit"){
           window.localStorage.temperature="°F";
         }
-        else if(item.unitName=="用水量单位"){
+        else if(item.unitName=="my-info.setting-temperature.useWaterUnit"){
           window.localStorage.useWater="T";
         }
-        else if(item.unitName=="用电量单位"){
+        else if(item.unitName=="my-info.setting-temperature.useElectricityUnit"){
           window.localStorage.Electricity="min";
         }
       }
