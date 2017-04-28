@@ -5,16 +5,21 @@ angular.module('nextgenModule')
     '$ionicModal',
     '$compile',
     'baseConfig',
-    'checkVersionService','$ionicHistory','hmsPopup','nextgenService','$timeout',
+    'checkVersionService','$ionicHistory','hmsPopup','nextgenService','$timeout','SettingsService','$ionicSlideBoxDelegate','hmsHttp',
     function ($scope,
               $state,
               $ionicModal,
               $compile,
               baseConfig,
-              checkVersionService,$ionicHistory,hmsPopup,nextgenService,$timeout
+              checkVersionService,$ionicHistory,hmsPopup,nextgenService,$timeout,SettingsService,$ionicSlideBoxDelegate,hmsHttp
     ) {
+      var ctrId="00";
+      var header="8877";
+      var idx="00";
+      var devId="03";//E8:91:E0:DC:20:F1
+      var sku=SettingsService.get('sku');
 
-     //var deveiceId="E0DC20F1";
+      //var deveiceId="E0DC20F1";
 
   /**
        *@author:chenjiacheng
@@ -24,12 +29,10 @@ angular.module('nextgenModule')
        *@disc:getValue
 
        */
-      function getValue(data){
+
+    function getValue(data){
         //The following is the operating equipment parameters
-        var ctrId="00";
-        var header="8877";
-        var idx="00";
-        var devId="03";//E8:91:E0:DC:20:F1
+
         return nextgenService.getCmdvalue(header,idx, data, ctrId,devId);
       };
       /**
@@ -40,19 +43,21 @@ angular.module('nextgenModule')
        *@disc:getDeviceId
 
        */
-      var getDeviceId = function(){
-        var deviceList = localStorage.deviceInfo.split(";");
 
-        for(var i = 0; i < deviceList.length; i ++){
+      var getDeviceId = function () {
+        if (localStorage.deviceInfo == undefined) {
+          return;
+        }
+        var deviceList = localStorage.deviceInfo.split(";");
+        console.log("----" + localStorage.deviceInfo);
+        for (var i = 0; i < deviceList.length; i++) {
           var deviceInfo = deviceList[i].split(",");
-          if(deviceInfo[0] == "E8:91:E0:DC:20:F1"){//SKU
+          if (deviceInfo[0] == sku) {
             return deviceInfo[1];
           }
         }
       };
-
-
-    //var deveiceId=getDeviceId();
+      var deviceId = getDeviceId();
     // alert("OK"+deveiceId);
 
       /**
@@ -70,11 +75,9 @@ angular.module('nextgenModule')
    }
 
     var  data= nextgenService.operateShower(argment);
-     var  deveiceId=getDeviceId();
-        alert(deveiceId);
     var value = getValue(data);
   alert(value);
-    nextgenService.sendCmd(deveiceId,value,"持续出水","持续出水失败");
+    nextgenService.sendCmd(deviceId,value,"持续出水","持续出水失败");
 
   }
       /**
@@ -91,11 +94,9 @@ angular.module('nextgenModule')
       'mode': '02'    //00表示stop，01表示Start continuous outlet 02表示Start evacuate cold water (turn on, and off when reach 37 degree,Start evacuate cold water 如果5分钟后水温仍达不到37度则自动停止) ,other表示内置设定
     }
     var data = nextgenService.operateShower(argment);
-        var deveiceId=getDeviceId();
-        alert(deveiceId);
-    var value = getValue(data);
+     var value = getValue(data);
     alert(value);
-    nextgenService.sendCmd(deveiceId,value,"排空冷水","排空冷水失败");
+    nextgenService.sendCmd(deviceId,value,"排空冷水","排空冷水失败");
 
 }
       /**
@@ -111,11 +112,9 @@ angular.module('nextgenModule')
           'mode': '00'    //00表示stop，01表示Start continuous outlet 02表示Start evacuate cold water (turn on, and off when reach 37 degree,Start evacuate cold water 如果5分钟后水温仍达不到37度则自动停止) ,other表示内置设定
         }
         var data = nextgenService.operateShower(argment);
-        var deveiceId=getDeviceId();
-        alert(deveiceId);
-        var value = getValue(data);
+      var value = getValue(data);
         alert(value);
-        nextgenService.sendCmd(deveiceId,value,"关闭","关闭失败");
+        nextgenService.sendCmd(deviceId,value,"关闭","关闭失败");
 
       }
       /**
@@ -127,14 +126,13 @@ angular.module('nextgenModule')
 
        */
   function closeAll(){
-        var deveiceId=getDeviceId();
-        alert(deveiceId);
-        var data = nextgenService.stopAll();
+
+         var data = nextgenService.stopAll();
 
         var value = getValue(data);
 
        alert(value);
-    nextgenService.sendCmd(deveiceId,value,"一键关闭","一键关闭失败");
+    nextgenService.sendCmd(deviceId,value,"一键关闭","一键关闭失败");
       };
       /**
        *@author:chenjiacheng
@@ -151,12 +149,11 @@ angular.module('nextgenModule')
           'out': 'HRS',			  //这个参数是个枚举字符串 HRS，HS，SP，HDS 分别表示 头顶花洒，头顶摇摆，spout，手持花洒，
 
         }
+
         var data = nextgenService.setShowerPara(argment);
-        var deveiceId=getDeviceId();
-        alert(deveiceId);
-        var value = getValue(data);
+       var value = getValue(data);
         alert(value);
-       nextgenService.sendCmd(deveiceId,value,"头顶花洒","头顶花洒失败");
+       nextgenService.sendCmd(deviceId,value,"头顶花洒","头顶花洒失败");
 
 
       }
@@ -176,12 +173,9 @@ angular.module('nextgenModule')
 
         }
         var data = nextgenService.setShowerPara(argment);
-        var deveiceId=getDeviceId();
-        alert(deveiceId);
-        var value = getValue(data);
-
-        alert(value);
-        nextgenService.sendCmd(deveiceId,value,"头顶花洒","头顶花洒失败");
+      var value = getValue(data);
+ alert(value);
+        nextgenService.sendCmd(deviceId,value,"头顶花洒","头顶花洒失败");
 
 
       }
@@ -199,12 +193,11 @@ angular.module('nextgenModule')
           'out': 'HDS',			  //这个参数是个枚举字符串 HRS，HS，SP，HDS 分别表示 头顶花洒，头顶摇摆，spout，手持花洒，
 
         }
+
         var data = nextgenService.setShowerPara(argment);
-        var deveiceId=getDeviceId();
-        alert(deveiceId);
-        var value = getValue(data);
+       var value = getValue(data);
         alert(value);
-        nextgenService.sendCmd(deveiceId,value,"手持花洒","手持花洒");
+        nextgenService.sendCmd(deviceId,value,"手持花洒","手持花洒失败");
 
 
       }
@@ -223,11 +216,9 @@ angular.module('nextgenModule')
 
         }
         var data = nextgenService.setShowerPara(argment);
-        var deveiceId=getDeviceId();
-        alert(deveiceId);
         var value = getValue(data);
   alert(value);
-        nextgenService.sendCmd(deveiceId,value,"Spout","Spout失败");
+        nextgenService.sendCmd(deviceId,value,"Spout","Spout失败");
 
     }
 
@@ -286,11 +277,19 @@ angular.module('nextgenModule')
         var resultOn = result;
         if (resultOn.payload.cmd == "CMD_RETURN") {
           var tempData = nextgenService.explainAck(resultOn.payload.value[0]);
-          if(tempData.ack=='1000'){
+          if(tempData.ack.indexOf("fa")>=0){
             $scope.handlenapeListNape[2].selecFlag =false;
             $scope.handlenapeListNape[2].imgUrl = $scope.handlenapeListNape[2].imgUrlTemp;
 
            }
+
+
+
+
+
+
+
+
 
           $scope.$apply();
         }
@@ -373,147 +372,97 @@ angular.module('nextgenModule')
       ];
 
 
-
-
-    //  $scope.currentSlideData = $scope.handlenapeListNape[0].handledata;
+      /**
+       *
+       set dang qian ce hau shu ju zhi
+       设置当前侧滑数据为侧滑初始化数据
+       */
       $scope.currentSlideData = $scope.slideInitData;
-
-      //初始化当前模板数据
+      /**
+       init dang qian mo ban shu ju
+       初始化当前模板数据
+       */
+      $scope.lockSlide = function () {
+        $ionicSlideBoxDelegate.enableSlide( false );
+      };
       $scope.initHtmlTemplate = function (currentSlideData) {
-        //初始化数据
-        if($('#ionSliderBox').children().length !== 0){
-      $('#ionSliderBox').empty();
+        /**
+         init silde-box data
+         初始化slide-box数据
+         */
+        if($('#cewafiionSliderBox').children().length !== 0){
+          $('#cewafiionSliderBox').empty();
         };
+
+        // on-slide-changed='slideHasChanged($index)'>
         var checHtml =
-          "<ion-slide-box on-slide-changed='slideHasChanged($index)'>"+
+          "<ion-slide-box ng-init='lockSlide()'>"+
           "<ion-slide ng-repeat='list in currentSlideData track by $index'>"+
           "<div id={{list.parNodeid}} class='toilet-parameterctl'>"+
           "<canvas id={{list.canves01}} class='canves-pos'></canvas>"+
-          "<canvas id={{list.canves02}} class='canves-pos'></canvas>"+
           "<canvas id={{list.canves03}} class='canves-pos'></canvas>"+
-          "<canvas id={{list.canves04}} class='canves-pos'></canvas>"+
           "<div class='toilet-parameterctl-data' ng-if='!list.parameterctlFlag'>"+
-          "<span class='toilet-parameterctl-raddata' ng-bind='list.gearInit'></span>"+
-          "<span class='toilet-parameterctl-des'  translate={{list.des}} ></span>"+
+          "<p ng-if='cenwatpurifierCtrl.isShwoClearStatus' class='toilet-parameterctl-raddata' ></p>"+
+          "<span ng-if='cenwatpurifierCtrl.isShwoClearStatus' class='toilet-parameterctl-des' ></span>"+
+
+        "<span ng-if='true' class='toilet-parameterctl-raddata toilet-parameterct-span' ></span>"+
+         /* "<p ng-if='true' class='toilet-parameterctl-raddata' translate='nextgen.yidong' style='font-size: 0.6rem;' >4324</p>"+*/
+          "<div ng-if='true' class='toilet-parameterctl-des' translate='nextgen.yidong'></div>"+
           "</div>"+
           "<div class='toilet-parameterctl-dataimg' ng-if='list.parameterctlFlag'>"+
-       "<img class='conninfo-parameterctl-img' ng-src='build/img/toilet-controller/btn_devicedetail_scoll.png' alt=''>"+
+          "<img class='conninfo-parameterctl-img' ng-src='build/img/toilet-controller/btn_devicedetail_scoll.png' alt=''>"+
           "</div>"+
           "</div>"+
           "</ion-slide>"+
           "</ion-slide-box>"
+        /**
+         bian yi html 数据
+         编译html数据
+         */
         var $checkhtml = $compile(checHtml)($scope); // 编译
-        $('#ionSliderBox').append($checkhtml[0]);
-        console.log(1);
+        $('#cewafiionSliderBox').append($checkhtml[0])
       };
+
       $scope.initHtmlTemplate($scope.currentSlideData);
-       var initCircle = function (slideDataObj) {
-         //获取父元素高度
-         this.canvsscreenHeight = document.getElementById(slideDataObj.parNodeid).offsetHeight;
-         this.canvsscreenWidth = document.getElementById(slideDataObj.parNodeid).offsetWidth;
-         this.rateInit = document.documentElement.clientWidth / 7.5;
+      var initCircle = function (slideDataObj) {
+        //获取父元素高度
+        this.canvsscreenHeight = document.getElementById(slideDataObj.parNodeid).offsetHeight;
+        this.canvsscreenWidth = document.getElementById(slideDataObj.parNodeid).offsetWidth;
+        this.rateInit = document.documentElement.clientWidth / 7.5;
 
-         // 设置每个canves的宽高
-         document.getElementById(slideDataObj.canves01).height = this.canvsscreenHeight;
-         document.getElementById(slideDataObj.canves01).width = this.canvsscreenWidth;
-         document.getElementById(slideDataObj.canves01).style.zIndex = 1;
+        // 设置每个canves的宽高
+        document.getElementById(slideDataObj.canves01).height = this.canvsscreenHeight;
+        document.getElementById(slideDataObj.canves01).width = this.canvsscreenWidth;
+        document.getElementById(slideDataObj.canves01).style.zIndex = 1;
 
-         document.getElementById(slideDataObj.canves02).height = this.canvsscreenHeight;
-         document.getElementById(slideDataObj.canves02).width = this.canvsscreenWidth;
-         document.getElementById(slideDataObj.canves02).style.zIndex = 3;
-
-         document.getElementById(slideDataObj.canves03).height = this.canvsscreenHeight;
-         document.getElementById(slideDataObj.canves03).width = this.canvsscreenWidth;
-         document.getElementById(slideDataObj.canves03).style.zIndex = 2;
-         // 获取canvesobj
-         this.cr1 = getCanvesObj(slideDataObj.canves01);//档位canves
-         this.cr2 = getCanvesObj(slideDataObj.canves02);//滑动小球档位canves
-         this.cr3 = getCanvesObj(slideDataObj.canves03);//颜色填充档位canves
-         // this.cr4 = getCanvesObj(slideDataObj.canves04);//颜色填充档位canves
-         //四种圆
-         this.deliverCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2,color:"#67c6b0"};//档位圆
-         this.HideCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2-0.4*this.rateInit,color:"black"};//档位圆
-         this.deliverLine = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2,color:"black"};//档位线
-         this.rollCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2-0.2*this.rateInit,color:"white"};//小球圆
-         this.FillCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2,color:"#59a59d"};//填充圆
-         // this.bimianCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2-30,color:"black"};//防触点
-         //变量
-        //填充圆
-        // this.bimianCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2-30,color:"black"};//防触点
-        //变量
-        this.i=0;this.j=0;
-        this.stoPosPoint=0;
-        this.starRad=135;
-        this.radSectionArr=[];
-        this.radRange;
+        document.getElementById(slideDataObj.canves03).height = this.canvsscreenHeight;
+        document.getElementById(slideDataObj.canves03).width = this.canvsscreenWidth;
+        document.getElementById(slideDataObj.canves03).style.zIndex = 2;
+        // 获取canvesobj
+        this.cr1 = getCanvesObj(slideDataObj.canves01);//档位canves
+        this.cr3 = getCanvesObj(slideDataObj.canves03);//颜色填充档位canves
+        //四种圆
+        this.deliverCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2,color:"#6ACBB3"};//档位圆
+        this.HideCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2-0.4*this.rateInit,color:"black"};//档位圆
         //画档位圆
-        this.drawDeliverCircle = function (n) {
-          this.radRange = (270-(n-1))/n;
-          this.radSectionArr.push(this.starRad);
-          var tempstrAngle = this.starRad;
-          for(var k=1;k<=n;k++){
-            drawRadian(this.cr1,this.deliverCircle,tempstrAngle,tempstrAngle+this.radRange);
-            tempstrAngle = tempstrAngle+this.radRange+1;
-            this.radSectionArr.push(tempstrAngle);
-           };
-          // 画白色遮挡
-         drawRadian(this.cr1,this.HideCircle,0,360);
-
-          // drawRadian(this.cr4,this.bimianCircle,0,360);
+        this.drawDeliverCircle = function () {
+          drawRadian(this.cr1,this.deliverCircle,0,360);
+          drawRadian(this.cr3,this.HideCircle,0,360);
         };
-
-     };
+      };
       var currentRadObj;
       setTimeout(function () {
+        //保存选择的数据项当前的档位
+        $scope.handleRadSelected;
         $scope.getCurrentObj = function (index) {
+          $scope.handleRadSelected = index;
           //当前new实例
           currentRadObj = new initCircle($scope.currentSlideData[index]);
-          currentRadObj.i=0;
-          currentRadObj.j=0;
-          currentRadObj.stoPosPoint=0;
-          currentRadObj.gearInit = $scope.currentSlideData[index].gearInitTemp;
-          $scope.currentSlideData[index].gearInit = $scope.currentSlideData[index].gearInitTemp;
           //当前绑定事件对象
           var currentEventObj = getIdObj($scope.currentSlideData[index].canves02);
-          currentRadObj.drawDeliverCircle($scope.currentSlideData[index].gearNum);
-
-
-          if($scope.currentSlideData[index].des === "init"){
-            currentRadObj.drawc(currentRadObj.cr2,405,"type");
-            currentRadObj.drawCircleFill(currentRadObj.cr2,405);
-            //初始化数据
-            $('.slider-pager').empty();
-          }else{
-            currentRadObj.drawc(currentRadObj.cr2,currentRadObj.starRad,"type");
-            currentEventObj.addEventListener( 'touchstart', function( e ){
-              e.preventDefault();
-              var poi = getEvtLocation(e);
-              bginX = poi.x;
-              bginY = poi.y;
-            }, false );
-            currentEventObj.addEventListener( 'touchmove', function( e ){
-              e.preventDefault();
-              var poi = getEvtLocation(e);
-              currentRadObj.drawc(currentRadObj.cr2,getAngle(currentRadObj.canvsscreenHeight,currentRadObj.canvsscreenWidth,poi.x,poi.y));
-            }, false );
-           currentEventObj.addEventListener( 'touchend', function( e ){
-              e.preventDefault();
-              currentRadObj.drawc(currentRadObj.cr2,currentRadObj.radSectionArr[currentRadObj.stoPosPoint]);
-            }, false );
-            var getEvtLocation = function(e){
-              var touch = e.touches[0];
-              return{
-                x : touch.clientX,
-                y : touch.clientY
-              }
-            };
-
-          }
+          currentRadObj.drawDeliverCircle();
         };
-      $scope.getCurrentObj(0);
-        $scope.slideHasChanged = function (index) {
-          $scope.getCurrentObj(index);
-        };
+        $scope.getCurrentObj(0);
       },20);
       /**
        *@author:chenjiacheng
@@ -753,10 +702,43 @@ angular.module('nextgenModule')
 
       };
 
+//通过云端发送指令
+      var test = function () {
+        var url = baseConfig.basePath + "/r/api/message/sendMessage";
+        var paramter = {
+          "ver": 1,
+          "from": {
+            "ctype": 240,
+            "uid": "13405533206"
+          },
+          "to": {
+            "ctype": 229,
+            "uid": "hand-residential"
+          },
+          "ts": 1493013672695,
+          "idx": 1,
+          "mtype": "ctl",
+          "data": {
+            "cmd": ["887706010005270221"]
+          }
+        };
+        hmsHttp.post(url, paramter).success(
+          function (response) {
+            //var value = response.data.data.cmd[0];
+           alert(JSON.stringify(response));
+           // alert(value);
+         //   alert(JSON.stringify(bathroomCmdService.explainAck(value)));
 
+          }
+        ).error(
+          function (response, status, header, config) {
+            hmsPopup.showShortCenterToast("");
+           // alert(1234);
+          }
+        );
+      };
 
-
-
+      //test();
 
 
 

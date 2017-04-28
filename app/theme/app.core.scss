@@ -14,6 +14,7 @@
 @import "../pages/login/registered/registered.scss";
 @import "../pages/login/forget-password/forgetPassword.scss";
 @import "../pages/message/message";
+@import "../pages/message/message-detail/messageDetail";
 @import "../pages/my-info/myInfo";
 @import "../pages/my-info/add-members/addMembers";
 @import "../pages/my-info/green-life/greenLife";
@@ -67,3 +68,7 @@
 @import "../pages/device-controller/nextgen-controller/nextgen";
 @import "../pages/device-controller/nextgen-controller/nextgen-set/nextgenSet";
 @import "../pages/device-controller/nextgen-controller/nextgen-info/nextgenInfo";
+
+@import "../pages/device-controller/airfoil-shower-controller/airfoilShower";
+@import "../pages/device-controller/airfoil-shower-controller/airfoil-shower-setting-controller/airfoilShowerSetting";
+

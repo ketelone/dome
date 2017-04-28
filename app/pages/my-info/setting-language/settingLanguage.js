@@ -169,6 +169,7 @@ angular.module('myInfoModule')
 
               }
 
+
             },
             function () {
 
@@ -194,6 +195,7 @@ angular.module('myInfoModule')
         }
         else {
           $translate.use('en');
+          publicMethod.goBack();
         }
 
 

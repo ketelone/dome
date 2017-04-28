@@ -31,15 +31,16 @@
     </div>
   </ion-content>
 
-  <div class="toilet-handlenape-selec" ng-click="openModal();">
+  <div class="toilet-handlenape-selec">
   </div>
   <div class="toilet-handlenape-selec" ng-click="openModal();" ng-if="isWind">
     <span class="handlenape-selec-des" translate="bathroom.wind"></span>
     <span class="handlenape-selec-use" translate="{{windType.type}}"></span>
     <img class="handlenape-selec-img" src="build/img/karess-controller/icon_scenario_arrow.png"/>
   </div>
-  <div class="toilet-handlenape-selec timer-div text-center" ng-click="openModal();" ng-if="isTime">
-    <span ng-if="isCountDown">{{countDown |  date:'HH:mm:ss'}}</span>
+  <div class="toilet-handlenape-selec timer-div text-center"  ng-if="isTime">
+    <span>{{countDown |  date:'HH:mm:ss'}}</span>
+    <!--<span ng-if="isCountDown">{{countDown |  date:'HH:mm:ss'}}</span>-->
     <!--<span class="handlenape-selec-des" translate="bathroom.wind"></span>-->
     <!--<span class="handlenape-selec-use" translate="{{windType.type}}"></span>-->
     <!--<img class="handlenape-selec-img" src="build/img/karess-controller/icon_scenario_arrow.png"/>-->

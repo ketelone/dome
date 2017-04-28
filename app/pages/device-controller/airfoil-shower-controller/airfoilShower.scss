@@ -1,17 +1,9 @@
-.nextgen {
-
-  .headColor {
-   background-color: $global-head-bg;
-  }
-  .iconColor {
-    color: $color-base
-  }
-
+.airfoil-shower-controller {
   .toilet-bg{
-   background-color: $global-head-bg;
+    background-color: $global-head-bg;
   }
   .toilet-conninfo{
-    margin-top: 0.86rem;
+    padding-top: 0.86rem;
     width: 100%;
     height: auto;
     width: auto;
@@ -85,23 +77,19 @@
       .toilet-parameterctl-raddata{
         font-size: $font-size-bigger;
         color: $color-base;
-        white-space: nowrap;
       }
       .toilet-parameterctl-des{
-       // display: block;
-        //margin-top: 0.15rem;
-        font-size: 0.5rem;
-        white-space: nowrap;
+        display: block;
+        margin-top: 0.15rem;
+        font-size: 0.30rem;
         color: white;
-       position: relative;
-        right:0rem
       }
     }
   }
   .toilet-handlenape-selec{
     position: absolute;
-    top: 5.9rem;
-    z-index: 0;
+    top: 6.86rem;
+    z-index: 10;
     width: 100%;
     height: 1.08rem;
     line-height: 1.08rem;
@@ -112,28 +100,23 @@
       color: $color-base;
     }
     .handlenape-selec-use{
-      //margin-left: 3rem;
+      margin-left: 4.34rem;
       color: $global-border;
-      white-space: nowrap;
-
     }
     .handlenape-selec-img{
-     // display: inline-block;
-      position:relative;
-
+      display: inline-block;
       width: 0.193rem;
       height: 0.308rem;
-      //right: 0rem;
-      left:0.2rem;
+      right: 0.607rem;
     }
   }
   .toilet-handlenape{
     position: absolute;
-    top: 6.68rem;
+    top: 7.54rem;
     width: 96%;
     margin-left: 2%;
     margin-right: 2%;
-    height: 6.86rem;
+    height: 9.5rem;
     .napes-border{
       border:0.03rem solid $global-border;
       border-radius: 0.08rem;
@@ -151,17 +134,22 @@
         height: 0.6rem;
       }
       .list-napes-dec{
-      //  position: absolute;
-       // top: 0.35rem;
-       // left: 0.65rem;
+        position: absolute;
+        top: 0.35rem;
+        left: 0.5rem;
         font-size: $font-size-small;
         color: white;
-        position: relative;
-        bottom: 1rem;
       }
     }
     .toilet-handlenape-list:last-child .handlenape-list-napes{
-      margin-bottom: 2.3rem;
+      margin-bottom: 2.8rem;
+      //margin-bottom: 2.8rem;
     }
+  }
+  .temperate{
+    position: absolute;
+    float: left;
+    margin-top: 3.8rem;
+    left: 2rem;
   }
 }

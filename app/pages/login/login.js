@@ -28,6 +28,8 @@ angular.module('loginModule')
               hmsPopup,
               $rootScope, publicMethod) {
 
+      localStorage.boxLinkCount = 1;
+
       //将页面的导航bar设置成白色
       $ionicPlatform.ready(function () {
         if (window.StatusBar) {
@@ -196,8 +198,9 @@ angular.module('loginModule')
       }
 
       $scope.login = function () {//登录功能
-        $state.go('tabs');
-        return;
+        // $state.go('tabs');
+        // return;
+
         if (window.localStorage.empno != $scope.loginInfo.username) {
           localStorage.removeItem('key_history1');
           localStorage.removeItem('common_linkman2');
@@ -234,6 +237,7 @@ angular.module('loginModule')
 
             if (result.access_token && result.access_token != '') {
               window.localStorage.token = result.access_token;
+              console.log("window.localStorage.token: "+window.localStorage.token);
               window.localStorage.empno = $scope.loginInfo.username;
               window.localStorage.checkboxSavePwd = $scope.rememberPassword;
               $state.go('tabs');
