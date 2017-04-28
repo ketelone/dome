@@ -227,8 +227,23 @@ angular.module('indexPageModule')
           isStatus: true,
           isError: true,
           sku: "E8:91:E0:DC:20:F1"
+        },
+        {
+          id: "8",
+          pictureUrl: "build/img/index/img_home_device_chushuifa.png",
+          deviceType: "airfoil-shower",
+          deviceStatus: "设备离线",
+          deviceDesc: "",
+          statusPictureUrl: "build/img/index/icon_home_device_no_singal.png",
+          errorPictureUrl: "build/img/index/icon_home_device_warnning.png",
+          isStatus: true,
+          isError: true,
+          sku: ""
         }
       ];
+
+      $scope.temperature = "20";
+      $scope.humidity = "30";
 
       $scope.boxList = [];
 
@@ -247,7 +262,8 @@ angular.module('indexPageModule')
         };
         hmsHttp.post(url, paramter).success(
           function(response){
-            console.log("="+response.results[0].now.text);
+            $scope.temperature = response.results[0].now.temperature;
+            $scope.humidity = response.results[0].now.humidity;
             alert(JSON.stringify(response));
           }
         ).error(
@@ -258,7 +274,7 @@ angular.module('indexPageModule')
       };
 
       $scope.$watch('', function(){
-        //test();
+        test();
         if(localStorage.boxLinkCount == 1){
           searchBox();
           localStorage.boxLinkCount = 2;
@@ -485,8 +501,11 @@ angular.module('indexPageModule')
         }
         if(item.deviceType == "nextgen"){
           $state.go('nextgen');
-
         }
+          if(item.deviceType == "airfoil-shower"){
+            $state.go('airfoilShower');
+          }
+
       };
 
       $scope.addModule = function(){

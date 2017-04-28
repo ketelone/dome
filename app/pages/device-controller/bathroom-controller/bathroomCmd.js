@@ -32,13 +32,13 @@
               var operate = ackStr.substring(0,4);
               code = {'ack':operate};
             }else if(ack == 'fd'){
-              //invalid ack
+              //invalid ack package error
               code = {'ack':'1003'};
             }else if (ack =='fc'){
-              //invalid ack
+              //invalid ack   data error
               code = {'ack':'1002'};
             }else if (ack == 'fb'){
-              //invalid ack
+              //invalid ack mcd refuse
               code = {'ack':'1001'};
             }else if (ack == '8a'){
               code = explainLightingStatus(ackStr);
@@ -243,6 +243,23 @@
               //冷干
               data = data + '05' + arg.time_hour +arg.time_min;
             }
+          }
+          return data;
+        }
+
+        /*5.设置Heater参数 ——————————————————————TEMP设置暂不作用，温度由Bathroom Heater自行控制。 cmd+mode+temp
+         {
+         "operate":"SET_HEATER_PARA",
+         "temperature":"00~40",
+         "mode":"NORMAL/SWING"
+         }*/
+
+        function setHeaterPara(arg){
+          var data = '03';
+          if (arg.mode == 'NORMAL'){
+            data = data + '00';
+          }else if (arg.mode =='SWING'){
+            data = data + '01';
           }
           return data;
         }

@@ -107,7 +107,11 @@
   },
   "index": {
     "myHome": "我家",
-    "humidity": "湿度"
+    "humidity": "湿度",
+    "myModel": "我的场景",
+    "addModel": "添加场景",
+    "myDevice": "我的设备",
+    "addDevice": "添加设备"
   },
   "bigaunt": {
     "bigauntTitle": "场景详情"

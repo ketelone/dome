@@ -12,6 +12,7 @@ angular.module('airfoilShowerModule')
     'airfoilShowerService',
     '$timeout',
     '$stateParams',
+    'hmsHttp',
     function ($scope,
               $state,
               $ionicSlideBoxDelegate,
@@ -23,7 +24,8 @@ angular.module('airfoilShowerModule')
               checkVersionService,
               airfoilShowerService,
               $timeout,
-              $stateParams
+              $stateParams,
+              hmsHttp
     ) {
       $scope.goBack = function () {
         publicMethod.goBack();
@@ -609,8 +611,8 @@ angular.module('airfoilShowerModule')
       };
 
       $scope.$watch('',function(){
-        getCurrentSignalStatus();
-        getCurrentTemperate();
+        //getCurrentSignalStatus();
+        //getCurrentTemperate();
       },true);
 
       /**
@@ -705,7 +707,12 @@ angular.module('airfoilShowerModule')
 
         var data = airfoilShowerService.setShowerPara(argment);
         var value = getCmdValue(data);
-        sendCmd(value,"出水成功","出水失败");
+        if(baseConfig.isCloudCtrl){
+          sendCmd("airfoilWaterTurnOn",value,"出水成功","出水失败");
+        }else{
+          var deviceId = getDeviceId();
+          sendCmd(value,"出水成功","出水失败");
+        }
       };
 
       /**
@@ -718,7 +725,12 @@ angular.module('airfoilShowerModule')
         };
         var data = airfoilShowerService.operateShower(argment);
         var value = getCmdValue(data);
-        sendCmd(value,"关闭成功","关闭失败");
+        if(baseConfig.isCloudCtrl){
+          sendCmd("airfoilWaterTurnOff", value,"关闭","关闭失败");
+        }else{
+          var deviceId = getDeviceId();
+          sendCmd(deviceId, value,"关闭","关闭失败");
+        }
       };
 
       /**
@@ -728,16 +740,20 @@ angular.module('airfoilShowerModule')
       var closeFunction = function(){
         var data = airfoilShowerService.stopAll();
         var value = getCmdValue(data);
-        sendCmd(value,"关闭","关闭失败");
+        if(baseConfig.isCloudCtrl){
+          sendCmd("closeAllFunction", value,"关闭","关闭失败");
+        }else{
+          var deviceId = getDeviceId();
+          sendCmd(deviceId, value,"关闭","关闭失败");
+        }
       };
 
-      var sendCmd = function(value, successMsg, errorMsg){
-        var deviceId = getDeviceId();
-        //checkCurrentLinkType();
-
-        pluginToCtrl(deviceId, value, successMsg, errorMsg);
-
-        //cloudToCtrl(deviceId, value, successMsg, errorMsg);
+      var sendCmd = function(deviceId, value, successMsg, errorMsg){
+        if(baseConfig.isCloudCtrl){
+          cloudToCtrl(deviceId, value, successMsg, errorMsg);
+        }else{
+          pluginToCtrl(deviceId, value, successMsg, errorMsg);
+        }
 
       };
 
@@ -757,34 +773,61 @@ angular.module('airfoilShowerModule')
       };
 
       var cloudToCtrl = function(deviceId, value, successMsg, errorMsg){
-         /*var url = baseConfig.basePath + "/message/sendMessage";
-         var paramter = {
-         "ver":1,
-         "from":{
-         "ctype":240,
-         "uid":"18611111111"
-         },
-         "to":{
-         "ctype":229,
-         "uid":"11E7BC66"
-         },
-         "ts":1493013672695,
-         "idx":1,
-         "mtype":"ctl",
-         "data":{
-         "cmd":["88772A0001F0E5310326"]
-         }
-         };
-         hmsHttp.post(url, paramter).success(
-         function(response){
-         //console.log(response.rows[0]);
-         hmsPopup.showShortCenterToast(successMsg);
-         }
-         ).error(
-         function (response, status, header, config){
-         hmsPopup.showShortCenterToast(errorMsg);
-         }
-         );*/
+        alert("deviceId: "+deviceId);
+        var url = baseConfig.basePath + "/r/api/message/sendMessage";
+        var paramter = {
+          "ver":1,
+          "from":{
+            "ctype":240,
+            "uid": deviceId
+          },
+          "to":{
+            "ctype":229,
+            "uid":"hand-residential"
+          },
+          "ts":1493013672695,
+          "idx":1,
+          "mtype":"ctl",
+          "data":{
+            "cmd":[value]
+          }
+        };
+        hmsHttp.post(url, paramter).success(
+
+          function(response){
+            alert(JSON.stringify(response));
+            if(response.code == 200){
+              alert("in--");
+              var value = airfoilShowerService.explainAck(response.data.data.cmd[0]);
+
+              if(value.ack.toLowerCase() == "fa21"){
+                angular.forEach($scope.handlenapeListNape, function(data, index, array){
+                  if(data.matchdataid == 'water'){
+                    data.selecFlag = true;
+                    data.imgUrl = data.imgSeledUrl;
+                    alert("water success");
+                  }
+                });
+              }else if(value.ack.toLowerCase() == "fa00"){
+                angular.forEach($scope.handlenapeListNape, function(data, index, array){
+                  if(data.matchdataid == 'clear'){
+                    alert("stop success");
+                    $timeout(function () {
+                      data.selecFlag = true;
+                      data.imgUrl = data.imgSeledUrl;
+                    }, 1000);
+                  }
+                });
+              }
+            }else{
+              alert("fail");
+            }
+          }
+        ).error(
+          function (response, status, header, config){
+            hmsPopup.showShortCenterToast("");
+          }
+        );
       };
 
       var checkCurrentLinkType = function(){

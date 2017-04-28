@@ -6,7 +6,10 @@ $applicationColor: white !default;
      height: 2.5rem;
    }
   .scroll{
-    height: 8.2rem;
+    height: 9.2rem;
+  }
+  .scroll-content{
+    top: 3.7rem;
   }
   .application-header{
     width: 100vw;
@@ -758,6 +761,7 @@ $applicationColor: white !default;
     height: 1rem;
     margin-top: 0.5rem;
     padding-top: 0.2rem;
+    margin-left: 1.25rem;
     border: 0.02rem dashed gray;
   }
   .add-font{

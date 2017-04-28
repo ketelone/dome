@@ -9,7 +9,8 @@ angular.module('airfoilShowerModule')
           setShowerPara: setShowerPara,
           explainAck: explainAck,
           operateShower: operateShower,
-          getWaterTemperature: getWaterTemperature
+          getWaterTemperature: getWaterTemperature,
+          stopAll: stopAll
         };
 
         return service;
