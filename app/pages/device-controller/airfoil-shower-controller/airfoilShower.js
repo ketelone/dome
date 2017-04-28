@@ -1,0 +1,794 @@
+angular.module('airfoilShowerModule')
+  .controller('airfoilShowerCtrl', [
+    '$scope',
+    '$state',
+    '$ionicSlideBoxDelegate',
+    'publicMethod',
+    'hmsPopup',
+    '$ionicModal',
+    '$compile',
+    'baseConfig',
+    'checkVersionService',
+    'airfoilShowerService',
+    '$timeout',
+    '$stateParams',
+    function ($scope,
+              $state,
+              $ionicSlideBoxDelegate,
+              publicMethod,
+              hmsPopup,
+              $ionicModal,
+              $compile,
+              baseConfig,
+              checkVersionService,
+              airfoilShowerService,
+              $timeout,
+              $stateParams
+    ) {
+      $scope.goBack = function () {
+        publicMethod.goBack();
+      };
+
+      $scope.currentWaterTemperate = 0;
+
+      $scope.value = [];
+      /*
+       cehuashuliangdangshu-json
+       侧滑转档数量json
+       */
+      /**
+       moren-json
+       init默认
+       **/
+      $scope.slideInitData =[{
+        des: "init",
+        gearNum: 1,
+        gearInit: 1,
+        gearInitTemp: 1,
+        parameterctlFlag: true,
+        parNodeid: 'toilet-initCtl',
+        canves01: "initcanves01",
+        canves02: "initcanves02",
+        canves03: "initcanves03"
+      }]
+      /*
+       nuanjiao-json
+       暖脚
+       */
+      $scope.slideNuanjioaData =[{
+        des: "风力档位",
+        gearNum: 9,
+        gearInit: 1,
+        gearInitTemp: 1,
+        parameterctlFlag: false,
+        parNodeid: 'toilet-NuanjioaFlCtl',
+        canves01: "NuanjioaFlcanves01",
+        canves02: "NuanjioaFlcanves02",
+        canves03: "NuanjioaFlcanves03"
+      }]
+
+      $scope.slideWaterData =
+        [{
+        des: "水温",
+        gearNum: 19,
+        gearInit: 1,
+        gearInitTemp: 1,
+        currentTemp: 30,
+        parameterctlFlag: false,
+        parNodeid: 'toilet-NvYongSyCtl',
+        canves01: "NvYongSycanves01",
+        canves02: "NvYongSycanves02",
+        canves03: "NvYongSycanves03",
+        open:'887709010001012332000010',
+        close:'887709010001011332000020',
+        directive:{
+          init:'887709010001014432000077',
+          1:'887709010001014232000071',
+          2:'887709010001014432000077',
+          3:'887709010001014632000075',
+          4:'88770901000101483200007B',
+          5:'887709010001014a32000079'
+        }
+      }];
+
+      /*
+       nuanjiao-json
+       暖角
+       */
+      $scope.slidewarmjData =[{
+        des: "风力档位",
+        gearNum: 9,
+        gearInit: 1,
+        gearInitTemp: 1,
+        parameterctlFlag: false,
+        parNodeid: 'toilet-warmjCtl',
+        canves01: "warmjcanves01",
+        canves02: "warmjcanves02",
+        canves03: "warmjcanves03",
+        open:'887709010001032302000022',
+        close:'887709020001031302000011',
+        directive:{
+          // init:'88770908000103440200004C',
+          // 1:'887709070001034202000045',
+          // 2:'887709060001034402000042',
+          // 3:'887709050001034602000043',
+          // 4:'88770904000103480200004C',
+          // 5:'887709030001034a02000049',
+        }
+      }];
+      /*
+       quanwen-json
+       圈温
+       */
+      $scope.slidequanwenData =[{
+        des: "温度档位",
+        gearNum: 5,
+        gearInit: 1,
+        gearInitTemp: 1,
+        parameterctlFlag: false,
+        parNodeid: 'toilet-quanwenCtl',
+        canves01: "quanwencanves01",
+        canves02: "quanwencanves02",
+        canves03: "quanwencanves03",
+        open:'887709010001032302000022',
+        close:'887709020001031302000011',
+        directive:{
+          // init:'88770908000103440200004C',
+          // 1:'887709070001034202000045',
+          // 2:'887709060001034402000042',
+          // 3:'887709050001034602000043',
+          // 4:'88770904000103480200004C',
+          // 5:'887709030001034a02000049',
+        }
+      }]
+      /**
+       gongnenglist-json
+       功能列表数据
+       **/
+      $scope.handlenapeListNape = [
+        {
+          imgUrl: "build/img/airfoil-shower/water_nor.png",
+          imgSeledUrl: "build/img/airfoil-shower/water.png",
+          imgUrlTemp:"build/img/airfoil-shower/water_nor.png",
+          handleDes: "airfoidShower.getWater",
+          selecFlag:false,
+          matchdataid:"water",
+          isManyDirective:true,
+          opendirective:"887709010001012332000010",
+          closedirective:"887709010001011332000020",
+          handleInitdata:$scope.slideInitData,
+          handledata:$scope.slideWaterData
+        },
+        {
+          imgUrl: "build/img/airfoil-shower/stop_nor.png",
+          imgSeledUrl: "build/img/airfoil-shower/stop.png",
+          imgUrlTemp:"build/img/airfoil-shower/stop_nor.png",
+          handleDes: "airfoidShower.allStop",
+          matchdataid:"clear",
+          isManyDirective:false,
+          selecFlag:false,
+          handledata:$scope.slideInitData
+        },
+        {
+          imgUrl: "build/img/airfoil-shower/setting_nor.png",
+          imgSeledUrl: "build/img/airfoil-shower/setting.png",
+          imgUrlTemp:"build/img/airfoil-shower/setting_nor.png",
+          handleDes: "airfoidShower.setting",
+          matchdataid:12,
+          selecFlag:false
+        }
+      ];
+      /**
+       *
+       set dang qian ce hau shu ju zhi
+       设置当前侧滑数据为侧滑初始化数据
+       */
+      //$scope.currentSlideData = $scope.slideInitData;
+      $scope.currentSlideData = $scope.slideWaterData;
+      /**
+       init dang qian mo ban shu ju
+       初始化当前模板数据
+       */
+      $scope.lockSlide = function () {
+        $ionicSlideBoxDelegate.enableSlide( false );
+      };
+      $scope.initHtmlTemplate = function (currentSlideData) {
+        /**
+         init silde-box data
+         初始化slide-box数据
+         */
+        if($('#ionSliderBox').children().length !== 0){
+          $('#ionSliderBox').empty();
+        };
+        // on-slide-changed='slideHasChanged($index)'>
+        var checHtml =
+          "<div ng-init='lockSlide()' does-continue = 'true' ng-click='nextSlide($index)'>"+
+          "<div ng-repeat='list in currentSlideData track by $index'>"+
+          "<div id={{list.parNodeid}} class='toilet-parameterctl'>"+
+          "<canvas id={{list.canves01}} class='canves-pos'></canvas>"+
+          "<canvas id={{list.canves02}} class='canves-pos'></canvas>"+
+          "<canvas id={{list.canves03}} class='canves-pos'></canvas>"+
+          "<canvas id={{list.canves04}} class='canves-pos'></canvas>"+
+          "<div class='toilet-parameterctl-data' ng-if='!list.parameterctlFlag'>"+
+          "<span class='toilet-parameterctl-raddata' ng-bind='list.currentTemp'></span>"+
+          "<span class='toilet-parameterctl-des' ng-bind='list.des'></span>"+
+          "<span class='toilet-parameterctl-des' ng-bind='list.gearInit + 29'></span>"+
+          "</div>"+
+          //"<div class='toilet-parameterctl-dataimg' ng-if='!list.parameterctlFlag'>"+
+          //"<img class='conninfo-parameterctl-img' ng-src='build/img/toilet-controller/btn_devicedetail_scoll.png' alt=''>"+
+          //"</div>"+
+          "</div>"+
+          "</div>"+
+          "</div>"
+        /**
+         bian yi html 数据
+         编译html数据
+         */
+        var $checkhtml = $compile(checHtml)($scope); // 编译
+        $('#ionSliderBox').append($checkhtml[0])
+      };
+
+      $scope.$watch('currentSlideData', function(){
+
+      }, false);
+
+      $scope.initHtmlTemplate($scope.currentSlideData);
+      /**
+       *@autor:gongke
+       *@name:
+       *@params:
+       *@disc:goback
+       */
+      var initCircle = function (slideDataObj) {
+        //获取父元素高度
+        this.canvsscreenHeight = document.getElementById(slideDataObj.parNodeid).offsetHeight;
+        this.canvsscreenWidth = document.getElementById(slideDataObj.parNodeid).offsetWidth;
+        this.rateInit = document.documentElement.clientWidth / 7.5;
+
+        // 设置每个canves的宽高
+        document.getElementById(slideDataObj.canves01).height = this.canvsscreenHeight;
+        document.getElementById(slideDataObj.canves01).width = this.canvsscreenWidth;
+        document.getElementById(slideDataObj.canves01).style.zIndex = 1;
+
+        document.getElementById(slideDataObj.canves02).height = this.canvsscreenHeight;
+        document.getElementById(slideDataObj.canves02).width = this.canvsscreenWidth;
+        document.getElementById(slideDataObj.canves02).style.zIndex = 3;
+
+        document.getElementById(slideDataObj.canves03).height = this.canvsscreenHeight;
+        document.getElementById(slideDataObj.canves03).width = this.canvsscreenWidth;
+        document.getElementById(slideDataObj.canves03).style.zIndex = 2;
+        this.cr1 = getCanvesObj(slideDataObj.canves01);
+        this.cr2 = getCanvesObj(slideDataObj.canves02);
+        this.cr3 = getCanvesObj(slideDataObj.canves03);
+        this.deliverCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2,color:"#2F3538"};
+        this.HideCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2-0.4*this.rateInit,color:"black"};
+        this.deliverLine = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2,color:"black"};
+        this.rollCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2-0.2*this.rateInit,color:"white"};
+        this.FillCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2,color:"#6ACBB3"};
+        this.i=0;this.j=0;
+        this.stoPosPoint=0;
+        this.starRad=135;
+        this.radSectionArr=[];
+        this.radRange;
+        this.drawDeliverCircle = function (n) {
+          this.radRange = (270-(n-1))/n;
+          this.radSectionArr.push(this.starRad);
+          var tempstrAngle = this.starRad;
+          for(var k=1;k<=n;k++){
+            drawRadian(this.cr1,this.deliverCircle,tempstrAngle,tempstrAngle+this.radRange);
+            tempstrAngle = tempstrAngle+this.radRange+1;
+            this.radSectionArr.push(tempstrAngle);
+          };
+          drawRadian(this.cr1,this.HideCircle,0,360);
+          // drawRadian(this.cr4,this.bimianCircle,0,360);
+        };
+        this.drawCircleFill = function (canvesobj,changeRad) {
+          canvesobj.clearRect(0,0,this.canvsscreenHeight,this.canvsscreenWidth);
+          drawRadian(canvesobj,this.FillCircle,this.starRad,changeRad);
+          if(changeRad<0){
+            var changeRadTemp = Math.abs(changeRad+360);
+          }else{
+            if(changeRad>=0 && changeRad<=45){
+              var changeRadTemp = Math.abs(changeRad+360);
+            }else{
+              var changeRadTemp = Math.abs(changeRad);
+            };
+          };
+          this.radSectionArr.push(changeRadTemp);
+          this.radSectionArr = this.radSectionArr.sort(function(a,b){
+            return a-b});
+          var radSectionArrLen = this.radSectionArr.length;
+          this.i=0;this.i=1;
+          for(this.i;this.i<radSectionArrLen;this.i++){
+            if(changeRadTemp === this.radSectionArr[this.i]){
+              if(Math.abs(this.radSectionArr[this.i]-this.radSectionArr[this.i-1]) < Math.abs(this.radSectionArr[this.i]-this.radSectionArr[this.i+1])){
+                this.stoPosPoint = this.i-1;
+                if(this.i<=1){
+                  slideDataObj.gearInit = 1;
+                }else{
+                  slideDataObj.gearInit = this.i;
+                };
+                $scope.$apply();
+                this.j=1;
+                for(this.j;this.j<this.i;this.j++){
+                  drawRadian(this.cr3,this.deliverLine,this.radSectionArr[this.i-this.j-1]-1,this.radSectionArr[this.i-this.j-1]);
+                };
+              }else{
+                this.stoPosPoint = this.i;
+                slideDataObj.gearInit = this.i+1;
+                $scope.$apply();
+                this.j=1;
+                for(this.j;this.j<this.i+1;this.j++){
+                  drawRadian(this.cr3,this.deliverLine,this.radSectionArr[this.i-this.j]-1,this.radSectionArr[this.i-this.j]);
+                };
+              };
+              this.radSectionArr.splice(this.i,1);
+            }
+          };
+          //画白色遮挡
+          drawRadian(canvesobj,this.HideCircle,0,360);
+        };
+        //画圆球和指示
+        this.drawc = function (canvesobj,ancr,type) {
+          if(135<=ancr || ancr<=45){
+            var jd =  changeAngale(ancr);
+            canvesobj.clearRect(0,0,this.canvsscreenHeight,this.canvsscreenWidth);
+            var x = Math.cos(jd)*(this.rollCircle.r)+(this.rollCircle.x);
+            var y = Math.sin(jd)*(this.rollCircle.r)+(this.rollCircle.y);
+            //画小球
+            canvesobj.beginPath();
+            canvesobj.fillStyle = this.rollCircle.color;
+            canvesobj.moveTo(x,y);
+            canvesobj.arc(x,y,0.2*this.rateInit,0,Math.PI*2,false);
+            canvesobj.fill();
+            canvesobj.closePath();
+            //画小球中的指示标识
+            canvesobj.beginPath();
+            canvesobj.fillStyle = "#191C23";
+            canvesobj.lineWidth = 0.01*this.rateInit;//设置线宽
+            canvesobj.moveTo(x,y-(0.2*this.rateInit/4));
+            canvesobj.lineTo(x-(0.2*this.rateInit/4)/Math.sqrt(2)-0.01*this.rateInit,y);
+            canvesobj.lineTo(x,y+(0.2*this.rateInit/4));
+            canvesobj.fill();//填充颜色
+            canvesobj.moveTo(x+0.01*this.rateInit,y-(0.2*this.rateInit/4));
+            canvesobj.lineTo(x+(0.2*this.rateInit/4)/Math.sqrt(2)+0.02*this.rateInit,y);
+            canvesobj.lineTo(x+0.01*this.rateInit,y+(0.2*this.rateInit/4));
+            canvesobj.stroke();//画线框
+            canvesobj.fill();//填充颜色
+            canvesobj.closePath();
+            //随小球和指示画fil填充
+            if(!type){
+              this.drawCircleFill(this.cr3,ancr)
+            }
+          };
+        };
+      };
+
+      var currentRadObj;
+      setTimeout(function () {
+        $scope.handleRadSelected;
+        $scope.getCurrentObj = function (index) {
+          $scope.handleRadSelected = index;
+          currentRadObj = new initCircle($scope.currentSlideData[index]);
+          currentRadObj.i=0;
+          currentRadObj.j=0;
+          currentRadObj.stoPosPoint=0;
+          currentRadObj.gearInit = $scope.currentSlideData[index].gearInitTemp;
+          $scope.currentSlideData[index].gearInit = $scope.currentSlideData[index].gearInitTemp;
+          var currentEventObj = getIdObj($scope.currentSlideData[index].canves02);
+          currentRadObj.drawDeliverCircle($scope.currentSlideData[index].gearNum);
+
+          if($scope.currentSlideData[index].des === "init"){
+            currentRadObj.drawc(currentRadObj.cr2,405,"type");
+            currentRadObj.drawCircleFill(currentRadObj.cr2,405);
+            //初始化数据
+            $('.slider-pager').empty();
+          }else{
+            currentRadObj.drawc(currentRadObj.cr2,currentRadObj.starRad,"type");
+            currentEventObj.addEventListener( 'touchstart', function( e ){
+              e.preventDefault();
+              var poi = getEvtLocation(e);
+              bginX = poi.x;
+              bginY = poi.y;
+            }, false );
+            currentEventObj.addEventListener( 'touchmove', function( e ){
+              e.preventDefault();
+              var poi = getEvtLocation(e);
+              currentRadObj.drawc(currentRadObj.cr2,getAngle(currentRadObj.canvsscreenHeight,currentRadObj.canvsscreenWidth,poi.x,poi.y));
+            }, false );
+            currentEventObj.addEventListener( 'touchend', function( e ){
+              e.preventDefault();
+              currentRadObj.drawc(currentRadObj.cr2,currentRadObj.radSectionArr[currentRadObj.stoPosPoint]);
+              $scope.radScrollSendDir();
+            }, false );
+            var getEvtLocation = function(e){
+              var touch = e.touches[0];
+              return{
+                x : touch.clientX,
+                y : touch.clientY
+              }
+            };
+          };
+        };
+        $scope.getCurrentObj(0);
+        $scope.nextSlide = function() {
+          var sliderLenght = document.querySelectorAll('ion-slide').length;
+          if(sliderLenght !== 1){
+            //$ionicSlideBoxDelegate.next();
+            //$scope.getCurrentObj($ionicSlideBoxDelegate.currentIndex());
+          }
+        };
+      },20);
+      //发送指令
+      var cmd = {
+        from: {
+          cid: "0xE3",
+        },
+        idx: 1,
+        method: "CTL",
+        payload: {
+          cmd: "CMD_REQUEST",
+          "device_type": "BLE_DEVICE",
+          value: [],
+        },
+        to: {
+          cid: "0xE4",
+          "device_id": "8BE850C2",
+        },
+        ts: "1492146861.217451",
+        ver: 1
+      };
+      $scope.sendCmd = function (cmdvalue,des) {
+        cmd.payload.value =[];
+        cmd.payload.value.push(cmdvalue);
+        alert(angular.toJson(cmd));
+        cordova.plugins.SocketPlugin.tcpSendCmd({
+          "timeout": "5000",
+          "value": cmd
+        }, success, error);
+        function success(response) {
+          hmsPopup.showShortCenterToast(des+" "+"success");
+        };
+        function error() {
+          hmsPopup.showShortCenterToast(des+" "+"error");
+        }
+      };
+
+
+
+      //保存选择的数据项
+      $scope.handleRadSelected;
+      $scope.handlenapeSelectedIndex;
+      //档位滑动执行发指令操作
+      var count = 1;
+
+      $scope.radScrollSendDir = function () {
+
+        if($scope.handlenapeListNape[0].selecFlag){
+          if($scope.handlenapeListNape[$scope.handlenapeSelectedIndex].isManyDirective && (count%2 == 1)){
+            var selectRad = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].gearInit;
+            var dirinfo = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].directive[selectRad];
+            var diedes = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].des;
+            var cmdvalue = dirinfo;
+            var temperate = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].gearInit + 29;
+            getWater(temperate.toString(16));
+          }
+          count = count + 1;
+        }
+      };
+      //处理选择怎加border
+      var handlenapeListNapeLen = $scope.handlenapeListNape.length;
+      $scope.selectNapes = function (index) {
+        $scope.handlenapeSelectedIndex = index;
+        if($scope.handlenapeListNape[index].matchdataid === 12){
+          $state.go("airfoilShowerSetting");
+        }else {
+          $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
+          for(var i=0;i<handlenapeListNapeLen;i++){
+            if(i !== index){
+              $scope.handlenapeListNape[i].selecFlag = false;
+            }
+          }
+          if($scope.handlenapeListNape[index].selecFlag === true){
+            $scope.handlenapeListNape[index].selecFlag = false;
+            //$scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgSeledUrl;
+            for(var i=0;i<handlenapeListNapeLen;i++){
+              if(i !== index){
+                $scope.handlenapeListNape[i].imgUrl = $scope.handlenapeListNape[i].imgUrlTemp;
+              }
+            }
+          }else{
+            $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgUrlTemp;
+          };
+          // 根据选择项来初始化选择项的
+          if($scope.handlenapeListNape[index].handledata){
+            //$scope.currentSlideData = $scope.handlenapeListNape[index].handledata;
+            //$scope.initHtmlTemplate($scope.currentSlideData);
+            setTimeout(function () {
+              $scope.getCurrentObj(0);
+              if($scope.handlenapeListNape[index].matchdataid === "water"){
+                getWater();
+              }
+              if($scope.handlenapeListNape[index].matchdataid === "clear"){
+                closeFunction();
+                $timeout(function () {
+                  $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgUrlTemp;
+                  $scope.handlenapeListNape[index].selecFlag = false;
+                }, 1000);
+              }else{
+                if($scope.handlenapeListNape[index])
+                  if(!$scope.handlenapeListNape[index].isManyDirective){
+                    var cmdvalue = $scope.handlenapeListNape[index].directive;
+                    var dirdes = "";
+                  }else {
+                    if($scope.handlenapeListNape[index].selecFlag){
+                      var cmdvalue = $scope.handlenapeListNape[index].handledata[0].open;
+                      var dirdes = "";
+                    }else{
+                      var cmdvalue = $scope.handlenapeListNape[index].handledata[0].close;
+                      var dirdes = "";
+
+                    }
+                  }
+              }
+            },20)
+          }
+        };
+      };
+      //模式选择
+      //获取屏幕高度
+      $scope.screenHeig = window.innerHeight;
+      $ionicModal.fromTemplateUrl('build/pages/model/hmsModal.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+      }).then(function (modal) {
+        $scope.modal = modal;
+      });
+      $scope.openModal = function () {
+        if($scope.handlenapeSelectedIndex !== undefined){
+          var permitopen = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].matchdataid;
+          if(permitopen === "water" || permitopen === "clear"){
+            $scope.modal.show();
+            setTimeout(function () {
+              var ele = document.getElementsByClassName("hmsModal");
+              if ($scope.value.length === 3) {
+                ele[0].style.top = $scope.screenHeig - 156 + 'px';
+              } else if ($scope.value.length === 4) {
+                ele[0].style.top = $scope.screenHeig - 208 + 'px';
+              } else if ($scope.value.length === 2) {
+                ele[0].style.top = $scope.screenHeig - 104 + 'px';
+              } else if ($scope.value.length === 1) {
+                ele[0].style.top = $scope.screenHeig - 52 + 'px';
+              } else if ($scope.value.length > 4) {
+                ele[0].style.top= 68 + '%';
+                ele[0].style.minHeight = 32 + '%';
+              };
+            }, 10)
+          }else{
+            hmsPopup.showShortCenterToast("此选项不能设置此功能!");
+          }
+        }else{
+          hmsPopup.showShortCenterToast("没有选择项不能使用!");
+        }
+
+      };
+      $scope.$on('$destroy', function() {
+        $scope.modal.remove();
+      });
+
+      $scope.valueTemp = "";
+      $scope.choose = function (val) {
+        for(var i=0;i<$scope.value.length;i++){
+          if($scope.value[i].id === val.id){
+            $scope.toiletController.modelType = $scope.value[i].des;
+          }
+        };
+        if($scope.handlenapeListNape[$scope.handlenapeSelectedIndex].matchdataid === "water" || $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].matchdataid === "tunxi"){
+          if(val.id !== $scope.valueTemp.id){
+            $scope.sendCmd(val.directive,"");
+          }
+          // $scope.sendCmd(val.directive,"");
+          $scope.valueTemp = val;
+        }else if($scope.handlenapeListNape[$scope.handlenapeSelectedIndex].matchdataid === "clear"){
+          if(val.id==="guanbi"){
+            if($scope.valueTemp.directiveclose){
+              // console.log("colse")
+              // console.log($scope.valueTemp.directiveclose)
+              $scope.sendCmd($scope.valueTemp.directiveclose,"")
+            }
+          }else{
+            // console.log("open")
+            // console.log(val.directiveclose)
+            $scope.sendCmd(val.directiveopen,"");
+          }
+          // if(val.id !=="guanbi"){
+          $scope.valueTemp = val;
+          // }
+        }
+        $scope.modal.hide();
+      };
+
+      $scope.$watch('',function(){
+        getCurrentSignalStatus();
+        getCurrentTemperate();
+      },true);
+
+      /**
+       *@autor: caolei
+       *@disc: get current signal status
+       */
+      var getCurrentSignalStatus = function(){
+
+      };
+
+      /**
+       *@autor: caolei
+       *@disc: get current temperate
+       */
+      var getCurrentTemperate = function(){
+        var data = airfoilShowerService.getWaterTemperature();
+        var value = getCmdValue(data);
+        sendCmd(value,"获取水温","获取水温失败");
+        //$scope.slideWaterData[0].currentTemp = 20;
+      };
+
+      document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
+        var resultOn = result;
+        if(resultOn.from.device_id != getDeviceId()){
+          return;
+        }
+        if (resultOn.payload.cmd == "CMD_RETURN") {
+          var temperteValue = airfoilShowerService.explainAck(resultOn.payload.value[0]);
+          if(temperteValue.temperature){
+            $scope.slideWaterData[0].currentTemp = parseInt(temperteValue.temperature, 16);
+          }
+
+          explainCurrentOperate(resultOn.payload.value[0]);
+
+          $scope.$apply();
+        }
+      }, false);
+
+      var explainCurrentOperate = function(value) {
+        var code = bathroomCmdService.explainAck(value);
+        if (code.ack.indexOf("fa") >= 0) {
+          angular.forEach($scope.handlenapeListNape, function(data, index, array){
+            if(data.matchdataid == 'water'){
+              data.selecFlag = true;
+              data.imgUrl = data.imgSeledUrl;
+            }
+            if(data.matchdataid == 'clear'){
+              $timeout(function () {
+                data.selecFlag = true;
+                data.imgUrl = data.imgSeledUrl;
+              }, 1000);
+            }
+
+          });
+        }
+      };
+
+      var getCmdValue = function(data){
+        return airfoilShowerService.getCmdValue("8877", "00", data, "E3", "01");
+      };
+
+      /**
+       *@autor: caolei
+       *@return: device id
+       *@disc: get device id
+       */
+      var getDeviceId = function(){
+        var deviceList = localStorage.deviceInfo.split(";");
+        for(var i = 0; i < deviceList.length; i ++){
+          var deviceInfo = deviceList[i].split(",");
+          if(deviceInfo[0] == $stateParams.deviceSku){
+            return deviceInfo[1];
+          }
+        }
+      };
+
+      /**
+       *@autor: caolei
+       *@disc: open water function
+       */
+      var getWater = function(temperature){
+        var argment =  {
+          'temperature':'1E',
+          'out':'SP'
+        };
+        if(temperature){
+          argment =  {
+            'temperature':'temperature',
+            'out':'SP'
+          };
+        }
+
+        var data = airfoilShowerService.setShowerPara(argment);
+        var value = getCmdValue(data);
+        sendCmd(value,"出水成功","出水失败");
+      };
+
+      /**
+       *@autor: caolei
+       *@disc: close water function
+       */
+      var closeWater = function(){
+        var argment = {
+          'mode':'00'
+        };
+        var data = airfoilShowerService.operateShower(argment);
+        var value = getCmdValue(data);
+        sendCmd(value,"关闭成功","关闭失败");
+      };
+
+      /**
+       *@autor: caolei
+       *@disc: close all function
+       */
+      var closeFunction = function(){
+        var data = airfoilShowerService.stopAll();
+        var value = getCmdValue(data);
+        sendCmd(value,"关闭","关闭失败");
+      };
+
+      var sendCmd = function(value, successMsg, errorMsg){
+        var deviceId = getDeviceId();
+        //checkCurrentLinkType();
+
+        pluginToCtrl(deviceId, value, successMsg, errorMsg);
+
+        //cloudToCtrl(deviceId, value, successMsg, errorMsg);
+
+      };
+
+      var pluginToCtrl = function(deviceId, value, successMsg, errorMsg){
+        var cmd = airfoilShowerService.getCmdJsonStr(value, deviceId);
+        cordova.plugins.SocketPlugin.tcpSendCmd({
+          "timeout": "2000",
+          "value": cmd ,
+          "ip": localStorage.boxIp
+        }, success, error);
+        function success(response) {
+          hmsPopup.showShortCenterToast(successMsg);
+        }
+        function error() {
+          hmsPopup.showShortCenterToast(errorMsg);
+        }
+      };
+
+      var cloudToCtrl = function(deviceId, value, successMsg, errorMsg){
+         /*var url = baseConfig.basePath + "/message/sendMessage";
+         var paramter = {
+         "ver":1,
+         "from":{
+         "ctype":240,
+         "uid":"18611111111"
+         },
+         "to":{
+         "ctype":229,
+         "uid":"11E7BC66"
+         },
+         "ts":1493013672695,
+         "idx":1,
+         "mtype":"ctl",
+         "data":{
+         "cmd":["88772A0001F0E5310326"]
+         }
+         };
+         hmsHttp.post(url, paramter).success(
+         function(response){
+         //console.log(response.rows[0]);
+         hmsPopup.showShortCenterToast(successMsg);
+         }
+         ).error(
+         function (response, status, header, config){
+         hmsPopup.showShortCenterToast(errorMsg);
+         }
+         );*/
+      };
+
+      var checkCurrentLinkType = function(){
+
+      };
+
+    }]);

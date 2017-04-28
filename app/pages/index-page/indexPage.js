@@ -15,6 +15,7 @@ angular.module('indexPageModule')
     '$ionicHistory',
     'hmsPopup',
     'SettingsService',
+    'hmsHttp',
     function ($scope,
               $state,
               $ionicGesture,
@@ -24,7 +25,8 @@ angular.module('indexPageModule')
               $http,
               $ionicHistory,
               hmsPopup,
-              SettingsService) {
+              SettingsService,
+              hmsHttp) {
 
       $scope.isSceneModel = true;
       $scope.isDeviceModel = false;
@@ -230,25 +232,38 @@ angular.module('indexPageModule')
 
       $scope.boxList = [];
 
-      $scope.$watch('', function(){
-        //localStorage.deviceInfo = ";r,1";
-
-        //hmsPopup.showLoading();
+      $scope.linkBox = function(){
         searchBox();
+      };
+
+      var test = function(){
+        var url = baseConfig.basePath + "/rr/api?sysName=seniverseWeather&apiName=GetWeather";
+        var paramter = {
+          "location" : "ShangHai",
+          "language" : "zh-Hans",
+          "unit" : "c",
+          "start" : "0",
+          "hours" : "24"
+        };
+        hmsHttp.post(url, paramter).success(
+          function(response){
+            console.log("="+response.results[0].now.text);
+            alert(JSON.stringify(response));
+          }
+        ).error(
+          function (response, status, header, config){
+            hmsPopup.showShortCenterToast("");
+          }
+        );
+      };
+
+      $scope.$watch('', function(){
+        //test();
+        if(localStorage.boxLinkCount == 1){
+          searchBox();
+          localStorage.boxLinkCount = 2;
+        }
       }, true);
-
-      /* $scope.$on("$stateChangeSuccess", function (event, toState, toParams, fromState, fromParam){
-
-       if(toState.name == 'tabs'){
-       searchBox();
-       if($scope.boxList.length > 0){
-       angular.forEach($scope.boxList, function(data, index, array) {
-       boxLink(data);
-       selectDeviceOn(data.payload.cmd_properties.device_id);
-       });
-       }
-       }
-       });*/
 
       document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
         //hmsPopup.showShortCenterToast("开始返回数据！");
@@ -304,7 +319,7 @@ angular.module('indexPageModule')
           }
         };
         cordova.plugins.SocketPlugin.udpBroadCast({
-          "timeout": "3000",
+          "timeout": "1500",
           "ip": "255.255.255.255",
           "value": cmd//指令json
         }, success, error);
