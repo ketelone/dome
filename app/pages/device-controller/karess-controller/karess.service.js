@@ -265,14 +265,14 @@ angular.module('karessControlModule')
         }
 
 
-        // console.log(this.requestStatus(this.data._requestStatusType.FILLER_STATUS)); //请求指令
-        // var cmd = "8877060000028A0001";
-        // console.log(JSON.stringify(this.resolveCmd(cmd)));
-        // var status = this.resolveCmd(cmd).value.status;
-        // if(status == this._data._returnCmdType.FILLER_STATUS.Start){
-        //   console.log("Start");
-        // }else if(status == this._data._returnCmdType.FILLER_STATUS.Stop){
-        //   console.log("Stop");
-        // }
+        console.log(this.requestStatus(this.data._requestStatusType.FILLER_STATUS)); //请求指令
+        var cmd = "8877060000028A0001";
+        console.log(JSON.stringify(this.resolveCmd(cmd)));
+        var status = this.resolveCmd(cmd).value.status;
+        if(status == this._data._returnCmdType.FILLER_STATUS.Start){
+          console.log("Start");
+        }else if(status == this._data._returnCmdType.FILLER_STATUS.Stop){
+          console.log("Stop");
+        }
 
       }]);

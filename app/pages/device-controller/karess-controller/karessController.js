@@ -5,13 +5,13 @@ angular.module('karessControlModule')
     '$ionicModal',
     '$compile',
     'baseConfig',
-    'checkVersionService', 'SettingsService', '$ionicHistory', '$ionicSlideBoxDelegate', 'karessService', 'hmsPopup',
+    'checkVersionService', 'SettingsService', '$ionicHistory', '$ionicSlideBoxDelegate', 'karessService', 'hmsPopup','hmsHttp',
     function ($scope,
               $state,
               $ionicModal,
               $compile,
               baseConfig,
-              checkVersionService, SettingsService, $ionicHistory, $ionicSlideBoxDelegate, karessService, hmsPopup) {
+              checkVersionService, SettingsService, $ionicHistory, $ionicSlideBoxDelegate, karessService, hmsPopup,hmsHttp) {
       var sku = SettingsService.get('sku');
       /**
        *@autor: caolei
@@ -480,8 +480,12 @@ angular.module('karessControlModule')
         if (index == 0) {
           if (info.selecFlag == false) {
             var value = karessService.getCmd("8877", 1, karessService.data.openFiller, 0, 2);
-            console.log(value);
-            sendCmd(deviceId, value, '注水开启成功！', '注水开启失败！');
+            if(baseConfig.isCloudCtrl == true){
+              test(index,value,'karessOnWater');
+            }else{
+              console.log(value);
+              sendCmd(deviceId, value, '注水开启成功！', '注水开启失败！');
+            }
           } else {
             var value = karessService.getCmd("8877", 1, karessService.data.closeFiller, 0, 2);
             console.log(value);
@@ -490,9 +494,13 @@ angular.module('karessControlModule')
         }
         if (index == 1) {
           if (info.selecFlag == false) {
-            var value = karessService.getCmd("8877", 1, karessService.data.openDrain, 0, 2);
-            console.log(value);
-            sendCmd(deviceId, value, '开启落水成功！', '开启落水失败！');
+            if(baseConfig.isCloudCtrl == true) {
+
+            }else{
+              var value = karessService.getCmd("8877", 1, karessService.data.openDrain, 0, 2);
+              console.log(value);
+              sendCmd(deviceId, value, '开启落水成功！', '开启落水失败！');
+            }
           } else {
             var value = karessService.getCmd("8877", 1, karessService.data.closeDrain, 0, 2);
             console.log(value);
@@ -564,18 +572,7 @@ angular.module('karessControlModule')
         }
 
 
-        $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
-        for (var i = 0; i < handlenapeListNapeLen; i++) {
-          if (i !== index) {
-            $scope.handlenapeListNape[i].selecFlag = false;
-          }
-          ;
-        }
-        ;
-        if ($scope.handlenapeListNape[index].selecFlag === true) {
-          $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgSeledUrl;
-        }
-        ;
+
         for (var i = 0; i < handlenapeListNapeLen; i++) {
           if (i !== index) {
             $scope.handlenapeListNape[i].imgUrl = $scope.handlenapeListNape[i].imgUrlTemp;
@@ -697,13 +694,13 @@ angular.module('karessControlModule')
       }, false);
 
 
-      var test = function () {
-        var url = baseConfig.basePath + "/r/api/messagendMessage";
+      var test = function (index,value,deviceId) {
+        var url = baseConfig.basePath + "/r/api/message/sendMessage";
         var paramter = {
           "ver": 1,
           "from": {
             "ctype": 240,
-            "uid": "13405533206"
+            "uid": deviceId
           },
           "to": {
             "ctype": 229,
@@ -713,15 +710,28 @@ angular.module('karessControlModule')
           "idx": 1,
           "mtype": "ctl",
           "data": {
-            "cmd": ["887706010005270221"]
+            "cmd": [value]
           }
         };
         hmsHttp.post(url, paramter).success(
           function (response) {
-            var value = response.data.data.cmd[0];
-            alert(JSON.stringify(response));
-            alert(value);
-            alert(JSON.stringify(bathroomCmdService.explainAck(value)));
+            if(response.code == 200){
+              console.log(index);
+              console.log(response.data.data.cmd[0]);
+              alert(response.data.data.cmd[0]);
+              $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
+              for (var i = 0; i < handlenapeListNapeLen; i++) {
+                if (i !== index) {
+                  $scope.handlenapeListNape[i].selecFlag = false;
+                }
+                ;
+              }
+              ;
+              if ($scope.handlenapeListNape[index].selecFlag === true) {
+                $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgSeledUrl;
+              }
+              ;
+            }
           }
         ).error(
           function (response, status, header, config) {
