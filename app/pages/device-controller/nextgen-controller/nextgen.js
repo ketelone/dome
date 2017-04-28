@@ -283,6 +283,14 @@ angular.module('nextgenModule')
 
            }
 
+
+
+
+
+
+
+
+
           $scope.$apply();
         }
       }, false);

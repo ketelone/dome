@@ -3,16 +3,25 @@
  */
 
 angular.module('messageModule')
-
+  .config(['$stateProvider',
+    function ($stateProvider) {
+      $stateProvider
+        .state('messageDetail', {
+          url: '/messageDetail',
+          templateUrl: 'build/pages/message/message-detail/messageDetail.html',
+          controller: 'messageDetailCtrl'
+        })
+    }
+  ])
   .controller('messageCtrl', [
     '$scope',
     '$state',
     '$timeout',
-    'publicMethod','$ionicPopup','hmsPopup','publicMethod','hmsHttp',
+    'publicMethod','$ionicPopup','hmsPopup','hmsHttp','SettingsService',
     function ($scope,
               $state,
               $timeout,
-              publicMethod,$ionicPopup,hmsPopup,publicMethod,hmsHttp) {
+              publicMethod,$ionicPopup,hmsPopup,hmsHttp,SettingsService) {
 
 
 
@@ -30,7 +39,7 @@ $scope.exceptionword='exceptionword';
 
      $scope.exceptionitems= [
         {
-          id: "1",
+          id: "200",
           exceptionMessage:"message.exceptionMessage",
           device:"message.device1",
           time:"message.time",
@@ -40,7 +49,7 @@ $scope.exceptionword='exceptionword';
           ischecked:false,
           name:"exception"
         },
-        {
+       /* {
           id: "2",
           exceptionMessage:"message.exceptionMessage",
           device:"message.device2",
@@ -61,13 +70,13 @@ $scope.exceptionword='exceptionword';
           circleUrltemp:"build/img/common/radio_q.png",
          name:"exception"
 
-        }
+        }*/
       ];
 
 
       $scope.statusitems= [
         {
-          id: "1",
+          id: "100",
           statusMessage:"message.statusMessage1",
           device:"message.device1",
           messageDel:"message.messageDel1",
@@ -78,52 +87,52 @@ $scope.exceptionword='exceptionword';
           circleUrltemp:"build/img/common/radio_q.png",
           name:"status"
         },
-        {
-          id: "2",
-          statusMessage:"message.statusMessage2",
-          device:"message.device2",
-          messageDel:"message.messageDel2",
-          time:"message.time",
-          circleUrl1:"build/img/common/radio_q.png",
-          circleUrl2:"build/img/common/radio_h.png",
-          ischecked:false,
-          circleUrltemp:"build/img/common/radio_q.png",
-          name:"status"
-        },{
-          id: "3",
-          statusMessage:"message.statusMessage1",
-          device:"message.device2",
-          messageDel:"message.messageDel1",
-          time:"message.time",
-          circleUrl1:"build/img/common/radio_q.png",
-          circleUrl2:"build/img/common/radio_h.png",
-          ischecked:false,
-          circleUrltemp:"build/img/common/radio_q.png",
-          name:"status"
-        },{
-          id: "4",
-          statusMessage:"message.statusMessage1",
-          device:"message.device1",
-          messageDel:"message.messageDel1",
-          time:"message.time",
-          circleUrl1:"build/img/common/radio_q.png",
-          circleUrl2:"build/img/common/radio_h.png",
-          ischecked:false,
-          circleUrltemp:"build/img/common/radio_q.png",
-          name:"status"
-        },
-        {
-          id: "5",
-          statusMessage:"message.statusMessage1",
-          device:"message.device1",
-          messageDel:"message.messageDel1",
-          time:"2017-02-08 17:25",
-          circleUrl1:"build/img/common/radio_q.png",
-          circleUrl2:"build/img/common/radio_h.png",
-          ischecked:false,
-          circleUrltemp:"build/img/common/radio_q.png",
-          name:"status"
-        },
+        //{
+        //  id: "2",
+        //  statusMessage:"message.statusMessage2",
+        //  device:"message.device2",
+        //  messageDel:"message.messageDel2",
+        //  time:"message.time",
+        //  circleUrl1:"build/img/common/radio_q.png",
+        //  circleUrl2:"build/img/common/radio_h.png",
+        //  ischecked:false,
+        //  circleUrltemp:"build/img/common/radio_q.png",
+        //  name:"status"
+        //},{
+        //  id: "3",
+        //  statusMessage:"message.statusMessage1",
+        //  device:"message.device2",
+        //  messageDel:"message.messageDel1",
+        //  time:"message.time",
+        //  circleUrl1:"build/img/common/radio_q.png",
+        //  circleUrl2:"build/img/common/radio_h.png",
+        //  ischecked:false,
+        //  circleUrltemp:"build/img/common/radio_q.png",
+        //  name:"status"
+        //},{
+        //  id: "4",
+        //  statusMessage:"message.statusMessage1",
+        //  device:"message.device1",
+        //  messageDel:"message.messageDel1",
+        //  time:"message.time",
+        //  circleUrl1:"build/img/common/radio_q.png",
+        //  circleUrl2:"build/img/common/radio_h.png",
+        //  ischecked:false,
+        //  circleUrltemp:"build/img/common/radio_q.png",
+        //  name:"status"
+        //},
+        //{
+        //  id: "5",
+        //  statusMessage:"message.statusMessage1",
+        //  device:"message.device1",
+        //  messageDel:"message.messageDel1",
+        //  time:"2017-02-08 17:25",
+        //  circleUrl1:"build/img/common/radio_q.png",
+        //  circleUrl2:"build/img/common/radio_h.png",
+        //  ischecked:false,
+        //  circleUrltemp:"build/img/common/radio_q.png",
+        //  name:"status"
+        //},
       ]
 
 
@@ -134,6 +143,8 @@ $scope.exceptionword='exceptionword';
        *@return:
        *@disc: Get exception information from interface
        */
+      $scope.response="";
+
       function getException(){
         var url = "https://139.219.186.43/residential/r/api/cmm/deviceException/query";
         var paramter = [
@@ -141,10 +152,40 @@ $scope.exceptionword='exceptionword';
         ];
         hmsHttp.post(url, paramter).success(
           function(response){
-            alert("success");
-            alert(response);
+           // alert("success");
+          //  alert(response);
             console.log(response);
-            // console.log(response.rows[0]);
+            console.log(response.rows[0].description);
+            $scope.response=response;
+       //异常及保修
+            var item1={
+              id: response.rows[0].exceptionId,
+              exceptionMessage:response.rows[0].description,
+              device:response.rows[0].deviceName,
+              time:response.rows[0].creationDate,
+              circleUrl1:"build/img/common/radio_q.png",
+              circleUrl2:"build/img/common/radio_h.png",
+              ischecked:false,
+              circleUrltemp:"build/img/common/radio_q.png",
+              name:"exception"
+
+            }
+            $scope.exceptionitems.unshift(item1);
+           //状态及提醒
+            var item2={
+              id: response.rows[1].exceptionId,
+              statusMessage:response.rows[1].description,
+              device:response.rows[1].deviceName,
+              time:response.rows[1].creationDate,
+              circleUrl1:"build/img/common/radio_q.png",
+              circleUrl2:"build/img/common/radio_h.png",
+              ischecked:false,
+              circleUrltemp:"build/img/common/radio_q.png",
+              name:"exception"
+
+            }
+            $scope.statusitems.unshift(item2);
+           // console.log(response.rows[0]);
             // $scope.deciveInfo.place = response.rows[0];
             //hmsPopup.showPopup("<span translate='bathroom.saveAlert'></span>");
           }
@@ -157,6 +198,31 @@ $scope.exceptionword='exceptionword';
 
       }
       getException();
+      /**
+       *@author:chenjiacheng
+       *@name:logout
+       *@params:
+       *@return:
+       *@disc:go  messageDetail list
+       */
+      $scope.goMessDetail=function(item){
+
+        SettingsService.set("exceptionId",item.id);
+        $state.go("messageDetail");
+
+      }
+/**
+       *@author:chenjiacheng
+       *@name:logout
+       *@params:
+       *@return:
+       *@disc:setClass
+       */
+$scope.hasRead=""
+function setClass(){
+
+      }
+
       /**
        *@author:chenjiacheng
        *@name:logout
@@ -230,8 +296,8 @@ hmsPopup.confirmNoTitle( "<br><br><div ><div>删除后将无法在消息记录�
        */
       $scope.onChoose=function(item){
 
-        alert("statustrue");
-        alert($scope.data.showDelete);
+        //alert("statustrue");
+      //  alert($scope.data.showDelete);
         if($scope.data.showDelete==false){
           return;
         }
@@ -330,7 +396,7 @@ if( $scope.hasStaus==true) {
 
       $scope.statusitems[i].ischecked = false;
       $scope.statusitems[i].circleUrl1 = $scope.statusitems[i].circleUrltemp;
-    }
+  }
   }
 
 }else{
