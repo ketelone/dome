@@ -91,14 +91,14 @@ NIMI.prototype._data = {
  * @constructor
  */
 NIMI.prototype.frontRearDry = function (method, temperature, volume, place, flushOptions, mSwitchType) {
-  alert(angular.toJson({
-    method:method,
-    temperature:temperature,
-    volume:volume,
-    place:place,
-    flushOptions:flushOptions,
-    mSwitchType:mSwitchType
-  }))
+  // alert(angular.toJson({
+  //   method:method,
+  //   temperature:temperature,
+  //   volume:volume,
+  //   place:place,
+  //   flushOptions:flushOptions,
+  //   mSwitchType:mSwitchType
+  // }))
   var cmd = "";
   if (config.FRONT == method) {
     cmd = "01";

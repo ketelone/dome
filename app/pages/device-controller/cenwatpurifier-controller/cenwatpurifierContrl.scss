@@ -19,26 +19,16 @@
       }
       .conninfo-signal-info{
         display: inline-block;
-        width: 1.21rem;
         font-size: $font-size-small;
         color: $color-text-value;
       }
     }
-    .toilet-conninfo-isues{
-      display: inline-block;
-      height: 0.28rem;
-      line-height: 0.28rem;
-      float: right;
-      .conninfo-isues-img{
-        width: 0.235rem;
-        margin-right:0.075rem;
-      }
-      .conninfo-isues-info{
-        display: inline-block;
-        width: 1.21rem;
-        font-size: $font-size-small;
-        color: $color-text-deviceinfo;
-      }
+    .conninfo-isues-img{
+      width: 0.8rem;
+      height: 0.8rem;
+      position: absolute;
+      right: 0.4rem;
+      top: 0.7rem;
     }
   }
   .toilet-parameterctl {

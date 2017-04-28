@@ -1,23 +1,18 @@
 .hmsModal {
-  //.headerCase{
-  //  height: 44px;
-  //  border-bottom: 1px solid rgb(56,126,245);
-  //  border-top: 1px solid #387ef5;
-  //  text-align: center;
-  //  .headertitle{
-  //    margin-top: 12px;
-  //  }
-  //  .createNewRecord{
-  //    position: absolute;
-  //    display: inline-block;
-  //    right: 20px;
-  //    top: 3px;
-  //    width: 30px;
-  //    height: 40px;
-  //    line-height: 40px;
-  //    font-size: 22px;
-  //  }
-  //}
+
+  .item {
+    border-color: #ddd;
+    background-color: #fff;
+    color: #444;
+    position: relative;
+    z-index: 2;
+    display: block;
+    margin: -1px;
+    padding: 0.30rem;
+    border-width: 1px;
+    border-style: solid;
+    font-size: 0.32rem;
+  }
   .contentCase {
     background-color:#4F5C79;
     //margin-top: 44px;

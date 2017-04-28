@@ -411,7 +411,7 @@ angular.module('toiletControlModule')
         // on-slide-changed='slideHasChanged($index)'>
         var checHtml =
           // "<ion-slide-box ng-init='lockSlide()' on-slide-changed='slideHasChanged($index)'>"+
-          "<ion-slide-box ng-init='lockSlide()' delegate-handle='boxSlider' ng-click='slideHasChangedleft()'>"+
+          "<ion-slide-box ng-init='lockSlide()' delegate-handle='boxSlider'>"+
           "<ion-slide ng-repeat='list in currentSlideData track by $index'>"+
           "<div id={{list.parNodeid}} class='toilet-parameterctl'>"+
           "<canvas id={{list.canves01}} class='canves-pos'></canvas>"+
@@ -437,7 +437,7 @@ angular.module('toiletControlModule')
       };
 
       $scope.initHtmlTemplate($scope.currentSlideData);
-
+      var onceFlag=true;
       var initCircle = function (slideDataObj) {
         //获取父元素高度
         this.rateInit = document.documentElement.clientWidth / 7.5;
@@ -530,7 +530,9 @@ angular.module('toiletControlModule')
                     slideDataObj.gearInit = this.i;
                   }
                 };
-                $scope.$apply();
+                if(onceFlag){
+                  $scope.$apply();
+                };
                 //画档位线
                 this.j=1;
                 for(this.j;this.j<this.i;this.j++){
@@ -551,7 +553,9 @@ angular.module('toiletControlModule')
                 }else{
                   slideDataObj.gearInit = this.i+1;
                 }
-                $scope.$apply();
+                if(onceFlag){
+                  $scope.$apply();
+                };
                 //画档位线
                 this.j=1;
                 for(this.j;this.j<this.i+1;this.j++){
@@ -653,10 +657,31 @@ angular.module('toiletControlModule')
           };
         };
         $scope.getCurrentObj(0);
+        $scope.count=0;
         $scope.slideHasChangedleft = function () {
-          // console.log($ionicSlideBoxDelegate.$getByHandle('boxSlider').slidesCount())
-          // $ionicSlideBoxDelegate.currentIndex();
-          // $scope.getCurrentObj(index);
+          onceFlag = true;
+          if($scope.currentSlideData.length !== 1){
+            onceFlag = false;
+            $scope.count--;
+            if($scope.count >= 0){
+              $ionicSlideBoxDelegate.$getByHandle('boxSlider').previous();
+              $scope.getCurrentObj($scope.count);
+              onceFlag = true;
+            };
+          };
+        };
+        $scope.slideHasChangedright = function () {
+          onceFlag = true;
+          var slidecount = $scope.currentSlideData.length;
+          if(slidecount !== 1){
+            onceFlag = false;
+            $scope.count++;
+            if($scope.count <= slidecount-1){
+              $ionicSlideBoxDelegate.$getByHandle('boxSlider').next();
+              $scope.getCurrentObj($scope.count);
+              onceFlag = true;
+            }
+          };
         };
       },20);
       //发送指令
@@ -802,6 +827,7 @@ angular.module('toiletControlModule')
        *@disc:handle light or gary
        */
       $scope.hanleInitTemple = function (index) {
+        $scope.count=0;
         if(!$scope.handlenapeListNape[index].selecFlag){
           $scope.handlenapeSelectedIndex = undefined;
         }
@@ -830,10 +856,10 @@ angular.module('toiletControlModule')
       var handlenapeListNapeLen = $scope.handlenapeListNape.length;
       $scope.selectNapes = function (index) {
         $scope.handlenapeSelectedIndex = index;
-        $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
         if($scope.handlenapeListNape[index].matchdataid === "setting"){
           $state.go("toiletSetting");
         }else {
+          $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
           if(!$scope.handlenapeListNape[index].isManyDirective){
             if($scope.handlenapeListNape[index].selecFlag && $scope.handlenapeListNape[index].matchdataid !== "clear"){
               $scope.onceTimeIntionCreate();
@@ -885,18 +911,18 @@ angular.module('toiletControlModule')
           };
           // $timeout(function () {
           //   $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
-            for(var i=0;i<handlenapeListNapeLen;i++){
-              if(i !== index){
-                $scope.handlenapeListNape[i].selecFlag = false;
-              };
-            };
+          //   for(var i=0;i<handlenapeListNapeLen;i++){
+          //     if(i !== index){
+          //       $scope.handlenapeListNape[i].selecFlag = false;
+          //     }
+          //   };
             if($scope.handlenapeListNape[index].selecFlag === true){
               $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgSeledUrl;
-              for(var i=0;i<handlenapeListNapeLen;i++){
-                if(i !== index){
-                  $scope.handlenapeListNape[i].imgUrl = $scope.handlenapeListNape[i].imgUrlTemp;
-                }
-              };
+              // for(var i=0;i<handlenapeListNapeLen;i++){
+              //   if(i !== index){
+              //     $scope.handlenapeListNape[i].imgUrl = $scope.handlenapeListNape[i].imgUrlTemp;
+              //   }
+              // };
             }else{
               $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgUrlTemp;
             };
@@ -1025,7 +1051,7 @@ angular.module('toiletControlModule')
                 desTemp = "移动";
               }else if(val.id === 3){
                 desTemp = "正常";
-              }
+              };
             })
             if($scope.handlenapeListNape[$scope.handlenapeSelectedIndex].matchdataid === "nvyong"){
               $scope.nvyongIntionCreate("女用",desTemp,"ON");
