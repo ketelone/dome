@@ -17,7 +17,7 @@ angular.module('messageModule')
 
 
       $scope.data = {
-        showDelete: false //左侧选择框
+        showDelete: false //左侧选择框是否显示
       };
  $scope.threeBottom=false;
       $scope.hasStaus=true;//defalut no Display
@@ -151,7 +151,7 @@ $scope.exceptionword='exceptionword';
         ).error(
           function (response, status, header, config){
             //hmsPopup.showPopup("<span translate='bathroom.saveError'></span>");
-            alert("1234");
+          //  alert("1234");
           }
         );
 

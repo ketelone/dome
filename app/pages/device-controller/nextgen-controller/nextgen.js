@@ -5,13 +5,13 @@ angular.module('nextgenModule')
     '$ionicModal',
     '$compile',
     'baseConfig',
-    'checkVersionService','$ionicHistory','hmsPopup','nextgenService','$timeout','SettingsService','$ionicSlideBoxDelegate',
+    'checkVersionService','$ionicHistory','hmsPopup','nextgenService','$timeout','SettingsService','$ionicSlideBoxDelegate','hmsHttp',
     function ($scope,
               $state,
               $ionicModal,
               $compile,
               baseConfig,
-              checkVersionService,$ionicHistory,hmsPopup,nextgenService,$timeout,SettingsService,$ionicSlideBoxDelegate
+              checkVersionService,$ionicHistory,hmsPopup,nextgenService,$timeout,SettingsService,$ionicSlideBoxDelegate,hmsHttp
     ) {
       var ctrId="00";
       var header="8877";
@@ -277,7 +277,7 @@ angular.module('nextgenModule')
         var resultOn = result;
         if (resultOn.payload.cmd == "CMD_RETURN") {
           var tempData = nextgenService.explainAck(resultOn.payload.value[0]);
-          if(tempData.ack=='1000'){
+          if(tempData.ack.indexOf("fa")>=0){
             $scope.handlenapeListNape[2].selecFlag =false;
             $scope.handlenapeListNape[2].imgUrl = $scope.handlenapeListNape[2].imgUrlTemp;
 
@@ -694,10 +694,43 @@ angular.module('nextgenModule')
 
       };
 
+//通过云端发送指令
+      var test = function () {
+        var url = baseConfig.basePath + "/r/api/message/sendMessage";
+        var paramter = {
+          "ver": 1,
+          "from": {
+            "ctype": 240,
+            "uid": "13405533206"
+          },
+          "to": {
+            "ctype": 229,
+            "uid": "hand-residential"
+          },
+          "ts": 1493013672695,
+          "idx": 1,
+          "mtype": "ctl",
+          "data": {
+            "cmd": ["887706010005270221"]
+          }
+        };
+        hmsHttp.post(url, paramter).success(
+          function (response) {
+            //var value = response.data.data.cmd[0];
+           alert(JSON.stringify(response));
+           // alert(value);
+         //   alert(JSON.stringify(bathroomCmdService.explainAck(value)));
 
+          }
+        ).error(
+          function (response, status, header, config) {
+            hmsPopup.showShortCenterToast("");
+           // alert(1234);
+          }
+        );
+      };
 
-
-
+      //test();
 
 
 
