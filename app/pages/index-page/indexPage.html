@@ -13,10 +13,10 @@
 
     <div class="data-info">
       <div class="temperature">
-        20℃
+        {{temperature}}℃
       </div>
       <div class="percentage">
-        40%
+        {{humidity}}%
       </div>
       <div class="temperature-ch">
         <span translate="index.humidity"></span>
@@ -32,17 +32,7 @@
       </div>
     </div>
 
-    <ion-content class="mainApplication" style="bottom:48px;" scrollbar-y="false">
-
-      <div class="calendar-container">
-        <img ng-src="build/img/banner@3x.png" class="calendar-head"/>
-        <div class="calendar-content">
-          <div class="application-calendar">
-            <!--<img ng-src="build/img/banner@3x.png" class="blur-bg"/>-->
-            <!--<div class="white-bg"></div>-->
-          </div>
-        </div>
-      </div>
+    <ion-content class="mainApplication" style="bottom:48px;">
 
       <hms-tab-slide-box class="hms">
         <div class="ion-chevron-up chevron-color" ng-click="linkBox();"></div>
@@ -51,20 +41,11 @@
             <ion-scroll direction="y" style="white-space: nowrap;width: 100%;text-align: center;" scrollbar-y="true">
               <a href="javascript:;" ng-repeat="tab in tabs" on-finish-render ng-click="changeModel(tab.text)" style="width: 31%;border: none;font-size: 0.32rem; color: white"> {{tab.text}}</a>
               <span id="line" class="height-light" ng-show="isOneLine"></span>
+              <br>
               <!--<span class="height-light2" ng-show="isSecondLine"></span>-->
 
+
               <div ng-if="isSceneModel">
-
-                <div class="row noPadding-module add-module text-left" ng-click="addModule()">
-                  <span class="add-module" translate="">我的场景</span>
-                  <div class="add">
-                    <div class="add-font">+</div>
-                    <div class="add-device">
-                      <span translate="">添加场景</span>
-                    </div>
-                  </div>
-                </div>
-
                 <div ng-repeat="item in modelData" ng-click="goKeyscene(item)">
                   <img class="imgll" ng-src="{{item.pictureUrl}}"/>
                   <div class="text-center interval-line">
@@ -84,18 +65,19 @@
                   </div>
                 </div>
 
-              </div>
-
-              <div ng-if="isDeviceModel">
-                <div class="row noPadding-module add-module text-left" ng-click="addDevice()">
-                  <span class="add-module" translate="">我的设备</span>
+                <div class="row add-module text-left" ng-click="addModule()">
+                  <!--<span class="add-module" translate="index.myModel"></span>-->
                   <div class="add">
                     <div class="add-font">+</div>
                     <div class="add-device">
-                      <span translate="">添加设备</span>
+                      <span translate="index.addModel">添加场景</span>
                     </div>
                   </div>
                 </div>
+
+              </div>
+
+              <div ng-if="isDeviceModel">
 
                 <div class="deviceStyle row noPadding" ng-repeat="item in deviceModel" ng-click="getDeviceInfo(item)" style="padding-top: 0.24rem;">
                   <div class="col-25 noPadding">
@@ -114,6 +96,16 @@
                     <img class="error-img" ng-src="{{item.errorPictureUrl}}" ng-if="item.isError"/>
                     <span>{{item.deviceDesc}}</span>
                     <span style="color: #565A64"><i class="ion-ios-arrow-forward" ></i></span>
+                  </div>
+                </div>
+
+                <div class="row add-module text-left" ng-click="addDevice()">
+                  <!--<span class="add-module" translate="index.myDevice">我的设备</span>-->
+                  <div class="add">
+                    <div class="add-font">+</div>
+                    <div class="add-device">
+                      <span translate="index.addDevice">添加设备</span>
+                    </div>
                   </div>
                 </div>
 
