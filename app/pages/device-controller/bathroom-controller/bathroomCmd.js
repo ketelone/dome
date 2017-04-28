@@ -166,11 +166,11 @@
           if (status == '00') {
             statusStr = 'init';
           }else if (status == '01') {
-            statusStr = 'heater_off';
+            statusStr = 'heater_off';//
           }else if (status == '02'){
-            statusStr = 'heater_run';
+            statusStr = 'heater';//热风开启
           }else if (status == '03') {
-            statusStr = 'fan';
+            statusStr = 'fan';//凉风
           }else if (status == '04') {
             statusStr = 'hot_dry';
           }else if (status == '05') {

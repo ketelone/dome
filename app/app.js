@@ -26,7 +26,8 @@ var myApp = angular.module('myApp', [
   'bathroomModule',
   'karessControlModule',
   'nextgenModule',
-  'mcControlModule'
+  'mcControlModule',
+  'airfoilShowerModule'
 ]);
 
 var db = null;
@@ -110,244 +111,139 @@ angular.module('myApp')
       //T_CTM_PARTY
       db.transaction(function (tx) {
         tx.executeSql("CREATE TABLE IF NOT EXISTS T_CTM_PARTY (" +
-          "[PARTY_ID] bigint NOT NULL ," +
-          "[PARTY_TYPE] nvarchar(30) NULL ," +
-          "[PARTY_ACCOUNT] nvarchar(30) NULL ," +
-          "[PASSWORD] nvarchar(30) NULL ," +
-          "[HEAD_PORTRAIT] nvarchar(240) NULL ," +
-          "[PARTY_NAME] nvarchar(30) NULL ," +
-          "[SEX] nvarchar(30) NULL ," +
-          "[PHONE_NUMBER] nvarchar(30) NULL ," +
-          "[EMAIL_ADDRESS] nvarchar(30) NULL ," +
-          "[ROLE_ID] bigint NULL ," +
-          "[PARTY_STATUS] nvarchar(30) NULL ," +
-          "[REFERENCE_SOURCE] nvarchar(30) NULL ," +
-          "[CREATION_DATE] datetime NOT NULL DEFAULT (sysdatetime()) ," +
-          "[CREATED_BY] nvarchar(100) NOT NULL DEFAULT ('-1') ," +
-          "[LAST_UPDATE_DATE] datetime NOT NULL DEFAULT (sysdatetime()) ," +
-          "[LAST_UPDATED_BY] nvarchar(100) NOT NULL DEFAULT ('-1') ," +
-          "[LAST_UPDATE_LOGIN] nvarchar(100) NOT NULL DEFAULT ('-1') ," +
-          "[OBJECT_VERSION_NUMBER] bigint NOT NULL DEFAULT ((1)) ," +
-          "[REQUEST_ID] bigint NULL ," +
-          "[PROGRAM_ID] bigint NULL ," +
-          "[ATTRIBUTE_CATEGORY] nvarchar(100) NULL ," +
-          "[ATTRIBUTE1] nvarchar(240) NULL ," +
-          "[ATTRIBUTE2] nvarchar(240) NULL ," +
-          "[ATTRIBUTE3] nvarchar(240) NULL ," +
-          "[ATTRIBUTE4] nvarchar(240) NULL ," +
-          "[ATTRIBUTE5] nvarchar(240) NULL ," +
-          "[ATTRIBUTE6] nvarchar(240) NULL ," +
-          "[ATTRIBUTE7] nvarchar(240) NULL ," +
-          "[ATTRIBUTE8] nvarchar(240) NULL ," +
-          "[ATTRIBUTE9] nvarchar(240) NULL ," +
-          "[ATTRIBUTE10] nvarchar(240) NULL ," +
-          "[ATTRIBUTE11] nvarchar(240) NULL ," +
-          "[ATTRIBUTE12] nvarchar(240) NULL ," +
-          "[ATTRIBUTE13] nvarchar(240) NULL ," +
-          "[ATTRIBUTE14] nvarchar(240) NULL ," +
-          "[ATTRIBUTE15] nvarchar(240) NULL ," +
-          "PRIMARY KEY ([PARTY_ID])," +
-          "UNIQUE ([PARTY_ID] ASC)" +
+          "[PARTY_ID] [bigint] IDENTITY(1,1) NOT NULL," +
+          "[PARTY_TYPE] [nvarchar](30) NULL," +
+          "[PARTY_ACCOUNT] [nvarchar](30) NULL," +
+          "[PASSWORD] [nvarchar](80) NULL," +
+          "[HEAD_PORTRAIT] [nvarchar](240) NULL," +
+          "[PARTY_NAME] [nvarchar](30) NULL," +
+          "[SEX] [nvarchar](30) NULL," +
+          "[PHONE_NUMBER] [nvarchar](30) NULL," +
+          "[EMAIL_ADDRESS] [nvarchar](30) NULL," +
+          "[LOCATION_ADDRESS] [nvarchar](30) NULL," +
+          "[ROLE_ID] [bigint] NULL," +
+          "[TIME_ZONE] [nvarchar](30) NULL," +
+          "[PARTY_STATUS] [nvarchar](30) NULL," +
+          "[REFERENCE_SOURCE] [nvarchar](30) NULL," +
+          "[CREATION_DATE] [datetime] NOT NULL," +
+          "[CREATED_BY] [nvarchar](100) NOT NULL," +
+          "[LAST_UPDATE_DATE] [datetime] NOT NULL," +
+          "[LAST_UPDATED_BY] [nvarchar](100) NOT NULL," +
+          "[LAST_UPDATE_LOGIN] [nvarchar](100) NOT NULL," +
+          "[OBJECT_VERSION_NUMBER] [bigint] NOT NULL," +
+          "[REQUEST_ID] [bigint] NULL," +
+          "[PROGRAM_ID] [bigint] NULL," +
+          "[ATTRIBUTE_CATEGORY] [nvarchar](100) NULL," +
+          "[ATTRIBUTE1] [nvarchar](240) NULL," +
+          "[ATTRIBUTE2] [nvarchar](240) NULL," +
+          "[ATTRIBUTE3] [nvarchar](240) NULL," +
+          "[ATTRIBUTE4] [nvarchar](240) NULL," +
+          "[ATTRIBUTE5] [nvarchar](240) NULL," +
+          "[ATTRIBUTE6] [nvarchar](240) NULL," +
+          "[ATTRIBUTE7] [nvarchar](240) NULL," +
+          "[ATTRIBUTE8] [nvarchar](240) NULL," +
+          "[ATTRIBUTE9] [nvarchar](240) NULL," +
+          "[ATTRIBUTE10] [nvarchar](240) NULL," +
+          "[ATTRIBUTE11] [nvarchar](240) NULL," +
+          "[ATTRIBUTE12] [nvarchar](240) NULL," +
+          "[ATTRIBUTE13] [nvarchar](240) NULL," +
+          "[ATTRIBUTE14] [nvarchar](240) NULL," +
+          "[ATTRIBUTE15] [nvarchar](240) NULL," +
+          "[GROUP_ID] [bigint] NULL" +
           ")");
 
         tx.executeSql("CREATE TABLE IF NOT EXISTS T_CTM_PARTY_BOX (" +
-          "[PARTY_BOX_DEVICE_ID] bigint NOT NULL ," +
-          "[PARTY_ID] bigint NULL ," +
-          "[BOX_ID] bigint NULL ," +
-          "[REFERENCE_SOURCE] nvarchar(30) NULL ," +
-          "[CREATION_DATE] datetime NOT NULL DEFAULT (sysdatetime()) ," +
-          "[CREATED_BY] nvarchar(100) NOT NULL DEFAULT ('-1') ," +
-          "[LAST_UPDATE_DATE] datetime NOT NULL DEFAULT (sysdatetime()) ," +
-          "[LAST_UPDATED_BY] nvarchar(100) NOT NULL DEFAULT ('-1') ," +
-          "[LAST_UPDATE_LOGIN] nvarchar(100) NOT NULL DEFAULT ('-1') ," +
-          "[OBJECT_VERSION_NUMBER] bigint NOT NULL DEFAULT ((1)) ," +
-          "[REQUEST_ID] bigint NULL ," +
-          "[PROGRAM_ID] bigint NULL ," +
-          "[ATTRIBUTE_CATEGORY] nvarchar(100) NULL ," +
-          "[ATTRIBUTE1] nvarchar(240) NULL ," +
-          "[ATTRIBUTE2] nvarchar(240) NULL ," +
-          "[ATTRIBUTE3] nvarchar(240) NULL ," +
-          "[ATTRIBUTE4] nvarchar(240) NULL ," +
-          "[ATTRIBUTE5] nvarchar(240) NULL ," +
-          "[ATTRIBUTE6] nvarchar(240) NULL ," +
-          "[ATTRIBUTE7] nvarchar(240) NULL ," +
-          "[ATTRIBUTE8] nvarchar(240) NULL ," +
-          "[ATTRIBUTE9] nvarchar(240) NULL ," +
-          "[ATTRIBUTE10] nvarchar(240) NULL ," +
-          "[ATTRIBUTE11] nvarchar(240) NULL ," +
-          "[ATTRIBUTE12] nvarchar(240) NULL ," +
-          "[ATTRIBUTE13] nvarchar(240) NULL ," +
-          "[ATTRIBUTE14] nvarchar(240) NULL ," +
-          "[ATTRIBUTE15] nvarchar(240) NULL ," +
-          "PRIMARY KEY ([PARTY_BOX_DEVICE_ID])" +
+          "[PARTY_BOX_ID] [bigint] IDENTITY(1,1) NOT NULL," +
+          "[PARTY_ID] [bigint] NULL," +
+          "[BOX_ID] [bigint] NULL," +
+          "[REFERENCE_SOURCE] [nvarchar](30) NULL," +
+          "[CREATION_DATE] [datetime] NOT NULL," +
+          "[CREATED_BY] [nvarchar](100) NOT NULL," +
+          "[LAST_UPDATE_DATE] [datetime] NOT NULL," +
+          "[LAST_UPDATED_BY] [nvarchar](100) NOT NULL," +
+          "[LAST_UPDATE_LOGIN] [nvarchar](100) NOT NULL," +
+          "[GROUP_ID] [bigint] NULL" +
           ")");
 
         tx.executeSql("CREATE TABLE IF NOT EXISTS T_CTM_PARTY_BOX_DEVICE (" +
-          "[PARTY_BOX_DEVICE_ID] bigint NOT NULL ," +
-          "[PARTY_ID] bigint NULL ," +
-          "[BOX_ID] bigint NULL ," +
-          "[DEVICE_ID] bigint NULL ," +
-          "[REFERENCE_SOURCE] nvarchar(30) NULL ," +
-          "[CREATION_DATE] datetime NOT NULL DEFAULT (sysdatetime()) ," +
-          "[CREATED_BY] nvarchar(100) NOT NULL DEFAULT ('-1') ," +
-          "[LAST_UPDATE_DATE] datetime NOT NULL DEFAULT (sysdatetime()) ," +
-          "[LAST_UPDATED_BY] nvarchar(100) NOT NULL DEFAULT ('-1') ," +
-          "[LAST_UPDATE_LOGIN] nvarchar(100) NOT NULL DEFAULT ('-1') ," +
-          "[OBJECT_VERSION_NUMBER] bigint NOT NULL DEFAULT ((1)) ," +
-          "[REQUEST_ID] bigint NULL ," +
-          "[PROGRAM_ID] bigint NULL ," +
-          "[ATTRIBUTE_CATEGORY] nvarchar(100) NULL ," +
-          "[ATTRIBUTE1] nvarchar(240) NULL ," +
-          "[ATTRIBUTE2] nvarchar(240) NULL ," +
-          "[ATTRIBUTE3] nvarchar(240) NULL ," +
-          "[ATTRIBUTE4] nvarchar(240) NULL ," +
-          "[ATTRIBUTE5] nvarchar(240) NULL ," +
-          "[ATTRIBUTE6] nvarchar(240) NULL ," +
-          "[ATTRIBUTE7] nvarchar(240) NULL ," +
-          "[ATTRIBUTE8] nvarchar(240) NULL ," +
-          "[ATTRIBUTE9] nvarchar(240) NULL ," +
-          "[ATTRIBUTE10] nvarchar(240) NULL ," +
-          "[ATTRIBUTE11] nvarchar(240) NULL ," +
-          "[ATTRIBUTE12] nvarchar(240) NULL ," +
-          "[ATTRIBUTE13] nvarchar(240) NULL ," +
-          "[ATTRIBUTE14] nvarchar(240) NULL ," +
-          "[ATTRIBUTE15] nvarchar(240) NULL ," +
-          "PRIMARY KEY ([PARTY_BOX_DEVICE_ID])" +
-          ")");
-
-        tx.executeSql("CREATE TABLE IF NOT EXISTS T_CTM_PARTY_DEVICE (" +
-          "[PARTY_DEVICE_ID] bigint NOT NULL ," +
-          "[PARTY_ID] bigint NULL ," +
-          "[DEVICE_ID] bigint NULL ," +
-          "[REFERENCE_SOURCE] nvarchar(30) NULL ," +
-          "[CREATION_DATE] datetime NOT NULL DEFAULT (sysdatetime()) ," +
-          "[CREATED_BY] nvarchar(100) NOT NULL DEFAULT ('-1') ," +
-          "[LAST_UPDATE_DATE] datetime NOT NULL DEFAULT (sysdatetime()) ," +
-          "[LAST_UPDATED_BY] nvarchar(100) NOT NULL DEFAULT ('-1') ," +
-          "[LAST_UPDATE_LOGIN] nvarchar(100) NOT NULL DEFAULT ('-1') ," +
-          "[OBJECT_VERSION_NUMBER] bigint NOT NULL DEFAULT ((1)) ," +
-          "[REQUEST_ID] bigint NULL ," +
-          "[PROGRAM_ID] bigint NULL ," +
-          "[ATTRIBUTE_CATEGORY] nvarchar(100) NULL ," +
-          "[ATTRIBUTE1] nvarchar(240) NULL ," +
-          "[ATTRIBUTE2] nvarchar(240) NULL ," +
-          "[ATTRIBUTE3] nvarchar(240) NULL ," +
-          "[ATTRIBUTE4] nvarchar(240) NULL ," +
-          "[ATTRIBUTE5] nvarchar(240) NULL ," +
-          "[ATTRIBUTE6] nvarchar(240) NULL ," +
-          "[ATTRIBUTE7] nvarchar(240) NULL ," +
-          "[ATTRIBUTE8] nvarchar(240) NULL ," +
-          "[ATTRIBUTE9] nvarchar(240) NULL ," +
-          "[ATTRIBUTE10] nvarchar(240) NULL ," +
-          "[ATTRIBUTE11] nvarchar(240) NULL ," +
-          "[ATTRIBUTE12] nvarchar(240) NULL ," +
-          "[ATTRIBUTE13] nvarchar(240) NULL ," +
-          "[ATTRIBUTE14] nvarchar(240) NULL ," +
-          "[ATTRIBUTE15] nvarchar(240) NULL ," +
-          "PRIMARY KEY ([PARTY_DEVICE_ID])" +
+          "[BOX_DEVICE_ID] [bigint] IDENTITY(1,1) NOT NULL," +
+          "[PARTY_ID] [bigint] NOT NULL," +
+          "[BOX_ID] [bigint] NOT NULL," +
+          "[DEVICE_ID] [bigint] NOT NULL," +
+          "[REFERENCE_SOURCE] [nvarchar](30) NULL," +
+          "[CREATION_DATE] [datetime] NOT NULL," +
+          "[CREATED_BY] [nvarchar](100) NOT NULL," +
+          "[LAST_UPDATE_DATE] [datetime] NOT NULL," +
+          "[LAST_UPDATED_BY] [nvarchar](100) NOT NULL," +
+          "[LAST_UPDATE_LOGIN] [nvarchar](100) NOT NULL," +
+          "[GROUP_ID] [bigint] NULL" +
           ")");
 
         tx.executeSql("CREATE TABLE IF NOT EXISTS T_CTM_PARTY_GROUP (" +
-          "[PARTY_GROUP_ID] bigint NOT NULL ," +
-          "[PARTY_ID] bigint NULL ," +
-          "[GROUP_ID] bigint NULL ," +
-          "[ROOT_FLAG] nvarchar(30) NULL ," +
-          "[DEFAULT_FLAG] nvarchar(30) NULL ," +
-          "[REFERENCE_SOURCE] nvarchar(30) NULL ," +
-          "[CREATION_DATE] datetime NOT NULL DEFAULT (sysdatetime()) ," +
-          "[CREATED_BY] nvarchar(100) NOT NULL DEFAULT ('-1') ," +
-          "[LAST_UPDATE_DATE] datetime NOT NULL DEFAULT (sysdatetime()) ," +
-          "[LAST_UPDATED_BY] nvarchar(100) NOT NULL DEFAULT ('-1') ," +
-          "[LAST_UPDATE_LOGIN] nvarchar(100) NOT NULL DEFAULT ('-1') ," +
-          "[OBJECT_VERSION_NUMBER] bigint NOT NULL DEFAULT ((1)) ," +
-          "[REQUEST_ID] bigint NULL ," +
-          "[PROGRAM_ID] bigint NULL ," +
-          "[ATTRIBUTE_CATEGORY] nvarchar(100) NULL ," +
-          "[ATTRIBUTE1] nvarchar(240) NULL ," +
-          "[ATTRIBUTE2] nvarchar(240) NULL ," +
-          "[ATTRIBUTE3] nvarchar(240) NULL ," +
-          "[ATTRIBUTE4] nvarchar(240) NULL ," +
-          "[ATTRIBUTE5] nvarchar(240) NULL ," +
-          "[ATTRIBUTE6] nvarchar(240) NULL ," +
-          "[ATTRIBUTE7] nvarchar(240) NULL ," +
-          "[ATTRIBUTE8] nvarchar(240) NULL ," +
-          "[ATTRIBUTE9] nvarchar(240) NULL ," +
-          "[ATTRIBUTE10] nvarchar(240) NULL ," +
-          "[ATTRIBUTE11] nvarchar(240) NULL ," +
-          "[ATTRIBUTE12] nvarchar(240) NULL ," +
-          "[ATTRIBUTE13] nvarchar(240) NULL ," +
-          "[ATTRIBUTE14] nvarchar(240) NULL ," +
-          "[ATTRIBUTE15] nvarchar(240) NULL ," +
-          "PRIMARY KEY ([PARTY_GROUP_ID])" +
+          "[PARTY_GROUP_ID] [bigint] IDENTITY(1,1) NOT NULL," +
+          "[PARTY_ID] [bigint] NULL," +
+          "[GROUP_ID] [bigint] NULL," +
+          "[ROOT_FLAG] [nvarchar](30) NULL," +
+          "[DEFAULT_FLAG] [nvarchar](30) NULL," +
+          "[REFERENCE_SOURCE] [nvarchar](30) NULL," +
+          "[CREATION_DATE] [datetime] NOT NULL," +
+          "[CREATED_BY] [nvarchar](100) NOT NULL," +
+          "[LAST_UPDATE_DATE] [datetime] NOT NULL," +
+          "[LAST_UPDATED_BY] [nvarchar](100) NOT NULL," +
+          "[LAST_UPDATE_LOGIN] [nvarchar](100) NOT NULL" +
           ")");
 
         tx.executeSql("CREATE TABLE IF NOT EXISTS T_CTM_PARTY_GROUP_DEVICE (" +
-          "[GROUP_DEVICE_ID] bigint NOT NULL ," +
-          "[PARTY_ID] bigint NULL ," +
-          "[GROUP_ID] bigint NULL ," +
-          "[DEVICE_ID] bigint NULL ," +
-          "[REFERENCE_SOURCE] nvarchar(30) NULL ," +
-          "[CREATION_DATE] datetime NOT NULL DEFAULT (sysdatetime()) ," +
-          "[CREATED_BY] nvarchar(100) NOT NULL DEFAULT ('-1') ," +
-          "[LAST_UPDATE_DATE] datetime NOT NULL DEFAULT (sysdatetime()) ," +
-          "[LAST_UPDATED_BY] nvarchar(100) NOT NULL DEFAULT ('-1') ," +
-          "[LAST_UPDATE_LOGIN] nvarchar(100) NOT NULL DEFAULT ('-1') ," +
-          "[OBJECT_VERSION_NUMBER] bigint NOT NULL DEFAULT ((1)) ," +
-          "[REQUEST_ID] bigint NULL ," +
-          "[PROGRAM_ID] bigint NULL ," +
-          "[ATTRIBUTE_CATEGORY] nvarchar(100) NULL ," +
-          "[ATTRIBUTE1] nvarchar(240) NULL ," +
-          "[ATTRIBUTE2] nvarchar(240) NULL ," +
-          "[ATTRIBUTE3] nvarchar(240) NULL ," +
-          "[ATTRIBUTE4] nvarchar(240) NULL ," +
-          "[ATTRIBUTE5] nvarchar(240) NULL ," +
-          "[ATTRIBUTE6] nvarchar(240) NULL ," +
-          "[ATTRIBUTE7] nvarchar(240) NULL ," +
-          "[ATTRIBUTE8] nvarchar(240) NULL ," +
-          "[ATTRIBUTE9] nvarchar(240) NULL ," +
-          "[ATTRIBUTE10] nvarchar(240) NULL ," +
-          "[ATTRIBUTE11] nvarchar(240) NULL ," +
-          "[ATTRIBUTE12] nvarchar(240) NULL ," +
-          "[ATTRIBUTE13] nvarchar(240) NULL ," +
-          "[ATTRIBUTE14] nvarchar(240) NULL ," +
-          "[ATTRIBUTE15] nvarchar(240) NULL ," +
-          "PRIMARY KEY ([GROUP_DEVICE_ID])" +
+          "[GROUP_DEVICE_ID] [bigint] IDENTITY(1,1) NOT NULL," +
+          "[PARTY_ID] [bigint] NOT NULL," +
+          "[GROUP_ID] [bigint] NOT NULL," +
+          "[DEVICE_ID] [bigint] NOT NULL," +
+          "[REFERENCE_SOURCE] [nvarchar](30) NULL," +
+          "[CREATION_DATE] [datetime] NOT NULL," +
+          "[CREATED_BY] [nvarchar](100) NOT NULL," +
+          "[LAST_UPDATE_DATE] [datetime] NOT NULL," +
+          "[LAST_UPDATED_BY] [nvarchar](100) NOT NULL," +
+          "[LAST_UPDATE_LOGIN] [nvarchar](100) NOT NULL" +
           ")");
 
         tx.executeSql("CREATE TABLE IF NOT EXISTS T_DVM_DEVICE (" +
-          "[DEVICE_ID] bigint NOT NULL ," +
-          "[PRODUCT_ID] bigint NULL ," +
-          "[SKU_ID] bigint NULL ," +
-          "[DEVICE_SN] nvarchar(30) NULL ," +
-          "[DEVICE_NAME] nvarchar(30) NULL ," +
-          "[LOCATION] nvarchar(240) NULL ," +
-          "[CONNECT_MODE] nvarchar(30) NULL ," +
-          "[REFERENCE_SOURCE] nvarchar(30) NULL ," +
-          "[CREATION_DATE] datetime NOT NULL DEFAULT (sysdatetime()) ," +
-          "[CREATED_BY] nvarchar(100) NOT NULL DEFAULT ('-1') ," +
-          "[LAST_UPDATE_DATE] datetime NOT NULL DEFAULT (sysdatetime()) ," +
-          "[LAST_UPDATED_BY] nvarchar(100) NOT NULL DEFAULT ('-1') ," +
-          "[LAST_UPDATE_LOGIN] nvarchar(100) NOT NULL DEFAULT ('-1') ," +
-          "[OBJECT_VERSION_NUMBER] bigint NOT NULL DEFAULT ((1)) ," +
-          "[REQUEST_ID] bigint NULL ," +
-          "[PROGRAM_ID] bigint NULL ," +
-          "[ATTRIBUTE_CATEGORY] nvarchar(100) NULL ," +
-          "[ATTRIBUTE1] nvarchar(240) NULL ," +
-          "[ATTRIBUTE2] nvarchar(240) NULL ," +
-          "[ATTRIBUTE3] nvarchar(240) NULL ," +
-          "[ATTRIBUTE4] nvarchar(240) NULL ," +
-          "[ATTRIBUTE5] nvarchar(240) NULL ," +
-          "[ATTRIBUTE6] nvarchar(240) NULL ," +
-          "[ATTRIBUTE7] nvarchar(240) NULL ," +
-          "[ATTRIBUTE8] nvarchar(240) NULL ," +
-          "[ATTRIBUTE9] nvarchar(240) NULL ," +
-          "[ATTRIBUTE10] nvarchar(240) NULL ," +
-          "[ATTRIBUTE11] nvarchar(240) NULL ," +
-          "[ATTRIBUTE12] nvarchar(240) NULL ," +
-          "[ATTRIBUTE13] nvarchar(240) NULL ," +
-          "[ATTRIBUTE14] nvarchar(240) NULL ," +
-          "[ATTRIBUTE15] nvarchar(240) NULL ," +
-          "PRIMARY KEY ([DEVICE_ID])" +
+          "[DEVICE_ID] [bigint] IDENTITY(1,1) NOT NULL," +
+          "[IOT_DEVICE_ID] [nvarchar](50) NULL," +
+          "[PRODUCT_ID] [bigint] NOT NULL," +
+          "[SKU_ID] [bigint] NOT NULL," +
+          "[SKU_NUMBER] [nvarchar](30) NOT NULL," +
+          "[DEVICE_SERIAL_NUMBER] [nvarchar](30) NULL," +
+          "[DEVICE_CODE] [nvarchar](30) NULL," +
+          "[DEVICE_NAME] [nvarchar](30) NULL," +
+          "[LOCATION] [nvarchar](240) NULL," +
+          "[CONNECT_MODE] [nvarchar](30) NULL," +
+          "[REFERENCE_SOURCE] [nvarchar](30) NULL," +
+          "[CREATION_DATE] [datetime] NOT NULL," +
+          "[CREATED_BY] [nvarchar](100) NOT NULL," +
+          "[LAST_UPDATE_DATE] [datetime] NOT NULL," +
+          "[LAST_UPDATED_BY] [nvarchar](100) NOT NULL," +
+          "[LAST_UPDATE_LOGIN] [nvarchar](100) NOT NULL," +
+          "[OBJECT_VERSION_NUMBER] [bigint] NOT NULL," +
+          "[REQUEST_ID] [bigint] NULL," +
+          "[PROGRAM_ID] [bigint] NULL," +
+          "[ATTRIBUTE_CATEGORY] [nvarchar](100) NULL," +
+          "[ATTRIBUTE1] [nvarchar](240) NULL," +
+          "[ATTRIBUTE2] [nvarchar](240) NULL," +
+          "[ATTRIBUTE3] [nvarchar](240) NULL," +
+          "[ATTRIBUTE4] [nvarchar](240) NULL," +
+          "[ATTRIBUTE5] [nvarchar](240) NULL," +
+          "[ATTRIBUTE6] [nvarchar](240) NULL," +
+          "[ATTRIBUTE7] [nvarchar](240) NULL," +
+          "[ATTRIBUTE8] [nvarchar](240) NULL," +
+          "[ATTRIBUTE9] [nvarchar](240) NULL," +
+          "[ATTRIBUTE10] [nvarchar](240) NULL," +
+          "[ATTRIBUTE11] [nvarchar](240) NULL," +
+          "[ATTRIBUTE12] [nvarchar](240) NULL," +
+          "[ATTRIBUTE13] [nvarchar](240) NULL," +
+          "[ATTRIBUTE14] [nvarchar](240) NULL," +
+          "[ATTRIBUTE15] [nvarchar](240) NULL," +
+          "[DEVICE_STATUS] [nvarchar](30) NULL," +
+          "[GROUP_ID] [bigint] NULL" +
           ")");
 
         tx.executeSql("CREATE TABLE T_CTM_PARTY_SCENARIO (" +
@@ -359,7 +255,7 @@ angular.module('myApp')
           "[SCENARIO_NAME] [nvarchar](30) NULL," +
           "[IMAGE_ADDRESS] [nvarchar](30) NULL," +
           "[REFERENCE_SOURCE] [nvarchar](30) NULL," +
-          "[SCENARIO_status] [nvarchar](30) NULL," +
+          "[SCENARIO_STATUS] [nvarchar](30) NULL," +
           "[DEFAULT_FLAG] [nvarchar](30) NULL," +
           "[ACTIVE_FLAG] [nvarchar](30) NULL," +
           "[DESCRIPTION] [nvarchar](240) NULL," +
@@ -387,7 +283,7 @@ angular.module('myApp')
           "[ATTRIBUTE13] [nvarchar](240) NULL," +
           "[ATTRIBUTE14] [nvarchar](240) NULL," +
           "[ATTRIBUTE15] [nvarchar](240) NULL," +
-          "PRIMARY KEY ([SCENARIO_ID] ASC)" +
+          "[GROUP_ID] [bigint] NULL" +
           ")");
       });
       /*db.close(successcb, errorcb);
@@ -642,6 +538,16 @@ angular.module('myApp')
           url: '/bathroomInfo',
           templateUrl: 'build/pages/device-controller/bathroom-controller/bathroom-info/bathroomInfo.html',
           controller: 'bathroomInfoCtrl'
+        })
+        .state('airfoilShower', {
+          url: '/airfoilShower',
+          templateUrl: 'build/pages/device-controller/airfoil-shower-controller/airfoilShower.html',
+          controller: 'airfoilShowerCtrl'
+        })
+        .state('airfoilShowerSetting', {
+          url: '/airfoilShowerSetting',
+          templateUrl: 'build/pages/device-controller/airfoil-shower-controller/airfoil-shower-setting-controller/airfoilShowerSetting.html',
+          controller: 'airfoilShowerSettingCtrl'
         });
       // if none of the above states are matched, use this as the fallback
       if (baseConfig.debug) {

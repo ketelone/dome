@@ -419,5 +419,10 @@
     "delete": "删除",
     "cancel": "取消",
     "allOff": "全不选"
+  },
+  "airfoidShower": {
+    "getWater": "&nbsp;&nbsp;&nbsp;出水",
+    "allStop": "一键停止",
+    "setting": "&nbsp;&nbsp;&nbsp;设置"
   }
 }
