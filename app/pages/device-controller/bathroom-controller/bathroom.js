@@ -16,7 +16,8 @@ angular.module('bathroomModule')
     '$timeout',
     'baseConfig',
     'hmsHttp',
-    function($scope, $state, $interval, $window, $ionicModal, $ionicHistory, hmsPopup, $stateParams, bathroomService, bathroomCmdService, $timeout, baseConfig, hmsHttp){
+    'cmdService',
+    function($scope, $state, $interval, $window, $ionicModal, $ionicHistory, hmsPopup, $stateParams, bathroomService, bathroomCmdService, $timeout, baseConfig, hmsHttp, cmdService){
 
       $scope.bathroomData = [
         {
@@ -146,8 +147,8 @@ angular.module('bathroomModule')
       $scope.count = 1;
       $scope.isCountDown = false;
       //$scope.countDown = 0;
-      $scope.temperate = '0℃';
-      $scope.tempPercent = '0%';
+      $scope.temperate = '22℃';
+      $scope.tempPercent = '19%';
       $scope.isBox = true;
       $scope.isBig = false;
       $scope.isWind = false;
@@ -184,7 +185,10 @@ angular.module('bathroomModule')
       };
 
       var pluginToCtrl = function(deviceId, value, successMsg, errorMsg){
-        var cmd = bathroomService.getCmd(value, deviceId);
+
+        bathroomService.sendCmd(deviceId, value, localStorage.boxIp);
+
+        /*var cmd = bathroomService.getCmd(value, deviceId);
         cordova.plugins.SocketPlugin.tcpSendCmd({
           "timeout": "2000",
           "value": cmd,
@@ -195,13 +199,15 @@ angular.module('bathroomModule')
         }
         function error() {
           hmsPopup.showShortCenterToast(errorMsg);
-        }
+        }*/
       };
 
       var cloudToCtrl = function(deviceId, value, successMsg, errorMsg){
         //cloud
         var url = baseConfig.basePath + "/r/api/message/sendMessage";
-        var paramter = {
+        var paramter = cmdService.cloudCmd(deviceId, value);
+
+        /*var paramter = {
           "ver":1,
           "from":{
             "ctype":240,
@@ -217,7 +223,8 @@ angular.module('bathroomModule')
           "data":{
             "cmd":[value]
           }
-        };
+        };*/
+
         hmsHttp.post(url, paramter).success(
           function(response){
             console.log(response);

@@ -31,7 +31,7 @@ angular.module('productModule')
        *@disc:goback
        */
       $scope.goBack = function () {
-        $ionicHistory.goback();
+        $ionicHistory.goBack();
       }
 
       $scope.getSwitchStatus = function (item) {

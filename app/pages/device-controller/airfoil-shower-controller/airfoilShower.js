@@ -13,6 +13,7 @@ angular.module('airfoilShowerModule')
     '$timeout',
     '$stateParams',
     'hmsHttp',
+    'cmdService',
     function ($scope,
               $state,
               $ionicSlideBoxDelegate,
@@ -25,7 +26,8 @@ angular.module('airfoilShowerModule')
               airfoilShowerService,
               $timeout,
               $stateParams,
-              hmsHttp
+              hmsHttp,
+              cmdService
     ) {
       $scope.goBack = function () {
         publicMethod.goBack();
@@ -754,11 +756,13 @@ angular.module('airfoilShowerModule')
         }else{
           pluginToCtrl(deviceId, value, successMsg, errorMsg);
         }
-
       };
 
       var pluginToCtrl = function(deviceId, value, successMsg, errorMsg){
-        var cmd = airfoilShowerService.getCmdJsonStr(value, deviceId);
+
+        cmdService.sendCmd(deviceId, value, localStorage.boxIp);
+
+        /*var cmd = airfoilShowerService.getCmdJsonStr(value, deviceId);
         cordova.plugins.SocketPlugin.tcpSendCmd({
           "timeout": "2000",
           "value": cmd ,
@@ -769,13 +773,14 @@ angular.module('airfoilShowerModule')
         }
         function error() {
           hmsPopup.showShortCenterToast(errorMsg);
-        }
+        }*/
       };
 
       var cloudToCtrl = function(deviceId, value, successMsg, errorMsg){
-        alert("deviceId: "+deviceId);
         var url = baseConfig.basePath + "/r/api/message/sendMessage";
-        var paramter = {
+        var paramter = cmdService.cloudCmd(deviceId, value);
+
+        /*var paramter = {
           "ver":1,
           "from":{
             "ctype":240,
@@ -791,13 +796,13 @@ angular.module('airfoilShowerModule')
           "data":{
             "cmd":[value]
           }
-        };
+        };*/
+
         hmsHttp.post(url, paramter).success(
 
           function(response){
             alert(JSON.stringify(response));
             if(response.code == 200){
-              alert("in--");
               var value = airfoilShowerService.explainAck(response.data.data.cmd[0]);
 
               if(value.ack.toLowerCase() == "fa21"){
