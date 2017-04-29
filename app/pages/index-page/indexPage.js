@@ -158,18 +158,20 @@ angular.module('indexPageModule')
           isStatus: true,
           isError: false,
           sku: "1"
-        },{
-          id: "2",
-          pictureUrl: "build/img/index/icon_home_device_room.png",
-          deviceType: "卫生间",
-          deviceStatus: "4个设备",
-          deviceDesc: "",
-          statusPictureUrl: "",
-          errorPictureUrl: "",
-          isStatus: false,
-          isError: false,
-          sku: "2"
-        },{
+        },
+        // {
+        //   id: "2",
+        //   pictureUrl: "build/img/index/icon_home_device_room.png",
+        //   deviceType: "卫生间",
+        //   deviceStatus: "4个设备",
+        //   deviceDesc: "",
+        //   statusPictureUrl: "",
+        //   errorPictureUrl: "",
+        //   isStatus: false,
+        //   isError: false,
+        //   sku: "2"
+        // },
+        {
           id: "3",
           pictureUrl: "build/img/index/img_home_device_heater.png",
           deviceType: "浴霸",
@@ -232,6 +234,18 @@ angular.module('indexPageModule')
           id: "8",
           pictureUrl: "build/img/index/img_home_device_chushuifa.png",
           deviceType: "airfoil-shower",
+          deviceStatus: "设备离线",
+          deviceDesc: "",
+          statusPictureUrl: "build/img/index/icon_home_device_no_singal.png",
+          errorPictureUrl: "build/img/index/icon_home_device_warnning.png",
+          isStatus: true,
+          isError: true,
+          sku: ""
+        },
+        {
+          id: "9",
+          pictureUrl: "build/img/index/img_home_device_chushuifa.png",
+          deviceType: "mc镜柜",
           deviceStatus: "设备离线",
           deviceDesc: "",
           statusPictureUrl: "build/img/index/icon_home_device_no_singal.png",
@@ -508,6 +522,9 @@ angular.module('indexPageModule')
         }
           if(item.deviceType == "airfoil-shower"){
             $state.go('airfoilShower');
+          }
+          if(item.deviceType == "mc镜柜"){
+            $state.go('mc');
           }
 
       };

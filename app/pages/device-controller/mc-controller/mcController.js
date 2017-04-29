@@ -505,11 +505,11 @@ angular.module('mcControlModule')
       };
       var test = function (index, value, deviceId) {
         var url = baseConfig.basePath + "/r/api/message/sendMessage";
-        var paramter = cmdService.cloudCmd(value,deviceId);
+        var paramter = cmdService.cloudCmd(deviceId,value);
         hmsHttp.post(url, paramter).success(
           function (response) {
             if (response.code == 200) {
-              var status = cmdService.explainAck(response.data.data.cmd[0]);
+              var status = mcService.explainAck(response.data.data.cmd[0]);
               if (status == '') {
               } else {
                 if (status.ack.indexOf('fa') >= 0) {
@@ -540,7 +540,6 @@ angular.module('mcControlModule')
           }
         ).error(
           function (response, status, header, config) {
-            hmsPopup.showShortCenterToast("");
           }
         );
       };
