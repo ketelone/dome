@@ -224,7 +224,12 @@
     "zhengchang": "正常",
     "clearopen": "打开阀门",
     "clearextend": "伸出喷管",
-    "clearinstance": "智感除菌"
+    "clearinstance": "智感除菌",
+    "mutex":"互斥",
+    "loadingdata":"正在获取数据",
+    "loadingdataerrror":"数据获取失败",
+    "directerror":"指令发生失败",
+    "directesuccess":"指令发生成功"
   },
   "toiletSetting": {
     "title": "马桶设置",
@@ -296,7 +301,7 @@
     "surplus":"剩余",
     "complete":"完成",
     "clear":"清洁",
-    "autoclear":"自动清洗",
+    "autoclear":"清洗",
     "handleclear":"手动清洗",
     "onekeystop":"一键停止",
     "setting":"设置",
@@ -308,7 +313,11 @@
     "timedelay":"时间延迟",
     "flowinstance":"流量即时",
     "flowelay":"流量延迟",
-    "mix":"混合"
+    "mix":"混合",
+    "loadingdata":"正在获取数据",
+    "loadingdataerrror":"数据获取失败",
+    "directerror":"指令发生失败",
+    "directesuccess":"指令发生成功"
   },
   "cenwatpurSetting":{
     "title":"中央净水器设置",
