@@ -36,6 +36,8 @@ angular.module('messageModule')
  $scope.statusword='statusword';
 $scope.exceptionword='exceptionword';
 
+     var circleUrl2="build/img/common/radio_h.png";
+     var circleUrltemp="build/img/common/radio_q.png";
 
      $scope.exceptionitems= [
         {
@@ -44,10 +46,10 @@ $scope.exceptionword='exceptionword';
           device:"message.device1",
           time:"message.time",
           circleUrl1:"build/img/common/radio_q.png",
-          circleUrl2:"build/img/common/radio_h.png",
-          circleUrltemp:"build/img/common/radio_q.png",
           ischecked:false,
-          name:"exception"
+          name:"exception",
+          hasRead:true,
+          readStyle:""
         },
        /* {
           id: "2",
@@ -55,8 +57,6 @@ $scope.exceptionword='exceptionword';
           device:"message.device2",
           time:"message.time",
           circleUrl1:"build/img/common/radio_q.png",
-          circleUrl2:"build/img/common/radio_h.png",
-          circleUrltemp:"build/img/common/radio_q.png",
           ischecked:false,
           name:"exception"
         },{
@@ -65,9 +65,7 @@ $scope.exceptionword='exceptionword';
           device:"message.device1",
           time:"message.time",
           circleUrl1:"build/img/common/radio_q.png",
-          circleUrl2:"build/img/common/radio_h.png",
           ischecked:false,
-          circleUrltemp:"build/img/common/radio_q.png",
          name:"exception"
 
         }*/
@@ -82,10 +80,10 @@ $scope.exceptionword='exceptionword';
           messageDel:"message.messageDel1",
           time:"message.time",
           circleUrl1:"build/img/common/radio_q.png",
-          circleUrl2:"build/img/common/radio_h.png",
           ischecked:false,
-          circleUrltemp:"build/img/common/radio_q.png",
-          name:"status"
+          name:"status",
+          hasRead:true,
+          readStyle:""
         },
         //{
         //  id: "2",
@@ -94,9 +92,7 @@ $scope.exceptionword='exceptionword';
         //  messageDel:"message.messageDel2",
         //  time:"message.time",
         //  circleUrl1:"build/img/common/radio_q.png",
-        //  circleUrl2:"build/img/common/radio_h.png",
-        //  ischecked:false,
-        //  circleUrltemp:"build/img/common/radio_q.png",
+       //  ischecked:false,
         //  name:"status"
         //},{
         //  id: "3",
@@ -105,9 +101,7 @@ $scope.exceptionword='exceptionword';
         //  messageDel:"message.messageDel1",
         //  time:"message.time",
         //  circleUrl1:"build/img/common/radio_q.png",
-        //  circleUrl2:"build/img/common/radio_h.png",
         //  ischecked:false,
-        //  circleUrltemp:"build/img/common/radio_q.png",
         //  name:"status"
         //},{
         //  id: "4",
@@ -116,9 +110,7 @@ $scope.exceptionword='exceptionword';
         //  messageDel:"message.messageDel1",
         //  time:"message.time",
         //  circleUrl1:"build/img/common/radio_q.png",
-        //  circleUrl2:"build/img/common/radio_h.png",
         //  ischecked:false,
-        //  circleUrltemp:"build/img/common/radio_q.png",
         //  name:"status"
         //},
         //{
@@ -128,9 +120,7 @@ $scope.exceptionword='exceptionword';
         //  messageDel:"message.messageDel1",
         //  time:"2017-02-08 17:25",
         //  circleUrl1:"build/img/common/radio_q.png",
-        //  circleUrl2:"build/img/common/radio_h.png",
         //  ischecked:false,
-        //  circleUrltemp:"build/img/common/radio_q.png",
         //  name:"status"
         //},
       ]
@@ -148,7 +138,7 @@ $scope.exceptionword='exceptionword';
       function getException(){
         var url = "https://139.219.186.43/residential/r/api/cmm/deviceException/query";
         var paramter = [
-          {"partyId":"1"}
+          {"partyId":"6"}
         ];
         hmsHttp.post(url, paramter).success(
           function(response){
@@ -158,19 +148,21 @@ $scope.exceptionword='exceptionword';
             console.log(response.rows[0].description);
             $scope.response=response;
        //异常及保修
+
             var item1={
               id: response.rows[0].exceptionId,
               exceptionMessage:response.rows[0].description,
               device:response.rows[0].deviceName,
               time:response.rows[0].creationDate,
               circleUrl1:"build/img/common/radio_q.png",
-              circleUrl2:"build/img/common/radio_h.png",
               ischecked:false,
-              circleUrltemp:"build/img/common/radio_q.png",
-              name:"exception"
+              name:"exception",
+              hasRead:false,
+              readStyle:""
 
             }
             $scope.exceptionitems.unshift(item1);
+
            //状态及提醒
             var item2={
               id: response.rows[1].exceptionId,
@@ -178,10 +170,10 @@ $scope.exceptionword='exceptionword';
               device:response.rows[1].deviceName,
               time:response.rows[1].creationDate,
               circleUrl1:"build/img/common/radio_q.png",
-              circleUrl2:"build/img/common/radio_h.png",
               ischecked:false,
-              circleUrltemp:"build/img/common/radio_q.png",
-              name:"exception"
+              name:"exception",
+              hasRead:false,
+              readStyle:""
 
             }
             $scope.statusitems.unshift(item2);
@@ -216,13 +208,24 @@ $scope.exceptionword='exceptionword';
        *@name:logout
        *@params:
        *@return:
-       *@disc:setClass
+       *@disc:判断是否已读
        */
-$scope.hasRead=""
-function setClass(){
 
-      }
+   var read= function(){
 
+  for (var i = 0; i <$scope.statusitems.length; i++) {
+     if ($scope.statusitems[i].hasRead==true) {
+      $scope.statusitems[i].readStyle="hasread";
+       }
+  }
+
+     for (var i = 0; i < $scope.exceptionitems.length; i++) {
+       if ($scope.exceptionitems[i].hasRead==true) {
+         $scope.exceptionitems[i].readStyle="hasread";
+       }
+     }
+    }
+      read();
       /**
        *@author:chenjiacheng
        *@name:logout
@@ -298,16 +301,16 @@ hmsPopup.confirmNoTitle( "<br><br><div ><div>删除后将无法在消息记录�
 
         //alert("statustrue");
       //  alert($scope.data.showDelete);
-        if($scope.data.showDelete==false){
-          return;
-        }
+      //  if($scope.data.showDelete==false){
+      //    return;
+      //  }
 
         if(item.ischecked==true&& item.name=="status") {
            //alert("statustrue");
           for (var i = 0; i < $scope.statusitems.length; i++) {
             if ($scope.statusitems[i].id == item.id) {
               $scope.statusitems[i].ischecked = false;
-              $scope.statusitems[i].circleUrl1 = $scope.statusitems[i].circleUrltemp;
+              $scope.statusitems[i].circleUrl1 = circleUrltemp;
             }
           }
         }
@@ -318,19 +321,16 @@ hmsPopup.confirmNoTitle( "<br><br><div ><div>删除后将无法在消息记录�
       for (var i = 0; i < $scope.statusitems.length; i++) {
         if ($scope.statusitems[i].id == item.id) {
           $scope.statusitems[i].ischecked = true;
-          $scope.statusitems[i].circleUrl1 = $scope.statusitems[i].circleUrl2;
+          $scope.statusitems[i].circleUrl1 = circleUrl2;
         }
       }  }
 
      else   if(item.ischecked==true&& item.name=="exception") {
-         // alert("exceptiontrue");
-          if($scope.data.showDelete==false){
-            return;
-          }
+
           for (var i = 0; i < $scope.exceptionitems.length; i++) {
             if ($scope.exceptionitems[i].id ==item.id) {
               $scope.exceptionitems[i].ischecked = false;
-              $scope.exceptionitems[i].circleUrl1 = $scope.exceptionitems[i].circleUrltemp;
+              $scope.exceptionitems[i].circleUrl1 = circleUrltemp;
     //alert(  $scope.exceptionitems[i].circleUrltemp +"2");
     //alert( $scope.exceptionitems[i].circleUrl1 +"1");
             }
@@ -339,13 +339,11 @@ hmsPopup.confirmNoTitle( "<br><br><div ><div>删除后将无法在消息记录�
         }
     else  if(item.ischecked==false&& item.name=="exception") {
        //alert("exceptionfalse");
-          if($scope.data.showDelete==false){
-            return;
-          }
+
           for (var i = 0; i < $scope.exceptionitems.length; i++) {
             if ($scope.exceptionitems[i].id ==item.id) {
               $scope.exceptionitems[i].ischecked = true;
-              $scope.exceptionitems[i].circleUrl1 = $scope.exceptionitems[i].circleUrl2;
+              $scope.exceptionitems[i].circleUrl1 = circleUrl2;
             }
           };
         }
@@ -362,11 +360,11 @@ hmsPopup.confirmNoTitle( "<br><br><div ><div>删除后将无法在消息记录�
 
         for (var i = 0; i < $scope.statusitems.length; i++) {
             $scope.statusitems[i].ischecked = false;
-          $scope.statusitems[i].circleUrl1 = $scope.statusitems[i].circleUrltemp;
+          $scope.statusitems[i].circleUrl1 = circleUrltemp;
         }
         for (var i = 0; i < $scope.exceptionitems.length; i++) {
           $scope.exceptionitems[i].ischecked = false;
-          $scope.exceptionitems[i].circleUrl1 = $scope.exceptionitems[i].circleUrltemp;
+          $scope.exceptionitems[i].circleUrl1 = circleUrltemp;
         }
         $scope.threeBottom=false;
         $scope.data.showDelete =false;
@@ -388,14 +386,14 @@ if( $scope.hasStaus==true) {
   if ($scope.hasChooseAllstatus == true) {
     for (var i = 0; i < $scope.statusitems.length; i++) {
       $scope.statusitems[i].ischecked = true;
-      $scope.statusitems[i].circleUrl1 = $scope.statusitems[i].circleUrl2;
+      $scope.statusitems[i].circleUrl1 = circleUrl2;
     }
 
   } else {
     for (var i = 0; i < $scope.statusitems.length; i++) {
 
       $scope.statusitems[i].ischecked = false;
-      $scope.statusitems[i].circleUrl1 = $scope.statusitems[i].circleUrltemp;
+      $scope.statusitems[i].circleUrl1 =circleUrltemp;
   }
   }
 
@@ -405,14 +403,14 @@ if( $scope.hasStaus==true) {
   if ($scope.hasChooseAllexception == true) {
     for (var i = 0; i < $scope.exceptionitems.length; i++) {
       $scope.exceptionitems[i].ischecked = true;
-      $scope.exceptionitems[i].circleUrl1 = $scope.exceptionitems[i].circleUrl2;
+      $scope.exceptionitems[i].circleUrl1 = circleUrl2;
     }
 
   } else {
     for (var i = 0; i < $scope.exceptionitems.length; i++) {
 
       $scope.exceptionitems[i].ischecked = false;
-      $scope.exceptionitems[i].circleUrl1 = $scope.exceptionitems[i].circleUrltemp;
+      $scope.exceptionitems[i].circleUrl1 = circleUrltemp;
 
     }
 
