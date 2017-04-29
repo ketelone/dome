@@ -5,13 +5,14 @@
 angular.module('utilModule')
   .service('cmdService',
     ['baseConfig',
-      function (baseConfig){
-        this.cloudCmd = function (value) {
+      function (baseConfig) {
+
+        this.cloudCmd = function (deviceId, value) {
           var paramter = {
             "ver": 1,
             "from": {
               "ctype": 240,
-              "uid": "13405533206"
+              "uid": deviceId
             },
             "to": {
               "ctype": 229,
@@ -26,6 +27,7 @@ angular.module('utilModule')
           };
           return paramter;
         };
+
         this.sendCmd = function (deviceId, value, boxId) {
           var cmd = {
             from: {
@@ -52,27 +54,30 @@ angular.module('utilModule')
           }, success, error);
           function success(response) {
           }
+
           function error() {
           }
         };
-        function explainAck(arg){
-          var code ;
-          if (arg.length>=16 && arg.length<=40) {
-            var ackStr = arg.substring(12,arg.length-2);
-            var ack = ackStr.substring(0,2).toLowerCase();
+
+
+        this.explainAck = function (arg) {
+          var code;
+          if (arg.length >= 16 && arg.length <= 40) {
+            var ackStr = arg.substring(12, arg.length - 2);
+            var ack = ackStr.substring(0, 2).toLowerCase();
             if (ack == 'fa') {
               //valid ack
-              var operate = ackStr.substring(0,4);
-              code = {'ack':operate};
-            }else if(ack == 'fd'){
+              var operate = ackStr.substring(0, 4).toLowerCase();
+              code = {'ack': operate};
+            } else if (ack == 'fd') {
               //invalid ack
-              code = {'ack':'1003'};
-            }else if (ack =='fc'){
+              code = {'ack': '1003'};
+            } else if (ack == 'fc') {
               //invalid ack
-              code = {'ack':'1002'};
-            }else if (ack == 'fb'){
+              code = {'ack': '1002'};
+            } else if (ack == 'fb') {
               //invalid ack
-              code = {'ack':'1001'};
+              code = {'ack': '1001'};
             }
           }
           return code;

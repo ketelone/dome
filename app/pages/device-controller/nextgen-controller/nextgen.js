@@ -18,7 +18,7 @@ angular.module('nextgenModule')
       var idx="00";
       var devId="03";//E8:91:E0:DC:20:F1
       var sku=SettingsService.get('sku');
-
+    var switchType="";
       //var deveiceId="E0DC20F1";
 
   /**
@@ -58,8 +58,18 @@ angular.module('nextgenModule')
         }
       };
       var deviceId = getDeviceId();
-    // alert("OK"+deveiceId);
+      /**
+       *@author:chenjiacheng
+       *@name:initChushuiWay
+       *@params:
+       *@return:
+       *@disc:initChushuiWay
 
+       */
+     /* var initChushuiWay=function(){
+        handHuasa();//默认手持花洒
+      }
+      initChushuiWay();*/
       /**
        *@author:chenjiacheng
        *@name:chixuWater
@@ -69,7 +79,7 @@ angular.module('nextgenModule')
 
        */
   function chixuWater(){
-
+        switchType="chixuWater";
     var argment = {
       'mode': '01'    //00表示stop，01表示Start continuous outlet 02表示Start evacuate cold water (turn on, and off when reach 37 degree,Start evacuate cold water 如果5分钟后水温仍达不到37度则自动停止) ,other表示内置设定
    }
@@ -77,7 +87,12 @@ angular.module('nextgenModule')
     var  data= nextgenService.operateShower(argment);
     var value = getValue(data);
   alert(value);
-    nextgenService.sendCmd(deviceId,value,"持续出水","持续出水失败");
+
+       if(baseConfig.isCloudCtrl){
+         cloudSendcmd("ShownerTurnOn",value,"持续出水","持续出水失败");
+       }else{
+      nextgenService.sendCmd(deviceId,value,"持续出水","持续出水失败");
+        }
 
   }
       /**
@@ -89,14 +104,18 @@ angular.module('nextgenModule')
 
        */
   function paikongWater(){
-
+        switchType="paikongWater";
     var argment = {
       'mode': '02'    //00表示stop，01表示Start continuous outlet 02表示Start evacuate cold water (turn on, and off when reach 37 degree,Start evacuate cold water 如果5分钟后水温仍达不到37度则自动停止) ,other表示内置设定
     }
     var data = nextgenService.operateShower(argment);
      var value = getValue(data);
     alert(value);
-    nextgenService.sendCmd(deviceId,value,"排空冷水","排空冷水失败");
+        if(baseConfig.isCloudCtrl){
+          cloudSendcmd("ShownerCoolTurnOn",value,"排空冷水","排空冷水失败");
+        }else{
+          nextgenService.sendCmd(deviceId,value,"排空冷水","排空冷水失败");
+        }
 
 }
       /**
@@ -108,14 +127,18 @@ angular.module('nextgenModule')
 
        */
       function closeWater(){
+        switchType="closeWater";
         var argment = {
           'mode': '00'    //00表示stop，01表示Start continuous outlet 02表示Start evacuate cold water (turn on, and off when reach 37 degree,Start evacuate cold water 如果5分钟后水温仍达不到37度则自动停止) ,other表示内置设定
         }
         var data = nextgenService.operateShower(argment);
       var value = getValue(data);
         alert(value);
-        nextgenService.sendCmd(deviceId,value,"关闭","关闭失败");
-
+    if(baseConfig.isCloudCtrl){
+          cloudSendcmd(deviceId,value,"关闭","关闭失败");
+        }else{
+          nextgenService.sendCmd(deviceId,value,"关闭","关闭失败");
+        }
       }
       /**
        *@author:chenjiacheng
@@ -126,13 +149,17 @@ angular.module('nextgenModule')
 
        */
   function closeAll(){
-
+        switchType="closeAll";
          var data = nextgenService.stopAll();
 
         var value = getValue(data);
 
        alert(value);
-    nextgenService.sendCmd(deviceId,value,"一键关闭","一键关闭失败");
+    if(baseConfig.isCloudCtrl){
+          cloudSendcmd(deviceId,value,"一键关闭","一键关闭失败");
+        }else{
+      nextgenService.sendCmd(deviceId,value,"一键关闭","一键关闭失败");
+    }
       };
       /**
        *@author:chenjiacheng
@@ -144,6 +171,7 @@ angular.module('nextgenModule')
        */
       //头顶花洒
       function headerHuasa(){
+        switchType="headerHuasa";
         var argment = {
           'temperature': '00',    //这个最好传16进制的字符串 比如0 ->00 100->64
           'out': 'HRS',			  //这个参数是个枚举字符串 HRS，HS，SP，HDS 分别表示 头顶花洒，头顶摇摆，spout，手持花洒，
@@ -153,8 +181,11 @@ angular.module('nextgenModule')
         var data = nextgenService.setShowerPara(argment);
        var value = getValue(data);
         alert(value);
-       nextgenService.sendCmd(deviceId,value,"头顶花洒","头顶花洒失败");
-
+     if(baseConfig.isCloudCtrl){
+          cloudSendcmd(deviceId,value,"头顶花洒","头顶花洒失败");
+        }else{
+        nextgenService.sendCmd(deviceId,value,"头顶花洒","头顶花洒失败");
+      }
 
       }
       /**
@@ -167,6 +198,7 @@ angular.module('nextgenModule')
        */
       //头顶摆动
       function headerBaidong(){
+        switchType="headerBaidong";
         var argment = {
           'temperature': '00',    //这个最好传16进制的字符串 比如0 ->00 100->64
           'out': 'HS',			  //这个参数是个枚举字符串 HRS，HS，SP，HDS 分别表示 头顶花洒，头顶摇摆，spout，手持花洒，
@@ -175,7 +207,11 @@ angular.module('nextgenModule')
         var data = nextgenService.setShowerPara(argment);
       var value = getValue(data);
  alert(value);
-        nextgenService.sendCmd(deviceId,value,"头顶花洒","头顶花洒失败");
+        if(baseConfig.isCloudCtrl){
+          cloudSendcmd(deviceId,value,"头顶花洒","头顶花洒失败");
+        }else{
+          nextgenService.sendCmd(deviceId,value,"头顶花洒","头顶花洒失败");
+        }
 
 
       }
@@ -188,6 +224,7 @@ angular.module('nextgenModule')
 
        */
       function handHuasa(){
+        switchType="handHuasa";
         var argment = {
           'temperature': '00',    //这个最好传16进制的字符串 比如0 ->00 100->64
           'out': 'HDS',			  //这个参数是个枚举字符串 HRS，HS，SP，HDS 分别表示 头顶花洒，头顶摇摆，spout，手持花洒，
@@ -197,9 +234,11 @@ angular.module('nextgenModule')
         var data = nextgenService.setShowerPara(argment);
        var value = getValue(data);
         alert(value);
-        nextgenService.sendCmd(deviceId,value,"手持花洒","手持花洒失败");
-
-
+      if(baseConfig.isCloudCtrl){
+          cloudSendcmd(deviceId,value,"手持花洒","手持花洒失败");
+        }else{
+          nextgenService.sendCmd(deviceId,value,"手持花洒","手持花洒失败");
+        }
       }
       /**
        *@author:chenjiacheng
@@ -210,6 +249,7 @@ angular.module('nextgenModule')
 
        */
       function goSpout(){
+        switchType="goSpout";
         var argment = {
           'temperature': '00',    //这个最好传16进制的字符串 比如0 ->00 100->64
           'out': 'SP',			  //这个参数是个枚举字符串 HRS，HS，SP，HDS 分别表示 头顶花洒，头顶摇摆，spout，手持花洒，
@@ -218,8 +258,12 @@ angular.module('nextgenModule')
         var data = nextgenService.setShowerPara(argment);
         var value = getValue(data);
   alert(value);
-        nextgenService.sendCmd(deviceId,value,"Spout","Spout失败");
+       if(baseConfig.isCloudCtrl){
+          cloudSendcmd(deviceId,value,"Spout","Spout失败");
+        }else{
+         nextgenService.sendCmd(deviceId,value,"Spout","Spout失败");
 
+       }
     }
 
 
@@ -275,22 +319,59 @@ angular.module('nextgenModule')
 
       document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
         var resultOn = result;
-        if (resultOn.payload.cmd == "CMD_RETURN") {
-          var tempData = nextgenService.explainAck(resultOn.payload.value[0]);
-          if(tempData.ack.indexOf("fa")>=0){
-            $scope.handlenapeListNape[2].selecFlag =false;
-            $scope.handlenapeListNape[2].imgUrl = $scope.handlenapeListNape[2].imgUrlTemp;
 
+        if(resultOn.from.device_id == getDeviceId()) {
+          if (resultOn.payload.cmd == "CMD_RETURN") {
+            var tempData = nextgenService.explainAck(resultOn.payload.value[0]);
+            if(tempData.ack.indexOf("fa")>=0) {
+              if(switchType=="handHuasa"){
+                hmsPopup.showShortCenterToast("手持花洒开启成功");
+              }
+              if(switchType=="chixuWater"){
+                hmsPopup.showShortCenterToast("持续出水开启成功");
+                $scope.handlenapeListNape[0].selecFlag = true;
+                $scope.handlenapeListNape[0].imgUrl = $scope.handlenapeListNape[0].imgSeledUrl;
+                $scope.handlenapeListNape[1].selecFlag = false;
+                $scope.handlenapeListNape[1].imgUrl = $scope.handlenapeListNape[1].imgUrlTemp;
+
+              }
+              if(switchType=="paikongWater"){
+                hmsPopup.showShortCenterToast("排空冷水开启成功");
+                $scope.handlenapeListNape[1].selecFlag = true;
+                $scope.handlenapeListNape[1].imgUrl = $scope.handlenapeListNape[1].imgSeledUrl;
+                $scope.handlenapeListNape[0].selecFlag =false;
+                $scope.handlenapeListNape[0].imgUrl = $scope.handlenapeListNape[0].imgUrlTemp;
+
+              }
+              if(switchType=="closeWater"){
+                hmsPopup.showShortCenterToast("关闭成功");
+                $scope.handlenapeListNape[1].selecFlag = false;
+                $scope.handlenapeListNape[1].imgUrl = $scope.handlenapeListNape[1].imgUrlTemp;
+                $scope.handlenapeListNape[0].selecFlag =false;
+                $scope.handlenapeListNape[0].imgUrl = $scope.handlenapeListNape[0].imgUrlTemp;
+
+              }
+              if(switchType=="closeAll"){
+                hmsPopup.showShortCenterToast("一键关闭成功");
+                $scope.handlenapeListNape[2].selecFlag =false;
+                $scope.handlenapeListNape[2].imgUrl = $scope.handlenapeListNape[2].imgUrlTemp;
            }
+              if(switchType=="headerHuasa"){
+                hmsPopup.showShortCenterToast("头顶花洒开启成功");
+              }
+                           if(switchType=="headerBaidong"){
+                hmsPopup.showShortCenterToast("头顶摆动开启成功");
+              }
+              if(switchType=="goSpout"){
+                hmsPopup.showShortCenterToast("spout开启成功");
+              }
+         }
+            else{
+              hmsPopup.showShortCenterToast("操作失败");
+            }
 
 
-
-
-
-
-
-
-
+    }
           $scope.$apply();
         }
       }, false);
@@ -315,7 +396,7 @@ angular.module('nextgenModule')
 
   //侧滑转档数量json
       $scope.slideInitData =[{
-        des: "nextgen.yidong",
+        des: "nextgen.chixu",
         gearNum: 1,
         gearInit: 1,
        // gearInitTemp: 1,
@@ -407,7 +488,7 @@ angular.module('nextgenModule')
 
         "<span ng-if='true' class='toilet-parameterctl-raddata toilet-parameterct-span' ></span>"+
          /* "<p ng-if='true' class='toilet-parameterctl-raddata' translate='nextgen.yidong' style='font-size: 0.6rem;' >4324</p>"+*/
-          "<div ng-if='true' class='toilet-parameterctl-des' translate='nextgen.yidong'></div>"+
+          "<div ng-if='true' class='toilet-parameterctl-des' translate='{{slideInitData[0].des}}'></div>"+
           "</div>"+
           "<div class='toilet-parameterctl-dataimg' ng-if='list.parameterctlFlag'>"+
           "<img class='conninfo-parameterctl-img' ng-src='build/img/toilet-controller/btn_devicedetail_scoll.png' alt=''>"+
@@ -478,7 +559,7 @@ angular.module('nextgenModule')
 
       $scope.selectNapes = function (index) {
 
-     $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
+     /*$scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
 
         for(var i=0;i<handlenapeListNapeLen;i++){
           if(i != index){
@@ -497,52 +578,55 @@ angular.module('nextgenModule')
             $scope.handlenapeListNape[i].imgUrl = $scope.handlenapeListNape[i].imgUrlTemp;
           }
         };
-
+*/
   if (index == 0) {
 
 
      $scope.slideInitData[0].des = "nextgen.chixu";
-      $scope.toiletController = {
-        modelType: "nextgen.maichong",
-        way: "nextgen.handleSelecDes"
-      };
-      $scope.value = [{id: 2, des: 'nextgen.maichong'},
+      //$scope.toiletController = {
+      //  modelType: "nextgen.yidong",
+      //  way: "nextgen.handleSelecDes"
+      //};
+     /* $scope.value = [{id: 2, des: 'nextgen.maichong'},
         {id: 3, des: 'nextgen.bodong'}, {id: 4, des: 'nextgen.yidong'}, {id: 5, des: 'nextgen.Spout'}
-      ];
+      ];*/
 
-  if($scope.handlenapeListNape[index].selecFlag ==true){
-    alert(1);
-    handHuasa();//先选择手持花洒
+  //if($scope.handlenapeListNape[index].selecFlag ==true){
+  //  alert(1);
+   // handHuasa();//先选择手持花洒
     alert(2);
     chixuWater();//再持续出水
 
-  }
-    else{
-
-    closeWater();
-  }
+ // }
+   // else{
+    if($scope.handlenapeListNape[0].selecFlag ==true){
+    closeWater();}
+  //}
 
 }
         if(index==1) {
 
 
             $scope.slideInitData[0].des = "nextgen.paikong";
-            $scope.toiletController = {
-              modelType: "nextgen.maichong",
-              way: "nextgen.handleSelecDes"
-            };
-            $scope.value = [{id: 2, des: 'nextgen.maichong'},
-              {id: 3, des: 'nextgen.bodong'}, {id: 4, des: 'nextgen.yidong'}, {id: 5, des: 'nextgen.Spout'}
-            ];
-          if($scope.handlenapeListNape[index].selecFlag ==true){
-            handHuasa();//先选择手持花洒
-            paikongWater(); //再排空冷水
-          }
-          else{
-            closeWater();
-          }
+            //$scope.toiletController = {
+            //  modelType: "nextgen.yidong",
+            //  way: "nextgen.handleSelecDes"
+            //};
+            //$scope.value = [{id: 2, des: 'nextgen.maichong'},
+            //  {id: 3, des: 'nextgen.bodong'}, {id: 4, des: 'nextgen.yidong'}, {id: 5, des: 'nextgen.Spout'}
+            //];
+        //  if($scope.handlenapeListNape[index].selecFlag ==true){
+          //  handHuasa();//先选择手持花洒
+            paikongWater(); //排空冷水
+        //  }
+          //else{
+         if($scope.handlenapeListNape[1].selecFlag ==true){
+            closeWater();}
+        //  }
         }
         if(index==2){
+          $scope.handlenapeListNape[2].selecFlag = true;
+          $scope.handlenapeListNape[2].imgUrl = $scope.handlenapeListNape[2].imgSeledUrl;
 
           closeAll();
     }
@@ -626,14 +710,14 @@ angular.module('nextgenModule')
       $scope.openModal = function () {
 
 
-        if( $scope.handlenapeListNape[0].selecFlag==true||$scope.handlenapeListNape[1].selecFlag==true) {
+        //if( $scope.handlenapeListNape[0].selecFlag==true||$scope.handlenapeListNape[1].selecFlag==true) {
           $scope.modal.show();
           setTimeout(function () {
             var ele = document.getElementsByClassName("hmsModal");
             ele[0].style.top = 68 + '%';
             ele[0].style.minHeight = 61 + '%';
           }, 10)
-        }
+      //  }
 
        //  }
 
@@ -703,30 +787,83 @@ angular.module('nextgenModule')
       };
 
 //通过云端发送指令
-      var test = function () {
+      var cloudSendcmd = function (deviceId, value, successMsg, errorMsg) {
         var url = baseConfig.basePath + "/r/api/message/sendMessage";
         var paramter = {
-          "ver": 1,
-          "from": {
-            "ctype": 240,
-            "uid": "13405533206"
+          "ver":1,
+          "from":{
+            "ctype":240,
+            "uid": deviceId
           },
-          "to": {
-            "ctype": 229,
-            "uid": "hand-residential"
+          "to":{
+            "ctype":229,
+            "uid":"hand-residential"
           },
-          "ts": 1493013672695,
-          "idx": 1,
-          "mtype": "ctl",
-          "data": {
-            "cmd": ["887706010005270221"]
+          "ts":1493013672695,
+          "idx":1,
+          "mtype":"ctl",
+          "data":{
+            "cmd":[value]
           }
         };
         hmsHttp.post(url, paramter).success(
           function (response) {
             //var value = response.data.data.cmd[0];
            alert(JSON.stringify(response));
-           // alert(value);
+            if(response.code == 200) {
+              var tempData = nextgenService.explainAck(response.data.data.cmd[0]);
+             
+              if (tempData.ack.indexOf("fa") >= 0) {
+                if (switchType == "handHuasa") {
+                  hmsPopup.showShortCenterToast("手持花洒开启成功");
+                }
+                if (switchType == "chixuWater") {
+                  hmsPopup.showShortCenterToast("持续出水开启成功");
+                  $scope.handlenapeListNape[0].selecFlag = true;
+                  $scope.handlenapeListNape[0].imgUrl = $scope.handlenapeListNape[0].imgSeledUrl;
+                  $scope.handlenapeListNape[1].selecFlag = false;
+                  $scope.handlenapeListNape[1].imgUrl = $scope.handlenapeListNape[1].imgUrlTemp;
+
+                }
+                if (switchType == "paikongWater") {
+                  hmsPopup.showShortCenterToast("排空冷水开启成功");
+                  $scope.handlenapeListNape[1].selecFlag = true;
+                  $scope.handlenapeListNape[1].imgUrl = $scope.handlenapeListNape[1].imgSeledUrl;
+                  $scope.handlenapeListNape[0].selecFlag = false;
+                  $scope.handlenapeListNape[0].imgUrl = $scope.handlenapeListNape[0].imgUrlTemp;
+
+                }
+                if (switchType == "closeWater") {
+                  hmsPopup.showShortCenterToast("关闭成功");
+                  $scope.handlenapeListNape[1].selecFlag = false;
+                  $scope.handlenapeListNape[1].imgUrl = $scope.handlenapeListNape[1].imgUrlTemp;
+                  $scope.handlenapeListNape[0].selecFlag = false;
+                  $scope.handlenapeListNape[0].imgUrl = $scope.handlenapeListNape[0].imgUrlTemp;
+
+                }
+                if (switchType == "closeAll") {
+                  hmsPopup.showShortCenterToast("一键关闭成功");
+                  $scope.handlenapeListNape[2].selecFlag = false;
+                  $scope.handlenapeListNape[2].imgUrl = $scope.handlenapeListNape[2].imgUrlTemp;
+                }
+                if (switchType == "headerHuasa") {
+                  hmsPopup.showShortCenterToast("头顶花洒开启成功");
+                }
+                if (switchType == "headerBaidong") {
+                  hmsPopup.showShortCenterToast("头顶摆动开启成功");
+                }
+                if (switchType == "goSpout") {
+                  hmsPopup.showShortCenterToast("spout开启成功");
+                }
+              }
+              else {
+                hmsPopup.showShortCenterToast("操作失败");
+              }
+            }
+
+
+
+            // alert(value);
          //   alert(JSON.stringify(bathroomCmdService.explainAck(value)));
 
           }

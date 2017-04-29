@@ -85,10 +85,10 @@ angular.module('nextgenModule')
           var code ;
           if (arg.length>=16) {
             var ackStr = arg.substring(12,arg.length-2);
-            var ack = ackStr.substring(0,2).toLowerCase();
+            var ack = ackStr.substring(0,2)
             if (ack == 'fa') {
               //valid ack
-              var operate = ackStr.substring(0,4);
+              var operate = ackStr.substring(0,4).toLowerCase();
               code = {'ack':operate};
             }else if(ack == 'fd'){
               //invalid ack

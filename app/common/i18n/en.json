@@ -58,7 +58,7 @@
       "enterPhoneNum": "Phone Numer",
       "moreSix": "6 digitals at least",
       "checkNextStep": "Click“Next”",
-      "role": "By Registering,you're agreeing to"
+      "role": "By Registering,you're agreeing to",
       "aggrement": "《Kohler Customer Agreement 》",
       "phoneRegister": "Phone number Register",
       "mailRegister": "Email Register",
@@ -390,7 +390,7 @@
     "zhengchang": "Normal",
     "bath": "Bath Faucet",
     "handshower": "Handshower",
-    "settingName1": "Historical Exception Records"",
+    "settingName1": "Historical Exception Records",
     "settingName2": "Reset All",
     "settingName3": "Device Info",
     "infoTaressName": "Device Info",
