@@ -82,10 +82,12 @@ angular.module('nextgenModule')
 
 //arg 这里 8877-----
         function explainAck(arg){
+
           var code ;
-          if (arg.length>=16) {
+          if (arg.length>=16&&arg.length<=40) {
             var ackStr = arg.substring(12,arg.length-2);
-            var ack = ackStr.substring(0,2)
+            var ack = ackStr.substring(0,2).toLowerCase();
+           // alert("12344");
             if (ack == 'fa') {
               //valid ack
               var operate = ackStr.substring(0,4).toLowerCase();

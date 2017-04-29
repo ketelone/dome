@@ -17,11 +17,11 @@ angular.module('messageModule')
     '$scope',
     '$state',
     '$timeout',
-    'publicMethod','$ionicPopup','hmsPopup','hmsHttp','SettingsService',
+    'publicMethod','$ionicPopup','hmsPopup','hmsHttp','SettingsService','baseConfig',
     function ($scope,
               $state,
               $timeout,
-              publicMethod,$ionicPopup,hmsPopup,hmsHttp,SettingsService) {
+              publicMethod,$ionicPopup,hmsPopup,hmsHttp,SettingsService,baseConfig) {
 
 
 
@@ -136,7 +136,7 @@ $scope.exceptionword='exceptionword';
       $scope.response="";
 
       function getException(){
-        var url = "https://139.219.186.43/residential/r/api/cmm/deviceException/query";
+        var url = baseConfig.basePath+"/r/api/cmm/deviceException/query";
         var paramter = [
           {"partyId":"6"}
         ];
@@ -171,7 +171,7 @@ $scope.exceptionword='exceptionword';
               time:response.rows[1].creationDate,
               circleUrl1:"build/img/common/radio_q.png",
               ischecked:false,
-              name:"exception",
+              name:"status",
               hasRead:false,
               readStyle:""
 
@@ -316,7 +316,6 @@ hmsPopup.confirmNoTitle( "<br><br><div ><div>删除后将无法在消息记录�
         }
 
     else if(item.ischecked==false&& item.name=="status"){
-
 
       for (var i = 0; i < $scope.statusitems.length; i++) {
         if ($scope.statusitems[i].id == item.id) {

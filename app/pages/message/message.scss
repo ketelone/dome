@@ -119,6 +119,7 @@ right: 0.3rem;
   font-size: 0.24rem;
   color: #FFFFFF;
 }
+
 .button:after{
   background: #212121;
   z-index: -1;
@@ -133,7 +134,7 @@ right: 0.3rem;
    bottom:44px;
   }
 
-
+//底部三个按钮样式
   .allChoose{
     background: #3F3F3F;
 padding: 0.24rem 0.77rem 0.24rem 0.77rem;
@@ -149,7 +150,7 @@ padding: 0.24rem 0.77rem 0.24rem 0.77rem;
 }
 
 
-
+//是否已读样式
   .hasread{
     opacity:0.9;
   }

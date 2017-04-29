@@ -60,6 +60,7 @@ angular.module('utilModule')
         };
 
         this.explainAck = function (arg) {
+
           var code;
           if (arg.length >= 16 && arg.length <= 40) {
             var ackStr = arg.substring(12, arg.length - 2);
