@@ -1,4 +1,3 @@
-
 /**
  * Created by daidongdong on 2017/4/28.
  */
@@ -6,8 +5,9 @@
 angular.module('utilModule')
   .service('cmdService',
     ['baseConfig',
-      function (baseConfig){
-        this.cloudCmd = function (deviceId,value) {
+      function (baseConfig) {
+
+        this.cloudCmd = function (deviceId, value) {
           var paramter = {
             "ver": 1,
             "from": {
@@ -28,7 +28,7 @@ angular.module('utilModule')
           return paramter;
         };
 
-        this.sendCmd = function (deviceId, value) {
+        this.sendCmd = function (deviceId, value, boxId) {
           var cmd = {
             from: {
               cid: "0xE3",
@@ -47,27 +47,37 @@ angular.module('utilModule')
             ts: Date.parse(new Date()) / 1000,
             ver: 1,
           }
+          cordova.plugins.SocketPlugin.tcpSendCmd({
+            "timeout": "5000",
+            "value": cmd,
+            "ip": boxId
+          }, success, error);
+          function success(response) {
+          }
+
+          function error() {
+          }
         };
 
 
-        function explainAck(arg){
-          var code ;
-          if (arg.length>=16 && arg.length<=40) {
-            var ackStr = arg.substring(12,arg.length-2);
-            var ack = ackStr.substring(0,2).toLowerCase();
+        this.explainAck = function (arg) {
+          var code;
+          if (arg.length >= 16 && arg.length <= 40) {
+            var ackStr = arg.substring(12, arg.length - 2);
+            var ack = ackStr.substring(0, 2).toLowerCase();
             if (ack == 'fa') {
               //valid ack
-              var operate = ackStr.substring(0,4);
-              code = {'ack':operate};
-            }else if(ack == 'fd'){
+              var operate = ackStr.substring(0, 4).toLowerCase();
+              code = {'ack': operate};
+            } else if (ack == 'fd') {
               //invalid ack
-              code = {'ack':'1003'};
-            }else if (ack =='fc'){
+              code = {'ack': '1003'};
+            } else if (ack == 'fc') {
               //invalid ack
-              code = {'ack':'1002'};
-            }else if (ack == 'fb'){
+              code = {'ack': '1002'};
+            } else if (ack == 'fb') {
               //invalid ack
-              code = {'ack':'1001'};
+              code = {'ack': '1001'};
             }
           }
           return code;

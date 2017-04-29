@@ -5,24 +5,24 @@ angular.module('mcControlModule')
     '$ionicModal',
     '$compile',
     'baseConfig',
-    'checkVersionService', 'SettingsService', '$ionicHistory', '$ionicSlideBoxDelegate', 'mcService',
+    'checkVersionService', 'SettingsService', '$ionicHistory', '$ionicSlideBoxDelegate', 'mcService', 'hmsHttp', 'cmdService','hmsPopup',
     function ($scope,
               $state,
               $ionicModal,
               $compile,
               baseConfig,
-              checkVersionService, SettingsService, $ionicHistory, $ionicSlideBoxDelegate, mcService) {
+              checkVersionService, SettingsService, $ionicHistory, $ionicSlideBoxDelegate, mcService, hmsHttp, cmdService,hmsPopup) {
       var sku = SettingsService.get('sku')
       /**
        *@autor: caolei
        *@return: device id
        *@disc: get device id
        */
-      var getDeviceId = function(){
+      var getDeviceId = function () {
         var deviceList = localStorage.deviceInfo.split(";");
-        for(var i = 0; i < deviceList.length; i ++){
+        for (var i = 0; i < deviceList.length; i++) {
           var deviceInfo = deviceList[i].split(",");
-          if(deviceInfo[0] == sku){
+          if (deviceInfo[0] == sku) {
             return deviceInfo[1];
           }
         }
@@ -45,17 +45,17 @@ angular.module('mcControlModule')
       }]
 
       $scope.slideTunBuData = [{
-          des: "亮度",
-          gearNum: 2,
-          gearInit: 1,
-          gearInitTemp: 1,
-          parameterctlFlag: false,
-          parNodeid: 'toilet-TunBuSyCtl',
-          canves01: "TunBuSycanves01",
-          canves02: "TunBuSycanves02",
-          canves03: "TunBuSycanves03",
-          flag: "1"
-        },
+        des: "亮度",
+        gearNum: 2,
+        gearInit: 1,
+        gearInitTemp: 1,
+        parameterctlFlag: false,
+        parNodeid: 'toilet-TunBuSyCtl',
+        canves01: "TunBuSycanves01",
+        canves02: "TunBuSycanves02",
+        canves03: "TunBuSycanves03",
+        flag: "1"
+      },
         {
           des: "色温",
           gearNum: 2,
@@ -393,53 +393,52 @@ angular.module('mcControlModule')
       }, 20);
       //处理选择怎加border
       var handlenapeListNapeLen = $scope.handlenapeListNape.length;
-      $scope.selectNapes = function (index,info) {
+      $scope.selectNapes = function (index, info) {
         $scope.handlenapeSelectedIndex = index;
         console.log(info.selecFlag);
         if (index == 0) {
-          if(info.selecFlag ==false) {
+          if (info.selecFlag == false) {
             var value = mcService.getCmd("8877", 1, mcService.data.openLight, 0, 5);
             console.log(value);
-            sendCmd(deviceId, value, '灯光开启成功！', '注水开启失败！');
-          }else{
+
+            if (baseConfig.isCloudCtrl == true) {
+
+              test(index, value, 'mcOpenLight');
+            } else {
+              console.log(value);
+              cmdService.sendCmd(deviceId, value, localStorage.boxIp);
+            }
+          } else {
             var value = mcService.getCmd("8877", 1, mcService.data.closeLight, 0, 5);
             console.log(value);
             sendCmd(deviceId, value, '灯光关闭成功！', '灯光关闭失败！');
           }
         }
         if (index == 1) {
-          if(info.selecFlag ==false){
+          if (info.selecFlag == false) {
             var value = mcService.getCmd("8877", 1, mcService.data.openDemist, 0, 5);
-            console.log(value);
-            sendCmd(deviceId, value, '除雾开启成功！', '除雾开启失败！');
-          }else{
+            if (baseConfig.isCloudCtrl == true) {
+              test(index, value, 'mcDefogging');
+            } else {
+              console.log(value);
+              cmdService.sendCmd(deviceId, value, localStorage.boxIp);
+            }
+          } else {
             var value = mcService.getCmd("8877", 1, mcService.data.closeDemist, 0, 5);
             console.log(value);
-            sendCmd(deviceId, value, '关闭除雾成功！', '关闭除雾失败！');
+            cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           }
         }
         if (index == 2) {
-            var value = mcService.getCmd("8877", 1, mcService.data.closeAll, 0, 5);
-            console.log(value);
-            sendCmd(deviceId, value, '一键停止开启成功！', '一键停止开启失败！');
+          var value = mcService.getCmd("8877", 1, mcService.data.closeAll, 0, 5);
+          console.log(value);
+          cmdService.sendCmd(deviceId, value, localStorage.boxIp);
         }
         if (index == 3) {
           $state.go('karessSetting');
         }
 
 
-        $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
-        for (var i = 0; i < handlenapeListNapeLen; i++) {
-          if (i !== index) {
-            $scope.handlenapeListNape[i].selecFlag = false;
-          }
-          ;
-        }
-        ;
-        if ($scope.handlenapeListNape[index].selecFlag === true) {
-          $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgSeledUrl;
-        }
-        ;
         for (var i = 0; i < handlenapeListNapeLen; i++) {
           if (i !== index) {
             $scope.handlenapeListNape[i].imgUrl = $scope.handlenapeListNape[i].imgUrlTemp;
@@ -489,39 +488,6 @@ angular.module('mcControlModule')
         }
         ;
       };
-      var sendCmd = function (deviceId, value, successMsg, errorMsg) {
-        return;
-        var cmd = {
-          from: {
-            cid: "0xE3",
-          },
-          idx: 1,
-          method: "CTL",
-          payload: {
-            cmd: "CMD_REQUEST",
-            "device_type": "BLE_DEVICE",
-            value: [value],
-          },
-          to: {
-            cid: "0xE4",
-            "device_id": deviceId,
-          },
-          ts: Date.parse(new Date()) / 1000,
-          ver: 1,
-        }
-        cordova.plugins.SocketPlugin.tcpSendCmd({
-          "timeout": "5000",
-          "value": cmd,
-          "ip": localStorage.boxIp
-        }, success, error);
-        function success(response) {
-          hmsPopup.showShortCenterToast(successMsg);
-        }
-
-        function error() {
-          hmsPopup.showShortCenterToast(errorMsg);
-        }
-      };
       //保存选择的数据项
       $scope.handleRadSelected;
       $scope.handlenapeSelectedIndex;
@@ -534,7 +500,49 @@ angular.module('mcControlModule')
         }
         if ($scope.handlenapeListNape == 0) {
           var value = mcService.getCmd("8877", 1, mcService.data.closeSanitize, 0, 5);
-          sendCmd(deviceId, value, '开启成功！', '注水开启失败！');
+          cmdService.sendCmd(deviceId, value, localStorage.boxIp);
         }
       };
+      var test = function (index, value, deviceId) {
+        var url = baseConfig.basePath + "/r/api/message/sendMessage";
+        var paramter = cmdService.cloudCmd(value,deviceId);
+        hmsHttp.post(url, paramter).success(
+          function (response) {
+            if (response.code == 200) {
+              var status = cmdService.explainAck(response.data.data.cmd[0]);
+              if (status == '') {
+              } else {
+                if (status.ack.indexOf('fa') >= 0) {
+                  status.ack = status.ack.substring(2, 4);
+                  console.log(status)
+                  if (status.ack == 28) {
+                    hmsPopup.showShortCenterToast("开灯成功！");
+                  }
+                  if (status.ack == 26) {
+                    hmsPopup.showShortCenterToast("除雾成功！");
+                  }
+                }
+
+              }
+              $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
+              for (var i = 0; i < handlenapeListNapeLen; i++) {
+                if (i !== index) {
+                  $scope.handlenapeListNape[i].selecFlag = false;
+                }
+                ;
+              }
+              ;
+              if ($scope.handlenapeListNape[index].selecFlag === true) {
+                $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgSeledUrl;
+              }
+              ;
+            }
+          }
+        ).error(
+          function (response, status, header, config) {
+            hmsPopup.showShortCenterToast("");
+          }
+        );
+      };
+
     }]);

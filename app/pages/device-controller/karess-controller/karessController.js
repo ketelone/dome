@@ -484,87 +484,87 @@ angular.module('karessControlModule')
               test(index,value,'karessOnWater');
             }else{
               console.log(value);
-              sendCmd(deviceId, value, '注水开启成功！', '注水开启失败！');
+              cmdService.sendCmd(deviceId, value, localStorage.boxIp);
             }
           } else {
             var value = karessService.getCmd("8877", 1, karessService.data.closeFiller, 0, 2);
             console.log(value);
-            sendCmd(deviceId, value, '注水关闭成功！', '注水关闭失败！');
+            cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           }
         }
         if (index == 1) {
           if (info.selecFlag == false) {
+            var value = karessService.getCmd("8877", 1, karessService.data.openDrain, 0, 2);
             if(baseConfig.isCloudCtrl == true) {
-
+              test(index,value,'karessOffWater');
             }else{
-              var value = karessService.getCmd("8877", 1, karessService.data.openDrain, 0, 2);
               console.log(value);
-              sendCmd(deviceId, value, '开启落水成功！', '开启落水失败！');
+              cmdService.sendCmd(deviceId, value, localStorage.boxIp);
             }
           } else {
             var value = karessService.getCmd("8877", 1, karessService.data.closeDrain, 0, 2);
             console.log(value);
-            sendCmd(deviceId, value, '关闭落水成功！', '关闭落水失败！');
+            cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           }
         }
         if (index == 2) {
           if (info.selecFlag == false) {
             var value = karessService.getCmd("8877", 1, karessService.data.openMassageBack, 0, 2);
             console.log(value);
-            sendCmd(deviceId, value, '水力按摩开启成功！', '水力按摩开启失败！');
+            cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           } else {
             var value = karessService.getCmd("8877", 1, karessService.data.closeMassageBack, 0, 2);
             console.log(value);
-            sendCmd(deviceId, value, '水力按摩关闭成功！', '水力按摩关闭失败！');
+            cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           }
         }
         if (index == 3) {
           if (info.selecFlag == false) {
             var value = karessService.getCmd("8877", 1, karessService.data.openMassagePillow, 0, 2);
             console.log(value);
-            sendCmd(deviceId, value, '头部按摩开启成功！', '头部按摩开启失败！');
+            cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           } else {
             var value = karessService.getCmd("8877", 1, karessService.data.closeMassagePillow, 0, 2);
             console.log(value);
-            sendCmd(deviceId, value, '头部按摩关闭成功！', '头部按摩关闭失败！');
+            cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           }
         }
         if (index == 4) {
           if (info.selecFlag == false) {
             var value = karessService.getCmd("8877", 1, karessService.data.openHeatBack, 0, 2);
             console.log(value);
-            sendCmd(deviceId, value, '背部加热开启成功！', '背部加热开启失败！');
+            cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           } else {
             var value = karessService.getCmd("8877", 1, karessService.data.closeHeatBack, 0, 2);
             console.log(value);
-            sendCmd(deviceId, value, '背部加热关闭成功！', '背部加热关闭失败！');
+            cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           }
         }
         if (index == 5) {
           var value = karessService.getCmd("8877", 1, karessService.data.closeAll, 0, 2);
           console.log(value);
-          sendCmd(deviceId, value, '一键停止开启成功！', '一键停止开启失败！');
+          cmdService.sendCmd(deviceId, value, localStorage.boxIp);
         }
         if (index == 6) {
           if (info.selecFlag == false) {
             var value = karessService.getCmd("8877", 1, karessService.data.openSanitize, 0, 2);
             console.log(value);
-            sendCmd(deviceId, value, '管道除菌开启成功！', '管道除菌开启失败！');
+            cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           } else {
             var value = karessService.getCmd("8877", 1, karessService.data.closeDrain, 0, 2);
             console.log(value);
-            sendCmd(deviceId, value, '管道除菌关闭成功！', '管道除菌关闭失败！');
+            cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           }
         }
         if (index == 7) {
           if (info.selecFlag == false) {
             var value = karessService.getCmd("8877", 1, karessService.data.openSanitize, 0, 2);
             console.log(value);
-            sendCmd(deviceId, value, '节能开启成功！', '节能开启失败！');
+            cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           } else {
             var value = karessService.getCmd("8877", 1, karessService.data.closeSanitize, 0, 2);
             console.log(value);
-            sendCmd(deviceId, value, '节能关闭成功！', '节能关闭失败！');
+            cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           }
         }
         if (index == 8) {
@@ -622,39 +622,7 @@ angular.module('karessControlModule')
         }
         ;
       };
-      var sendCmd = function (deviceId, value, successMsg, errorMsg) {
-        var cmd = {
-          from: {
-            cid: "0xE3",
-          },
-          idx: 1,
-          method: "CTL",
-          payload: {
-            cmd: "CMD_REQUEST",
-            "device_type": "BLE_DEVICE",
-            value: [value],
-          },
-          to: {
-            cid: "0xE4",
-            "device_id": deviceId,
-          },
-          ts: Date.parse(new Date()) / 1000,
-          ver: 1,
-        }
-        console.log(cmd);
-        cordova.plugins.SocketPlugin.tcpSendCmd({
-          "timeout": "5000",
-          "value": cmd,
-          "ip": localStorage.boxIp
-        }, success, error);
-        function success(response) {
-          hmsPopup.showShortCenterToast(successMsg);
-        }
 
-        function error() {
-          hmsPopup.showShortCenterToast(errorMsg);
-        }
-      };
       //保存选择的数据项
       $scope.handleRadSelected;
       $scope.handlenapeSelectedIndex;
@@ -667,13 +635,13 @@ angular.module('karessControlModule')
         }
         if ($scope.handlenapeListNape == 0) {
           var value = karessService.getCmd("8877", 1, karessService.data.closeSanitize, 0, 5);
-          sendCmd(deviceId, value, '注水开启成功！', '注水开启失败！');
+          cmdService.sendCmd(deviceId, value, localStorage.boxIp);
         } else if ($scope.handlenapeListNape == 2) {
           var value = karessService.getCmd("8877", 1, karessService.data.closeSanitize, 0, 5);
-          sendCmd(deviceId, value, '水力按摩开启成功！', '水力加热开启失败！');
+          cmdService.sendCmd(deviceId, value, localStorage.boxIp);
         } else if ($scope.handlenapeListNape == 4) {
           var value = karessService.getCmd("8877", 1, karessService.data.closeSanitize, 0, 5);
-          sendCmd(deviceId, value, '背部加热关闭成功！', '背部加热关闭失败！');
+          cmdService.sendCmd(deviceId, value, localStorage.boxIp);
         }
       };
 
@@ -696,31 +664,26 @@ angular.module('karessControlModule')
 
       var test = function (index,value,deviceId) {
         var url = baseConfig.basePath + "/r/api/message/sendMessage";
-        var paramter = {
-          "ver": 1,
-          "from": {
-            "ctype": 240,
-            "uid": deviceId
-          },
-          "to": {
-            "ctype": 229,
-            "uid": "hand-residential"
-          },
-          "ts": 1493013672695,
-          "idx": 1,
-          "mtype": "ctl",
-          "data": {
-            "cmd": [value]
-          }
-        };
+        var paramter = cmdService.cloudCmd(value,deviceId);
+        console.log(paramter);
         hmsHttp.post(url, paramter).success(
           function (response) {
             if(response.code == 200){
-              console.log(index);
-              console.log(response.data.data.cmd[0]);
-              alert(response.data.data.cmd[0]);
               var  status = cmdService.explainAck(response.data.data.cmd[0]);
-              console.log(status);
+              if(status == ''){
+              }else{
+                if(status.ack.indexOf('fa') >= 0){
+                  status.ack = status.ack.substring(2,4);
+                  console.log(status)
+                  if(status.ack == 22){
+                    hmsPopup.showShortCenterToast("注水成功！");
+                  }
+                  if(status.ack == 25){
+                    hmsPopup.showShortCenterToast("落水成功！");
+                  }
+                }
+
+              }
               $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
               for (var i = 0; i < handlenapeListNapeLen; i++) {
                 if (i !== index) {
@@ -741,5 +704,9 @@ angular.module('karessControlModule')
           }
         );
       };
+
+
+
+
 
     }]);
