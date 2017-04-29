@@ -520,6 +520,24 @@ angular.module('indexPageModule')
         $state.go('deviceList');
       };
 
+
+      function setUnit(){
+        var url =baseConfig.basePath+"/r/api/ctm/insertPartyUtil";
+        var paramter =
+        {"temperature":"°C","PartySettingId":100};
+        hmsHttp.post(url, paramter).success(
+          function(response) {
+            console.log(response);
+            //alert(response);
+          }).error(
+          function (response, status, header, config){
+            //hmsPopup.showPopup("<span translate='bathroom.saveError'></span>");
+            //  alert("1234");
+          }
+        );
+
+      }
+      setUnit();
     }
   ]);
 
