@@ -5,13 +5,13 @@ angular.module('nextgenModule')
     '$ionicModal',
     '$compile',
     'baseConfig',
-    'checkVersionService','$ionicHistory','hmsPopup','nextgenService','$timeout','SettingsService','$ionicSlideBoxDelegate','hmsHttp',
+    'checkVersionService','$ionicHistory','hmsPopup','nextgenService','$timeout','SettingsService','$ionicSlideBoxDelegate','hmsHttp','cmdService',
     function ($scope,
               $state,
               $ionicModal,
               $compile,
               baseConfig,
-              checkVersionService,$ionicHistory,hmsPopup,nextgenService,$timeout,SettingsService,$ionicSlideBoxDelegate,hmsHttp
+              checkVersionService,$ionicHistory,hmsPopup,nextgenService,$timeout,SettingsService,$ionicSlideBoxDelegate,hmsHttp,cmdService
     ) {
       var ctrId="00";
       var header="8877";
@@ -86,7 +86,7 @@ angular.module('nextgenModule')
 
     var  data= nextgenService.operateShower(argment);
     var value = getValue(data);
-  alert(value);
+  //alert(value);
 
        if(baseConfig.isCloudCtrl){
          cloudSendcmd("ShownerTurnOn",value,"持续出水","持续出水失败");
@@ -110,7 +110,7 @@ angular.module('nextgenModule')
     }
     var data = nextgenService.operateShower(argment);
      var value = getValue(data);
-    alert(value);
+  //  alert(value);
         if(baseConfig.isCloudCtrl){
           cloudSendcmd("ShownerCoolTurnOn",value,"排空冷水","排空冷水失败");
         }else{
@@ -133,7 +133,7 @@ angular.module('nextgenModule')
         }
         var data = nextgenService.operateShower(argment);
       var value = getValue(data);
-        alert(value);
+    //    alert(value);
     if(baseConfig.isCloudCtrl){
           cloudSendcmd(deviceId,value,"关闭","关闭失败");
         }else{
@@ -154,7 +154,7 @@ angular.module('nextgenModule')
 
         var value = getValue(data);
 
-       alert(value);
+     //  alert(value);
     if(baseConfig.isCloudCtrl){
           cloudSendcmd(deviceId,value,"一键关闭","一键关闭失败");
         }else{
@@ -180,7 +180,7 @@ angular.module('nextgenModule')
 
         var data = nextgenService.setShowerPara(argment);
        var value = getValue(data);
-        alert(value);
+       // alert(value);
      if(baseConfig.isCloudCtrl){
           cloudSendcmd(deviceId,value,"头顶花洒","头顶花洒失败");
         }else{
@@ -206,7 +206,7 @@ angular.module('nextgenModule')
         }
         var data = nextgenService.setShowerPara(argment);
       var value = getValue(data);
- alert(value);
+// alert(value);
         if(baseConfig.isCloudCtrl){
           cloudSendcmd(deviceId,value,"头顶花洒","头顶花洒失败");
         }else{
@@ -233,7 +233,7 @@ angular.module('nextgenModule')
 
         var data = nextgenService.setShowerPara(argment);
        var value = getValue(data);
-        alert(value);
+        //alert(value);
       if(baseConfig.isCloudCtrl){
           cloudSendcmd(deviceId,value,"手持花洒","手持花洒失败");
         }else{
@@ -257,7 +257,7 @@ angular.module('nextgenModule')
         }
         var data = nextgenService.setShowerPara(argment);
         var value = getValue(data);
-  alert(value);
+ // alert(value);
        if(baseConfig.isCloudCtrl){
           cloudSendcmd(deviceId,value,"Spout","Spout失败");
         }else{
@@ -313,7 +313,7 @@ angular.module('nextgenModule')
        *@name:
        *@params:
        *@return:
-       *@disc:监听一键停止的返回信息，当tempData.ack=='1000'使图标变灰
+       *@disc:监听
 
        */
 
@@ -353,13 +353,22 @@ angular.module('nextgenModule')
               }
               if(switchType=="closeAll"){
                 hmsPopup.showShortCenterToast("一键关闭成功");
-                $scope.handlenapeListNape[2].selecFlag =false;
-                $scope.handlenapeListNape[2].imgUrl = $scope.handlenapeListNape[2].imgUrlTemp;
-           }
+                $scope.handlenapeListNape[2].selecFlag =true;
+                $scope.handlenapeListNape[2].imgUrl = $scope.handlenapeListNape[2].imgSeledUrl;
+                $scope.handlenapeListNape[1].selecFlag = false;
+                $scope.handlenapeListNape[1].imgUrl = $scope.handlenapeListNape[1].imgUrlTemp;
+                $scope.handlenapeListNape[0].selecFlag =false;
+                $scope.handlenapeListNape[0].imgUrl = $scope.handlenapeListNape[0].imgUrlTemp;
+                $timeout(function () {
+                  $scope.handlenapeListNape[2].selecFlag =false;
+                  $scope.handlenapeListNape[2].imgUrl = $scope.handlenapeListNape[2].imgUrlTemp;
+
+                }, 2000);
+              }
               if(switchType=="headerHuasa"){
                 hmsPopup.showShortCenterToast("头顶花洒开启成功");
               }
-                           if(switchType=="headerBaidong"){
+             if(switchType=="headerBaidong"){
                 hmsPopup.showShortCenterToast("头顶摆动开启成功");
               }
               if(switchType=="goSpout"){
@@ -594,7 +603,7 @@ angular.module('nextgenModule')
   //if($scope.handlenapeListNape[index].selecFlag ==true){
   //  alert(1);
    // handHuasa();//先选择手持花洒
-    alert(2);
+
     chixuWater();//再持续出水
 
  // }
@@ -625,8 +634,6 @@ angular.module('nextgenModule')
         //  }
         }
         if(index==2){
-          $scope.handlenapeListNape[2].selecFlag = true;
-          $scope.handlenapeListNape[2].imgUrl = $scope.handlenapeListNape[2].imgSeledUrl;
 
           closeAll();
     }
@@ -789,31 +796,15 @@ angular.module('nextgenModule')
 //通过云端发送指令
       var cloudSendcmd = function (deviceId, value, successMsg, errorMsg) {
         var url = baseConfig.basePath + "/r/api/message/sendMessage";
-        var paramter = {
-          "ver":1,
-          "from":{
-            "ctype":240,
-            "uid": deviceId
-          },
-          "to":{
-            "ctype":229,
-            "uid":"hand-residential"
-          },
-          "ts":1493013672695,
-          "idx":1,
-          "mtype":"ctl",
-          "data":{
-            "cmd":[value]
-          }
-        };
+        var paramter =cmdService.cloudCmd(deviceId, value);
         hmsHttp.post(url, paramter).success(
           function (response) {
             //var value = response.data.data.cmd[0];
-           alert(JSON.stringify(response));
+          alert(JSON.stringify(response));
             if(response.code == 200) {
-              var tempData = nextgenService.explainAck(response.data.data.cmd[0]);
-             
-              if (tempData.ack.indexOf("fa") >= 0) {
+              //alert('resp:'+response.data.data.cmd[0]);
+              var  status = nextgenService.explainAck(response.data.data.cmd[0]);
+               if ( status .ack.indexOf("fa") >= 0) {
                 if (switchType == "handHuasa") {
                   hmsPopup.showShortCenterToast("手持花洒开启成功");
                 }
@@ -843,8 +834,17 @@ angular.module('nextgenModule')
                 }
                 if (switchType == "closeAll") {
                   hmsPopup.showShortCenterToast("一键关闭成功");
-                  $scope.handlenapeListNape[2].selecFlag = false;
-                  $scope.handlenapeListNape[2].imgUrl = $scope.handlenapeListNape[2].imgUrlTemp;
+                  $scope.handlenapeListNape[2].selecFlag = true;
+                  $scope.handlenapeListNape[2].imgUrl = $scope.handlenapeListNape[2].imgSeledUrl;
+                  $scope.handlenapeListNape[1].selecFlag = false;
+                  $scope.handlenapeListNape[1].imgUrl = $scope.handlenapeListNape[1].imgUrlTemp;
+                  $scope.handlenapeListNape[0].selecFlag =false;
+                  $scope.handlenapeListNape[0].imgUrl = $scope.handlenapeListNape[0].imgUrlTemp;
+                  $timeout(function () {
+                    $scope.handlenapeListNape[2].selecFlag =false;
+                    $scope.handlenapeListNape[2].imgUrl = $scope.handlenapeListNape[2].imgUrlTemp;
+
+                  }, 2000);
                 }
                 if (switchType == "headerHuasa") {
                   hmsPopup.showShortCenterToast("头顶花洒开启成功");
@@ -857,7 +857,7 @@ angular.module('nextgenModule')
                 }
               }
               else {
-                hmsPopup.showShortCenterToast("操作失败");
+                hmsPopup.showShortCenterToast("设备异常,操作失败");
               }
             }
 
@@ -869,7 +869,7 @@ angular.module('nextgenModule')
           }
         ).error(
           function (response, status, header, config) {
-            hmsPopup.showShortCenterToast("");
+           // hmsPopup.showShortCenterToast("网络异常,操作失败");
            // alert(1234);
           }
         );
