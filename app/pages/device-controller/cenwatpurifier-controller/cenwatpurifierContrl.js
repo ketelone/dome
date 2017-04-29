@@ -4,6 +4,7 @@ angular.module('toiletControlModule')
     '$state',
     '$ionicSlideBoxDelegate',
     '$timeout',
+    'cmdService',
     'publicMethod',
     'hmsPopup',
     'hmsHttp',
@@ -15,6 +16,7 @@ angular.module('toiletControlModule')
               $state,
               $ionicSlideBoxDelegate,
               $timeout,
+              cmdService,
               publicMethod,
               hmsPopup,
               hmsHttp,
@@ -76,6 +78,7 @@ angular.module('toiletControlModule')
           handleDes: "cenwatpurifier.autoclear",
           matchdataid:"clear",
           selecFlag:false,
+          cloudId:"cenwapurclear"
         },
         {
           imgUrl: "build/img/cenwatpurifier-controller/icon_setting.png",
@@ -179,24 +182,6 @@ angular.module('toiletControlModule')
         $scope.getCurrentObj(0);
       },20);
       //发送指令
-      var cmd = {
-        from: {
-          cid: "0xE3",
-        },
-        idx:Date.parse(new Date()) / 1000,
-        method: "CTL",
-        payload: {
-          cmd: "CMD_REQUEST",
-          "device_type": "BLE_DEVICE",
-          value: [],
-        },
-        to: {
-          cid: "0xE4",
-          "device_id": cenwapurcmdObj.diviceid,
-        },
-        ts: "1492146861.217451",
-        ver: 1,
-      };
       $scope.sendCmd = function (cmdvalue,name) {
         cmd.payload.value =[];
         cmd.to.device_id = "";
@@ -209,9 +194,6 @@ angular.module('toiletControlModule')
         function success(response) {
           //resolve
           if(response.code == 200){
-            // var value = bathroomCmdService.explainAck(response.data.data.cmd[0]);
-            var value = "";
-            alert("value.ack:  "+value.ack);
             if(value.ack.toLowerCase() == "fa27"){
               $scope.selectChange(index);
             }
@@ -219,7 +201,6 @@ angular.module('toiletControlModule')
             hmsPopup.showShortCenterToast("<span translate="+name+"></span>"+"<span translate='cenwatpurifier.directerror'></span>");
           }
           // hmsPopup.showShortCenterToast("<span translate=name></span>"+"<span translate='cenwatpurifier.directesuccess'></span>");
-
         };
         function error() {
           hmsPopup.showShortCenterToast("<span translate="+name+"></span>"+"<span translate='cenwatpurifier.directerror'></span>");
@@ -233,29 +214,22 @@ angular.module('toiletControlModule')
         //cloud
         hmsPopup.showLoading("<span translate='cenwatpurifier.loadingdata'></span>");
         var url = baseConfig.basePath + "/r/api/message/sendMessage";
-        cmd.payload.value =[];
-        cmd.to.device_id = "";
-        cmd.payload.value.push(cmdvalue);
-        alert(angular.toJson(cmd));
-        var paramter = cmd;
+        var paramter = cmdService.cloudCmd(cmdvalue,$scope.handlenapeListNape[index].cloudId);
         hmsHttp.post(url, paramter).success(
           function(response){
             hmsPopup.hideLoading();
             if(response.code == 200){
-              // var value = bathroomCmdService.explainAck(response.data.data.cmd[0]);
-              var value = "";
-              alert("value.ack:  "+value.ack);
-              if(value.ack.toLowerCase() == "fa27"){
+              var value = cmdService.explainAck(response.data.data.cmd[0]);
+              if(value.ack.includes("fa")){
                 $scope.selectChange(index);
               }
             }else{
-              hmsPopup.showShortCenterToast("<span translate=name></span>"+"<span translate='cenwatpurifier.directerror'></span>");
+              hmsPopup.showShortCenterToast("<span translate="+$scope.handlenapeListNape[index].handleDes+"></span>"+"<span translate='cenwatpurifier.directerror'></span>");
             }
           }
         ).error(function (response, status, header, config) {
             hmsPopup.hideLoading();
-            hmsPopup.showShortCenterToast("<span translate=name></span>"+"<span translate='cenwatpurifier.loadingdataerrror'></span>");
-          ;
+          hmsPopup.showShortCenterToast("<span translate="+$scope.handlenapeListNape[index].handleDes+"></span>"+"<span translate='cenwatpurifier.loadingdataerrror'></span>");;
         })}
 
       /**
@@ -275,14 +249,13 @@ angular.module('toiletControlModule')
       //处理选择怎加border
       var handlenapeListNapeLen = $scope.handlenapeListNape.length;
       $scope.selectNapes = function (index) {
-        $scope.getImpleteData();
+        // $scope.cpGetImpleteData();
         $scope.handlenapeSelectedIndex = index;
         if($scope.handlenapeListNape[index].matchdataid === "setting"){
           $state.go("cenwatpurSetting");
         }else {
-          if($scope.handlenapeListNape[index].selecFlag){
+          if(!$scope.handlenapeListNape[index].selecFlag){
             var cmdvalue = getCmd(cenwapurcmdObj.header,cenwapurcmdObj.idx,cenwatpurDir._data.startOutlet,cenwapurcmdObj.ctrId,cenwapurcmdObj.devId);
-            var name = $scope.handlenapeListNape[index].handleDes;
             if(baseConfig.isCloudCtrl){
               //cloud send cmd
               $scope.cpGetImpleteData(cmdvalue,name,index);
@@ -292,7 +265,6 @@ angular.module('toiletControlModule')
             };
           }else{
             var cmdvalue = getCmd(cenwapurcmdObj.header,cenwapurcmdObj.idx,cenwatpurDir._data.stopOutlet,cenwapurcmdObj.ctrId,cenwapurcmdObj.devId);
-            var name = $scope.handlenapeListNape[index].handleDes;
             if(baseConfig.isCloudCtrl){
               //cloud send cmd
               $scope.cpGetImpleteData(cmdvalue,name,index);

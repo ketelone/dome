@@ -58,8 +58,6 @@ angular.module('utilModule')
           function error() {
           }
         };
-
-
         this.explainAck = function (arg) {
           var code;
           if (arg.length >= 16 && arg.length <= 40) {

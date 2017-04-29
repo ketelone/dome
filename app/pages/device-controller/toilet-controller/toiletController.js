@@ -273,6 +273,7 @@ angular.module('toiletControlModule')
           isManyDirective:false,
           dataname:"bigFlush",
           handledata:$scope.slideInitData,
+          cloudId:"NIMIbigFlush  ",
         },
         {
           imgUrl: "build/img/toilet-controller/xiaochong.png",
@@ -293,7 +294,8 @@ angular.module('toiletControlModule')
           selecFlag:false,
           matchdataid:"nvyong",
           isManyDirective:true,
-          handledata:$scope.slideNvYongData
+          handledata:$scope.slideNvYongData,
+          cloudId:"NIMInvyong ",
         },
         {
           imgUrl: "build/img/toilet-controller/tunxi.png",
@@ -693,31 +695,10 @@ angular.module('toiletControlModule')
         };
       },20);
       //发送指令
-      var cmd = {
-        from: {
-          cid: "0xE3",
-        },
-        idx:Date.parse(new Date()) / 1000,
-        method: "CTL",
-        payload: {
-          cmd: "CMD_REQUEST",
-          "device_type": "BLE_DEVICE",
-          value: [],
-        },
-        to: {
-          cid: "0xE4",
-          "device_id": tolitercmdObj.diviceid,
-        },
-        ts: "1492146861.217451",
-        ver: 1,
-      };
       $scope.sendCmd = function (cmdvalue,name) {
-        cmd.payload.value =[];
-        cmd.payload.value.push(cmdvalue);
-        alert(angular.toJson(cmd));
         cordova.plugins.SocketPlugin.tcpSendCmd({
           "timeout": "5000",
-          "value": cmd
+          "value": cmdService.cloudCmd(tolitercmdObj.diviceid,cmdvalue)
         }, success, error);
         function success(response) {
           //resolve
@@ -905,42 +886,34 @@ angular.module('toiletControlModule')
           }
         }
       }
-
-
       /**
        *@params:index(selected index),deviceId(device id),cmdvalue(directive value),name(directive name)
        *@disc:impletemnet get data
        */
       $scope.toGetImpleteData = function(cmdvalue, name,index,isType){
-        $scope.selectChange(index,isType);
-        // //cloud
-        // hmsPopup.showLoading("<span translate='toiletController.loadingdata'></span>");
-        // var url = baseConfig.basePath + "/r/api/message/sendMessage";
-        // cmd.payload.value =[];
-        // cmd.payload.value.push(cmdvalue);
-        // var paramter = cmd;
-        // hmsHttp.post(url, paramter).success(
-        //   function(response){
-        //     hmsPopup.hideLoading();
-        //     if(response.code == 200){
-        //       // var value = bathroomCmdService.explainAck(response.data.data.cmd[0]);
-        //       var value = "";
-        //       alert("value.ack:  "+value.ack);
-        //       if(value.ack.toLowerCase() == "fa27"){
-        //         $scope.selectChange(index,isType);
-        //       }
-        //     }else{
-        //       hmsPopup.showShortCenterToast("<span translate=name></span>"+"<span translate='toiletController.directerror'></span>");
-        //     }
-        //   }
-        // ).error(function (response, status, header, config) {
-        //   hmsPopup.hideLoading();
-        //   hmsPopup.showShortCenterToast("<span translate=name></span>"+"<span translate='toiletController.loadingdataerrror'></span>");
-        //   ;
-        // })
-      }
-
-
+        //cloud
+        hmsPopup.showLoading("<span translate='toiletController.loadingdata'></span>");
+        var url = baseConfig.basePath + "/r/api/message/sendMessage";
+        var paramter = cmdService.cloudCmd(cmdvalue,$scope.handlenapeListNape[index].cloudId);
+        hmsHttp.post(url, paramter).success(
+          function(response){
+            hmsPopup.hideLoading();
+            if(response.code == 200){
+              var value = cmdService.explainAck(response.data.data.cmd[0]);
+              if(value.ack.includes("fa")){
+                $scope.selectChange(index,isType);
+              }else{
+                hmsPopup.showShortCenterToast("<span translate="+$scope.handlenapeListNape[index].handleDes+"></span>"+"<span translate='toiletController.directerror'></span>");
+              }
+            }else{
+              hmsPopup.showShortCenterToast("<span translate="+$scope.handlenapeListNape[index].handleDes+"></span>"+"<span translate='toiletController.directerror'></span>");
+            }
+          }
+        ).error(function (response, status, header, config) {
+          hmsPopup.hideLoading();
+          hmsPopup.showShortCenterToast("<span translate="+$scope.handlenapeListNape[index].handleDes+"></span>"+"<span translate='toiletController.loadingdataerrror'></span>");;
+        })
+      };
       /**
        *@params:index(selected index)
        *@disc:handle light or gary
