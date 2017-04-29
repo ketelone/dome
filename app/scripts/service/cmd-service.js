@@ -1,3 +1,4 @@
+
 /**
  * Created by daidongdong on 2017/4/28.
  */
@@ -6,12 +7,12 @@ angular.module('utilModule')
   .service('cmdService',
     ['baseConfig',
       function (baseConfig){
-        this.cloudCmd = function (value) {
+        this.cloudCmd = function (deviceId,value) {
           var paramter = {
             "ver": 1,
             "from": {
               "ctype": 240,
-              "uid": "13405533206"
+              "uid": deviceId
             },
             "to": {
               "ctype": 229,
@@ -26,7 +27,8 @@ angular.module('utilModule')
           };
           return paramter;
         };
-        this.sendCmd = function (deviceId, value, boxId) {
+
+        this.sendCmd = function (deviceId, value) {
           var cmd = {
             from: {
               cid: "0xE3",
@@ -45,19 +47,10 @@ angular.module('utilModule')
             ts: Date.parse(new Date()) / 1000,
             ver: 1,
           }
-          cordova.plugins.SocketPlugin.tcpSendCmd({
-            "timeout": "5000",
-            "value": cmd,
-            "ip": boxId
-          }, success, error);
-          function success(response) {
-          }
-          function error() {
-          }
         };
 
 
-        this.explainAck = function (arg){
+        function explainAck(arg){
           var code ;
           if (arg.length>=16 && arg.length<=40) {
             var ackStr = arg.substring(12,arg.length-2);
@@ -75,8 +68,6 @@ angular.module('utilModule')
             }else if (ack == 'fb'){
               //invalid ack
               code = {'ack':'1001'};
-            }else {
-              code = '';
             }
           }
           return code;
