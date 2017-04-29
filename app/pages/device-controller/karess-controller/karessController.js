@@ -5,13 +5,13 @@ angular.module('karessControlModule')
     '$ionicModal',
     '$compile',
     'baseConfig',
-    'checkVersionService', 'SettingsService', '$ionicHistory', '$ionicSlideBoxDelegate', 'karessService', 'hmsPopup','hmsHttp',
+    'checkVersionService', 'SettingsService', '$ionicHistory', '$ionicSlideBoxDelegate', 'karessService', 'hmsPopup','hmsHttp','cmdService',
     function ($scope,
               $state,
               $ionicModal,
               $compile,
               baseConfig,
-              checkVersionService, SettingsService, $ionicHistory, $ionicSlideBoxDelegate, karessService, hmsPopup,hmsHttp) {
+              checkVersionService, SettingsService, $ionicHistory, $ionicSlideBoxDelegate, karessService, hmsPopup,hmsHttp,cmdService) {
       var sku = SettingsService.get('sku');
       /**
        *@autor: caolei
@@ -719,6 +719,8 @@ angular.module('karessControlModule')
               console.log(index);
               console.log(response.data.data.cmd[0]);
               alert(response.data.data.cmd[0]);
+              var  status = cmdService.explainAck(response.data.data.cmd[0]);
+              console.log(status);
               $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
               for (var i = 0; i < handlenapeListNapeLen; i++) {
                 if (i !== index) {

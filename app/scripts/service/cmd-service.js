@@ -55,7 +55,9 @@ angular.module('utilModule')
           function error() {
           }
         };
-        function explainAck(arg){
+
+
+        this.explainAck = function (arg){
           var code ;
           if (arg.length>=16 && arg.length<=40) {
             var ackStr = arg.substring(12,arg.length-2);
@@ -73,6 +75,8 @@ angular.module('utilModule')
             }else if (ack == 'fb'){
               //invalid ack
               code = {'ack':'1001'};
+            }else {
+              code = '';
             }
           }
           return code;
