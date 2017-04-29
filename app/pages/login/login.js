@@ -198,6 +198,7 @@ angular.module('loginModule')
       }
 
       $scope.login = function () {//登录功能
+        //window.localStorage.empno = "13469950960";
         // $state.go('tabs');
         // return;
 
