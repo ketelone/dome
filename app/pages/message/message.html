@@ -31,7 +31,7 @@
 <!--status-->
    <ion-list ng-show="hasStaus" show-delete="data.showDelete" >
      <ion-item   ng-click="goMessDetail(statusitem)" style="background: #212121;border-style:none;" ng-repeat="statusitem in statusitems " item="statusitem"  class="item item-icon-right item-remove-animate">
-   <div ng-click="onChoose(statusitem)" class="row oneModel"  >
+   <div  ng-class="statusitem.readStyle" class="row oneModel"  >
   <!-- <img  ng-show="show-delete" style="width: 0.44rem;height: 0.45rem" ng-src="build/img/message/radio_bg.png"/>-->
            <div class="col col-75">
              <div class="row">
@@ -77,8 +77,8 @@
     </ion-list>
 <!--exception-->
     <ion-list ng-show="hasException" show-delete="data.showDelete" >
-      <ion-item ng-click="goMessDetail(exceptionitem)" style="background: #212121;border-style:none;" ng-repeat="exceptionitem in exceptionitems" item="exceptionitem"  class="item item-icon-right item-remove-animate">
-        <div class="row oneModel" >
+      <ion-item  ng-click="goMessDetail(exceptionitem)" style="background: #212121;border-style:none;" ng-repeat="exceptionitem in exceptionitems" item="exceptionitem"  class="item item-icon-right item-remove-animate">
+        <div ng-class="exceptionitem.readStyle" class="row oneModel" >
           <div class="col col-75">
             <div class="row">
               <div class="col col-60" STYLE="padding-left: 0rem"><span class="leftWord1" translate="{{exceptionitem.exceptionMessage}}"></span></div>
@@ -127,7 +127,7 @@
   <div ng-show="threeBottom" class="row bottomWord">
     <div ng-click="bottomManychoose()" class="col col-33 allChoose"><span translate="message.all" ></span></div>
     <div ng-click="bottomGocancel()" class="col col-33 cancal"><span translate="message.cancel"></span></div>
-    <div ng-click="bottomGodetele()" class="col col-33 delete"><span translate="message.delete"></span></div>
+    <div ng-click="bottomGodetele()" class="col delete"><span translate="message.delete"></span></div>
   </div>
 
 
