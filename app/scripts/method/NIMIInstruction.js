@@ -99,7 +99,7 @@ NIMI.prototype.frontRearDry = function (method, temperature, volume, place, flus
   //   flushOptions:flushOptions,
   //   mSwitchType:mSwitchType
   // }))
-  alert(angular.toJson({
+  console.log(angular.toJson({
     method:method,
     temperature:temperature,
     volume:volume,
@@ -139,7 +139,7 @@ NIMI.prototype.frontRearDry = function (method, temperature, volume, place, flus
  * @returns {string} 指令中的 data串
  */
 NIMI.prototype.feetSeatHeater = function (temperature) {
-  alert(angular.toJson({
+  console.log(angular.toJson({
     method:"暖分",
     temperature:temperature,
   }))

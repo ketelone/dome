@@ -98,6 +98,7 @@ angular.module('toiletControlModule')
         }
       };
       //auto cover setting
+      $scope.fontSize = document.documentElement.clientWidth / 7.5;
       $scope.setModalTop = "toiletSetModalTop";
       $scope.setSingalModalTop = "toiletSetSingalModalTop";
       $scope.screenHeig = window.innerHeight;
@@ -120,7 +121,7 @@ angular.module('toiletControlModule')
         setTimeout(function () {
           var ele = document.getElementsByClassName("toiletSetModalTop");
           ele[0].style.top = 68 + '%';
-        },20)
+        },10)
       };
       $scope.$on('$destroy', function() {
         $scope.setmodal.remove();
@@ -142,7 +143,7 @@ angular.module('toiletControlModule')
           $scope.modal.show();
           setTimeout(function () {
             var ele = document.getElementsByClassName("toiletSetSingalModalTop");
-            ele[0].style.top = $scope.screenHeig - 52*$scope.value.length + 'px';
+            ele[0].style.top = $scope.screenHeig - 1.02*$scope.fontSize*$scope.value.length + 'px';
           }, 10)
         }
       };
