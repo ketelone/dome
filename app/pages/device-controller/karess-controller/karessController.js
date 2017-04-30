@@ -479,7 +479,7 @@ angular.module('karessControlModule')
         $scope.handlenapeSelectedIndex = index;
         if (index == 0) {
           if (info.selecFlag == false) {
-            var value = karessService.getCmd("8877", 1, karessService.data.openFiller, 0, 2);
+            var value = cmdService.getCmd("8877", 1, karessService.data.openFiller, 0, 2);
             if(baseConfig.isCloudCtrl == true){
               test(index,value,'karessOnWater');
             }else{
@@ -487,14 +487,14 @@ angular.module('karessControlModule')
               cmdService.sendCmd(deviceId, value, localStorage.boxIp);
             }
           } else {
-            var value = karessService.getCmd("8877", 1, karessService.data.closeFiller, 0, 2);
+            var value = cmdService.getCmd("8877", 1, karessService.data.closeFiller, 0, 2);
             console.log(value);
             cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           }
         }
         if (index == 1) {
           if (info.selecFlag == false) {
-            var value = karessService.getCmd("8877", 1, karessService.data.openDrain, 0, 2);
+            var value = cmdService.getCmd("8877", 1, karessService.data.openDrain, 0, 2);
             if(baseConfig.isCloudCtrl == true) {
               test(index,value,'karessOffWater');
             }else{
@@ -502,67 +502,67 @@ angular.module('karessControlModule')
               cmdService.sendCmd(deviceId, value, localStorage.boxIp);
             }
           } else {
-            var value = karessService.getCmd("8877", 1, karessService.data.closeDrain, 0, 2);
+            var value = cmdService.getCmd("8877", 1, karessService.data.closeDrain, 0, 2);
             console.log(value);
             cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           }
         }
         if (index == 2) {
           if (info.selecFlag == false) {
-            var value = karessService.getCmd("8877", 1, karessService.data.openMassageBack, 0, 2);
+            var value = cmdService.getCmd("8877", 1, karessService.data.openMassageBack, 0, 2);
             console.log(value);
             cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           } else {
-            var value = karessService.getCmd("8877", 1, karessService.data.closeMassageBack, 0, 2);
+            var value = cmdService.getCmd("8877", 1, karessService.data.closeMassageBack, 0, 2);
             console.log(value);
             cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           }
         }
         if (index == 3) {
           if (info.selecFlag == false) {
-            var value = karessService.getCmd("8877", 1, karessService.data.openMassagePillow, 0, 2);
+            var value = cmdService.getCmd("8877", 1, karessService.data.openMassagePillow, 0, 2);
             console.log(value);
             cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           } else {
-            var value = karessService.getCmd("8877", 1, karessService.data.closeMassagePillow, 0, 2);
+            var value = cmdService.getCmd("8877", 1, karessService.data.closeMassagePillow, 0, 2);
             console.log(value);
             cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           }
         }
         if (index == 4) {
           if (info.selecFlag == false) {
-            var value = karessService.getCmd("8877", 1, karessService.data.openHeatBack, 0, 2);
+            var value = cmdService.getCmd("8877", 1, karessService.data.openHeatBack, 0, 2);
             console.log(value);
             cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           } else {
-            var value = karessService.getCmd("8877", 1, karessService.data.closeHeatBack, 0, 2);
+            var value = cmdService.getCmd("8877", 1, karessService.data.closeHeatBack, 0, 2);
             console.log(value);
             cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           }
         }
         if (index == 5) {
-          var value = karessService.getCmd("8877", 1, karessService.data.closeAll, 0, 2);
+          var value = cmdService.getCmd("8877", 1, karessService.data.closeAll, 0, 2);
           console.log(value);
           cmdService.sendCmd(deviceId, value, localStorage.boxIp);
         }
         if (index == 6) {
           if (info.selecFlag == false) {
-            var value = karessService.getCmd("8877", 1, karessService.data.openSanitize, 0, 2);
+            var value = cmdService.getCmd("8877", 1, karessService.data.openSanitize, 0, 2);
             console.log(value);
             cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           } else {
-            var value = karessService.getCmd("8877", 1, karessService.data.closeDrain, 0, 2);
+            var value = cmdService.getCmd("8877", 1, karessService.data.closeDrain, 0, 2);
             console.log(value);
             cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           }
         }
         if (index == 7) {
           if (info.selecFlag == false) {
-            var value = karessService.getCmd("8877", 1, karessService.data.openSanitize, 0, 2);
+            var value = cmdService.getCmd("8877", 1, karessService.data.openSanitize, 0, 2);
             console.log(value);
             cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           } else {
-            var value = karessService.getCmd("8877", 1, karessService.data.closeSanitize, 0, 2);
+            var value = cmdService.getCmd("8877", 1, karessService.data.closeSanitize, 0, 2);
             console.log(value);
             cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           }
@@ -640,13 +640,13 @@ angular.module('karessControlModule')
           var diedes = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].des;
         }
         if ($scope.handlenapeListNape == 0) {
-          var value = karessService.getCmd("8877", 1, karessService.data.closeSanitize, 0, 5);
+          var value = cmdService.getCmd("8877", 1, karessService.data.closeSanitize, 0, 5);
           cmdService.sendCmd(deviceId, value, localStorage.boxIp);
         } else if ($scope.handlenapeListNape == 2) {
-          var value = karessService.getCmd("8877", 1, karessService.data.closeSanitize, 0, 5);
+          var value = cmdService.getCmd("8877", 1, karessService.data.closeSanitize, 0, 5);
           cmdService.sendCmd(deviceId, value, localStorage.boxIp);
         } else if ($scope.handlenapeListNape == 4) {
-          var value = karessService.getCmd("8877", 1, karessService.data.closeSanitize, 0, 5);
+          var value = cmdService.getCmd("8877", 1, karessService.data.closeSanitize, 0, 5);
           cmdService.sendCmd(deviceId, value, localStorage.boxIp);
         }
       };

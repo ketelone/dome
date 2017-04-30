@@ -82,5 +82,25 @@ angular.module('utilModule')
           }
           return code;
         }
+        /**
+         * 返回cmd字段命令
+         * @param {*} header 头 16进制
+         * @param {*} idx 索引 16进制
+         * @param {*} data 数据段 16进制
+         * @param {*} ctrId 控制段 16进制
+         * @param {*} devId 设备段 16进制
+         */
+        this.getCmd = function(header, idx, data, ctrId, devId) {
+          if (data.length % 2 != 0) {
+            data = "0" + data;
+          }
+          var checksum = parseInt(idx, 16) ^ parseInt(ctrId, 16) ^ parseInt(devId, 16);
+          for (var i = 0, len = data.length; i < len; i += 2) {
+            var hex = data.substring(i, i + 2);
+            checksum ^= parseInt(hex, 16);
+          }
+          var length = data.length / 2 + 4;
+          return header + doStr(length) + doStr(idx) + doStr(ctrId) + doStr(devId) + data + doStr(checksum.toString(16));
+        }
 
       }]);
