@@ -601,6 +601,12 @@ angular.module('karessControlModule')
         {id: 2, des: 'karessController.handshower'}
       ];
       $scope.openModal = function () {
+        if($scope.handlenapeSelectedIndex == 0){
+
+        }else{
+          hmsPopup.showShortCenterToast("当前状态不能切换出水方式");
+          return;
+        }
         if ($scope.value.length !== 0) {
           $scope.modal.show();
           setTimeout(function () {
@@ -664,12 +670,12 @@ angular.module('karessControlModule')
 
       var test = function (index,value,deviceId) {
         var url = baseConfig.basePath + "/r/api/message/sendMessage";
-        var paramter = cmdService.cloudCmd(value,deviceId);
+        var paramter = cmdService.cloudCmd(deviceId,value);
         console.log(paramter);
         hmsHttp.post(url, paramter).success(
           function (response) {
             if(response.code == 200){
-              var  status = cmdService.explainAck(response.data.data.cmd[0]);
+              var  status = karessService.explainAck(response.data.data.cmd[0]);
               if(status == ''){
               }else{
                 if(status.ack.indexOf('fa') >= 0){
@@ -700,7 +706,6 @@ angular.module('karessControlModule')
           }
         ).error(
           function (response, status, header, config) {
-            hmsPopup.showShortCenterToast("");
           }
         );
       };

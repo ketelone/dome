@@ -17,8 +17,8 @@ angular.module('productModule')
         flagDevice4: false,
         onOrOff3: true,
         onOrOff4: true,
-        onLinePic3: "build/img/keyscene-morning/icon_home_device_signal5.png",
-        onLinePic4: "build/img/keyscene-morning/icon_home_device_signal5.png",
+        onLinePic3: "build/img/keyscene-leavehome/icon_home_device_signal5.png",
+        onLinePic4: "build/img/keyscene-leavehome/icon_home_device_signal5.png",
         isOneButton: true,
         isTwoButton: false,
         isOff: false
@@ -31,7 +31,7 @@ angular.module('productModule')
        *@disc:goback
        */
       $scope.goBack = function () {
-        $ionicHistory.goback();
+        $ionicHistory.goBack();
       }
 
       $scope.getSwitchStatus = function (item) {

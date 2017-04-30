@@ -45,7 +45,7 @@ angular.module('utilModule')
               "device_id": deviceId,
             },
             ts: Date.parse(new Date()) / 1000,
-            ver: 1,
+            ver: 1
           }
           cordova.plugins.SocketPlugin.tcpSendCmd({
             "timeout": "5000",
@@ -58,7 +58,9 @@ angular.module('utilModule')
           function error() {
           }
         };
+
         this.explainAck = function (arg) {
+
           var code;
           if (arg.length >= 16 && arg.length <= 40) {
             var ackStr = arg.substring(12, arg.length - 2);

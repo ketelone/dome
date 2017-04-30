@@ -11,40 +11,58 @@ angular.module('deviceAddModule')
         $ionicHistory.goBack();
       }
       /**
-      *@autor:daidongdong
-      *@name:
-      *@params:
-      *@return:
-      *@disc:
-      */
-      $scope.goAddBox = function(){
-          $state.go('boxList');
+       *@autor:daidongdong
+       *@name:
+       *@params:
+       *@return:
+       *@disc:
+       */
+      $scope.goAddBox = function () {
+        $state.go('boxList');
       }
 
 
-      $scope.goAddOnLineBox = function(){
+      $scope.goAddOnLineBox = function () {
         $state.go('boxOnLine');
       }
-
 
 
 //寻找box
       $scope.selectBox = function () {
         hmsPopup.showLoading('<span translate="alertMsg.loading"></span>');
         console.log('select box');
-        var cmd = {
-          "from": {"cid": "0xE3"},
-          "to": {"cid": "0xE4"},
-          "ts": Date.parse(new Date()) / 1000,
-          "idx": 0,
-          "method": "CTL",
-          "payload": {
-            "cmd": "SCAN_BOX_REQUEST",
-            "cmd_properties": {
-              "scan_box_request": "KOHLER_BOX_SEARCH"
-            }
+        // var cmd = {
+        //   "from": {"cid": "0xE3"},
+        //   "to": {"cid": "0xE4"},
+        //   "ts": Date.parse(new Date()) / 1000,
+        //   "idx": 0,
+        //   "method": "CTL",
+        //   "payload": {
+        //     "cmd": "SCAN_BOX_REQUEST",
+        //     "cmd_properties": {
+        //       "scan_box_request": "KOHLER_BOX_SEARCH"
+        //     }
+        //   }
+        // }
+        var cmd = [{
+          "ver": 1,       //message protocol version
+          "from": {
+            "ctype": '0XE3',    //source peer type: 0xF0 Cloud,  0xE5 IOT Module, 0xE4 Box, 0xE3 App
+            "uid": "peerId"   // follow Protocol design guide
+          },
+          "to": {
+            "ctype": '0XE4',    //source peer type: 0xF0 Cloud,  0xE5 IOT Module, 0xE4 Box, 0xE3 App
+            "uid": "peerId"    // follow Protocol design guide
+          },
+          "ts": Date.parse(new Date()) / 1000,   //timestamp: the number of ms since time 00:00:00 UTC on 1970-01-01
+          "idx": 12,           //message index 0 ~ 65535 2Bytes
+          "mtype": "rqst",   //follow Protocol design guide
+          "data": {
+            "device_type": "BOX",
+            "act": " SCAN_BOX_REQUEST ",
+            "act_params": {"scan_box_request": 'KOHLER_BOX_SEARCH'}
           }
-        }
+        }]
         cordova.plugins.SocketPlugin.udpBroadCast({
           "timeout": "5000",
           "ip": "255.255.255.255",
@@ -158,7 +176,7 @@ angular.module('deviceAddModule')
 //接受tcp状态
       document.addEventListener('SocketPlugin.receiveTcpStatus', function (result) {
 
-        hmsPopup.showShortCenterToast("tcp状态"+angular.toJson(result.code));
+        hmsPopup.showShortCenterToast("tcp状态" + angular.toJson(result.code));
       }, false);
 //接受tcp返回数据
       document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
@@ -324,7 +342,7 @@ angular.module('deviceAddModule')
         }
         cordova.plugins.SocketPlugin.tcpSendCmd({
           "timeout": "5000",
-          "ip":"255.255.255.255",
+          "ip": "255.255.255.255",
           "value": cmd
         }, success, error);
         function success(response) {
@@ -337,11 +355,11 @@ angular.module('deviceAddModule')
       }
 
       $scope.closebox = function () {
-        cordova.plugins.SocketPlugin.tcpClose ({
+        cordova.plugins.SocketPlugin.tcpClose({
           "timeout": "5000",
-          "ip":"255.255.255.255",
+          "ip": "255.255.255.255",
           "value": ''
-        },success,error);
+        }, success, error);
         function success(response) {
           hmsPopup.showShortCenterToast("断开box成功");
         }

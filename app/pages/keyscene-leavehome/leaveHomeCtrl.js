@@ -22,10 +22,10 @@ angular.module('productModule')
       onOrOff2 : true,
       onOrOff3 : true,
       onOrOff4 : true,
-      onLinePic1 : "build/img/keyscene-morning/icon_home_device_signal5.png",//tupian
-      onLinePic2 : "build/img/keyscene-morning/icon_home_device_signal5.png",
-      onLinePic3 : "build/img/keyscene-morning/icon_home_device_signal5.png",
-      onLinePic4 : "build/img/keyscene-morning/icon_home_device_signal5.png",
+      onLinePic1 : "build/img/keyscene-leavehome/icon_home_device_signal5.png",//tupian
+      onLinePic2 : "build/img/keyscene-leavehome/icon_home_device_signal5.png",
+      onLinePic3 : "build/img/keyscene-leavehome/icon_home_device_signal5.png",
+      onLinePic4 : "build/img/keyscene-leavehome/icon_home_device_signal5.png",
     }
     /**
      *@autor:daidongdong

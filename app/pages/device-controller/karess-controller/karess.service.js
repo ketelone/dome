@@ -264,6 +264,28 @@ angular.module('karessControlModule')
           return d;
         }
 
+        this.explainAck = function (arg) {
+          var code;
+          if (arg.length >= 16 && arg.length <= 40) {
+            var ackStr = arg.substring(12, arg.length - 2);
+            var ack = ackStr.substring(0, 2).toLowerCase();
+            if (ack == 'fa') {
+              //valid ack
+              var operate = ackStr.substring(0, 4).toLowerCase();
+              code = {'ack': operate};
+            } else if (ack == 'fd') {
+              //invalid ack
+              code = {'ack': '1003'};
+            } else if (ack == 'fc') {
+              //invalid ack
+              code = {'ack': '1002'};
+            } else if (ack == 'fb') {
+              //invalid ack
+              code = {'ack': '1001'};
+            }
+          }
+          return code;
+        }
 
         // console.log(this.requestStatus(this.data._requestStatusType.FILLER_STATUS)); //请求指令
         // var cmd = "8877060000028A0001";
