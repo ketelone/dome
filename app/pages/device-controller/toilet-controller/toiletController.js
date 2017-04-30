@@ -642,8 +642,8 @@ angular.module('toiletControlModule')
           currentRadObj.id=$scope.currentSlideData[index].id;
           currentRadObj.j=0;
           currentRadObj.stoPosPoint=0;
-          // currentRadObj.gearInit = $scope.currentSlideData[index].gearInitTemp;
-          // $scope.currentSlideData[index].gearInit = $scope.currentSlideData[index].gearInitTemp;
+          currentRadObj.gearInit = $scope.currentSlideData[index].gearInitTemp;
+          $scope.currentSlideData[index].gearInit = $scope.currentSlideData[index].gearInitTemp;
           //当前绑定事件对象
           var currentEventObj = getIdObj($scope.currentSlideData[index].canves02);
           currentRadObj.drawDeliverCircle($scope.currentSlideData[index].gearNum);
@@ -927,14 +927,14 @@ angular.module('toiletControlModule')
                 $scope.currentSlideData = $scope.slideInitData;
               }else{
                 // reduce
-                $scope.currentSlideData.forEach(function (item1,index1) {
-                  $scope.handlenapeListNape[index].handledata.forEach(function (item2,index2) {
-                    if(item1.parNodeid === item2.parNodeid){
-                      $scope.currentSlideData.splice(index1,1);
+                for(var j=0;j<$scope.currentSlideData.length;j++) {
+                  for (var n = 0; n < $scope.handlenapeListNape[index].handledata.length; n++) {
+                    if ($scope.currentSlideData[j].parNodeid === $scope.handlenapeListNape[index].handledata[n].parNodeid) {
+                      $scope.currentSlideData.splice(j, 1);
                     }
-                  })
-                })
-              }
+                  }
+                };
+              };
             }else{
               //open
               //repeat scroll
@@ -977,32 +977,32 @@ angular.module('toiletControlModule')
        */
       $scope.toGetImpleteData = function(cmdvalue, name,index,isType){
         //cloud
-        hmsPopup.showLoading("<span translate='toiletController.loadingdata'></span>");
-        $timeout(function () {
-          hmsPopup.hideLoading();
-          $scope.selectChange(index,isType);
-        },1000)
         // hmsPopup.showLoading("<span translate='toiletController.loadingdata'></span>");
-        // var url = baseConfig.basePath + "/r/api/message/sendMessage";
-        // var paramter = cmdService.cloudCmd(cmdvalue,$scope.handlenapeListNape[index].cloudId);
-        // hmsHttp.post(url, paramter).success(
-        //   function(response){
-        //     hmsPopup.hideLoading();
-        //     if(response.code == 200){
-        //       var value = cmdService.explainAck(response.data.data.cmd[0]);
-        //       if(value.ack.includes("fa")){
-        //         $scope.selectChange(index,isType);
-        //       }else{
-        //         hmsPopup.showShortCenterToast("<span translate="+$scope.handlenapeListNape[index].handleDes+"></span>"+"<span translate='toiletController.directerror'></span>");
-        //       }
-        //     }else{
-        //       hmsPopup.showShortCenterToast("<span translate="+$scope.handlenapeListNape[index].handleDes+"></span>"+"<span translate='toiletController.directerror'></span>");
-        //     }
-        //   }
-        // ).error(function (response, status, header, config) {
+        // $timeout(function () {
         //   hmsPopup.hideLoading();
-        //   hmsPopup.showShortCenterToast("<span translate="+$scope.handlenapeListNape[index].handleDes+"></span>"+"<span translate='toiletController.loadingdataerrror'></span>");;
-        // })
+        //   $scope.selectChange(index,isType);
+        // },1000)
+        hmsPopup.showLoading("<span translate='toiletController.loadingdata'></span>");
+        var url = baseConfig.basePath + "/r/api/message/sendMessage";
+        var paramter = cmdService.cloudCmd(cmdvalue,$scope.handlenapeListNape[index].cloudId);
+        hmsHttp.post(url, paramter).success(
+          function(response){
+            hmsPopup.hideLoading();
+            if(response.code == 200){
+              var value = cmdService.explainAck(response.data.data.cmd[0]);
+              if(value.ack.includes("fa")){
+                $scope.selectChange(index,isType);
+              }else{
+                hmsPopup.showShortCenterToast("<span translate="+$scope.handlenapeListNape[index].handleDes+"></span>"+"<span translate='toiletController.directerror'></span>");
+              }
+            }else{
+              hmsPopup.showShortCenterToast("<span translate="+$scope.handlenapeListNape[index].handleDes+"></span>"+"<span translate='toiletController.directerror'></span>");
+            }
+          }
+        ).error(function (response, status, header, config) {
+          hmsPopup.hideLoading();
+          hmsPopup.showShortCenterToast("<span translate="+$scope.handlenapeListNape[index].handleDes+"></span>"+"<span translate='toiletController.loadingdataerrror'></span>");;
+        })
       };
       /**
        *@params:index(selected index)
