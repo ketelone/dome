@@ -70,8 +70,7 @@ angular.module('toiletControlModule')
        gong neng list-json
        功能列表数据
        **/
-      $scope.handlenapeListNape = [
-        {
+      $scope.handlenapeListNape = [{
           imgUrl: "build/img/cenwatpurifier-controller/icon_handleclear.png",
           imgSeledUrl: "build/img/cenwatpurifier-controller/icon_handlecleared.png",
           imgUrlTemp:"build/img/cenwatpurifier-controller/icon_handleclear.png",
@@ -79,8 +78,7 @@ angular.module('toiletControlModule')
           matchdataid:"clear",
           selecFlag:false,
           cloudId:"cenwapurclear"
-        },
-        {
+        },{
           imgUrl: "build/img/cenwatpurifier-controller/icon_setting.png",
           imgSeledUrl: "build/img/cenwatpurifier-controller/icon_settinged.png",
           imgUrlTemp:"build/img/cenwatpurifier-controller/icon_setting.png",

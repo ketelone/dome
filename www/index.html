@@ -25,7 +25,35 @@
       win.addEventListener(resizeEvt, recalc, false);
       doc.addEventListener('DOMContentLoaded', recalc, false);
     })(document, window);
-//    document.documentElement.style.fontSize = (document.documentElement.clientWidth / 7.5) + 'px';
+//    var publish = function(){
+//      this.subscribers = [];
+//    };
+//    publish.prototype.filter = function(data){
+//      this.subscribers.forEach(function(item){
+//        item["fn"](data);
+//      })
+//    };
+//    publish.prototype.add = function(sub) {
+//      var alreadyExists = this.subscribers.some(function (item) {
+//        return item.name === sub.name;
+//      })
+//      if (!alreadyExists) {
+//        this.subscribers.push(sub)
+//      };
+//      return this;
+//    }
+//    var pub = new publish();
+//    var sub1 = {
+//      name:"co",
+//      fn:function(data){
+//        console.log(data);
+//      },
+//    };
+//    pub.add(sub1);
+//    document.addEventListener('click', function (result) {
+//      pub.filter("2")
+//    },false)
+
   </script>
   <link href="build/lib/ionic/css/ionic.min.css" rel="stylesheet">
   <link href="build/css/app.core.css" rel="stylesheet">

@@ -45,7 +45,8 @@ angular.module('toiletControlModule')
           $scope.modal.show();
           setTimeout(function () {
             var ele = document.getElementsByClassName("cenwatpurSetSingalModalTop");
-            ele[0].style.top = $scope.screenHeig - 1.02*$scope.fontSize*$scope.value.length + 'px';
+            ele[0].style.top = $scope.screenHeig - 52*$scope.value.length + 'px';
+            ele[0].style.minHeight = 52*$scope.value.length + 'px';
           }, 10)
         }
       };

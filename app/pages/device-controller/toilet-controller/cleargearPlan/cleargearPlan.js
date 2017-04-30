@@ -183,6 +183,7 @@ angular.module('toiletControlModule')
         setTimeout(function () {
           var ele = document.getElementsByClassName("hmsiot-manySelect");
           ele[0].style.top = 43 + '%';
+          ele[0].style.minHeight = 57 + '%';
         }, 20)
       };
       $scope.$on('$destroy', function() {
