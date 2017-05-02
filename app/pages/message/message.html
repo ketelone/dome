@@ -1,136 +1,128 @@
 <ion-view view-title="消息" class="message">
-  <!-- <ion-header-bar align-title="center" class="bar-stable">
-     <div class="buttons">
-       <button class="button" ng-click="">左侧按钮</button>
-     </div>
-     <div class="title">消息</div>
-     <div class="buttons">
-       <button class="button">右侧按钮</button>
-     </div>
-   </ion-header-bar>-->
 
-<!--<div class="bar bar-header" style="height: 2rem">-->
-  <!--<div class="row"><span>消息</span></div>-->
-  <!--<div class="row"><span>消息</span></div>-->
-
-
-<!--</div>-->
- <div class="cusHeader">
+  <!--</div>-->
+  <div class="cusHeader">
     <div class="row mesHeader">
       <span translate="message.message">消息</span>
     </div>
-<div class="row allMess">
-   <div ng-click="showStatus()" class="col col-33"><span translate="message.status" ng-class="statusword">状态及提醒</span></div>
-  <div ng-click="showException()" class="col col-33"><span translate="message.exception" ng-class="exceptionword">异常及保修</span></div>
-  <div class="col col-33"><span translate="message.other">其它</span></div>
-</div>
- </div>
-
-  <ion-content class="hasHeader" style="overflow-y:scroll; ">
-    <ion-scroll zooming="true" direction="y"  class="scroll-view ionic-scroll scroll-y" >
-<!--status-->
-   <ion-list ng-show="hasStaus" show-delete="data.showDelete" >
-     <ion-item   ng-click="goMessDetail(statusitem)" style="background: #212121;border-style:none;" ng-repeat="statusitem in statusitems " item="statusitem"  class="item item-icon-right item-remove-animate">
-   <div  ng-class="statusitem.readStyle" class="row oneModel"  >
-  <!-- <img  ng-show="show-delete" style="width: 0.44rem;height: 0.45rem" ng-src="build/img/message/radio_bg.png"/>-->
-           <div class="col col-75">
-             <div class="row">
-               <div class="col col-60" style="padding-left: 0rem"><span class="leftWord1" translate={{statusitem.statusMessage}}></span></div>
-               <div class="col" ><span class="leftWord2" translate={{statusitem.device}}></span></div>
-             </div>
-             <div class="row">
-               <span class="leftWord3" translate={{statusitem.messageDel}}></span>
-             </div>
-             <div class="row addpadding">
-               <span class="time" translate="{{statusitem.time}}"></span>
-             </div>
-           </div>
-           <div class="col ">
-             <i class="icon ion-ios-arrow-right iconSize"></i>
-           </div>
+    <div class="row allMess">
+      <div ng-click="showStatus()" class="col col-33"><span translate="message.status"
+                                                            ng-class="statusword">状态及提醒</span></div>
+      <div ng-click="showException()" class="col col-33"><span translate="message.exception" ng-class="exceptionword">异常及保修</span>
       </div>
-    <ion-option-button class="manyChoose"
-                          ng-click="manyChoose()" translate="message.manyChoose">
-         多选
-       </ion-option-button>
-       <ion-option-button class="goDelete"
-                          ng-click="goDeteleitem(statusitem)" translate="message.delete">
-         删除
-       </ion-option-button>
-       <ion-delete-button  ng-click="onChoose(statusitem)" >
+      <div class="col col-33"><span translate="message.other">其它</span></div>
+    </div>
+  </div>
 
-         <img  style=" width: 0.5rem;height:0.5rem" ng-src={{statusitem.circleUrl1}} />
-
-
-       </ion-delete-button>
-
-     </ion-item>
-</ion-list>
-
-
- <!--nostatus-->
-    <ion-list ng-show="false" >
-
-<div class="noMessage">
-  <span class="noMessageWord" translate="message.noMessageWord1">暂无设备消息</span> </div>
-
-    </ion-list>
-<!--exception-->
-    <ion-list ng-show="hasException" show-delete="data.showDelete" >
-      <ion-item  ng-click="goMessDetail(exceptionitem)" style="background: #212121;border-style:none;" ng-repeat="exceptionitem in exceptionitems" item="exceptionitem"  class="item item-icon-right item-remove-animate">
-        <div ng-class="exceptionitem.readStyle" class="row oneModel" >
-          <div class="col col-75">
-            <div class="row">
-              <div class="col col-60" STYLE="padding-left: 0rem"><span class="leftWord1" translate="{{exceptionitem.exceptionMessage}}"></span></div>
-              <div class="col" ><span class="leftWord2" translate="{{exceptionitem.device}}"></span></div>
+  <ion-content class="hasHeader" style="overflow-y:scroll; margin-bottom: 44px">
+    <ion-scroll zooming="true" direction="y" class="scroll-view ionic-scroll scroll-y">
+      <!--status-->
+      <ion-list ng-show="hasStaus" show-delete="data.showDelete">
+        <ion-item ng-click="goMessDetail(statusitem)" style="background: #212121;border-style:none;"
+                  ng-repeat="statusitem in statusitems " item="statusitem"
+                  class="item item-icon-right item-remove-animate">
+          <div ng-class="statusitem.readStyle" class="row oneModel">
+            <!-- <img  ng-show="show-delete" style="width: 0.44rem;height: 0.45rem" ng-src="build/img/message/radio_bg.png"/>-->
+            <div class="col col-75">
+              <div class="row">
+                <div class="col col-60" style="padding-left: 0rem"><span class="leftWord1"
+                                                                         translate={{statusitem.statusMessage}}></span>
+                </div>
+                <div class="col"><span class="leftWord2" translate={{statusitem.device}}></span></div>
+              </div>
+              <div class="row">
+                <span class="leftWord3" translate={{statusitem.messageDel}}></span>
+              </div>
+              <div class="row addpadding">
+                <span class="time" translate="{{statusitem.time}}"></span>
+              </div>
             </div>
-           <div class="row addpadding">
-              <span class="time" translate="{{exceptionitem.time}}"> </span>
+            <div class="col ">
+              <i class="icon ion-ios-arrow-right iconSize"></i>
             </div>
           </div>
-          <div class="col ">
-            <i class="icon ion-ios-arrow-right iconSize"></i>
+          <ion-option-button class="manyChoose"
+                             ng-click="manyChoose()" translate="message.manyChoose">
+            多选
+          </ion-option-button>
+          <ion-option-button class="goDelete"
+                             ng-click="goDeteleitem(statusitem)" translate="message.delete">
+            删除
+          </ion-option-button>
+          <ion-delete-button ng-click="onChoose(statusitem)">
+
+            <img style=" width: 0.5rem;height:0.5rem" ng-src={{statusitem.circleUrl1}}>
+
+
+          </ion-delete-button>
+
+        </ion-item>
+      </ion-list>
+
+
+      <!--nostatus-->
+      <ion-list ng-show="false">
+
+        <div class="noMessage">
+          <span class="noMessageWord" translate="message.noMessageWord1">暂无设备消息</span></div>
+
+      </ion-list>
+      <!--exception-->
+      <ion-list ng-show="hasException" show-delete="data.showDelete">
+        <ion-item ng-click="goMessDetail(exceptionitem)" style="background: #212121;border-style:none;"
+                  ng-repeat="exceptionitem in exceptionitems" item="exceptionitem"
+                  class="item item-icon-right item-remove-animate">
+          <div ng-class="exceptionitem.readStyle" class="row oneModel">
+            <div class="col col-75">
+              <div class="row">
+                <div class="col col-60" STYLE="padding-left: 0rem"><span class="leftWord1"
+                                                                         translate="{{exceptionitem.exceptionMessage}}"></span>
+                </div>
+                <div class="col"><span class="leftWord2" translate="{{exceptionitem.device}}"></span></div>
+              </div>
+              <div class="row addpadding">
+                <span class="time" translate="{{exceptionitem.time}}"> </span>
+              </div>
+            </div>
+            <div class="col ">
+              <i class="icon ion-ios-arrow-right iconSize"></i>
+            </div>
           </div>
-        </div>
 
-        <ion-option-button class="manyChoose"
-                           ng-click="manyChoose(exceptionitem)" translate="message.manyChoose">
-          多选
-        </ion-option-button>
-        <ion-option-button class="goDelete"
-                           ng-click="goDeteleitem(exceptionitem)" translate="message.delete">
-          删除
-        </ion-option-button>
-        <ion-delete-button  ng-click="onChoose(exceptionitem)" >
+          <ion-option-button class="manyChoose"
+                             ng-click="manyChoose(exceptionitem)" translate="message.manyChoose">
+            多选
+          </ion-option-button>
+          <ion-option-button class="goDelete"
+                             ng-click="goDeteleitem(exceptionitem)" translate="message.delete">
+            删除
+          </ion-option-button>
+          <ion-delete-button ng-click="onChoose(exceptionitem)">
 
-          <img  style=" width: 0.42rem;height:0.42rem" ng-src={{exceptionitem.circleUrl1}} />
+            <img style=" width: 0.42rem;height:0.42rem" ng-src={{exceptionitem.circleUrl1}}>
 
-     </ion-delete-button>
-      </ion-item>
+          </ion-delete-button>
+        </ion-item>
 
-    </ion-list>
-
-
-    <!--noexception-->
-    <ion-list ng-show="false" >
-
-      <div class="noMessage">
-        <span class="noMessageWord" translate="message.noMessageWord2">您当前的设备无异常</span> </div>
-    </ion-list>
+      </ion-list>
 
 
+      <!--noexception-->
+      <ion-list ng-show="false">
+
+        <div class="noMessage">
+          <span class="noMessageWord" translate="message.noMessageWord2">您当前的设备无异常</span></div>
+      </ion-list>
 
 
-      </ion-scroll>
+    </ion-scroll>
   </ion-content>
 
   <div ng-show="threeBottom" class="row bottomWord">
-    <div ng-click="bottomManychoose()" class="col col-33 allChoose"><span translate="message.all" ></span></div>
+    <div ng-click="bottomManychoose()" class="col col-33 allChoose"><span translate="message.all"></span></div>
     <div ng-click="bottomGocancel()" class="col col-33 cancal"><span translate="message.cancel"></span></div>
     <div ng-click="bottomGodetele()" class="col delete"><span translate="message.delete"></span></div>
   </div>
-
-
 
 
 </ion-view>

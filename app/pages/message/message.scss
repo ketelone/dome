@@ -1,157 +1,157 @@
-.message{
+.message {
 
-.cusHeader{
-  //background-image: linear-gradient(-180deg, #42444A 1%, #191C23 86%);
-height: 2.86rem;
-position: relative;
-  background:no-repeat url("../img/my-info/img_home_topbackground.png");
-  background-size:cover;
+  .cusHeader {
+    //background-image: linear-gradient(-180deg, #42444A 1%, #191C23 86%);
+    height: 2.86rem;
+    position: relative;
+    background: no-repeat url("../img/my-info/img_home_topbackground.png");
+    background-size: cover;
 
-}
-.mesHeader{
+  }
+  .mesHeader {
 
-
-padding:0.82rem 0rem 0rem 3.11rem;
-  font-size:0.6rem;
-color:#FFFFFF;
-}
+    padding: 0.82rem 0rem 0rem 3.11rem;
+    font-size: 0.6rem;
+    color: #FFFFFF;
+  }
 
   .allMess {
-  padding: 0rem 0rem 0rem 0.89rem;
+    padding: 0rem 0rem 0rem 0.89rem;
     font-size: 0.32rem;
     white-space: nowrap;
 
-    color:#565A64 ;
+    color: #565A64;
     position: absolute;
-   top: 2.22rem;
+    top: 2.22rem;
   }
-.statusword{
-  border-bottom:solid 0.05rem #FFFFFF;
-  padding-bottom: 0.2rem;
-  color:#FFFFFF;
-}
+  .statusword {
+    border-bottom: solid 0.05rem #FFFFFF;
+    padding-bottom: 0.2rem;
+    color: #FFFFFF;
+  }
 
-.hasHeader{
-  position: absolute;
-  top: 2.85rem;
-  background: #212121;
-}
+  .hasHeader {
+    position: absolute;
+    top: 2.85rem;
+    background: #212121;
+  }
 
-li{padding: 0rem}
-.item-complex.item-icon-right .item-content{
+  li {
+    padding: 0rem
+  }
+  .item-complex.item-icon-right .item-content {
     padding: 0rem
   }
   //one message
-.oneModel {
-  color: #FFFFFF;
-  background: #212121;
- // border:  solid #2D3234;
-border-bottom: 0.05rem solid #2D3234;
-  .col {
-    padding: 0.15rem
-  }
-
-  .nopaddingLeft {
-    padding-left: 0rem;
-  }
-  .leftWord1 {
-    font-family: PingFangSC-Medium;
-    font-size: 0.32rem;
+  .oneModel {
     color: #FFFFFF;
-    letter-spacing: 1px;
-    line-height: 0.32rem;
-  }
-  .leftWord2 {
-    border: 1px solid #979797;
-    font-size: 0.25rem;
-    padding-left: 0.1rem;
-    padding-right: 0.1rem;
-line-height: 0.3rem;
-}
-  .leftWord3 {
-    font-family: PingFangSC-Regular;
-    font-size: 0.24rem;
-    color: #565A64;
-    letter-spacing: 0.01rem;
-    line-height: 0.28rem;
-  }
-  .time {
-    font-family: SFNSText;
-    font-size: 0.24rem;
-    color: #A4A4A4;
-  }
-  .addpadding {
-    padding-top: 0.3rem;
-  }
-  .iconSize {
-  font-size: 0.5rem;
-right: 0.3rem;
+    background: #212121;
+    // border:  solid #2D3234;
+    border-bottom: 0.05rem solid #2D3234;
+    .col {
+      padding: 0.15rem
+    }
 
+    .nopaddingLeft {
+      padding-left: 0rem;
+    }
+    .leftWord1 {
+      font-family: PingFangSC-Medium;
+      font-size: 0.32rem;
+      color: #FFFFFF;
+      letter-spacing: 1px;
+      line-height: 0.32rem;
+    }
+    .leftWord2 {
+      border: 1px solid #979797;
+      font-size: 0.25rem;
+      padding-left: 0.1rem;
+      padding-right: 0.1rem;
+      line-height: 0.3rem;
+    }
+    .leftWord3 {
+      font-family: PingFangSC-Regular;
+      font-size: 0.24rem;
+      color: #565A64;
+      letter-spacing: 0.01rem;
+      line-height: 0.28rem;
+    }
+    .time {
+      font-family: SFNSText;
+      font-size: 0.24rem;
+      color: #A4A4A4;
+    }
+    .addpadding {
+      padding-top: 0.3rem;
+    }
+    .iconSize {
+      font-size: 0.5rem;
+      right: 0.3rem;
+
+    }
   }
-}
 
   //nostatus　noException
-  .noMessage{
+  .noMessage {
     position: relative;
     top: 4.27rem;
     text-align: center;
   }
-.noMessageWord{
-  font-family: PingFangSC-Regular;
+  .noMessageWord {
+    font-family: PingFangSC-Regular;
 
-  font-size: 0.28rem;
-  color: #9B9B9B;
+    font-size: 0.28rem;
+    color: #9B9B9B;
 
-}
-//animate
+  }
+  //animate
 
-
-  .item-left-edit.visible.active
-  {
-    transform: translate3d(0.3rem,0,0) !important;
+  .item-left-edit.visible.active {
+    transform: translate3d(0.3rem, 0, 0) !important;
     z-index: 999;
   }
-  .manyChoose{background: #C8C7CD;
+  .manyChoose {
+    background: #C8C7CD;
     font-size: 0.24rem;
-    color: #FFFFFF;}
-.goDelete{
-  background: #FE3B31;
-  font-size: 0.24rem;
-  color: #FFFFFF;
-}
+    color: #FFFFFF;
+  }
+  .goDelete {
+    background: #FE3B31;
+    font-size: 0.24rem;
+    color: #FFFFFF;
+  }
 
-.button:after{
-  background: #212121;
-  z-index: -1;
-}
+  .button:after {
+    background: #212121;
+    z-index: -1;
+  }
 
   .bottomWord {
     font-family: PingFangSC-Regular;
     font-size: 0.32rem;
     color: #FFFFFF;
     text-align: center;
-    position:absolute;
-   bottom:44px;
+    position: absolute;
+    bottom: 44px;
   }
 
-//底部三个按钮样式
-  .allChoose{
+  //底部三个按钮样式
+  .allChoose {
     background: #3F3F3F;
-padding: 0.24rem 0.77rem 0.24rem 0.77rem;
+    padding: 0.24rem 0.77rem 0.24rem 0.77rem;
   }
 
-.cancal{
-  background: #A2A2A2;
-  padding: 0.24rem 0.77rem 0.24rem 0.77rem;
-}
-.delete{
-  background: #FE3B31;
-  padding: 0.24rem 0.77rem 0.24rem 0.77rem;
-}
+  .cancal {
+    background: #A2A2A2;
+    padding: 0.24rem 0.77rem 0.24rem 0.77rem;
+  }
+  .delete {
+    background: #FE3B31;
+    padding: 0.24rem 0.77rem 0.24rem 0.77rem;
+  }
 
-
-//是否已读样式
-  .hasread{
-    opacity:0.9;
+  //是否已读样式
+  .hasread {
+    opacity: 0.9;
   }
 }

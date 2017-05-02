@@ -172,14 +172,14 @@ angular.module('karessControlModule')
           selecFlag: false,
           handledata: $scope.slideInitData
         },
-        {
-          imgUrl: "build/img/karess-controller/icon_jienengnor.png",
-          imgSeledUrl: "build/img/karess-controller/icon_jieneng.png",
-          imgUrlTemp: "build/img/karess-controller/icon_jienengnor.png",
-          handleDes: "karessController.jieneng",
-          selecFlag: false,
-          handledata: $scope.slideInitData
-        },
+        // {
+        //   imgUrl: "build/img/karess-controller/icon_jienengnor.png",
+        //   imgSeledUrl: "build/img/karess-controller/icon_jieneng.png",
+        //   imgUrlTemp: "build/img/karess-controller/icon_jienengnor.png",
+        //   handleDes: "karessController.jieneng",
+        //   selecFlag: false,
+        //   handledata: $scope.slideInitData
+        // },
         {
           imgUrl: "build/img/karess-controller/icon_shezhinor.png",
           imgSeledUrl: "build/img/karess-controller/icon_shezhi.png",
@@ -556,18 +556,18 @@ angular.module('karessControlModule')
             cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           }
         }
+        // if (index == 7) {
+        //   if (info.selecFlag == false) {
+        //     var value = cmdService.getCmd("8877", 1, karessService.data.openSanitize, 0, 2);
+        //     console.log(value);
+        //     cmdService.sendCmd(deviceId, value, localStorage.boxIp);
+        //   } else {
+        //     var value = cmdService.getCmd("8877", 1, karessService.data.closeSanitize, 0, 2);
+        //     console.log(value);
+        //     cmdService.sendCmd(deviceId, value, localStorage.boxIp);
+        //   }
+        // }
         if (index == 7) {
-          if (info.selecFlag == false) {
-            var value = cmdService.getCmd("8877", 1, karessService.data.openSanitize, 0, 2);
-            console.log(value);
-            cmdService.sendCmd(deviceId, value, localStorage.boxIp);
-          } else {
-            var value = cmdService.getCmd("8877", 1, karessService.data.closeSanitize, 0, 2);
-            console.log(value);
-            cmdService.sendCmd(deviceId, value, localStorage.boxIp);
-          }
-        }
-        if (index == 8) {
           $state.go('karessSetting');
         }
 

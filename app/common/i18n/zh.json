@@ -414,14 +414,14 @@
     "parameterrad": "0",
     "parameterdes": "水温档位",
     "handleSelecDes": "出水方式",
-    "zhushui": "&nbsp;&nbsp;&nbsp;注水",
-    "luoshui": "&nbsp;&nbsp;&nbsp;落水",
+    "zhushui": "注水",
+    "luoshui": "落水",
     "shuilianmo": "水力按摩",
     "toubuanmo": "头部按摩",
     "beibujiare": "背部加热",
     "yijiantingzhi": "一键停止",
     "guandaochujun": "管道除菌",
-    "shezhi": "&nbsp;&nbsp;&nbsp;设置",
+    "shezhi": "设置",
     "gaunbi": "关闭",
     "maichong": "脉冲",
     "bodong": "波动",
@@ -438,7 +438,7 @@
     "infoTaress3": "SKU号",
     "infoTaress4": "SN号",
     "infoTaress5": "位置信息",
-    "jieneng": "&nbsp;&nbsp;&nbsp;节能"
+    "jieneng": "节能"
   },
   "mcController": {
     "setting": "设置",
@@ -448,10 +448,10 @@
     "parameterrad": "0",
     "parameterdes": "水温档位",
     "handleSelecDes": "出水方式",
-    "zhushui": "&nbsp;&nbsp;&nbsp;灯光",
-    "luoshui": "&nbsp;&nbsp;&nbsp;除雾",
+    "zhushui": "灯光",
+    "luoshui": "除雾",
     "shuilianmo": "一键停止",
-    "shezhi": "&nbsp;&nbsp;&nbsp;设置",
+    "shezhi": "设置",
     "settingName1": "异常情况统计",
     "settingName2": "恢复出厂设置",
     "settingName3": "查看设备信息",
@@ -461,7 +461,7 @@
     "infoTaress3": "SKU号",
     "infoTaress4": "SN号",
     "infoTaress5": "位置信息",
-    "jieneng": "&nbsp;&nbsp;&nbsp;节能"
+    "jieneng": "节能"
   },
   "nextgen": {
     "title": "next gen shower",

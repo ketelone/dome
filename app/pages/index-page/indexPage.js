@@ -72,7 +72,7 @@ angular.module('indexPageModule')
             lastUpdateDate: ""
           },
           {
-            id: "3",
+            id: "1",
             pictureUrl: 'build/img/index/img_home_leavehome.png',
             title: "离家",
             context: "一键关闭所有设备",
@@ -94,7 +94,7 @@ angular.module('indexPageModule')
             lastUpdateDate: ""
           },
           {
-            id: "5",
+            id: "3",
             pictureUrl: 'build/img/index/muyu@3x.png',
             title: "沐浴",
             context: "享受沐浴",
@@ -105,7 +105,7 @@ angular.module('indexPageModule')
             lastUpdateDate: ""
           },
           {
-            id: "6",
+            id: "5",
             pictureUrl: 'build/img/index/img_home_veil.png',
             title: "维亚灯光",
             context: "开始您美好的一天",
@@ -116,7 +116,7 @@ angular.module('indexPageModule')
             lastUpdateDate: ""
           },
           {
-            id: "7",
+            id: "6",
             pictureUrl: 'build/img/index/img_home_period.png',
             title: "大姨了吗",
             context: "女性特殊期洗浴关怀方案",
@@ -682,7 +682,7 @@ angular.module('indexPageModule')
         );
 
       }
-      setUnit();
+      // setUnit();
     }
   ]);
 

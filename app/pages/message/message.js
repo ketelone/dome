@@ -17,113 +17,26 @@ angular.module('messageModule')
     '$scope',
     '$state',
     '$timeout',
-    'publicMethod','$ionicPopup','hmsPopup','hmsHttp','SettingsService','baseConfig',
+    'publicMethod', '$ionicPopup', 'hmsPopup', 'hmsHttp', 'SettingsService', 'baseConfig',
     function ($scope,
               $state,
               $timeout,
-              publicMethod,$ionicPopup,hmsPopup,hmsHttp,SettingsService,baseConfig) {
-
+              publicMethod, $ionicPopup, hmsPopup, hmsHttp, SettingsService, baseConfig) {
 
 
       $scope.data = {
         showDelete: false //左侧选择框是否显示
       };
- $scope.threeBottom=false;
-      $scope.hasStaus=true;//defalut no Display
-  $scope.hasException=false;//defalut no Display
-  //$scope.noStaus=false;//defalut no status
-  //$scope.noException=false;//defalut no Exception
- $scope.statusword='statusword';
-$scope.exceptionword='exceptionword';
+      $scope.threeBottom = false;
+      $scope.hasStaus = true;//defalut no Display
+      $scope.hasException = false;//defalut no Display
+      $scope.statusword = 'statusword';
+      $scope.exceptionword = 'exceptionword';
+      $scope.exceptionitems = [];
+      $scope.statusitems = [];
 
-     var circleUrl2="build/img/common/radio_h.png";
-     var circleUrltemp="build/img/common/radio_q.png";
-
-     $scope.exceptionitems= [
-        {
-          id: "200",
-          exceptionMessage:"message.exceptionMessage",
-          device:"message.device1",
-          time:"message.time",
-          circleUrl1:"build/img/common/radio_q.png",
-          ischecked:false,
-          name:"exception",
-          hasRead:true,
-          readStyle:""
-        },
-       /* {
-          id: "2",
-          exceptionMessage:"message.exceptionMessage",
-          device:"message.device2",
-          time:"message.time",
-          circleUrl1:"build/img/common/radio_q.png",
-          ischecked:false,
-          name:"exception"
-        },{
-          id: "3",
-          exceptionMessage:"message.exceptionMessage",
-          device:"message.device1",
-          time:"message.time",
-          circleUrl1:"build/img/common/radio_q.png",
-          ischecked:false,
-         name:"exception"
-
-        }*/
-      ];
-
-
-      $scope.statusitems= [
-        {
-          id: "100",
-          statusMessage:"message.statusMessage1",
-          device:"message.device1",
-          messageDel:"message.messageDel1",
-          time:"message.time",
-          circleUrl1:"build/img/common/radio_q.png",
-          ischecked:false,
-          name:"status",
-          hasRead:true,
-          readStyle:""
-        },
-        //{
-        //  id: "2",
-        //  statusMessage:"message.statusMessage2",
-        //  device:"message.device2",
-        //  messageDel:"message.messageDel2",
-        //  time:"message.time",
-        //  circleUrl1:"build/img/common/radio_q.png",
-       //  ischecked:false,
-        //  name:"status"
-        //},{
-        //  id: "3",
-        //  statusMessage:"message.statusMessage1",
-        //  device:"message.device2",
-        //  messageDel:"message.messageDel1",
-        //  time:"message.time",
-        //  circleUrl1:"build/img/common/radio_q.png",
-        //  ischecked:false,
-        //  name:"status"
-        //},{
-        //  id: "4",
-        //  statusMessage:"message.statusMessage1",
-        //  device:"message.device1",
-        //  messageDel:"message.messageDel1",
-        //  time:"message.time",
-        //  circleUrl1:"build/img/common/radio_q.png",
-        //  ischecked:false,
-        //  name:"status"
-        //},
-        //{
-        //  id: "5",
-        //  statusMessage:"message.statusMessage1",
-        //  device:"message.device1",
-        //  messageDel:"message.messageDel1",
-        //  time:"2017-02-08 17:25",
-        //  circleUrl1:"build/img/common/radio_q.png",
-        //  ischecked:false,
-        //  name:"status"
-        //},
-      ]
+      var circleUrl2 = "build/img/common/radio_h.png";
+      var circleUrltemp = "build/img/common/radio_q.png";
 
 
       /**
@@ -133,62 +46,88 @@ $scope.exceptionword='exceptionword';
        *@return:
        *@disc: Get exception information from interface
        */
-      $scope.response="";
 
-      function getException(){
-        var url = baseConfig.basePath+"/r/api/cmm/deviceException/query";
+      function getException() {
+        var url = baseConfig.basePath + "/r/api/cmm/deviceException/query";
         var paramter = [
-          {"partyId":"6"}
+          {"partyId": 6, page: 1, pageSize: 10,lang:'zh_CN'}
         ];
         hmsHttp.post(url, paramter).success(
-          function(response){
-           // alert("success");
-          //  alert(response);
-            console.log(response);
-            console.log(response.rows[0].description);
-            $scope.response=response;
-       //异常及保修
+          function (response) {
+            //异常及保修
+            if(response.success == true){
+              for (var i = 0; i < response.rows.length; i++) {
+                if (response.rows[i].exceptionType == 'err') {
+                  //状态及提醒
+                  $scope.statusitems.push({
+                    id: response.rows[i].exceptionId,
+                    statusMessage: response.rows[i].description,
+                    device: response.rows[i].deviceName,
+                    time: response.rows[i].creationDate,
+                    exceptionId : response.rows[i].exceptionId,
+                    circleUrl1: "build/img/common/radio_q.png",
+                    ischecked: false,
+                    name: "status",
+                    hasRead: false,
+                    readStyle: ""
+                  });
+                } else if (response.rows[i].exceptionType == 'warn') {
+                  $scope.exceptionitems.push(
+                    {
+                      id: response.rows[i].exceptionId,
+                      exceptionMessage: response.rows[i].description,
+                      device: response.rows[i].deviceName,
+                      time: response.rows[i].creationDate,
+                      exceptionId : response.rows[i].exceptionId,
 
-            var item1={
-              id: response.rows[0].exceptionId,
-              exceptionMessage:response.rows[0].description,
-              device:response.rows[0].deviceName,
-              time:response.rows[0].creationDate,
-              circleUrl1:"build/img/common/radio_q.png",
-              ischecked:false,
-              name:"exception",
-              hasRead:false,
-              readStyle:""
-
+                      circleUrl1: "build/img/common/radio_q.png",
+                      ischecked: false,
+                      name: "exception",
+                      hasRead: false,
+                      readStyle: ""
+                    }
+                  );
+                }
+              }
             }
-            $scope.exceptionitems.unshift(item1);
+            $scope.exceptionitems.push({
+              id: "200",
+              exceptionMessage: "message.exceptionMessage",
+              device: "message.device1",
+              time: "message.time",
+              circleUrl1: "build/img/common/radio_q.png",
+              ischecked: false,
+              name: "exception",
+              hasRead: true,
+              readStyle: ""
+            });
 
-           //状态及提醒
-            var item2={
-              id: response.rows[1].exceptionId,
-              statusMessage:response.rows[1].description,
-              device:response.rows[1].deviceName,
-              time:response.rows[1].creationDate,
-              circleUrl1:"build/img/common/radio_q.png",
-              ischecked:false,
-              name:"status",
-              hasRead:false,
-              readStyle:""
 
-            }
-            $scope.statusitems.unshift(item2);
-           // console.log(response.rows[0]);
-            // $scope.deciveInfo.place = response.rows[0];
-            //hmsPopup.showPopup("<span translate='bathroom.saveAlert'></span>");
+            $scope.statusitems.push({
+              id: "100",
+              statusMessage: "message.statusMessage1",
+              device: "message.device1",
+              messageDel: "message.messageDel1",
+              time: "message.time",
+              circleUrl1: "build/img/common/radio_q.png",
+              ischecked: false,
+              name: "status",
+              hasRead: true,
+              readStyle: ""
+            });
+            console.log($scope.statusitems);
+            read();
+
           }
         ).error(
-          function (response, status, header, config){
+          function (response, status, header, config) {
             //hmsPopup.showPopup("<span translate='bathroom.saveError'></span>");
-          //  alert("1234");
+            //  alert("1234");
           }
         );
 
       }
+
       getException();
       /**
        *@author:chenjiacheng
@@ -197,13 +136,13 @@ $scope.exceptionword='exceptionword';
        *@return:
        *@disc:go  messageDetail list
        */
-      $scope.goMessDetail=function(item){
+      $scope.goMessDetail = function (item) {
 
-        SettingsService.set("exceptionId",item.id);
+        SettingsService.set("exceptionId", item.id);
         $state.go("messageDetail");
 
       }
-/**
+      /**
        *@author:chenjiacheng
        *@name:logout
        *@params:
@@ -211,21 +150,20 @@ $scope.exceptionword='exceptionword';
        *@disc:判断是否已读
        */
 
-   var read= function(){
+      var read = function () {
 
-  for (var i = 0; i <$scope.statusitems.length; i++) {
-     if ($scope.statusitems[i].hasRead==true) {
-      $scope.statusitems[i].readStyle="hasread";
-       }
-  }
+        for (var i = 0; i < $scope.statusitems.length; i++) {
+          if ($scope.statusitems[i].hasRead == true) {
+            $scope.statusitems[i].readStyle = "hasread";
+          }
+        }
 
-     for (var i = 0; i < $scope.exceptionitems.length; i++) {
-       if ($scope.exceptionitems[i].hasRead==true) {
-         $scope.exceptionitems[i].readStyle="hasread";
-       }
-     }
-    }
-      read();
+        for (var i = 0; i < $scope.exceptionitems.length; i++) {
+          if ($scope.exceptionitems[i].hasRead == true) {
+            $scope.exceptionitems[i].readStyle = "hasread";
+          }
+        }
+      }
       /**
        *@author:chenjiacheng
        *@name:logout
@@ -233,13 +171,13 @@ $scope.exceptionword='exceptionword';
        *@return:
        *@disc:Display status and alert list
        */
-     $scope.showStatus=function(){
-       $scope.hasStaus=true;
-      // console.log( $scope.swStaus);
-       $scope.hasException=false;
-     $scope.statusword='statusword';
-       $scope.exceptionword="";
-    };
+      $scope.showStatus = function () {
+        $scope.hasStaus = true;
+        // console.log( $scope.swStaus);
+        $scope.hasException = false;
+        $scope.statusword = 'statusword';
+        $scope.exceptionword = "";
+      };
       /**
        *@author:chenjiacheng
        *@name:showException
@@ -247,12 +185,12 @@ $scope.exceptionword='exceptionword';
        *@return:
        *@disc:Display exception and warranty list
        */
-      $scope.showException=function(){
-        $scope.hasStaus=false;
+      $scope.showException = function () {
+        $scope.hasStaus = false;
         //console.log( $scope.swStatus);
-        $scope.hasException=true;
-        $scope.exceptionword='statusword';
-        $scope.statusword="";
+        $scope.hasException = true;
+        $scope.exceptionword = 'statusword';
+        $scope.statusword = "";
       };
       /**
        *@author:chenjiacheng
@@ -263,19 +201,26 @@ $scope.exceptionword='exceptionword';
        */
 
 
-      $scope.goDeteleitem=function(item){
-        var　toDetele=function(){
-          if(item.name=='status') {
-
+      $scope.goDeteleitem = function (item) {
+        console.log(item);
+        var toDetele = function () {
+          if (item.name == 'status') {
             $scope.statusitems.splice($scope.statusitems.indexOf(item), 1);
           }
-          else{
+          else {
             $scope.exceptionitems.splice($scope.exceptionitems.indexOf(item), 1);
           }
+          var paramter = [{"exceptionId": item.exceptionId}];
+          console.log(paramter);
+          var url = baseConfig.basePath + "/r/api/cmm/deviceException/delete";
+          hmsHttp.post(url, paramter).success(function(response){
+            console.log(response);
+          }).error(
+          );
         }
-hmsPopup.confirmNoTitle( "<br><br><div ><div>删除后将无法在消息记录中找回,</div><br><div style='text-align:center'>是否要删除此消息?</div></div><br><br>",toDetele);
+        hmsPopup.confirmNoTitle("<div ><div>删除后将无法在消息记录中找回,</div><br><div style='text-align:center'>是否要删除此消息?</div></div><br><br>", toDetele);
 
- };
+      };
 
       /**
        *@author:chenjiacheng
@@ -284,11 +229,11 @@ hmsPopup.confirmNoTitle( "<br><br><div ><div>删除后将无法在消息记录�
        *@return:
        *@disc:ClickmanyChoose
        */
-      $scope.manyChoose=function(){
-      $scope.threeBottom=true;
-      $scope.data.showDelete = true;
+      $scope.manyChoose = function () {
+        $scope.threeBottom = true;
+        $scope.data.showDelete = true;
 
-  }
+      }
 
       /**
        *@author:chenjiacheng
@@ -297,16 +242,16 @@ hmsPopup.confirmNoTitle( "<br><br><div ><div>删除后将无法在消息记录�
        *@return:
        *@disc:choose you click
        */
-      $scope.onChoose=function(item){
+      $scope.onChoose = function (item) {
 
         //alert("statustrue");
-      //  alert($scope.data.showDelete);
-      //  if($scope.data.showDelete==false){
-      //    return;
-      //  }
+        //  alert($scope.data.showDelete);
+        //  if($scope.data.showDelete==false){
+        //    return;
+        //  }
 
-        if(item.ischecked==true&& item.name=="status") {
-           //alert("statustrue");
+        if (item.ischecked == true && item.name == "status") {
+          //alert("statustrue");
           for (var i = 0; i < $scope.statusitems.length; i++) {
             if ($scope.statusitems[i].id == item.id) {
               $scope.statusitems[i].ischecked = false;
@@ -315,38 +260,40 @@ hmsPopup.confirmNoTitle( "<br><br><div ><div>删除后将无法在消息记录�
           }
         }
 
-    else if(item.ischecked==false&& item.name=="status"){
+        else if (item.ischecked == false && item.name == "status") {
 
-      for (var i = 0; i < $scope.statusitems.length; i++) {
-        if ($scope.statusitems[i].id == item.id) {
-          $scope.statusitems[i].ischecked = true;
-          $scope.statusitems[i].circleUrl1 = circleUrl2;
+          for (var i = 0; i < $scope.statusitems.length; i++) {
+            if ($scope.statusitems[i].id == item.id) {
+              $scope.statusitems[i].ischecked = true;
+              $scope.statusitems[i].circleUrl1 = circleUrl2;
+            }
+          }
         }
-      }  }
 
-     else   if(item.ischecked==true&& item.name=="exception") {
+        else if (item.ischecked == true && item.name == "exception") {
 
           for (var i = 0; i < $scope.exceptionitems.length; i++) {
-            if ($scope.exceptionitems[i].id ==item.id) {
+            if ($scope.exceptionitems[i].id == item.id) {
               $scope.exceptionitems[i].ischecked = false;
               $scope.exceptionitems[i].circleUrl1 = circleUrltemp;
-    //alert(  $scope.exceptionitems[i].circleUrltemp +"2");
-    //alert( $scope.exceptionitems[i].circleUrl1 +"1");
+              //alert(  $scope.exceptionitems[i].circleUrltemp +"2");
+              //alert( $scope.exceptionitems[i].circleUrl1 +"1");
             }
           }
 
         }
-    else  if(item.ischecked==false&& item.name=="exception") {
-       //alert("exceptionfalse");
+        else if (item.ischecked == false && item.name == "exception") {
+          //alert("exceptionfalse");
 
           for (var i = 0; i < $scope.exceptionitems.length; i++) {
-            if ($scope.exceptionitems[i].id ==item.id) {
+            if ($scope.exceptionitems[i].id == item.id) {
               $scope.exceptionitems[i].ischecked = true;
               $scope.exceptionitems[i].circleUrl1 = circleUrl2;
             }
-          };
+          }
+          ;
         }
- }
+      }
       /**
        *@author:chenjiacheng
        *@name:bottomGocancel
@@ -354,19 +301,19 @@ hmsPopup.confirmNoTitle( "<br><br><div ><div>删除后将无法在消息记录�
        *@return:
        *@disc:clickbottomGocancel
        */
-      $scope.bottomGocancel=function(){
+      $scope.bottomGocancel = function () {
 
 
         for (var i = 0; i < $scope.statusitems.length; i++) {
-            $scope.statusitems[i].ischecked = false;
+          $scope.statusitems[i].ischecked = false;
           $scope.statusitems[i].circleUrl1 = circleUrltemp;
         }
         for (var i = 0; i < $scope.exceptionitems.length; i++) {
           $scope.exceptionitems[i].ischecked = false;
           $scope.exceptionitems[i].circleUrl1 = circleUrltemp;
         }
-        $scope.threeBottom=false;
-        $scope.data.showDelete =false;
+        $scope.threeBottom = false;
+        $scope.data.showDelete = false;
 
       }
 
@@ -377,56 +324,52 @@ hmsPopup.confirmNoTitle( "<br><br><div ><div>删除后将无法在消息记录�
        *@return:
        *@disc:clickbottomManychoose
        */
-    $scope.hasChooseAllstatus=false;
-      $scope.hasChooseAllexception=false;
-    $scope.bottomManychoose=function() {
-if( $scope.hasStaus==true) {
-  $scope.hasChooseAllstatus = !$scope.hasChooseAllstatus;
-  if ($scope.hasChooseAllstatus == true) {
-    for (var i = 0; i < $scope.statusitems.length; i++) {
-      $scope.statusitems[i].ischecked = true;
-      $scope.statusitems[i].circleUrl1 = circleUrl2;
-    }
+      $scope.hasChooseAllstatus = false;
+      $scope.hasChooseAllexception = false;
+      $scope.bottomManychoose = function () {
+        if ($scope.hasStaus == true) {
+          $scope.hasChooseAllstatus = !$scope.hasChooseAllstatus;
+          if ($scope.hasChooseAllstatus == true) {
+            for (var i = 0; i < $scope.statusitems.length; i++) {
+              $scope.statusitems[i].ischecked = true;
+              $scope.statusitems[i].circleUrl1 = circleUrl2;
+            }
 
-  } else {
-    for (var i = 0; i < $scope.statusitems.length; i++) {
+          } else {
+            for (var i = 0; i < $scope.statusitems.length; i++) {
 
-      $scope.statusitems[i].ischecked = false;
-      $scope.statusitems[i].circleUrl1 =circleUrltemp;
-  }
-  }
+              $scope.statusitems[i].ischecked = false;
+              $scope.statusitems[i].circleUrl1 = circleUrltemp;
+            }
+          }
 
-}else{
+        } else {
 
-  $scope.hasChooseAllexception = !$scope.hasChooseAllexception;
-  if ($scope.hasChooseAllexception == true) {
-    for (var i = 0; i < $scope.exceptionitems.length; i++) {
-      $scope.exceptionitems[i].ischecked = true;
-      $scope.exceptionitems[i].circleUrl1 = circleUrl2;
-    }
+          $scope.hasChooseAllexception = !$scope.hasChooseAllexception;
+          if ($scope.hasChooseAllexception == true) {
+            for (var i = 0; i < $scope.exceptionitems.length; i++) {
+              $scope.exceptionitems[i].ischecked = true;
+              $scope.exceptionitems[i].circleUrl1 = circleUrl2;
+            }
 
-  } else {
-    for (var i = 0; i < $scope.exceptionitems.length; i++) {
+          } else {
+            for (var i = 0; i < $scope.exceptionitems.length; i++) {
 
-      $scope.exceptionitems[i].ischecked = false;
-      $scope.exceptionitems[i].circleUrl1 = circleUrltemp;
+              $scope.exceptionitems[i].ischecked = false;
+              $scope.exceptionitems[i].circleUrl1 = circleUrltemp;
 
-    }
+            }
 
-  }
-
-
+          }
 
 
-}
+        }
 
 
-
-  }
-
+      }
 
 
-        /**
+      /**
        *@author:chenjiacheng
        *@name:bottomGodetele
        *@params:
@@ -434,47 +377,38 @@ if( $scope.hasStaus==true) {
        *@disc:clickbottomGodetele
        */
 
-$scope.bottomGodetele=function(){
+      $scope.bottomGodetele = function () {
 
-  if( $scope.hasStaus==true) {
-    var tempArry = [];
-    for (var i = 0; i < $scope.statusitems.length; i++) {
-      if ($scope.statusitems[i].ischecked == false) {
+        if ($scope.hasStaus == true) {
+          var tempArry = [];
+          for (var i = 0; i < $scope.statusitems.length; i++) {
+            if ($scope.statusitems[i].ischecked == false) {
 
-        tempArry.push($scope.statusitems[i]);
+              tempArry.push($scope.statusitems[i]);
+            }
+
+          }
+          $scope.statusitems = tempArry;
+
+          if ($scope.statusitems.length == 0) {
+            $scope.threeBottom = false;
+          }
+        }
+        else {
+          var tempArry = [];
+          for (var i = 0; i < $scope.exceptionitems.length; i++) {
+            if ($scope.exceptionitems[i].ischecked == false) {
+
+              tempArry.push($scope.exceptionitems[i]);
+            }
+
+          }
+          $scope.exceptionitems = tempArry;
+
+        }
+        $scope.threeBottom = false;
+        $scope.data.showDelete = false;
       }
-
-    }
-    $scope.statusitems = tempArry;
-
-    if ($scope.statusitems.length == 0) {
-      $scope.threeBottom = false;
-    }
-  }
-  else{
-    var tempArry = [];
-    for (var i = 0; i < $scope.exceptionitems.length; i++) {
-      if ($scope.exceptionitems[i].ischecked == false) {
-
-        tempArry.push($scope.exceptionitems[i]);
-      }
-
-    }
-    $scope.exceptionitems = tempArry;
-
-   // if ($scope.exceptionitems.length == 0) {
-
-    //}
-  }
-  $scope.threeBottom = false;
-  $scope.data.showDelete =false;
-    }
-
-
-
-
-
-
 
 
     }]);
