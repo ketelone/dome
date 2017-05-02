@@ -121,6 +121,8 @@
   "index": {
     "myHome": "我家",
     "humidity": "湿度",
+    "model": "场景模式",
+    "device": "设备模式",
     "myModel": "我的场景",
     "addModel": "添加场景",
     "myDevice": "我的设备",
@@ -373,7 +375,7 @@
     "dryer": "&nbsp;&nbsp;&nbsp;冷干",
     "hotDrying": "&nbsp;&nbsp;&nbsp;热干",
     "breath": "&nbsp;&nbsp;&nbsp;换气",
-    "purify": "空气<br>净化",
+    "purify": "空气净化",
     "windDirection": "&nbsp;&nbsp;&nbsp;风向",
     "light": "&nbsp;&nbsp;&nbsp;照明",
     "closeAll": "一键关闭",

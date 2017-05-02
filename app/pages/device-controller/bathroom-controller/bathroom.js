@@ -90,7 +90,7 @@ angular.module('bathroomModule')
           isOpenTimer: false,
           setTime: "",
           switchType: "Purify",
-          desc: "空气净化"
+          desc: "bathroom.purify"
         },
         {
           id: "7",

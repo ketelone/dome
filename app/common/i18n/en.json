@@ -106,8 +106,10 @@
     "periodDesc": "女性特殊期洗浴关怀方案"
   },
   "index": {
-    "myHome": "My Home",
-    "humidity": "Humidity"
+    "myHome": "Home",
+    "humidity": "Humidity",
+    "model": "场景模式",
+    "device": "设备模式"
   },
   "bigaunt": {
     "bigauntTitle": "Se"
@@ -329,16 +331,16 @@
     "bathroom": "Hathroom Heater",
     "cancel": "Cancel",
     "confirm": "Confirm",
-    "hot": "&nbsp;&nbsp;&nbsp;Heater",
+    "hot": "Heater",
     "cool": "&nbsp;&nbsp;&nbsp;Fan",
-    "dryer": "&nbsp;&nbsp;&nbsp;Cool Dry",
-    "hotDrying": "&nbsp;&nbsp;&nbsp;Hot Dry",
-    "breath": "&nbsp;&nbsp;&nbsp;vantilation",
+    "dryer": "Cool Dry",
+    "hotDrying": "Hot Dry",
+    "breath": "vantilation",
     "purify": "Air-Care",
-    "windDirection": "&nbsp;&nbsp;&nbsp;Air Flow",
-    "light": "&nbsp;&nbsp;&nbsp;Light",
+    "windDirection": "Air Flow",
+    "light": "Light",
     "closeAll": "Stop all",
-    "setting": "&nbsp;&nbsp;&nbsp;Seetings",
+    "setting": "Seetings",
     "wind": "Air Flow",
     "fixed": "Fix",
     "rock": "Swing",
