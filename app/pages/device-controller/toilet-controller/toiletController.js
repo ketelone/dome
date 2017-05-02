@@ -27,6 +27,9 @@ angular.module('toiletControlModule')
               baseConfig,
               checkVersionService
     ) {
+      $scope.screenHeig = window.innerHeight;
+      $scope.screenWidth = window.innerWidth;
+      $scope.fontSize = document.documentElement.clientWidth / 7.5;
       $scope.goBack = function () {
         publicMethod.goBack();
       };
@@ -617,8 +620,8 @@ angular.module('toiletControlModule')
             canvesobj.closePath();
             //随小球和指示画fil填充
             if(!type){
-              this.drawCircleFill(this.cr3,ancr)
-            }
+              this.drawCircleFill(this.cr3,ancr);
+            };
           };
         };
       };
@@ -646,7 +649,6 @@ angular.module('toiletControlModule')
           //当前绑定事件对象
           var currentEventObj = getIdObj($scope.currentSlideData[index].canves02);
           currentRadObj.drawDeliverCircle($scope.currentSlideData[index].gearNum);
-
           if($scope.currentSlideData[index].des === "init"){
             currentRadObj.drawc(currentRadObj.cr2,405,"type");
             currentRadObj.drawCircleFill(currentRadObj.cr2,405);
@@ -658,13 +660,13 @@ angular.module('toiletControlModule')
             currentEventObj.addEventListener( 'touchstart', function( e ){
               e.preventDefault();
               var poi = getEvtLocation(e);
-              bginX = poi.x;
-              bginY = poi.y;
+              console.log(poi)
             }, false );
             currentEventObj.addEventListener( 'touchmove', function( e ){
               e.preventDefault();
               var poi = getEvtLocation(e);
-              currentRadObj.drawc(currentRadObj.cr2,getAngle(currentRadObj.canvsscreenHeight,currentRadObj.canvsscreenWidth,poi.x,poi.y));
+              console.log(poi)
+              currentRadObj.drawc(currentRadObj.cr2,getAngle($scope.screenWidth/2,2.7*2*$scope.fontSize,poi.x,poi.y));
             }, false );
             currentEventObj.addEventListener( 'touchend', function( e ){
               e.preventDefault();
@@ -686,28 +688,36 @@ angular.module('toiletControlModule')
         $scope.slideHasChangedleft = function () {
           onceFlag = true;
           if($scope.currentSlideData.length !== 1){
-            currentRadObj = null;
             onceFlag = false;
             $scope.count--;
             if($scope.count >= 0){
+              currentRadObj = null;
               $ionicSlideBoxDelegate.$getByHandle('boxSlider').previous();
-              $scope.getCurrentObj($scope.count);
-              onceFlag = true;
-            };
+              $timeout(function () {
+                $scope.getCurrentObj($scope.count);
+                onceFlag = true;
+              },17)
+            }else{
+              $scope.count = 0;
+            }
           };
         };
         $scope.slideHasChangedright = function () {
           onceFlag = true;
           var slidecount = $scope.currentSlideData.length;
           if(slidecount !== 1){
-            currentRadObj = null;
             onceFlag = false;
             $scope.count++;
             if($scope.count <= slidecount-1){
+              currentRadObj = null;
               $ionicSlideBoxDelegate.$getByHandle('boxSlider').next();
-              $scope.getCurrentObj($scope.count);
-              onceFlag = true;
-            }
+              $timeout(function () {
+                $scope.getCurrentObj($scope.count);
+                onceFlag = true;
+              },17)
+            }else{
+              $scope.count = slidecount-1;
+            };
           };
         };
       },20);
@@ -722,21 +732,18 @@ angular.module('toiletControlModule')
           //resolve
           if(response.code == 200){
             if(value.ack.toLowerCase() == "fa27"){
-              hmsPopup.showShortCenterToast("<span translate="+$scope.handlenapeListNape[index].handleDes+"></span>"+"<span translate='toiletController.directesuccess'></span>");
+              $scope.Toast.show($translate.instant($scope.handlenapeListNape[index].handleDes)+$translate.instant("toiletController.directesuccess"));
               $scope.selectChange(index);
             }
           }else{
-            hmsPopup.showShortCenterToast("<span translate="+$scope.handlenapeListNape[index].handleDes+"></span>"+"<span translate='toiletController.directerror'></span>");
+            $scope.Toast.show($translate.instant($scope.handlenapeListNape[index].handleDes)+$translate.instant("toiletController.directerror"));
           }
         };
         function error() {
           hmsPopup.hideLoading();
-          hmsPopup.showShortCenterToast("<span translate="+$scope.handlenapeListNape[index].handleDes+"></span>"+"<span translate='toiletController.loadingdataerrror'></span>");;
+          $scope.Toast.show($translate.instant($scope.handlenapeListNape[index].handleDes)+$translate.instant("toiletController.loadingdataerrror"));
         };
       };
-
-
-
       /**
        *@params:flushOptions(nvyong mode) mSwitchType(turn or off)
        *@disc:use nvyong Instruction create
@@ -984,21 +991,23 @@ angular.module('toiletControlModule')
         // hmsHttp.post(url, paramter).success(
         //   function(response){
         //     hmsPopup.hideLoading();
+        //     //resolve
         //     if(response.code == 200){
-        //       var value = cmdService.explainAck(response.data.data.cmd[0]);
-        //       if(value.ack.includes("fa")){
-        //         $scope.selectChange(index,isType);
-        //       }else{
-        //         hmsPopup.showShortCenterToast("<span translate="+$scope.handlenapeListNape[index].handleDes+"></span>"+"<span translate='toiletController.directerror'></span>");
+        //       if(value.ack.toLowerCase() == "fa27"){
+        //         $scope.Toast.show($translate.instant($scope.handlenapeListNape[index].handleDes)+$translate.instant("toiletController.directesuccess"));
+        //         // hmsPopup.showShortCenterToast("<span translate="+$scope.handlenapeListNape[index].handleDes+"></span>"+"<span translate='toiletController.directesuccess'></span>");
+        //         $scope.selectChange(index);
         //       }
         //     }else{
-        //       hmsPopup.showShortCenterToast("<span translate="+$scope.handlenapeListNape[index].handleDes+"></span>"+"<span translate='toiletController.directerror'></span>");
+        //       $scope.Toast.show($translate.instant($scope.handlenapeListNape[index].handleDes)+$translate.instant("toiletController.directerror"));
+        //       // hmsPopup.showShortCenterToast("<span translate="+$scope.handlenapeListNape[index].handleDes+"></span>"+"<span translate='toiletController.directerror'></span>");
         //     }
-        //   }
-        // ).error(function (response, status, header, config) {
-        //   hmsPopup.hideLoading();
-        //   hmsPopup.showShortCenterToast("<span translate="+$scope.handlenapeListNape[index].handleDes+"></span>"+"<span translate='toiletController.loadingdataerrror'></span>");;
-        // })
+        //   }).
+        //   error(function () {
+        //     hmsPopup.hideLoading();
+        //     $scope.Toast.show($translate.instant($scope.handlenapeListNape[index].handleDes) + $translate.instant("toiletController.loadingdataerrror"));
+        //     // hmsPopup.showShortCenterToast("<span translate="+$scope.handlenapeListNape[index].handleDes+"></span>"+"<span translate='toiletController.loadingdataerrror'></span>");;
+        //   })
       };
       /**
        *@params:index(selected index)
@@ -1064,6 +1073,7 @@ angular.module('toiletControlModule')
                     }else{
                       // $scope.sendCmd(cmdvalue,index);
                     }
+                    $scope.toiletController.modelTypeClear = "toiletController.gaunbi"
                   }else{
                     $scope.selectChange(index,"0");
                   }
@@ -1104,9 +1114,7 @@ angular.module('toiletControlModule')
           }
         }
       };
-      $scope.fontSize = document.documentElement.clientWidth / 7.5;
       $scope.setSingalModalTop = "toiletSingalModalTop";
-      $scope.screenHeig = window.innerHeight;
       $ionicModal.fromTemplateUrl('build/pages/model/hmsModal.html', {
         scope: $scope,
         animation: 'slide-in-up'
