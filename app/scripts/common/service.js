@@ -65,5 +65,30 @@ angular.module('serviceModule', []).
         _variables[varname] = value;
       }
     };
-  });
+  })
+  .controller("AppCtrl",["$scope","$timeout",function ($scope,$timeout) {
+    var ToastFlag = false;
+    $scope.Toast = {
+      show: function (msg, time) {
+        if (ToastFlag == true) {
+          $scope.Toast.hide();
+        };
+        $scope.isVisible = 'visible animated bounceInUp';
+        $scope.isActive = 'active';
+        ToastFlag = true;
+        $scope.msg = msg;
+        if (time == undefined) {
+          time = 2000
+        }
+        $scope.showToast = $timeout(function () {
+          $scope.isActive = 'active fadeOut';
+        }, time)
+      },
+      hide: function () {
+        $scope.isVisible = '';
+        $scope.isActive = '';
+        $timeout.cancel($scope.showToast);
+      }
+    };
+  }])
 

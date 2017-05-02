@@ -22,7 +22,7 @@ angular.module('toiletControlModule')
       };
       $scope.clearGearPlanCheck = false;
       $scope.clearGearPlanCheckBg = true;
-      $translate.instant("cleargearPlan.zhouyi")
+
 
       $scope.weekTemp = [];
       $scope.weekTemp.push($translate.instant("cleargearPlan.zhouyi"));

@@ -2,6 +2,7 @@ angular.module('toiletControlModule')
   .controller('toiletSettingCtrl', [
     '$scope',
     '$state',
+    '$translate',
     'publicMethod',
     '$ionicModal',
     '$compile',
@@ -10,6 +11,7 @@ angular.module('toiletControlModule')
     'hmsPopup',
     function ($scope,
               $state,
+              $translate,
               publicMethod,
               $ionicModal,
               $compile,
