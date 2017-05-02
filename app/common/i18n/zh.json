@@ -229,7 +229,7 @@
     "loadingdata":"正在获取数据",
     "loadingdataerrror":"数据获取失败",
     "directerror":"指令发生失败",
-    "directesuccess":"指令发生成功",
+    "directesuccess":"指令发送成功",
     "njfl":"暖脚风力档位",
     "nvsy":"女用水压档位",
     "nvpos":"女用位置档位",
@@ -330,7 +330,7 @@
     "loadingdata":"正在获取数据",
     "loadingdataerrror":"数据获取失败",
     "directerror":"指令发生失败",
-    "directesuccess":"指令发生成功"
+    "directesuccess":"指令发送成功"
   },
   "cenwatpurSetting":{
     "title":"中央净水器设置",

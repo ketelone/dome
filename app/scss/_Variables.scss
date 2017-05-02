@@ -43,3 +43,40 @@ $global-border: #51D8BD !default;
   text-decoration: none;
   opacity: .3;
 }
+//Toast
+.own-loading-container-android {
+  position: absolute;
+  z-index: 100;
+  left: 0;
+  top: 90%;
+  right: 0;
+  bottom: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
+}
+.own-loading-container-android.visible {
+  visibility: visible;
+}
+.own-loading-container-android.active {
+  opacity: 1;
+}
+.own-loading-container-android .own-loading {
+  z-index: 100;
+  border-radius: 10px;
+  background-color: rgba(89, 185, 241, 0.89);
+  color: #fff;
+  text-overflow: ellipsis;
+  font-size: 15px;
+  position: absolute;
+  left: 50%;
+  right: 50%;
+  bottom: 8%;
+  margin-left: -25%;
+  min-width: 50%;
+  padding: 8px 20px;
+  vertical-align: middle;
+  text-align: center;
+  white-space: normal;
+}

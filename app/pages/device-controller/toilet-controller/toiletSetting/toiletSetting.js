@@ -2,6 +2,7 @@ angular.module('toiletControlModule')
   .controller('toiletSettingCtrl', [
     '$scope',
     '$state',
+    '$translate',
     'publicMethod',
     '$ionicModal',
     '$compile',
@@ -10,6 +11,7 @@ angular.module('toiletControlModule')
     'hmsPopup',
     function ($scope,
               $state,
+              $translate,
               publicMethod,
               $ionicModal,
               $compile,
@@ -17,6 +19,12 @@ angular.module('toiletControlModule')
               checkVersionService,
               hmsPopup
     ) {
+
+
+      console.log($translate.instant('toiletController.dengguang'))
+      $scope.Toast.show($translate.instant("toiletController.dengguang")+$translate.instant("toiletController.dengguang"));
+
+
       $scope.goBack = function () {
         publicMethod.goBack();
       }
