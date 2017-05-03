@@ -212,10 +212,8 @@ NIMI.prototype.cleanWand = function (mSwitchType, hour, minute, dateSwitch, MOM,
  */
 NIMI.prototype.ambientLight = function (lightMode, lightCtl, MOMC, TUEC, WEDC, THUC, FRIC, SATC, SUMC) {
   var cmd = "11";
-
   return cmd;
 };
-
 /**
  * 坐便灯
  * @param{int} lightStalls 灯光档位
@@ -226,7 +224,6 @@ NIMI.prototype.bowlLight = function (lightStalls) {
   cmd += "0" + getHex(fourBitToCheck(lightStalls.toString(2))) + "00" + "00" + "00";
   return cmd;
 };
-
 /**
  * 设置
  * @param welcome

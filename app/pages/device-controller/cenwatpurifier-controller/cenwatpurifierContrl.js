@@ -48,7 +48,7 @@ angular.module('toiletControlModule')
         readyconnected:"cenwatpurifier.readyConnected",
         unconnected:"cenwatpurifier.unConnected",
         connectStatus:"cenwatpurifier.readyConnected",
-        // //clear
+        //clear
         clearSurplus:"cenwatpurifier.surplus",
         clearComplete:"cenwatpurifier.complete",
         clearStatus:"cenwatpurifier.surplus",
@@ -195,13 +195,11 @@ angular.module('toiletControlModule')
             }
           }else{
             $scope.Toast.show($translate.instant($scope.handlenapeListNape[index].handleDes)+$translate.instant("cenwatpurifier.directerror"));
-            // hmsPopup.showShortCenterToast("<span translate="+$scope.handlenapeListNape[index].handleDes+"></span>"+"<span translate='toiletController.directerror'></span>");
           }
         };
         function error() {
           hmsPopup.hideLoading();
           $scope.Toast.show($translate.instant($scope.handlenapeListNape[index].handleDes)+$translate.instant("cenwatpurifier.loadingdataerrror"));
-          // hmsPopup.showShortCenterToast("<span translate="+$scope.handlenapeListNape[index].handleDes+"></span>"+"<span translate='toiletController.loadingdataerrror'></span>");;
         };
       };
       /**
@@ -220,17 +218,14 @@ angular.module('toiletControlModule')
             if (response.code == 200) {
               if (value.ack.toLowerCase() == "fa27") {
                 $scope.Toast.show($translate.instant($scope.handlenapeListNape[index].handleDes) + $translate.instant("cenwatpurifier.directesuccess"));
-                // hmsPopup.showShortCenterToast("<span translate="+$scope.handlenapeListNape[index].handleDes+"></span>"+"<span translate='toiletController.directesuccess'></span>");
                 $scope.selectChange(index);
               }
             } else {
               $scope.Toast.show($translate.instant($scope.handlenapeListNape[index].handleDes) + $translate.instant("cenwatpurifier.directerror"));
-              // hmsPopup.showShortCenterToast("<span translate="+$scope.handlenapeListNape[index].handleDes+"></span>"+"<span translate='toiletController.directerror'></span>");
             }
           }).error(function () {
           hmsPopup.hideLoading();
           $scope.Toast.show($translate.instant($scope.handlenapeListNape[index].handleDes) + $translate.instant("cenwatpurifier.loadingdataerrror"));
-          // hmsPopup.showShortCenterToast("<span translate="+$scope.handlenapeListNape[index].handleDes+"></span>"+"<span translate='toiletController.loadingdataerrror'></span>");;
         })
       }
 

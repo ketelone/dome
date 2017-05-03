@@ -269,7 +269,6 @@ angular.module('HmsModule')
           });
           myPopup.then(popup);
         } else {
-
           navigator.notification.prompt(
             title,  // message
             pluginPopup,          // callback to invoke
