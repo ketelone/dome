@@ -48,6 +48,7 @@ angular.module('messageModule')
        */
 
       function getException() {
+        hmsPopup.showLoading();
         var url = baseConfig.basePath + "/r/api/cmm/deviceException/query";
         var paramter = [
           {"partyId": 6, page: 1, pageSize: 10,lang:'zh_CN'}
@@ -79,7 +80,6 @@ angular.module('messageModule')
                       device: response.rows[i].deviceName,
                       time: response.rows[i].creationDate,
                       exceptionId : response.rows[i].exceptionId,
-
                       circleUrl1: "build/img/common/radio_q.png",
                       ischecked: false,
                       name: "exception",
@@ -117,12 +117,10 @@ angular.module('messageModule')
             });
             console.log($scope.statusitems);
             read();
-
+            hmsPopup.hideLoading();
           }
         ).error(
           function (response, status, header, config) {
-            //hmsPopup.showPopup("<span translate='bathroom.saveError'></span>");
-            //  alert("1234");
           }
         );
 

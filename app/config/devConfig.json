@@ -6,7 +6,7 @@
     "nativeScreenFlag": false,
     "deviceFlag": true,
     "clearTable": true,
-    "isCloudCtrl": true,
+    "isCloudCtrl": false,
     "isLinkDatabase": false,
     "basePath": "http://139.219.198.247:8080/residential",
     "weatherPath": "https://api.seniverse.com/v3/weather/now.json?key=oudikeyru8gzhosh&location=beijing&language=zh-Hans&unit=c",

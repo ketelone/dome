@@ -37,13 +37,13 @@
     @include tab-icon("../img/tabs/icon_home_arrowup.png");
   }
   .app-on {
-    @include tab-icon("../img/tabs/btn_buttom_message.png");
+    @include tab-icon("../img/tabs/icon_msg_selected.png");
   }
   .app-off {
     @include tab-icon("../img/tabs/btn_buttom_message.png");
   }
   .my-on {
-    @include tab-icon("../img/tabs/btn_buttom_user.png");
+    @include tab-icon("../img/tabs/icon_profile_selected.png");
   }
   .my-off {
     @include tab-icon("../img/tabs/btn_buttom_user.png");

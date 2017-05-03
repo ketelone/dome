@@ -480,7 +480,9 @@ angular.module('karessControlModule')
         if (index == 0) {
           if (info.selecFlag == false) {
             var value = cmdService.getCmd("8877", 1, karessService.data.openFiller, 0, 2);
+            console.log(baseConfig.isCloudCtrl);
             if(baseConfig.isCloudCtrl == true){
+              console.log('121');
               test(index,value,'karessOnWater');
             }else{
               console.log(value);
@@ -604,7 +606,7 @@ angular.module('karessControlModule')
         if($scope.handlenapeSelectedIndex == 0){
 
         }else{
-          hmsPopup.showShortCenterToast("当前状态不能切换出水方式");
+          $scope.toast("当前状态不能切换出水方式");
           return;
         }
         if ($scope.value.length !== 0) {
@@ -702,7 +704,7 @@ angular.module('karessControlModule')
                 $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgSeledUrl;
               }
               ;
-            }
+             }
           }
         ).error(
           function (response, status, header, config) {

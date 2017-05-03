@@ -232,26 +232,6 @@ angular.module('karessControlModule')
           return hex;
         }
 
-        /**
-         * 返回cmd字段命令
-         * @param {*} header 头 16进制
-         * @param {*} idx 索引 16进制
-         * @param {*} data 数据段 16进制
-         * @param {*} ctrId 控制段 16进制
-         * @param {*} devId 设备段 16进制
-         */
-        this.getCmd = function(header, idx, data, ctrId, devId) {
-          if (data.length % 2 != 0) {
-            data = "0" + data;
-          }
-          var checksum = parseInt(idx, 16) ^ parseInt(ctrId, 16) ^ parseInt(devId, 16);
-          for (var i = 0, len = data.length; i < len; i += 2) {
-            var hex = data.substring(i, i + 2);
-            checksum ^= parseInt(hex, 16);
-          }
-          var length = data.length / 2 + 4;
-          return header + doStr(length) + doStr(idx) + doStr(ctrId) + doStr(devId) + data + doStr(checksum.toString(16));
-        }
 
         /**
          * 十六进制补0
@@ -286,15 +266,5 @@ angular.module('karessControlModule')
           }
           return code;
         }
-
-        // console.log(this.requestStatus(this.data._requestStatusType.FILLER_STATUS)); //请求指令
-        // var cmd = "8877060000028A0001";
-        // console.log(JSON.stringify(this.resolveCmd(cmd)));
-        // var status = this.resolveCmd(cmd).value.status;
-        // if(status == this._data._returnCmdType.FILLER_STATUS.Start){
-        //   console.log("Start");
-        // }else if(status == this._data._returnCmdType.FILLER_STATUS.Stop){
-        //   console.log("Stop");
-        // }
 
       }]);
