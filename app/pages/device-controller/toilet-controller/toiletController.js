@@ -1006,29 +1006,29 @@ angular.module('toiletControlModule')
           hmsPopup.hideLoading();
           $scope.selectChange(index,isType);
         },1000)
-        hmsPopup.showLoading("<span translate='toiletController.loadingdata'></span>");
-        var url = baseConfig.basePath + "/r/api/message/sendMessage";
-        var paramter = cmdService.cloudCmd(cmdvalue,$scope.handlenapeListNape[index].cloudId);
-        hmsHttp.post(url, paramter).success(
-          function(response){
-            hmsPopup.hideLoading();
-            //resolve
-            if(response.code == 200){
-              if(value.ack.toLowerCase() == "fa27"){
-                if($scope.handlenapeListNape[index].matchdataid ==="dengguang" && isType === "0"){
-                  //
-                };
-                $scope.Toast.show($translate.instant($scope.handlenapeListNape[index].handleDes)+$translate.instant("toiletController.directesuccess"));
-                $scope.selectChange(index);
-              }
-            }else{
-              $scope.Toast.show($translate.instant($scope.handlenapeListNape[index].handleDes)+$translate.instant("toiletController.directerror"));
-            }
-          }).
-          error(function () {
-            hmsPopup.hideLoading();
-            $scope.Toast.show($translate.instant($scope.handlenapeListNape[index].handleDes) + $translate.instant("toiletController.loadingdataerrror"));
-          })
+        // hmsPopup.showLoading("<span translate='toiletController.loadingdata'></span>");
+        // var url = baseConfig.basePath + "/r/api/message/sendMessage";
+        // var paramter = cmdService.cloudCmd(cmdvalue,$scope.handlenapeListNape[index].cloudId);
+        // hmsHttp.post(url, paramter).success(
+        //   function(response){
+        //     hmsPopup.hideLoading();
+        //     //resolve
+        //     if(response.code == 200){
+        //       if(value.ack.toLowerCase() == "fa27"){
+        //         if($scope.handlenapeListNape[index].matchdataid ==="dengguang" && isType === "0"){
+        //           //
+        //         };
+        //         $scope.Toast.show($translate.instant($scope.handlenapeListNape[index].handleDes)+$translate.instant("toiletController.directesuccess"));
+        //         $scope.selectChange(index);
+        //       }
+        //     }else{
+        //       $scope.Toast.show($translate.instant($scope.handlenapeListNape[index].handleDes)+$translate.instant("toiletController.directerror"));
+        //     }
+        //   }).
+        //   error(function () {
+        //     hmsPopup.hideLoading();
+        //     $scope.Toast.show($translate.instant($scope.handlenapeListNape[index].handleDes) + $translate.instant("toiletController.loadingdataerrror"));
+        //   })
       };
       /**
        *@params:index(selected index)
