@@ -26,9 +26,6 @@ angular.module('toiletControlModule')
       //init check value
       $scope.lighttoiletlampmode = true;
       $scope.lightnightmode = false;
-
-      $scope.value = [{"background-color":'#563233'},{"background-color":'#6378B4'},{"background-color":'#F0D19F'},{"background-color":'#C39170'},{"background-color":'#EA695B'},
-        {"background-color":'#C1AE49'},{"background-color":'#70A18E'},{"background-color":'#FEFCFD'}];
       //week light color
       $scope.colorWeek = [{
         des:"lightSetting.zhoutian",

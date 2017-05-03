@@ -161,7 +161,7 @@ angular.module('toiletControlModule')
 
       //确定是否清除设备设置
       $scope.isCheckDeviceInfoSet = function () {
-        hmsPopup.confirmNoTitle("确定要恢复默认设置吗?</br>恢复默认设置后当前设置会被清空",function () {
+        hmsPopup.confirmNoTitle($translate.instant('toiletSetting.popmessage'),$translate.instant('golabelvariable.PopupConfire'),$translate.instant('golabelvariable.PopupCancle'),function () {
           console.log("你点击了确定")
         });
       };

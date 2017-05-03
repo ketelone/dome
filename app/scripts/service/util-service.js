@@ -134,7 +134,7 @@ angular.module('HmsModule')
   .service('hmsPopup', ['$ionicLoading', '$cordovaToast', '$ionicPopup', 'baseConfig',
     function ($ionicLoading, $cordovaToast, $ionicPopup, baseConfig) {
       this.showLoading = function (content) {
-        content = !content ? '加载中' : content;
+        content = !content ? '<span translate="golabelvariable.loading"></span>>' : content;
         $ionicLoading.show({
           template: '<ion-spinner icon="ios" class="spinner spinner-ios spinner-stable"></ion-spinner>' +
           '<div style="color: white;font-size: 12px;text-align: center;height:25px;line-height: 25px;">' + content + '</div>'
@@ -217,13 +217,13 @@ angular.module('HmsModule')
           );
         }
       };
-      this.confirmNoTitle = function (message, onConfirm) {
+      this.confirmNoTitle = function (message, confireText,cancleText,onConfirm) {
   /*      if (!baseConfig.nativeScreenFlag) {*/
           var confirmPopup = $ionicPopup.confirm({
             template: message,
-            cancelText: '取消',
+            cancelText: cancleText,
             cancelType: 'button-cux-popup-cancel',
-            okText: '确定',
+            okText: confireText,
             okType: 'button-cux-popup-confirm'
           });
           confirmPopup.then(function(res){

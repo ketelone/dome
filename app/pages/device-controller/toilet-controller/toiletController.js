@@ -746,7 +746,7 @@ angular.module('toiletControlModule')
       };
       /**
        *@params:flushOptions(nvyong mode) mSwitchType(turn or off)
-       *@disc:use nvyong Instruction create
+       *@disc:use nvyong Instruction create;
        */
       $scope.onceTimeIntionCreate = function (isType,index) {
         var  isType = isType;
@@ -1110,7 +1110,7 @@ angular.module('toiletControlModule')
               };
             };
           }else{
-            hmsPopup.showShortCenterToast("<span translate="+$scope.handlenapeListNape[index].handleDes+"></span>"+"<span translate='toiletController.mutex'></span>");
+            $scope.Toast.show($translate.instant($scope.handlenapeListNape[index].handleDes) + $translate.instant("toiletController.mutex"));
           }
         }
       };
@@ -1122,7 +1122,6 @@ angular.module('toiletControlModule')
         $scope.modal = modal;
       });
       $scope.openModal = function (type) {
-        // if($scope.handlenapeSelectedIndex !== undefined){
           if(type){
             $scope.value = $scope.ModelvalueNvYTunX;
             $scope.toiletController.handleSelecDes = $scope.toiletController.selectMode;
@@ -1143,11 +1142,8 @@ angular.module('toiletControlModule')
               ele[0].style.minHeight = 1*$scope.fontSize*$scope.value.length + 'px';
             },10)
           }else{
-            hmsPopup.showShortCenterToast("此选择只能女用或者臀洗使用!");
+            $scope.Toast.show($translate.instant("toiletController.dirpop"));
           }
-        // }else{
-        //   hmsPopup.showShortCenterToast("没有选择项使用!");
-        // };
       };
       $scope.$on('$destroy', function() {
         $scope.modal.remove();

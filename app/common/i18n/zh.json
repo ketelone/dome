@@ -1,4 +1,10 @@
 {
+  "golabelvariable":{
+    "loading":"加载中",
+    "PopupTitle":"提示",
+    "PopupConfire":"确定",
+    "PopupCancle":"取消"
+  },
   "my-info": {
     "myhome": "我家",
     "gexing":"个性签名",
@@ -230,6 +236,7 @@
     "loadingdataerrror":"数据获取失败",
     "directerror":"指令发生失败",
     "directesuccess":"指令发送成功",
+    "dirpop":"此选择只能女用或者臀洗使用",
     "njfl":"暖脚风力档位",
     "nvsy":"女用水压档位",
     "nvpos":"女用位置档位",
@@ -267,10 +274,10 @@
     "gaiquangy1": "盖和圈感应1",
     "gaiquangy2": "盖和圈感应2",
     "gaiquangy3": "盖和圈感应3",
-
     "never": "从不",
     "danwei": "小时",
-    "interngent": "智能学习"
+    "interngent": "智能学习",
+    "popmessage":"确定要恢复默认设置吗?\n恢复默认设置后当前设置会被清空"
   },
   "lightSetting": {
     "title": "灯光设置",

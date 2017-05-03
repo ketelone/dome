@@ -191,7 +191,6 @@ angular.module('toiletControlModule')
           if(response.code == 200){
             if(value.ack.toLowerCase() == "fa27"){
               $scope.Toast.show($translate.instant($scope.handlenapeListNape[index].handleDes)+$translate.instant("cenwatpurifier.directesuccess"));
-              // hmsPopup.showShortCenterToast("<span translate="+$scope.handlenapeListNape[index].handleDes+"></span>"+"<span translate='toiletController.directesuccess'></span>");
               $scope.selectChange(index);
             }
           }else{
