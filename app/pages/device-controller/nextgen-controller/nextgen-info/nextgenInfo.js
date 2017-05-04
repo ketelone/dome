@@ -1,5 +1,5 @@
 /**
- *@autor: caolei
+ *@author: caolei
  */
 angular.module('nextgenModule')
   .controller('nextgenInfoCtrl',[
@@ -20,7 +20,7 @@ angular.module('nextgenModule')
       };
 
       /**
-       *@autor: caolei
+       *@author: caolei
        *@params: Object deciveInfo
        *@disc: update device's place information
        */
@@ -44,7 +44,4 @@ angular.module('nextgenModule')
           }
         );
       }
-
-
-
     }]);

@@ -1,8 +1,8 @@
 //Next gen shower
 angular.module('nextgenModule')
   .service('nextgenService',
-    ['baseConfig','hmsPopup',
-      function (baseConfig,hmsPopup) {
+    ['baseConfig', 'hmsPopup',
+      function (baseConfig, hmsPopup) {
 
         var service = {
           setShowerPara: setShowerPara,
@@ -10,13 +10,13 @@ angular.module('nextgenModule')
           enterPowerSave: enterPowerSave,
           exitPowerSave: exitPowerSave,
           stopAll: stopAll,
-          readMemory:readMemory,
+          readMemory: readMemory,
           explainAck: explainAck,
           explainShowerStatus: explainShowerStatus,
           explainWaterTemperature: explainWaterTemperature,
-          explainDeviceError:explainDeviceError,
-          explainMemory:explainMemory,
-          explainSystemState:explainSystemState,
+          explainDeviceError: explainDeviceError,
+          explainMemory: explainMemory,
+          explainSystemState: explainSystemState,
           getCmdvalue: getCmdvalue,
           getCmd: getCmd,
           sendCmd: sendCmd
@@ -30,15 +30,15 @@ angular.module('nextgenModule')
          'out':'HRS',			  //这个参数是个枚举字符串 HRS，HS，SP，HDS 分别表示 头顶花洒，头顶摇摆，spout，手持花洒，
 
          }*/
-        function setShowerPara(arg){
+        function setShowerPara(arg) {
           var data = '01';
           if (arg.out == 'HRS') {
             data = data + arg.temperature + '01' + 'FF';
-          }else if (arg.out == 'HS') {
+          } else if (arg.out == 'HS') {
             data = data + arg.temperature + '02' + 'FF';
-          }else if (arg.out == 'SP') {
+          } else if (arg.out == 'SP') {
             data = data + arg.temperature + '04' + 'FF';
-          }else if (arg.out == 'HDS') {
+          } else if (arg.out == 'HDS') {
             data = data + arg.temperature + '08' + 'FF';
           }
           return data;
@@ -49,68 +49,71 @@ angular.module('nextgenModule')
          'mode':'00-02'    //00表示stop，01表示Start continuous outlet 02表示Start evacuate cold water (turn on, and off when reach 37 degree,Start evacuate cold water 如果5分钟后水温仍达不到37度则自动停止) ,other表示内置设定
 
          }参数样式*/
-        function operateShower(arg){
+        function operateShower(arg) {
           var data = '21';
           data = data + arg.mode;
           return data;
         }
+
         /*3.进入节能状态 	相关作业未停止，不能进入节能状态。
          var argment = {
          'mode':'01-03' //01表示低电量，02表示休眠，03表示断电
          }*/
-        function enterPowerSave(){
+        function enterPowerSave() {
           var data = '31';
           data = data + arg.mode;
           return data;
         }
 
 //4.退出节能模式 退出节能状态，回复到RUN状态。	无论从何种POWER SAVE状态退出，均回复RUN状态。
-        function exitPowerSave(){
+        function exitPowerSave() {
           var data = '32';
-
+          return data;
         }
+
 //5.一键停止
-        function stopAll(){
+        function stopAll() {
           var data = '00';
           return data;
         }
+
 //6.读取Memory设置
-        function readMemory(){
+        function readMemory() {
           var data = '79';
           return data;
         }
 
 //arg 这里 8877-----
-        function explainAck(arg){
+        function explainAck(arg) {
 
-          var code ;
-          if (arg.length>=16&&arg.length<=40) {
-            var ackStr = arg.substring(12,arg.length-2);
-            var ack = ackStr.substring(0,2).toLowerCase();
-           // alert("12344");
+          var code;
+          if (arg.length >= 16 && arg.length <= 40) {
+            var ackStr = arg.substring(12, arg.length - 2);
+            var ack = ackStr.substring(0, 2).toLowerCase();
+            // alert("12344");
             if (ack == 'fa') {
               //valid ack
-              var operate = ackStr.substring(0,4).toLowerCase();
-              code = {'ack':operate};
-            }else if(ack == 'fd'){
+              var operate = ackStr.substring(0, 4).toLowerCase();
+              code = {'ack': operate};
+            } else if (ack == 'fd') {
               //invalid ack
-              code = {'ack':'fd'};
-            }else if (ack =='fc'){
+              code = {'ack': 'fd'};
+            } else if (ack == 'fc') {
               //invalid ack
-              code = {'ack':'fc'};
-            }else if (ack == 'fb'){
+              code = {'ack': 'fc'};
+            } else if (ack == 'fb') {
               //invalid ack
-              code = {'ack':'fb'};//cmd refuse
-            }else if (ack == '83'){
+              code = {'ack': 'fb'};//cmd refuse
+            } else if (ack == '83') {
               code = explainShowerStatus(ackStr);
-            }else if (ack == 'a6'||ack == 'A6') {
+            } else if (ack == 'a6' || ack == 'A6') {
               code = explainWaterTemperature(ackStr);
-            }else if (ack == '81') {
+            } else if (ack == '81') {
               //返回设备错误状态
               code = explainDeviceError(ackStr);
-            }else if (ack == 'b0') {
+            } else if (ack == 'b0') {
               code = explainMemory(ackStr);
-            }else if(ack=='80'){
+            } else if (ack == '80') {
               code = explainSystemState(ackStr);
             }
           }
@@ -119,107 +122,105 @@ angular.module('nextgenModule')
         }
 
 //7.返回shower的状态 83
-        function explainShowerStatus(arg){
+        function explainShowerStatus(arg) {
           var cmdStr = arg;
-          var status,showerStatus;
-          try{
-            status = cmdStr.subString(2,4);
-          }catch(error){
+          var status, showerStatus;
+          try {
+            status = cmdStr.subString(2, 4);
+          } catch (error) {
             return;
           }
           if (status == '00') {
-            showerStatus = {'status':'init'};
-          }else if (status == '01') {
-            showerStatus = {'status':'shower off'};
-          }else if (status == '02') {
-            showerStatus = {'status':'shower on'};
-          }else if (status == '03') {
-            showerStatus = {'status':'run reserved'};
-          }else if (status == '04') {
-            showerStatus = {'status':'run reserved'};
-          }else if (status == '05') {
-            showerStatus = {'status':'run reserved'};
-          }else if (status == '06') {
-            showerStatus = {'status':'low save'};
-          }else if (status == '07') {
-            showerStatus = {'status':'sleep'};
-          }else if (status == '08') {
-            showerStatus = {'status':'power off'};
-          }else if (status == '09') {
-            showerStatus = {'status':'error'};
-          }else if (status == '0a'||status=='0A') {
-            showerStatus = {'status':'diag'};
-          }else if (status == '0b'||status=='0B') {
-            showerStatus = {'status':'safe mode'};
-          }else {
-            showerStatus = {'status':'reserved'};
+            showerStatus = {'status': 'init'};
+          } else if (status == '01') {
+            showerStatus = {'status': 'shower off'};
+          } else if (status == '02') {
+            showerStatus = {'status': 'shower on'};
+          } else if (status == '03') {
+            showerStatus = {'status': 'run reserved'};
+          } else if (status == '04') {
+            showerStatus = {'status': 'run reserved'};
+          } else if (status == '05') {
+            showerStatus = {'status': 'run reserved'};
+          } else if (status == '06') {
+            showerStatus = {'status': 'low save'};
+          } else if (status == '07') {
+            showerStatus = {'status': 'sleep'};
+          } else if (status == '08') {
+            showerStatus = {'status': 'power off'};
+          } else if (status == '09') {
+            showerStatus = {'status': 'error'};
+          } else if (status == '0a' || status == '0A') {
+            showerStatus = {'status': 'diag'};
+          } else if (status == '0b' || status == '0B') {
+            showerStatus = {'status': 'safe mode'};
+          } else {
+            showerStatus = {'status': 'reserved'};
           }
           showerStatus['cmd'] = '83';
           return showerStatus;
         }
 
 //8.返回当前水温（A6）	用于当应答STATUS26 REQ 	当排空冷水完成时，推送STATUS26 返回的温度都是16进制数
-        function explainWaterTemperature(arg){
+        function explainWaterTemperature(arg) {
           var cmdStr = arg;
-          var temperature,dict;
-          if (cmdStr.length>=4) {
-            try{
-              temperature = cmdStr.subString(2,4);
-            }catch(error){
+          var temperature, dict;
+          if (cmdStr.length >= 4) {
+            try {
+              temperature = cmdStr.subString(2, 4);
+            } catch (error) {
               return;
             }
           }
           dict = {
-            'cmd':'a6',
-            'temperature':temperature
+            'cmd': 'a6',
+            'temperature': temperature
           };
           return dict;
         }
 
 //9.返回设备错误状态
-        function explainDeviceError(arg){
+        function explainDeviceError(arg) {
           var dict = {
-            'cmd':'81',
-            'error':arg
+            'cmd': '81',
+            'error': arg
           };
           return arg;
         }
 
 //10.返回设备Memory设置 B0
-        function explainMemory(arg){
-          var  dict = {
-            'cmd':'b0',
-            'setting':arg
+        function explainMemory(arg) {
+          var dict = {
+            'cmd': 'b0',
+            'setting': arg
           };
           return dict;
         }
 
 //11.返回系统本体状态 80
-        function explainSystemState(arg){
+        function explainSystemState(arg) {
           var dict;
-          var state = arg.subString(2,4);
+          var state = arg.subString(2, 4);
           if (state == '00') {
             dict = 'init';
-          }else if (state == '01') {
+          } else if (state == '01') {
             dict = 'run';
-          }else if (state == '02') {
+          } else if (state == '02') {
             dict = 'low power';
-          }else if(state == '03'){
+          } else if (state == '03') {
             dict = 'sleep power ';
-          }else if (state == '04') {
+          } else if (state == '04') {
             dict = 'power off';
-          }else if (state == '05'||state=='06'||state =='08') {
+          } else if (state == '05' || state == '06' || state == '08') {
             dict = 'reserved';
-          }else if (state == '07') {
+          } else if (state == '07') {
             dict = 'diagnostic';
-          }else if (state >='10' && state<='1e') {
+          } else if (state >= '10' && state <= '1e') {
             dict = 'error';
           }
           dict["cmd"] = '80';
           return dict;
         }
-
-
 
 
         function getCmdvalue(header, idx, data, ctrId, devId) {
@@ -267,8 +268,8 @@ angular.module('nextgenModule')
 
         function sendCmd(deviceId, value, successMsg, errorMsg) {
 
-          if (baseConfig.deviceFlag==false) {
-          return;
+          if (baseConfig.deviceFlag == false) {
+            return;
           }
           var cmd = getCmd(value, deviceId);
           alert("cmd:" + JSON.stringify(cmd));
@@ -282,7 +283,7 @@ angular.module('nextgenModule')
           }
 
           function error() {
-          //  hmsPopup.showShortCenterToast(errorMsg);
+            //  hmsPopup.showShortCenterToast(errorMsg);
           }
         }
 
