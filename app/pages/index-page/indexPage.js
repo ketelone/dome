@@ -181,6 +181,7 @@ angular.module('indexPageModule')
             pictureUrl: "build/img/index/img_home_device_heater.png",
             deviceType: "浴霸",
             deviceStatus: "设备在线",
+            deviceStatus: "设备在线",
             deviceDesc: "80%",
             statusPictureUrl: "build/img/index/icon_home_device_signal4.png",
             errorPictureUrl: "",
@@ -311,6 +312,21 @@ angular.module('indexPageModule')
         );
       };
 
+      var getDeviceStatus = function(boxId){
+        var url = baseConfig.basePath + "/r/api/dvm/deviceAttribute/query";
+        var paramter = [{
+          "boxId": 37
+        }];
+        hmsHttp.post(url, paramter).success(
+          function(response){
+            console.log(JSON.stringify(response));
+          }
+        ).error(
+          function (response, status, header, config){
+          }
+        );
+      };
+
       var getDeviceList = function(){
         db.transaction(function(tx){
           tx.executeSql('select tdd.DEVICE_ID as DEVICE_ID,tdd.PRODUCT_ID as PRODUCT_ID, tdsb.SKU_NAME as SKU_NAME, tdsb.SKU_ID as SKU_ID, tdsb.SKU_NUMBER as SKU_NUMBER,tdd.LAST_UPDATE_DATE as LAST_UPDATE_DATE from T_DVM_DEVICE  tdd,T_CTM_PARTY_BOX_DEVICE tcpbd,T_DVM_SKU_B tdsb'+
@@ -321,6 +337,14 @@ angular.module('indexPageModule')
             ' and'+
             ' tdd.SKU_ID = tdsb.SKU_ID'+
             ' ORDER BY tdd.LAST_UPDATE_DATE DESC',[],function(tx, results){
+
+            /*var deviceIdList = [];
+            for(var i = 0; i < results.rows.length; i ++){
+              var deviceId = {"deviceId": results.rows.item(i).DEVICE_ID};
+              deviceIdList.push(deviceId);
+            }*/
+            var deviceStatusList = getDeviceStatus(localStorage.boxId);
+
             for(var i = 0; i < results.rows.length; i ++){
               var device = results.rows.item(i);
               var deviceName = device.SKU_NAME;
@@ -341,13 +365,22 @@ angular.module('indexPageModule')
                 pictureUrl = "build/img/index/img_home_device_toliet.png";
               }
 
+              var deviceStatus = "";
+              var deviceDesc = "";
+              for(var j = 0; j < deviceStatusList.length; j ++){
+                if(device.DEVICE_ID == deviceStatusList[j].deviceId){
+                  deviceStatus = "设备在线";
+                  deviceDesc = "有人使用";
+                }
+              }
+
               var deviceInfo =
               {
                 id: device.DEVICE_ID,
                 pictureUrl: pictureUrl,
                 deviceType: deviceName,
-                deviceStatus: "设备在线",
-                deviceDesc: "有人使用",
+                deviceStatus: deviceStatus,
+                deviceDesc: deviceDesc,
                 statusPictureUrl: "build/img/index/icon_home_device_signal5.png",
                 errorPictureUrl: "",
                 isStatus: true,
@@ -466,18 +499,19 @@ angular.module('indexPageModule')
       };
 
       $scope.$watch('', function(){
-        //checkIsOk();
-        if(baseConfig.isLinkDatabase){
-          getScenarioList();
-          getDeviceList();
-          //changeSceneStatus();
-        }
+        //getDeviceStatus("");
         getWeather();
         if(localStorage.boxLinkCount == 1){
           $timeout(function () {
             searchBox();
           },1000);
           localStorage.boxLinkCount = 2;
+        }
+        //checkIsOk();
+        if(baseConfig.isLinkDatabase){
+          getScenarioList();
+          getDeviceList();
+          //changeSceneStatus();
         }
       }, true);
 
@@ -514,16 +548,18 @@ angular.module('indexPageModule')
 
       }, false);*/
 
+      var deviceStatus = [];
       document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
         var resultOn = result["0"];
         if (resultOn.data.act == "LIST_BONDED_DEVICE_RETURN") {
           alert("开始返回数据");
           var deviceLinkInfo = "";
-          var deviceStatus = [];
+
           angular.forEach(resultOn.data.act_params.device_list, function(data, index, array){
             deviceLinkInfo = deviceLinkInfo =="" ? (";" + data.device_sku + "," + data.device_id) : (deviceLinkInfo + ";" + data.device_sku + "," + data.device_id);
             deviceStatus.push({'deviceSku': data.device_sku, 'deviceRssi': data.device_rssi, 'deviceState': data.device_state});
           });
+
           localStorage.deviceInfo = deviceLinkInfo;
           localStorage.deviceStatus = JSON.stringify(deviceStatus);
           hmsPopup.hideLoading();
@@ -551,7 +587,7 @@ angular.module('indexPageModule')
             "ver": "1",
             "from": {
               "ctype":  0XE3,
-              "uid"  : "peerId"
+              "uid"  : window.localStorage.empno
             },
             "to": {
               "ctype": 0XE4,
@@ -605,7 +641,6 @@ angular.module('indexPageModule')
               boxLink(data[0]);
             }, 1000);
           });
-          //boxLink($scope.boxList[0]);
         }
 
         function error(error) {
@@ -621,6 +656,7 @@ angular.module('indexPageModule')
       var boxLink = function (item) {
         var boxIp = item.data.act_params.ip; //item.payload.cmd_properties.ip
         var deviceId = item.data.act_params.device_id;
+        localStorage.boxId = deviceId;
         $scope.Toast.show($translate.instant("index.startLinkBox"));
         cordova.plugins.SocketPlugin.tcpConnect({
           "timeout": "5000",
@@ -653,7 +689,7 @@ angular.module('indexPageModule')
               "ver": 1,
               "from": {
                 "ctype":  0XE3,
-                "uid"  : "peerId"
+                "uid"  : window.localStorage.empno
               },
               "to": {
                 "ctype": 0xE4,

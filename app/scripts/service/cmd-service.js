@@ -34,7 +34,7 @@ angular.module('utilModule')
               "ver": 1,
               "from": {
                 "ctype":  0xE3,
-                "uid"  : "peerId"
+                "uid"  : window.localStorage.empno
               },
               "to": {
                 "ctype": 0xE5,
