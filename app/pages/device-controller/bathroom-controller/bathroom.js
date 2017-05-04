@@ -292,7 +292,6 @@ angular.module('bathroomModule')
             if(heater.status){
               $scope.isWind = false;
               $scope.isTime = true;
-              $scope.isCountDown = true;
 
               var hourValue = parseInt(heater.hour, 16);
               if(!hourValue){
@@ -676,8 +675,11 @@ angular.module('bathroomModule')
       var closeAllFunction = function(deviceId){
         var data = bathroomCmdService.stopAllOperation();
         var value = getValue(data);
-        closeWindDirection(deviceId);
+
         sendCmd(deviceId,value,"一键关闭","一键关闭失败");
+        $timeout(function () {
+          closeWindDirection(deviceId);
+        },300);
 
         angular.forEach($scope.bathroomData, function(data, index, array) {
           data.isOpen = false;
@@ -710,7 +712,7 @@ angular.module('bathroomModule')
           }
           if(data.switchType == 'Wind direction'){
             data.switchPictureUrl = "build/img/bathroom/wind_nor.png";
-            closeWindDirection(deviceId);
+            //closeWindDirection(deviceId);
           }
           if(data.switchType == 'Breath'){
             data.switchPictureUrl = "build/img/bathroom/breath_nor.png";
@@ -719,9 +721,9 @@ angular.module('bathroomModule')
 
         });
         $interval.cancel(timePromise);
-        var data = bathroomCmdService.stopAllOperation();
-        var value = getValue(data);
-        sendCmd(deviceId,value,"一键关闭","一键关闭失败");
+        //var data = bathroomCmdService.stopAllOperation();
+        //var value = getValue(data);
+        //sendCmd(deviceId,value,"一键关闭","一键关闭失败");
         //sendCmd(deviceId,"8877050200050007","一键关闭","一键关闭失败");
       };
 
@@ -1153,7 +1155,7 @@ angular.module('bathroomModule')
         $scope.isCountDown = true;
         var deviceId = getDeviceId();
         //$scope.countDown = $scope.timeHour.substring(0,$scope.timeHour.length-1)*60*60*1000 + $scope.timeMinu.substring(0,$scope.timeMinu.length-1)*60*1000 - 8*60*60*1000;
-        var hourValue = $scope.timeHour.substring(0,$scope.timeHour.length-1);
+        var hourValue = $scope.timeHour.substring(0,1);
         if(!hourValue){
           hourValue = "00"
         }else{
@@ -1166,31 +1168,31 @@ angular.module('bathroomModule')
           minuValue = "0" + minuValue;
         }
         $scope.countDown = hourValue + ":" + minuValue;
-        var hour = "0" + parseInt($scope.timeHour.substring(0,$scope.timeHour.length-1)).toString(16);
+        var hour = "0" + parseInt($scope.timeHour.substring(0,1)).toString(16);
         var min = "";
-        if(parseInt($scope.timeMinu.substring (0,$scope.timeMinu.length-1)) == 0){
+        if(parseInt($scope.timeMinu.substring (0,$scope.timeMinu.length-1)) < 16){
           min = "0" + parseInt($scope.timeMinu.substring (0,$scope.timeMinu.length-1)).toString(16);
         }else{
           min = parseInt($scope.timeMinu.substring (0,$scope.timeMinu.length-1)).toString(16);
         }
 
         angular.forEach(deviceInfo, function(data, index, array){
-          if(data.switchType == 'Hot'){
+          if(data.switchType == 'Hot' && data.isOpen){
             openHot(deviceId, hour, min);
           }
-          if(data.switchType == 'Hot drying'){
+          if(data.switchType == 'Hot drying' && data.isOpen){
             openHotDrying(deviceId, hour, min);
           }
-          if(data.switchType == 'Cool'){
+          if(data.switchType == 'Cool' && data.isOpen){
             openCool(deviceId, hour, min);
           }
-          if(data.switchType == 'Dryer'){
+          if(data.switchType == 'Dryer' && data.isOpen){
             openDryer(deviceId, hour, min);
           }
-          if(data.switchType == 'Breath'){
+          if(data.switchType == 'Breath' && data.isOpen){
             openBreath(deviceId, hour, min);
           }
-          if(data.switchType == 'Purify'){
+          if(data.switchType == 'Purify' && data.isOpen){
             openPurity(deviceId, hour, min);
           }
         });
