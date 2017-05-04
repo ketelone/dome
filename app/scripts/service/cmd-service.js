@@ -48,7 +48,6 @@ angular.module('utilModule')
               }
             }
           ]
-          return;
           cordova.plugins.SocketPlugin.tcpSendCmd({
             "timeout": "5000",
             "value": cmd,

@@ -549,11 +549,13 @@ angular.module('indexPageModule')
       }, false);*/
 
       var deviceStatus = [];
+      var deviceLinkInfo = "";
+
       document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
         var resultOn = result["0"];
+
         if (resultOn.data.act == "LIST_BONDED_DEVICE_RETURN") {
           alert("开始返回数据");
-          var deviceLinkInfo = "";
 
           angular.forEach(resultOn.data.act_params.device_list, function(data, index, array){
             deviceLinkInfo = deviceLinkInfo =="" ? (";" + data.device_sku + "," + data.device_id) : (deviceLinkInfo + ";" + data.device_sku + "," + data.device_id);
