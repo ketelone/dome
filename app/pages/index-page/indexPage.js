@@ -65,7 +65,7 @@ angular.module('indexPageModule')
           //   lastUpdateDate: ""
           // },
           {
-            id: "1",
+            id: "2",
             pictureUrl: 'build/img/index/img_home_morning.png',
             title: "晨起",
             context: "告别匆忙的晨起洗漱",
@@ -76,7 +76,7 @@ angular.module('indexPageModule')
             lastUpdateDate: ""
           },
           {
-            id: "2",
+            id: "1",
             pictureUrl: 'build/img/index/img_home_leavehome.png',
             title: "离家",
             context: "一键关闭所有设备",
@@ -87,7 +87,7 @@ angular.module('indexPageModule')
             lastUpdateDate: ""
           },
           {
-            id: "3",
+            id: "4",
             pictureUrl: 'build/img/index/img_home_spa.png',
             title: "泡澡",
             context: "出去SPA不如在家泡澡",
@@ -98,7 +98,7 @@ angular.module('indexPageModule')
             lastUpdateDate: ""
           },
           {
-            id: "4",
+            id: "3",
             pictureUrl: 'build/img/index/muyu@3x.png',
             title: "沐浴",
             context: "享受沐浴",

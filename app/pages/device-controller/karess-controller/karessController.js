@@ -5,13 +5,13 @@ angular.module('karessControlModule')
     '$ionicModal',
     '$compile',
     'baseConfig',
-    'checkVersionService', 'SettingsService', '$ionicHistory', '$ionicSlideBoxDelegate', 'karessService', 'hmsPopup', 'hmsHttp', 'cmdService',
+    'checkVersionService', 'SettingsService', '$ionicHistory', '$ionicSlideBoxDelegate', 'karessService', 'hmsPopup', 'hmsHttp', 'cmdService','$timeout',
     function ($scope,
               $state,
               $ionicModal,
               $compile,
               baseConfig,
-              checkVersionService, SettingsService, $ionicHistory, $ionicSlideBoxDelegate, karessService, hmsPopup, hmsHttp, cmdService) {
+              checkVersionService, SettingsService, $ionicHistory, $ionicSlideBoxDelegate, karessService, hmsPopup, hmsHttp, cmdService,$timeout) {
       var sku = SettingsService.get('sku');
       /**
        *@autor: caolei
@@ -208,7 +208,7 @@ angular.module('karessControlModule')
         }
         ;
         var checHtml =
-          "<ion-slide-box ng-init='lockSlide()' does-continue = 'true' ng-click='nextSlide($index)'>" +
+          "<ion-slide-box ng-init='lockSlide()' show-pager='true' delegate-handle='boxSlider'>" +
           "<ion-slide ng-repeat='list in currentSlideData track by $index'>" +
           "<div id={{list.parNodeid}} class='toilet-parameterctl'>" +
           "<canvas id={{list.canves01}} class='canves-pos'></canvas>" +
@@ -238,6 +238,7 @@ angular.module('karessControlModule')
         $('#ionSliderBox').append($checkhtml[0]);
       };
       $scope.initHtmlTemplate($scope.currentSlideData);
+      var onceFlag=true;
       var initCircle = function (slideDataObj) {
         //获取父元素高度
         this.canvsscreenHeight = document.getElementById(slideDataObj.parNodeid).offsetHeight;
@@ -348,8 +349,9 @@ angular.module('karessControlModule')
                   slideDataObj.gearInit = this.i;
                 }
                 ;
-                $scope.$apply();
-                //画档位线
+                if(onceFlag){
+                  $scope.$apply();
+                };                //画档位线
                 this.j = 1;
                 for (this.j; this.j < this.i; this.j++) {
                   drawRadian(this.cr3, this.deliverLine, this.radSectionArr[this.i - this.j - 1] - 1, this.radSectionArr[this.i - this.j - 1]);
@@ -358,8 +360,9 @@ angular.module('karessControlModule')
               } else {
                 this.stoPosPoint = this.i;
                 slideDataObj.gearInit = this.i + 1;
-                $scope.$apply();
-                //画档位线
+                if(onceFlag){
+                  $scope.$apply();
+                };                //画档位线
                 this.j = 1;
                 for (this.j; this.j < this.i + 1; this.j++) {
                   drawRadian(this.cr3, this.deliverLine, this.radSectionArr[this.i - this.j] - 1, this.radSectionArr[this.i - this.j]);
@@ -471,6 +474,42 @@ angular.module('karessControlModule')
             $scope.getCurrentObj($ionicSlideBoxDelegate.currentIndex());
           }
           ;
+        };
+        $scope.count=0;
+        $scope.slideHasChangedleft = function () {
+          onceFlag = true;
+          if($scope.currentSlideData.length !== 1){
+            onceFlag = false;
+            $scope.count--;
+            if($scope.count >= 0){
+              currentRadObj = null;
+              $ionicSlideBoxDelegate.$getByHandle('boxSlider').previous();
+              $timeout(function () {
+                $scope.getCurrentObj($scope.count);
+                onceFlag = true;
+              },17)
+            }else{
+              $scope.count = 0;
+            }
+          };
+        };
+        $scope.slideHasChangedright = function () {
+          onceFlag = true;
+          var slidecount = $scope.currentSlideData.length;
+          if(slidecount !== 1){
+            onceFlag = false;
+            $scope.count++;
+            if($scope.count <= slidecount-1){
+              currentRadObj = null;
+              $ionicSlideBoxDelegate.$getByHandle('boxSlider').next();
+              $timeout(function () {
+                $scope.getCurrentObj($scope.count);
+                onceFlag = true;
+              },17)
+            }else{
+              $scope.count = slidecount-1;
+            };
+          };
         };
       }, 20);
       //处理选择怎加border

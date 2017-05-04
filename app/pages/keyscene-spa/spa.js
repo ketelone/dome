@@ -34,17 +34,15 @@ angular.module('productModule')
        *@params: item
        *@disc: get switch status
        */
-     /* $scope.getSwitchStatus = function(item){
-        //console.log(item);
-        alert(item.isOff);
-        if(item.isOff){
-          //alert("on");
-          $scope.openKeyscene();
 
-        }else{
-          alert("off1");
+      $scope.getSwitchStatus = function (item) {
+        console.log(item);
+        if (item.isOff == true) {
+          $scope.openKeyscene();
+        } else {
+          $scope.closeKeyscene();
         }
-      };*/
+      };
 
 
 
@@ -94,27 +92,52 @@ angular.module('productModule')
           //浴霸
           if($scope.config.flagDevice3 != true) {
             $("#progressAnimation3").css({
-              "-webkit-animation": "aaa 6.0s linear",
+              "-webkit-animation": "aaa 2.0s linear",
               "background": "#1a1d28"
             });
             $timeout(function () {
               $scope.config.device3 = true;
-            }, 5900);
+            }, 2000);
           }
           //淋浴
           if($scope.config.flagDevice4 != true) {
             $("#progressAnimation4").css({
-              "-webkit-animation": "aaa 1.5s linear",
+              "-webkit-animation": "aaa 4s linear",
               "background": "#1a1d28"
             });
             $timeout(function () {
               $scope.config.device4 = true;
-            }, 1600);
+            }, 4000);
           }
         } else {
 
         }
       }
+
+      $scope.closeKeyscene = function () {
+        console.log($scope.config.openFlag);
+        if ($scope.config.openFlag == true) {
+          //浴霸
+          if ($scope.config.flagDevice3 != true) {
+            $scope.config.device3 = false;
+            $("#progressAnimation3").css({
+              "-webkit-animation": "bbb 4.0s linear",
+              "background": ''
+            });
+          }
+          //淋浴
+          if ($scope.config.flagDevice4 != true) {
+            $scope.config.device4 = false;
+            $("#progressAnimation4").css({
+              "-webkit-animation": "bbb 10s linear",
+              "background": ''
+            });
+          }
+        } else {
+
+        }
+      }
+
 
       /**
        *@author:chenjiacheng

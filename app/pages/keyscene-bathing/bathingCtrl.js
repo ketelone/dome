@@ -54,22 +54,22 @@ angular.module('productModule')
           //浴霸
           if ($scope.config.flagDevice3 != true) {
             $("#progressAnimation3").css({
-              "-webkit-animation": "aaa 6.0s linear",
+              "-webkit-animation": "aaa 4.0s linear",
               "background": "#1a1d28"
             });
             $timeout(function () {
               $scope.config.device3 = true;
-            }, 5900);
+            }, 4000);
           }
           //淋浴
           if ($scope.config.flagDevice4 != true) {
             $("#progressAnimation4").css({
-              "-webkit-animation": "aaa 1.5s linear",
+              "-webkit-animation": "aaa 10s linear",
               "background": "#1a1d28"
             });
             $timeout(function () {
               $scope.config.device4 = true;
-            }, 1600);
+            }, 10000);
           }
         } else {
 
@@ -84,7 +84,7 @@ angular.module('productModule')
           if ($scope.config.flagDevice3 != true) {
             $scope.config.device3 = false;
             $("#progressAnimation3").css({
-              "-webkit-animation": "bbb 6.0s linear",
+              "-webkit-animation": "bbb 4.0s linear",
               "background": ''
             });
           }
@@ -92,7 +92,7 @@ angular.module('productModule')
           if ($scope.config.flagDevice4 != true) {
             $scope.config.device4 = false;
             $("#progressAnimation4").css({
-              "-webkit-animation": "bbb 1.5s linear",
+              "-webkit-animation": "bbb 10s linear",
               "background": ''
             });
           }
