@@ -138,32 +138,32 @@ angular.module('toiletControlModule')
        */
       $scope.toilSetGetImpleteData = function(cmdvalue, name){
         //cloud
-        hmsPopup.showLoading("<span translate='lightSetting.loadingdata'></span>");
+        hmsPopup.showLoading("<span translate='cleargearPlan.loadingdata'></span>");
         $timeout(function () {
           hmsPopup.hideLoading();
           $scope.Toast.show("发生指令成功");
           $scope.lightnightmode = !$scope.lightnightmode;
         },1000)
-        // hmsPopup.showLoading("<span translate='lightSetting.loadingdata'></span>");
-        // var url = baseConfig.basePath + "/r/api/message/sendMessage";
-        // var paramter = cmdService.cloudCmd(cmdvalue,$scope.handlenapeListNape[index].cloudId);
-        // hmsHttp.post(url, paramter).success(
-        //   function(response){
-        //     hmsPopup.hideLoading();
-        //     //resolve
-        //     if(response.code == 200){
-        //       if(value.ack.toLowerCase() == "fa27"){
-        //         $scope.Toast.show(name+$translate.instant("lightSetting.directesuccess"));
-        //         $scope.lightnightmode = !$scope.lightnightmode;
-        //       }
-        //     }else{
-        //       $scope.Toast.show(name+$translate.instant("lightSetting.directerror"));
-        //     }
-        //   }).
-        // error(function () {
-        //   hmsPopup.hideLoading();
-        //   $scope.Toast.show(name + $translate.instant("lightSetting.loadingdataerrror"));
-        // })
+        hmsPopup.showLoading("<span translate='cleargearPlan.loadingdata'></span>");
+        var url = baseConfig.basePath + "/r/api/message/sendMessage";
+        var paramter = cmdService.cloudCmd(cmdvalue,$scope.handlenapeListNape[index].cloudId);
+        hmsHttp.post(url, paramter).success(
+          function(response){
+            hmsPopup.hideLoading();
+            //resolve
+            if(response.code == 200){
+              if(value.ack.toLowerCase() == "fa27"){
+                $scope.Toast.show(name+$translate.instant("cleargearPlan.directesuccess"));
+                $scope.lightnightmode = !$scope.lightnightmode;
+              }
+            }else{
+              $scope.Toast.show(name+$translate.instant("cleargearPlan.directerror"));
+            }
+          }).
+        error(function () {
+          hmsPopup.hideLoading();
+          $scope.Toast.show(name + $translate.instant("cleargearPlan.loadingdataerrror"));
+        })
       };
       /**
        *@disc:night light set

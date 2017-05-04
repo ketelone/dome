@@ -22,8 +22,6 @@ angular.module('toiletControlModule')
       };
       $scope.clearGearPlanCheck = false;
       $scope.clearGearPlanCheckBg = true;
-
-
       $scope.weekTemp = [];
       $scope.weekTemp.push($translate.instant("cleargearPlan.zhouyi"));
       $scope.weekTemp.push($translate.instant("cleargearPlan.zhouer"));
@@ -32,7 +30,6 @@ angular.module('toiletControlModule')
       $scope.weekTemp.push($translate.instant("cleargearPlan.zhouwu"));
       $scope.weekTemp.push($translate.instant("cleargearPlan.zhouliu"));
       $scope.weekTemp.push($translate.instant("cleargearPlan.zhoutian"));
-
       $scope.cleargearPlan = {
         weekValDanwei:"cleargearPlan.weekValDanwei",
         clearRepeatVal:"("+ $scope.weekTemp.join(",")+")",
@@ -54,6 +51,40 @@ angular.module('toiletControlModule')
           }
         }
       };
+      // send directive
+      /**
+       *@params:cmdvalue(value) name(current chu fa name)
+       *@disc:send clound Instruction;
+       */
+      $scope.clangerSetGetImpleteData = function(cmdvalue, name){
+        //cloud
+        hmsPopup.showLoading("<span translate='lightSetting.loadingdata'></span>");
+        $timeout(function () {
+          hmsPopup.hideLoading();
+          $scope.Toast.show("发生指令成功");
+          $scope.lightnightmode = !$scope.lightnightmode;
+        },1000)
+        // hmsPopup.showLoading("<span translate='lightSetting.loadingdata'></span>");
+        // var url = baseConfig.basePath + "/r/api/message/sendMessage";
+        // var paramter = cmdService.cloudCmd(cmdvalue,$scope.handlenapeListNape[index].cloudId);
+        // hmsHttp.post(url, paramter).success(
+        //   function(response){
+        //     hmsPopup.hideLoading();
+        //     //resolve
+        //     if(response.code == 200){
+        //       if(value.ack.toLowerCase() == "fa27"){
+        //         $scope.Toast.show(name+$translate.instant("lightSetting.directesuccess"));
+        //         $scope.lightnightmode = !$scope.lightnightmode;
+        //       }
+        //     }else{
+        //       $scope.Toast.show(name+$translate.instant("lightSetting.directerror"));
+        //     }
+        //   }).
+        // error(function () {
+        //   hmsPopup.hideLoading();
+        //   $scope.Toast.show(name + $translate.instant("lightSetting.loadingdataerrror"));
+        // })
+      };
       //data select
       //hour data
       $scope.listleft = [];
@@ -62,7 +93,7 @@ angular.module('toiletControlModule')
       $scope.clearGeardataTime={
         hour:"",
         minute:""
-      }
+      };
       for(var i=0;i<=23;i++){
         $scope.recicleObj = {
           name:i,
@@ -146,7 +177,7 @@ angular.module('toiletControlModule')
           }
           $scope.cleargearPlan.dataTime = filterTimeMinute($scope.clearGeardataTime.hour,"hour")+":"+ filterTimeMinute($scope.clearGeardataTime.minute,"minute")
         }else{
-          hmsPopup.showShortCenterToast("请选择数据项!");
+          $scope.Toast.show($translate.instant("cleargearPlan.selectPoup"));
         };
       };
       $scope.listleftRepeat = [{
