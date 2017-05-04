@@ -117,7 +117,7 @@ angular.module('toiletControlModule')
       $scope.changeCheckVal = function (type) {
         if(type === "autochongshui"){
           if(!$scope.chongshuisetval){
-            var cmdvalue = getCmd(tolitersetcmdObj.header,tolitersetcmdObj.idx,nimisetting.setting("OFF", "OFF", "OFF", "ON", "OFF", "OFF", "OFF", "OFF", "OFF"),tolitersetcmdObj.ctrId,tolitersetcmdObj.devId);
+            var cmdvalue = cmdService.getCmd(tolitersetcmdObj.header,tolitersetcmdObj.idx,nimisetting.setting("OFF", "OFF", "OFF", "ON", "OFF", "OFF", "OFF", "OFF", "OFF"),tolitersetcmdObj.ctrId,tolitersetcmdObj.devId);
             //send instructin
             console.log(cmdvalue)
             if(baseConfig.isCloudCtrl){
@@ -126,7 +126,7 @@ angular.module('toiletControlModule')
               // $scope.sendCmd("autochongshui",cmdvalue,$translate.instant("toiletSetting.autochongshui"));
             }
           }else{
-            var cmdvalue = getCmd(tolitersetcmdObj.header,tolitersetcmdObj.idx,nimisetting.setting("OFF", "OFF", "OFF", "OFF", "OFF", "OFF", "OFF", "OFF", "OFF"),tolitersetcmdObj.ctrId,tolitersetcmdObj.devId);
+            var cmdvalue = cmdService.getCmd(tolitersetcmdObj.header,tolitersetcmdObj.idx,nimisetting.setting("OFF", "OFF", "OFF", "OFF", "OFF", "OFF", "OFF", "OFF", "OFF"),tolitersetcmdObj.ctrId,tolitersetcmdObj.devId);
             //send instructin
             console.log(cmdvalue)
             if(baseConfig.isCloudCtrl){
@@ -137,7 +137,7 @@ angular.module('toiletControlModule')
           }
         }else if(type === "autochuchou"){
           if(!$scope.chuchousetval){
-            var cmdvalue = getCmd(tolitersetcmdObj.header,tolitersetcmdObj.idx,nimisetting.setting("OFF", "OFF", "OFF", "OFF", "OFF", "OFF", "ON", "OFF", "OFF"),tolitersetcmdObj.ctrId,tolitersetcmdObj.devId);
+            var cmdvalue = cmdService.getCmd(tolitersetcmdObj.header,tolitersetcmdObj.idx,nimisetting.setting("OFF", "OFF", "OFF", "OFF", "OFF", "OFF", "ON", "OFF", "OFF"),tolitersetcmdObj.ctrId,tolitersetcmdObj.devId);
             //send instructin
             console.log(cmdvalue)
             if(baseConfig.isCloudCtrl){
@@ -146,7 +146,7 @@ angular.module('toiletControlModule')
               // $scope.sendCmd("autochuchou",cmdvalue,$translate.instant("toiletSetting.autochongshui"));
             }
           }else{
-            var cmdvalue = getCmd(tolitersetcmdObj.header,tolitersetcmdObj.idx,nimisetting.setting("OFF", "OFF", "OFF", "OFF", "OFF", "OFF", "OFF", "OFF", "OFF"),tolitersetcmdObj.ctrId,tolitersetcmdObj.devId);
+            var cmdvalue = cmdService.getCmd(tolitersetcmdObj.header,tolitersetcmdObj.idx,nimisetting.setting("OFF", "OFF", "OFF", "OFF", "OFF", "OFF", "OFF", "OFF", "OFF"),tolitersetcmdObj.ctrId,tolitersetcmdObj.devId);
             //send instructin
             console.log(cmdvalue)
             if(baseConfig.isCloudCtrl){
@@ -319,7 +319,7 @@ angular.module('toiletControlModule')
           }else if(val.des === "toiletSetting.interngent"){
             var delayTime = 15;
           };
-          var cmdvalue = getCmd(tolitersetcmdObj.header,tolitersetcmdObj.idx,nimisetting.powerSaveDelay(delayTime),tolitersetcmdObj.ctrId,tolitersetcmdObj.devId);
+          var cmdvalue = cmdService.getCmd(tolitersetcmdObj.header,tolitersetcmdObj.idx,nimisetting.powerSaveDelay(delayTime),tolitersetcmdObj.ctrId,tolitersetcmdObj.devId);
           //send instructin
           console.log(cmdvalue)
           if(baseConfig.isCloudCtrl){
@@ -338,7 +338,7 @@ angular.module('toiletControlModule')
           }else if(val.des === "toiletSetting.farinstance"){
             var value = "distanceFar";
           }
-          var cmdvalue = getCmd(tolitersetcmdObj.header,tolitersetcmdObj.idx,nimisetting._data[value],tolitersetcmdObj.ctrId,tolitersetcmdObj.devId);
+          var cmdvalue = cmdService.getCmd(tolitersetcmdObj.header,tolitersetcmdObj.idx,nimisetting._data[value],tolitersetcmdObj.ctrId,tolitersetcmdObj.devId);
           //send instructin
           console.log(cmdvalue)
           if(baseConfig.isCloudCtrl){

@@ -9,6 +9,8 @@ angular.module('toiletControlModule')
     'baseConfig',
     'checkVersionService',
     'hmsPopup',
+    'cmdService',
+    'hmsHttp',
     function ($scope,
               $state,
               $translate,
@@ -17,7 +19,9 @@ angular.module('toiletControlModule')
               $ionicModal,
               baseConfig,
               checkVersionService,
-              hmsPopup
+              hmsPopup,
+              cmdService,
+              hmsHttp
     ) {
       var lighttersetcmdObj = {
         diviceid:'8BE850C2',
@@ -93,9 +97,9 @@ angular.module('toiletControlModule')
         if($scope.lightSetting.isShowCheckimg){
           lightsetval.modal = "default";
         }else if($scope.lightSetting.isShowWeekset){
-          lightsetval.modal = "default";
+          lightsetval.modal = "ByWeek";
         }else if($scope.lightSetting.isShowStatuset){
-          lightsetval.modal = "default";
+          lightsetval.modal = "Dynamic";
         };
         window.localStorage.lightModal = JSON.stringify(lightsetval);
         console.log(JSON.parse(window.localStorage.lightModal))
@@ -117,6 +121,7 @@ angular.module('toiletControlModule')
             if(value.ack.toLowerCase() == "fa27"){
               $scope.Toast.show(name+$translate.instant("lightSetting.directesuccess"));
               $scope.lightnightmode = !$scope.lightnightmode;
+              console.log($scope.lightnightmode)
             }
           }else{
             $scope.Toast.show(name+$translate.instant("lightSetting.directerror"));
@@ -137,6 +142,7 @@ angular.module('toiletControlModule')
         $timeout(function () {
           hmsPopup.hideLoading();
           $scope.Toast.show("发生指令成功");
+          $scope.lightnightmode = !$scope.lightnightmode;
         },1000)
         // hmsPopup.showLoading("<span translate='lightSetting.loadingdata'></span>");
         // var url = baseConfig.basePath + "/r/api/message/sendMessage";
@@ -163,8 +169,9 @@ angular.module('toiletControlModule')
        *@disc:night light set
        */
       $scope.lightchangeSet = function () {
+        console.log($scope.lightnightmode)
         if(!$scope.lightnightmode){
-          var cmdvalue = getCmd(lighttersetcmdObj.header,lighttersetcmdObj.idx,lightsetting.setting("OFF", "ON", "OFF", "OFF", "OFF", "OFF", "OFF", "OFF", "OFF"),lighttersetcmdObj.ctrId,lighttersetcmdObj.devId);
+          var cmdvalue = cmdService.getCmd(lighttersetcmdObj.header,lighttersetcmdObj.idx,lightsetting.setting("OFF", "ON", "OFF", "OFF", "OFF", "OFF", "OFF", "OFF", "OFF"),lighttersetcmdObj.ctrId,lighttersetcmdObj.devId);
           //send instructin
           console.log(cmdvalue)
           if(baseConfig.isCloudCtrl){
@@ -173,7 +180,7 @@ angular.module('toiletControlModule')
             // $scope.sendCmd(cmdvalue,$translate.instant("lightSetting.lightmode"));
           };
         }else{
-          var cmdvalue = getCmd(lighttersetcmdObj.header,lighttersetcmdObj.idx,lightsetting.setting("OFF", "OFF", "OFF", "OFF", "OFF", "OFF", "OFF", "OFF", "OFF"),lighttersetcmdObj.ctrId,lighttersetcmdObj.devId);
+          var cmdvalue = cmdService.getCmd(lighttersetcmdObj.header,lighttersetcmdObj.idx,lightsetting.setting("OFF", "OFF", "OFF", "OFF", "OFF", "OFF", "OFF", "OFF", "OFF"),lighttersetcmdObj.ctrId,lighttersetcmdObj.devId);
           //send instructin
           console.log(cmdvalue)
           if(baseConfig.isCloudCtrl){

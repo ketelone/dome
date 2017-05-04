@@ -1,10 +1,10 @@
 //公共head
 .header{
-  background-color:$global-head-bg;
+  background-color:$global-background;
   .header_button{
-    width: 30px;
-    height: 30px;
-    line-height: 30px;
+    width: 44px;
+    height: 44px;
+    line-height: 44px;
     margin-top: 1px;
     font-size: 30px;
     color: $color-base;
@@ -16,7 +16,7 @@
   .header_buttonRig{
     font-size: 16px;
     color: white;
-    background: $global-head-bg;
+    background: $global-background;
   }
 }
 

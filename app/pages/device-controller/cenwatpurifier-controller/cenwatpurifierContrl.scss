@@ -1,7 +1,9 @@
 .cenwatpurifierCtrl {
-   .toilet-bg{
-     background-color: $global-head-bg;
-   }
+  .toilet-bg{
+    margin-top:44px;
+    background-color: $global-head-bg;
+    color: $color-base;
+  }
   .toilet-conninfo{
     padding-top: 0.86rem;
     width: 100%;
