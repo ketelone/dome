@@ -15,10 +15,11 @@
     color:#565A64;
     font-size: $font-size-small;
   }
-   .toilet-bg{
-     background-color: $global-head-bg;
-     color: $color-base;
-   }
+  .toilet-bg{
+    margin-top:44px;
+    background-color: $global-head-bg;
+    color: $color-base;
+  }
   .modestyle{
     width: 100%;
     height: auto;

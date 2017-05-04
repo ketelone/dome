@@ -1,11 +1,14 @@
 .toilet-controller {
    .toilet-bg{
+     margin-top:44px;
      background-color: $global-head-bg;
+     color: $color-base;
    }
   .toilet-conninfo{
     padding-top: 0.86rem;
     width: 100%;
     height: auto;
+    background-color:#171A1C;
     .toilet-conninfo-signal{
       display: inline-block;
       margin-left: 0.9rem;
@@ -92,7 +95,7 @@
     width: 100%;
     height: 1.08rem;
     line-height: 1.08rem;
-    background-color: #1C202C;
+    background-color:#1C202C;
     font-size: $font-size-liter;
     .handlenape-selec-des{
       margin-left: 0.9rem;
@@ -137,6 +140,7 @@
     margin-left: 2%;
     margin-right: 2%;
     height: 9.5rem;
+    background-color:#1A1E28;
     .napes-border{
       border:0.03rem solid $global-border;
       border-radius: 0.08rem;

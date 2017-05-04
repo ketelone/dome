@@ -2,29 +2,45 @@ angular.module('toiletControlModule')
   .controller('lightSettingCtrl', [
     '$scope',
     '$state',
+    '$translate',
+    '$timeout',
     'publicMethod',
     '$ionicModal',
     'baseConfig',
     'checkVersionService',
     'hmsPopup',
+    'cmdService',
+    'hmsHttp',
     function ($scope,
               $state,
+              $translate,
+              $timeout,
               publicMethod,
               $ionicModal,
               baseConfig,
               checkVersionService,
-              hmsPopup
+              hmsPopup,
+              cmdService,
+              hmsHttp
     ) {
+      var lighttersetcmdObj = {
+        diviceid:'8BE850C2',
+        header:'8877',
+        idx:1,
+        ctrId:'00',
+        devId:'01'
+      };
+      var lightsetting = new NIMI();
       //init valiable
       $scope.lightSetting={
-        gaiganyin:"",
-        gaiganyinDistance:"",
+        // gaiganyin:"",
+        // gaiganyinDistance:"",
         isShowCheckimg:true,
-        isShowWeekset:true,
-        isShowStatuset:true
+        isShowWeekset:false,
+        isShowStatuset:false
       };
       //init check value
-      $scope.lighttoiletlampmode = true;
+      // $scope.lighttoiletlampmode = true;
       $scope.lightnightmode = false;
       //week light color
       $scope.colorWeek = [{
@@ -74,7 +90,105 @@ angular.module('toiletControlModule')
       }];
       //gobakc
       $scope.goBack = function () {
+        //localstorage setting value
+        var lightsetval = {
+          modal:"",
+        }
+        if($scope.lightSetting.isShowCheckimg){
+          lightsetval.modal = "default";
+        }else if($scope.lightSetting.isShowWeekset){
+          lightsetval.modal = "ByWeek";
+        }else if($scope.lightSetting.isShowStatuset){
+          lightsetval.modal = "Dynamic";
+        };
+        window.localStorage.lightModal = JSON.stringify(lightsetval);
+        console.log(JSON.parse(window.localStorage.lightModal))
         publicMethod.goBack();
+      };
+      /**
+       *@params:cmdvalue(value) type(chu fa type) name(current chu fa name)
+       *@disc:send Instruction;
+       */
+      $scope.sendCmd = function (cmdvalue,name) {
+        hmsPopup.showLoading("<span translate='lightSetting.loadingdata'></span>");
+        cordova.plugins.SocketPlugin.tcpSendCmd({
+          "timeout": "5000",
+          paramter :cmdService.cloudCmd(cmdvalue,$scope.handlenapeListNape[index].cloudId)
+        }, success, error);
+        function success(response) {
+          hmsPopup.hideLoading();
+          if(response.code == 200){
+            if(value.ack.toLowerCase() == "fa27"){
+              $scope.Toast.show(name+$translate.instant("lightSetting.directesuccess"));
+              $scope.lightnightmode = !$scope.lightnightmode;
+              console.log($scope.lightnightmode)
+            }
+          }else{
+            $scope.Toast.show(name+$translate.instant("lightSetting.directerror"));
+          }
+        };
+        function error() {
+          hmsPopup.hideLoading();
+          $scope.Toast.show(name + $translate.instant("lightSetting.loadingdataerrror"));
+        };
+      };
+      /**
+       *@params:cmdvalue(value) type(chu fa type) name(current chu fa name)
+       *@disc:send clound Instruction;
+       */
+      $scope.toilSetGetImpleteData = function(cmdvalue, name){
+        //cloud
+        hmsPopup.showLoading("<span translate='lightSetting.loadingdata'></span>");
+        $timeout(function () {
+          hmsPopup.hideLoading();
+          $scope.Toast.show("发生指令成功");
+          $scope.lightnightmode = !$scope.lightnightmode;
+        },1000)
+        // hmsPopup.showLoading("<span translate='lightSetting.loadingdata'></span>");
+        // var url = baseConfig.basePath + "/r/api/message/sendMessage";
+        // var paramter = cmdService.cloudCmd(cmdvalue,$scope.handlenapeListNape[index].cloudId);
+        // hmsHttp.post(url, paramter).success(
+        //   function(response){
+        //     hmsPopup.hideLoading();
+        //     //resolve
+        //     if(response.code == 200){
+        //       if(value.ack.toLowerCase() == "fa27"){
+        //         $scope.Toast.show(name+$translate.instant("lightSetting.directesuccess"));
+        //         $scope.lightnightmode = !$scope.lightnightmode;
+        //       }
+        //     }else{
+        //       $scope.Toast.show(name+$translate.instant("lightSetting.directerror"));
+        //     }
+        //   }).
+        // error(function () {
+        //   hmsPopup.hideLoading();
+        //   $scope.Toast.show(name + $translate.instant("lightSetting.loadingdataerrror"));
+        // })
+      };
+      /**
+       *@disc:night light set
+       */
+      $scope.lightchangeSet = function () {
+        console.log($scope.lightnightmode)
+        if(!$scope.lightnightmode){
+          var cmdvalue = cmdService.getCmd(lighttersetcmdObj.header,lighttersetcmdObj.idx,lightsetting.setting("OFF", "ON", "OFF", "OFF", "OFF", "OFF", "OFF", "OFF", "OFF"),lighttersetcmdObj.ctrId,lighttersetcmdObj.devId);
+          //send instructin
+          console.log(cmdvalue)
+          if(baseConfig.isCloudCtrl){
+            $scope.toilSetGetImpleteData(cmdvalue,$translate.instant("lightSetting.lightmode"));
+          }else{
+            // $scope.sendCmd(cmdvalue,$translate.instant("lightSetting.lightmode"));
+          };
+        }else{
+          var cmdvalue = cmdService.getCmd(lighttersetcmdObj.header,lighttersetcmdObj.idx,lightsetting.setting("OFF", "OFF", "OFF", "OFF", "OFF", "OFF", "OFF", "OFF", "OFF"),lighttersetcmdObj.ctrId,lighttersetcmdObj.devId);
+          //send instructin
+          console.log(cmdvalue)
+          if(baseConfig.isCloudCtrl){
+            $scope.toilSetGetImpleteData(cmdvalue,$translate.instant("lightSetting.lightmode"));
+          }else{
+            // $scope.sendCmd(cmdvalue,$translate.instant("lightSetting.lightmode"));
+          };
+        }
       };
       /**
        *@disc:checkbox selected
