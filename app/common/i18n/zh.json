@@ -493,6 +493,7 @@
     "title": "next gen shower",
     "deviceWifiInfo": "信号好",
     "deviceUseInfo": "使用中",
+    "unworking":"未启用",
     "parameterrad": "0",
     "parameterdes": "水温档位",
     "handleSelecDes": "出水方式",
