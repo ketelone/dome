@@ -659,13 +659,10 @@ angular.module('toiletControlModule')
             currentRadObj.drawCircleFill(currentRadObj.cr3,currentRadObj.starRad+currentRadObj.radRange * ($scope.currentSlideData[index].gearInit-1));
             currentEventObj.addEventListener( 'touchstart', function( e ){
               e.preventDefault();
-              var poi = getEvtLocation(e);
-              console.log(poi)
             }, false );
             currentEventObj.addEventListener( 'touchmove', function( e ){
               e.preventDefault();
               var poi = getEvtLocation(e);
-              console.log(poi)
               currentRadObj.drawc(currentRadObj.cr2,getAngle($scope.screenWidth/2,2.7*2*$scope.fontSize,poi.x,poi.y));
             }, false );
             currentEventObj.addEventListener( 'touchend', function( e ){
