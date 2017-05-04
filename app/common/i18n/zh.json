@@ -132,7 +132,16 @@
     "myModel": "我的场景",
     "addModel": "添加场景",
     "myDevice": "我的设备",
-    "addDevice": "添加设备"
+    "addDevice": "添加设备",
+    "searchBox": "searchBox",
+    "startLinkBox": "start boxLink",
+    "linkSuccess": "boxLink sucess",
+    "linkFail": "连接失败",
+    "startSelectDevice": "start  selectDeviceOn",
+    "searchDeviceSuccess": "搜索已连接设备成功",
+    "searchFail": "搜索已连接设备失败",
+    "noDeviceSearch": "没有已连接设备，请搜索未连接设备",
+    "noDevice": "没有设备"
   },
   "bigaunt": {
     "bigauntTitle": "场景详情"
@@ -398,7 +407,13 @@
     "sixHour": "六时",
     "timeout": "您选择的时间已超出范围，请重新选择",
     "twentyModel": "24小时<br>模式",
-    "commonModel": "普通模式"
+    "commonModel": "普通模式",
+    "pof": "请打开热风或者凉风或者冷干或者热干的功能",
+    "closeOtherFunction": "请关闭其它功能",
+    "notCloseTimer": "不能开启定时功能",
+    "fail": "fail",
+    "openLightSuccess": "open light success",
+    "openCoolSuccess": "open Cool success"
   },
   "spa": {
     "goHomeTitle": "场景详情",
@@ -530,6 +545,8 @@
   "airfoidShower": {
     "getWater": "&nbsp;&nbsp;&nbsp;出水",
     "allStop": "一键停止",
-    "setting": "&nbsp;&nbsp;&nbsp;设置"
+    "setting": "&nbsp;&nbsp;&nbsp;设置",
+    "waterSuccess": "water success",
+    "stopSuccess": "stop success"
   }
 }

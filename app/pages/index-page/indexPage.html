@@ -56,9 +56,9 @@
                         <label class="switch-btn">
                           <input class="checked-switch" type="checkbox" ng-model="item.isOff"  ng-click="getSwitchStatus(item)"/>
                           <span class="text-switch" data-yes="off" data-no="on" ng-if="item.isTwoButton"></span>
-                          <span class="toggle-btn" ng-if="item.isTwoButton"></span>
-                          <span class="text-switch font-format" ng-if="item.isOneButton">开启</span>
-                          <span class="toggle-btn only-switch" ng-if="item.isOneButton"></span>
+                          <span class="toggle-btn" ng-show="item.isTwoButton"></span>
+                          <span class="text-switch font-format" ng-show="item.isOneButton">开启</span>
+                          <span class="toggle-btn only-switch" ng-show="item.isOneButton"></span>
                         </label>
                       </center>
                     </div>

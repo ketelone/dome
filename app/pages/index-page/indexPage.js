@@ -16,6 +16,7 @@ angular.module('indexPageModule')
     'hmsPopup',
     'SettingsService',
     'hmsHttp',
+    '$translate',
     function ($scope,
               $state,
               $ionicGesture,
@@ -26,7 +27,8 @@ angular.module('indexPageModule')
               $ionicHistory,
               hmsPopup,
               SettingsService,
-              hmsHttp) {
+              hmsHttp,
+              $translate) {
 
       $scope.isSceneModel = true;
       $scope.isDeviceModel = false;
@@ -63,7 +65,7 @@ angular.module('indexPageModule')
           //   lastUpdateDate: ""
           // },
           {
-            id: "2",
+            id: "1",
             pictureUrl: 'build/img/index/img_home_morning.png',
             title: "晨起",
             context: "告别匆忙的晨起洗漱",
@@ -74,36 +76,36 @@ angular.module('indexPageModule')
             lastUpdateDate: ""
           },
           {
-            id: "1",
+            id: "2",
             pictureUrl: 'build/img/index/img_home_leavehome.png',
             title: "离家",
             context: "一键关闭所有设备",
             isOneButton: true,
             isTwoButton: false,
             jsonContext: "1",
-            isOff: false,
+            isOff:  false,
             lastUpdateDate: ""
           },
           {
-            id: "4",
+            id: "3",
             pictureUrl: 'build/img/index/img_home_spa.png',
             title: "泡澡",
             context: "出去SPA不如在家泡澡",
             isOneButton: false,
             isTwoButton: true,
             jsonContext: "1",
-            isOff: false,
+            isOff:  false,
             lastUpdateDate: ""
           },
           {
-            id: "3",
+            id: "4",
             pictureUrl: 'build/img/index/muyu@3x.png',
             title: "沐浴",
             context: "享受沐浴",
             isOneButton: false,
             isTwoButton: true,
             jsonContext: "1",
-            isOff: false,
+            isOff:  false,
             lastUpdateDate: ""
           },
           {
@@ -114,7 +116,7 @@ angular.module('indexPageModule')
             isOneButton: false,
             isTwoButton: true,
             jsonContext: "1",
-            isOff: false,
+            isOff:  false,
             lastUpdateDate: ""
           },
           {
@@ -125,7 +127,7 @@ angular.module('indexPageModule')
             isOneButton: false,
             isTwoButton: true,
             jsonContext: "1",
-            isOff: false,
+            isOff:  false,
             lastUpdateDate: ""
           }
         ];
@@ -157,7 +159,7 @@ angular.module('indexPageModule')
           tx.executeSql('update T_CTM_PARTY_SCENARIO set LAST_UPDATE_DATE = "'+getNowFormatDate()+'" where SCENARIO_ID = '+item.id);
         });
         $scope.modelData = [];
-        getDeviceList();
+        getScenarioList();
       };
 
       $scope.deviceModel = [];
@@ -293,7 +295,7 @@ angular.module('indexPageModule')
         var paramter = {
           "location" : "ShangHai",
           "language" : "zh-Hans",
-          "unit" : "c",
+          "unit" : "c", //c摄氏，f华氏
           "start" : "0",
           "hours" : "24"
         };
@@ -310,6 +312,59 @@ angular.module('indexPageModule')
       };
 
       var getDeviceList = function(){
+        db.transaction(function(tx){
+          tx.executeSql('select tdd.DEVICE_ID as DEVICE_ID,tdd.PRODUCT_ID as PRODUCT_ID, tdsb.SKU_NAME as SKU_NAME, tdsb.SKU_ID as SKU_ID, tdsb.SKU_NUMBER as SKU_NUMBER,tdd.LAST_UPDATE_DATE as LAST_UPDATE_DATE from T_DVM_DEVICE  tdd,T_CTM_PARTY_BOX_DEVICE tcpbd,T_DVM_SKU_B tdsb'+
+            ' where'+
+            ' tcpbd.PARTY_ID = "20"'+
+            ' and'+
+            ' tcpbd.DEVICE_ID = tdd.DEVICE_ID'+
+            ' and'+
+            ' tdd.SKU_ID = tdsb.SKU_ID'+
+            ' ORDER BY tdd.LAST_UPDATE_DATE DESC',[],function(tx, results){
+            for(var i = 0; i < results.rows.length; i ++){
+              var device = results.rows.item(i);
+              var deviceName = device.SKU_NAME;
+              var pictureUrl = "";
+              if(deviceName == 'NUMI 1.1'){
+                pictureUrl = "build/img/index/img_home_device_toliet.png";
+              }else if(deviceName == 'Bathroom Heater'){
+                pictureUrl = "build/img/index/img_home_device_heater.png";
+              }else if(deviceName == 'airfoil-shower'){
+                pictureUrl = "build/img/index/air.png";
+              }else if(deviceName == 'Karess'){
+                pictureUrl = "build/img/index/karess.png";
+              }else if(deviceName == 'MC'){
+                pictureUrl = "build/img/index/mirror.png";
+              }else if(deviceName == 'next gen shower'){
+                pictureUrl = "build/img/index/next.png";
+              }else if(deviceName == '中央净水器'){
+                pictureUrl = "build/img/index/img_home_device_toliet.png";
+              }
+
+              var deviceInfo =
+              {
+                id: device.DEVICE_ID,
+                pictureUrl: pictureUrl,
+                deviceType: deviceName,
+                deviceStatus: "设备在线",
+                deviceDesc: "有人使用",
+                statusPictureUrl: "build/img/index/icon_home_device_signal5.png",
+                errorPictureUrl: "",
+                isStatus: true,
+                isError: false,
+                sku: device.SKU_ID,
+                productId: device.PRODUCT_ID
+              };
+
+              $scope.deviceModel.push(deviceInfo);
+
+            }
+          }, null);
+        });
+      };
+
+      var getScenarioList = function(){
+        $scope.modelData = [];
         db.transaction(function(tx){
           //var partyId = window.localStorage.empno;
           var partyId = "13469950960";
@@ -357,54 +412,6 @@ angular.module('indexPageModule')
 
             }
           }, null);
-
-          tx.executeSql('select tdd.DEVICE_ID as DEVICE_ID,tdd.PRODUCT_ID as PRODUCT_ID, tdsb.SKU_NAME as SKU_NAME, tdsb.SKU_ID as SKU_ID, tdsb.SKU_NUMBER as SKU_NUMBER,tdd.LAST_UPDATE_DATE as LAST_UPDATE_DATE from T_DVM_DEVICE  tdd,T_CTM_PARTY_BOX_DEVICE tcpbd,T_DVM_SKU_B tdsb'+
-          ' where'+
-          ' tcpbd.PARTY_ID = "20"'+
-          ' and'+
-          ' tcpbd.DEVICE_ID = tdd.DEVICE_ID'+
-          ' and'+
-          ' tdd.SKU_ID = tdsb.SKU_ID'+
-          ' ORDER BY tdd.LAST_UPDATE_DATE DESC',[],function(tx, results){
-            for(var i = 0; i < results.rows.length; i ++){
-              var device = results.rows.item(i);
-              var deviceName = device.SKU_NAME;
-              var pictureUrl = "";
-              if(deviceName == 'NUMI 1.1'){
-                pictureUrl = "build/img/index/img_home_device_toliet.png";
-              }else if(deviceName == 'Bathroom Heater'){
-                pictureUrl = "build/img/index/img_home_device_heater.png";
-              }else if(deviceName == 'airfoil-shower'){
-                pictureUrl = "build/img/index/air.png";
-              }else if(deviceName == 'Karess'){
-                pictureUrl = "build/img/index/karess.png";
-              }else if(deviceName == 'MC'){
-                pictureUrl = "build/img/index/mirror.png";
-              }else if(deviceName == 'next gen shower'){
-                pictureUrl = "build/img/index/next.png";
-              }else if(deviceName == '中央净水器'){
-                pictureUrl = "build/img/index/img_home_device_toliet.png";
-              }
-
-              var deviceInfo =
-              {
-                 id: device.DEVICE_ID,
-                 pictureUrl: pictureUrl,
-                 deviceType: deviceName,
-                 deviceStatus: "设备在线",
-                 deviceDesc: "有人使用",
-                 statusPictureUrl: "build/img/index/icon_home_device_signal5.png",
-                 errorPictureUrl: "",
-                 isStatus: true,
-                 isError: false,
-                 sku: device.SKU_ID,
-                 productId: device.PRODUCT_ID
-               };
-
-              $scope.deviceModel.push(deviceInfo);
-
-            }
-          }, null);
         });
       };
 
@@ -421,7 +428,7 @@ angular.module('indexPageModule')
               //alert("deviceId : "+results.rows.item(i).DEVICE_ID + " groupId: "+results.rows.item(i).GROUP_ID + " PARTY_ID: "+results.rows.item(i).PARTY_ID);
             }
 
-            alert("deviceList:  "+deviceList);
+            //alert("deviceList:  "+deviceList);
           });
 
           /*tx.executeSql('select tdd.DEVICE_ID as DEVICE_ID, tdsb.SKU_NAME as SKU_NAME, tdsb.SKU_ID as SKU_ID, tdsb.SKU_NUMBER as SKU_NUMBER,tdd.LAST_UPDATE_DATE as LAST_UPDATE_DATE from T_DVM_DEVICE  tdd,T_CTM_PARTY_BOX_DEVICE tcpbd,T_DVM_SKU_B tdsb'+
@@ -443,14 +450,33 @@ angular.module('indexPageModule')
         });
       };
 
+      /**
+       *@autor: caolei
+       *@disc: get scene switch status
+       */
+      var changeSceneStatus = function(){
+        var sceneInfo = JSON.parse(localStorage.sceneList);
+        angular.forEach(sceneInfo, function(data, index, array){
+          for(var i = 0; i < $scope.modelData.length; i ++){
+            if(data.sceneType == $scope.modelData[i].title){
+              $scope.modelData[i].isOff = data.status;
+            }
+          }
+        });
+      };
+
       $scope.$watch('', function(){
         //checkIsOk();
         if(baseConfig.isLinkDatabase){
+          getScenarioList();
           getDeviceList();
+          //changeSceneStatus();
         }
         getWeather();
         if(localStorage.boxLinkCount == 1){
-          searchBox();
+          $timeout(function () {
+            searchBox();
+          },1000);
           localStorage.boxLinkCount = 2;
         }
       }, true);
@@ -489,36 +515,28 @@ angular.module('indexPageModule')
       }, false);*/
 
       document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
-        //hmsPopup.showShortCenterToast("开始返回数据！");
-        var resultOn = result;
-        $scope.deviceOff = resultOn.payload.cmd_properties.device_list;
-        if (resultOn.payload.cmd == "LIST_BONDED_DEVICE_RETURN") {
-          hmsPopup.showShortCenterToast("开始返回数据");
-          //localStorage.device_id = resultOn.payload.cmd_properties.device_list[0].device_id;
-          //循环device list 取出device id，并降deviceid与相应页面的设备做关联
+        var resultOn = result["0"];
+        if (resultOn.data.act == "LIST_BONDED_DEVICE_RETURN") {
+          alert("开始返回数据");
           var deviceLinkInfo = "";
           var deviceStatus = [];
-          angular.forEach(resultOn.payload.cmd_properties.device_list, function(data, index, array){
+          angular.forEach(resultOn.data.act_params.device_list, function(data, index, array){
             deviceLinkInfo = deviceLinkInfo =="" ? (";" + data.device_sku + "," + data.device_id) : (deviceLinkInfo + ";" + data.device_sku + "," + data.device_id);
             deviceStatus.push({'deviceSku': data.device_sku, 'deviceRssi': data.device_rssi, 'deviceState': data.device_state});
           });
-          //保存device 连接的信息。
           localStorage.deviceInfo = deviceLinkInfo;
           localStorage.deviceStatus = JSON.stringify(deviceStatus);
           hmsPopup.hideLoading();
 
-          if ($scope.deviceOn.length == 0) {
-            hmsPopup.showShortCenterToast("没有已连接设备，请搜索未连接设备");
-          }
         }
 
-        if (resultOn.payload.cmd == "SCAN_RETURN") {
+        /*if (resultOn.payload.cmd == "SCAN_RETURN") {
           console.log(resultOn.payload.cmd_properties.device_list);
           if ($scope.deviceOff.length == 0) {
-            hmsPopup.showShortCenterToast("没有设备");
+            $scope.Toast.show($translate.instant("index.noDevice"));
           }
           $scope.$apply();
-        }
+        }*/
 
       }, false);
 
@@ -528,9 +546,9 @@ angular.module('indexPageModule')
        *@disc: search box
        */
       var searchBox = function () {
-       /* var cmd = [
+        var cmd = [
           {
-            "ver": 1,
+            "ver": "1",
             "from": {
               "ctype":  0XE3,
               "uid"  : "peerId"
@@ -548,23 +566,10 @@ angular.module('indexPageModule')
               "act_params":{"scan_box_request":"KOHLER_BOX_SEARCH"}
             }
           }
-        ];*/
+        ];
 
-        var cmd = {
-          "from": {"cid": "0xE3"},
-          "to": {"cid": "0xE4"},
-          "ts": Date.parse(new Date()) / 1000,
-          "idx": 0,
-          "method": "CTL",
-          "payload": {
-            "cmd": "SCAN_BOX_REQUEST",
-            "cmd_properties": {
-              "scan_box_request": "KOHLER_BOX_SEARCH"
-            }
-          }
-        };
         cordova.plugins.SocketPlugin.udpBroadCast({
-          "timeout": "1500",
+          "timeout": "3000",
           "ip": "255.255.255.255",
           "value": cmd
         }, success, error);
@@ -594,13 +599,11 @@ angular.module('indexPageModule')
           $scope.boxList = response;
           hmsPopup.hideLoading();
           $scope.$apply();
-          hmsPopup.showShortCenterToast("searchBox");
+          $scope.Toast.show($translate.instant("index.searchBox"));
           angular.forEach($scope.boxList, function(data, index, array){
-
             $timeout(function () {
-              boxLink(data);
+              boxLink(data[0]);
             }, 1000);
-
           });
           //boxLink($scope.boxList[0]);
         }
@@ -616,25 +619,24 @@ angular.module('indexPageModule')
        *@disc: link box
        */
       var boxLink = function (item) {
-        //var boxIp = item.data.act_params.ip;
-        //var deviceId = item.data.act_params.device_id;
-        hmsPopup.showShortCenterToast("start boxLink");
-        console.log('lian box');
+        var boxIp = item.data.act_params.ip; //item.payload.cmd_properties.ip
+        var deviceId = item.data.act_params.device_id;
+        $scope.Toast.show($translate.instant("index.startLinkBox"));
         cordova.plugins.SocketPlugin.tcpConnect({
           "timeout": "5000",
-          "ip": item.payload.cmd_properties.ip,
+          "ip": boxIp
         }, success, error);
 
         function success(response) {
-          hmsPopup.showShortCenterToast("boxLink sucess");
+          $scope.Toast.show($translate.instant("index.linkSuccess"));
           $timeout(function () {
-            localStorage.boxIp = item.payload.cmd_properties.ip;
-            selectDeviceOn(item.payload.cmd_properties.device_id, item.payload.cmd_properties.ip);
+            localStorage.boxIp = boxIp;
+            selectDeviceOn(deviceId, boxIp);
           }, 1000);
         }
 
         function error() {
-          hmsPopup.showShortCenterToast("连接失败");
+          $scope.Toast.show($translate.instant("index.linkFail"));
         }
       };
 
@@ -644,41 +646,30 @@ angular.module('indexPageModule')
        *@disc: link device
        */
       var selectDeviceOn = function (device_id, boxIp) {
-        hmsPopup.showShortCenterToast("start  selectDeviceOn");
+        $scope.Toast.show($translate.instant("index.startSelectDevice"));
 
-       /* var cmd = [
-          {
-            "ver": 1,
-            "from": {
-              "ctype":  0XE3,
-              "uid"  : "peerId"
-            },
-            "to": {
-              "ctype": 0XE4,
-              "uid": device_id
-            },
-            "ts": 1487213040,
-            "idx": 12,
-            "mtype":  "rqst",
-            "data": {
-              "device_type": "BLE_DEVICE",
-              "act": " SCAN_REQUEST ",
-              "act_params":{"device_state":0}
+        var cmd = [
+            {
+              "ver": 1,
+              "from": {
+                "ctype":  0XE3,
+                "uid"  : "peerId"
+              },
+              "to": {
+                "ctype": 0xE4,
+                "uid": device_id
+              },
+              "ts": 1487213040,
+              "idx": 12,
+              "mtype":  "rqst",
+              "data": {
+                "device_type": "BLE_DEVICE",
+                "act": "LIST_BONDED_DEVICE_REQUEST",
+                "act_params":{}
+              }
             }
-          }
-        ];*/
+          ];
 
-        var cmd = {
-          "from": {"cid": "0xE3"},
-          "to": {"cid": "0xE4", "device_id": device_id},
-          "ts": Date.parse(new Date()) / 1000,
-          "idx": 0,
-          "method": "CTL",
-          "payload": {
-            "cmd": "LIST_BONDED_DEVICE_REQUEST",
-            "cmd_properties": ""
-          }
-        };
         cordova.plugins.SocketPlugin.tcpSendCmd({
           "timeout": "5000",
           "value": cmd,
@@ -686,11 +677,11 @@ angular.module('indexPageModule')
         }, success, error);
 
         function success(response) {
-          hmsPopup.showShortCenterToast("搜索已连接设备成功");
+          $scope.Toast.show($translate.instant("index.searchDeviceSuccess"));
         }
 
         function error() {
-          hmsPopup.showShortCenterToast("搜索已连接设备失败");
+          $scope.Toast.show($translate.instant("index.searchFail"));
         }
       };
 
@@ -719,10 +710,42 @@ angular.module('indexPageModule')
        *@params: item
        *@disc: get switch status
        */
+      var sceneList = [];
       $scope.getSwitchStatus = function(item){
+        var scentObj = {sceneType: item.title, status: item.isOff};
+        sceneList.push(scentObj);
+        localStorage.sceneList = JSON.stringify(sceneList);
         $scope.isInPage = 1;
-        //console.log(item);
+
+        if(item.title == '离家'){
+
+          return;
+        }else if(item.title == '晨起'){
+
+          return;
+        }
+
         if(item.isOff){
+          //发送指令并传送当前场景按钮的状态
+          angular.forEach($scope.modelData, function(data, index, array){
+            if(data.id == item.id){
+              item.isOff = true;
+              return;
+            }
+          });
+        }else{
+          //db.transaction(function(tx) {
+          //  tx.executeSql('update T_CTM_PARTY_SCENARIO set scenarioStatus = "N" where DEVICE_ID = '+item.id);
+          //});
+          angular.forEach($scope.modelData, function(data, index, array){
+            if(data.id == item.id){
+              item.isOff = false;
+              return;
+            }
+          });
+        }
+
+        /*if(item.isOff){
           //alert("on");
           if(checkIsLinkBox){
             var netType = network();
@@ -734,7 +757,7 @@ angular.module('indexPageModule')
           }
 
         }else{
-        }
+        }*/
       };
       console.log($ionicHistory);
 
