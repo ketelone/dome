@@ -26,7 +26,7 @@
     "cordova-plugin-statusbar": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-statusbar@2.2.2"
+            "id": "cordova-plugin-statusbar@2.2.3"
         },
         "is_top_level": true,
         "variables": {}
@@ -34,7 +34,7 @@
     "cordova-plugin-splashscreen": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-splashscreen@4.0.2"
+            "id": "cordova-plugin-splashscreen@4.0.3"
         },
         "is_top_level": true,
         "variables": {}
@@ -82,7 +82,7 @@
     "cordova.plugin.SocketPlugin": {
         "source": {
             "type": "local",
-            "path": "D:\\SocketPlugin2"
+            "path": "/Users/daidongdong/Downloads/SocketPlugin1"
         },
         "is_top_level": true,
         "variables": {}

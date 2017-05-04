@@ -114,7 +114,7 @@ static const uint16_t TCPPort = 5036;
 }
 
 #pragma makr - udp发送广播
--(void)broadcast:(NSDictionary *)ackMessage WithHost:(NSString *)udpHost  WithPort:(uint16_t)port
+-(void)broadcast:(id )ackMessage WithHost:(NSString *)udpHost  WithPort:(uint16_t)port
 {
     //获取BOX详细信息请求格式
     NSError *err;
@@ -130,10 +130,10 @@ static const uint16_t TCPPort = 5036;
 }
 
 #pragma mark - tcp发送数据报
--(void)startAck:(NSDictionary *)message
+-(void)startAck:(id)message
 {
     //发送确认包，服务器回执。发送数据报不能为nil
-    NSDictionary *requestACK = message;
+    id requestACK = message;
     if (requestACK) {
         //确保还在连接中
         if ([self.socket isConnected]) {
@@ -215,6 +215,7 @@ static const uint16_t TCPPort = 5036;
 {
     DLog(@"broadcast_didSendDataWithTag:%lu",tag);
 }
+
 //UDP发送消息失败回调
 - (void)udpSocket:(GCDAsyncUdpSocket *)sock didNotSendDataWithTag:(long)tag dueToError:(NSError *)error
 {
@@ -233,7 +234,7 @@ withFilterContext:(id)filterContext
 {
     //Json解析
     NSError *err;
-    NSDictionary *receiveMsg = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&err];
+    NSDictionary *receiveMsg = [[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&err] firstObject];
     DLog(@"broadcast_didReceiveData:%@",receiveMsg);
     
     if (![address isEqual:sock.localAddress]) {
@@ -274,7 +275,7 @@ withFilterContext:(id)filterContext
     
     if (httpResponse){
         //第一次连接等待
-        if ([httpResponse isEqualToDictionary:@{@"message":@"Who are you?"}]) {
+        if ([httpResponse isEqual:@{@"message":@"Who are you?"}]) {
             if (self.tcpResponse) self.tcpResponse(httpResponse,TcpSocketResponseStatusInit);
         }else{
             if (self.tcpResponse) self.tcpResponse(httpResponse,TcpSocketResponseStatusOthers);
@@ -316,18 +317,26 @@ withFilterContext:(id)filterContext
 - (void)keepLongConnection
 {
     if ([self.socket isDisconnected]) {
-        NSDictionary *reConnectAck = @{
-                                       @"from":@{@"cid":@"0xE3"},
-                                       @"to":@{@"cid":@"0xE4",@"device_id":@""},
-                                       @"ts":@([[NSDate date] timeIntervalSince1970]),
-                                       @"idx":@0,
-                                       @"method":@"CTL",
-                                       @"payload": @{
-                                               @"device_type":@"BLE_DEVICE",
-                                               @"cmd":@"",
-                                               @"cmd_properties":@""
-                                               }
-                                       };
+        id reConnectAck = @[@{
+                                           @"ver":@(1),
+                                           @"from":@{
+                                                   @"ctype":@(0xE3),
+                                                   @"uid":@"peerId"
+                                                   },
+                                           @"ctype":@"",
+                                           @"to": @{
+                                                   @"ctype": @(0XE4),
+                                                   @"uid": @"peerId"
+                                                   },
+                                           @"ts":@([NSDate date].timeIntervalSince1970),
+                                           @"idx":@(0),
+                                           @"mtype":@"rqst",
+                                           @"data":@{
+                                                   @"device_type":@"BOX",
+                                                   @"act": @"",
+                                                   @"act_params":@""
+                                                   }
+                                           }];
         [self startAck:reConnectAck];
     }
 }

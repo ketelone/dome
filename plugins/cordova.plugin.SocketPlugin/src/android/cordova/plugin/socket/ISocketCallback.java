@@ -5,7 +5,9 @@ package cordova.plugin.socket;
  */
 
 public interface ISocketCallback{
-    void onReceived(String ip, String data);
-    void onReconnected(String ip);
-    void onReconnectFailed(String ip);
+    void onConnected();
+    void onReceived(String data);
+    void onDisconnected();
+    void onError(Exception ex);
+
 }

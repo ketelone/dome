@@ -5,13 +5,13 @@ angular.module('karessControlModule')
     '$ionicModal',
     '$compile',
     'baseConfig',
-    'checkVersionService', 'SettingsService', '$ionicHistory', '$ionicSlideBoxDelegate', 'karessService', 'hmsPopup','hmsHttp','cmdService',
+    'checkVersionService', 'SettingsService', '$ionicHistory', '$ionicSlideBoxDelegate', 'karessService', 'hmsPopup', 'hmsHttp', 'cmdService',
     function ($scope,
               $state,
               $ionicModal,
               $compile,
               baseConfig,
-              checkVersionService, SettingsService, $ionicHistory, $ionicSlideBoxDelegate, karessService, hmsPopup,hmsHttp,cmdService) {
+              checkVersionService, SettingsService, $ionicHistory, $ionicSlideBoxDelegate, karessService, hmsPopup, hmsHttp, cmdService) {
       var sku = SettingsService.get('sku');
       /**
        *@autor: caolei
@@ -481,10 +481,10 @@ angular.module('karessControlModule')
           if (info.selecFlag == false) {
             var value = cmdService.getCmd("8877", 1, karessService.data.openFiller, 0, 2);
             console.log(baseConfig.isCloudCtrl);
-            if(baseConfig.isCloudCtrl == true){
+            if (baseConfig.isCloudCtrl == true) {
               console.log('121');
-              test(index,value,'karessOnWater');
-            }else{
+              test(index, value, 'karessOnWater');
+            } else {
               console.log(value);
               cmdService.sendCmd(deviceId, value, localStorage.boxIp);
             }
@@ -497,9 +497,9 @@ angular.module('karessControlModule')
         if (index == 1) {
           if (info.selecFlag == false) {
             var value = cmdService.getCmd("8877", 1, karessService.data.openDrain, 0, 2);
-            if(baseConfig.isCloudCtrl == true) {
-              test(index,value,'karessOffWater');
-            }else{
+            if (baseConfig.isCloudCtrl == true) {
+              test(index, value, 'karessOffWater');
+            } else {
               console.log(value);
               cmdService.sendCmd(deviceId, value, localStorage.boxIp);
             }
@@ -574,7 +574,6 @@ angular.module('karessControlModule')
         }
 
 
-
         for (var i = 0; i < handlenapeListNapeLen; i++) {
           if (i !== index) {
             $scope.handlenapeListNape[i].imgUrl = $scope.handlenapeListNape[i].imgUrlTemp;
@@ -603,9 +602,9 @@ angular.module('karessControlModule')
         {id: 2, des: 'karessController.handshower'}
       ];
       $scope.openModal = function () {
-        if($scope.handlenapeSelectedIndex == 0){
+        if ($scope.handlenapeSelectedIndex == 0) {
 
-        }else{
+        } else {
           $scope.toast("当前状态不能切换出水方式");
           return;
         }
@@ -655,38 +654,36 @@ angular.module('karessControlModule')
 
 //接受tcp状态
       document.addEventListener('SocketPlugin.receiveTcpStatus', function (result) {
-        if (deviceId) {
-          hmsPopup.showShortCenterToast("tcp状态" + angular.toJson(result.code));
+        if (resultOn.from.device_id == deviceId) {
 
         }
       }, false);
 //接受tcp返回数据
       document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
-          hmsPopup.showShortCenterToast("开始返回数据！");
-          var resultOn = result;
-          if (resultOn.payload.cmd == "CMD_RETURN" && resultOn.from.device_id == deviceId) {
-            karessService.resolveCmd(resultOn.payload.value);
-          }
+        var resultOn = result;
+        if (resultOn.payload.cmd == "CMD_RETURN" && resultOn.from.device_id == deviceId) {
+          karessService.resolveCmd(resultOn.payload.value);
+        }
       }, false);
 
 
-      var test = function (index,value,deviceId) {
+      var test = function (index, value, deviceId) {
         var url = baseConfig.basePath + "/r/api/message/sendMessage";
-        var paramter = cmdService.cloudCmd(deviceId,value);
+        var paramter = cmdService.cloudCmd(deviceId, value);
         console.log(paramter);
         hmsHttp.post(url, paramter).success(
           function (response) {
-            if(response.code == 200){
-              var  status = karessService.explainAck(response.data.data.cmd[0]);
-              if(status == ''){
-              }else{
-                if(status.ack.indexOf('fa') >= 0){
-                  status.ack = status.ack.substring(2,4);
+            if (response.code == 200) {
+              var status = karessService.explainAck(response.data.data.cmd[0]);
+              if (status == '') {
+              } else {
+                if (status.ack.indexOf('fa') >= 0) {
+                  status.ack = status.ack.substring(2, 4);
                   console.log(status)
-                  if(status.ack == 22){
+                  if (status.ack == 22) {
                     hmsPopup.showShortCenterToast("注水成功！");
                   }
-                  if(status.ack == 25){
+                  if (status.ack == 25) {
                     hmsPopup.showShortCenterToast("落水成功！");
                   }
                 }
@@ -697,23 +694,17 @@ angular.module('karessControlModule')
                 if (i !== index) {
                   $scope.handlenapeListNape[i].selecFlag = false;
                 }
-                ;
               }
-              ;
               if ($scope.handlenapeListNape[index].selecFlag === true) {
                 $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgSeledUrl;
               }
-              ;
-             }
+            }
           }
         ).error(
           function (response, status, header, config) {
           }
         );
       };
-
-
-
 
 
     }]);
