@@ -21,7 +21,7 @@
       <div class="temperature-ch">
         <span translate="index.humidity"></span>
       </div>
-      <div class="tree">
+      <!--<div class="tree">
         <img ng-src="build/img/index/icon_home_outdoor.png" class="tree"/>
       </div>
       <div class="temperature-out">
@@ -29,7 +29,7 @@
       </div>
       <div class="percentage-out">
         10%
-      </div>
+      </div>-->
     </div>
 
     <ion-content class="mainApplication" style="bottom:48px;">
@@ -39,7 +39,7 @@
         <div class="tsb-icons">
           <div class="tsb-ic-wrp text-center">
             <ion-scroll direction="y" style="white-space: nowrap;width: 100%;text-align: center;" scrollbar-y="true">
-              <a href="javascript:;" ng-repeat="tab in tabs" on-finish-render ng-click="changeModel(tab.text)" style="width: 31%;border: none;font-size: 0.32rem; color: white"> {{tab.text}}</a>
+              <a href="javascript:;" ng-repeat="tab in tabs" on-finish-render ng-click="changeModel(tab)" style="width: 31%;border: none;font-size: 0.32rem; color: white" translate="{{tab.text}}"></a>
               <span id="line" class="height-light" ng-show="isOneLine"></span>
               <br>
               <!--<span class="height-light2" ng-show="isSecondLine"></span>-->
@@ -56,9 +56,9 @@
                         <label class="switch-btn">
                           <input class="checked-switch" type="checkbox" ng-model="item.isOff"  ng-click="getSwitchStatus(item)"/>
                           <span class="text-switch" data-yes="off" data-no="on" ng-if="item.isTwoButton"></span>
-                          <span class="toggle-btn" ng-if="item.isTwoButton"></span>
-                          <span class="text-switch font-format" ng-if="item.isOneButton">开启</span>
-                          <span class="toggle-btn only-switch" ng-if="item.isOneButton"></span>
+                          <span class="toggle-btn" ng-show="item.isTwoButton"></span>
+                          <span class="text-switch font-format" ng-show="item.isOneButton">开启</span>
+                          <span class="toggle-btn only-switch" ng-show="item.isOneButton"></span>
                         </label>
                       </center>
                     </div>

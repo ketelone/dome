@@ -127,10 +127,21 @@
   "index": {
     "myHome": "我家",
     "humidity": "湿度",
+    "model": "场景模式",
+    "device": "设备模式",
     "myModel": "我的场景",
     "addModel": "添加场景",
     "myDevice": "我的设备",
-    "addDevice": "添加设备"
+    "addDevice": "添加设备",
+    "searchBox": "searchBox",
+    "startLinkBox": "start boxLink",
+    "linkSuccess": "boxLink sucess",
+    "linkFail": "连接失败",
+    "startSelectDevice": "start  selectDeviceOn",
+    "searchDeviceSuccess": "搜索已连接设备成功",
+    "searchFail": "搜索已连接设备失败",
+    "noDeviceSearch": "没有已连接设备，请搜索未连接设备",
+    "noDevice": "没有设备"
   },
   "bigaunt": {
     "bigauntTitle": "场景详情"
@@ -387,7 +398,7 @@
     "dryer": "&nbsp;&nbsp;&nbsp;冷干",
     "hotDrying": "&nbsp;&nbsp;&nbsp;热干",
     "breath": "&nbsp;&nbsp;&nbsp;换气",
-    "purify": "空气<br>净化",
+    "purify": "空气净化",
     "windDirection": "&nbsp;&nbsp;&nbsp;风向",
     "light": "&nbsp;&nbsp;&nbsp;照明",
     "closeAll": "一键关闭",
@@ -403,7 +414,13 @@
     "sixHour": "六时",
     "timeout": "您选择的时间已超出范围，请重新选择",
     "twentyModel": "24小时<br>模式",
-    "commonModel": "普通模式"
+    "commonModel": "普通模式",
+    "pof": "请打开热风或者凉风或者冷干或者热干的功能",
+    "closeOtherFunction": "请关闭其它功能",
+    "notCloseTimer": "不能开启定时功能",
+    "fail": "fail",
+    "openLightSuccess": "open light success",
+    "openCoolSuccess": "open Cool success"
   },
   "spa": {
     "goHomeTitle": "场景详情",
@@ -428,14 +445,14 @@
     "parameterrad": "0",
     "parameterdes": "水温档位",
     "handleSelecDes": "出水方式",
-    "zhushui": "&nbsp;&nbsp;&nbsp;注水",
-    "luoshui": "&nbsp;&nbsp;&nbsp;落水",
+    "zhushui": "注水",
+    "luoshui": "落水",
     "shuilianmo": "水力按摩",
     "toubuanmo": "头部按摩",
     "beibujiare": "背部加热",
     "yijiantingzhi": "一键停止",
     "guandaochujun": "管道除菌",
-    "shezhi": "&nbsp;&nbsp;&nbsp;设置",
+    "shezhi": "设置",
     "gaunbi": "关闭",
     "maichong": "脉冲",
     "bodong": "波动",
@@ -452,7 +469,7 @@
     "infoTaress3": "SKU号",
     "infoTaress4": "SN号",
     "infoTaress5": "位置信息",
-    "jieneng": "&nbsp;&nbsp;&nbsp;节能"
+    "jieneng": "节能"
   },
   "mcController": {
     "setting": "设置",
@@ -462,10 +479,10 @@
     "parameterrad": "0",
     "parameterdes": "水温档位",
     "handleSelecDes": "出水方式",
-    "zhushui": "&nbsp;&nbsp;&nbsp;灯光",
-    "luoshui": "&nbsp;&nbsp;&nbsp;除雾",
+    "zhushui": "灯光",
+    "luoshui": "除雾",
     "shuilianmo": "一键停止",
-    "shezhi": "&nbsp;&nbsp;&nbsp;设置",
+    "shezhi": "设置",
     "settingName1": "异常情况统计",
     "settingName2": "恢复出厂设置",
     "settingName3": "查看设备信息",
@@ -475,12 +492,13 @@
     "infoTaress3": "SKU号",
     "infoTaress4": "SN号",
     "infoTaress5": "位置信息",
-    "jieneng": "&nbsp;&nbsp;&nbsp;节能"
+    "jieneng": "节能"
   },
   "nextgen": {
     "title": "next gen shower",
     "deviceWifiInfo": "信号好",
     "deviceUseInfo": "使用中",
+    "unworking":"未启用",
     "parameterrad": "0",
     "parameterdes": "水温档位",
     "handleSelecDes": "出水方式",
@@ -535,6 +553,8 @@
   "airfoidShower": {
     "getWater": "&nbsp;&nbsp;&nbsp;出水",
     "allStop": "一键停止",
-    "setting": "&nbsp;&nbsp;&nbsp;设置"
+    "setting": "&nbsp;&nbsp;&nbsp;设置",
+    "waterSuccess": "water success",
+    "stopSuccess": "stop success"
   }
 }

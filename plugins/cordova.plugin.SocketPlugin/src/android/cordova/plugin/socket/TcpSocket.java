@@ -1,142 +1,159 @@
 package cordova.plugin.socket;
 
-import java.io.*;
-import java.net.InetAddress;
+import android.util.Log;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.SocketAddress;
+import java.net.SocketException;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 
 /**
- * Created by oliver on 17-4-20.
+ * Created by Oliver on 2017/3/21.
  */
 public class TcpSocket {
-    private boolean isConnected = false;
-    private ISocketCallback callback;
-    private Socket socket;
-    private InetSocketAddress address;
+    private Socket tcp;
+    private boolean flagReceive = true;
     private BufferedReader reader;
-    private OutputStream out ;
+    protected ISocketCallback callback;
+    boolean hasSent = false;
 
-    public TcpSocket(String ip, int port) {
-        if (address == null) {
-            address = new InetSocketAddress(ip, port);
-        }
+    protected ExecutorService service;
+    protected String ip;
+    protected int port;
+
+
+    public TcpSocket(ISocketCallback c, ExecutorService service) {
+        this.callback = c;
+        this.service = service;
     }
 
-    public boolean connect(int timeout) {
-        close();
-        socket = new Socket();
-        try {
-            socket.connect(address);
-            isConnected = true;
-            out = socket.getOutputStream();
-            reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            return true;
-        } catch (IOException e) {}
-
-        return false;
-    }
-
-    public void setCallback(ISocketCallback callback) {
+    public void setCallback(ISocketCallback callback){
         this.callback = callback;
     }
 
-    public boolean send(String data) {
-        try {
-            if(out != null){
-                out.write(data.getBytes());
-                out.flush();
-                return true;
+    public void connect(final String ip, final int port) {
+        this.ip = ip;
+        this.port = port;
+        service.execute(new Runnable() {
+            @Override
+            public void run() {
+                if (tcp == null) {
+                    try {
+                        tcp = new Socket(ip, port);
+                        service.execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    reader = new BufferedReader(new InputStreamReader(tcp.getInputStream()));
+                                    callback.onConnected();
+                                } catch (IOException e1) {
+                                    e1.printStackTrace();
+                                }
+
+                                receive();
+                            }
+                        });
+                    } catch (IOException e) {
+                        callback.onError(e);
+                        return;
+                    }
+
+                } else {
+                    if (!tcp.isClosed()) {
+                        try {
+                            tcp.close(); //重连
+                        } catch (IOException e) {
+                            callback.onError(e);
+                        }
+
+                    }
+                    if (tcp.isClosed()) {
+                        InetSocketAddress address = new InetSocketAddress(ip, port);
+                        try {
+                            tcp.connect(address);
+                            callback.onConnected();
+                        } catch (IOException e) {
+                            callback.onError(e);
+                        }
+                    }
+                }
+
             }
-        } catch (IOException ignored) {
-        }
-        reconnect();
-        return false;
+        });
     }
 
-    public void receive()  {
-        while (true) {
-            String data = null;
+    public void disconnect() {
+        if (tcp != null && !tcp.isClosed() && tcp.isConnected()) {
+            try {
+                tcp.close();
+                callback.onDisconnected();
+            } catch (IOException e) {
+                callback.onError(e);
+            }
+        }
+    }
+
+
+
+    public void send(final String data) {
+        if (service != null) {
+            if(!service.isShutdown()){
+                service.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            OutputStream outputStream = tcp.getOutputStream();
+                            if (outputStream != null) {
+                                outputStream.write(data.getBytes());
+                                outputStream.flush();
+                                Log.d("TcpSocket","Send --- >"+data);
+                            }
+                        } catch (IOException e) {
+                            callback.onError(e);
+                        }
+                    }
+                });
+            }
+        }
+    }
+    public void receive() {
+        try {
+            tcp.setSoTimeout(200);
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
+        while (flagReceive){
             try {
                 if(reader == null){
-                    break;
+                    continue;
                 }
-                data = reader.readLine();
-                if (data != null && !"".equals(data)) {
-                    onReceived(data);
+                String data = reader.readLine();
+                hasSent = false;
+                if(callback!=null && data!=null){
+                    callback.onReceived(data);
                 }
-            } catch (IOException e) {
-                break;
+            } catch (IOException  e) {
+            //    callback.onError(e);
             }
         }
-        isConnected = false;
-        System.err.println("close");
     }
 
-    private void onReceived(String data) {
-        if (callback != null) {
-            callback.onReceived(address.getHostString(), data);
-        }
+    public boolean isClosed() {
+        return tcp != null && tcp.isClosed();
     }
 
-    private void onReconnected() {
-        if (callback != null) {
-            callback.onReconnected(address.getHostString());
-        }
-    }
 
-    private void onReconnectFailed() {
-        if (callback != null) {
-            callback.onReconnectFailed(address.getHostString());
-        }
-    }
 
-    public boolean isConnected() {
-        return isConnected;
-    }
-
-    private boolean reconnect() {
-        for (int i = 0; i < 3; i++) {
-            boolean connect = connect(3000);
-            System.out.println("Start connecting... " + connect);
-            if (connect) {
-                onReconnected();
-                return true;
-            }
-        }
-        onReconnectFailed();
-        return false;
-    }
 
     public void close() {
-        if(reader!=null){
-            try {
-                reader.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            reader = null;
-        }
-
-        if(out!=null){
-            try {
-                out.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            out = null;
-        }
-            if(socket!=null&&!socket.isClosed()){
-
-                try {
-                    socket.close();
-                } catch (IOException e) {
-
-                }
-            }
-            socket = null;
+        flagReceive = false;
+        disconnect();
+        tcp = null;
     }
 
 }
-

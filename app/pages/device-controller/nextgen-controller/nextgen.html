@@ -5,44 +5,41 @@
     &lt;!&ndash;<button class="button button-icon icon ion-more" ng-click="openPopover($event)"></button>&ndash;&gt;
   </ion-header-bar>-->
   <div class="bar bar-header headColor " style="background-image: none">
-    <button class="button button-icon icon ion-ios-arrow-left iconColor" ng-click="goBack()" ></button>
-    <div class="h1 title"><span  class="iconColor">next&nbsp;gen&nbsp;shower&nbsp;</span></div>
-    <button class="button button-icon icon iconColor" ></button>
+    <button class="button button-icon icon ion-ios-arrow-left iconColor" ng-click="goBack()"></button>
+    <div class="h1 title"><span class="iconColor">next&nbsp;gen&nbsp;shower&nbsp;</span></div>
+    <button class="button button-icon icon iconColor"></button>
   </div>
-  <ion-content class="toilet-bg has-header" style="overflow-y:hidden">
+  <ion-content class="has-header" style="overflow-y:hidden;background-color: #0F0F0F">
     <div class="toilet-conninfo">
       <span class="toilet-conninfo-signal">
         <img class="conninfo-signal-img" src="build/img/nextgen/icon_devicedetail_wifi.png" alt="">
         <span class="conninfo-signal-info" translate="nextgen.deviceWifiInfo"></span>
       </span>
-       <span class="toilet-conninfo-isues">
+      <span class="toilet-conninfo-isues">
         <img class="conninfo-isues-img" src="build/img/nextgen/icon_devicedetail_warning.png" alt="">
         <span class="conninfo-isues-info" translate="nextgen.deviceUseInfo"></span>
       </span>
     </div>
-
-
-
     <div id="cewafiionSliderBox">
     </div>
-  <!--  <div class="toilet-parameterctl-dataimg" ng-if="parameterctlFlag">
-    <img class="conninfo-parameterctl-img" src="build/img/toilet-controller/btn_devicedetail_scoll.png" alt="">
-    </div>
-    </div>-->
-    <div  class="toilet-handlenape-selec " ng-click="openModal()">
-      <div class="row" style="padding: 0rem">
-     <div class="col col-66"><span  class="handlenape-selec-des" translate={{toiletController.way}}></span> </div>
-        <div class="col col-20"><span  class="handlenape-selec-use" translate={{toiletController.modelType}}></span></div>
-        <div class="col"> <img class="handlenape-selec-img" src="build/img/nextgen/icon_scenario_arrow.png"></img></div>
-      </div>
-    </div>
-    <ion-scroll class="toilet-handlenape" overflow-scroll="false">
-      <div class="toilet-handlenape-list" ng-repeat="list in handlenapeListNape track by $index" ng-click="selectNapes($index)">
-        <div class="handlenape-list-napes" ng-class="{true: 'napes-border', false: ''}[list.selecFlag]">
-          <img  class="list-napes-img" ng-src={{list.imgUrl}} alt="">
-          <div class="list-napes-dec" translate={{list.handleDes}}></div>
-        </div>
-      </div>
-    </ion-scroll>
   </ion-content>
+
+  <div class="toilet-handlenape-selec" ng-click="openModal()">
+    <div class="row" style="padding: 0rem">
+      <div class="col col-66"><span class="handlenape-selec-des" translate={{toiletController.way}}></span></div>
+      <div class="col col-20"><span class="handlenape-selec-use" translate={{toiletController.modelType}}></span>
+      </div>
+      <div class="col"><img class="handlenape-selec-img" src="build/img/nextgen/icon_scenario_arrow.png"></img></div>
+    </div>
+  </div>
+  <ion-scroll class="toilet-handlenape toilet-bg" overflow-scroll="false">
+    <div class="toilet-handlenape-list" ng-repeat="list in handlenapeListNape track by $index"
+         ng-click="selectNapes($index)">
+      <div class="handlenape-list-napes" ng-class="{true: 'napes-border', false: ''}[list.selecFlag]">
+        <img class="list-napes-img" ng-src={{list.imgUrl}} alt="">
+        <div class="list-napes-dec" translate={{list.handleDes}}></div>
+      </div>
+    </div>
+  </ion-scroll>
+
 </ion-view>

@@ -38,7 +38,7 @@
     NSString *broadCastIp = [arg objectForKey:@"ip"];
     NSInteger port = [[arg objectForKey:@"port"] integerValue];
     broadCastIp = broadCastIp?broadCastIp:@"255.255.255.255";
-    NSDictionary *msg = [arg objectForKey:@"value"];
+    id msg = [arg objectForKey:@"value"];
     
     if (msg==nil||[msg isEqual:[NSNull null]]) {
         CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"udp broadcast cmd can not be null or nil"];
@@ -90,18 +90,26 @@
     BOOL isConnected = [self.socketConnect initGCDAsyncSocket:ip];
     if (isConnected) {
         //第一次请求验证 返回 who are you?
-        NSDictionary *tcpAck = @{
-                                 @"from":@{@"cid":@"0xE3"},
-                                 @"to":@{@"cid":@"0xE4",@"device_id":@""},
-                                 @"ts":@([[NSDate date] timeIntervalSince1970]),
-                                 @"idx":@0,
-                                 @"method":@"CTL",
-                                 @"payload": @{
-                                         @"device_type":@"BLE_DEVICE",
-                                         @"cmd":@"",
-                                         @"cmd_properties":@""
-                                         }
-                                 };
+        id tcpAck = @[@{
+                          @"ver":@(1),
+                          @"from":@{
+                                  @"ctype":@(0xE3),
+                                  @"uid":@"peerId"
+                                  },
+                          @"ctype":@"",
+                          @"to": @{
+                                  @"ctype": @(0XE4),
+                                  @"uid": @"peerId"
+                                  },
+                          @"ts":@([NSDate date].timeIntervalSince1970),
+                          @"idx":@(0),
+                          @"mtype":@"rqst",
+                          @"data":@{
+                                  @"device_type":@"BOX",
+                                  @"act": @"",
+                                  @"act_params":@""
+                                  }
+                          }];
         [self.socketConnect startAck:tcpAck];//验证指令
         
         __block CDVPluginResult *result = nil;
@@ -137,7 +145,7 @@
     tcpCmd = command;
     NSDictionary *arg = command.arguments[0];
     NSTimeInterval timeout = [arg[@"timeout"] doubleValue];
-    NSDictionary *tcpAck = arg[@"value"];
+    id tcpAck = arg[@"value"];
     
     if (tcpAck==nil||[tcpAck isEqual:[NSNull null]]) {
         CDVPluginResult  *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:@{@"error":@"command can not be nill or null"}];
@@ -188,12 +196,11 @@
 {
     id resp = notification.object;
     
-    NSDictionary *result = resp;
     
-    if (result) {
+    if (resp) {
         //主动调用JS
         NSError *error;
-        NSData *jsonStrData = [NSJSONSerialization dataWithJSONObject:result  options:0 error:&error];
+        NSData *jsonStrData = [NSJSONSerialization dataWithJSONObject:resp  options:0 error:&error];
         NSString *jsonStr = [[NSString alloc] initWithData:jsonStrData encoding:NSUTF8StringEncoding];
         
         //收到通知

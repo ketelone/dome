@@ -29,24 +29,26 @@ angular.module('utilModule')
         };
 
         this.sendCmd = function (deviceId, value, boxId) {
-          var cmd = {
-            from: {
-              cid: "0xE3",
-            },
-            idx: 1,
-            method: "CTL",
-            payload: {
-              cmd: "CMD_REQUEST",
-              "device_type": "BLE_DEVICE",
-              value: [value],
-            },
-            to: {
-              cid: "0xE4",
-              "device_id": deviceId,
-            },
-            ts: Date.parse(new Date()) / 1000,
-            ver: 1
-          }
+          var cmd = [
+            {
+              "ver": 1,
+              "from": {
+                "ctype":  0xE3,
+                "uid"  : "peerId"
+              },
+              "to": {
+                "ctype": 0xE5,
+                "uid": deviceId
+              },
+              "ts": 1487213040,
+              "idx": 12,
+              "mtype":  "ctl",
+              "data": {
+                "cmd":[value]
+              }
+            }
+          ]
+          return;
           cordova.plugins.SocketPlugin.tcpSendCmd({
             "timeout": "5000",
             "value": cmd,

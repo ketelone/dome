@@ -16,6 +16,7 @@ angular.module('indexPageModule')
     'hmsPopup',
     'SettingsService',
     'hmsHttp',
+    '$translate',
     function ($scope,
               $state,
               $ionicGesture,
@@ -26,7 +27,8 @@ angular.module('indexPageModule')
               $ionicHistory,
               hmsPopup,
               SettingsService,
-              hmsHttp) {
+              hmsHttp,
+              $translate) {
 
       $scope.isSceneModel = true;
       $scope.isDeviceModel = false;
@@ -40,10 +42,12 @@ angular.module('indexPageModule')
 
       $scope.tabs = [
         {
-          text: "场景模式",
+          text: "index.model",
+          id: "1"
         },
         {
-          text: "设备模式",
+          text: "index.device",
+          id: "2"
         }
       ];
       $scope.modelData = [];
@@ -72,14 +76,14 @@ angular.module('indexPageModule')
             lastUpdateDate: ""
           },
           {
-            id: "3",
+            id: "1",
             pictureUrl: 'build/img/index/img_home_leavehome.png',
             title: "离家",
             context: "一键关闭所有设备",
             isOneButton: true,
             isTwoButton: false,
             jsonContext: "1",
-            isOff: false,
+            isOff:  false,
             lastUpdateDate: ""
           },
           {
@@ -90,40 +94,40 @@ angular.module('indexPageModule')
             isOneButton: false,
             isTwoButton: true,
             jsonContext: "1",
-            isOff: false,
+            isOff:  false,
             lastUpdateDate: ""
           },
           {
-            id: "5",
+            id: "3",
             pictureUrl: 'build/img/index/muyu@3x.png',
             title: "沐浴",
             context: "享受沐浴",
             isOneButton: false,
             isTwoButton: true,
             jsonContext: "1",
-            isOff: false,
+            isOff:  false,
             lastUpdateDate: ""
           },
           {
-            id: "6",
+            id: "5",
             pictureUrl: 'build/img/index/img_home_veil.png',
             title: "维亚灯光",
             context: "开始您美好的一天",
             isOneButton: false,
             isTwoButton: true,
             jsonContext: "1",
-            isOff: false,
+            isOff:  false,
             lastUpdateDate: ""
           },
           {
-            id: "7",
+            id: "6",
             pictureUrl: 'build/img/index/img_home_period.png',
             title: "大姨了吗",
             context: "女性特殊期洗浴关怀方案",
             isOneButton: false,
             isTwoButton: true,
             jsonContext: "1",
-            isOff: false,
+            isOff:  false,
             lastUpdateDate: ""
           }
         ];
@@ -136,7 +140,7 @@ angular.module('indexPageModule')
           $scope.isInPage = 2;
           return;
         }
-        console.log(item);
+
         if(item.id == '1'){
           $state.go('leaveHome');
         }else if(item.id == '2'){
@@ -150,6 +154,12 @@ angular.module('indexPageModule')
         }else if(item.id == '6'){
           $state.go('period');
         }
+
+        db.transaction(function(tx) {
+          tx.executeSql('update T_CTM_PARTY_SCENARIO set LAST_UPDATE_DATE = "'+getNowFormatDate()+'" where SCENARIO_ID = '+item.id);
+        });
+        $scope.modelData = [];
+        getScenarioList();
       };
 
       $scope.deviceModel = [];
@@ -166,17 +176,6 @@ angular.module('indexPageModule')
             isStatus: true,
             isError: false,
             sku: "1"
-          },{
-            id: "2",
-            pictureUrl: "build/img/index/icon_home_device_room.png",
-            deviceType: "卫生间",
-            deviceStatus: "4个设备",
-            deviceDesc: "",
-            statusPictureUrl: "",
-            errorPictureUrl: "",
-            isStatus: false,
-            isError: false,
-            sku: "2"
           },{
             id: "3",
             pictureUrl: "build/img/index/img_home_device_heater.png",
@@ -272,12 +271,31 @@ angular.module('indexPageModule')
         searchBox();
       };
 
-      var test = function(){
+
+      var getNowFormatDate = function() {
+        var date = new Date();
+        var seperator1 = "-";
+        var seperator2 = ":";
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+          month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+          strDate = "0" + strDate;
+        }
+        var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+          + " " + date.getHours() + seperator2 + date.getMinutes()
+          + seperator2 + date.getSeconds();
+        return currentdate;
+      }
+
+      var getWeather = function(){
         var url = baseConfig.basePath + "/rr/api?sysName=seniverseWeather&apiName=GetWeather";
         var paramter = {
           "location" : "ShangHai",
           "language" : "zh-Hans",
-          "unit" : "c",
+          "unit" : "c", //c摄氏，f华氏
           "start" : "0",
           "hours" : "24"
         };
@@ -285,7 +303,6 @@ angular.module('indexPageModule')
           function(response){
             $scope.temperature = response.results[0].now.temperature;
             $scope.humidity = response.results[0].now.humidity;
-            alert(JSON.stringify(response));
           }
         ).error(
           function (response, status, header, config){
@@ -296,9 +313,62 @@ angular.module('indexPageModule')
 
       var getDeviceList = function(){
         db.transaction(function(tx){
-          var partyId = window.localStorage.empno;
-          var deviceIdList = [1,2,3,4,5,6,7];
-          tx.executeSql('select * from T_CTM_PARTY_SCENARIO',[],function(tx, results){
+          tx.executeSql('select tdd.DEVICE_ID as DEVICE_ID,tdd.PRODUCT_ID as PRODUCT_ID, tdsb.SKU_NAME as SKU_NAME, tdsb.SKU_ID as SKU_ID, tdsb.SKU_NUMBER as SKU_NUMBER,tdd.LAST_UPDATE_DATE as LAST_UPDATE_DATE from T_DVM_DEVICE  tdd,T_CTM_PARTY_BOX_DEVICE tcpbd,T_DVM_SKU_B tdsb'+
+            ' where'+
+            ' tcpbd.PARTY_ID = "20"'+
+            ' and'+
+            ' tcpbd.DEVICE_ID = tdd.DEVICE_ID'+
+            ' and'+
+            ' tdd.SKU_ID = tdsb.SKU_ID'+
+            ' ORDER BY tdd.LAST_UPDATE_DATE DESC',[],function(tx, results){
+            for(var i = 0; i < results.rows.length; i ++){
+              var device = results.rows.item(i);
+              var deviceName = device.SKU_NAME;
+              var pictureUrl = "";
+              if(deviceName == 'NUMI 1.1'){
+                pictureUrl = "build/img/index/img_home_device_toliet.png";
+              }else if(deviceName == 'Bathroom Heater'){
+                pictureUrl = "build/img/index/img_home_device_heater.png";
+              }else if(deviceName == 'airfoil-shower'){
+                pictureUrl = "build/img/index/air.png";
+              }else if(deviceName == 'Karess'){
+                pictureUrl = "build/img/index/karess.png";
+              }else if(deviceName == 'MC'){
+                pictureUrl = "build/img/index/mirror.png";
+              }else if(deviceName == 'next gen shower'){
+                pictureUrl = "build/img/index/next.png";
+              }else if(deviceName == '中央净水器'){
+                pictureUrl = "build/img/index/img_home_device_toliet.png";
+              }
+
+              var deviceInfo =
+              {
+                id: device.DEVICE_ID,
+                pictureUrl: pictureUrl,
+                deviceType: deviceName,
+                deviceStatus: "设备在线",
+                deviceDesc: "有人使用",
+                statusPictureUrl: "build/img/index/icon_home_device_signal5.png",
+                errorPictureUrl: "",
+                isStatus: true,
+                isError: false,
+                sku: device.SKU_ID,
+                productId: device.PRODUCT_ID
+              };
+
+              $scope.deviceModel.push(deviceInfo);
+
+            }
+          }, null);
+        });
+      };
+
+      var getScenarioList = function(){
+        $scope.modelData = [];
+        db.transaction(function(tx){
+          //var partyId = window.localStorage.empno;
+          var partyId = "13469950960";
+          tx.executeSql('select * from T_CTM_PARTY_SCENARIO ORDER BY LAST_UPDATE_DATE DESC',[],function(tx, results){
             for(var i = 0; i < results.rows.length; i ++){
               var pictureUrl = "";
               var scenarioId = results.rows.item(i).SCENARIO_ID;
@@ -342,60 +412,76 @@ angular.module('indexPageModule')
 
             }
           }, null);
-          tx.executeSql('select * from T_DVM_DEVICE where DEVICE_ID in (select f.DEVICE_ID from T_CTM_PARTY_BOX_DEVICE f where f.PARTY_ID = "'+partyId+'")',[],function(tx, results){
-            for(var i = 0; i < results.rows.length; i ++){
+        });
+      };
+
+      var checkIsOk = function(){
+        db.transaction(function(tx) {
+          var deviceList = "房间1:  ";
+          var partyId = window.localStorage.empno;
+          //tx.executeSql('select tcpgd.PARTY_ID as PARTY_ID,tcpgd.GROUP_ID as GROUP_ID,tcpgd.DEVICE_ID as DEVICE_ID from T_CTM_PARTY_GROUP_DEVICE tcpgd,T_DVM_DEVICE tdd where tcpgd.PARTY_ID = "20" and tcpgd.DEVICE_ID = tdd.DEVICE_ID and tdd.device_id in ("55","56","57","58","59","60","61") group by tcpgd.party_id,tcpgd.group_id,tcpgd.device_id',[],function(tx, results){
+          tx.executeSql('select tcpgd.PARTY_ID as PARTY_ID,tcpgd.GROUP_ID as GROUP_ID,tcpgd.DEVICE_ID as DEVICE_ID from T_CTM_PARTY_GROUP_DEVICE tcpgd,T_DVM_DEVICE tdd where tcpgd.PARTY_ID = "20" and tcpgd.DEVICE_ID = tdd.DEVICE_ID  group by tcpgd.party_id,tcpgd.group_id,tcpgd.device_id',[],function(tx, results){
+            for(var i = 0; i < results.rows.length; i ++) {
+              if(results.rows.item(i).GROUP_ID == '46'){
+                deviceList = deviceList + " 设备: " + results.rows.item(i).DEVICE_ID + ";";
+              }
+              //alert("deviceId : "+results.rows.item(i).DEVICE_ID + " groupId: "+results.rows.item(i).GROUP_ID + " PARTY_ID: "+results.rows.item(i).PARTY_ID);
+            }
+
+            //alert("deviceList:  "+deviceList);
+          });
+
+          /*tx.executeSql('select tdd.DEVICE_ID as DEVICE_ID, tdsb.SKU_NAME as SKU_NAME, tdsb.SKU_ID as SKU_ID, tdsb.SKU_NUMBER as SKU_NUMBER,tdd.LAST_UPDATE_DATE as LAST_UPDATE_DATE from T_DVM_DEVICE  tdd,T_CTM_PARTY_BOX_DEVICE tcpbd,T_DVM_SKU_B tdsb'+
+            ' where'+
+            ' tcpbd.PARTY_ID = "20"'+
+            ' and'+
+            ' tcpbd.DEVICE_ID = tdd.DEVICE_ID'+
+            ' and'+
+            ' tdd.SKU_ID = tdsb.SKU_ID'+
+            ' ORDER BY tdd.LAST_UPDATE_DATE DESC',[],function(tx, results){
+            for(var i = 0; i < results.rows.length; i ++) {
               var device = results.rows.item(i);
               var pictureUrl = "";
-              if(device.DEVICE_NAME == 'numi'){
-                pictureUrl = "build/img/index/img_home_device_toliet.png";
-              }else if(device.DEVICE_NAME == 'bathroomHeader'){
-                pictureUrl = "build/img/index/img_home_device_heater.png";
-              }else if(device.DEVICE_NAME == 'airfoilShower'){
-                pictureUrl = "build/img/index/air.png";
-              }else if(device.DEVICE_NAME == 'karess'){
-                pictureUrl = "build/img/index/karess.png";
-              }else if(device.DEVICE_NAME == 'mc'){
-                pictureUrl = "build/img/index/mirror.png";
-              }else if(device.DEVICE_NAME == 'ng'){
-                pictureUrl = "build/img/index/next.png";
-              }else if(device.DEVICE_NAME == 'ro'){
-                pictureUrl = "build/img/index/img_home_device_toliet.png";
-              }
-
-              var deviceInfo =
-              {
-                 id: device.DEVICE_ID,
-                 pictureUrl: pictureUrl,
-                 deviceType: device.DEVICE_NAME,
-                 deviceStatus: "设备在线",
-                 deviceDesc: "有人使用",
-                 statusPictureUrl: "build/img/index/icon_home_device_signal5.png",
-                 errorPictureUrl: "",
-                 isStatus: true,
-                 isError: false,
-                 sku: "1"
-               };
-
-              $scope.deviceModel.push(deviceInfo);
-
+              alert("device name: " + results.rows.item(i).SKU_NAME);
             }
-          }, null);
+
+          });*/
+
+        });
+      };
+
+      /**
+       *@autor: caolei
+       *@disc: get scene switch status
+       */
+      var changeSceneStatus = function(){
+        var sceneInfo = JSON.parse(localStorage.sceneList);
+        angular.forEach(sceneInfo, function(data, index, array){
+          for(var i = 0; i < $scope.modelData.length; i ++){
+            if(data.sceneType == $scope.modelData[i].title){
+              $scope.modelData[i].isOff = data.status;
+            }
+          }
         });
       };
 
       $scope.$watch('', function(){
+        //checkIsOk();
         if(baseConfig.isLinkDatabase){
+          getScenarioList();
           getDeviceList();
+          //changeSceneStatus();
         }
-        test();
+        getWeather();
         if(localStorage.boxLinkCount == 1){
-          searchBox();
+          $timeout(function () {
+            searchBox();
+          },1000);
           localStorage.boxLinkCount = 2;
         }
       }, true);
 
-      document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
-        //hmsPopup.showShortCenterToast("开始返回数据！");
+      /*document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
         var resultOn = result;
         $scope.deviceOff = resultOn.payload.cmd_properties.device_list;
         if (resultOn.payload.cmd == "LIST_BONDED_DEVICE_RETURN") {
@@ -404,7 +490,7 @@ angular.module('indexPageModule')
           //循环device list 取出device id，并降deviceid与相应页面的设备做关联
           var deviceLinkInfo = "";
           var deviceStatus = [];
-          angular.forEach(resultOn.payload.cmd_properties.device_list, function(data, index, array){
+          angular.forEach(resultOn[0].data.act_params.device_list, function(data, index, array){
             deviceLinkInfo = deviceLinkInfo =="" ? (";" + data.device_sku + "," + data.device_id) : (deviceLinkInfo + ";" + data.device_sku + "," + data.device_id);
             deviceStatus.push({'deviceSku': data.device_sku, 'deviceRssi': data.device_rssi, 'deviceState': data.device_state});
           });
@@ -426,6 +512,32 @@ angular.module('indexPageModule')
           $scope.$apply();
         }
 
+      }, false);*/
+
+      document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
+        var resultOn = result["0"];
+        if (resultOn.data.act == "LIST_BONDED_DEVICE_RETURN") {
+          alert("开始返回数据");
+          var deviceLinkInfo = "";
+          var deviceStatus = [];
+          angular.forEach(resultOn.data.act_params.device_list, function(data, index, array){
+            deviceLinkInfo = deviceLinkInfo =="" ? (";" + data.device_sku + "," + data.device_id) : (deviceLinkInfo + ";" + data.device_sku + "," + data.device_id);
+            deviceStatus.push({'deviceSku': data.device_sku, 'deviceRssi': data.device_rssi, 'deviceState': data.device_state});
+          });
+          localStorage.deviceInfo = deviceLinkInfo;
+          localStorage.deviceStatus = JSON.stringify(deviceStatus);
+          hmsPopup.hideLoading();
+
+        }
+
+        /*if (resultOn.payload.cmd == "SCAN_RETURN") {
+          console.log(resultOn.payload.cmd_properties.device_list);
+          if ($scope.deviceOff.length == 0) {
+            $scope.Toast.show($translate.instant("index.noDevice"));
+          }
+          $scope.$apply();
+        }*/
+
       }, false);
 
       /**
@@ -434,23 +546,32 @@ angular.module('indexPageModule')
        *@disc: search box
        */
       var searchBox = function () {
-        var cmd = {
-          "from": {"cid": "0xE3"},
-          "to": {"cid": "0xE4"},
-          "ts": Date.parse(new Date()) / 1000,
-          "idx": 0,
-          "method": "CTL",
-          "payload": {
-            "cmd": "SCAN_BOX_REQUEST",
-            "cmd_properties": {
-              "scan_box_request": "KOHLER_BOX_SEARCH"
+        var cmd = [
+          {
+            "ver": "1",
+            "from": {
+              "ctype":  0XE3,
+              "uid"  : "peerId"
+            },
+            "to": {
+              "ctype": 0XE4,
+              "uid": "peerId"
+            },
+            "ts": 1487213040,
+            "idx": 12,
+            "mtype":  "rqst",
+            "data": {
+              "device_type": "BOX",
+              "act": " SCAN_BOX_REQUEST ",
+              "act_params":{"scan_box_request":"KOHLER_BOX_SEARCH"}
             }
           }
-        };
+        ];
+
         cordova.plugins.SocketPlugin.udpBroadCast({
-          "timeout": "1500",
+          "timeout": "3000",
           "ip": "255.255.255.255",
-          "value": cmd//指令json
+          "value": cmd
         }, success, error);
         function success(response) {
           // {
@@ -478,13 +599,11 @@ angular.module('indexPageModule')
           $scope.boxList = response;
           hmsPopup.hideLoading();
           $scope.$apply();
-          hmsPopup.showShortCenterToast("searchBox");
+          $scope.Toast.show($translate.instant("index.searchBox"));
           angular.forEach($scope.boxList, function(data, index, array){
-
             $timeout(function () {
-              boxLink(data);
+              boxLink(data[0]);
             }, 1000);
-
           });
           //boxLink($scope.boxList[0]);
         }
@@ -500,23 +619,24 @@ angular.module('indexPageModule')
        *@disc: link box
        */
       var boxLink = function (item) {
-        hmsPopup.showShortCenterToast("start boxLink");
-        console.log('lian box');
+        var boxIp = item.data.act_params.ip; //item.payload.cmd_properties.ip
+        var deviceId = item.data.act_params.device_id;
+        $scope.Toast.show($translate.instant("index.startLinkBox"));
         cordova.plugins.SocketPlugin.tcpConnect({
           "timeout": "5000",
-          "ip": item.payload.cmd_properties.ip,
+          "ip": boxIp
         }, success, error);
 
         function success(response) {
-          hmsPopup.showShortCenterToast("boxLink sucess");
+          $scope.Toast.show($translate.instant("index.linkSuccess"));
           $timeout(function () {
-            localStorage.boxIp = item.payload.cmd_properties.ip;
-            selectDeviceOn(item.payload.cmd_properties.device_id, item.payload.cmd_properties.ip);
+            localStorage.boxIp = boxIp;
+            selectDeviceOn(deviceId, boxIp);
           }, 1000);
         }
 
         function error() {
-          hmsPopup.showShortCenterToast("连接失败");
+          $scope.Toast.show($translate.instant("index.linkFail"));
         }
       };
 
@@ -526,18 +646,30 @@ angular.module('indexPageModule')
        *@disc: link device
        */
       var selectDeviceOn = function (device_id, boxIp) {
-        hmsPopup.showShortCenterToast("start  selectDeviceOn");
-        var cmd = {
-          "from": {"cid": "0xE3"},
-          "to": {"cid": "0xE4", "device_id": device_id},
-          "ts": Date.parse(new Date()) / 1000,
-          "idx": 0,
-          "method": "CTL",
-          "payload": {
-            "cmd": "LIST_BONDED_DEVICE_REQUEST",
-            "cmd_properties": ""
-          }
-        };
+        $scope.Toast.show($translate.instant("index.startSelectDevice"));
+
+        var cmd = [
+            {
+              "ver": 1,
+              "from": {
+                "ctype":  0XE3,
+                "uid"  : "peerId"
+              },
+              "to": {
+                "ctype": 0xE4,
+                "uid": device_id
+              },
+              "ts": 1487213040,
+              "idx": 12,
+              "mtype":  "rqst",
+              "data": {
+                "device_type": "BLE_DEVICE",
+                "act": "LIST_BONDED_DEVICE_REQUEST",
+                "act_params":{}
+              }
+            }
+          ];
+
         cordova.plugins.SocketPlugin.tcpSendCmd({
           "timeout": "5000",
           "value": cmd,
@@ -545,11 +677,11 @@ angular.module('indexPageModule')
         }, success, error);
 
         function success(response) {
-          hmsPopup.showShortCenterToast("搜索已连接设备成功");
+          $scope.Toast.show($translate.instant("index.searchDeviceSuccess"));
         }
 
         function error() {
-          hmsPopup.showShortCenterToast("搜索已连接设备失败");
+          $scope.Toast.show($translate.instant("index.searchFail"));
         }
       };
 
@@ -558,8 +690,9 @@ angular.module('indexPageModule')
        *@params: modelType
        *@disc: change model
        */
-      $scope.changeModel = function(modelType){
-        if(modelType == "场景模式"){
+      $scope.changeModel = function(item){
+        var modelType = item.id;
+        if(modelType == "1"){
           $scope.isSceneModel = true;
           $scope.isDeviceModel = false;
           $("#line").removeClass('height-light2');
@@ -577,11 +710,42 @@ angular.module('indexPageModule')
        *@params: item
        *@disc: get switch status
        */
+      var sceneList = [];
       $scope.getSwitchStatus = function(item){
+        var scentObj = {sceneType: item.title, status: item.isOff};
+        sceneList.push(scentObj);
+        localStorage.sceneList = JSON.stringify(sceneList);
         $scope.isInPage = 1;
-        //console.log(item);
-        alert(item.isOff);
+
+        if(item.title == '离家'){
+
+          return;
+        }else if(item.title == '晨起'){
+
+          return;
+        }
+
         if(item.isOff){
+          //发送指令并传送当前场景按钮的状态
+          angular.forEach($scope.modelData, function(data, index, array){
+            if(data.id == item.id){
+              item.isOff = true;
+              return;
+            }
+          });
+        }else{
+          //db.transaction(function(tx) {
+          //  tx.executeSql('update T_CTM_PARTY_SCENARIO set scenarioStatus = "N" where DEVICE_ID = '+item.id);
+          //});
+          angular.forEach($scope.modelData, function(data, index, array){
+            if(data.id == item.id){
+              item.isOff = false;
+              return;
+            }
+          });
+        }
+
+        /*if(item.isOff){
           //alert("on");
           if(checkIsLinkBox){
             var netType = network();
@@ -593,8 +757,7 @@ angular.module('indexPageModule')
           }
 
         }else{
-          alert("off");
-        }
+        }*/
       };
       console.log($ionicHistory);
 
@@ -605,33 +768,33 @@ angular.module('indexPageModule')
         $scope.getDeviceInfo = function(item){
 
           if(baseConfig.isLinkDatabase == true){
-            if(item.deviceType == "卫生间"){
-              $state.go('cenwatpurifierContrl',{deviceSku: item.sku});
-            }
-            if(item.deviceType == "bathroomHeader"){
+            if(item.deviceType == "Bathroom Heater"){
               $state.go('bathroom',{deviceSku: item.sku});
             }
-            if(item.deviceType == "numi"){
+            if(item.deviceType == "NUMI 1.1"){
               $state.go('toiletContrl');
             }
-            if(item.deviceType == "karess"){
+            if(item.deviceType == "Karess"){
               $state.go('karess');
               SettingsService.set("sku",item.sku);
             }
-            if(item.deviceType == "ng"){
+            if(item.deviceType == "next gen shower"){
               $state.go('nextgen');
               SettingsService.set("sku",item.sku);
             }
-            if(item.deviceType == "airfoilshower"){
+            if(item.deviceType == "airfoil-shower"){
               $state.go('airfoilShower');
             }
-            if(item.deviceType == "mc"){
+            if(item.deviceType == "MC"){
               $state.go('mc');
             }
+
+            db.transaction(function(tx) {
+              tx.executeSql('update T_DVM_DEVICE set LAST_UPDATE_DATE = "'+getNowFormatDate()+'" where DEVICE_ID = '+item.id);
+            });
+            $scope.deviceModel = [];
+            getDeviceList();
           }else{
-            if(item.deviceType == "卫生间"){
-              $state.go('cenwatpurifierContrl',{deviceSku: item.sku});
-            }
             if(item.deviceType == "浴霸"){
               $state.go('bathroom',{deviceSku: item.sku});
             }
@@ -653,12 +816,10 @@ angular.module('indexPageModule')
               $state.go('mc');
             }
           }
-
-
       };
 
       $scope.addModule = function(){
-        alert("in-----addModule");
+
       };
 
       $scope.addDevice = function(){
@@ -682,7 +843,7 @@ angular.module('indexPageModule')
         );
 
       }
-      setUnit();
+      // setUnit();
     }
   ]);
 

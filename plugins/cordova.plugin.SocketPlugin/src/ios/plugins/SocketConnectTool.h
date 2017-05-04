@@ -62,12 +62,12 @@ typedef void(^TcpReadResponse)(NSInteger tag);
 
 //UDP
 - (void)initGCDAsyncUdpSocket;  //udp协议初始化
--(void)broadcast:(NSDictionary *)ackMessage WithHost:(NSString *)udpHost  WithPort:(uint16_t)port;//发送udp广播
+-(void)broadcast:(id)ackMessage WithHost:(NSString *)udpHost  WithPort:(uint16_t)port;//发送udp广播
 
 //TCP
 - (BOOL)initGCDAsyncSocket:(NSString *)tcpHost; //tcp协议初始化
 - (void)initGCDAsyncGroupSocket:(NSArray<NSString *>*)hostGroup;    //多个tcp协议初始化
-- (void)startAck:(NSDictionary *)message;   //发送tcp数据报请求
+- (void)startAck:(id)message;   //发送tcp数据报请求
 - (void)cancelTcpSocketConnect; //取消tcp连接
 - (void)cancelAllTcpSocketConnections;  //取消所有tcp连接
 @end

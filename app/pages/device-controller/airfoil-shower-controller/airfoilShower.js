@@ -55,21 +55,6 @@ angular.module('airfoilShowerModule')
         canves02: "initcanves02",
         canves03: "initcanves03"
       }]
-      /*
-       nuanjiao-json
-       暖脚
-       */
-      $scope.slideNuanjioaData =[{
-        des: "风力档位",
-        gearNum: 9,
-        gearInit: 1,
-        gearInitTemp: 1,
-        parameterctlFlag: false,
-        parNodeid: 'toilet-NuanjioaFlCtl',
-        canves01: "NuanjioaFlcanves01",
-        canves02: "NuanjioaFlcanves02",
-        canves03: "NuanjioaFlcanves03"
-      }]
 
       $scope.slideWaterData =
         [{
@@ -95,56 +80,6 @@ angular.module('airfoilShowerModule')
         }
       }];
 
-      /*
-       nuanjiao-json
-       暖角
-       */
-      $scope.slidewarmjData =[{
-        des: "风力档位",
-        gearNum: 9,
-        gearInit: 1,
-        gearInitTemp: 1,
-        parameterctlFlag: false,
-        parNodeid: 'toilet-warmjCtl',
-        canves01: "warmjcanves01",
-        canves02: "warmjcanves02",
-        canves03: "warmjcanves03",
-        open:'887709010001032302000022',
-        close:'887709020001031302000011',
-        directive:{
-          // init:'88770908000103440200004C',
-          // 1:'887709070001034202000045',
-          // 2:'887709060001034402000042',
-          // 3:'887709050001034602000043',
-          // 4:'88770904000103480200004C',
-          // 5:'887709030001034a02000049',
-        }
-      }];
-      /*
-       quanwen-json
-       圈温
-       */
-      $scope.slidequanwenData =[{
-        des: "温度档位",
-        gearNum: 5,
-        gearInit: 1,
-        gearInitTemp: 1,
-        parameterctlFlag: false,
-        parNodeid: 'toilet-quanwenCtl',
-        canves01: "quanwencanves01",
-        canves02: "quanwencanves02",
-        canves03: "quanwencanves03",
-        open:'887709010001032302000022',
-        close:'887709020001031302000011',
-        directive:{
-          // init:'88770908000103440200004C',
-          // 1:'887709070001034202000045',
-          // 2:'887709060001034402000042',
-          // 3:'887709050001034602000043',
-          // 4:'88770904000103480200004C',
-          // 5:'887709030001034a02000049',
-        }
-      }]
       /**
        gongnenglist-json
        功能列表数据
@@ -423,42 +358,6 @@ angular.module('airfoilShowerModule')
           }
         };
       },20);
-      //发送指令
-      var cmd = {
-        from: {
-          cid: "0xE3",
-        },
-        idx: 1,
-        method: "CTL",
-        payload: {
-          cmd: "CMD_REQUEST",
-          "device_type": "BLE_DEVICE",
-          value: [],
-        },
-        to: {
-          cid: "0xE4",
-          "device_id": "8BE850C2",
-        },
-        ts: "1492146861.217451",
-        ver: 1
-      };
-      $scope.sendCmd = function (cmdvalue,des) {
-        cmd.payload.value =[];
-        cmd.payload.value.push(cmdvalue);
-        alert(angular.toJson(cmd));
-        cordova.plugins.SocketPlugin.tcpSendCmd({
-          "timeout": "5000",
-          "value": cmd
-        }, success, error);
-        function success(response) {
-          hmsPopup.showShortCenterToast(des+" "+"success");
-        };
-        function error() {
-          hmsPopup.showShortCenterToast(des+" "+"error");
-        }
-      };
-
-
 
       //保存选择的数据项
       $scope.handleRadSelected;
@@ -580,38 +479,6 @@ angular.module('airfoilShowerModule')
         $scope.modal.remove();
       });
 
-      $scope.valueTemp = "";
-      $scope.choose = function (val) {
-        for(var i=0;i<$scope.value.length;i++){
-          if($scope.value[i].id === val.id){
-            $scope.toiletController.modelType = $scope.value[i].des;
-          }
-        };
-        if($scope.handlenapeListNape[$scope.handlenapeSelectedIndex].matchdataid === "water" || $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].matchdataid === "tunxi"){
-          if(val.id !== $scope.valueTemp.id){
-            $scope.sendCmd(val.directive,"");
-          }
-          // $scope.sendCmd(val.directive,"");
-          $scope.valueTemp = val;
-        }else if($scope.handlenapeListNape[$scope.handlenapeSelectedIndex].matchdataid === "clear"){
-          if(val.id==="guanbi"){
-            if($scope.valueTemp.directiveclose){
-              // console.log("colse")
-              // console.log($scope.valueTemp.directiveclose)
-              $scope.sendCmd($scope.valueTemp.directiveclose,"")
-            }
-          }else{
-            // console.log("open")
-            // console.log(val.directiveclose)
-            $scope.sendCmd(val.directiveopen,"");
-          }
-          // if(val.id !=="guanbi"){
-          $scope.valueTemp = val;
-          // }
-        }
-        $scope.modal.hide();
-      };
-
       $scope.$watch('',function(){
         //getCurrentSignalStatus();
         //getCurrentTemperate();
@@ -653,6 +520,11 @@ angular.module('airfoilShowerModule')
         }
       }, false);
 
+      /**
+       *@autor: caolei
+       *@params: ack
+       *@disc: Analyze current operation
+       */
       var explainCurrentOperate = function(value) {
         var code = bathroomCmdService.explainAck(value);
         if (code.ack.indexOf("fa") >= 0) {
@@ -801,7 +673,6 @@ angular.module('airfoilShowerModule')
         hmsHttp.post(url, paramter).success(
 
           function(response){
-            alert(JSON.stringify(response));
             if(response.code == 200){
               var value = airfoilShowerService.explainAck(response.data.data.cmd[0]);
 
@@ -810,13 +681,13 @@ angular.module('airfoilShowerModule')
                   if(data.matchdataid == 'water'){
                     data.selecFlag = true;
                     data.imgUrl = data.imgSeledUrl;
-                    alert("water success");
+                    $scope.Toast.show($translate.instant("airfoidShower.waterSuccess"));
                   }
                 });
               }else if(value.ack.toLowerCase() == "fa00"){
                 angular.forEach($scope.handlenapeListNape, function(data, index, array){
                   if(data.matchdataid == 'clear'){
-                    alert("stop success");
+                    $scope.Toast.show($translate.instant("airfoidShower.stopSuccess"));
                     $timeout(function () {
                       data.selecFlag = true;
                       data.imgUrl = data.imgSeledUrl;

@@ -5,13 +5,13 @@ angular.module('karessControlModule')
     '$ionicModal',
     '$compile',
     'baseConfig',
-    'checkVersionService', 'SettingsService', '$ionicHistory', '$ionicSlideBoxDelegate', 'karessService', 'hmsPopup','hmsHttp','cmdService',
+    'checkVersionService', 'SettingsService', '$ionicHistory', '$ionicSlideBoxDelegate', 'karessService', 'hmsPopup', 'hmsHttp', 'cmdService','$timeout',
     function ($scope,
               $state,
               $ionicModal,
               $compile,
               baseConfig,
-              checkVersionService, SettingsService, $ionicHistory, $ionicSlideBoxDelegate, karessService, hmsPopup,hmsHttp,cmdService) {
+              checkVersionService, SettingsService, $ionicHistory, $ionicSlideBoxDelegate, karessService, hmsPopup, hmsHttp, cmdService,$timeout) {
       var sku = SettingsService.get('sku');
       /**
        *@autor: caolei
@@ -172,14 +172,14 @@ angular.module('karessControlModule')
           selecFlag: false,
           handledata: $scope.slideInitData
         },
-        {
-          imgUrl: "build/img/karess-controller/icon_jienengnor.png",
-          imgSeledUrl: "build/img/karess-controller/icon_jieneng.png",
-          imgUrlTemp: "build/img/karess-controller/icon_jienengnor.png",
-          handleDes: "karessController.jieneng",
-          selecFlag: false,
-          handledata: $scope.slideInitData
-        },
+        // {
+        //   imgUrl: "build/img/karess-controller/icon_jienengnor.png",
+        //   imgSeledUrl: "build/img/karess-controller/icon_jieneng.png",
+        //   imgUrlTemp: "build/img/karess-controller/icon_jienengnor.png",
+        //   handleDes: "karessController.jieneng",
+        //   selecFlag: false,
+        //   handledata: $scope.slideInitData
+        // },
         {
           imgUrl: "build/img/karess-controller/icon_shezhinor.png",
           imgSeledUrl: "build/img/karess-controller/icon_shezhi.png",
@@ -208,7 +208,7 @@ angular.module('karessControlModule')
         }
         ;
         var checHtml =
-          "<ion-slide-box ng-init='lockSlide()' does-continue = 'true' ng-click='nextSlide($index)'>" +
+          "<ion-slide-box ng-init='lockSlide()' show-pager='true' delegate-handle='boxSlider'>" +
           "<ion-slide ng-repeat='list in currentSlideData track by $index'>" +
           "<div id={{list.parNodeid}} class='toilet-parameterctl'>" +
           "<canvas id={{list.canves01}} class='canves-pos'></canvas>" +
@@ -238,6 +238,7 @@ angular.module('karessControlModule')
         $('#ionSliderBox').append($checkhtml[0]);
       };
       $scope.initHtmlTemplate($scope.currentSlideData);
+      var onceFlag=true;
       var initCircle = function (slideDataObj) {
         //获取父元素高度
         this.canvsscreenHeight = document.getElementById(slideDataObj.parNodeid).offsetHeight;
@@ -348,8 +349,9 @@ angular.module('karessControlModule')
                   slideDataObj.gearInit = this.i;
                 }
                 ;
-                $scope.$apply();
-                //画档位线
+                if(onceFlag){
+                  $scope.$apply();
+                };                //画档位线
                 this.j = 1;
                 for (this.j; this.j < this.i; this.j++) {
                   drawRadian(this.cr3, this.deliverLine, this.radSectionArr[this.i - this.j - 1] - 1, this.radSectionArr[this.i - this.j - 1]);
@@ -358,8 +360,9 @@ angular.module('karessControlModule')
               } else {
                 this.stoPosPoint = this.i;
                 slideDataObj.gearInit = this.i + 1;
-                $scope.$apply();
-                //画档位线
+                if(onceFlag){
+                  $scope.$apply();
+                };                //画档位线
                 this.j = 1;
                 for (this.j; this.j < this.i + 1; this.j++) {
                   drawRadian(this.cr3, this.deliverLine, this.radSectionArr[this.i - this.j] - 1, this.radSectionArr[this.i - this.j]);
@@ -472,6 +475,42 @@ angular.module('karessControlModule')
           }
           ;
         };
+        $scope.count=0;
+        $scope.slideHasChangedleft = function () {
+          onceFlag = true;
+          if($scope.currentSlideData.length !== 1){
+            onceFlag = false;
+            $scope.count--;
+            if($scope.count >= 0){
+              currentRadObj = null;
+              $ionicSlideBoxDelegate.$getByHandle('boxSlider').previous();
+              $timeout(function () {
+                $scope.getCurrentObj($scope.count);
+                onceFlag = true;
+              },17)
+            }else{
+              $scope.count = 0;
+            }
+          };
+        };
+        $scope.slideHasChangedright = function () {
+          onceFlag = true;
+          var slidecount = $scope.currentSlideData.length;
+          if(slidecount !== 1){
+            onceFlag = false;
+            $scope.count++;
+            if($scope.count <= slidecount-1){
+              currentRadObj = null;
+              $ionicSlideBoxDelegate.$getByHandle('boxSlider').next();
+              $timeout(function () {
+                $scope.getCurrentObj($scope.count);
+                onceFlag = true;
+              },17)
+            }else{
+              $scope.count = slidecount-1;
+            };
+          };
+        };
       }, 20);
       //处理选择怎加border
       var handlenapeListNapeLen = $scope.handlenapeListNape.length;
@@ -480,9 +519,11 @@ angular.module('karessControlModule')
         if (index == 0) {
           if (info.selecFlag == false) {
             var value = cmdService.getCmd("8877", 1, karessService.data.openFiller, 0, 2);
-            if(baseConfig.isCloudCtrl == true){
-              test(index,value,'karessOnWater');
-            }else{
+            console.log(baseConfig.isCloudCtrl);
+            if (baseConfig.isCloudCtrl == true) {
+              console.log('121');
+              test(index, value, 'karessOnWater');
+            } else {
               console.log(value);
               cmdService.sendCmd(deviceId, value, localStorage.boxIp);
             }
@@ -495,9 +536,9 @@ angular.module('karessControlModule')
         if (index == 1) {
           if (info.selecFlag == false) {
             var value = cmdService.getCmd("8877", 1, karessService.data.openDrain, 0, 2);
-            if(baseConfig.isCloudCtrl == true) {
-              test(index,value,'karessOffWater');
-            }else{
+            if (baseConfig.isCloudCtrl == true) {
+              test(index, value, 'karessOffWater');
+            } else {
               console.log(value);
               cmdService.sendCmd(deviceId, value, localStorage.boxIp);
             }
@@ -556,21 +597,20 @@ angular.module('karessControlModule')
             cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           }
         }
+        // if (index == 7) {
+        //   if (info.selecFlag == false) {
+        //     var value = cmdService.getCmd("8877", 1, karessService.data.openSanitize, 0, 2);
+        //     console.log(value);
+        //     cmdService.sendCmd(deviceId, value, localStorage.boxIp);
+        //   } else {
+        //     var value = cmdService.getCmd("8877", 1, karessService.data.closeSanitize, 0, 2);
+        //     console.log(value);
+        //     cmdService.sendCmd(deviceId, value, localStorage.boxIp);
+        //   }
+        // }
         if (index == 7) {
-          if (info.selecFlag == false) {
-            var value = cmdService.getCmd("8877", 1, karessService.data.openSanitize, 0, 2);
-            console.log(value);
-            cmdService.sendCmd(deviceId, value, localStorage.boxIp);
-          } else {
-            var value = cmdService.getCmd("8877", 1, karessService.data.closeSanitize, 0, 2);
-            console.log(value);
-            cmdService.sendCmd(deviceId, value, localStorage.boxIp);
-          }
-        }
-        if (index == 8) {
           $state.go('karessSetting');
         }
-
 
 
         for (var i = 0; i < handlenapeListNapeLen; i++) {
@@ -601,10 +641,10 @@ angular.module('karessControlModule')
         {id: 2, des: 'karessController.handshower'}
       ];
       $scope.openModal = function () {
-        if($scope.handlenapeSelectedIndex == 0){
+        if ($scope.handlenapeSelectedIndex == 0) {
 
-        }else{
-          hmsPopup.showShortCenterToast("当前状态不能切换出水方式");
+        } else {
+          $scope.toast("当前状态不能切换出水方式");
           return;
         }
         if ($scope.value.length !== 0) {
@@ -653,38 +693,36 @@ angular.module('karessControlModule')
 
 //接受tcp状态
       document.addEventListener('SocketPlugin.receiveTcpStatus', function (result) {
-        if (deviceId) {
-          hmsPopup.showShortCenterToast("tcp状态" + angular.toJson(result.code));
+        if (resultOn.from.device_id == deviceId) {
 
         }
       }, false);
 //接受tcp返回数据
       document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
-          hmsPopup.showShortCenterToast("开始返回数据！");
-          var resultOn = result;
-          if (resultOn.payload.cmd == "CMD_RETURN" && resultOn.from.device_id == deviceId) {
-            karessService.resolveCmd(resultOn.payload.value);
-          }
+        var resultOn = result;
+        if (resultOn.payload.cmd == "CMD_RETURN" && resultOn.from.device_id == deviceId) {
+          karessService.resolveCmd(resultOn.payload.value);
+        }
       }, false);
 
 
-      var test = function (index,value,deviceId) {
+      var test = function (index, value, deviceId) {
         var url = baseConfig.basePath + "/r/api/message/sendMessage";
-        var paramter = cmdService.cloudCmd(deviceId,value);
+        var paramter = cmdService.cloudCmd(deviceId, value);
         console.log(paramter);
         hmsHttp.post(url, paramter).success(
           function (response) {
-            if(response.code == 200){
-              var  status = karessService.explainAck(response.data.data.cmd[0]);
-              if(status == ''){
-              }else{
-                if(status.ack.indexOf('fa') >= 0){
-                  status.ack = status.ack.substring(2,4);
+            if (response.code == 200) {
+              var status = karessService.explainAck(response.data.data.cmd[0]);
+              if (status == '') {
+              } else {
+                if (status.ack.indexOf('fa') >= 0) {
+                  status.ack = status.ack.substring(2, 4);
                   console.log(status)
-                  if(status.ack == 22){
+                  if (status.ack == 22) {
                     hmsPopup.showShortCenterToast("注水成功！");
                   }
-                  if(status.ack == 25){
+                  if (status.ack == 25) {
                     hmsPopup.showShortCenterToast("落水成功！");
                   }
                 }
@@ -695,13 +733,10 @@ angular.module('karessControlModule')
                 if (i !== index) {
                   $scope.handlenapeListNape[i].selecFlag = false;
                 }
-                ;
               }
-              ;
               if ($scope.handlenapeListNape[index].selecFlag === true) {
                 $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgSeledUrl;
               }
-              ;
             }
           }
         ).error(
@@ -709,9 +744,6 @@ angular.module('karessControlModule')
           }
         );
       };
-
-
-
 
 
     }]);

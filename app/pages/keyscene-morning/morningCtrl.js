@@ -53,43 +53,43 @@ angular.module('productModule')
           if($scope.config.flagDevice1 != true){
             console.log($scope.config.flagDevice1);
             $("#progressAnimation1").css({
-              "-webkit-animation": "aaa 5.5s linear",
+              "-webkit-animation": "aaa 6s linear",
               "background": "#1a1d28"
             });
             $timeout(function () {
               $scope.config.device1 = true;
               $scope.config.openFlag = false;
-            }, 5700);
+            }, 6000);
           }
           //浴霸
           if($scope.config.flagDevice2 != true) {
             $("#progressAnimation3").css({
-              "-webkit-animation": "aaa 3.0s linear",
+              "-webkit-animation": "aaa 4.0s linear",
               "background": "#1a1d28"
             });
             $timeout(function () {
               $scope.config.device3 = true;
-            }, 2800);
+            }, 4000);
           }
           //淋浴
           if($scope.config.flagDevice3 != true) {
             $("#progressAnimation2").css({
-              "-webkit-animation": "aaa 6.0s linear",
+              "-webkit-animation": "aaa 2.0s linear",
               "background": "#1a1d28"
             });
             $timeout(function () {
               $scope.config.device2 = true;
-            }, 5900);
+            }, 2000);
           }
           //净水
           if($scope.config.flagDevice4 != true) {
             $("#progressAnimation4").css({
-              "-webkit-animation": "aaa 1.5s linear",
+              "-webkit-animation": "aaa 10s linear",
               "background": "#1a1d28"
             });
             $timeout(function () {
               $scope.config.device4 = true;
-            }, 1600);
+            }, 10000);
           }
         } else {
 
