@@ -37,9 +37,6 @@ angular.module('toiletControlModule')
       };
       //init zhiling obj
       var cenwatpurDir = new RoController();
-      //get device status
-      var cmdvalue = getCmd(cenwapurcmdObj.header,cenwapurcmdObj.idx,cenwatpurDir._data.requestAllStatus,cenwapurcmdObj.ctrId,cenwapurcmdObj.devId);
-      // $scope.sendCmd(cmdvalue,"")
       /*
        Central water purifier shu ju
        */
@@ -189,40 +186,22 @@ angular.module('toiletControlModule')
         $scope.getCurrentObj(0);
       },20);
       document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
-        //resolve
-        if(response.code == 200){
-          if(value.ack.toLowerCase() == "fa27"){
-            $scope.Toast.show($translate.instant($scope.handlenapeListNape[index].handleDes)+$translate.instant("cenwatpurifier.directesuccess"));
-            $scope.selectChange(index);
+        var resultOn = result[0];
+        if(resultOn.from.uid ===cenwapurcmdObj.diviceid){
+          if (resultOn.data.cmd.length > 0) {
+            var tempData = bathroomCmdService.explainAck(resultOn.data.cmd[0]);
+            // if(tempData.temperature){
+            //   $scope.temperate = parseInt(tempData.temperature,16) + "℃";
+            //   $scope.tempPercent = parseInt(tempData.humidity,16) + "%";
+            // }
+            // var heater = bathroomCmdService.explainHeaterStatus(resultOn.data.cmd[0]);
+            // if(heater.status){
+            // }
+            // explainCurrentOperate(resultOn.data.cmd[0]);
+            // $scope.$apply();
           }
-        }else{
-          hmsPopup.hideLoading();
-          $scope.Toast.show($translate.instant($scope.handlenapeListNape[index].handleDes)+$translate.instant("cenwatpurifier.directerror"));
         }
-        //
-        // var resultOn = result;
-        //
-        // if(resultOn.from.device_id == getDeviceId()){
-        //   if (resultOn.payload.cmd == "CMD_RETURN") {
-        //
-        //     var tempData = bathroomCmdService.explainAck(resultOn.payload.value[0]);
-        //     if(tempData.temperature){
-        //       $scope.temperate = parseInt(tempData.temperature,16) + "℃";
-        //       $scope.tempPercent = parseInt(tempData.humidity,16) + "%";
-        //     }
-        //     var heater = bathroomCmdService.explainHeaterStatus(resultOn.payload.value[0]);
-        //     if(heater.status){
-        //       $scope.isWind = false;
-        //       $scope.isTime = true;
-        //       $scope.isCountDown = true;
-        //       $scope.countDown = parseInt(heater.hour, 16)*60*60*1000 + parseInt(heater.min, 16)*60*1000 - 8*60*60*1000;
-        //     }
-        //
-        //     explainCurrentOperate(resultOn.payload.value[0]);
-        //
-        //     $scope.$apply();
-        //   }
-        // }
+
       }, false);
       // //发送指令
       // cmdService.sendCmd(deviceId,cmdvalue,boxId);

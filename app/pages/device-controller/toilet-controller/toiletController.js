@@ -194,9 +194,9 @@ angular.module('toiletControlModule')
       $scope.slidelightData = [{
         id:"dengguang",
         des: "toiletController.aroundlight",
-        gearNum: 2,
-        gearInit: 4,
-        gearInitTemp: 4,
+        gearNum: 3,
+        gearInit: 1,
+        gearInitTemp: 1,
         parameterctlFlag: false,
         parNodeid: 'toilet-lightCtl',
         canves01: "lightcanves01",
@@ -846,11 +846,44 @@ angular.module('toiletControlModule')
         }
       };
       /**
-       *@params:flushOptions(nvyong mode) mSwitchType(turn or off)
+       *@params:lightCtl(aroundLigh rand) isType(type) selectedIndex(selected index)
        *@disc:use aroundLigh Instruction create
        */
-      $scope.aroundLightIntionCreate = function () {
-
+      $scope.aroundLightIntionCreate = function (lightCtl,isType,selectedIndex) {
+        if(!JSON.parse(window.localStorage.lightModal)){
+          var lightMode = "Default";
+          var MOMC = "Pantone7456";
+          var TUEC = "Pantone7507";
+          var WEDC = "Pantone7515";
+          var THUC = "Pantone7416";
+          var FRIC = "Pantone618";
+          var SATC = "Pantone563";
+          var SUMC = "Pantone4985";
+          var dynamicCtl = "OFF";
+        }else{
+          var locastorgeLight = JSON.parse(window.localStorage.lightModal);
+          var lightMode = locastorgeLight.lightMode;
+          var MOMC = locastorgeLight.MOMC;
+          var TUEC = locastorgeLight.TUEC;
+          var WEDC = locastorgeLight.WEDC;
+          var THUC = locastorgeLight.THUC;
+          var FRIC = locastorgeLight.FRIC;
+          var SATC = locastorgeLight.SATC;
+          var SUMC = locastorgeLight.SUMC;
+          if(lightMode === "Dynamic"){
+            var dynamicCtl = "ON";
+          }else {
+            var dynamicCtl = "OFF";
+          }
+        };
+        var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx,nimi.ambientLight(lightMode, lightCtl, dynamicCtl, MOMC, TUEC, WEDC, THUC, FRIC, SATC, SUMC),tolitercmdObj.ctrId,tolitercmdObj.devId);
+        //send instructin
+        console.log(cmdvalue)
+        if(baseConfig.isCloudCtrl){
+          $scope.toGetImpleteData(cmdvalue,$scope.handlenapeListNape[selectedIndex].handleDes,selectedIndex,isType);
+        }else{
+          // $scope.sendCmd(cmdvalue,selectedIndex);
+        }
       };
       /**
        *@params:flushOptions(nvyong mode) mSwitchType(turn or off)
@@ -1127,10 +1160,10 @@ angular.module('toiletControlModule')
                 };
               }else if($scope.handlenapeListNape[index].matchdataid === "dengguang"){
                 if(!$scope.handlenapeListNape[index].selecFlag){
-                  $scope.aroundLightIntionCreate(1,"0",index);
+                  $scope.aroundLightIntionCreate(4,"0",index);
                   // $timeout(function () {
                   //   $scope.tolLightIntionCreate(5,"0",index);
-                  // },200)
+                  // },400)
                 }else{
                   $scope.tolLightIntionCreate(0,"0",index);
                 };

@@ -88,16 +88,51 @@ angular.module('toiletControlModule')
           "margin-bottom":"0.5rem"
         }
       }];
+      /**
+       *@params:value(current selected color)
+       *@disc:get color;
+       */
+      $scope.getColor = function (value) {
+        if(value === "#563233"){
+          return "Pantone4985";
+        }else if(value === "#6378B4"){
+          return "Pantone7456";
+        }else if(value === "#F0D19F"){
+          return "Pantone7507";
+        }else if(value === "#C39170"){
+          return "Pantone7515";
+        }else if(value === "#EA695B"){
+          return "Pantone7416";
+        }else if(value === "#C1AE49"){
+          return "Pantone618";
+        }else if(value === "#70A18E"){
+          return "Pantone556";
+        }
+      }
       //gobakc
       $scope.goBack = function () {
         //localstorage setting value
         var lightsetval = {
           modal:"",
-        }
+          MOMC:"white",
+          TUEC:"white",
+          WEDC:"white",
+          THUC:"white",
+          FRIC:"white",
+          SATC:"white",
+          SUMC:"white"
+        };
         if($scope.lightSetting.isShowCheckimg){
           lightsetval.modal = "default";
         }else if($scope.lightSetting.isShowWeekset){
           lightsetval.modal = "ByWeek";
+          lightsetval.MOMC = $scope.getColor($scope.colorWeek[0].color["background-color"]);
+          lightsetval.TUEC = $scope.getColor($scope.colorWeek[1].color["background-color"]);
+          lightsetval.WEDC = $scope.getColor($scope.colorWeek[2].color["background-color"]);
+          lightsetval.THUC = $scope.getColor($scope.colorWeek[3].color["background-color"]);
+          lightsetval.FRIC = $scope.getColor($scope.colorWeek[4].color["background-color"]);
+          lightsetval.SATC = $scope.getColor($scope.colorWeek[5].color["background-color"]);
+          lightsetval.SUMC = $scope.getColor($scope.colorWeek[6].color["background-color"]);
         }else if($scope.lightSetting.isShowStatuset){
           lightsetval.modal = "Dynamic";
         };
