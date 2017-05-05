@@ -1,7 +1,6 @@
 package cordova.plugin.socket;
 
 import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -10,10 +9,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -27,8 +24,11 @@ public class SocketPlugin extends CordovaPlugin {
 
     private ExecutorService service;
 
+    private CallbackContext mCallbackContext;
+
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+        mCallbackContext = callbackContext;
         if (service == null) {
             service = Executors.newCachedThreadPool();
         }
@@ -98,20 +98,6 @@ public class SocketPlugin extends CordovaPlugin {
             callbackContext.error(getCode(0x00));
         }
     }
-
-//    private void fixUdpTimeout(final int timeout, final CallbackContext callbackContext, final JSONArray data, final int port) {
-//        service.execute(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    Thread.sleep(timeout);
-//                } catch (InterruptedException e) {
-//
-//                }
-//
-//            }
-//        });
-//    }
 
     private int defTcpPort = 5036;
 
@@ -213,6 +199,9 @@ public class SocketPlugin extends CordovaPlugin {
     }
 
     private void sendDataUpdate(String info) {
+        if(info !=null && !info.isEmpty() && info.contains("Who are you")){
+            mCallbackContext.success();
+        }
         final String data = String.format("cordova.fireDocumentEvent('SocketPlugin.receiveTcpData',%s)", info);
         cordova.getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -223,7 +212,6 @@ public class SocketPlugin extends CordovaPlugin {
     }
 
     private void sendStatusUpdate(String info) {
-
         final String data = String.format("cordova.fireDocumentEvent('SocketPlugin.receiveTcpStatus',%s)", info);
         cordova.getActivity().runOnUiThread(new Runnable() {
             @Override
