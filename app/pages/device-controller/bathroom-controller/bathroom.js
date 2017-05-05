@@ -294,16 +294,16 @@ angular.module('bathroomModule')
               $scope.isTime = true;
 
               var hourValue = parseInt(heater.hour, 16);
-              if(!hourValue){
-                hourValue = "00"
-              }else{
+              if(hourValue.length == 1){
                 hourValue = "0" + hourValue;
+              }else{
+                hourValue = hourValue;
               }
               var minuValue = parseInt(heater.min, 16);
-              if(!minuValue){
-                minuValue = "00";
-              }else if(minuValue.length == 1){
+              if(minuValue.length == 1){
                 minuValue = "0" + minuValue;
+              }else{
+                minuValue = minuValue;
               }
               $scope.countDown = hourValue + ":" + minuValue;
             }
@@ -867,15 +867,16 @@ angular.module('bathroomModule')
 
         if(item.switchType == 'Light'){
           item.isOpen = false;
-          if(($scope.count%4) == 1){
-            openLight(deviceId);
-          }else if(($scope.count%4) == 2){
-            closeLight(deviceId);
-            changeRingCol('#99d5ff');
-          }else if(($scope.count%4) == 3){
+          //if(($scope.count%4) == 1){
+          //  openLight(deviceId);
+          //}else if(($scope.count%4) == 2){
+          //  closeLight(deviceId);
+          //  changeRingCol('#99d5ff');
+          //}else
+          if(($scope.count%2) == 1){
             openLight(deviceId);
             changeRingCol('#ff6600');
-          }else if(($scope.count%4) == 0){
+          }else if(($scope.count%2) == 0){
             closeLight(deviceId);
             changeRingCol('#99d5ff');
           }
@@ -1062,10 +1063,22 @@ angular.module('bathroomModule')
 
       $scope.getCommon = function(item){
         openBreath(getDeviceId(), "", "");
+        $scope.isWindShow = false;
+        angular.forEach($scope.bathroomData, function(data, index, array){
+          if(data.switchType == 'Breath'){
+            data.isOpen = false;
+          }
+        });
       };
 
       $scope.getAllDay = function(item){
         open24HBreath(getDeviceId());
+        $scope.isWindShow = false;
+        angular.forEach($scope.bathroomData, function(data, index, array){
+          if(data.switchType == 'Breath'){
+            data.isOpen = false;
+          }
+        });
       };
 
       /**
