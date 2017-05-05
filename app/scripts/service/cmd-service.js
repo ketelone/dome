@@ -34,7 +34,7 @@ angular.module('utilModule')
               "ver": 1,
               "from": {
                 "ctype":  0xE3,
-                "uid"  : "peerId"
+                "uid"  : window.localStorage.empno
               },
               "to": {
                 "ctype": 0xE5,
@@ -48,7 +48,6 @@ angular.module('utilModule')
               }
             }
           ]
-          return;
           cordova.plugins.SocketPlugin.tcpSendCmd({
             "timeout": "5000",
             "value": cmd,

@@ -5,13 +5,13 @@ angular.module('karessControlModule')
     '$ionicModal',
     '$compile',
     'baseConfig',
-    'checkVersionService', 'SettingsService', '$ionicHistory', '$ionicSlideBoxDelegate', 'karessService', 'hmsPopup', 'hmsHttp', 'cmdService','$timeout',
+    'checkVersionService', 'SettingsService', '$ionicHistory', '$ionicSlideBoxDelegate', 'karessService', 'hmsPopup', 'hmsHttp', 'cmdService', '$timeout',
     function ($scope,
               $state,
               $ionicModal,
               $compile,
               baseConfig,
-              checkVersionService, SettingsService, $ionicHistory, $ionicSlideBoxDelegate, karessService, hmsPopup, hmsHttp, cmdService,$timeout) {
+              checkVersionService, SettingsService, $ionicHistory, $ionicSlideBoxDelegate, karessService, hmsPopup, hmsHttp, cmdService, $timeout) {
       var sku = SettingsService.get('sku');
       /**
        *@autor: caolei
@@ -238,7 +238,7 @@ angular.module('karessControlModule')
         $('#ionSliderBox').append($checkhtml[0]);
       };
       $scope.initHtmlTemplate($scope.currentSlideData);
-      var onceFlag=true;
+      var onceFlag = true;
       var initCircle = function (slideDataObj) {
         //获取父元素高度
         this.canvsscreenHeight = document.getElementById(slideDataObj.parNodeid).offsetHeight;
@@ -349,9 +349,10 @@ angular.module('karessControlModule')
                   slideDataObj.gearInit = this.i;
                 }
                 ;
-                if(onceFlag){
+                if (onceFlag) {
                   $scope.$apply();
-                };                //画档位线
+                }
+                ;                //画档位线
                 this.j = 1;
                 for (this.j; this.j < this.i; this.j++) {
                   drawRadian(this.cr3, this.deliverLine, this.radSectionArr[this.i - this.j - 1] - 1, this.radSectionArr[this.i - this.j - 1]);
@@ -360,9 +361,10 @@ angular.module('karessControlModule')
               } else {
                 this.stoPosPoint = this.i;
                 slideDataObj.gearInit = this.i + 1;
-                if(onceFlag){
+                if (onceFlag) {
                   $scope.$apply();
-                };                //画档位线
+                }
+                ;                //画档位线
                 this.j = 1;
                 for (this.j; this.j < this.i + 1; this.j++) {
                   drawRadian(this.cr3, this.deliverLine, this.radSectionArr[this.i - this.j] - 1, this.radSectionArr[this.i - this.j]);
@@ -475,46 +477,50 @@ angular.module('karessControlModule')
           }
           ;
         };
-        $scope.count=0;
+        $scope.count = 0;
         $scope.slideHasChangedleft = function () {
           onceFlag = true;
-          if($scope.currentSlideData.length !== 1){
+          if ($scope.currentSlideData.length !== 1) {
             onceFlag = false;
             $scope.count--;
-            if($scope.count >= 0){
+            if ($scope.count >= 0) {
               currentRadObj = null;
               $ionicSlideBoxDelegate.$getByHandle('boxSlider').previous();
               $timeout(function () {
                 $scope.getCurrentObj($scope.count);
                 onceFlag = true;
-              },17)
-            }else{
+              }, 17)
+            } else {
               $scope.count = 0;
             }
-          };
+          }
+          ;
         };
         $scope.slideHasChangedright = function () {
           onceFlag = true;
           var slidecount = $scope.currentSlideData.length;
-          if(slidecount !== 1){
+          if (slidecount !== 1) {
             onceFlag = false;
             $scope.count++;
-            if($scope.count <= slidecount-1){
+            if ($scope.count <= slidecount - 1) {
               currentRadObj = null;
               $ionicSlideBoxDelegate.$getByHandle('boxSlider').next();
               $timeout(function () {
                 $scope.getCurrentObj($scope.count);
                 onceFlag = true;
-              },17)
-            }else{
-              $scope.count = slidecount-1;
-            };
-          };
+              }, 17)
+            } else {
+              $scope.count = slidecount - 1;
+            }
+            ;
+          }
+          ;
         };
       }, 20);
       //处理选择怎加border
       var handlenapeListNapeLen = $scope.handlenapeListNape.length;
       $scope.selectNapes = function (index, info) {
+        $scope.indexNum = index;
         $scope.handlenapeSelectedIndex = index;
         if (index == 0) {
           if (info.selecFlag == false) {
@@ -693,15 +699,15 @@ angular.module('karessControlModule')
 
 //接受tcp状态
       document.addEventListener('SocketPlugin.receiveTcpStatus', function (result) {
-        if (resultOn.from.device_id == deviceId) {
+        if (result.from.uid == deviceId) {
 
         }
       }, false);
 //接受tcp返回数据
       document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
-        var resultOn = result;
-        if (resultOn.payload.cmd == "CMD_RETURN" && resultOn.from.device_id == deviceId) {
-          karessService.resolveCmd(resultOn.payload.value);
+        if (result[0].data.cmd.length > 0 && result.from.uid == deviceId) {
+          var status = karessService.explainAck(result[0].data.cmd);
+          karessButton(status);
         }
       }, false);
 
@@ -714,29 +720,7 @@ angular.module('karessControlModule')
           function (response) {
             if (response.code == 200) {
               var status = karessService.explainAck(response.data.data.cmd[0]);
-              if (status == '') {
-              } else {
-                if (status.ack.indexOf('fa') >= 0) {
-                  status.ack = status.ack.substring(2, 4);
-                  console.log(status)
-                  if (status.ack == 22) {
-                    hmsPopup.showShortCenterToast("注水成功！");
-                  }
-                  if (status.ack == 25) {
-                    hmsPopup.showShortCenterToast("落水成功！");
-                  }
-                }
-
-              }
-              $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
-              for (var i = 0; i < handlenapeListNapeLen; i++) {
-                if (i !== index) {
-                  $scope.handlenapeListNape[i].selecFlag = false;
-                }
-              }
-              if ($scope.handlenapeListNape[index].selecFlag === true) {
-                $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgSeledUrl;
-              }
+              karessButton(status);
             }
           }
         ).error(
@@ -745,5 +729,73 @@ angular.module('karessControlModule')
         );
       };
 
+        function karessButton(status){
+          if (status == '') {
+          } else {
+            if (status.ack.indexOf('fa') >= 0) {
+              status.ack = status.ack.substring(2, 4);
+              console.log(status)
+              if (status.ack == 22) {
+                if($scope.handlenapeListNape[index].selecFlag == false){
+                  $scope.toast.show("注水开启成功！");
+                }else{
+                  $scope.toast.show("注水关闭成功！");
+                }
+              }
+              if (status.ack == 25) {
+                if($scope.handlenapeListNape[index].selecFlag == false){
+                  $scope.toast.show("落水开启成功！");
+                }else{
+                  $scope.toast.show("落水关闭成功！");
+                }
+              }
+              if (status.ack == 21) {
+                if($scope.handlenapeListNape[index].selecFlag == false){
+                  $scope.toast.show("水力按摩开启成功！");
+                }else{
+                  $scope.toast.show("水力按摩关闭成功！");
+                }
+              }
+              if (status.ack == 23) {
+                if($scope.handlenapeListNape[index].selecFlag == false){
+                  $scope.toast.show("头部按摩开启成功！");
+                }else{
+                  $scope.toast.show("头部按摩关闭成功！");
+                }
+              }
+              if (status.ack == 24) {
+                if($scope.handlenapeListNape[index].selecFlag == false){
+                  $scope.toast.show("管道除菌开启成功！");
+                }else{
+                  $scope.toast.show("管道除菌关闭成功！");
+                }
+              }
+              if (status.ack == 27) {
+                if($scope.handlenapeListNape[index].selecFlag == false){
+                  $scope.toast.show("背部加热开启成功！");
+                }else{
+                  $scope.toast.show("背部加热关闭成功！");
+                }
+              }
+              if (status.ack == 00) {
+                $scope.toast.show("一键关闭成功！");
+              }
+            }else{
+              if(status.ack.indexOf('fb') >= 0 || status.ack.indexOf('fc') >= 0 || status.ack.indexOf('fd') >= 0){
+                $scope.toast.show("操作失败！");
+              }
+            }
 
+          }
+          var index = $scope.indexNum;
+          $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
+          for (var i = 0; i < handlenapeListNapeLen; i++) {
+            if (index == 7) {
+              $scope.handlenapeListNape[i].selecFlag = false;
+            }
+          }
+          if ($scope.handlenapeListNape[index].selecFlag === true) {
+            $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgSeledUrl;
+          }
+        }
     }]);
