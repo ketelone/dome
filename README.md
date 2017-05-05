@@ -28,6 +28,8 @@ $ gulp run-dev
 # 浏览器运行app程序
 $ ionic serve
 ```
+#启动gulp的监听
+gulp watch
 
 # Git 操作规范
 ```
@@ -93,72 +95,28 @@ Xcode
 Android测试环境
 确认cordova版本最好是6.3.1,jdk一定要1.7以上,Android SDK一定要API23以上
 ```
+
+
+
+
 1.修改app/config/devConfig.json  里面
 1.真机打包,修改app/config/devConfig.json  里面  isMobilePlatform  nativeScreenFlag 设置为true
-2.gulp run-dev
+2.**************gulp run-dev***********
 3.测试环境打包 
   iOS版本 Android 打包 通用插件下载
   
 
-  一 iOS 打包
-  
-  (1) CDVPlugin-Bridging-Header.h 修改融云app key   0vnjpoadnd4cz 
-  (2) C Language Dialect 改成 GNU99[-std=gnu99]
-  (3) Apple LLVM8.0 - Preprocessing 去掉DEBUG=1
-  (4) 删掉cell_image.png
-    
-  (5) 
-    AppDelegate+JPush.m didRegisterForRemoteNotificationsWithDeviceToken加入下面的判断
-    
-    NSString *token =
-        [[[[deviceToken description] stringByReplacingOccurrencesOfString:@"<"
-                                                               withString:@""]
-          stringByReplacingOccurrencesOfString:@">"
-          withString:@""]
-         stringByReplacingOccurrencesOfString:@" "
-         withString:@""];
-        NSLog(@"token = %@",token);
-        [[NSUserDefaults standardUserDefaults]setObject:token forKey:@"device_token"];
-        
-        [[RCIMClient sharedRCIMClient] setDeviceToken:token];
-        
-    #import <RongIMLib/RongIMLib.h>
-    
-    
-  二 Android 打包
-  
-4.正式环境PROD appID com.hand-china.hrms
+  一 iOS 打包（xcode测试）
+    cordova platforms rm ios
+    cordova platforms add ios
+  1.选择证书  Kohler
+  2. C Language Dialect 改成 GNU99[-std=gnu99]
 
-  iOS版本 Android 打包 通用插件下载
+    
   
-  
-  一 iOS 打包
-  (1) CDVPlugin-Bridging-Header.h 修改融云app key   e5t4ouvptpsaa 
-  (2) C Language Dialect 改成 GNU99[-std=gnu99]
-  (3) Apple LLVM8.0 - Preprocessing 去掉DEBUG=1
-  (4) 删掉cell_image.png
-  (5) YYText 
-  (6) 钩上推送的选项
-  
-  (5) 
-  AppDelegate+JPush.m didRegisterForRemoteNotificationsWithDeviceToken加入下面的判断
-  
-  NSString *token =
-      [[[[deviceToken description] stringByReplacingOccurrencesOfString:@"<"
-                                                             withString:@""]
-        stringByReplacingOccurrencesOfString:@">"
-        withString:@""]
-       stringByReplacingOccurrencesOfString:@" "
-       withString:@""];
-      NSLog(@"token = %@",token);
-      [[NSUserDefaults standardUserDefaults]setObject:token forKey:@"device_token"];
-      
-      [[RCIMClient sharedRCIMClient] setDeviceToken:token];
-      
-  #import <RongIMLib/RongIMLib.h>
-  
-  二 Android 打包
-  
-5.ionic platform add android
-6.ionic build android
+  二 Android 打包（测试）
+ionic platform rm android
+ionic platform add android
+ionic build android
+apk包
 

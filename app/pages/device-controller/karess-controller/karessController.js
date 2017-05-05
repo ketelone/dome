@@ -705,8 +705,9 @@ angular.module('karessControlModule')
       }, false);
 //接受tcp返回数据
       document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
-        if (result[0].data.cmd.length > 0 && result.from.uid == deviceId) {
-          var status = karessService.explainAck(result[0].data.cmd);
+
+        if (result[0].data.cmd.length > 0 && result[0].from.uid == deviceId) {
+          var status = karessService.explainAck(result[0].data.cmd[0]);
           karessButton(status);
         }
       }, false);
@@ -730,6 +731,7 @@ angular.module('karessControlModule')
       };
 
         function karessButton(status){
+          var index = $scope.indexNum;
           if (status == '') {
           } else {
             if (status.ack.indexOf('fa') >= 0) {
@@ -787,7 +789,6 @@ angular.module('karessControlModule')
             }
 
           }
-          var index = $scope.indexNum;
           $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
           for (var i = 0; i < handlenapeListNapeLen; i++) {
             if (index == 7) {
