@@ -269,6 +269,7 @@ angular.module('indexPageModule')
       $scope.boxList = [];
 
       $scope.linkBox = function(){
+        hmsPopup.showLoading();
         searchBox();
       };
 
@@ -500,11 +501,13 @@ angular.module('indexPageModule')
 
       $scope.$watch('', function(){
         //getDeviceStatus("");
+        hmsPopup.showLoading();
+
         getWeather();
         if(localStorage.boxLinkCount == 1){
-          $timeout(function () {
+          //$timeout(function () {
             searchBox();
-          },1000);
+          //},1500);
           localStorage.boxLinkCount = 2;
         }
         //checkIsOk();
@@ -513,6 +516,7 @@ angular.module('indexPageModule')
           getDeviceList();
           //changeSceneStatus();
         }
+
       }, true);
 
       /*document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
@@ -549,11 +553,14 @@ angular.module('indexPageModule')
       }, false);*/
 
       var deviceStatus = [];
+      var deviceLinkInfo = "";
       document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
+        var resultStr = JSON.stringify(result);
+        if(resultStr.indexOf("Who are you") >= 0){
+          return;
+        }
         var resultOn = result["0"];
         if (resultOn.data.act == "LIST_BONDED_DEVICE_RETURN") {
-          alert("开始返回数据");
-          var deviceLinkInfo = "";
 
           angular.forEach(resultOn.data.act_params.device_list, function(data, index, array){
             deviceLinkInfo = deviceLinkInfo =="" ? (";" + data.device_sku + "," + data.device_id) : (deviceLinkInfo + ";" + data.device_sku + "," + data.device_id);
@@ -562,8 +569,8 @@ angular.module('indexPageModule')
 
           localStorage.deviceInfo = deviceLinkInfo;
           localStorage.deviceStatus = JSON.stringify(deviceStatus);
-          hmsPopup.hideLoading();
 
+          hmsPopup.hideLoading();
         }
 
         /*if (resultOn.payload.cmd == "SCAN_RETURN") {
@@ -593,12 +600,12 @@ angular.module('indexPageModule')
               "ctype": 0XE4,
               "uid": "peerId"
             },
-            "ts": 1487213040,
+            "ts": Date.parse(new Date()) / 1000,
             "idx": 12,
             "mtype":  "rqst",
             "data": {
               "device_type": "BOX",
-              "act": " SCAN_BOX_REQUEST ",
+              "act": "SCAN_BOX_REQUEST",
               "act_params":{"scan_box_request":"KOHLER_BOX_SEARCH"}
             }
           }
@@ -607,7 +614,8 @@ angular.module('indexPageModule')
         cordova.plugins.SocketPlugin.udpBroadCast({
           "timeout": "3000",
           "ip": "255.255.255.255",
-          "value": cmd
+          "value": cmd,
+          "port": "5037"
         }, success, error);
         function success(response) {
           // {
@@ -633,7 +641,6 @@ angular.module('indexPageModule')
           // }
           //localStorage.boxIp = response.payload.cmd_properties.ip;
           $scope.boxList = response;
-          hmsPopup.hideLoading();
           $scope.$apply();
           $scope.Toast.show($translate.instant("index.searchBox"));
           angular.forEach($scope.boxList, function(data, index, array){
@@ -653,6 +660,10 @@ angular.module('indexPageModule')
        *@params: object box
        *@disc: link box
        */
+
+      $timeout(function () {
+        hmsPopup.hideLoading();
+      }, 15000);
       var boxLink = function (item) {
         var boxIp = item.data.act_params.ip; //item.payload.cmd_properties.ip
         var deviceId = item.data.act_params.device_id;
@@ -660,7 +671,8 @@ angular.module('indexPageModule')
         $scope.Toast.show($translate.instant("index.startLinkBox"));
         cordova.plugins.SocketPlugin.tcpConnect({
           "timeout": "5000",
-          "ip": boxIp
+          "ip": boxIp,
+          "port": "5036"
         }, success, error);
 
         function success(response) {
@@ -709,7 +721,8 @@ angular.module('indexPageModule')
         cordova.plugins.SocketPlugin.tcpSendCmd({
           "timeout": "5000",
           "value": cmd,
-          "ip": boxIp
+          "ip": boxIp,
+          "port": "5036"
         }, success, error);
 
         function success(response) {
