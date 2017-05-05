@@ -234,7 +234,7 @@ withFilterContext:(id)filterContext
 {
     //Json解析
     NSError *err;
-    NSDictionary *receiveMsg = [[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&err] firstObject];
+    id receiveMsg = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&err];
     DLog(@"broadcast_didReceiveData:%@",receiveMsg);
     
     if (![address isEqual:sock.localAddress]) {
@@ -271,7 +271,7 @@ withFilterContext:(id)filterContext
 -(void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag
 {
     NSError *err;
-    NSDictionary *httpResponse = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&err];
+    id httpResponse = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&err];
     
     if (httpResponse){
         //第一次连接等待
@@ -318,25 +318,25 @@ withFilterContext:(id)filterContext
 {
     if ([self.socket isDisconnected]) {
         id reConnectAck = @[@{
-                                           @"ver":@(1),
-                                           @"from":@{
-                                                   @"ctype":@(0xE3),
-                                                   @"uid":@"peerId"
-                                                   },
-                                           @"ctype":@"",
-                                           @"to": @{
-                                                   @"ctype": @(0XE4),
-                                                   @"uid": @"peerId"
-                                                   },
-                                           @"ts":@([NSDate date].timeIntervalSince1970),
-                                           @"idx":@(0),
-                                           @"mtype":@"rqst",
-                                           @"data":@{
-                                                   @"device_type":@"BOX",
-                                                   @"act": @"",
-                                                   @"act_params":@""
-                                                   }
-                                           }];
+                                @"ver":@(1),
+                                @"from":@{
+                                        @"ctype":@(0xE3),
+                                        @"uid":@"peerId"
+                                        },
+                                @"ctype":@"",
+                                @"to": @{
+                                        @"ctype": @(0XE4),
+                                        @"uid": @"peerId"
+                                        },
+                                @"ts":@([NSDate date].timeIntervalSince1970),
+                                @"idx":@(0),
+                                @"mtype":@"rqst",
+                                @"data":@{
+                                        @"device_type":@"BOX",
+                                        @"act": @"",
+                                        @"act_params":@""
+                                        }
+                                }];
         [self startAck:reConnectAck];
     }
 }
