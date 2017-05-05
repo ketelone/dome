@@ -194,7 +194,7 @@ angular.module('toiletControlModule')
       $scope.slidelightData = [{
         id:"dengguang",
         des: "toiletController.aroundlight",
-        gearNum: 3,
+        gearNum: 2,
         gearInit: 1,
         gearInitTemp: 1,
         parameterctlFlag: false,
@@ -534,6 +534,10 @@ angular.module('toiletControlModule')
                 if(this.i<=1){
                   if(slideDataObj.parNodeid === "toilet-warmjCtl"){
                     slideDataObj.gearInit = 2;
+                  }else if(slideDataObj.parNodeid === "toilet-lightCtl"){
+                    if(this.i === 1){
+                      slideDataObj.gearInit = "低";
+                    };
                   }else{
                     slideDataObj.gearInit = 1;
                   }
@@ -542,15 +546,13 @@ angular.module('toiletControlModule')
                     slideDataObj.gearInit = this.i+1;
                   }else if(slideDataObj.parNodeid === "toilet-lightCtl"){
                     if(this.i === 2){
-                      slideDataObj.gearInit = 4;
+                      slideDataObj.gearInit = '中';
                     }else if(this.i === 3){
-                      slideDataObj.gearInit = 7;
-                    }else if(this.i === 4){
-                      slideDataObj.gearInit = 10;
+                      slideDataObj.gearInit = "高";
                     }
                   }else{
                     slideDataObj.gearInit = this.i;
-                  }
+                  };
                 };
                 if(onceFlag){
                   $scope.$apply();
@@ -565,12 +567,10 @@ angular.module('toiletControlModule')
                 if(slideDataObj.parNodeid === "toilet-warmjCtl"){
                   slideDataObj.gearInit = this.i+2;
                 }else if(slideDataObj.parNodeid === "toilet-lightCtl"){
-                  if(this.i === 2){
-                    slideDataObj.gearInit = 4;
-                  }else if(this.i === 3){
-                    slideDataObj.gearInit = 7;
-                  }else if(this.i === 4){
-                    slideDataObj.gearInit = 10;
+                  if(this.i+1 === 2){
+                    slideDataObj.gearInit = "中";
+                  }else if(this.i+1 === 3){
+                    slideDataObj.gearInit = "高";
                   }
                 }else{
                   slideDataObj.gearInit = this.i+1;
@@ -637,6 +637,7 @@ angular.module('toiletControlModule')
             if(item.isManyDirective){
               if(item.matchdataid ===$scope.currentSlideData[index].id){
                 currentRadObj.selectedIndex=i;
+                currentRadObj.currentIndex=index;
               }
             }
           });
@@ -745,14 +746,13 @@ angular.module('toiletControlModule')
        *@params:flushOptions(nvyong mode) mSwitchType(turn or off)
        *@disc:use nvyong Instruction create;
        */
-      $scope.onceTimeIntionCreate = function (isType,index) {
-        var  isType = isType;
+      $scope.onceTimeIntionCreate = function (flag,isType,index) {
         var selectedDataTemp = $scope.handlenapeListNape[index];
         var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx,nimi._data[selectedDataTemp.dataname],tolitercmdObj.ctrId,tolitercmdObj.devId);
         //send instructin
         console.log(cmdvalue);
         if(baseConfig.isCloudCtrl){
-          $scope.toGetImpleteData(cmdvalue,$scope.handlenapeListNape[index].handleDes,index,isType);
+          $scope.toGetImpleteData(flag,cmdvalue,$scope.handlenapeListNape[index].handleDes,index,isType);
         }else{
           // $scope.sendCmd(cmdvalue,index);
         };
@@ -761,8 +761,7 @@ angular.module('toiletControlModule')
        *@params:type(use type),flushOptions(nvyong mode) mSwitchType(turn or off)
        *@disc:use nvyong and tunxi Instruction create
        */
-      $scope.nvyongIntionCreate = function (type,flushOptions,mSwitchType,isType,selectedIndex) {
-        var isType = isType;
+      $scope.nvyongIntionCreate = function (flag,type,flushOptions,mSwitchType,isType,selectedIndex) {
         var selectedDataTemp = $scope.handlenapeListNape[selectedIndex];
         var handleOriginData = selectedDataTemp.handledata;
         var temperature = handleOriginData[2].gearInit;
@@ -781,7 +780,7 @@ angular.module('toiletControlModule')
         //send instructin
         console.log(cmdvalue)
         if(baseConfig.isCloudCtrl){
-          $scope.toGetImpleteData(cmdvalue,$scope.handlenapeListNape[selectedIndex].handleDes,selectedIndex,isType);
+          $scope.toGetImpleteData(flag,cmdvalue,$scope.handlenapeListNape[selectedIndex].handleDes,selectedIndex,isType);
         }else{
           // $scope.sendCmd(cmdvalue,selectedIndex);
         }
@@ -790,7 +789,7 @@ angular.module('toiletControlModule')
        *@params:flushOptions(nvyong mode) mSwitchType(turn or off)
        *@disc:use nuamfen Instruction create
        */
-      $scope.nuamfenIntionCreate = function (mSwitchType,isType,selectedIndex) {
+      $scope.nuamfenIntionCreate = function (flag,mSwitchType,isType,selectedIndex) {
         var isType = isType;
         var selectedDataTemp = $scope.handlenapeListNape[selectedIndex];
         var handleOriginData = selectedDataTemp.handledata;
@@ -809,7 +808,7 @@ angular.module('toiletControlModule')
         //send instructin
         console.log(cmdvalue)
         if(baseConfig.isCloudCtrl){
-          $scope.toGetImpleteData(cmdvalue,$scope.handlenapeListNape[selectedIndex].handleDes,selectedIndex,isType);
+          $scope.toGetImpleteData(flag,cmdvalue,$scope.handlenapeListNape[selectedIndex].handleDes,selectedIndex,isType);
         }else{
           // $scope.sendCmd(cmdvalue,selectedIndex);
         }
@@ -818,8 +817,7 @@ angular.module('toiletControlModule')
        *@params:flushOptions(nvyong mode) mSwitchType(turn or off)
        *@disc:use nuamfen Instruction create
        */
-      $scope.feetSeatIntionCreate = function (type,temperature,isType,selectedIndex) {
-        var isType = isType;
+      $scope.feetSeatIntionCreate = function (flag,type,temperature,isType,selectedIndex) {
         var selectedDataTemp = $scope.handlenapeListNape[selectedIndex];
         var handleOriginData = selectedDataTemp.handledata;
         if(!temperature){
@@ -840,7 +838,7 @@ angular.module('toiletControlModule')
         //send instructin
         console.log(cmdvalue)
         if(baseConfig.isCloudCtrl){
-          $scope.toGetImpleteData(cmdvalue,$scope.handlenapeListNape[selectedIndex].handleDes,selectedIndex,isType);
+          $scope.toGetImpleteData(flag,cmdvalue,$scope.handlenapeListNape[selectedIndex].handleDes,selectedIndex,isType);
         }else{
           // $scope.sendCmd(cmdvalue,selectedIndex);
         }
@@ -849,7 +847,7 @@ angular.module('toiletControlModule')
        *@params:lightCtl(aroundLigh rand) isType(type) selectedIndex(selected index)
        *@disc:use aroundLigh Instruction create
        */
-      $scope.aroundLightIntionCreate = function (lightCtl,isType,selectedIndex) {
+      $scope.aroundLightIntionCreate = function (flag,lightCtl,isType,selectedIndex) {
         if(!JSON.parse(window.localStorage.lightModal)){
           var lightMode = "Default";
           var MOMC = "Pantone7456";
@@ -862,7 +860,7 @@ angular.module('toiletControlModule')
           var dynamicCtl = "OFF";
         }else{
           var locastorgeLight = JSON.parse(window.localStorage.lightModal);
-          var lightMode = locastorgeLight.lightMode;
+          var lightMode = locastorgeLight.modal;
           var MOMC = locastorgeLight.MOMC;
           var TUEC = locastorgeLight.TUEC;
           var WEDC = locastorgeLight.WEDC;
@@ -876,25 +874,35 @@ angular.module('toiletControlModule')
             var dynamicCtl = "OFF";
           }
         };
+        var selectedDataTemp = $scope.handlenapeListNape[selectedIndex];
+        var handleOriginData = selectedDataTemp.handledata;
+        if(!lightCtl){
+          var lightCtl = handleOriginData[0].gearInit;
+        }
         var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx,nimi.ambientLight(lightMode, lightCtl, dynamicCtl, MOMC, TUEC, WEDC, THUC, FRIC, SATC, SUMC),tolitercmdObj.ctrId,tolitercmdObj.devId);
         //send instructin
         console.log(cmdvalue)
         if(baseConfig.isCloudCtrl){
-          $scope.toGetImpleteData(cmdvalue,$scope.handlenapeListNape[selectedIndex].handleDes,selectedIndex,isType);
+          $scope.toGetImpleteData(flag,cmdvalue,$scope.handlenapeListNape[selectedIndex].handleDes,selectedIndex,isType);
         }else{
           // $scope.sendCmd(cmdvalue,selectedIndex);
         }
       };
       /**
-       *@params:flushOptions(nvyong mode) mSwitchType(turn or off)
+       *@params:flushOptions(nvyong mode) mSwitchType(turn or off) flag(is toiltelight)
        *@disc:use toiltelight Instruction create
        */
-      $scope.tolLightIntionCreate = function (lightStalls,isType,selectedIndex) {
+      $scope.tolLightIntionCreate = function (flag,lightStalls,isType,selectedIndex) {
+        var selectedDataTemp = $scope.handlenapeListNape[selectedIndex];
+        var handleOriginData = selectedDataTemp.handledata;
+        if(!lightStalls){
+          var lightStalls = handleOriginData[1].gearInit;
+        }
         var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx,nimi.bowlLight(lightStalls),tolitercmdObj.ctrId,tolitercmdObj.devId);
         //send instructin
         console.log(cmdvalue)
         if(baseConfig.isCloudCtrl){
-          $scope.toGetImpleteData(cmdvalue,$scope.handlenapeListNape[selectedIndex].handleDes,selectedIndex,isType);
+          $scope.toGetImpleteData(flag,cmdvalue,$scope.handlenapeListNape[selectedIndex].handleDes,selectedIndex,isType);
         }else{
           // $scope.sendCmd(cmdvalue,selectedIndex);
         }
@@ -949,92 +957,100 @@ angular.module('toiletControlModule')
       //档位滑动执行发指令操作
       $scope.radScrollSendDir = function (currentRadObj) {
         if(currentRadObj.id === "nvyong"){
-          $scope.nvyongIntionCreate("女用","正常","ON","1",currentRadObj.selectedIndex);
+          $scope.nvyongIntionCreate("true","女用","正常","ON","1",currentRadObj.selectedIndex);
         }else if(currentRadObj.id === "tunxi"){
-          $scope.nvyongIntionCreate("臀洗","正常","ON","1",currentRadObj.selectedIndex);
+          $scope.nvyongIntionCreate("true","臀洗","正常","ON","1",currentRadObj.selectedIndex);
         }else if(currentRadObj.id === "nuanfeng"){
-          $scope.nuamfenIntionCreate("ON","1",currentRadObj.selectedIndex);
+          $scope.nuamfenIntionCreate("true","ON","1",currentRadObj.selectedIndex);
         }else if(currentRadObj.id === "nuanjiao"){
-          $scope.feetSeatIntionCreate("nuanjiao","","1",currentRadObj.selectedIndex)
+          $scope.feetSeatIntionCreate("true","nuanjiao","","1",currentRadObj.selectedIndex)
         }else if(currentRadObj.id === "quanwen"){
-          $scope.feetSeatIntionCreate("quanwen","","1",currentRadObj.selectedIndex);
+          $scope.feetSeatIntionCreate("true","quanwen","","1",currentRadObj.selectedIndex);
+        }else if(currentRadObj.id === "dengguang"){
+          if(currentRadObj.currentIndex===0){
+            $scope.aroundLightIntionCreate(true,"","1",currentRadObj.selectedIndex);
+          }else{
+            $scope.tolLightIntionCreate(true,"","1",currentRadObj.selectedIndex);
+          }
         };
       };
       //ack back selected hanle
-      $scope.selectChange = function (index,isType) {
-        // 根据选择项来初始化选择项的
-        if(isType == "0"){
-          $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
-          if($scope.handlenapeListNape[index].selecFlag === true){
-            $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgSeledUrl;
-          }else{
-            $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgUrlTemp;
-          };
-          if($scope.handlenapeListNape[index].isManyDirective){
-            if(!$scope.handlenapeListNape[index].selecFlag){
-              $scope.judgeIsHaveHandlesFlag = true;
-              $scope.judgeIsHaveHandles();
-              if($scope.judgeIsHaveHandlesFlag){
-                $scope.currentSlideData = $scope.slideInitData;
+      $scope.selectChange = function (flag,index,isType) {
+        if(flag){
+          // 根据选择项来初始化选择项的
+          if(isType == "0"){
+            $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
+            if($scope.handlenapeListNape[index].selecFlag === true){
+              $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgSeledUrl;
+            }else{
+              $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgUrlTemp;
+            };
+            if($scope.handlenapeListNape[index].isManyDirective){
+              if(!$scope.handlenapeListNape[index].selecFlag){
+                $scope.judgeIsHaveHandlesFlag = true;
+                $scope.judgeIsHaveHandles();
+                if($scope.judgeIsHaveHandlesFlag){
+                  $scope.currentSlideData = $scope.slideInitData;
+                }else{
+                  // reduce
+                  for(var j=0;j<$scope.currentSlideData.length;j++) {
+                    for (var n = 0; n < $scope.handlenapeListNape[index].handledata.length; n++) {
+                      if ($scope.currentSlideData[j].parNodeid === $scope.handlenapeListNape[index].handledata[n].parNodeid) {
+                        $scope.currentSlideData.splice(j, 1);
+                      };
+                    };
+                  };
+                };
               }else{
-                // reduce
-                for(var j=0;j<$scope.currentSlideData.length;j++) {
-                  for (var n = 0; n < $scope.handlenapeListNape[index].handledata.length; n++) {
-                    if ($scope.currentSlideData[j].parNodeid === $scope.handlenapeListNape[index].handledata[n].parNodeid) {
-                      $scope.currentSlideData.splice(j, 1);
-                    }
-                  }
+                //open
+                //repeat scroll
+                if($scope.currentSlideData[0].des === "init"){
+                  $scope.currentSlideData = [];
+                  $scope.handlenapeListNape[index].handledata.forEach(function (item) {
+                    $scope.currentSlideData.push(item);
+                  });
+                }else{
+                  $scope.currentSlideDataTemp = $scope.currentSlideData.concat($scope.handlenapeListNape[index].handledata);
+                  $scope.currentSlideData = [];
+                  $scope.currentSlideDataTemp.forEach(function (item) {
+                    $scope.currentSlideData.push(item);
+                  });
+                };
+                // $ionicSlideBoxDelegate.$getByHandle("boxSlider").slide(0);
+              };
+              $scope.hanleInitTemple(index);
+            }else{
+              if($scope.handlenapeListNape[index].selecFlag){
+                if($scope.handlenapeListNape[index].matchdataid === "clear"){
+                  $scope.value = $scope.Clearvalue;
+                  $scope.toiletController.modelTypeClear = "toiletController.gaunbi";
+                  $scope.openModal();
                 };
               };
-            }else{
-              //open
-              //repeat scroll
-              if($scope.currentSlideData[0].des === "init"){
-                $scope.currentSlideData = [];
-                $scope.handlenapeListNape[index].handledata.forEach(function (item) {
-                  $scope.currentSlideData.push(item);
-                });
-              }else{
-                $scope.currentSlideDataTemp = $scope.currentSlideData.concat($scope.handlenapeListNape[index].handledata);
-                $scope.currentSlideData = [];
-                $scope.currentSlideDataTemp.forEach(function (item) {
-                  $scope.currentSlideData.push(item);
-                });
-              };
-              // $ionicSlideBoxDelegate.$getByHandle("boxSlider").slide(0);
             };
-            $scope.hanleInitTemple(index);
-          }else{
-            if($scope.handlenapeListNape[index].selecFlag){
-              if($scope.handlenapeListNape[index].matchdataid === "clear"){
-                $scope.value = $scope.Clearvalue;
-                $scope.toiletController.modelTypeClear = "toiletController.gaunbi";
-                $scope.openModal();
-              };
+            if(!$scope.handlenapeListNape[index].isManyDirective && $scope.handlenapeListNape[index].matchdataid !== "clear"){
+              $timeout(function () {
+                $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
+                if($scope.handlenapeListNape[index].selecFlag === true){
+                  $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgSeledUrl;
+                }else{
+                  $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgUrlTemp;
+                };
+              },6000)
             };
           };
-          if(!$scope.handlenapeListNape[index].isManyDirective && $scope.handlenapeListNape[index].matchdataid !== "clear"){
-            $timeout(function () {
-              $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
-              if($scope.handlenapeListNape[index].selecFlag === true){
-                $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgSeledUrl;
-              }else{
-                $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgUrlTemp;
-              };
-            },1000)
-          };
-        };
+        }
       };
       /**
        *@params:index(selected index),deviceId(device id),cmdvalue(directive value),name(directive name)
        *@disc:impletemnet get data
        */
-      $scope.toGetImpleteData = function(cmdvalue, name,index,isType){
+      $scope.toGetImpleteData = function(flag,cmdvalue, name,index,isType){
         //cloud
         hmsPopup.showLoading("<span translate='toiletController.loadingdata'></span>");
         $timeout(function () {
           hmsPopup.hideLoading();
-          $scope.selectChange(index,isType);
+          $scope.selectChange(flag,index,isType);
         },1000)
         // hmsPopup.showLoading("<span translate='toiletController.loadingdata'></span>");
         // var url = baseConfig.basePath + "/r/api/message/sendMessage";
@@ -1049,7 +1065,7 @@ angular.module('toiletControlModule')
         //           //
         //         };
         //         $scope.Toast.show($translate.instant($scope.handlenapeListNape[index].handleDes)+$translate.instant("toiletController.directesuccess"));
-        //         $scope.selectChange(index);
+        //         $scope.selectChange(flag,index,isType);
         //       }
         //     }else{
         //       $scope.Toast.show($translate.instant($scope.handlenapeListNape[index].handleDes)+$translate.instant("toiletController.directerror"));
@@ -1103,7 +1119,7 @@ angular.module('toiletControlModule')
           if($scope.hanleMutexFlag){
             if(!$scope.handlenapeListNape[index].isManyDirective){
               if(!$scope.handlenapeListNape[index].selecFlag && $scope.handlenapeListNape[index].matchdataid !== "clear"){
-                $scope.onceTimeIntionCreate("0",index);
+                $scope.onceTimeIntionCreate("true","0",index);
               };
               if($scope.handlenapeListNape[index].matchdataid === "clear") {
                 //close clear
@@ -1120,52 +1136,55 @@ angular.module('toiletControlModule')
                     console.log(cmdvalue)
                     if(baseConfig.isCloudCtrl){
                       var isType = "0";
-                      $scope.toGetImpleteData(cmdvalue,$scope.handlenapeListNape[index].handleDes,index,isType);
+                      $scope.toGetImpleteData(true,cmdvalue,$scope.handlenapeListNape[index].handleDes,index,isType);
                     }else{
                       // $scope.sendCmd(cmdvalue,index);
                     }
                     $scope.toiletController.modelTypeClear = "toiletController.gaunbi"
                   }else{
-                    $scope.selectChange(index,"0");
+                    $scope.selectChange("true",index,"0");
                   }
                 }else{
-                  $scope.selectChange(index,"0");
+                  $scope.selectChange("true",index,"0");
                 }
               }
             }else{
               //use instruction create
               if($scope.handlenapeListNape[index].matchdataid === "nvyong"){
                 if(!$scope.handlenapeListNape[index].selecFlag){
-                  $scope.nvyongIntionCreate("女用","正常","ON","0",index);
+                  $scope.nvyongIntionCreate(true,"女用","正常","ON","0",index);
                 }else{
-                  $scope.nvyongIntionCreate("女用","正常","OFF","0",index);
+                  $scope.nvyongIntionCreate(true,"女用","正常","OFF","0",index);
                 };
               }else if($scope.handlenapeListNape[index].matchdataid === "tunxi"){
                 if(!$scope.handlenapeListNape[index].selecFlag){
-                  $scope.nvyongIntionCreate("臀洗","正常","ON","0",index);
+                  $scope.nvyongIntionCreate(true,"臀洗","正常","ON","0",index);
                 }else{
-                  $scope.nvyongIntionCreate("臀洗","正常","OFF","0",index);
+                  $scope.nvyongIntionCreate(true,"臀洗","正常","OFF","0",index);
                 };
               }else if($scope.handlenapeListNape[index].matchdataid === "nuanfen"){
                 if(!$scope.handlenapeListNape[index].selecFlag){
-                  $scope.nuamfenIntionCreate("ON","0",index);
+                  $scope.nuamfenIntionCreate(true,"ON","0",index);
                 }else{
-                  $scope.nuamfenIntionCreate("OFF","0",index);
+                  $scope.nuamfenIntionCreate(true,"OFF","0",index);
                 };
               }else if($scope.handlenapeListNape[index].matchdataid === "nuanjiao" || $scope.handlenapeListNape[index].matchdataid === "quanwen"){
                 if(!$scope.handlenapeListNape[index].selecFlag){
-                  $scope.feetSeatIntionCreate("",2,"0",index);
+                  $scope.feetSeatIntionCreate(true,"",2,"0",index);
                 }else{
-                  $scope.feetSeatIntionCreate("",1,"0",index);
+                  $scope.feetSeatIntionCreate(true,"",1,"0",index);
                 };
               }else if($scope.handlenapeListNape[index].matchdataid === "dengguang"){
                 if(!$scope.handlenapeListNape[index].selecFlag){
-                  $scope.aroundLightIntionCreate(4,"0",index);
-                  // $timeout(function () {
-                  //   $scope.tolLightIntionCreate(5,"0",index);
-                  // },400)
+                  $scope.aroundLightIntionCreate(true,"低","0",index);
+                  $timeout(function () {
+                    $scope.tolLightIntionCreate(false,5,"0",index);
+                  },400)
                 }else{
-                  $scope.tolLightIntionCreate(0,"0",index);
+                  $scope.aroundLightIntionCreate(true,'关',"0",index);
+                  $timeout(function () {
+                    $scope.tolLightIntionCreate(false,0,"0",index);
+                  },400)
                 };
               };
             };
@@ -1238,9 +1257,9 @@ angular.module('toiletControlModule')
               };
             })
             if($scope.handlenapeListNape[2].selecFlag){
-              $scope.nvyongIntionCreate("女用",desTemp,"ON","1",2);
+              $scope.nvyongIntionCreate("true","女用",desTemp,"ON","1",2);
             }else if($scope.handlenapeListNape[3].selecFlag){
-              $scope.nvyongIntionCreate("臀洗",desTemp,"ON","1",3);
+              $scope.nvyongIntionCreate("true","臀洗",desTemp,"ON","1",3);
             }
           };
           $scope.valueTemp = val;
@@ -1261,7 +1280,7 @@ angular.module('toiletControlModule')
             console.log(cmdvalue)
             if(baseConfig.isCloudCtrl){
               var isType = "1";
-              $scope.toGetImpleteData(cmdvalue,$scope.handlenapeListNape[11].handleDes,11,isType);
+              $scope.toGetImpleteData(true,cmdvalue,$scope.handlenapeListNape[11].handleDes,11,isType);
             }else{
               // $scope.sendCmd(cmdvalue,11);
             }

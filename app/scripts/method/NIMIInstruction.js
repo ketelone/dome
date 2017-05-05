@@ -17,6 +17,8 @@ var config = {
   "REAR": "臀洗",
   //烘干 Dry
   "DRY": "暖风",
+  //命令成功
+  "ACK_SUCCESS": "1000",
   //命令拒绝
   "ACK_REFUSE": "1001",
   //数据错误
@@ -204,6 +206,7 @@ NIMI.prototype.cleanWand = function (mSwitchType, hour, minute, dateSwitch, MOM,
  * @returns {string}
  */
 NIMI.prototype.ambientLight = function (lightMode, lightCtl, dynamicCtl, MOMC, TUEC, WEDC, THUC, FRIC, SATC, SUMC) {
+  console.log("lightCtl"+lightCtl)
   var cmd = "11";
   var param_one = "";
   var mLightCtl = "";
@@ -238,7 +241,7 @@ NIMI.prototype.ambientLight = function (lightMode, lightCtl, dynamicCtl, MOMC, T
     case '高':
       mLightCtl = "1010";
       break;
-  };
+  }
   mSUMC = getDataByColor(SUMC);
   mMOMC = getDataByColor(MOMC);
   mTUEC = getDataByColor(TUEC);
@@ -253,6 +256,7 @@ NIMI.prototype.ambientLight = function (lightMode, lightCtl, dynamicCtl, MOMC, T
     + getHex("0" + mSATC + "0" + mFRIC);
   return cmd;
 };
+
 /**
  * 通过颜色获取相应的指令数据
  * @param color
@@ -285,246 +289,252 @@ function getDataByColor(color) {
     case "Pantone556":
       data = config.Pantone556;
       break;
-      return data;
   }
+  return data;
 }
 
-  /**
-   * 坐便灯
-   * @param{int} lightStalls 灯光档位 {0,4,,8,12,15} [15表示 learn by self]
-   * @returns {string}
-   */
-  NIMI.prototype.bowlLight = function (lightStalls) {
-    var cmd = "18";
-    cmd += "0" + getHex(fourBitToCheck(lightStalls.toString(2))) + "00" + "00" + "00";
-    return cmd;
+/**
+ * 坐便灯
+ * @param{int} lightStalls 灯光档位 {0,4,,8,12,15} [15表示 learn by self]
+ * @returns {string}
+ */
+NIMI.prototype.bowlLight = function (lightStalls) {
+  var cmd = "18";
+  cmd += "0" + getHex(fourBitToCheck(lightStalls.toString(2))) + "00" + "00" + "00";
+  return cmd;
+};
+
+/**
+ * 设置
+ * @param welcome
+ * @param nightLight 夜灯 {ON,OFF}
+ * @param bowlLight 坐便灯 {ON,OFF}
+ * @param autoFlush 自动冲洗 {ON,OFF}
+ * @param PRWash 前缘冲洗 {ON,OFF}
+ * @param autoOpenClose 自动感应距离 {ON,OFF}
+ * @param deodorizer 智能除臭 {ON,OFF}
+ * @param trap 自动开关盖
+ * @param sound 声音
+ * @returns {string}
+ */
+NIMI.prototype.setting = function (welcome, nightLight, bowlLight, autoFlush, PRWash, autoOpenClose, deodorizer, trap, sound) {
+  var cmd = "0A";
+  var mWelcome = "0";
+  (welcome == config.ON) ? mWelcome = "1" : mWelcome = "0";
+  var mNightLight = "0";
+  (nightLight == config.ON) ? mNightLight = "1" : mNightLight = "0";
+  var mBowlLight = "0";
+  (bowlLight == config.ON) ? mBowlLight = "1" : mBowlLight = "0";
+  var mAutoFlush = "0";
+  (autoFlush == config.ON) ? mAutoFlush = "1" : mAutoFlush = "0";
+  var mPRWash = "0";
+  (PRWash == config.ON) ? mPRWash = "1" : mPRWash = "0";
+  var mAutoOpenClose = "0";
+  (autoOpenClose == config.ON) ? mAutoOpenClose = "1" : mAutoOpenClose = "0";
+  var mDeodorizer = "0";
+  (deodorizer == config.ON) ? mDeodorizer = "1" : mDeodorizer = "0";
+  var mTrap = "0";
+  (trap == config.ON) ? mTrap = "1" : mTrap = "0";
+  var mSound = "0";
+  (sound == config.ON) ? mSound = "1" : mSound = "0";
+  cmd += getHex(mWelcome + mNightLight + mBowlLight + mAutoFlush + mPRWash + mAutoOpenClose + mDeodorizer + mTrap);
+  cmd += getHex("0" + mSound + "000000");
+  cmd += "00" + "00";
+  return cmd;
+};
+
+/**
+ * 节能模式 延时状态
+ * @param delayTime
+ * @returns {string}
+ */
+NIMI.prototype.powerSaveDelay = function (delayTime) {
+  var cmd = "0C";
+  cmd += getHex("0" + fourBitToCheck(delayTime.toString(2)) + "000") + "00" + "00" + "00";
+  return cmd;
+};
+
+/**
+ * 节能模式 Schedule状态
+ * @param startTime
+ * @param startMin
+ * @param endTime
+ * @param endMin
+ * @returns {string}
+ */
+NIMI.prototype.powerSaveSchedule = function (startTime, startMin, endTime, endMin) {
+  var cmd = "0C";
+  cmd += getHex("1" + fiveBitToCheck(startTime.toString(2)) + sixBitToCheck(startMin.toString(2))
+      + fiveBitToCheck(endTime.toString(2)) + sixBitToCheck(endMin.toString(2)) + "0") + "FE";
+  return cmd;
+};
+
+/**
+ * 解析指令入口
+ * @param cmd
+ */
+NIMI.prototype.analysisInstruction = function (cmd) {
+  var code;
+  if (arg.length >= 16 && arg.length <= 40) {
+    var ackStr = arg.substring(12, arg.length - 2);
+    var ack = ackStr.substring(0, 2).toLowerCase();
+    var operate = ackStr.substring(2, 4);
+    if (ack == "fa") {
+      code = {"ack": config.ACK_SUCCESS, "cmd": operate, "flag": "ack"};
+    } else if (ack == "fb") {
+      code = {"ack": config.ACK_REFUSE, "cmd": operate, "flag": "ack"};
+    } else if (ack == "fc") {
+      code = {"ack": config.ACK_DATA_ERROR, "cmd": operate, "flag": "ack"};
+    } else if (ack == "fd") {
+      code = {"ack": config.ACK_PKG_ERROR, "cmd": operate, "flag": "ack"};
+    } else if (ack == "98") {
+      code = analysisToiletStatus(ackStr);
+    } else if (ack == "87") {
+      code = analysisSanitizeStatus(ackStr);
+    }
+  } else {
+    code = {"ack": config.ACK_PKG_ERROR};
+  }
+  return code;
+};
+
+/**
+ * 解析返回命令字为98的数据 指设备状态的返回
+ * 当flushStatus 为正在冲水时 flushType分大冲小冲 0-小冲 1-大冲
+ * @param ackStr
+ */
+NIMI.prototype.analysisToiletStatus = function (ackStr) {
+  var mJson;
+  var data = ackStr.substring(2, ackStr.length);
+  var param_one = byteToCheck(data.substring(0, 2).toString(2));
+  var param_second = byteToCheck(data.substring(2, 4).toString(2));
+  var param_third = byteToCheck(data.substring(4, 6).toString(2));
+  var param_fourth = byteToCheck(data.substring(6, 8).toString(2));
+  var param_fifth = byteToCheck(data.substring(8, 10).toString(2));
+  var flushStatus = param_one.substring(0, 3);
+  var lidRingStatus = param_one.substring(3, 6);
+  var dryerStatus = param_one.substring(7, 8);
+  var feetHeater = param_second.substring(0, 1);
+  var seatedStatus = param_second.substring(1, 2);
+  var powerSaveStatus = param_second.substring(3, 4);
+  var motherboardSystemStatus = param_second.substring(5, 8);
+  var hasBattery = param_third.substring(2, 3);
+  var fontStatus = param_third.substring(3, 4);
+  var rearStatus = param_third.substring(4, 5);
+  var ambientStatus = param_third.substring(6, 7);
+  var flushType = param_third.substring(7, 8);
+  var wandStatus = param_fourth.substring(0, 1);
+  var UVProgressStatus = param_fourth.substring(1, 3);
+  var ballValve = param_fourth.substring(3, 4);
+  var powerSaveLearnByUser = param_fifth.substring(0, 3);
+  mJson = {
+    "flag": "status", "cmd": "98",
+    "flushStatus": flushStatus, "lidRingStatus": lidRingStatus, "dryerStatus": dryerStatus,
+    "feetHeater": feetHeater, "seatedStatus": seatedStatus, "powerSaveStatus": powerSaveStatus,
+    "motherboardSystemStatus": motherboardSystemStatus, "hasBattery": hasBattery, "fontStatus": fontStatus,
+    "rearStatus": rearStatus, "ambientStatus": ambientStatus, "flushType": flushType, "wandStatus": wandStatus,
+    "UVProgressStatus": UVProgressStatus, "ballValve": ballValve, "powerSaveLearnByUser": powerSaveLearnByUser
   };
-  /**
-   * 设置
-   * @param welcome
-   * @param nightLight 夜灯 {ON,OFF}
-   * @param bowlLight 坐便灯 {ON,OFF}
-   * @param autoFlush 自动冲洗 {ON,OFF}
-   * @param PRWash 前缘冲洗 {ON,OFF}
-   * @param autoOpenClose 自动感应距离 {ON,OFF}
-   * @param deodorizer 智能除臭 {ON,OFF}
-   * @param trap 自动开关盖
-   * @param sound 声音
-   * @returns {string}
-   */
-  NIMI.prototype.setting = function (welcome, nightLight, bowlLight, autoFlush, PRWash, autoOpenClose, deodorizer, trap, sound) {
-    var cmd = "0A";
-    var mWelcome = "0";
-    (welcome == config.ON) ? mWelcome = "1" : mWelcome = "0";
-    var mNightLight = "0";
-    (nightLight == config.ON) ? mNightLight = "1" : mNightLight = "0";
-    var mBowlLight = "0";
-    (bowlLight == config.ON) ? mBowlLight = "1" : mBowlLight = "0";
-    var mAutoFlush = "0";
-    (autoFlush == config.ON) ? mAutoFlush = "1" : mAutoFlush = "0";
-    var mPRWash = "0";
-    (PRWash == config.ON) ? mPRWash = "1" : mPRWash = "0";
-    var mAutoOpenClose = "0";
-    (autoOpenClose == config.ON) ? mAutoOpenClose = "1" : mAutoOpenClose = "0";
-    var mDeodorizer = "0";
-    (deodorizer == config.ON) ? mDeodorizer = "1" : mDeodorizer = "0";
-    var mTrap = "0";
-    (trap == config.ON) ? mTrap = "1" : mTrap = "0";
-    var mSound = "0";
-    (sound == config.ON) ? mSound = "1" : mSound = "0";
-    cmd += getHex(mWelcome + mNightLight + mBowlLight + mAutoFlush + mPRWash + mAutoOpenClose + mDeodorizer + mTrap);
-    cmd += getHex("0" + mSound + "000000");
-    cmd += "00" + "00";
-    return cmd;
-  };
-  /**
-   * 节能模式 延时状态
-   * @param delayTime
-   * @returns {string}
-   */
-  NIMI.prototype.powerSaveDelay = function (delayTime) {
-    var cmd = "0C";
-    cmd += getHex("0" + fourBitToCheck(delayTime.toString(2)) + "000") + "00" + "00" + "00";
-    return cmd;
-  };
+  return mJson;
+};
 
-  /**
-   * 节能模式 Schedule状态
-   * @param startTime
-   * @param startMin
-   * @param endTime
-   * @param endMin
-   * @returns {string}
-   */
-  NIMI.prototype.powerSaveSchedule = function (startTime, startMin, endTime, endMin) {
-    var cmd = "0C";
-    cmd += getHex("1" + fiveBitToCheck(startTime.toString(2)) + sixBitToCheck(startMin.toString(2))
-        + fiveBitToCheck(endTime.toString(2)) + sixBitToCheck(endMin.toString(2)) + "0") + "FE";
-    return cmd;
-  };
-  /**
-   * 解析指令入口
-   * @param cmd 8877
-   */
-  NIMI.prototype.analysisInstruction = function (cmd) {
-    var code;
-    if (arg.length >= 16 && arg.length <= 40) {
-      var ackStr = arg.substring(12, arg.length - 2);
-      var ack = ackStr.substring(0, 2).toLowerCase();
-      if (ack == "fa") {
-        var operate = ackStr.substring(0, 4);
-        code = {"ack": operate};
-      } else if (ack == "fb") {
-        code = {"ack": config.ACK_REFUSE};
-      } else if (ack == "fc") {
-        code = {"ack": config.ACK_DATA_ERROR};
-      } else if (ack == "fd") {
-        code = {"ack": config.ACK_PKG_ERROR};
-      } else if (ack == "98") {
-        code = analysisToiletStatus(ackStr);
-      } else if (ack == "87") {
-        code = analysisSanitizeStatus(ackStr);
-      }
-    } else {
-      code = {"ack": config.ACK_PKG_ERROR};
+/**
+ * 一键除菌状态返回
+ * @param ackStr
+ */
+NIMI.prototype.analysisSanitizeStatus = function (ackStr) {
+  var mJson;
+  var data = ackStr.substring(2, ackStr.length);
+  var param_one = byteToCheck(data.substring(0, 2).toString(2));
+  var UVStatus = param_one.substring(4, 8);
+  var hour = parseInt(data.substring(2, 4), 16);
+  var minute = parseInt(data.substring(4, 6), 16);
+  var second = parseInt(data.substring(6, 8), 16);
+  mJson = {"flag": "status", "cmd": "87", "UVStatus": UVStatus, "hour": hour, "minute": minute, "second": second};
+  return mJson;
+};
+
+/**
+ * 16进制转2进制补零
+ * @param data
+ */
+function byteToCheck(data) {
+  if (data.length < 8) {
+    var l = 8 - data.length;
+    for (var i = 0; i < l; i++) {
+      data = "0" + data;
     }
-    return code;
-  };
-  /**
-   * 解析返回命令字为98的数据 指设备状态的返回
-   * 当flushStatus 为正在冲水时 flushType分大冲小冲 0-小冲 1-大冲
-   * @param ackStr
-   */
-  NIMI.prototype.analysisToiletStatus = function (ackStr) {
-    var mJson;
-    var data = ackStr.substring(2, ackStr.length);
-    var param_one = byteToCheck(data.substring(0, 2).toString(2));
-    var param_second = byteToCheck(data.substring(2, 4).toString(2));
-    var param_third = byteToCheck(data.substring(4, 6).toString(2));
-    var param_fourth = byteToCheck(data.substring(6, 8).toString(2));
-    var param_fifth = byteToCheck(data.substring(8, 10).toString(2));
-    var flushStatus = param_one.substring(0, 3);
-    var lidRingStatus = param_one.substring(3, 6);
-    var dryerStatus = param_one.substring(7, 8);
-    var feetHeater = param_second.substring(0, 1);
-    var seatedStatus = param_second.substring(1, 2);
-    var powerSaveStatus = param_second.substring(3, 4);
-    var motherboardSystemStatus = param_second.substring(5, 8);
-    var hasBattery = param_third.substring(2, 3);
-    var fontStatus = param_third.substring(3, 4);
-    var rearStatus = param_third.substring(4, 5);
-    var ambientStatus = param_third.substring(6, 7);
-    var flushType = param_third.substring(7, 8);
-    var wandStatus = param_fourth.substring(0, 1);
-    var UVProgressStatus = param_fourth.substring(1, 3);
-    var ballValve = param_fourth.substring(3, 4);
-    var powerSaveLearnByUser = param_fifth.substring(0, 3);
-    mJson = {
-      "flushStatus": flushStatus, "lidRingStatus": lidRingStatus, "dryerStatus": dryerStatus,
-      "feetHeater": feetHeater, "seatedStatus": seatedStatus, "powerSaveStatus": powerSaveStatus,
-      "motherboardSystemStatus": motherboardSystemStatus, "hasBattery": hasBattery, "fontStatus": fontStatus,
-      "rearStatus": rearStatus, "ambientStatus": ambientStatus, "flushType": flushType, "wandStatus": wandStatus,
-      "UVProgressStatus": UVProgressStatus, "ballValve": ballValve, "powerSaveLearnByUser": powerSaveLearnByUser
-    };
-    return mJson;
-  };
-  /**
-   * 一键除菌状态返回
-   * @param ackStr
-   */
-  NIMI.prototype.analysisSanitizeStatus = function (ackStr) {
-    var mJson;
-    var data = ackStr.substring(2, ackStr.length);
-    var param_one = byteToCheck(data.substring(0, 2).toString(2));
-    var UVStatus = param_one.substring(4, 8);
-    var hour = parseInt(data.substring(2, 4), 16);
-    var minute = parseInt(data.substring(4, 6), 16);
-    var second = parseInt(data.substring(6, 8), 16);
-    mJson = {"UVStatus": UVStatus, "hour": hour, "minute": minute, "second": second};
-    return mJson;
   }
+  return data;
+}
 
-  /**
-   * 16进制转2进制补零
-   * @param data
-   */
-  function byteToCheck(data) {
-    if (data.length < 8) {
-      var l = 8 - data.length;
-      for (var i = 0; i < l; i++) {
-        data = "0" + data;
-      }
+/**
+ * 十进制转二进制 六位补零
+ * @param {String} data
+ */
+function sixBitToCheck(data) {
+  if (data.length < 6) {
+    var l = 6 - data.length;
+    for (var i = 0; i < l; i++) {
+      data = "0" + data;
     }
-    return data;
   }
+  return data;
+}
 
-  /**
-   * 十进制转二进制 六位补零
-   * @param {String} data
-   */
-  function sixBitToCheck(data) {
-    if (data.length < 6) {
-      var l = 6 - data.length;
-      for (var i = 0; i < l; i++) {
-        data = "0" + data;
-      }
+/**
+ * 十进制转二进制 四位补零
+ * @param {String} data
+ */
+function fourBitToCheck(data) {
+  if (data.length < 4) {
+    var l = 4 - data.length;
+    for (var i = 0; i < l; i++) {
+      data = "0" + data;
     }
-    return data;
   }
+  return data;
+}
 
-  /**
-   * 十进制转二进制 四位补零
-   * @param {String} data
-   */
-  function fourBitToCheck(data) {
-    if (data.length < 4) {
-      var l = 4 - data.length;
-      for (var i = 0; i < l; i++) {
-        data = "0" + data;
-      }
+/**
+ * 十进制转二进制 五位补零
+ * @param {String} data
+ */
+function fiveBitToCheck(data) {
+  if (data.length < 5) {
+    var l = 5 - data.length;
+    for (var i = 0; i < l; i++) {
+      data = "0" + data;
     }
-    return data;
   }
+  return data;
+}
 
-  /**
-   * 十进制转二进制 五位补零
-   * @param {String} data
-   */
-  function fiveBitToCheck(data) {
-    if (data.length < 5) {
-      var l = 5 - data.length;
-      for (var i = 0; i < l; i++) {
-        data = "0" + data;
-      }
-    }
-    return data;
+/**
+ * 按byte获取十六进制
+ * @param {String} bin
+ */
+function getHex(bin) {
+  var hex = "";
+  for (var i = 0; i < bin.length; i += 4) {
+    var h = bin.substring(i, i + 4);
+    hex += parseInt(h, 2).toString(16).toUpperCase();
   }
+  return hex;
+}
 
-  /**
-   * 按byte获取十六进制
-   * @param {String} bin
-   */
-  function getHex(bin) {
-    var hex = "";
-    for (var i = 0; i < bin.length; i += 4) {
-      var h = bin.substring(i, i + 4);
-      hex += parseInt(h, 2).toString(16).toUpperCase();
-    }
-    return hex;
+/**
+ * 十六进制补0
+ * @param {String} d
+ */
+function doStr(d) {
+  if (d.length % 2 != 0) {
+    d = "0" + d;
   }
+  return d;
+}
 
-  /**
-   * 十六进制补0
-   * @param {String} d
-   */
-  function doStr(d) {
-    if (d.length % 2 != 0) {
-      d = "0" + d;
-    }
-    return d;
-  }
-
-  function RoController(){};
+function RoController(){};
 
   RoController.prototype._data={
     stopAll:"00", //停止所有功能。
