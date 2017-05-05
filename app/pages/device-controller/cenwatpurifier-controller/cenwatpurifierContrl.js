@@ -29,6 +29,7 @@ angular.module('toiletControlModule')
         publicMethod.goBack();
       };
       var cenwapurcmdObj = {
+        boxid:localStorage.boxIp,
         diviceid:'',
         header:'8877',
         idx:Date.parse(new Date()) / 1000,
@@ -46,10 +47,9 @@ angular.module('toiletControlModule')
         unconnected:"cenwatpurifier.unConnected",
         connectStatus:"cenwatpurifier.readyConnected",
         //clear
-        clearSurplus:"cenwatpurifier.surplus",
         clearComplete:"cenwatpurifier.complete",
         clearStatus:"cenwatpurifier.surplus",
-        clearData:"1:34",
+        clearData:"cenwatpurifier.surplus",
         isShwoClearStatus:true
       }
       /*
@@ -58,7 +58,6 @@ angular.module('toiletControlModule')
        **/
       $scope.slideInitData =[{
         des: "init",
-        parameterctlFlag: false,
         parNodeid: 'toilet-initCtl',
         canves01: "initcanves01",
         canves03: "initcanves03",
@@ -96,12 +95,10 @@ angular.module('toiletControlModule')
       /**
        *
        set dang qian ce hau shu ju zhi
-       设置当前侧滑数据为侧滑初始化数据
        */
       $scope.currentSlideData = $scope.slideInitData;
       /**
        init dang qian mo ban shu ju
-       初始化当前模板数据
        */
       $scope.lockSlide = function () {
         $ionicSlideBoxDelegate.enableSlide( false );
@@ -125,9 +122,8 @@ angular.module('toiletControlModule')
           "<div class='toilet-parameterctl-data' ng-if='!list.parameterctlFlag'>"+
           "<p ng-if='cenwatpurifierCtrl.isShwoClearStatus' class='toilet-parameterctl-raddata' translate={{cenwatpurifierCtrl.connectStatus}}></p>"+
           "<span ng-if='cenwatpurifierCtrl.isShwoClearStatus' class='toilet-parameterctl-des' translate='cenwatpurifier.status'></span>"+
-
-          "<span ng-if='!cenwatpurifierCtrl.isShwoClearStatus' class='toilet-parameterctl-raddata toilet-parameterct-span' translate={{cenwatpurifierCtrl.clearStatus}}></span>"+
-          "<p ng-if='!cenwatpurifierCtrl.isShwoClearStatus' class='toilet-parameterctl-raddata' style='font-size: 0.6rem;' ng-bind='cenwatpurifierCtrl.clearData'></p>"+
+          // "<span ng-if='!cenwatpurifierCtrl.isShwoClearStatus' class='toilet-parameterctl-raddata toilet-parameterct-span' translate={{cenwatpurifierCtrl.clearStatus}}></span>"+
+          "<p ng-if='!cenwatpurifierCtrl.isShwoClearStatus' class='toilet-parameterctl-raddata' style='font-size: 0.4rem;' translate={{cenwatpurifierCtrl.clearData}}></p>"+
           "<span ng-if='!cenwatpurifierCtrl.isShwoClearStatus' class='toilet-parameterctl-des' translate='cenwatpurifier.clear'></span>"+
           "</div>"+
           "<div class='toilet-parameterctl-dataimg' ng-if='list.parameterctlFlag'>"+
@@ -185,49 +181,34 @@ angular.module('toiletControlModule')
         };
         $scope.getCurrentObj(0);
       },20);
+
+
+      /**
+       *@params:
+       *@disc:accept ack or status;
+       */
       document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
         var resultOn = result[0];
-        if(resultOn.from.uid ===cenwapurcmdObj.diviceid){
-          if (resultOn.data.cmd.length > 0) {
-            var tempData = bathroomCmdService.explainAck(resultOn.data.cmd[0]);
-            // if(tempData.temperature){
-            //   $scope.temperate = parseInt(tempData.temperature,16) + "℃";
-            //   $scope.tempPercent = parseInt(tempData.humidity,16) + "%";
-            // }
-            // var heater = bathroomCmdService.explainHeaterStatus(resultOn.data.cmd[0]);
-            // if(heater.status){
-            // }
-            // explainCurrentOperate(resultOn.data.cmd[0]);
-            // $scope.$apply();
-          }
-        }
-
+        if(resultOn.from.uid === cenwapurcmdObj.diviceid){
+          if (resultOn.data.cmd) {
+            var backDataCmd = lightsetting.analysisInstruction(resultOn.data.cmd[0]);
+            if(backDataCmd.flag === "ack"){
+              if(backDataCmd.cmd === "13"){
+                var name = "cenwatpurifier.autoclear";
+              }else{
+                var name = "";
+              }
+              if(backDataCmd.ack === "fa"){
+                $scope.selectChange(index);
+                $scope.Toast.show($translate.instant(name)+$translate.instant("golabelvariable.directesuccess"));
+              }else{
+                $scope.Toast.show($translate.instant(name)+$translate.instant("golabelvariable.directerror"));
+              };
+            }
+            $scope.$apply();
+          };
+        };
       }, false);
-      // //发送指令
-      // cmdService.sendCmd(deviceId,cmdvalue,boxId);
-
-      // $scope.sendCmd = function (cmdvalue,name) {
-      //   hmsPopup.showLoading("<span translate='cenwatpurifier.loadingdata'></span>");
-      //   cordova.plugins.SocketPlugin.tcpSendCmd({
-      //     "timeout": "5000",
-      //     "value": cmdService.cloudCmd(cmdvalue,$scope.handlenapeListNape[index].cloudId)
-      //   }, success, error);
-      //   function success(response) {
-      //     //resolve
-      //     if(response.code == 200){
-      //       if(value.ack.toLowerCase() == "fa27"){
-      //         $scope.Toast.show($translate.instant($scope.handlenapeListNape[index].handleDes)+$translate.instant("cenwatpurifier.directesuccess"));
-      //         $scope.selectChange(index);
-      //       }
-      //     }else{
-      //       $scope.Toast.show($translate.instant($scope.handlenapeListNape[index].handleDes)+$translate.instant("cenwatpurifier.directerror"));
-      //     }
-      //   };
-      //   function error() {
-      //     hmsPopup.hideLoading();
-      //     $scope.Toast.show($translate.instant($scope.handlenapeListNape[index].handleDes)+$translate.instant("cenwatpurifier.loadingdataerrror"));
-      //   };
-      // };
       /**
        *@params:index(selected index),deviceId(device id),cmdvalue(directive value),name(directive name)
        *@disc:impletemnet get data
@@ -283,9 +264,8 @@ angular.module('toiletControlModule')
               $scope.cpGetImpleteData(cmdvalue,name,index);
             }else{
               //divice sen cmd
-              // $scope.sendCmd(cmdvalue,"")
-              //发送指令
-              // cmdService.sendCmd(deviceId,cmdvalue,boxId);
+              //cmdService.sendCmd(deviceId,cmdvalue,boxId);
+              cmdService.sendCmd(lighttersetcmdObj.diviceid, cmdvalue, cenwapurcmdObj.boxid);
             };
           }else{
             var cmdvalue = getCmd(cenwapurcmdObj.header,cenwapurcmdObj.idx,cenwatpurDir._data.stopOutlet,cenwapurcmdObj.ctrId,cenwapurcmdObj.devId);
@@ -294,8 +274,8 @@ angular.module('toiletControlModule')
               $scope.cpGetImpleteData(cmdvalue,name,index);
             }else{
               //divice sen cmd
-              // $scope.sendCmd(cmdvalue,"")
               // cmdService.sendCmd(deviceId,cmdvalue,boxId);
+              cmdService.sendCmd(lighttersetcmdObj.diviceid, cmdvalue, cenwapurcmdObj.boxid);
             };
           };
         };

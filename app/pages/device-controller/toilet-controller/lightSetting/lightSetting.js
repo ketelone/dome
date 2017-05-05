@@ -24,6 +24,7 @@ angular.module('toiletControlModule')
               hmsHttp
     ) {
       var lighttersetcmdObj = {
+        boxid:localStorage.boxIp,
         diviceid:'8BE850C2',
         header:'8877',
         idx:1,
@@ -141,32 +142,32 @@ angular.module('toiletControlModule')
         publicMethod.goBack();
       };
       /**
-       *@params:cmdvalue(value) type(chu fa type) name(current chu fa name)
-       *@disc:send Instruction;
+       *@params:
+       *@disc:accept ack or status;
        */
-      $scope.sendCmd = function (cmdvalue,name) {
-        hmsPopup.showLoading("<span translate='lightSetting.loadingdata'></span>");
-        cordova.plugins.SocketPlugin.tcpSendCmd({
-          "timeout": "5000",
-          paramter :cmdService.cloudCmd(cmdvalue,$scope.handlenapeListNape[index].cloudId)
-        }, success, error);
-        function success(response) {
-          hmsPopup.hideLoading();
-          if(response.code == 200){
-            if(value.ack.toLowerCase() == "fa27"){
-              $scope.Toast.show(name+$translate.instant("lightSetting.directesuccess"));
-              $scope.lightnightmode = !$scope.lightnightmode;
-              console.log($scope.lightnightmode)
+      document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
+        var resultOn = result[0];
+        if(resultOn.from.uid === lighttersetcmdObj.diviceid){
+          if (resultOn.data.cmd) {
+            var backDataCmd = lightsetting.analysisInstruction(resultOn.data.cmd[0]);
+            if(backDataCmd.flag === "ack"){
+              var name = "lightSetting.settingsucc";
+              // if(backDataCmd.cmd === "13"){
+              //   var name = "lightSetting.settingsucc";
+              // }else{
+              //   var name = "";
+              // };
+              if(backDataCmd.ack === "fa"){
+                $scope.Toast.show($translate.instant(name)+$translate.instant("golabelvariable.directesuccess"));
+                $scope.lightnightmode = !$scope.lightnightmode;
+              }else{
+                $scope.Toast.show($translate.instant(name)+$translate.instant("golabelvariable.directerror"));
+              };
             }
-          }else{
-            $scope.Toast.show(name+$translate.instant("lightSetting.directerror"));
-          }
+            $scope.$apply();
+          };
         };
-        function error() {
-          hmsPopup.hideLoading();
-          $scope.Toast.show(name + $translate.instant("lightSetting.loadingdataerrror"));
-        };
-      };
+      }, false);
       /**
        *@params:cmdvalue(value) type(chu fa type) name(current chu fa name)
        *@disc:send clound Instruction;
@@ -179,26 +180,26 @@ angular.module('toiletControlModule')
           $scope.Toast.show("发生指令成功");
           $scope.lightnightmode = !$scope.lightnightmode;
         },1000)
-        hmsPopup.showLoading("<span translate='cleargearPlan.loadingdata'></span>");
-        var url = baseConfig.basePath + "/r/api/message/sendMessage";
-        var paramter = cmdService.cloudCmd(cmdvalue,$scope.handlenapeListNape[index].cloudId);
-        hmsHttp.post(url, paramter).success(
-          function(response){
-            hmsPopup.hideLoading();
-            //resolve
-            if(response.code == 200){
-              if(value.ack.toLowerCase() == "fa27"){
-                $scope.Toast.show(name+$translate.instant("cleargearPlan.directesuccess"));
-                $scope.lightnightmode = !$scope.lightnightmode;
-              }
-            }else{
-              $scope.Toast.show(name+$translate.instant("cleargearPlan.directerror"));
-            }
-          }).
-        error(function () {
-          hmsPopup.hideLoading();
-          $scope.Toast.show(name + $translate.instant("cleargearPlan.loadingdataerrror"));
-        })
+        // hmsPopup.showLoading("<span translate='cleargearPlan.loadingdata'></span>");
+        // var url = baseConfig.basePath + "/r/api/message/sendMessage";
+        // var paramter = cmdService.cloudCmd(cmdvalue,$scope.handlenapeListNape[index].cloudId);
+        // hmsHttp.post(url, paramter).success(
+        //   function(response){
+        //     hmsPopup.hideLoading();
+        //     //resolve
+        //     if(response.code == 200){
+        //       if(value.ack.toLowerCase() == "fa27"){
+        //         $scope.Toast.show(name+$translate.instant("cleargearPlan.directesuccess"));
+        //         $scope.lightnightmode = !$scope.lightnightmode;
+        //       }
+        //     }else{
+        //       $scope.Toast.show(name+$translate.instant("cleargearPlan.directerror"));
+        //     }
+        //   }).
+        // error(function () {
+        //   hmsPopup.hideLoading();
+        //   $scope.Toast.show(name + $translate.instant("cleargearPlan.loadingdataerrror"));
+        // })
       };
       /**
        *@disc:night light set
@@ -213,6 +214,7 @@ angular.module('toiletControlModule')
             $scope.toilSetGetImpleteData(cmdvalue,$translate.instant("lightSetting.lightmode"));
           }else{
             // $scope.sendCmd(cmdvalue,$translate.instant("lightSetting.lightmode"));
+            cmdService.sendCmd(lighttersetcmdObj.diviceid, cmdvalue, lighttersetcmdObj.boxid);
           };
         }else{
           var cmdvalue = cmdService.getCmd(lighttersetcmdObj.header,lighttersetcmdObj.idx,lightsetting.setting("OFF", "OFF", "OFF", "OFF", "OFF", "OFF", "OFF", "OFF", "OFF"),lighttersetcmdObj.ctrId,lighttersetcmdObj.devId);
@@ -222,6 +224,7 @@ angular.module('toiletControlModule')
             $scope.toilSetGetImpleteData(cmdvalue,$translate.instant("lightSetting.lightmode"));
           }else{
             // $scope.sendCmd(cmdvalue,$translate.instant("lightSetting.lightmode"));
+            cmdService.sendCmd(lighttersetcmdObj.diviceid, cmdvalue, lighttersetcmdObj.boxid);
           };
         }
       };

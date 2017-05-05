@@ -353,7 +353,6 @@ NIMI.prototype.powerSaveDelay = function (delayTime) {
   cmd += getHex("0" + fourBitToCheck(delayTime.toString(2)) + "000") + "00" + "00" + "00";
   return cmd;
 };
-
 /**
  * 节能模式 Schedule状态
  * @param startTime
@@ -368,7 +367,6 @@ NIMI.prototype.powerSaveSchedule = function (startTime, startMin, endTime, endMi
       + fiveBitToCheck(endTime.toString(2)) + sixBitToCheck(endMin.toString(2)) + "0") + "FE";
   return cmd;
 };
-
 /**
  * 解析指令入口
  * @param cmd

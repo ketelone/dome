@@ -225,7 +225,6 @@ angular.module('bathroomModule')
             "cmd":[value]
           }
         };*/
-
         hmsHttp.post(url, paramter).success(
           function(response){
             console.log(response);
@@ -260,7 +259,6 @@ angular.module('bathroomModule')
           }
         );
       };
-
       var sendCmd = function(deviceId, value, successMsg, errorMsg){
 
         if(baseConfig.isCloudCtrl){

@@ -57,6 +57,7 @@ angular.module('toiletControlModule')
         id:"clearinstance",des:'toiletController.clearinstance',
       }];
       var tolitercmdObj = {
+        boxid:localStorage.boxIp,
         diviceid:'8BE850C2',
         header:'8877',
         idx:1,
@@ -414,12 +415,10 @@ angular.module('toiletControlModule')
       /**
        *
        set dang qian ce hau shu ju zhi
-       设置当前侧滑数据为侧滑初始化数据
        */
       $scope.currentSlideData = $scope.slideInitData;
       /**
        init dang qian mo ban shu ju
-       初始化当前模板数据
        */
       $scope.lockSlide = function () {
         $ionicSlideBoxDelegate.enableSlide( false );
@@ -457,7 +456,6 @@ angular.module('toiletControlModule')
         var $checkhtml = $compile(checHtml)($scope); // 编译
         $('#ionSliderBox').append($checkhtml[0])
       };
-
       $scope.initHtmlTemplate($scope.currentSlideData);
       var onceFlag=true;
       var initCircle = function (slideDataObj) {
@@ -719,29 +717,58 @@ angular.module('toiletControlModule')
           };
         };
       },20);
-      //发送指令
-      $scope.sendCmd = function (cmdvalue,index) {
-        hmsPopup.showLoading("<span translate='toiletController.loadingdata'></span>");
-        cordova.plugins.SocketPlugin.tcpSendCmd({
-          "timeout": "5000",
-          "value": cmdService.cloudCmd(cmdvalue,$scope.handlenapeListNape[index].cloudId)
-        }, success, error);
-        function success(response) {
-          //resolve
-          if(response.code == 200){
-            if(value.ack.toLowerCase() == "fa27"){
-              $scope.Toast.show($translate.instant($scope.handlenapeListNape[index].handleDes)+$translate.instant("toiletController.directesuccess"));
-              $scope.selectChange(index);
-            }
-          }else{
-            $scope.Toast.show($translate.instant($scope.handlenapeListNape[index].handleDes)+$translate.instant("toiletController.directerror"));
-          }
+      /**
+       *@params:
+       *@disc:accept ack or status;
+       */
+      document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
+        var resultOn = result[0];
+        if(resultOn.from.uid === tolitercmdObj.diviceid){
+          if (resultOn.data.cmd) {
+            var backDataCmd = nimi.analysisInstruction(resultOn.data.cmd[0]);
+            if(backDataCmd.flag === "ack"){
+              if(backDataCmd.cmd === "07"){
+                var name = "toiletController.chongxi";
+              }else if(backDataCmd.cmd === "01"){
+                var name = "toiletController.nvyong";
+              }else if(backDataCmd.cmd === "02"){
+                var name = "toiletController.tunxi";
+              }else if(backDataCmd.cmd === "05"){
+                var name = "toiletController.quanwen";
+              }else if(backDataCmd.cmd === "03"){
+                var name = "toiletController.nuanfeng";
+              }else if(backDataCmd.cmd === "11"){
+                var name = "toiletController.arounlight";
+              }else if(backDataCmd.cmd === "18"){
+                var name = "toiletController.tlitelight";
+              }else if(backDataCmd.cmd === "05"){
+                var name = "toiletController.nuanjiao";
+              }else if(backDataCmd.cmd === "08"){
+                var name = "toiletController.toiltequan";
+              }else if(backDataCmd.cmd === "17"){
+                var name = "toiletController.clearopen";
+              }else if(backDataCmd.cmd === "15"){
+                var name = "toiletController.clearextend";
+              }else if(backDataCmd.cmd === "OE"){
+                var name = "toiletController.clearinstance";
+              }else{
+                var name = "";
+              };
+              if(backDataCmd.ack === "fa"){
+                $scope.Toast.show($translate.instant(name)+$translate.instant("golabelvariable.directesuccess"));
+                $scope.selectChange($scope.handlenapeSelectedIndex);
+              }else{
+                $scope.Toast.show($translate.instant(name)+$translate.instant("golabelvariable.directerror"));
+              };
+            }else{
+              if(backDataCmd.cmd === "OE"){
+
+              }
+            };
+            $scope.$apply();
+          };
         };
-        function error() {
-          hmsPopup.hideLoading();
-          $scope.Toast.show($translate.instant($scope.handlenapeListNape[index].handleDes)+$translate.instant("toiletController.loadingdataerrror"));
-        };
-      };
+      }, false);
       /**
        *@params:flushOptions(nvyong mode) mSwitchType(turn or off)
        *@disc:use nvyong Instruction create;
@@ -755,6 +782,7 @@ angular.module('toiletControlModule')
           $scope.toGetImpleteData(flag,cmdvalue,$scope.handlenapeListNape[index].handleDes,index,isType);
         }else{
           // $scope.sendCmd(cmdvalue,index);
+          cmdService.sendCmd(tolitercmdObj.diviceid, cmdvalue, tolitercmdObj.boxid);
         };
       };
       /**
@@ -783,14 +811,14 @@ angular.module('toiletControlModule')
           $scope.toGetImpleteData(flag,cmdvalue,$scope.handlenapeListNape[selectedIndex].handleDes,selectedIndex,isType);
         }else{
           // $scope.sendCmd(cmdvalue,selectedIndex);
-        }
+          cmdService.sendCmd(tolitercmdObj.diviceid, cmdvalue, tolitercmdObj.boxid);
+        };
       };
       /**
        *@params:flushOptions(nvyong mode) mSwitchType(turn or off)
        *@disc:use nuamfen Instruction create
        */
       $scope.nuamfenIntionCreate = function (flag,mSwitchType,isType,selectedIndex) {
-        var isType = isType;
         var selectedDataTemp = $scope.handlenapeListNape[selectedIndex];
         var handleOriginData = selectedDataTemp.handledata;
         var temperature = handleOriginData[1].gearInit;
@@ -811,6 +839,7 @@ angular.module('toiletControlModule')
           $scope.toGetImpleteData(flag,cmdvalue,$scope.handlenapeListNape[selectedIndex].handleDes,selectedIndex,isType);
         }else{
           // $scope.sendCmd(cmdvalue,selectedIndex);
+          cmdService.sendCmd(tolitercmdObj.diviceid, cmdvalue, tolitercmdObj.boxid);
         }
       };
       /**
@@ -841,6 +870,7 @@ angular.module('toiletControlModule')
           $scope.toGetImpleteData(flag,cmdvalue,$scope.handlenapeListNape[selectedIndex].handleDes,selectedIndex,isType);
         }else{
           // $scope.sendCmd(cmdvalue,selectedIndex);
+          cmdService.sendCmd(tolitercmdObj.diviceid, cmdvalue, tolitercmdObj.boxid);
         }
       };
       /**
@@ -886,6 +916,7 @@ angular.module('toiletControlModule')
           $scope.toGetImpleteData(flag,cmdvalue,$scope.handlenapeListNape[selectedIndex].handleDes,selectedIndex,isType);
         }else{
           // $scope.sendCmd(cmdvalue,selectedIndex);
+          cmdService.sendCmd(tolitercmdObj.diviceid, cmdvalue, tolitercmdObj.boxid);
         }
       };
       /**
@@ -905,6 +936,7 @@ angular.module('toiletControlModule')
           $scope.toGetImpleteData(flag,cmdvalue,$scope.handlenapeListNape[selectedIndex].handleDes,selectedIndex,isType);
         }else{
           // $scope.sendCmd(cmdvalue,selectedIndex);
+          cmdService.sendCmd(tolitercmdObj.diviceid, cmdvalue, tolitercmdObj.boxid);
         }
       };
       //Mutex json
@@ -956,6 +988,7 @@ angular.module('toiletControlModule')
       $scope.handlenapeSelectedIndex;
       //档位滑动执行发指令操作
       $scope.radScrollSendDir = function (currentRadObj) {
+        $scope.handlenapeSelectedIndex = currentRadObj;
         if(currentRadObj.id === "nvyong"){
           $scope.nvyongIntionCreate("true","女用","正常","ON","1",currentRadObj.selectedIndex);
         }else if(currentRadObj.id === "tunxi"){
@@ -963,7 +996,7 @@ angular.module('toiletControlModule')
         }else if(currentRadObj.id === "nuanfeng"){
           $scope.nuamfenIntionCreate("true","ON","1",currentRadObj.selectedIndex);
         }else if(currentRadObj.id === "nuanjiao"){
-          $scope.feetSeatIntionCreate("true","nuanjiao","","1",currentRadObj.selectedIndex)
+          $scope.feetSeatIntionCreate("true","nuanjiao","","1",currentRadObj.selectedIndex);
         }else if(currentRadObj.id === "quanwen"){
           $scope.feetSeatIntionCreate("true","quanwen","","1",currentRadObj.selectedIndex);
         }else if(currentRadObj.id === "dengguang"){
@@ -1082,9 +1115,6 @@ angular.module('toiletControlModule')
        */
       $scope.hanleInitTemple = function (index) {
         $scope.count=0;
-        // if(!$scope.handlenapeListNape[index].selecFlag){
-        //   $scope.handlenapeSelectedIndex = undefined;
-        // };
         $scope.initHtmlTemplate($scope.currentSlideData);
         setTimeout(function () {
           //init every gearInitTemp
@@ -1132,13 +1162,14 @@ angular.module('toiletControlModule')
                       var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx, nimi._data["closeExtendWand"],tolitercmdObj.ctrId,tolitercmdObj.devId);
                     } else if ($scope.toiletController.modelTypeClear === "oiletController.clearinstance") {
                       var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx, nimi._data["closeIntelligentSterilization"],tolitercmdObj.ctrId,tolitercmdObj.devId);
-                    }
+                    };
                     console.log(cmdvalue)
                     if(baseConfig.isCloudCtrl){
                       var isType = "0";
                       $scope.toGetImpleteData(true,cmdvalue,$scope.handlenapeListNape[index].handleDes,index,isType);
                     }else{
                       // $scope.sendCmd(cmdvalue,index);
+                      cmdService.sendCmd(tolitercmdObj.diviceid, cmdvalue, tolitercmdObj.boxid);
                     }
                     $scope.toiletController.modelTypeClear = "toiletController.gaunbi"
                   }else{
@@ -1283,6 +1314,7 @@ angular.module('toiletControlModule')
               $scope.toGetImpleteData(true,cmdvalue,$scope.handlenapeListNape[11].handleDes,11,isType);
             }else{
               // $scope.sendCmd(cmdvalue,11);
+              cmdService.sendCmd(tolitercmdObj.diviceid, cmdvalue, tolitercmdObj.boxid);
             }
           }
           $scope.valueTemp = val;
