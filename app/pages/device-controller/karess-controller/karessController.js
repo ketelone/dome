@@ -97,18 +97,6 @@ angular.module('karessControlModule')
           canves03: "TunBuPosPoscanves03",
           flag: "2"
         }
-        // , {
-        //   des: "流量",
-        //   gearNum: 5,
-        //   gearInit: 1,
-        //   gearInitTemp: 1,
-        //   parameterctlFlag: false,
-        //   parNodeid: 'toilet-TunBuTemCtl',
-        //   canves01: "TunBuTemTemcanves01",
-        //   canves02: "TunBuTemTemcanves02",
-        //   canves03: "TunBuTemTemcanves03",
-        //   flag : "3"
-        // }
       ];
 
 
@@ -520,18 +508,32 @@ angular.module('karessControlModule')
       //处理选择怎加border
       var handlenapeListNapeLen = $scope.handlenapeListNape.length;
       $scope.selectNapes = function (index, info) {
-        $scope.indexNum = index;
         $scope.handlenapeSelectedIndex = index;
         if (index == 0) {
           if (info.selecFlag == false) {
+            //tingzhizhushui
+            var value1 = cmdService.getCmd("8877", 1, karessService.data.closeMassageBack, 0, 2);
+            //wendu
+            if($scope.karessController.modelType == 'Bath Faucet'){
+              var outlet =1;
+            }else{
+              var outlet =2;
+            }
+            var value2 = cmdService.getCmd("8877", 1, karessService.setFillerParams(38,95,3,outlet), 0, 2);
+            console.log(value2);
             var value = cmdService.getCmd("8877", 1, karessService.data.openFiller, 0, 2);
             console.log(baseConfig.isCloudCtrl);
             if (baseConfig.isCloudCtrl == true) {
               console.log('121');
               test(index, value, 'karessOnWater');
             } else {
-              console.log(value);
-              cmdService.sendCmd(deviceId, value, localStorage.boxIp);
+              cmdService.sendCmd(deviceId, value1, localStorage.boxIp);
+              $timeout(function(){
+                cmdService.sendCmd(deviceId, value2, localStorage.boxIp);
+              },260);
+              $timeout(function(){
+                cmdService.sendCmd(deviceId, value, localStorage.boxIp);
+              },500);
             }
           } else {
             var value = cmdService.getCmd("8877", 1, karessService.data.closeFiller, 0, 2);
@@ -648,7 +650,6 @@ angular.module('karessControlModule')
       ];
       $scope.openModal = function () {
         if ($scope.handlenapeSelectedIndex == 0) {
-
         } else {
           $scope.toast("当前状态不能切换出水方式");
           return;
@@ -682,17 +683,51 @@ angular.module('karessControlModule')
       $scope.radScrollSendDir = function () {
         if ($scope.handlenapeListNape[$scope.handlenapeSelectedIndex].isManyDirective) {
           var selectRad = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].gearInit;
+          $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].gearInitTemp = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].gearInit;
           console.log(selectRad);
           var diedes = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].des;
+          console.log(diedes);
         }
+        console.log($scope.handlenapeListNape[$scope.handlenapeSelectedIndex]);
         if ($scope.handlenapeListNape == 0) {
-          var value = cmdService.getCmd("8877", 1, karessService.data.closeSanitize, 0, 5);
-          cmdService.sendCmd(deviceId, value, localStorage.boxIp);
+          if(diedes == '水温'){
+            var temp = $scope.slideTunBuData[0].gearInit + 29;
+          }else{
+            if($scope.slideTunBuData[1].gearInit == 1){
+              var level = 25;
+            }else if($scope.slideTunBuData[1].gearInit == 2){
+              var level = 50;
+            }
+            else if($scope.slideTunBuData[1].gearInit == 3){
+              var level = 75;
+            }
+            else if($scope.slideTunBuData[1].gearInit == 4){
+              var level = 95;
+            }
+          }
+          if($scope.karessController.modelType == 'Bath Faucet'){
+            var outlet =1;
+          }else{
+            var outlet =2;
+          }
+          var value2 = cmdService.getCmd("8877", 1, karessService.setFillerParams(temp,level,3,outlet), 0, 2);
+          console.log(value2);
+          cmdService.sendCmd(deviceId, value2, localStorage.boxIp);
         } else if ($scope.handlenapeListNape == 2) {
-          var value = cmdService.getCmd("8877", 1, karessService.data.closeSanitize, 0, 5);
+          if($scope.shuilianmoData[0].gearInit == 1){
+            var temp = 1;
+          }else{
+            var temp = 5;
+          }
+          var value = cmdService.getCmd("8877", 1, karessService.setMassageBackPressure(temp,0), 0, 5);
           cmdService.sendCmd(deviceId, value, localStorage.boxIp);
         } else if ($scope.handlenapeListNape == 4) {
-          var value = cmdService.getCmd("8877", 1, karessService.data.closeSanitize, 0, 5);
+          if($scope.shuiBeiBuData[0].gearInit == 1){
+            var temp = '00';
+          }else{
+            var temp = '01';
+          }
+          var value = cmdService.getCmd("8877", 1, karessService.setHeatParam(temp), 0, 5);
           cmdService.sendCmd(deviceId, value, localStorage.boxIp);
         }
       };
@@ -731,7 +766,7 @@ angular.module('karessControlModule')
       };
 
         function karessButton(status){
-          var index = $scope.indexNum;
+          var index = $scope.handlenapeSelectedIndex;
           if (status == '') {
           } else {
             if (status.ack.indexOf('fa') >= 0) {
