@@ -29,14 +29,14 @@ angular.module('toiletControlModule')
     ) {
       $scope.goBack = function () {
         publicMethod.goBack();
-      };
+      }
       var cenwapurcmdObj = {
         boxid:localStorage.boxIp,
-        diviceid:'',
+        diviceid:'B62EF53F',
         header:'8877',
-        idx:Date.parse(new Date()) / 1000,
-        ctrId:'0',
-        devId:'6'
+        idx:1,
+        ctrId:'03',
+        devId:'06'
       };
       alert(angular.toJson(cenwapurcmdObj))
       //init zhiling obj
