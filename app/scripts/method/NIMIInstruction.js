@@ -135,8 +135,8 @@ NIMI.prototype.frontRearDry = function (method, temperature, volume, place, flus
  * @returns {string} 指令中的 data串
  */
 NIMI.prototype.feetSeatHeater = function (temperature) {
-  var cmd = "";
-  cmd = "05" + getHex(fourBitToCheck(temperature.toString(2))) + "0" + "00" + "00" + "00";
+  var cmd = "05";
+  cmd += getHex(fourBitToCheck(temperature.toString(2))) + "0" + "00" + "00" + "00";
   return cmd;
 };
 
@@ -206,7 +206,6 @@ NIMI.prototype.cleanWand = function (mSwitchType, hour, minute, dateSwitch, MOM,
  * @returns {string}
  */
 NIMI.prototype.ambientLight = function (lightMode, lightCtl, dynamicCtl, MOMC, TUEC, WEDC, THUC, FRIC, SATC, SUMC) {
-  console.log("lightCtl"+lightCtl)
   var cmd = "11";
   var param_one = "";
   var mLightCtl = "";
@@ -353,6 +352,7 @@ NIMI.prototype.powerSaveDelay = function (delayTime) {
   cmd += getHex("0" + fourBitToCheck(delayTime.toString(2)) + "000") + "00" + "00" + "00";
   return cmd;
 };
+
 /**
  * 节能模式 Schedule状态
  * @param startTime
@@ -367,6 +367,7 @@ NIMI.prototype.powerSaveSchedule = function (startTime, startMin, endTime, endMi
       + fiveBitToCheck(endTime.toString(2)) + sixBitToCheck(endMin.toString(2)) + "0") + "FE";
   return cmd;
 };
+
 /**
  * 解析指令入口
  * @param cmd
@@ -401,7 +402,7 @@ NIMI.prototype.analysisInstruction = function (cmd) {
  * 当flushStatus 为正在冲水时 flushType分大冲小冲 0-小冲 1-大冲
  * @param ackStr
  */
-NIMI.prototype.analysisToiletStatus = function (ackStr) {
+function analysisToiletStatus(ackStr) {
   var mJson;
   var data = ackStr.substring(2, ackStr.length);
   var param_one = byteToCheck(data.substring(0, 2).toString(2));
@@ -434,13 +435,13 @@ NIMI.prototype.analysisToiletStatus = function (ackStr) {
     "UVProgressStatus": UVProgressStatus, "ballValve": ballValve, "powerSaveLearnByUser": powerSaveLearnByUser
   };
   return mJson;
-};
+}
 
 /**
  * 一键除菌状态返回
  * @param ackStr
  */
-NIMI.prototype.analysisSanitizeStatus = function (ackStr) {
+function analysisSanitizeStatus(ackStr) {
   var mJson;
   var data = ackStr.substring(2, ackStr.length);
   var param_one = byteToCheck(data.substring(0, 2).toString(2));
@@ -450,7 +451,7 @@ NIMI.prototype.analysisSanitizeStatus = function (ackStr) {
   var second = parseInt(data.substring(6, 8), 16);
   mJson = {"flag": "status", "cmd": "87", "UVStatus": UVStatus, "hour": hour, "minute": minute, "second": second};
   return mJson;
-};
+}
 
 /**
  * 16进制转2进制补零
@@ -532,23 +533,101 @@ function doStr(d) {
   return d;
 }
 
+/**
+ * 返回cmd字段命令
+ * @param {*} header 头 16进制
+ * @param {*} idx 索引 16进制
+ * @param {*} data 数据段 16进制
+ * @param {*} ctrId 控制段 16进制
+ * @param {*} devId 设备段 16进制
+ */
+function getCmd(header, idx, data, ctrId, devId) {
+  if (data.length % 2 != 0) {
+    data = "0" + data;
+  }
+  var checksum = parseInt(idx, 16) ^ parseInt(ctrId, 16) ^ parseInt(devId, 16);
+  for (var i = 0, len = data.length; i < len; i += 2) {
+    var hex = data.substring(i, i + 2);
+    checksum ^= parseInt(hex, 16);
+  }
+  var length = data.length / 2 + 4;
+  return header + doStr(length)
+    + doStr(idx)
+    + doStr(ctrId)
+    + doStr(devId)
+    + data
+    + doStr(checksum.toString(16));
+}
+
+
+
 function RoController(){};
 
-  RoController.prototype._data={
-    stopAll:"00", //停止所有功能。
-    startOutlet:"2101",  //开启出水
-    stopOutlet:"2100",  //关闭出水
-    requestAllStatus:"70",  //查询设备所有状态
-    _paramPowerSaveMode:{
-      _header:"31",
-      LOW_POWER:"01",
-      SLEEP:"02",
-      POWER_OFF:"03"
+RoController.prototype._data={
+  stopAll:"00", //停止所有功能。
+  startOutlet:"2501",  //开启冲洗
+  stopOutlet:"2500",  //关闭冲洗
+  requestAllStatus:"70",  //查询设备所有状态
+  _paramPowerSaveMode:{
+    _header:"31",
+    LOW_POWER:"01",
+    SLEEP:"02",
+    POWER_OFF:"03"
+  }
+}
+RoController.prototype.enterPowerSaveMode = function(mode) {
+  return this._data._paramPowerSaveMode._header+mode;
+}
+RoController.prototype.analysisInstruction = function (cmd) {
+  var code;
+  if (arg.length >= 16 && arg.length <= 40) {
+    var ackStr = arg.substring(12, arg.length - 2);
+    var ack = ackStr.substring(0, 2).toLowerCase();
+    var operate = ackStr.substring(2, 4);
+    if (ack == "fa") {
+      code = {"ack": config.ACK_SUCCESS, "cmd": operate, "flag": "ack"};
+    } else if (ack == "fb") {
+      code = {"ack": config.ACK_REFUSE, "cmd": operate, "flag": "ack"};
+    } else if (ack == "fc") {
+      code = {"ack": config.ACK_DATA_ERROR, "cmd": operate, "flag": "ack"};
+    } else if (ack == "fd") {
+      code = {"ack": config.ACK_PKG_ERROR, "cmd": operate, "flag": "ack"};
+    } else if (ack == "a5") {
+      code = analysisConsumableStatus(ackStr);
+    } else if (ack == "88") {
+      code = analysisFlushStatus(ackStr);
     }
+  } else {
+    code = {"ack": config.ACK_PKG_ERROR, "flag": "ack"};
   }
-  RoController.prototype.enterPowerSaveMode = function(mode) {
-    return this._data._paramPowerSaveMode._header+mode;
-  }
+  return code;
+}
+
+/**
+ * 滤芯状态返回
+ * @param ackStr
+ */
+function analysisConsumableStatus(ackStr) {
+  var mJson;
+  var data = ackStr.substring(2, ackStr.length);
+  var param_one = byteToCheck(data.substring(0, 2).toString(2));
+  var consumableStatus = param_one.substring(6, 8);
+  var param_second = parseInt(data.substring(2, 4), 16);
+  mJson = {"flag": "status", "cmd": "a5", "FiltrationStatus": consumableStatus, "FiltrationRemain": param_second};
+  return mJson;
+}
+/**
+ * 返回冲洗状态
+ * @param ackStr
+ */
+function analysisFlushStatus(ackStr) {
+  var mJson;
+  var data = ackStr.substring(2, ackStr.length);
+  var param_one = byteToCheck(data.substring(0, 2).toString(2));
+  var flushStatus = param_one.substring(4, 8);
+  mJson = {"flag": "status", "cmd": "88", "flushStatus": param_one};
+  return mJson;
+}
 /**
    * 返回cmd字段命令
    * @param {*} header 头 16进制

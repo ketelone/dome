@@ -268,7 +268,10 @@
     "nffl":"暖风风力档位",
     "nffw":"暖风风温档位",
     "njfl":"暖脚风力档位",
-    "qwfw":"圈温温度档位"
+    "qwfw":"圈温温度档位",
+    "heatdirec":"加热",
+    "devicePop":"获取设备状态",
+    "devicenouse":"无人使用"
   },
   "toiletSetting": {
     "title": "马桶设置",
@@ -314,6 +317,7 @@
   },
   "cleargearPlan": {
     "title": "智感除菌计划",
+    "settingopen":"请先打开智感除菌计划设置!",
     "startTimeDes": "开始时间",
     "hour": "时",
     "minute": "分",
@@ -327,10 +331,7 @@
     "zhoutian": "周天",
     "weekValDanwei":"每",
     "selectPoup":"请选择数据项",
-    "loadingdata":"正在获取数据",
-    "loadingdataerrror":"数据获取失败",
-    "directerror":"指令发生失败",
-    "directesuccess":"指令发送成功"
+    "settingsucc": "设置"
 
   },
   "cenwatpurifier":{
@@ -340,8 +341,8 @@
     "unConnected":"未连接",
     "surplus":"正在清洁",
     "complete":"完成",
-    "clear":"自动清洁",
     "autoclear":"自动清洗",
+    "devicestats":"设备状态",
     "handleclear":"手动清洗",
     "onekeystop":"一键停止",
     "setting":"设置",

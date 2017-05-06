@@ -158,8 +158,8 @@ angular.module('toiletControlModule')
               //   var name = "";
               // };
               if(backDataCmd.ack === "fa"){
-                $scope.Toast.show($translate.instant(name)+$translate.instant("golabelvariable.directesuccess"));
                 $scope.lightnightmode = !$scope.lightnightmode;
+                $scope.Toast.show($translate.instant(name)+$translate.instant("golabelvariable.directesuccess"));
               }else{
                 $scope.Toast.show($translate.instant(name)+$translate.instant("golabelvariable.directerror"));
               };

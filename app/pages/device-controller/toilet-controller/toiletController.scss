@@ -36,11 +36,16 @@
         width: 0.235rem;
         margin-right:0.075rem;
       }
+      .device-statususe{
+        color: $color-text-deviceinfo;
+      }
+      .device-statusnouse{
+        color: gray;
+      }
       .conninfo-isues-info{
         display: inline-block;
         width: 1.21rem;
         font-size: $font-size-small;
-        color: $color-text-deviceinfo;
       }
     }
   }

@@ -10,8 +10,8 @@
         <span class="conninfo-signal-info" translate="toiletController.deviceWifiInfo"></span>
       </span>
       <span class="toilet-conninfo-isues">
-        <img class="conninfo-isues-img" src="build/img/toilet-controller/icon_devicedetail_warning.png" alt="">
-        <span class="conninfo-isues-info" translate="toiletController.deviceUseInfo"></span>
+        <img ng-if="toiletController.deviceinfoflag" class="conninfo-isues-img" src="build/img/toilet-controller/icon_devicedetail_warning.png" alt="">
+        <span class="conninfo-isues-info" ng-class="{true: 'device-statususe', false: 'device-statusnouse'}[toiletController.deviceinfoflag]" translate="{{toiletController.deviceUseInfo}}"></span>
       </span>
     </div>
     <div id="ionSliderBox" style="background-color:#171A1C">
@@ -28,7 +28,7 @@
       <img class="handlenape-selec-img" src="build/img/toilet-controller/icon_scenario_arrow.png"></img>
     </div>
     <ion-scroll class="toilet-handlenape" overflow-scroll="false">
-      <div class="toilet-handlenape-list" ng-repeat="list in handlenapeListNape track by $index" ng-click="selectNapes($index)">
+      <div class="toilet-handlenape-list" ng-repeat="list in handlenapeListNape track by $index" ng-click="selectNapes($index)" ng-if="$index !== 12">
         <div class="handlenape-list-napes" ng-class="{true: 'napes-border', false: ''}[list.selecFlag]">
           <!--<img class="list-napes-img" ng-src={{list.imgUrl}} alt="">-->
           <!--<span class="list-napes-dec" translate={{list.handleDes}}></span>-->
