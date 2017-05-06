@@ -18,8 +18,8 @@ import java.util.concurrent.Executors;
  */
 public class UDPBroadCast {
     private static String TAG = "UDPBroadCast";
-    private static final int MAX_DATA_PACKET_LENGTH = 256;
-    private static final int MAX_DATA_RECEV_LENGTH = 256;
+    private static final int MAX_DATA_PACKET_LENGTH = 512;
+    private static final int MAX_DATA_RECEV_LENGTH = 512;
     private static volatile DatagramSocket udpSocket;
 
     /**

@@ -119,7 +119,7 @@ angular.module('karessControlModule')
         };
 
         /**
-         * 设置水力按摩(massage-back)的按摩水压
+         * 设置背部加热(massage-back)的按摩水压
          *
          */
         this.setHeatParam = function(temp) {
@@ -128,7 +128,7 @@ angular.module('karessControlModule')
 
 
         /**
-         * 设置背部加热参数
+         * 设置水力按摩参数
          *
          */
         this.setMassageBackPressure = function(flow, mode) {

@@ -28,11 +28,11 @@
     box列表
     <div class="list">
       <div class="item" ng-repeat="item in boxList">
-        <div class="row" ng-click="boxClick(item)">相应回复:{{item.payload.cmd}}</div>
-        <div class="row" ng-click="boxClick(item)">相应回复:{{item.payload.cmd_properties.device_id}}</div>
-        <div class="row" ng-click="boxClick(item)">相应回复:{{item.payload.cmd_properties.ip}}</div>
-        <div class="row" ng-click="boxClick(item)">相应回复:{{item.payload.cmd_properties.sku}}</div>
-        <div class="row" ng-click="boxClick(item)">相应回复:{{item.payload.cmd_properties.sn}}</div>
+        <div class="row" ng-click="boxClick(item)">相应回复:{{item.data.act_params}}</div>
+        <div class="row" ng-click="boxClick(item)">相应回复:{{item.data.act_params.device_id}}</div>
+        <div class="row" ng-click="boxClick(item)">相应回复:{{item.data.act_params.ip}}</div>
+        <div class="row" ng-click="boxClick(item)">相应回复:{{item.data.act_params.sku}}</div>
+        <div class="row" ng-click="boxClick(item)">相应回复:{{item.data.act_params.sn}}</div>
 
         <div class="row" ng-click="closebox(item)">断开box连接</div>
         <div class="row" ng-click="closebox(item)">断开box连接</div>
@@ -43,20 +43,16 @@
 
 
     <button ng-click="selectDeviceOn()">
-      获取device已连接列表
+      获取device已连接列表<br>
     </button>
     <div class="list">
-      <div class="item" ng-repeat="deviceOnItem in deviceOn">
-        <div class="row" ng-click="open(deviceOnItem)">{{deviceOnItem.device_id}}</div>
-        <div class="row" ng-click="open(deviceOnItem)">{{deviceOnItem.device_mac}}</div>
-        <div class="row" ng-click="open(deviceOnItem)">{{deviceOnItem.device_rssi}}</div>
-        <div class="row" ng-click="close(deviceOnItem)">{{deviceOnItem.device_sku}}</div>
-        <div class="row" ng-click="close(deviceOnItem)">{{deviceOnItem.device_state}}</div>
-        <div class="row" ng-click="close(deviceOnItem)">{{deviceOnItem.device_state}}</div>
-        <div class="row" ng-click="over(deviceOnItem)">解绑</div>
-        <div class="row" ng-click="over(deviceOnItem)">解绑</div>
-        <div class="row" ng-click="over(deviceOnItem)">解绑</div>
-        <div class="row" ng-click="over(deviceOnItem)">解绑</div>
+      <div class="item" ng-repeat="deviceOnItem in deviceOn" ng-click="over()">
+        <div class="row" >{{deviceOnItem.device_mac}}</div>
+        <div class="row" >{{deviceOnItem.device_mac}}</div>
+        <div class="row" >{{deviceOnItem.device_rssi}}</div>
+        <div class="row" >{{deviceOnItem.device_sku}}</div>
+        <div class="row" >{{deviceOnItem.device_state}}</div>
+        <div class="row" >{{deviceOnItem.device_state}}</div>
 
 
       </div>
