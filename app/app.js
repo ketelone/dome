@@ -54,10 +54,10 @@ angular.module('myApp')
       if (window.localStorage.languageFlag == undefined || window.localStorage.language == "default") {
         navigator.globalization.getPreferredLanguage(
           function (language) {
-            alert(language.value == 'zh-Hans-CN');
-            alert(language.value == 'zh-CN' || language.value == 'zh-Hans-CN');
+            //alert(language.value == 'zh-Hans-CN');
+            //alert(language.value == 'zh-CN' || language.value == 'zh-Hans-CN');
             if (language.value == 'zh-CN' || language.value == 'zh-Hans-CN') {
-              alert(language.value + '1');
+              //alert(language.value + '1');
               $translate.use('zh');
 
             }
@@ -66,7 +66,7 @@ angular.module('myApp')
 
             }
             else if (language.value == 'en-US' || language.value == 'en-CN') {
-              alert(language.value + '2');
+              //alert(language.value + '2');
               $translate.use('en');
             }
             else if (language.value == 'en-TH' || language.value == 'th-CN') {
@@ -75,7 +75,7 @@ angular.module('myApp')
             }
             else {
               $translate.use('en');
-              alert(language.value + "a");
+              //alert(language.value + "a");
 
             }
             window.localStorage.languageFlag = true;
