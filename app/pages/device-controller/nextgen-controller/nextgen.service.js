@@ -19,7 +19,8 @@ angular.module('nextgenModule')
           explainSystemState: explainSystemState,
           getCmdvalue: getCmdvalue,
           getCmd: getCmd,
-          sendCmd: sendCmd
+          sendCmd: sendCmd,
+          getDeviceStatus:getDeviceStatus
         };
 
         return service;
@@ -83,14 +84,31 @@ angular.module('nextgenModule')
           return data;
         }
 
+        //7.获取shower状态
+        function getDeviceStatus(arg) {
+          var data = '7203';
+          return data;
+        }
+
+//8.获取设备温度
+        function getDeviceTemperature() {
+          var data = '721a';
+          return data;
+        }
+
+//9.返回系统本体状态
+        function getSystemStatus(arg) {
+          var data = '7200';
+          return data;
+        }
+
+
 //arg 这里 8877-----
         function explainAck(arg) {
-
           var code;
-          if (arg.length >= 16 && arg.length <= 40) {
-            var ackStr = arg.substring(12, arg.length - 2);
+          if (arg.length >= 16) {
+            var ackStr = arg.substring(12, arg.length - 2).toLowerCase();
             var ack = ackStr.substring(0, 2).toLowerCase();
-            // alert("12344");
             if (ack == 'fa') {
               //valid ack
               var operate = ackStr.substring(0, 4).toLowerCase();
@@ -100,7 +118,7 @@ angular.module('nextgenModule')
               code = {'ack': 'fd'};
             } else if (ack == 'fc') {
               //invalid ack
-              code = {'ack': 'fc'};
+              code = {'ack': 'fd'};
             } else if (ack == 'fb') {
               //invalid ack
               code = {'ack': 'fb'};//cmd refuse
@@ -108,18 +126,21 @@ angular.module('nextgenModule')
               code = explainShowerStatus(ackStr);
             } else if (ack == 'a6' || ack == 'A6') {
               code = explainWaterTemperature(ackStr);
+            } else if (ack == '91') {
+              code = explainEnvironmentStatus(ackStr);
+            } else if (ack == '80') {
+              code = explainSystemState(ackStr);
             } else if (ack == '81') {
               //返回设备错误状态
               code = explainDeviceError(ackStr);
             } else if (ack == 'b0') {
               code = explainMemory(ackStr);
-            } else if (ack == '80') {
-              code = explainSystemState(ackStr);
             }
           }
 
           return code;
         }
+
 
 //7.返回shower的状态 83
         function explainShowerStatus(arg) {
@@ -197,31 +218,30 @@ angular.module('nextgenModule')
           return dict;
         }
 
-//11.返回系统本体状态 80
-        function explainSystemState(arg) {
+//9.返回系统本体状态 80
+        function explainSystemState(arg){
           var dict;
-          var state = arg.subString(2, 4);
+          var state = arg.subString(2,4);
           if (state == '00') {
-            dict = 'init';
-          } else if (state == '01') {
-            dict = 'run';
-          } else if (state == '02') {
-            dict = 'low power';
-          } else if (state == '03') {
-            dict = 'sleep power ';
-          } else if (state == '04') {
-            dict = 'power off';
-          } else if (state == '05' || state == '06' || state == '08') {
-            dict = 'reserved';
-          } else if (state == '07') {
-            dict = 'diagnostic';
-          } else if (state >= '10' && state <= '1e') {
-            dict = 'error';
+            dict = {'state':'init'};
+          }else if (state == '01') {
+            dict = {'state':'run'};
+          }else if (state == '02') {
+            dict = {'state'	:'low power'};
+          }else if(state == '03'){
+            dict = {'state':'sleep power'};
+          }else if (state == '04') {
+            dict = {'state':'power off'};
+          }else if (state == '05'||state=='06'||state =='08') {
+            dict = {'state':'reserved'};
+          }else if (state == '07') {
+            dict = {'state':'diagnostic'};
+          }else if (state >='10' && state<='1e') {
+            dict = {'state':'error'};
           }
           dict["cmd"] = '80';
           return dict;
         }
-
 
         function getCmdvalue(header, idx, data, ctrId, devId) {
           if (data.length % 2 != 0) {
