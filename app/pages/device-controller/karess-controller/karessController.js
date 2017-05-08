@@ -18,7 +18,6 @@ angular.module('karessControlModule')
        *@return: device id
        *@disc: get device id
        */
-      console.log("----" + localStorage.deviceInfo);
       var getDeviceId = function () {
         if (localStorage.deviceInfo == undefined) {
           return;
@@ -36,7 +35,22 @@ angular.module('karessControlModule')
       $scope.karessController = {
         modelType: "karessController.bath",
       };
-      //侧滑转档数量json
+
+
+      var statusKaress = function () {
+        var value = cmdService.getCmd("8877", '01', karessService.requestStatus('1A'), 'E3', '02');
+        var value1 = cmdService.getCmd("8877", '01', karessService.requestStatus('1B'), 'E3', '02');
+
+        console.log(value);
+        console.log(value1);
+        return;
+        cmdService.sendCmd(deviceId, value, localStorage.boxIp);
+        $timeout(function () {
+          cmdService.sendCmd(deviceId, value1, localStorage.boxIp);
+        }, 230);
+      }
+      statusKaress();
+      //侧滑转档数量jsongulp
       $scope.slideInitData = [{
         des: "init",
         gearNum: 1,
@@ -510,16 +524,16 @@ angular.module('karessControlModule')
         if (index == 0) {
           if (info.selecFlag == false) {
             //tingzhizhushui
-            var value1 = cmdService.getCmd("8877", 1, karessService.data.closeFiller, 0, 2);
+            var value1 = cmdService.getCmd("8877", '01', karessService.data.closeFiller, 'E3', '02');
             //wendu
             if ($scope.karessController.modelType == 'Bath Faucet') {
-              var outlet = 1;
+              var outlet = '13';
             } else {
-              var outlet = 2;
+              var outlet = '23';
             }
-            var value2 = cmdService.getCmd("8877", 1, karessService.setFillerParams(38, 95, 3, outlet), 0, 2);
+            var value2 = cmdService.getCmd("8877", '01', karessService.setFillerParams(38, 95, outlet), 'E3', '02');
             console.log(value2);
-            var value = cmdService.getCmd("8877", 1, karessService.data.openFiller, 0, 2);
+            var value = cmdService.getCmd("8877", '01', karessService.data.openFiller, 'E3', '02');
             console.log(baseConfig.isCloudCtrl);
             if (baseConfig.isCloudCtrl == true) {
               console.log('121');
@@ -534,14 +548,14 @@ angular.module('karessControlModule')
               }, 500);
             }
           } else {
-            var value = cmdService.getCmd("8877", 1, karessService.data.closeFiller, 0, 2);
+            var value = cmdService.getCmd("8877", '01', karessService.data.closeFiller, 'E3', '02');
             console.log(value);
             cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           }
         }
         if (index == 1) {
           if (info.selecFlag == false) {
-            var value = cmdService.getCmd("8877", 1, karessService.data.openDrain, 0, 2);
+            var value = cmdService.getCmd("8877", '01', karessService.data.openDrain, 'E3', '02');
             if (baseConfig.isCloudCtrl == true) {
               test(index, value, 'karessOffWater');
             } else {
@@ -549,58 +563,61 @@ angular.module('karessControlModule')
               cmdService.sendCmd(deviceId, value, localStorage.boxIp);
             }
           } else {
-            var value = cmdService.getCmd("8877", 1, karessService.data.closeDrain, 0, 2);
+            var value = cmdService.getCmd("8877", '01', karessService.data.closeDrain, 'E3', '02');
             console.log(value);
             cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           }
         }
         if (index == 2) {
+          alert(info.selecFlag);
           if (info.selecFlag == false) {
-            var value1 = cmdService.getCmd("8877", 1, karessService.setMassageBackPressure(1, 0), 0, 5);
+            var value1 = cmdService.getCmd("8877", '01', karessService.setMassageBackPressure('10', '00'), 'E3', '02');
             cmdService.sendCmd(deviceId, value1, localStorage.boxIp);
-            var value = cmdService.getCmd("8877", 1, karessService.data.openMassageBack, 0, 2);
+            var value = cmdService.getCmd("8877", '01', karessService.data.openMassageBack, 'E3', '02');
             console.log(value);
-            cmdService.sendCmd(deviceId, value, localStorage.boxIp);
+            $timeout(function () {
+              cmdService.sendCmd(deviceId, value, localStorage.boxIp);
+            }, 300);
           } else {
-            var value = cmdService.getCmd("8877", 1, karessService.data.closeMassageBack, 0, 2);
-            console.log(value);
+            var value = cmdService.getCmd("8877", '01', karessService.data.closeMassageBack, 'E3', '02');
+            console.log(value+"00000000000000000");
             cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           }
         }
         if (index == 3) {
           if (info.selecFlag == false) {
-            var value = cmdService.getCmd("8877", 1, karessService.data.openMassagePillow, 0, 2);
+            var value = cmdService.getCmd("8877", '01', karessService.data.openMassagePillow, 'E3', '02');
             console.log(value);
             cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           } else {
-            var value = cmdService.getCmd("8877", 1, karessService.data.closeMassagePillow, 0, 2);
+            var value = cmdService.getCmd("8877", '01', karessService.data.closeMassagePillow, 'E3', '02');
             console.log(value);
             cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           }
         }
         if (index == 4) {
           if (info.selecFlag == false) {
-            var value = cmdService.getCmd("8877", 1, karessService.data.openHeatBack, 0, 2);
+            var value = cmdService.getCmd("8877", '01', karessService.data.openHeatBack, 'E3', '02');
             console.log(value);
             cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           } else {
-            var value = cmdService.getCmd("8877", 1, karessService.data.closeHeatBack, 0, 2);
+            var value = cmdService.getCmd("8877", '01', karessService.data.closeHeatBack, 'E3', '02');
             console.log(value);
             cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           }
         }
         if (index == 5) {
-          var value = cmdService.getCmd("8877", 1, karessService.data.closeAll, 0, 2);
+          var value = cmdService.getCmd("8877", '01', karessService.data.closeAll, 'E3', '02');
           console.log(value);
           cmdService.sendCmd(deviceId, value, localStorage.boxIp);
         }
         if (index == 6) {
           if (info.selecFlag == false) {
-            var value = cmdService.getCmd("8877", 1, karessService.data.openSanitize, 0, 2);
+            var value = cmdService.getCmd("8877", '01', karessService.data.openSanitize, 'E3', '02');
             console.log(value);
             cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           } else {
-            var value = cmdService.getCmd("8877", 1, karessService.data.closeDrain, 0, 2);
+            var value = cmdService.getCmd("8877", '01', karessService.data.closeDrain, 'E3', '02');
             console.log(value);
             cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           }
@@ -632,7 +649,7 @@ angular.module('karessControlModule')
       //模式选择
       //获取屏幕高度
       $scope.screenHeig = window.innerHeight;
-      $ionicModal.fromTemplateUrl('build/pages/model/hmsModal.html', {
+      $ionicModal.fromTemplateUrl('build/pages/device-controller/karess-controller/modal/hmsModal.html', {
         scope: $scope,
         animation: 'slide-in-up'
       }).then(function (modal) {
@@ -651,7 +668,7 @@ angular.module('karessControlModule')
           $scope.modal.show();
           setTimeout(function () {
             var ele = document.getElementsByClassName("hmsModal");
-            ele[0].style.top = 83 + '%';
+            ele[0].style.top = 85 + '%';
             ele[0].style.minHeight = 61 + '%';
           }, 10)
         }
@@ -667,9 +684,9 @@ angular.module('karessControlModule')
           }
         }
         if ($scope.karessController.modelType == 'Bath Faucet') {
-          var outlet = 1;
+          var outlet = '10';
         } else {
-          var outlet = 2;
+          var outlet = '50';
         }
         var temp = $scope.slideTunBuData[0].gearInit + 29;
         if ($scope.slideTunBuData[1].gearInit == 1) {
@@ -684,9 +701,9 @@ angular.module('karessControlModule')
           var level = 95;
         }
         //tingzhizhushui
-        var value1 = cmdService.getCmd("8877", 1, karessService.data.closeFiller, 0, 2);
-        var value = cmdService.getCmd("8877", 1, karessService.data.openFiller, 0, 2);
-        var value2 = cmdService.getCmd("8877", 1, karessService.setFillerParams(temp, level, 3, outlet), 0, 2);
+        var value1 = cmdService.getCmd("8877", '01', karessService.data.closeFiller, 'E3', '02');
+        var value = cmdService.getCmd("8877", '01', karessService.data.openFiller, 'E3', '02');
+        var value2 = cmdService.getCmd("8877", '01', karessService.setFillerParams(temp, level, '13'), 'E3', '02');
         cmdService.sendCmd(deviceId, value1, localStorage.boxIp);
         $timeout(function () {
           cmdService.sendCmd(deviceId, value2, localStorage.boxIp);
@@ -724,20 +741,20 @@ angular.module('karessControlModule')
           }
 
           if ($scope.karessController.modelType == 'Bath Faucet') {
-            var outlet = 1;
+            var outlet = '10';
           } else {
-            var outlet = 2;
+            var outlet = '50';
           }
-          var value2 = cmdService.getCmd("8877", 1, karessService.setFillerParams(temp, level, 3, outlet), 0, 2);
+          var value2 = cmdService.getCmd("8877", '01', karessService.setFillerParams(temp, level, '13'), 'E3', '02');
           console.log(value2);
           cmdService.sendCmd(deviceId, value2, localStorage.boxIp);
         } else if ($scope.handlenapeListNape == 2) {
           if ($scope.shuilianmoData[0].gearInit == 1) {
-            var temp = 1;
+            var temp = '10';
           } else {
-            var temp = 5;
+            var temp = '50';
           }
-          var value = cmdService.getCmd("8877", 1, karessService.setMassageBackPressure(temp, 0), 0, 5);
+          var value = cmdService.getCmd("8877", '01', karessService.setMassageBackPressure(temp, 0), 'E3', '02');
           cmdService.sendCmd(deviceId, value, localStorage.boxIp);
         } else if ($scope.handlenapeListNape == 4) {
           if ($scope.shuiBeiBuData[0].gearInit == 1) {
@@ -745,7 +762,7 @@ angular.module('karessControlModule')
           } else {
             var temp = '01';
           }
-          var value = cmdService.getCmd("8877", 1, karessService.setHeatParam(temp), 0, 5);
+          var value = cmdService.getCmd("8877", '01', karessService.setHeatParam(temp), 'E3', '02');
           cmdService.sendCmd(deviceId, value, localStorage.boxIp);
         }
       };
@@ -758,7 +775,6 @@ angular.module('karessControlModule')
       }, false);
 //接受tcp返回数据
       document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
-
         if (result[0].data.cmd.length > 0 && result[0].from.uid == deviceId) {
           var status = karessService.explainAck(result[0].data.cmd[0]);
           karessButton(status);
@@ -789,7 +805,7 @@ angular.module('karessControlModule')
         } else {
           if (status.ack.indexOf('fa') >= 0) {
             status.ack = status.ack.substring(2, 4);
-            console.log(status)
+            console.log(status);
             if (status.ack == 22) {
               if ($scope.handlenapeListNape[index].selecFlag == false) {
                 console.log("--------12");
@@ -807,6 +823,9 @@ angular.module('karessControlModule')
               }
             }
             if (status.ack == 21) {
+              alert(index);
+              console.log("--------1222" + $scope.handlenapeListNape[index].selecFlag);
+              console.log("--------12222" + index);
               if ($scope.handlenapeListNape[index].selecFlag == false) {
                 $scope.Toast.show("水力按摩开启成功！");
               } else {
@@ -814,6 +833,8 @@ angular.module('karessControlModule')
               }
             }
             if (status.ack == 23) {
+              console.log("--------1222" + $scope.handlenapeListNape[index].selecFlag);
+              console.log("--------12222" + index);
               if ($scope.handlenapeListNape[index].selecFlag == false) {
                 $scope.Toast.show("头部按摩开启成功！");
               } else {
@@ -840,19 +861,25 @@ angular.module('karessControlModule')
           } else {
             if (status.ack.indexOf('fb') >= 0 || status.ack.indexOf('fc') >= 0 || status.ack.indexOf('fd') >= 0) {
               $scope.Toast.show("操作失败！");
+            }else{
+              return;
             }
           }
 
         }
         $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
-        for (var i = 0; i < $scope.handlenapeListNape.length; i++) {
-          if (index == 7) {
+        if (index == 5) {
+          for (var i = 0; i < $scope.handlenapeListNape.length; i++) {
             $scope.handlenapeListNape[i].selecFlag = false;
+            $scope.handlenapeListNape[i].imgUrl = $scope.handlenapeListNape[i].imgUrlTemp;
           }
+        }else{
         }
+        console.log("--------------------------222222-");
+
         if ($scope.handlenapeListNape[index].selecFlag == true) {
           $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgSeledUrl;
-        }else{
+        } else {
           $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgUrlTemp;
 
         }

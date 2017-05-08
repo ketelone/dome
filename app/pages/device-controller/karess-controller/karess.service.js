@@ -23,25 +23,25 @@ angular.module('karessControlModule')
           quitSaveMode: "32", //退出节能模式
           _paramMassageBack: {
             flow: {
-              LOW: "1",
-              HIGH: "5",
-              RESERVED: "0"
+              LOW: "10",
+              HIGH: "50",
+              RESERVED: "00"
             },
             mode: {
-              NORMAL: "0"
+              NORMAL: "00"
             }
           },
           _paramFiller: {
             flow: {
               LOW: "1",
               LOW_MID: "2",
-              MID: "3",
+              MID: "0011",
               MID_HIGH: "4",
               HIGH: "5"
             },
             outlet: {
-              BATH_FAUCET: "1",
-              HANDSHOWER: "2",
+              BATH_FAUCET: "13",
+              HANDSHOWER: "23",
             }
           },
           _paramHeadBack: {
@@ -132,7 +132,7 @@ angular.module('karessControlModule')
          *
          */
         this.setMassageBackPressure = function(flow, mode) {
-          return "01" + flow + "00" + mode;
+          return "01" + flow  + mode;
         };
 
         /**
@@ -142,10 +142,10 @@ angular.module('karessControlModule')
          * flow: _data._paramFiller.flow.*
          * outlet _data._paramFiller.outlet.*
          */
-        this.setFillerParams = function(temp, level, flow, outlet) {
+        this.setFillerParams = function(temp, level, outlet) {
           var t = doStr(temp.toString(16));
           var l = doStr(level.toString(16));
-          return "02" + t + l + outlet + flow;
+          return "02" + t + l + outlet;
         };
 
         this.enterPowerSaveMode = function(mode) {

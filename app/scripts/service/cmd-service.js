@@ -101,5 +101,14 @@ angular.module('utilModule')
           var length = data.length / 2 + 4;
           return header + doStr(length) + doStr(idx) + doStr(ctrId) + doStr(devId) + data + doStr(checksum.toString(16));
         }
-
+        /**
+         * 十六进制补0
+         * @param {*字符} d
+         */
+        this.doStr = function(d) {
+          if (d.length % 2 != 0) {
+            d = "0" + d;
+          }
+          return d;
+        }
       }]);
