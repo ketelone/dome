@@ -352,7 +352,8 @@
     "sixHour": "6Hr",
     "timeout": "Your choice is out of range,Please re-select",
     "twentyModel": "24Hr",
-    "commonModel": "Normal Mode"
+    "commonModel": "Normal Mode",
+    "timeout": "count down"
   },
   "spa": {
     "goHomeTitle": "Scenario Detail",

@@ -504,17 +504,17 @@ angular.module('airfoilShowerModule')
       };
 
       document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
-        var resultOn = result;
-        if(resultOn.from.device_id != getDeviceId()){
+        var resultOn = result[0];
+        if(resultOn.from.uid != getDeviceId()){
           return;
         }
-        if (resultOn.payload.cmd == "CMD_RETURN") {
-          var temperteValue = airfoilShowerService.explainAck(resultOn.payload.value[0]);
+        if (resultOn.data.cmd.length > 0) {
+          var temperteValue = airfoilShowerService.explainAck(resultOn.data.cmd[0]);
           if(temperteValue.temperature){
             $scope.slideWaterData[0].currentTemp = parseInt(temperteValue.temperature, 16);
           }
 
-          explainCurrentOperate(resultOn.payload.value[0]);
+          explainCurrentOperate(resultOn.data.cmd[0]);
 
           $scope.$apply();
         }

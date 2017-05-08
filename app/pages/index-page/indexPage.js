@@ -175,7 +175,7 @@ angular.module('indexPageModule')
             errorPictureUrl: "",
             isStatus: true,
             isError: false,
-            sku: "1"
+            sku: "D7:9C:8B:E8:50:C2"
           },{
             id: "3",
             pictureUrl: "build/img/index/img_home_device_heater.png",
@@ -187,30 +187,19 @@ angular.module('indexPageModule')
             errorPictureUrl: "",
             isStatus: true,
             isError: false,
-            sku: "EB:4E:28:49:09:9D"
-          },{
-            id: "4",
-            pictureUrl: "build/img/index/img_home_device_sensor.png",
-            deviceType: "溢水传感器",
-            deviceStatus: "设备在线",
-            deviceDesc: "发生溢水",
-            statusPictureUrl: "build/img/index/icon_home_device_signal3.png",
-            errorPictureUrl: "build/img/index/icon_home_device_warnning.png",
-            isStatus: true,
-            isError: true,
-            sku: "4"
+            sku: "D7:12:29:DF:76:06"
           },
           {
             id: "5",
             pictureUrl: "build/img/index/img_home_device_chushuifa.png",
-            deviceType: "出水阀",
+            deviceType: "RO",
             deviceStatus: "设备离线",
             deviceDesc: "",
             statusPictureUrl: "build/img/index/icon_home_device_no_singal.png",
             errorPictureUrl: "build/img/index/icon_home_device_warnning.png",
             isStatus: true,
             isError: true,
-            sku: "5"
+            sku: "FB:3F:B6:2E:F5:3F"
           },
           {
             id: "6",
@@ -340,10 +329,10 @@ angular.module('indexPageModule')
             ' ORDER BY tdd.LAST_UPDATE_DATE DESC',[],function(tx, results){
 
             /*var deviceIdList = [];
-            for(var i = 0; i < results.rows.length; i ++){
-              var deviceId = {"deviceId": results.rows.item(i).DEVICE_ID};
-              deviceIdList.push(deviceId);
-            }*/
+             for(var i = 0; i < results.rows.length; i ++){
+             var deviceId = {"deviceId": results.rows.item(i).DEVICE_ID};
+             deviceIdList.push(deviceId);
+             }*/
             var deviceStatusList = getDeviceStatus(localStorage.boxId);
 
             for(var i = 0; i < results.rows.length; i ++){
@@ -466,20 +455,20 @@ angular.module('indexPageModule')
           });
 
           /*tx.executeSql('select tdd.DEVICE_ID as DEVICE_ID, tdsb.SKU_NAME as SKU_NAME, tdsb.SKU_ID as SKU_ID, tdsb.SKU_NUMBER as SKU_NUMBER,tdd.LAST_UPDATE_DATE as LAST_UPDATE_DATE from T_DVM_DEVICE  tdd,T_CTM_PARTY_BOX_DEVICE tcpbd,T_DVM_SKU_B tdsb'+
-            ' where'+
-            ' tcpbd.PARTY_ID = "20"'+
-            ' and'+
-            ' tcpbd.DEVICE_ID = tdd.DEVICE_ID'+
-            ' and'+
-            ' tdd.SKU_ID = tdsb.SKU_ID'+
-            ' ORDER BY tdd.LAST_UPDATE_DATE DESC',[],function(tx, results){
-            for(var i = 0; i < results.rows.length; i ++) {
-              var device = results.rows.item(i);
-              var pictureUrl = "";
-              alert("device name: " + results.rows.item(i).SKU_NAME);
-            }
+           ' where'+
+           ' tcpbd.PARTY_ID = "20"'+
+           ' and'+
+           ' tcpbd.DEVICE_ID = tdd.DEVICE_ID'+
+           ' and'+
+           ' tdd.SKU_ID = tdsb.SKU_ID'+
+           ' ORDER BY tdd.LAST_UPDATE_DATE DESC',[],function(tx, results){
+           for(var i = 0; i < results.rows.length; i ++) {
+           var device = results.rows.item(i);
+           var pictureUrl = "";
+           alert("device name: " + results.rows.item(i).SKU_NAME);
+           }
 
-          });*/
+           });*/
 
         });
       };
@@ -506,7 +495,7 @@ angular.module('indexPageModule')
         getWeather();
         if(localStorage.boxLinkCount == 1){
           //$timeout(function () {
-            searchBox();
+          searchBox();
           //},1500);
           localStorage.boxLinkCount = 2;
         }
@@ -520,37 +509,37 @@ angular.module('indexPageModule')
       }, true);
 
       /*document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
-        var resultOn = result;
-        $scope.deviceOff = resultOn.payload.cmd_properties.device_list;
-        if (resultOn.payload.cmd == "LIST_BONDED_DEVICE_RETURN") {
-          hmsPopup.showShortCenterToast("开始返回数据");
-          //localStorage.device_id = resultOn.payload.cmd_properties.device_list[0].device_id;
-          //循环device list 取出device id，并降deviceid与相应页面的设备做关联
-          var deviceLinkInfo = "";
-          var deviceStatus = [];
-          angular.forEach(resultOn[0].data.act_params.device_list, function(data, index, array){
-            deviceLinkInfo = deviceLinkInfo =="" ? (";" + data.device_sku + "," + data.device_id) : (deviceLinkInfo + ";" + data.device_sku + "," + data.device_id);
-            deviceStatus.push({'deviceSku': data.device_sku, 'deviceRssi': data.device_rssi, 'deviceState': data.device_state});
-          });
-          //保存device 连接的信息。
-          localStorage.deviceInfo = deviceLinkInfo;
-          localStorage.deviceStatus = JSON.stringify(deviceStatus);
-          hmsPopup.hideLoading();
+       var resultOn = result;
+       $scope.deviceOff = resultOn.payload.cmd_properties.device_list;
+       if (resultOn.payload.cmd == "LIST_BONDED_DEVICE_RETURN") {
+       hmsPopup.showShortCenterToast("开始返回数据");
+       //localStorage.device_id = resultOn.payload.cmd_properties.device_list[0].device_id;
+       //循环device list 取出device id，并降deviceid与相应页面的设备做关联
+       var deviceLinkInfo = "";
+       var deviceStatus = [];
+       angular.forEach(resultOn[0].data.act_params.device_list, function(data, index, array){
+       deviceLinkInfo = deviceLinkInfo =="" ? (";" + data.device_sku + "," + data.device_id) : (deviceLinkInfo + ";" + data.device_sku + "," + data.device_id);
+       deviceStatus.push({'deviceSku': data.device_sku, 'deviceRssi': data.device_rssi, 'deviceState': data.device_state});
+       });
+       //保存device 连接的信息。
+       localStorage.deviceInfo = deviceLinkInfo;
+       localStorage.deviceStatus = JSON.stringify(deviceStatus);
+       hmsPopup.hideLoading();
 
-          if ($scope.deviceOn.length == 0) {
-            hmsPopup.showShortCenterToast("没有已连接设备，请搜索未连接设备");
-          }
-        }
+       if ($scope.deviceOn.length == 0) {
+       hmsPopup.showShortCenterToast("没有已连接设备，请搜索未连接设备");
+       }
+       }
 
-        if (resultOn.payload.cmd == "SCAN_RETURN") {
-          console.log(resultOn.payload.cmd_properties.device_list);
-          if ($scope.deviceOff.length == 0) {
-            hmsPopup.showShortCenterToast("没有设备");
-          }
-          $scope.$apply();
-        }
+       if (resultOn.payload.cmd == "SCAN_RETURN") {
+       console.log(resultOn.payload.cmd_properties.device_list);
+       if ($scope.deviceOff.length == 0) {
+       hmsPopup.showShortCenterToast("没有设备");
+       }
+       $scope.$apply();
+       }
 
-      }, false);*/
+       }, false);*/
 
       var deviceStatus = [];
       var deviceLinkInfo = "";
@@ -573,12 +562,12 @@ angular.module('indexPageModule')
         }
 
         /*if (resultOn.payload.cmd == "SCAN_RETURN") {
-          console.log(resultOn.payload.cmd_properties.device_list);
-          if ($scope.deviceOff.length == 0) {
-            $scope.Toast.show($translate.instant("index.noDevice"));
-          }
-          $scope.$apply();
-        }*/
+         console.log(resultOn.payload.cmd_properties.device_list);
+         if ($scope.deviceOff.length == 0) {
+         $scope.Toast.show($translate.instant("index.noDevice"));
+         }
+         $scope.$apply();
+         }*/
 
       }, false);
 
@@ -696,26 +685,26 @@ angular.module('indexPageModule')
         $scope.Toast.show($translate.instant("index.startSelectDevice"));
 
         var cmd = [
-            {
-              "ver": 1,
-              "from": {
-                "ctype":  0XE3,
-                "uid"  : window.localStorage.empno
-              },
-              "to": {
-                "ctype": 0xE4,
-                "uid": device_id
-              },
-              "ts": 1487213040,
-              "idx": 12,
-              "mtype":  "rqst",
-              "data": {
-                "device_type": "BLE_DEVICE",
-                "act": "LIST_BONDED_DEVICE_REQUEST",
-                "act_params":{}
-              }
+          {
+            "ver": 1,
+            "from": {
+              "ctype":  0XE3,
+              "uid"  : window.localStorage.empno
+            },
+            "to": {
+              "ctype": 0xE4,
+              "uid": device_id
+            },
+            "ts": 1487213040,
+            "idx": 12,
+            "mtype":  "rqst",
+            "data": {
+              "device_type": "BLE_DEVICE",
+              "act": "LIST_BONDED_DEVICE_REQUEST",
+              "act_params":{}
             }
-          ];
+          }
+        ];
 
         cordova.plugins.SocketPlugin.tcpSendCmd({
           "timeout": "5000",
@@ -794,18 +783,18 @@ angular.module('indexPageModule')
         }
 
         /*if(item.isOff){
-          //alert("on");
-          if(checkIsLinkBox){
-            var netType = network();
-            if(netType == '无网络链接'){
+         //alert("on");
+         if(checkIsLinkBox){
+         var netType = network();
+         if(netType == '无网络链接'){
 
-            }else{
-              //do post
-            }
-          }
+         }else{
+         //do post
+         }
+         }
 
-        }else{
-        }*/
+         }else{
+         }*/
       };
       console.log($ionicHistory);
 
@@ -813,57 +802,61 @@ angular.module('indexPageModule')
         return true;
       };
 
-        $scope.getDeviceInfo = function(item){
+      $scope.getDeviceInfo = function(item){
 
-          if(baseConfig.isLinkDatabase == true){
-            if(item.deviceType == "Bathroom Heater"){
-              $state.go('bathroom',{deviceSku: item.sku});
-            }
-            if(item.deviceType == "NUMI 1.1"){
-              $state.go('toiletContrl');
-            }
-            if(item.deviceType == "Karess"){
-              $state.go('karess');
-              SettingsService.set("sku",item.sku);
-            }
-            if(item.deviceType == "next gen shower"){
-              $state.go('nextgen');
-              SettingsService.set("sku",item.sku);
-            }
-            if(item.deviceType == "airfoil-shower"){
-              $state.go('airfoilShower');
-            }
-            if(item.deviceType == "MC"){
-              $state.go('mc');
-            }
-
-            db.transaction(function(tx) {
-              tx.executeSql('update T_DVM_DEVICE set LAST_UPDATE_DATE = "'+getNowFormatDate()+'" where DEVICE_ID = '+item.id);
-            });
-            $scope.deviceModel = [];
-            getDeviceList();
-          }else{
-            if(item.deviceType == "浴霸"){
-              $state.go('bathroom',{deviceSku: item.sku});
-            }
-            if(item.deviceType == "马桶"){
-              $state.go('toiletContrl');
-            }
-            if(item.deviceType == "karess"){
-              $state.go('karess');
-              SettingsService.set("sku",item.sku);
-            }
-            if(item.deviceType == "nextgen"){
-              $state.go('nextgen');
-              SettingsService.set("sku",item.sku);
-            }
-            if(item.deviceType == "airfoil-shower"){
-              $state.go('airfoilShower');
-            }
-            if(item.deviceType == "mc镜柜"){
-              $state.go('mc');
-            }
+        if(baseConfig.isLinkDatabase == true){
+          if(item.deviceType == "Bathroom Heater"){
+            $state.go('bathroom',{deviceSku: item.sku});
           }
+          if(item.deviceType == "NUMI 1.1"){
+            $state.go('toiletContrl');
+          }
+          if(item.deviceType == "Karess"){
+            $state.go('karess');
+            SettingsService.set("sku",item.sku);
+          }
+          if(item.deviceType == "next gen shower"){
+            $state.go('nextgen');
+            SettingsService.set("sku",item.sku);
+          }
+          if(item.deviceType == "airfoil-shower"){
+            $state.go('airfoilShower');
+          }
+          if(item.deviceType == "MC"){
+            $state.go('mc');
+          }
+
+          db.transaction(function(tx) {
+            tx.executeSql('update T_DVM_DEVICE set LAST_UPDATE_DATE = "'+getNowFormatDate()+'" where DEVICE_ID = '+item.id);
+          });
+          $scope.deviceModel = [];
+          getDeviceList();
+        }else{
+          if(item.deviceType == "浴霸"){
+            $state.go('bathroom',{deviceSku: item.sku});
+          }
+          if(item.deviceType == "马桶"){
+            $state.go('toiletContrl');
+          }
+          if(item.deviceType == "karess"){
+            $state.go('karess');
+            SettingsService.set("sku",item.sku);
+          }
+          if(item.deviceType == "nextgen"){
+            $state.go('nextgen');
+            SettingsService.set("sku",item.sku);
+          }
+          if(item.deviceType == "airfoil-shower"){
+            $state.go('airfoilShower');
+          }
+          if(item.deviceType == "mc镜柜"){
+            $state.go('mc');
+          }
+          if(item.deviceType == "RO"){
+            $state.go('mc');
+          }
+
+        }
       };
 
       $scope.addModule = function(){

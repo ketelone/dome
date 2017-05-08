@@ -141,7 +141,8 @@
     "searchDeviceSuccess": "搜索已连接设备成功",
     "searchFail": "搜索已连接设备失败",
     "noDeviceSearch": "没有已连接设备，请搜索未连接设备",
-    "noDevice": "没有设备"
+    "noDevice": "没有设备",
+    "open": "开启"
   },
   "bigaunt": {
     "bigauntTitle": "场景详情"
@@ -415,7 +416,8 @@
     "notCloseTimer": "不能开启定时功能",
     "fail": "fail",
     "openLightSuccess": "open light success",
-    "openCoolSuccess": "open Cool success"
+    "openCoolSuccess": "open Cool success",
+    "timeout": "倒计时"
   },
   "spa": {
     "goHomeTitle": "场景详情",
