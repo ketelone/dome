@@ -854,8 +854,8 @@ angular.module('indexPageModule')
               SettingsService.set("sku",item.sku);
             }
             if(item.deviceType == "nextgen"){
-              $state.go('nextgen');
-              SettingsService.set("sku",item.sku);
+              $state.go('nextgen',{deviceSku: item.sku});
+              // SettingsService.set("sku",item.sku);
             }
             if(item.deviceType == "airfoil-shower"){
               $state.go('airfoilShower');

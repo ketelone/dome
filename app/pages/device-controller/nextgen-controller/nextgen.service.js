@@ -85,7 +85,7 @@ angular.module('nextgenModule')
         }
 
         //7.获取shower状态
-        function getDeviceStatus(arg) {
+        function getDeviceStatus() {
           var data = '7203';
           return data;
         }
@@ -147,7 +147,7 @@ angular.module('nextgenModule')
           var cmdStr = arg;
           var status, showerStatus;
           try {
-            status = cmdStr.subString(2, 4);
+            status = cmdStr.substring(2, 4);
           } catch (error) {
             return;
           }
