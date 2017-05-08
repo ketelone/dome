@@ -109,7 +109,8 @@
     "myHome": "Home",
     "humidity": "Humidity",
     "model": "场景模式",
-    "device": "设备模式"
+    "device": "设备模式",
+    "open": "开启"
   },
   "bigaunt": {
     "bigauntTitle": "Se"
@@ -352,7 +353,8 @@
     "sixHour": "6Hr",
     "timeout": "Your choice is out of range,Please re-select",
     "twentyModel": "24Hr",
-    "commonModel": "Normal Mode"
+    "commonModel": "Normal Mode",
+    "timeout": "count down"
   },
   "spa": {
     "goHomeTitle": "Scenario Detail",
