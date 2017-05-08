@@ -38,7 +38,7 @@ angular.module('toiletControlModule')
         ctrId:'03',
         devId:'06'
       };
-      alert(angular.toJson(cenwapurcmdObj))
+      // alert(angular.toJson(cenwapurcmdObj))
       //init zhiling obj
       var cenwatpurDir = new RoController();
       /*
@@ -183,29 +183,38 @@ angular.module('toiletControlModule')
        *@disc:accept ack or status;
        */
       $scope.initStatusFlag = true;
+      //handle once
+      $scope.directiveOnceFlag = 0;
+      $scope.clearOnceFlag = 0;
+      $scope.statustiveOnceFlag = 0;
+
       document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
-        alert(angular.toJson(result))
+        // alert(angular.toJson(result))
         var resultOn = result[0];
-        alert("resultOn" + " "+ resultOn)
+        // alert("resultOn" + " "+ angular.toJson(resultOn))
         if(resultOn.from.uid === cenwapurcmdObj.diviceid){
+          // alert(1)
+          // alert(resultOn.data.cmd[0])
           if (resultOn.data.cmd) {
+            // alert(2)
             var backDataCmd = cenwatpurDir.analysisInstruction(resultOn.data.cmd[0]);
-            alert("backDataCmd");
-            alert(angular.toJson(backDataCmd))
+            // alert("backDataCmd");
+            // alert(angular.toJson(backDataCmd))
             if(backDataCmd.flag === "ack"){
-              if(backDataCmd.cmd === "25"){
-                var name = "cenwatpurifier.autoclear";
-              }else{
-                var name = "";
-              };
-              alert("$scope.selectChangeFlag");
-              alert($scope.selectChangeFlag)
-              if(backDataCmd.ack === "fa"){
-                $scope.selectChange($scope.selectChangeFlag,$scope.handlenapeSelectedIndex);
-                $scope.Toast.show($translate.instant(name)+$translate.instant("golabelvariable.directesuccess"));
-              }else{
-                $scope.Toast.show($translate.instant(name)+$translate.instant("golabelvariable.directerror"));
-              };
+              // if($scope.directiveOnceFlag === 0){
+              //   $scope.directiveOnceFlag++;
+                if(backDataCmd.cmd === "25"){
+                  var name = "cenwatpurifier.autoclear";
+                  // alert("$scope.selectChangeFlag");
+                  // alert($scope.selectChangeFlag);
+                  if(backDataCmd.ack === "1000"){
+                    $scope.selectChange($scope.selectChangeFlag,$scope.handlenapeSelectedIndex);
+                    $scope.Toast.show($translate.instant(name)+$translate.instant("golabelvariable.directesuccess"));
+                  }else{
+                    $scope.Toast.show($translate.instant(name)+$translate.instant("golabelvariable.directerror"));
+                  };
+                };
+              // }
             }else{
               if(!$scope.initStatusFlag){
                 hmsPopup.hideLoading();
@@ -213,31 +222,37 @@ angular.module('toiletControlModule')
               };
               //status
               if(backDataCmd.cmd === "a5"){
-                $scope.initStatusFlag = false;
-                //get device status lv xin
-                if(backDataCmd.FiltrationRemain>100){
-                  backDataCmd.FiltrationRemain = 0+"%";
-                }else{
-                  backDataCmd.FiltrationRemain = backDataCmd.FiltrationRemain+"%";
-                }
-                $scope.cenwatpurifierCtrl.connectStatus = backDataCmd.FiltrationRemain;
-                if($scope.handlenapeListNape[0].selecFlag){
-                  $scope.cenwatpurifierCtrl.isShwoClearStatus = false;
-                }else{
-                  $scope.cenwatpurifierCtrl.isShwoClearStatus = true;
-                }
+                if($scope.clearOnceFlag === 0) {
+                  $scope.clearOnceFlag++;
+                  $scope.initStatusFlag = false;
+                  //get device status lv xin
+                  if(backDataCmd.FiltrationRemain>100){
+                    backDataCmd.FiltrationRemain = 0+"%";
+                  }else{
+                    backDataCmd.FiltrationRemain = backDataCmd.FiltrationRemain+"%";
+                  };
+                  $scope.cenwatpurifierCtrl.connectStatus = backDataCmd.FiltrationRemain;
+                  if($scope.handlenapeListNape[0].selecFlag){
+                    $scope.cenwatpurifierCtrl.isShwoClearStatus = false;
+                  }else{
+                    $scope.cenwatpurifierCtrl.isShwoClearStatus = true;
+                  };
+                };
                 //clear
               }else if(backDataCmd.cmd === "88"){
-                $scope.initStatusFlag = false;
-                if(backDataCmd.flushStatus === "0001"){
-                  //complete
-                  // $scope.cenwatpurifierCtrl.isShwoClearStatus = false;
-                }else if(backDataCmd.flushStatus === "0010"){
-                  //doing
-                  $scope.cenwatpurifierCtrl.clearData = $scope.cenwatpurifierCtrl.clearStatus;
-                  $scope.selectChange(true,0);
-                }
-              }
+                if($scope.statustiveOnceFlag === 0) {
+                  $scope.statustiveOnceFlag++;
+                  $scope.initStatusFlag = false;
+                  if(backDataCmd.flushStatus === "0001"){
+                    //complete
+                    // $scope.cenwatpurifierCtrl.isShwoClearStatus = false;
+                  }else if(backDataCmd.flushStatus === "0010"){
+                    //doing
+                    $scope.cenwatpurifierCtrl.clearData = $scope.cenwatpurifierCtrl.clearStatus;
+                    $scope.selectChange(true,0);
+                  };
+                };
+              };
             };
             $scope.$apply();
           };
@@ -303,6 +318,7 @@ angular.module('toiletControlModule')
       //处理选择怎加border
       var handlenapeListNapeLen = $scope.handlenapeListNape.length;
       $scope.selectNapes = function (index) {
+        // $scope.directiveOnceFlag = 0;
         // $scope.cpGetImpleteData();
         $scope.handlenapeSelectedIndex = index;
         if($scope.handlenapeListNape[index].matchdataid === "setting"){
