@@ -16,7 +16,7 @@
     <div class="toilet-handlenape-selec">
     </div>
     <ion-scroll class="toilet-handlenape" overflow-scroll="false">
-      <div class="toilet-handlenape-list" ng-repeat="list in handlenapeListNape track by $index" ng-click="selectNapes($index)">
+      <div class="toilet-handlenape-list" ng-repeat="list in handlenapeListNape track by $index" ng-if="$index !== 1" ng-click="selectNapes($index)">
         <div class="handlenape-list-napes" ng-class="{true: 'napes-border', false: ''}[list.selecFlag]">
           <span style="display: inline-block;padding-top:0.2rem"><img class="list-napes-img" ng-src={{list.imgUrl}} alt="" /></span>
           <p class="list-napes-dec" translate={{list.handleDes}}></p>

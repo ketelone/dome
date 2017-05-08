@@ -3,7 +3,11 @@
     "loading":"加载中",
     "PopupTitle":"提示",
     "PopupConfire":"确定",
-    "PopupCancle":"取消"
+    "PopupCancle":"取消",
+    "loadingdata":"正在获取数据",
+    "loadingdataerrror":"数据获取失败",
+    "directerror":"指令发生失败",
+    "directesuccess":"指令发送成功"
   },
   "my-info": {
     "myhome": "我家",
@@ -224,15 +228,19 @@
     "handleSelecMode": "模式",
     "dachong01": "大冲",
     "xioachong": "小冲",
+    "chongxi":"冲洗",
     "nvyong": "女用",
     "tunxi": "臀洗",
     "quanwen": "圈温",
     "nuanfeng": "暖风",
     "dengguang": "灯光",
+    "arounlight": "环境灯",
+    "tlitelight":"坐便灯",
     "nuanjiao": "暖脚",
     "guangai": "关盖",
     "fangai": "翻盖",
     "fanquan": "翻圈",
+    "toiltequan": "马桶圈",
     "qingjie": "清洁",
     "shezhi": "设置",
     "gaunbi": "正常",
@@ -261,7 +269,10 @@
     "nffl":"暖风风力档位",
     "nffw":"暖风风温档位",
     "njfl":"暖脚风力档位",
-    "qwfw":"圈温温度档位"
+    "qwfw":"圈温温度档位",
+    "heatdirec":"加热",
+    "devicePop":"获取设备状态",
+    "devicenouse":"无人使用"
   },
   "toiletSetting": {
     "title": "马桶设置",
@@ -283,11 +294,8 @@
     "never": "从不",
     "danwei": "小时",
     "interngent": "智能学习",
-    "popmessage":"确定要恢复默认设置吗?\n恢复默认设置后当前设置会被清空",
-    "loadingdata":"正在获取数据",
-    "loadingdataerrror":"数据获取失败",
-    "directerror":"指令发生失败",
-    "directesuccess":"指令发送成功"
+    "settingsucc": "设置",
+    "popmessage":"确定要恢复默认设置吗?\n恢复默认设置后当前设置会被清空"
   },
   "lightSetting": {
     "title": "灯光设置",
@@ -306,13 +314,11 @@
     "zhousi": "四",
     "zhouwu": "五",
     "zhouliu": "六",
-    "loadingdata":"正在获取数据",
-    "loadingdataerrror":"数据获取失败",
-    "directerror":"指令发生失败",
-    "directesuccess":"指令发送成功"
+    "settingsucc": "设置"
   },
   "cleargearPlan": {
     "title": "智感除菌计划",
+    "settingopen":"请先打开智感除菌计划设置!",
     "startTimeDes": "开始时间",
     "hour": "时",
     "minute": "分",
@@ -324,7 +330,9 @@
     "zhouwu": "周五",
     "zhouliu": "周六",
     "zhoutian": "周天",
-    "weekValDanwei":"每"
+    "weekValDanwei":"每",
+    "selectPoup":"请选择数据项",
+    "settingsucc": "设置"
 
   },
   "cenwatpurifier":{
@@ -332,10 +340,10 @@
     "status":"状态",
     "readyConnected":"已连接",
     "unConnected":"未连接",
-    "surplus":"剩余",
+    "surplus":"正在清洁",
     "complete":"完成",
-    "clear":"清洁",
-    "autoclear":"清洗",
+    "autoclear":"自动清洗",
+    "devicestats":"设备状态",
     "handleclear":"手动清洗",
     "onekeystop":"一键停止",
     "setting":"设置",
@@ -347,11 +355,7 @@
     "timedelay":"时间延迟",
     "flowinstance":"流量即时",
     "flowelay":"流量延迟",
-    "mix":"混合",
-    "loadingdata":"正在获取数据",
-    "loadingdataerrror":"数据获取失败",
-    "directerror":"指令发生失败",
-    "directesuccess":"指令发送成功"
+    "mix":"混合"
   },
   "cenwatpurSetting":{
     "title":"中央净水器设置",

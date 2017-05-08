@@ -38,6 +38,7 @@ angular.module('toiletControlModule')
         jiedianDanwei:""
       };
       var tolitersetcmdObj = {
+        boxid:localStorage.boxIp,
         diviceid:'8BE850C2',
         header:'8877',
         idx:1,
@@ -46,37 +47,43 @@ angular.module('toiletControlModule')
       };
       var nimisetting = new NIMI();
       /**
-       *@params:cmdvalue(value) type(chu fa type) name(current chu fa name)
-       *@disc:send Instruction;
+       *@params:
+       *@disc:accept ack or status;
        */
-      $scope.sendCmd = function (type,cmdvalue,name) {
-        hmsPopup.showLoading("<span translate='toiletSetting.loadingdata'></span>");
-        cordova.plugins.SocketPlugin.tcpSendCmd({
-          "timeout": "5000",
-          paramter :cmdService.cloudCmd(cmdvalue,$scope.handlenapeListNape[index].cloudId)
-        }, success, error);
-        function success(response) {
-          hmsPopup.hideLoading();
-          //resolve
-          if(response.code == 200){
-            if(value.ack.toLowerCase() == "fa27"){
-              $scope.Toast.show(name+$translate.instant("toiletSetting.directesuccess"));
-              if(type === "autochongshui"){
-                $scope.chongshuisetval = !$scope.chongshuisetval;
-              }else if(type === "autochuchou"){
-                $scope.chuchousetval = !$scope.chuchousetval;
-              }
-              // $scope.selectChange(index);
+      document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
+        var resultOn = result[0];
+        if(resultOn.from.uid === tolitersetcmdObj.diviceid){
+          if (resultOn.data.cmd) {
+            var backDataCmd = nimisetting.analysisInstruction(resultOn.data.cmd[0]);
+            if(backDataCmd.flag === "ack"){
+              var name = "toiletSetting.settingsucc";
+              //
+              // if(backDataCmd.cmd === "13"){
+              //   var name = "toiletSetting.autofangai";
+              // }else if(backDataCmd.cmd === "13"){
+              //   var name = "toiletSetting.autofangai";
+              // }else if(backDataCmd.cmd === "13"){
+              //   var name = "toiletSetting.autofangai";
+              // }else if(backDataCmd.cmd === "13"){
+              //   var name = "toiletSetting.autofangai";
+              // }else{
+              //   var name = "";
+              // };
+              if(backDataCmd.ack === "fa"){
+                $scope.Toast.show($translate.instant(name)+$translate.instant("golabelvariable.directesuccess"));
+                if(type === "autochongshui"){
+                  $scope.chongshuisetval = !$scope.chongshuisetval;
+                }else if(type === "autochuchou"){
+                  $scope.chuchousetval = !$scope.chuchousetval;
+                };
+              }else{
+                $scope.Toast.show($translate.instant(name)+$translate.instant("golabelvariable.directerror"));
+              };
             }
-          }else{
-            $scope.Toast.show(name+$translate.instant("toiletSetting.directerror"));
-          }
+            $scope.$apply();
+          };
         };
-        function error() {
-          hmsPopup.hideLoading();
-          $scope.Toast.show(name + $translate.instant("toiletSetting.loadingdataerrror"));
-        };
-      };
+      }, false);
       /**
        *@params:cmdvalue(value) type(chu fa type) name(current chu fa name)
        *@disc:send clound Instruction;
@@ -87,7 +94,7 @@ angular.module('toiletControlModule')
         $timeout(function () {
           hmsPopup.hideLoading();
           $scope.Toast.show("发生指令成功");
-        },1000)
+        },1000);
         // hmsPopup.showLoading("<span translate='toiletSetting.loadingdata'></span>");
         // var url = baseConfig.basePath + "/r/api/message/sendMessage";
         // var paramter = cmdService.cloudCmd(cmdvalue,$scope.handlenapeListNape[index].cloudId);
@@ -124,6 +131,7 @@ angular.module('toiletControlModule')
               $scope.toilSetGetImpleteData(type,cmdvalue,$translate.instant("toiletSetting.autochongshui"));
             }else{
               // $scope.sendCmd("autochongshui",cmdvalue,$translate.instant("toiletSetting.autochongshui"));
+              cmdService.sendCmd(tolitersetcmdObj.diviceid, cmdvalue, tolitersetcmdObj.boxid);
             }
           }else{
             var cmdvalue = cmdService.getCmd(tolitersetcmdObj.header,tolitersetcmdObj.idx,nimisetting.setting("OFF", "OFF", "OFF", "OFF", "OFF", "OFF", "OFF", "OFF", "OFF"),tolitersetcmdObj.ctrId,tolitersetcmdObj.devId);
@@ -133,6 +141,7 @@ angular.module('toiletControlModule')
               $scope.toilSetGetImpleteData(type,cmdvalue,$translate.instant("toiletSetting.autochongshui"));
             }else{
               // $scope.sendCmd("autochongshui",cmdvalue,$translate.instant("toiletSetting.autochongshui"));
+              cmdService.sendCmd(tolitersetcmdObj.diviceid, cmdvalue, tolitersetcmdObj.boxid);
             }
           }
         }else if(type === "autochuchou"){
@@ -144,6 +153,7 @@ angular.module('toiletControlModule')
               $scope.toilSetGetImpleteData(type,cmdvalue,$translate.instant("toiletSetting.autochongshui"));
             }else{
               // $scope.sendCmd("autochuchou",cmdvalue,$translate.instant("toiletSetting.autochongshui"));
+              cmdService.sendCmd(tolitersetcmdObj.diviceid, cmdvalue, tolitersetcmdObj.boxid);
             }
           }else{
             var cmdvalue = cmdService.getCmd(tolitersetcmdObj.header,tolitersetcmdObj.idx,nimisetting.setting("OFF", "OFF", "OFF", "OFF", "OFF", "OFF", "OFF", "OFF", "OFF"),tolitersetcmdObj.ctrId,tolitersetcmdObj.devId);
@@ -153,115 +163,11 @@ angular.module('toiletControlModule')
               $scope.toilSetGetImpleteData(type,cmdvalue,$translate.instant("toiletSetting.autochongshui"));
             }else{
               // $scope.sendCmd("autochuchou",cmdvalue,$translate.instant("toiletSetting.autochongshui"));
+              cmdService.sendCmd(tolitersetcmdObj.diviceid, cmdvalue, tolitersetcmdObj.boxid);
             }
           }
         }
       };
-
-      // $scope.listleft = [{
-      //   name:"toiletSetting.close",
-      //   flag:false,
-      //   towdata:[{
-      //     name: "toiletSetting.none",
-      //     flag:false
-      //   }]
-      // },{
-      //   name:"toiletSetting.ganyinggai",
-      //   flag:false,
-      //   towdata:[{
-      //     name: "toiletSetting.nearinstance",
-      //     flag:false
-      //   },{
-      //     name: "toiletSetting.centerinstance",
-      //     flag:false
-      //   },{
-      //     name: "toiletSetting.farinstance",
-      //     flag:false
-      //   }]
-      // },{
-      //   name:"toiletSetting.gaiquangy",
-      //   flag:false,
-      //   towdata:[{
-      //     name: "toiletSetting.gaiquangy1",
-      //     flag:false
-      //   },{
-      //     name: "toiletSetting.gaiquangy2",
-      //     flag:false
-      //   },{
-      //     name: "toiletSetting.gaiquangy3",
-      //     flag:false
-      //   }]
-      // }];
-      // $scope.gaiganyinTemp = "";
-      // $scope.gaiganyinDistanceTemp = "";
-      //
-      // $scope.listright=$scope.listleft[0].towdata;
-      // $scope.silderSeleced = function (index) {
-      //   $scope.listleft[index].flag = !$scope.listleft[index].flag;
-      //   if($scope.listleft[index].flag){
-      //     $scope.gaiganyinTemp = $scope.listleft[index].name;
-      //     $scope.listright = $scope.listleft[index].towdata;
-      //   }else{
-      //     $scope.gaiganyinTemp = "";
-      //     $scope.listright = [];
-      //   };
-      //   for(var i=0;i<$scope.listleft.length;i++){
-      //     if(index !== i){
-      //       $scope.listleft[i].flag = false;
-      //     }
-      //   }
-      // };
-      // $scope.silderRightSeleced = function (index) {
-      //   $scope.listright[index].flag = !$scope.listright[index].flag;
-      //   if($scope.listright[index].flag){
-      //     $scope.gaiganyinDistanceTemp = $scope.listright[index].name;
-      //   }else{
-      //     $scope.gaiganyinDistanceTemp = "";
-      //   };
-      //   for(var i=0;i<$scope.listright.length;i++){
-      //     if(index !== i){
-      //       $scope.listright[i].flag = false;
-      //     }
-      //   }
-      // };
-      // //auto cover setting
-      // $scope.fontSize = document.documentElement.clientWidth / 7.5;
-      // $scope.setModalTop = "toiletSetModalTop";
-      // $scope.setSingalModalTop = "toiletSetSingalModalTop";
-      // $scope.screenHeig = window.innerHeight;
-      // $ionicModal.fromTemplateUrl('build/pages/model/hmsModal.html', {
-      //   scope: $scope,
-      //   animation: 'slide-in-up'
-      // }).then(function (modal) {
-      //   $scope.modal = modal;
-      // });
-      // //自动翻盖设置
-      // $ionicModal.fromTemplateUrl('build/pages/model/hmsiot-setSelect.html', {
-      //   scope: $scope,
-      //   animation: 'slide-in-up'
-      // }).then(function (modal) {
-      //   $scope.setmodal = modal;
-      // });
-      // $scope.setopenModal = function () {
-      //   $scope.listright=$scope.listleft[1].towdata;
-      //   $scope.setmodal.show();
-      //   setTimeout(function () {
-      //     var ele = document.getElementsByClassName("toiletSetModalTop");
-      //     ele[0].style.top = 68 + '%';
-      //   },10)
-      // };
-      // $scope.$on('$destroy', function() {
-      //   $scope.setmodal.remove();
-      // });
-      // $scope.setchoose = function () {
-      //   $scope.setmodal.hide();
-      //   if($scope.gaiganyinTemp && $scope.gaiganyinDistanceTemp){
-      //     $scope.toilteSettingData.gaiganyin=$scope.gaiganyinTemp;
-      //     $scope.toilteSettingData.gaiganyinDistance=$scope.gaiganyinDistanceTemp;
-      //   }else{
-      //     hmsPopup.showShortCenterToast("请选择数据项!");
-      //   };
-      // };
       $scope.jiedianval = [{
         id:"jiedianval",des:'toiletSetting.never','danwei':""
       },{id:"jiedianval",des:'4','danwei':"toiletSetting.danwei"
@@ -298,7 +204,7 @@ angular.module('toiletControlModule')
             ele[0].style.top = $scope.screenHeig - 1*$scope.fontSize*$scope.value.length + 'px';
             ele[0].style.minHeight = 1*$scope.fontSize*$scope.value.length + 'px';
           }, 10)
-        }
+        };
       };
       $scope.$on('$destroy', function() {
         $scope.modal.remove();
@@ -326,6 +232,7 @@ angular.module('toiletControlModule')
             $scope.toilSetGetImpleteData("jiedian",cmdvalue,$translate.instant("toiletSetting.jiedianset"));
           }else{
             // $scope.sendCmd("jiedian",cmdvalue,$translate.instant("toiletSetting.jiedianset"));
+            cmdService.sendCmd(tolitersetcmdObj.diviceid, cmdvalue, boxId);
           };
         }else{
           $scope.toilteSettingData.gaiganyinDistance=val.des;
@@ -345,6 +252,7 @@ angular.module('toiletControlModule')
             $scope.toilSetGetImpleteData("autofangai",cmdvalue,$translate.instant("toiletSetting.autofangai"));
           }else{
             // $scope.sendCmd("autofangai",cmdvalue,$translate.instant("toiletSetting.autofangai"));
+            cmdService.sendCmd(tolitersetcmdObj.diviceid, cmdvalue, boxId);
           };
         };
       };
