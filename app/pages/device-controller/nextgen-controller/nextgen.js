@@ -49,7 +49,7 @@ angular.module('nextgenModule')
         if (baseConfig.isCloudCtrl) {
           cloudSendcmd("ShownerTurnOn", value, "持续出水", "持续出水失败");
         } else {
-          nextgenService.sendCmd(deviceId, value, "持续出水", "持续出水失败");
+          cmdService.sendCmd(deviceId, value, "持续出水", "持续出水失败");
         }
       }
 
@@ -65,7 +65,7 @@ angular.module('nextgenModule')
         if (baseConfig.isCloudCtrl) {
           cloudSendcmd("ShownerCoolTurnOn", value, "排空冷水", "排空冷水失败");
         } else {
-          nextgenService.sendCmd(deviceId, value, "排空冷水", "排空冷水失败");
+          cmdService.sendCmd(deviceId, value, "排空冷水", "排空冷水失败");
         }
       }
 
@@ -85,7 +85,7 @@ angular.module('nextgenModule')
         if (baseConfig.isCloudCtrl) {
           cloudSendcmd(deviceId, value, "关闭", "关闭失败");
         } else {
-          nextgenService.sendCmd(deviceId, value, "关闭", "关闭失败");
+          cmdService.sendCmd(deviceId, value, "关闭", "关闭失败");
         }
       }
 
@@ -98,7 +98,7 @@ angular.module('nextgenModule')
         if (baseConfig.isCloudCtrl) {
           cloudSendcmd(deviceId, value, "一键关闭", "一键关闭失败");
         } else {
-          nextgenService.sendCmd(deviceId, value, "一键关闭", "一键关闭失败");
+          cmdService.sendCmd(deviceId, value, "一键关闭", "一键关闭失败");
         }
       }
 
@@ -331,7 +331,6 @@ angular.module('nextgenModule')
       $scope.choose = function (val) {
         if (val.id < 6) {
           $scope.modal.hide();
-          $scope.waterway = val.des;
           var argment = null;
           var way = "";
           switch (val.id) {
@@ -375,8 +374,9 @@ angular.module('nextgenModule')
           if (baseConfig.isCloudCtrl) {
             cloudSendcmd(deviceId, value, way, way + "失败");
           } else {
-            nextgenService.sendCmd(deviceId, value, way, way + "失败");
+            cmdService.sendCmd(deviceId, value, way, way + "失败");
           }
+          $scope.waterway = val.des;
         }
       };
 
