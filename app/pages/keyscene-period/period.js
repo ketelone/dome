@@ -50,6 +50,10 @@ angular.module('productModule')
       $scope.goBack = function () {
         $ionicHistory.goBack();
       }
+      //进入设置页面
+      $scope.goSetting = function () {
+        $state.go('periodSetting');
+      }
 
       /**
        *@author:chenjiacheng

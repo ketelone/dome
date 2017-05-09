@@ -27,7 +27,8 @@ var myApp = angular.module('myApp', [
   'karessControlModule',
   'nextgenModule',
   'mcControlModule',
-  'airfoilShowerModule'
+  'airfoilShowerModule',
+  'sceneSupermarketModule'
 ]);
 
 var db = null;
@@ -581,6 +582,11 @@ angular.module('myApp')
           templateUrl: 'build/pages/device-add/box-add-device/boxAddDevice.html',
           controller: 'boxAddDeviceCtrl'
         })
+        .state('sceneSupermarket', {
+          url: '/sceneSupermarket',
+          templateUrl: 'build/pages/scene-supermarket/scene-supermarket.html',
+          controller: 'sceneSupermarketCtrl'
+        })
         //一键场景
         //gohome
         .state('goHome', {
@@ -614,6 +620,12 @@ angular.module('myApp')
           templateUrl: 'build/pages/keyscene-period/period.html',
           controller: 'periodCtrl'
         })
+        .state('periodSetting', {
+          url: '/periodSetting',
+          templateUrl: 'build/pages/keyscene-period/period-setting/period-setting.html',
+          controller: 'periodSettingCtrl'
+        })
+
         .state('veil', {
           url: '/veil',
           templateUrl: 'build/pages/keyscene-veil/veil.html',

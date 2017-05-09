@@ -73,7 +73,9 @@ angular.module('indexPageModule')
             isTwoButton: false,
             jsonContext: "1",
             isOff: false,
-            lastUpdateDate: ""
+            lastUpdateDate: "",
+            buttonName:"开启",
+            buttonStatus:false
           },
           {
             id: "1",
@@ -84,7 +86,9 @@ angular.module('indexPageModule')
             isTwoButton: false,
             jsonContext: "1",
             isOff:  false,
-            lastUpdateDate: ""
+            lastUpdateDate: "",
+            buttonName:"开启",
+            buttonStatus:false
           },
           {
             id: "4",
@@ -95,7 +99,9 @@ angular.module('indexPageModule')
             isTwoButton: true,
             jsonContext: "1",
             isOff:  false,
-            lastUpdateDate: ""
+            lastUpdateDate: "",
+            buttonName:"开启",
+            buttonStatus:false
           },
           {
             id: "3",
@@ -106,7 +112,9 @@ angular.module('indexPageModule')
             isTwoButton: true,
             jsonContext: "1",
             isOff:  false,
-            lastUpdateDate: ""
+            lastUpdateDate: "",
+            buttonName:"开启",
+            buttonStatus:false
           },
           {
             id: "5",
@@ -117,7 +125,9 @@ angular.module('indexPageModule')
             isTwoButton: true,
             jsonContext: "1",
             isOff:  false,
-            lastUpdateDate: ""
+            lastUpdateDate: "",
+            buttonName:"开启",
+            buttonStatus:false
           },
           {
             id: "6",
@@ -128,7 +138,9 @@ angular.module('indexPageModule')
             isTwoButton: true,
             jsonContext: "1",
             isOff:  false,
-            lastUpdateDate: ""
+            lastUpdateDate: "",
+            buttonName:"开启",
+            buttonStatus:false
           }
         ];
       }
@@ -161,6 +173,17 @@ angular.module('indexPageModule')
         $scope.modelData = [];
         getScenarioList();
       };
+
+      $scope.changeStatus = function (index) {
+        console.log('调用方法');
+        if($scope.modelData[index].buttonName=='开启中'){
+          return 0;
+        }else {
+          $scope.modelData[index].buttonName='开启中'
+          $scope.modelData[index].buttonStatus = true;
+        }
+
+      }
 
       $scope.deviceModel = [];
       if(!baseConfig.isLinkDatabase){
@@ -651,7 +674,7 @@ angular.module('indexPageModule')
 
       $timeout(function () {
         hmsPopup.hideLoading();
-      }, 15000);
+      }, 5000);
       var boxLink = function (item) {
         var boxIp = item.data.act_params.ip; //item.payload.cmd_properties.ip
         var deviceId = item.data.act_params.device_id;
@@ -749,6 +772,7 @@ angular.module('indexPageModule')
        */
       var sceneList = [];
       $scope.getSwitchStatus = function(item){
+        console.log(item.isOff);
         var scentObj = {sceneType: item.title, status: item.isOff};
         sceneList.push(scentObj);
         localStorage.sceneList = JSON.stringify(sceneList);
@@ -860,7 +884,7 @@ angular.module('indexPageModule')
       };
 
       $scope.addModule = function(){
-
+        $state.go('sceneSupermarket');
       };
 
       $scope.addDevice = function(){

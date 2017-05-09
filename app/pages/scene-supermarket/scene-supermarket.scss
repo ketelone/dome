@@ -1,0 +1,73 @@
+.scene-supermarket{
+  .title-button{
+    font-size: 14px !important;
+    color: #4C5059;
+  }
+  .title-margin{
+    margin-top: 0.2rem;
+    margin-bottom: 0.2rem;
+  }
+  .left-title{
+    font-family: PingFangSC-Medium;
+    font-size: $font-size;
+    color: #FFFFFF;
+    letter-spacing: 1px;
+    padding-left: 10px;
+  }
+  .right-title{
+    font-family: PingFangSC-Regular;
+    font-size: $font-size-button;
+    color: #565A64;
+    letter-spacing: 1px;
+    text-align: right;
+    padding-right: 10px;
+  }
+  .text-title{
+    color: white;
+    margin-top: 0.3rem;
+    font-family: PingFangSC-Medium;
+    font-size: $font-size;
+    line-height: 0.32rem;
+  }
+  .text{
+    font-family: PingFangSC-Regular;
+    font-size: $font-size-button;
+    color: #FFFFFF;
+    letter-spacing: 1px;
+    line-height: 0.30rem;
+  }
+  .img{
+    height: 19vh;
+  }
+  .morning{
+    background-image: url("../img/scene-supermarket/zaoqi2x.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+  .leave-home{
+    background-image: url("../img/scene-supermarket/lijia2x.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+  .home-spa{
+    background-image: url("../img/scene-supermarket/paozao2x.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+  .weiya{
+    background-image: url("../img/scene-supermarket/dengguang2x.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+  .dayi{
+    background-image: url("../img/scene-supermarket/dayima2x.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+  .linyu{
+    background-image: url("../img/scene-supermarket/linyu2x.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+}
