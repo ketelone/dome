@@ -80,9 +80,6 @@ angular.module('nextgenModule')
         $ionicHistory.goBack();
       }
 
-      //选中的功能
-      var switchType = "";
-
       //出水方式初始模式选择
       $scope.waterway = localStorage.waterway?localStorage.waterway:"nextgen.Spout";
 
@@ -96,8 +93,12 @@ angular.module('nextgenModule')
         $scope.showWater = false;
       }
 
+      //选中的功能，用于判断高亮的对象
+      var switchType = "";
+
       //持续出水
       $scope.chixuWater = function () {
+        chooseWaterWay();//发送选择出水口指令
         switchType = "chixuWater";
         var argment = {
           'mode': '01'    //00表示stop，01表示Start continuous outlet 02表示Start evacuate cold water (turn on, and off when reach 37 degree,Start evacuate cold water 如果5分钟后水温仍达不到37度则自动停止) ,other表示内置设定
@@ -110,6 +111,7 @@ angular.module('nextgenModule')
 
       //排空冷水
       $scope.paikongWater = function () {
+        chooseWaterWay();//发送选择出水口指令
         switchType = "paikongWater";
         var argment = {
           'mode': '02'    //00表示stop，01表示Start continuous outlet 02表示Start evacuate cold water (turn on, and off when reach 37 degree,Start evacuate cold water 如果5分钟后水温仍达不到37度则自动停止) ,other表示内置设定
@@ -140,6 +142,68 @@ angular.module('nextgenModule')
         sendCmd(deviceId, value, "一键关闭", "一键关闭失败");
       }
 
+      //头顶花洒
+      function headerHuasa(){
+        argment = {
+          'temperature': '00',    //这个最好传16进制的字符串 比如0 ->00 100->64
+          'out': 'HRS',			  //这个参数是个枚举字符串 HRS，HS，SP，HDS 分别表示 头顶花洒，头顶摇摆，spout，手持花洒，
+        }
+        var data = nextgenService.setShowerPara(argment);
+        var value = getValue(data);
+        sendCmd(deviceId, value, "头顶花洒", "头顶花洒失败");
+      }
+
+      //头顶摆动
+      function headerBaidong() {
+        argment = {
+          'temperature': '00',    //这个最好传16进制的字符串 比如0 ->00 100->64
+          'out': 'HS',			  //这个参数是个枚举字符串 HRS，HS，SP，HDS 分别表示 头顶花洒，头顶摇摆，spout，手持花洒，
+        }
+        var data = nextgenService.setShowerPara(argment);
+        var value = getValue(data);
+        sendCmd(deviceId, value, "头顶摆动", "头顶摆动失败");
+      }
+
+      //手持花洒
+      function handHuasa() {
+        argment = {
+          'temperature': '00',    //这个最好传16进制的字符串 比如0 ->00 100->64
+          'out': 'HDS',			  //这个参数是个枚举字符串 HRS，HS，SP，HDS 分别表示 头顶花洒，头顶摇摆，spout，手持花洒，
+        }
+        var data = nextgenService.setShowerPara(argment);
+        var value = getValue(data);
+        sendCmd(deviceId, value, "手持花洒", "手持花洒失败");
+      }
+
+      //goSpout
+      function goSpout() {
+        argment = {
+          'temperature': '00',    //这个最好传16进制的字符串 比如0 ->00 100->64
+          'out': 'SP',			  //这个参数是个枚举字符串 HRS，HS，SP，HDS 分别表示 头顶花洒，头顶摇摆，spout，手持花洒，
+        }
+        var data = nextgenService.setShowerPara(argment);
+        var value = getValue(data);
+        sendCmd(deviceId, value, "Spout", "Spout失败");
+      }
+
+      //判断出水口，发送选择出水口指令
+      function chooseWaterWay() {
+        switch($scope.waterway){
+          case "nextgen.yidong":
+            handHuasa();
+            break;
+          case "nextgen.maichong":
+            headerHuasa();
+            break;
+          case "nextgen.bodong":
+            headerBaidong();
+            break;
+          case "nextgen.Spout":
+            goSpout();
+            break;
+        }
+      }
+
       //初次进入页面
       var nextgenInit = true;
 
@@ -149,7 +213,7 @@ angular.module('nextgenModule')
           if (ackData.ack.indexOf("fa") >= 0) {
             switch (switchType) {
               case "chixuWater":
-                $scope.Toast.show($translate.instant("nextgen.chixu") + $translate.instant("nextgen.start"));
+                // $scope.Toast.show($translate.instant("nextgen.chixu") + $translate.instant("nextgen.start"));
                 // hmsPopup.showShortCenterToast("持续出水开启成功");
                 $scope.showWater = false;
                 $scope.handlenapeListNape[0].selecFlag = true;
@@ -158,7 +222,7 @@ angular.module('nextgenModule')
                 break;
               case "paikongWater":
                 // hmsPopup.showShortCenterToast("排空冷水开启成功");
-                $scope.Toast.show($translate.instant("nextgen.paikong") + $translate.instant("nextgen.start"));
+                // $scope.Toast.show($translate.instant("nextgen.paikong") + $translate.instant("nextgen.start"));
                 $scope.showWater = false;
                 $scope.handlenapeListNape[0].selecFlag = true;
                 $scope.handlenapeListNape[0].imgUrl = $scope.handlenapeListNape[0].imgSeledUrl;
@@ -166,14 +230,14 @@ angular.module('nextgenModule')
                 break;
               case "closeWater":
                 // hmsPopup.showShortCenterToast("关闭成功");
-                $scope.Toast.show($translate.instant("nextgen.close") + $translate.instant("nextgen.success"));
+                // $scope.Toast.show($translate.instant("nextgen.close") + $translate.instant("nextgen.success"));
                 $scope.handlenapeListNape[0].selecFlag = false;
                 $scope.handlenapeListNape[0].imgUrl = $scope.handlenapeListNape[0].imgUrlTemp;
                 $scope.waterstatus = "nextgen.unworking";
                 break;
               case "closeAll":
                 // hmsPopup.showShortCenterToast("一键关闭成功");
-                $scope.Toast.show($translate.instant("nextgen.stop") + $translate.instant("nextgen.success"));
+                // $scope.Toast.show($translate.instant("nextgen.stop") + $translate.instant("nextgen.success"));
                 $scope.handlenapeListNape[1].selecFlag = true;
                 $scope.handlenapeListNape[1].imgUrl = $scope.handlenapeListNape[1].imgSeledUrl;
                 $scope.handlenapeListNape[0].selecFlag = false;
@@ -184,27 +248,28 @@ angular.module('nextgenModule')
                   $scope.handlenapeListNape[1].imgUrl = $scope.handlenapeListNape[1].imgUrlTemp;
                 }, 2000);
                 break;
+              //出水方式可以不判断，将变量的变化放到modal.choose那里，modal.choose可以不发送指令的
               case "handHuasa":
                 // hmsPopup.showShortCenterToast("手持花洒开启成功");
-                $scope.Toast.show($translate.instant("nextgen.yidong") + $translate.instant("nextgen.start"));
+                // $scope.Toast.show($translate.instant("nextgen.yidong") + $translate.instant("nextgen.start"));
                 $scope.waterway = "nextgen.yidong";
                 localStorage.waterway = "nextgen.yidong";
                 break;
               case "headerHuasa":
                 // hmsPopup.showShortCenterToast("头顶花洒开启成功");
-                $scope.Toast.show($translate.instant("nextgen.maichong") + $translate.instant("nextgen.start"));
+                // $scope.Toast.show($translate.instant("nextgen.maichong") + $translate.instant("nextgen.start"));
                 $scope.waterway = "nextgen.maichong";
                 localStorage.waterway = "nextgen.maichong";
                 break;
               case "headerBaidong":
                 // hmsPopup.showShortCenterToast("头顶摆动开启成功");
-                $scope.Toast.show($translate.instant("nextgen.bodong") + $translate.instant("nextgen.start"));
+                // $scope.Toast.show($translate.instant("nextgen.bodong") + $translate.instant("nextgen.start"));
                 $scope.waterway = 'nextgen.bodong';
                 localStorage.waterway = 'nextgen.bodong';
                 break;
               case "goSpout":
                 // hmsPopup.showShortCenterToast("spout开启成功");
-                $scope.Toast.show($translate.instant("nextgen.Spout") + $translate.instant("nextgen.start"));
+                // $scope.Toast.show($translate.instant("nextgen.Spout") + $translate.instant("nextgen.start"));
                 $scope.waterway = 'nextgen.Spout';
                 localStorage.waterway = 'nextgen.Spout';
                 break;
@@ -395,46 +460,24 @@ angular.module('nextgenModule')
       $scope.choose = function (val) {
         if (val.id < 6) {
           $scope.modal.hide();
-          var argment = null;
-          var way = "";
           switch (val.id) {
             case 2:
               switchType = "headerHuasa";
-              argment = {
-                'temperature': '00',    //这个最好传16进制的字符串 比如0 ->00 100->64
-                'out': 'HRS',			  //这个参数是个枚举字符串 HRS，HS，SP，HDS 分别表示 头顶花洒，头顶摇摆，spout，手持花洒，
-              }
-              way = "头顶花洒";
+              headerHuasa();
               break;
             case 3:
               switchType = "headerBaidong";
-              argment = {
-                'temperature': '00',    //这个最好传16进制的字符串 比如0 ->00 100->64
-                'out': 'HS',			  //这个参数是个枚举字符串 HRS，HS，SP，HDS 分别表示 头顶花洒，头顶摇摆，spout，手持花洒，
-              }
-              way = "头顶摆动";
+              headerBaidong();
               break;
             case 4:
               switchType = "handHuasa";
-              argment = {
-                'temperature': '00',    //这个最好传16进制的字符串 比如0 ->00 100->64
-                'out': 'HDS',			  //这个参数是个枚举字符串 HRS，HS，SP，HDS 分别表示 头顶花洒，头顶摇摆，spout，手持花洒，
-              }
-              way = "头持花洒";
+              handHuasa();
               break;
             case 5:
               switchType = "goSpout";
-              argment = {
-                'temperature': '00',    //这个最好传16进制的字符串 比如0 ->00 100->64
-                'out': 'SP',			  //这个参数是个枚举字符串 HRS，HS，SP，HDS 分别表示 头顶花洒，头顶摇摆，spout，手持花洒，
-              }
-              way = "Spout";
+              goSpout();
               break;
           }
-          // alert(way);
-          var data = nextgenService.setShowerPara(argment);
-          var value = getValue(data);
-          sendCmd(deviceId, value, way, way + "失败");
         }
       };
 
