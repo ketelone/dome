@@ -54,6 +54,7 @@ angular.module('utilModule')
             "ip": boxId
           }, success, error);
           function success(response) {
+            // alert('发送成功');
           }
 
           function error() {

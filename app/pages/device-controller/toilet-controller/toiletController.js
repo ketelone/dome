@@ -61,20 +61,11 @@ angular.module('toiletControlModule')
         diviceid:'8BE850C2',
         header:'8877',
         idx:1,
-        ctrId:'00',
+        ctrId:'E3',
         devId:'01'
       };
       var nimi = new NIMI();
-      // //get devic status
-      // var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx,nimi._data["synchronizeReq"],tolitercmdObj.ctrId,tolitercmdObj.devId);
-      // //send instructin
-      // console.log(cmdvalue)
-      // if(baseConfig.isCloudCtrl){
-      //   $scope.toGetImpleteData("false",cmdvalue,$translate.instant('toiletController.devicePop'),1,"0");
-      // }else{
-      //   // $scope.sendCmd(cmdvalue,selectedIndex);
-      //   cmdServiceendCmd(tolitercmdObj.diviceid, cmdvalue, tolitercmdObj.boxid);
-      // };
+      // alert("obj"+angular.toJson(tolitercmdObj))
       /*
        tongyishujuji
        */
@@ -746,58 +737,79 @@ angular.module('toiletControlModule')
       $scope.handlenapeSelectedIndex = 12;
       $scope.selectChangeFlag = false;
       $scope.selectIsType = 1;
-
+      $scope.tostatustiveOnceFlag = 0;
+      $scope.todeviceFlag = 0;
       document.addEventListener('SocketPlugin.receiveTcpData',function (result) {
         var resultOn = result[0];
+        // alert("resultOn"+angular.toJson(resultOn))
         if(resultOn.from.uid === tolitercmdObj.diviceid){
           if (resultOn.data.cmd) {
+            // alert("resultOn.data.cmd"+angular.toJson(resultOn.data.cmd))
             var backDataCmd = nimi.analysisInstruction(resultOn.data.cmd[0]);
+            alert("backDataCmd1234" + angular.toJson(backDataCmd))
+            // alert("backDataCmd"+angular.toJson(backDataCmd))
             if(backDataCmd.flag === "ack"){
-              if(backDataCmd.cmd === "07"){
-                var name = "toiletController.chongxi";
-              }else if(backDataCmd.cmd === "01"){
-                var name = "toiletController.nvyong";
-              }else if(backDataCmd.cmd === "02"){
-                var name = "toiletController.tunxi";
-              }else if(backDataCmd.cmd === "05"){
-                var name = "toiletController.heatdirec";
-              }else if(backDataCmd.cmd === "03"){
-                var name = "toiletController.nuanfeng";
-              }else if(backDataCmd.cmd === "11"){
-                var name = "toiletController.arounlight";
-              }else if(backDataCmd.cmd === "18"){
-                var name = "toiletController.tlitelight";
-              }else if(backDataCmd.cmd === "05"){
-                var name = "toiletController.heatdirec";
-              }else if(backDataCmd.cmd === "08"){
-                var name = "toiletController.toiltequan";
-              }else if(backDataCmd.cmd === "17"){
-                var name = "toiletController.clearopen";
-              }else if(backDataCmd.cmd === "15"){
-                var name = "toiletController.clearextend";
-              }else if(backDataCmd.cmd === "0E"){
-                var name = "toiletController.clearinstance";
-              }else{
-                var name = "";
-              };
-              if(backDataCmd.ack === "fa"){
-                $scope.selectChange($scope.selectChangeFlag,$scope.handlenapeSelectedIndex,$scope.selectIsType);
-                $scope.Toast.show($translate.instant(name)+$translate.instant("golabelvariable.directesuccess"));
-              }else{
-                $scope.Toast.show($translate.instant(name)+$translate.instant("golabelvariable.directerror"));
-              };
-            }else{
-              if(backDataCmd.cmd === "cmd"){
-                //get device status
-                if(backDataCmd.seatedStatus === "1"){
-                  $scope.toiletController.deviceUseInfo = $scope.toiletController.useing
-                  $scope.toiletController.deviceinfoflag = true;
-                }else if(backDataCmd.seatedStatus === "0"){
-                  $scope.toiletController.deviceinfoflag = false;
-                  $scope.toiletController.deviceUseInfo = $scope.toiletController.nouse
-                }else{
-                  $scope.Toast.show($translate.instant("toiletController.devicePop")+$translate.instant("golabelvariable.directerror"));
+              if($scope.todeviceFlag === 0) {
+                $scope.todeviceFlag++;
+                alert("backDataCmd" + angular.toJson(backDataCmd))
+                if (backDataCmd.cmd === "07") {
+                  var name = "toiletController.chongxi";
+                } else if (backDataCmd.cmd === "01") {
+                  var name = "toiletController.nvyong";
+                } else if (backDataCmd.cmd === "02") {
+                  var name = "toiletController.tunxi";
+                } else if (backDataCmd.cmd === "05") {
+                  var name = "toiletController.heatdirec";
+                } else if (backDataCmd.cmd === "03") {
+                  var name = "toiletController.nuanfeng";
+                } else if (backDataCmd.cmd === "11") {
+                  var name = "toiletController.arounlight";
+                } else if (backDataCmd.cmd === "18") {
+                  var name = "toiletController.tlitelight";
+                } else if (backDataCmd.cmd === "05") {
+                  var name = "toiletController.heatdirec";
+                } else if (backDataCmd.cmd === "08") {
+                  var name = "toiletController.toiltequan";
+                } else if (backDataCmd.cmd === "17") {
+                  var name = "toiletController.clearopen";
+                } else if (backDataCmd.cmd === "15") {
+                  var name = "toiletController.clearextend";
+                } else if (backDataCmd.cmd === "0e") {
+                  var name = "toiletController.clearinstance";
+                } else {
+                  var name = "设备";
                 };
+                alert("name" + angular.toJson($translate.instant(name)))
+                alert("$scope.selectChangeFlag" + angular.toJson($scope.selectChangeFlag))
+                alert("$scope.handlenapeSelectedIndex" + angular.toJson($scope.handlenapeSelectedIndex))
+                alert("$scope.selectIsType" + angular.toJson($scope.selectIsType))
+                if (backDataCmd.ack === "1000") {
+                  $scope.selectChange($scope.selectChangeFlag, $scope.handlenapeSelectedIndex, $scope.selectIsType);
+                  $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
+                } else {
+                  $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directerror"));
+                };
+              }
+            }else{
+              // alert("backDataCmdstatus" + angular.toJson(backDataCmd));
+              if(backDataCmd.cmd === "98") {
+                //get device status
+                if ($scope.tostatustiveOnceFlag === 0) {
+                  alert("status");
+                  alert("backDataCmd"+angular.toJson(backDataCmd))
+                  $scope.tostatustiveOnceFlag++;
+                  if (backDataCmd.fontStatus === "1") {
+                    hmsPopup.hideLoading();
+                    $scope.toiletController.deviceUseInfo = $scope.toiletController.useing
+                    $scope.toiletController.deviceinfoflag = true;
+                  } else if (backDataCmd.fontStatus === "0") {
+                    hmsPopup.hideLoading();
+                    $scope.toiletController.deviceinfoflag = false;
+                    $scope.toiletController.deviceUseInfo = $scope.toiletController.nouse
+                  } else {
+                    $scope.Toast.show($translate.instant("toiletController.devicePop") + $translate.instant("golabelvariable.directerror"));
+                  };
+                }
               };
             };
             $scope.$apply();
@@ -815,10 +827,10 @@ angular.module('toiletControlModule')
         var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx,nimi._data[selectedDataTemp.dataname],tolitercmdObj.ctrId,tolitercmdObj.devId);
         //send instructin
         console.log(cmdvalue);
+        alert("cmdvalue"+cmdvalue)
         if(baseConfig.isCloudCtrl){
           $scope.toGetImpleteData(flag,cmdvalue,$scope.handlenapeListNape[index].handleDes,index,isType);
         }else{
-          // $scope.sendCmd(cmdvalue,index);
           cmdService.sendCmd(tolitercmdObj.diviceid, cmdvalue, tolitercmdObj.boxid);
         };
       };
@@ -845,11 +857,11 @@ angular.module('toiletControlModule')
         };
         var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx,nimi.frontRearDry(type,temperature,volume,place,flushOptions,mSwitchType),tolitercmdObj.ctrId,tolitercmdObj.devId);
         //send instructin
-        console.log(cmdvalue)
+        console.log(cmdvalue);
+        alert("cmdvalue"+cmdvalue)
         if(baseConfig.isCloudCtrl){
           $scope.toGetImpleteData(flag,cmdvalue,$scope.handlenapeListNape[selectedIndex].handleDes,selectedIndex,isType);
         }else{
-          // $scope.sendCmd(cmdvalue,selectedIndex);
           cmdService.sendCmd(tolitercmdObj.diviceid, cmdvalue, tolitercmdObj.boxid);
         };
       };
@@ -875,11 +887,11 @@ angular.module('toiletControlModule')
         };
         var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx,nimi.frontRearDry("暖风",temperature,volume,1,"正常",mSwitchType),tolitercmdObj.ctrId,tolitercmdObj.devId);
         //send instructin
-        console.log(cmdvalue)
+        console.log(cmdvalue);
+        alert("cmdvalue"+cmdvalue)
         if(baseConfig.isCloudCtrl){
           $scope.toGetImpleteData(flag,cmdvalue,$scope.handlenapeListNape[selectedIndex].handleDes,selectedIndex,isType);
         }else{
-          // $scope.sendCmd(cmdvalue,selectedIndex);
           cmdService.sendCmd(tolitercmdObj.diviceid,cmdvalue,tolitercmdObj.boxid);
         }
       };
@@ -908,11 +920,11 @@ angular.module('toiletControlModule')
         };
         var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx,nimi.feetSeatHeater(temperature),tolitercmdObj.ctrId,tolitercmdObj.devId);
         //send instructin
-        console.log(cmdvalue)
+        console.log(cmdvalue);
+        alert("cmdvalue"+cmdvalue)
         if(baseConfig.isCloudCtrl){
           $scope.toGetImpleteData(flag,cmdvalue,$scope.handlenapeListNape[selectedIndex].handleDes,selectedIndex,isType);
         }else{
-          // $scope.sendCmd(cmdvalue,selectedIndex);
           cmdService.sendCmd(tolitercmdObj.diviceid, cmdvalue, tolitercmdObj.boxid);
         };
       };
@@ -923,7 +935,7 @@ angular.module('toiletControlModule')
       $scope.aroundLightIntionCreate = function (flag,lightCtl,isType,selectedIndex) {
         $scope.selectChangeFlag = flag;
         $scope.selectIsType = isType;
-        if(!JSON.parse(window.localStorage.lightModal)){
+        if(!window.localStorage.lightModal){
           var lightMode = "Default";
           var MOMC = "Pantone7456";
           var TUEC = "Pantone7507";
@@ -956,11 +968,11 @@ angular.module('toiletControlModule')
         }
         var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx,nimi.ambientLight(lightMode, lightCtl, dynamicCtl, MOMC, TUEC, WEDC, THUC, FRIC, SATC, SUMC),tolitercmdObj.ctrId,tolitercmdObj.devId);
         //send instructin
-        console.log(cmdvalue)
+        console.log(cmdvalue);
+        alert("cmdvalue"+cmdvalue)
         if(baseConfig.isCloudCtrl){
           $scope.toGetImpleteData(flag,cmdvalue,$scope.handlenapeListNape[selectedIndex].handleDes,selectedIndex,isType);
         }else{
-          // $scope.sendCmd(cmdvalue,selectedIndex);
           cmdService.sendCmd(tolitercmdObj.diviceid, cmdvalue, tolitercmdObj.boxid);
         }
       };
@@ -978,11 +990,11 @@ angular.module('toiletControlModule')
         }
         var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx,nimi.bowlLight(lightStalls),tolitercmdObj.ctrId,tolitercmdObj.devId);
         //send instructin
-        console.log(cmdvalue)
+        console.log(cmdvalue);
+        alert("cmdvalue"+cmdvalue)
         if(baseConfig.isCloudCtrl){
           $scope.toGetImpleteData(flag,cmdvalue,$scope.handlenapeListNape[selectedIndex].handleDes,selectedIndex,isType);
         }else{
-          // $scope.sendCmd(cmdvalue,selectedIndex);
           cmdService.sendCmd(tolitercmdObj.diviceid, cmdvalue, tolitercmdObj.boxid);
         }
       };
@@ -1160,18 +1172,19 @@ angular.module('toiletControlModule')
       $scope.handlenapeSelectedIndex = 12;
       $scope.selectChangeFlag = false;
       $scope.selectIsType = "1";
-      // flag,index,isType
+      // flag,index,isTyp
       //get devic status
       var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx,nimi._data["synchronizeReq"],tolitercmdObj.ctrId,tolitercmdObj.devId);
       //send instructin
       console.log(cmdvalue)
-      if(baseConfig.isCloudCtrl){
-        // flag,cmdvalue, name,index,isType
-        $scope.toGetImpleteData("false",cmdvalue,$translate.instant('toiletController.devicePop'),12,"1");
-      }else{
-        // $scope.sendCmd(cmdvalue,selectedIndex);
-        cmdService.sendCmd(tolitercmdObj.diviceid, cmdvalue, tolitercmdObj.boxid);
-      };
+      // alert("cmdvalue"+cmdvalue)
+      // if(baseConfig.isCloudCtrl){
+      //   // flag,cmdvalue, name,index,isType
+      //   $scope.toGetImpleteData("false",cmdvalue,$translate.instant('toiletController.devicePop'),12,"1");
+      // }else{
+      //   hmsPopup.showLoading("<span translate='golabelvariable.loadingdata'></span>");
+      //   cmdService.sendCmd(tolitercmdObj.diviceid, cmdvalue, tolitercmdObj.boxid);
+      // };
       /**
        *@params:index(selected index)
        *@disc:handle light or gary
@@ -1199,6 +1212,7 @@ angular.module('toiletControlModule')
       //hanle selected border
       var handlenapeListNapeLen = $scope.handlenapeListNape.length;
       $scope.selectNapes = function (index) {
+        $scope.todeviceFlag = 0;
         $scope.handlenapeSelectedIndex = index;
         if($scope.handlenapeListNape[index].matchdataid === "setting"){
           $state.go("toiletSetting");
@@ -1217,6 +1231,7 @@ angular.module('toiletControlModule')
               if($scope.handlenapeListNape[index].matchdataid === "clear") {
                 //close clear
                 console.log($scope.toiletController.modelTypeClear)
+                alert($scope.toiletController.modelTypeClear)
                 if($scope.handlenapeListNape[index].selecFlag){
                   if($scope.toiletController.modelTypeClear !== "toiletController.gaunbi") {
                     if ($scope.toiletController.modelTypeClear === "toiletController.clearopen") {
@@ -1372,7 +1387,8 @@ angular.module('toiletControlModule')
             })
             var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx,nimi._data[desTemp],tolitercmdObj.ctrId,tolitercmdObj.devId);
             //send instructin
-            console.log(cmdvalue)
+            console.log(cmdvalue);
+            alert("cmdvalue"+cmdvalue)
             $scope.selectChangeFlag = true;
             $scope.selectIsType = "1";
             if(baseConfig.isCloudCtrl){

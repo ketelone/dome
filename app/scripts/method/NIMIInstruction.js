@@ -206,6 +206,18 @@ NIMI.prototype.cleanWand = function (mSwitchType, hour, minute, dateSwitch, MOM,
  * @returns {string}
  */
 NIMI.prototype.ambientLight = function (lightMode, lightCtl, dynamicCtl, MOMC, TUEC, WEDC, THUC, FRIC, SATC, SUMC) {
+  console.log(angular.toJson({
+    "lightMode":lightMode,
+    "lightCtl":lightCtl,
+    "dynamicCtl":dynamicCtl,
+    "MOMC":MOMC,
+    "TUEC":TUEC,
+    "WEDC":WEDC,
+    "THUC":THUC,
+    "FRIC":FRIC,
+    "SATC":SATC,
+    "SUMC":SUMC
+  }))
   var cmd = "11";
   var param_one = "";
   var mLightCtl = "";
@@ -242,17 +254,23 @@ NIMI.prototype.ambientLight = function (lightMode, lightCtl, dynamicCtl, MOMC, T
       break;
   }
   mSUMC = getDataByColor(SUMC);
+  console.log(mSUMC);
   mMOMC = getDataByColor(MOMC);
+  console.log(mMOMC);
   mTUEC = getDataByColor(TUEC);
   mWEDC = getDataByColor(WEDC);
   mTHUC = getDataByColor(THUC);
   mFRIC = getDataByColor(FRIC);
   mSATC = getDataByColor(SATC);
   param_one = mSUMC + mLightMode + mLightCtl;
+  console.log("mLightMode"+mLightMode);
+  console.log("mLightCtl"+mLightCtl);
+  console.log("param"+param_one);
   cmd += getHex(param_one)
     + getHex("0" + mTUEC + mDynamicCtl + mMOMC)
     + getHex("0" + mTHUC + "0" + mWEDC)
     + getHex("0" + mSATC + "0" + mFRIC);
+  console.log("cmd"+cmd);
   return cmd;
 };
 
@@ -372,7 +390,7 @@ NIMI.prototype.powerSaveSchedule = function (startTime, startMin, endTime, endMi
  * 解析指令入口
  * @param cmd
  */
-NIMI.prototype.analysisInstruction = function (cmd) {
+NIMI.prototype.analysisInstruction = function (arg) {
   var code;
   if (arg.length >= 16 && arg.length <= 40) {
     var ackStr = arg.substring(12, arg.length - 2);
@@ -405,11 +423,11 @@ NIMI.prototype.analysisInstruction = function (cmd) {
 function analysisToiletStatus(ackStr) {
   var mJson;
   var data = ackStr.substring(2, ackStr.length);
-  var param_one = byteToCheck(data.substring(0, 2).toString(2));
-  var param_second = byteToCheck(data.substring(2, 4).toString(2));
-  var param_third = byteToCheck(data.substring(4, 6).toString(2));
-  var param_fourth = byteToCheck(data.substring(6, 8).toString(2));
-  var param_fifth = byteToCheck(data.substring(8, 10).toString(2));
+  var param_one = byteToCheck(parseInt(data.substring(0, 2)).toString(2));
+  var param_second = byteToCheck(parseInt(data.substring(2, 4)).toString(2));
+  var param_third = byteToCheck(parseInt(data.substring(4, 6)).toString(2));
+  var param_fourth = byteToCheck(parseInt(data.substring(6, 8)).toString(2));
+  var param_fifth = byteToCheck(parseInt(data.substring(8, 10)).toString(2));
   var flushStatus = param_one.substring(0, 3);
   var lidRingStatus = param_one.substring(3, 6);
   var dryerStatus = param_one.substring(7, 8);
@@ -444,7 +462,7 @@ function analysisToiletStatus(ackStr) {
 function analysisSanitizeStatus(ackStr) {
   var mJson;
   var data = ackStr.substring(2, ackStr.length);
-  var param_one = byteToCheck(data.substring(0, 2).toString(2));
+  var param_one = byteToCheck(parseInt(data.substring(0, 2)).toString(2));
   var UVStatus = param_one.substring(4, 8);
   var hour = parseInt(data.substring(2, 4), 16);
   var minute = parseInt(data.substring(4, 6), 16);
@@ -550,6 +568,7 @@ function getCmd(header, idx, data, ctrId, devId) {
     var hex = data.substring(i, i + 2);
     checksum ^= parseInt(hex, 16);
   }
+  console.log("checksum"+checksum);
   var length = data.length / 2 + 4;
   return header + doStr(length)
     + doStr(idx)
@@ -578,7 +597,7 @@ RoController.prototype._data={
 RoController.prototype.enterPowerSaveMode = function(mode) {
   return this._data._paramPowerSaveMode._header+mode;
 }
-RoController.prototype.analysisInstruction = function (cmd) {
+RoController.prototype.analysisInstruction = function (arg) {
   var code;
   if (arg.length >= 16 && arg.length <= 40) {
     var ackStr = arg.substring(12, arg.length - 2);
@@ -623,9 +642,10 @@ function analysisConsumableStatus(ackStr) {
 function analysisFlushStatus(ackStr) {
   var mJson;
   var data = ackStr.substring(2, ackStr.length);
-  var param_one = byteToCheck(data.substring(0, 2).toString(2));
+  var param_one_data =parseInt(data.substring(0, 2)).toString(2);
+  var param_one = byteToCheck(param_one_data);
   var flushStatus = param_one.substring(4, 8);
-  mJson = {"flag": "status", "cmd": "88", "flushStatus": param_one};
+  mJson = {"flag": "status", "cmd": "88", "flushStatus": flushStatus};
   return mJson;
 }
 /**
@@ -636,20 +656,20 @@ function analysisFlushStatus(ackStr) {
    * @param {*} ctrId 控制段 16进制
    * @param {*} devId 设备段 16进制
    */
-  function getCmd(header, idx, data, ctrId, devId) {
-    if (data.length % 2 != 0) {
-      data = "0" + data;
-    }
-    var checksum = parseInt(idx, 16) ^ parseInt(ctrId, 16) ^ parseInt(devId, 16);
-    for (var i = 0, len = data.length; i < len; i += 2) {
-      var hex = data.substring(i, i + 2);
-      checksum ^= parseInt(hex, 16);
-    }
-    var length = data.length / 2 + 4;
-    return header + doStr(length)
-      + doStr(idx)
-      + doStr(ctrId)
-      + doStr(devId)
-      + data
-      + doStr(checksum.toString(16));
-  }
+  // function getCmd(header, idx, data, ctrId, devId) {
+  //   if (data.length % 2 != 0) {
+  //     data = "0" + data;
+  //   }
+  //   var checksum = parseInt(idx, 16) ^ parseInt(ctrId, 16) ^ parseInt(devId, 16);
+  //   for (var i = 0, len = data.length; i < len; i += 2) {
+  //     var hex = data.substring(i, i + 2);
+  //     checksum ^= parseInt(hex, 16);
+  //   }
+  //   var length = data.length / 2 + 4;
+  //   return header + doStr(length)
+  //     + doStr(idx)
+  //     + doStr(ctrId)
+  //     + doStr(devId)
+  //     + data
+  //     + doStr(checksum.toString(16));
+  // }
