@@ -46,7 +46,7 @@
 
 
               <div ng-if="isSceneModel">
-                <div ng-repeat="item in modelData" ng-click="goKeyscene(item)">
+                <div ng-repeat="item in modelData track by $index" ng-click="goKeyscene(item)">
                   <img class="imgll" ng-src="{{item.pictureUrl}}"/>
                   <div class="text-center interval-line">
                     <p class="font-color-self-title">{{item.title}}</p>

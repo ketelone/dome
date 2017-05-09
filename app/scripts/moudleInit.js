@@ -19,4 +19,5 @@ var karessControlModule = angular.module('karessControlModule', []);
 var mcControlModule = angular.module('mcControlModule', []);
 var nextgenModule = angular.module('nextgenModule', []);
 var airfoilShowerModule = angular.module('airfoilShowerModule', []);
+var sceneSupermarketModule = angular.module('sceneSupermarketModule', []);
 
