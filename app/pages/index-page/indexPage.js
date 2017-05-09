@@ -490,10 +490,10 @@ angular.module('indexPageModule')
 
       $scope.$watch('', function(){
         //getDeviceStatus("");
-        hmsPopup.showLoading();
 
         getWeather();
         if(localStorage.boxLinkCount == 1){
+          hmsPopup.showLoading();
           //$timeout(function () {
           searchBox();
           //},1500);

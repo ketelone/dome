@@ -12,7 +12,11 @@
           explainEnvironmentStatus: explainEnvironmentStatus,
           explainAck: explainAck,
           explainHeaterStatus: explainHeaterStatus,
-          setHeaterPara: setHeaterPara
+          setHeaterPara: setHeaterPara,
+          getLightDeviceStatus: getLightDeviceStatus,
+          getHeaterStatus: getHeaterStatus,
+          getAirCaseStatus: getAirCaseStatus,
+          getDeviceAllStatus: getDeviceAllStatus
         };
 
         return service;
@@ -26,8 +30,9 @@
         function explainAck(arg){
           var code ;
           if (arg.length>=16 && arg.length<=40) {
-            var ackStr = arg.substring(12,arg.length-2);
+            var ackStr = arg.substring(12,arg.length-2).toLowerCase();
             var ack = ackStr.substring(0,2).toLowerCase();
+
             if (ack == 'fa') {
               //valid ack
               var operate = ackStr.substring(0,4);
@@ -74,7 +79,7 @@
         //lighting explain 8a/8A
         function explainLightingStatus(arg){
           var lightingState;
-          var value = arg.substring(2,arg.length+1);
+          var value = arg.substring(2,4);
           if (value == '00') {
             lightingState = {
               'state':'init'
@@ -88,6 +93,7 @@
               'state':'lighting_on'
             };
           }
+          lightingState['cmd'] = '8a';
           return lightingState;
         }
 
@@ -112,15 +118,8 @@
           }else if (acs == '02') {
             acsStr = 'Air-care on'
           }
-          //hour status
-          if (hour == '00') {
-            hourStr = 'init';
-          }else if (hour == '01') {
-            hourStr = 'Air-care off';
-          }else if (hour == '02') {
-            hourStr = 'Air-care on'
-          }
           airCareStatus = {
+            'cmd': '85',
             'acs':acsStr,
             'hour':hour,
             'min':min,
@@ -196,6 +195,7 @@
             statusStr = 'reserved';
           }
           heater = {
+            'cmd': '84',
             'status':statusStr,
             'hour':hour,
             'min':min,
@@ -263,6 +263,24 @@
             data = data + '40';
           }
           return data;
+        }
+
+        //9.获取灯的状态 720a
+        function getLightDeviceStatus(){
+          return '720a';
+        }
+//10.获取heater状态
+        function getHeaterStatus(){
+          return '7204';
+        }
+//11.获取aircase状态
+        function getAirCaseStatus(){
+          return '7205';
+        }
+
+        //12.获取素有状态
+        function getDeviceAllStatus(){
+          return '70';
         }
 
         /**

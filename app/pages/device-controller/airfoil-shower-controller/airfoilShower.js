@@ -375,6 +375,7 @@ angular.module('airfoilShowerModule')
             var cmdvalue = dirinfo;
             var temperate = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].gearInit + 29;
             getWater(temperate.toString(16));
+            localStorage.airfoilTemperate = temperate;
           }
           count = count + 1;
         }
@@ -482,14 +483,21 @@ angular.module('airfoilShowerModule')
       $scope.$watch('',function(){
         //getCurrentSignalStatus();
         //getCurrentTemperate();
+        getCurrentSwitchStatus();
       },true);
+
+      var getCurrentSwitchStatus = function(){
+
+      };
 
       /**
        *@autor: caolei
        *@disc: get current signal status
        */
       var getCurrentSignalStatus = function(){
-
+        var data = airfoilShowerService.getAirfoilStatus();
+        var value = getCmdValue(data);
+        sendCmd(value,"获取出水状态","获取出水状态失败");
       };
 
       /**
@@ -514,11 +522,28 @@ angular.module('airfoilShowerModule')
             $scope.slideWaterData[0].currentTemp = parseInt(temperteValue.temperature, 16);
           }
 
+          changeSwitchStatus(resultOn.data.cmd[0]);
+
           explainCurrentOperate(resultOn.data.cmd[0]);
 
           $scope.$apply();
         }
       }, false);
+
+      var changeSwitchStatus = function(value){
+        var data = airfoilShowerService.explainAck(value);
+        if(data.cmd == '83'){
+          angular.forEach($scope.handlenapeListNape, function(data, index, array){
+            if(data.matchdataid == 'water' && data.status == 'shower on'){
+              data.selecFlag = true;
+              data.imgUrl = data.imgSeledUrl;
+            }else if(data.matchdataid == 'water' && data.status == 'shower off'){
+              data.selecFlag = false;
+              data.imgUrl = data.imgUrlTemp;
+            }
+          });
+        }
+      };
 
       /**
        *@autor: caolei

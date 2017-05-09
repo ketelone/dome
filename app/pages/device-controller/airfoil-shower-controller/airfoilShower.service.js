@@ -10,7 +10,8 @@ angular.module('airfoilShowerModule')
           explainAck: explainAck,
           operateShower: operateShower,
           getWaterTemperature: getWaterTemperature,
-          stopAll: stopAll
+          stopAll: stopAll,
+          getAirfoilStatus: getAirfoilStatus
         };
 
         return service;
@@ -144,6 +145,7 @@ angular.module('airfoilShowerModule')
           }else {
             showerStatus = {'status':'reserved'};
           }
+          showerStatus['cmd'] = '83';
           return showerStatus;
         }
 
@@ -166,6 +168,10 @@ angular.module('airfoilShowerModule')
 
         function explainMemory(arg){
           return arg;
+        }
+
+        function getAirfoilStatus(){
+          return "7203";
         }
 
 
