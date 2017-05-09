@@ -74,20 +74,28 @@ angular.module('toiletControlModule')
        *@params:
        *@disc:accept ack or status;
        */
+      $scope.clearsetOnceFlag = 0;
       document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
         var resultOn = result[0];
+        alert(angular.toJson(resultOn))
         if(resultOn.from.uid === cleartersetcmdObj.diviceid){
           if (resultOn.data.cmd) {
             var backDataCmd = cleartersetting.analysisInstruction(resultOn.data.cmd[0]);
-            alert("backDataCmd"+angular.toJson(backDataCmd))
             if(backDataCmd.flag === "ack"){
-              var name = "cleargearPlan.settingsucc";
-              if(backDataCmd.ack === "1000"){
-                $scope.Toast.show($translate.instant(name)+$translate.instant("golabelvariable.directesuccess"));
-              }else{
-                $scope.Toast.show($translate.instant(name)+$translate.instant("golabelvariable.directerror"));
+              if($scope.clearsetOnceFlag === 0){
+                $scope.clearsetOnceFlag++;
+                // alert(1)
+                // alert("backDataCmdlightclear"+angular.toJson(backDataCmd))
+                if(backDataCmd.cmd === "0e") {
+                  var name = "cleargearPlan.settingsucc";
+                  if(backDataCmd.ack === "1000"){
+                    $scope.Toast.show($translate.instant(name)+$translate.instant("golabelvariable.directesuccess"));
+                  }else{
+                    $scope.Toast.show($translate.instant(name)+$translate.instant("golabelvariable.directerror"));
+                  };
+                };
               };
-            }
+            };
             $scope.$apply();
           };
         };
@@ -127,6 +135,7 @@ angular.module('toiletControlModule')
       };
       // mSwitchType, hour, minute, dateSwitch, MOM, TUE, WED, THU, FRI, SAT, SUM
       $scope.sendCmdData = function () {
+        $scope.clearsetOnceFlag = 0;
         if($scope.clearGearPlanCheckBg){
           $scope.Toast.show($translate.instant("cleargearPlan.settingopen"));
         }else{
@@ -136,7 +145,6 @@ angular.module('toiletControlModule')
           if(baseConfig.isCloudCtrl){
             $scope.clangerSetGetImpleteData(cmdvalue);
           }else{
-            // $scope.sendCmd(cmdvalue,$translate.instant("lightSetting.lightmode"));
             cmdService.sendCmd(cleartersetcmdObj.diviceid,cmdvalue,cleartersetcmdObj.boxid);
           };
         };

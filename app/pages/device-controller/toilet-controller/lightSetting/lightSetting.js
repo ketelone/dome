@@ -124,7 +124,8 @@ angular.module('toiletControlModule')
           SUMC:"white"
         };
         if($scope.lightSetting.isShowCheckimg){
-          lightsetval.modal = "default";
+          lightsetval.modal = "Default";
+          lightsetval.flag = true;
         }else if($scope.lightSetting.isShowWeekset){
           lightsetval.modal = "ByWeek";
           lightsetval.MOMC = $scope.getColor($scope.colorWeek[0].color["background-color"]);
@@ -135,7 +136,8 @@ angular.module('toiletControlModule')
           lightsetval.SATC = $scope.getColor($scope.colorWeek[5].color["background-color"]);
           lightsetval.SUMC = $scope.getColor($scope.colorWeek[6].color["background-color"]);
         }else if($scope.lightSetting.isShowStatuset){
-          lightsetval.modal = "Dynamic";
+          lightsetval.modal = "Default";
+          lightsetval.flag = false;
         };
         window.localStorage.lightModal = JSON.stringify(lightsetval);
         console.log(JSON.parse(window.localStorage.lightModal))
@@ -150,14 +152,16 @@ angular.module('toiletControlModule')
         if(resultOn.from.uid === lighttersetcmdObj.diviceid){
           if (resultOn.data.cmd) {
             var backDataCmd = lightsetting.analysisInstruction(resultOn.data.cmd[0]);
-            alert("backDataCmd"+angular.toJson(backDataCmd))
             if(backDataCmd.flag === "ack"){
-              var name = "lightSetting.settingsucc";
-              if(backDataCmd.ack === "1000"){
-                $scope.lightnightmode = !$scope.lightnightmode;
-                $scope.Toast.show($translate.instant(name)+$translate.instant("golabelvariable.directesuccess"));
-              }else{
-                $scope.Toast.show($translate.instant(name)+$translate.instant("golabelvariable.directerror"));
+              if(backDataCmd.cmd === "0a") {
+                // alert("backDataCmdlightset"+angular.toJson(backDataCmd))
+                var name = "lightSetting.settingsucc";
+                if(backDataCmd.ack === "1000"){
+                  $scope.lightnightmode = !$scope.lightnightmode;
+                  $scope.Toast.show($translate.instant(name)+$translate.instant("golabelvariable.directesuccess"));
+                }else{
+                  $scope.Toast.show($translate.instant(name)+$translate.instant("golabelvariable.directerror"));
+                };
               };
             }
             $scope.$apply();

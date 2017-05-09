@@ -2,9 +2,9 @@ var config = {
   //冲洗选项-正常
   "NORMAL": "正常",
   //冲洗选项-按摩
-  "MASSAGE": "按摩",
+  "MASSAGE": "移动",
   //冲洗选项-振动
-  "VIBRATION": "振动",
+  "VIBRATION": "脉冲",
   //冲洗选项-波动
   "FLUCTUATION": "波动",
   //开启
@@ -34,12 +34,9 @@ var config = {
   "Pantone7416": "101",
   "Pantone618": "110",
   "Pantone556": "111"
-
 };
-
 function NIMI() {
 }
-
 /**
  * 简单指令可直接获取
  * @private
@@ -103,7 +100,7 @@ NIMI.prototype._data = {
  * @constructor
  */
 NIMI.prototype.frontRearDry = function (method, temperature, volume, place, flushOptions, mSwitchType) {
-  alert(angular({
+  alert(angular.toJson({
     method:method,
     temperature:temperature,
     volume:volume,
@@ -143,7 +140,7 @@ NIMI.prototype.frontRearDry = function (method, temperature, volume, place, flus
  * @returns {string} 指令中的 data串
  */
 NIMI.prototype.feetSeatHeater = function (temperature) {
-  alert(angular({
+  alert(angular.toJson({
     temperature:temperature
   }))
   var cmd = "05";
@@ -167,7 +164,7 @@ NIMI.prototype.feetSeatHeater = function (temperature) {
  * @returns {string}
  */
 NIMI.prototype.cleanWand = function (mSwitchType, hour, minute, dateSwitch, MOM, TUE, WED, THU, FRI, SAT, SUM) {
-  alert(angular({
+  alert(angular.toJson({
     mSwitchType:mSwitchType,
     hour:hour,
     minute:minute,
@@ -255,7 +252,7 @@ NIMI.prototype.ambientLight = function (lightMode, lightCtl, dynamicCtl, MOMC, T
   var mFRIC = "";
   var mSATC = "";
   var mDynamicCtl = "0";
-  (mDynamicCtl == config.ON) ? mDynamicCtl = "1" : mDynamicCtl = "0";
+  (dynamicCtl == config.ON) ? mDynamicCtl = "1" : mDynamicCtl = "0";
   switch (lightMode) {
     case 'Default':
       mLightMode = "0";
@@ -307,7 +304,7 @@ NIMI.prototype.ambientLight = function (lightMode, lightCtl, dynamicCtl, MOMC, T
 function getDataByColor(color) {
   var data = "";
   switch (color) {
-    case "White":
+    case "white":
       data = config.White;
       break;
     case "Pantone4985":
@@ -336,12 +333,12 @@ function getDataByColor(color) {
 }
 
 /**
- * 坐便灯
+ * 坐便灯;
  * @param{int} lightStalls 灯光档位 {0,4,,8,12,15} [15表示 learn by self]
  * @returns {string}
  */
 NIMI.prototype.bowlLight = function (lightStalls) {
-  alert(angular({
+  alert(angular.toJson({
     lightStalls:lightStalls
   }))
   var cmd = "18";
@@ -363,7 +360,7 @@ NIMI.prototype.bowlLight = function (lightStalls) {
  * @returns {string}
  */
 NIMI.prototype.setting = function (welcome, nightLight, bowlLight, autoFlush, PRWash, autoOpenClose, deodorizer, trap, sound) {
-  alert(angular({
+  alert(angular.toJson({
     welcome:welcome,
     nightLight:nightLight,
     bowlLight:bowlLight,
@@ -405,7 +402,7 @@ NIMI.prototype.setting = function (welcome, nightLight, bowlLight, autoFlush, PR
  * @returns {string}
  */
 NIMI.prototype.powerSaveDelay = function (delayTime) {
-  alert(angular({
+  alert(angular.toJson({
     delayTime:delayTime,
   }))
   var cmd = "0C";
