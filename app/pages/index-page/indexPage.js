@@ -39,7 +39,6 @@ angular.module('indexPageModule')
         percentage: "",
         temperatureCh: ""
       };
-
       $scope.tabs = [
         {
           text: "index.model",
@@ -157,11 +156,11 @@ angular.module('indexPageModule')
 
         db.transaction(function (tx) {
           tx.executeSql('update T_CTM_PARTY_SCENARIO set LAST_UPDATE_DATE = "' + getNowFormatDate() + '" where SCENARIO_ID = ' + item.id);
+
         });
         $scope.modelData = [];
         getScenarioList();
       };
-
       $scope.deviceModel = [];
       if (!baseConfig.isLinkDatabase) {
         $scope.deviceModel = [
@@ -176,6 +175,17 @@ angular.module('indexPageModule')
             isStatus: true,
             isError: false,
             sku: "D7:9C:8B:E8:50:C2"
+          }, {
+            id: "2",
+            pictureUrl: "build/img/index/img_home_device_heater.png",
+            deviceType: "中央净水器",
+            deviceStatus: "中央净水器",
+            deviceDesc: "中央净水器",
+            statusPictureUrl: "build/img/index/icon_home_device_signal4.png",
+            errorPictureUrl: "",
+            isStatus: true,
+            isError: false,
+            sku: "FB:3F:B6:2E:F5:3F"
           }, {
             id: "3",
             pictureUrl: "build/img/index/img_home_device_heater.png",
@@ -842,6 +852,9 @@ angular.module('indexPageModule')
           }
           if (item.deviceType == "马桶") {
             $state.go('toiletContrl');
+          }
+          if (item.deviceType == "中央净水器") {
+            $state.go('cenwatpurifierContrl');
           }
           if (item.deviceType == "karess") {
             $state.go('karess');
