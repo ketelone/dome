@@ -568,7 +568,6 @@ function getCmd(header, idx, data, ctrId, devId) {
     var hex = data.substring(i, i + 2);
     checksum ^= parseInt(hex, 16);
   }
-  console.log("checksum"+checksum);
   var length = data.length / 2 + 4;
   return header + doStr(length)
     + doStr(idx)

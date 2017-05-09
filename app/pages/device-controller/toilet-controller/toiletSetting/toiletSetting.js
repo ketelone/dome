@@ -42,7 +42,7 @@ angular.module('toiletControlModule')
         diviceid:'8BE850C2',
         header:'8877',
         idx:1,
-        ctrId:'00',
+        ctrId:'E3',
         devId:'01'
       };
       var nimisetting = new NIMI();
@@ -55,21 +55,10 @@ angular.module('toiletControlModule')
         if(resultOn.from.uid === tolitersetcmdObj.diviceid){
           if (resultOn.data.cmd) {
             var backDataCmd = nimisetting.analysisInstruction(resultOn.data.cmd[0]);
+            alert("backDataCmd"+angular.toJson(backDataCmd))
             if(backDataCmd.flag === "ack"){
               var name = "toiletSetting.settingsucc";
-              //
-              // if(backDataCmd.cmd === "13"){
-              //   var name = "toiletSetting.autofangai";
-              // }else if(backDataCmd.cmd === "13"){
-              //   var name = "toiletSetting.autofangai";
-              // }else if(backDataCmd.cmd === "13"){
-              //   var name = "toiletSetting.autofangai";
-              // }else if(backDataCmd.cmd === "13"){
-              //   var name = "toiletSetting.autofangai";
-              // }else{
-              //   var name = "";
-              // };
-              if(backDataCmd.ack === "fa"){
+              if(backDataCmd.ack === "1000"){
                 $scope.Toast.show($translate.instant(name)+$translate.instant("golabelvariable.directesuccess"));
                 if(type === "autochongshui"){
                   $scope.chongshuisetval = !$scope.chongshuisetval;
@@ -90,7 +79,7 @@ angular.module('toiletControlModule')
        */
       $scope.toilSetGetImpleteData = function(type,cmdvalue, name){
         //cloud
-        hmsPopup.showLoading("<span translate='toiletSetting.loadingdata'></span>");
+        hmsPopup.showLoading("<span translate='golabelvariable.loadingdata'></span>");
         $timeout(function () {
           hmsPopup.hideLoading();
           $scope.Toast.show("发生指令成功");
@@ -130,7 +119,6 @@ angular.module('toiletControlModule')
             if(baseConfig.isCloudCtrl){
               $scope.toilSetGetImpleteData(type,cmdvalue,$translate.instant("toiletSetting.autochongshui"));
             }else{
-              // $scope.sendCmd("autochongshui",cmdvalue,$translate.instant("toiletSetting.autochongshui"));
               cmdService.sendCmd(tolitersetcmdObj.diviceid, cmdvalue, tolitersetcmdObj.boxid);
             }
           }else{
@@ -140,7 +128,6 @@ angular.module('toiletControlModule')
             if(baseConfig.isCloudCtrl){
               $scope.toilSetGetImpleteData(type,cmdvalue,$translate.instant("toiletSetting.autochongshui"));
             }else{
-              // $scope.sendCmd("autochongshui",cmdvalue,$translate.instant("toiletSetting.autochongshui"));
               cmdService.sendCmd(tolitersetcmdObj.diviceid, cmdvalue, tolitersetcmdObj.boxid);
             }
           }
@@ -152,7 +139,6 @@ angular.module('toiletControlModule')
             if(baseConfig.isCloudCtrl){
               $scope.toilSetGetImpleteData(type,cmdvalue,$translate.instant("toiletSetting.autochongshui"));
             }else{
-              // $scope.sendCmd("autochuchou",cmdvalue,$translate.instant("toiletSetting.autochongshui"));
               cmdService.sendCmd(tolitersetcmdObj.diviceid, cmdvalue, tolitersetcmdObj.boxid);
             }
           }else{
@@ -162,7 +148,6 @@ angular.module('toiletControlModule')
             if(baseConfig.isCloudCtrl){
               $scope.toilSetGetImpleteData(type,cmdvalue,$translate.instant("toiletSetting.autochongshui"));
             }else{
-              // $scope.sendCmd("autochuchou",cmdvalue,$translate.instant("toiletSetting.autochongshui"));
               cmdService.sendCmd(tolitersetcmdObj.diviceid, cmdvalue, tolitersetcmdObj.boxid);
             }
           }
@@ -231,7 +216,6 @@ angular.module('toiletControlModule')
           if(baseConfig.isCloudCtrl){
             $scope.toilSetGetImpleteData("jiedian",cmdvalue,$translate.instant("toiletSetting.jiedianset"));
           }else{
-            // $scope.sendCmd("jiedian",cmdvalue,$translate.instant("toiletSetting.jiedianset"));
             cmdService.sendCmd(tolitersetcmdObj.diviceid, cmdvalue, boxId);
           };
         }else{
@@ -251,7 +235,6 @@ angular.module('toiletControlModule')
           if(baseConfig.isCloudCtrl){
             $scope.toilSetGetImpleteData("autofangai",cmdvalue,$translate.instant("toiletSetting.autofangai"));
           }else{
-            // $scope.sendCmd("autofangai",cmdvalue,$translate.instant("toiletSetting.autofangai"));
             cmdService.sendCmd(tolitersetcmdObj.diviceid, cmdvalue, boxId);
           };
         };

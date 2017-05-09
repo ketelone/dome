@@ -777,7 +777,7 @@ angular.module('toiletControlModule')
                 } else if (backDataCmd.cmd === "0e") {
                   var name = "toiletController.clearinstance";
                 } else {
-                  var name = "设备";
+                  var name = "toiletController.devicePop";
                 };
                 alert("name" + angular.toJson($translate.instant(name)))
                 alert("$scope.selectChangeFlag" + angular.toJson($scope.selectChangeFlag))
@@ -800,7 +800,7 @@ angular.module('toiletControlModule')
                   $scope.tostatustiveOnceFlag++;
                   if (backDataCmd.fontStatus === "1") {
                     hmsPopup.hideLoading();
-                    $scope.toiletController.deviceUseInfo = $scope.toiletController.useing
+                    $scope.toiletController.deviceUseInfo = $scope.toiletController.useing;
                     $scope.toiletController.deviceinfoflag = true;
                   } else if (backDataCmd.fontStatus === "0") {
                     hmsPopup.hideLoading();
@@ -1177,14 +1177,14 @@ angular.module('toiletControlModule')
       var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx,nimi._data["synchronizeReq"],tolitercmdObj.ctrId,tolitercmdObj.devId);
       //send instructin
       console.log(cmdvalue)
-      // alert("cmdvalue"+cmdvalue)
-      // if(baseConfig.isCloudCtrl){
-      //   // flag,cmdvalue, name,index,isType
-      //   $scope.toGetImpleteData("false",cmdvalue,$translate.instant('toiletController.devicePop'),12,"1");
-      // }else{
-      //   hmsPopup.showLoading("<span translate='golabelvariable.loadingdata'></span>");
-      //   cmdService.sendCmd(tolitercmdObj.diviceid, cmdvalue, tolitercmdObj.boxid);
-      // };
+      alert("cmdvalue"+cmdvalue)
+      if(baseConfig.isCloudCtrl){
+        // flag,cmdvalue, name,index,isType
+        $scope.toGetImpleteData("false",cmdvalue,$translate.instant('toiletController.devicePop'),12,"1");
+      }else{
+        hmsPopup.showLoading("<span translate='golabelvariable.loadingdata'></span>");
+        cmdService.sendCmd(tolitercmdObj.diviceid, cmdvalue, tolitercmdObj.boxid);
+      };
       /**
        *@params:index(selected index)
        *@disc:handle light or gary

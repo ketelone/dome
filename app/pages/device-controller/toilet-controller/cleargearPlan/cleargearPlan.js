@@ -3,6 +3,7 @@ angular.module('toiletControlModule')
     '$scope',
     '$state',
     '$translate',
+    '$timeout',
     'publicMethod',
     '$ionicModal',
     'baseConfig',
@@ -12,6 +13,7 @@ angular.module('toiletControlModule')
     function ($scope,
               $state,
               $translate,
+              $timeout,
               publicMethod,
               $ionicModal,
               baseConfig,
@@ -27,7 +29,7 @@ angular.module('toiletControlModule')
         diviceid:'8BE850C2',
         header:'8877',
         idx:1,
-        ctrId:'00',
+        ctrId:'E3',
         devId:'01'
       };
       var cleartersetting = new NIMI();
@@ -77,9 +79,10 @@ angular.module('toiletControlModule')
         if(resultOn.from.uid === cleartersetcmdObj.diviceid){
           if (resultOn.data.cmd) {
             var backDataCmd = cleartersetting.analysisInstruction(resultOn.data.cmd[0]);
+            alert("backDataCmd"+angular.toJson(backDataCmd))
             if(backDataCmd.flag === "ack"){
               var name = "cleargearPlan.settingsucc";
-              if(backDataCmd.ack === "fa"){
+              if(backDataCmd.ack === "1000"){
                 $scope.Toast.show($translate.instant(name)+$translate.instant("golabelvariable.directesuccess"));
               }else{
                 $scope.Toast.show($translate.instant(name)+$translate.instant("golabelvariable.directerror"));
@@ -130,12 +133,12 @@ angular.module('toiletControlModule')
           var cmdvalue = cmdService.getCmd(cleartersetcmdObj.header,cleartersetcmdObj.idx,cleartersetting.cleanWand("OFF", $scope.clearGeardataTimeval.hour, $scope.clearGeardataTimeval.minute, "ON", $scope.trunChange($scope.listleftRepeat[0].reflag),$scope.trunChange($scope.listleftRepeat[1].reflag),
             $scope.trunChange($scope.listleftRepeat[2].reflag),$scope.trunChange($scope.listleftRepeat[3].reflag),$scope.trunChange($scope.listleftRepeat[4].reflag),$scope.trunChange($scope.listleftRepeat[5].reflag)),cleartersetcmdObj.ctrId,cleartersetcmdObj.devId);        //send instructin
           console.log(cmdvalue)
-          // if(baseConfig.isCloudCtrl){
-          //   $scope.clangerSetGetImpleteData(cmdvalue);
-          // }else{
-          //   // $scope.sendCmd(cmdvalue,$translate.instant("lightSetting.lightmode"));
-          //   cmdService.sendCmd(cleartersetcmdObj.diviceid,cmdvalue,cleartersetcmdObj.boxid);
-          // };
+          if(baseConfig.isCloudCtrl){
+            $scope.clangerSetGetImpleteData(cmdvalue);
+          }else{
+            // $scope.sendCmd(cmdvalue,$translate.instant("lightSetting.lightmode"));
+            cmdService.sendCmd(cleartersetcmdObj.diviceid,cmdvalue,cleartersetcmdObj.boxid);
+          };
         };
       };
       //data select

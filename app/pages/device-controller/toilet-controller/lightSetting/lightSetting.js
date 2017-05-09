@@ -28,7 +28,7 @@ angular.module('toiletControlModule')
         diviceid:'8BE850C2',
         header:'8877',
         idx:1,
-        ctrId:'00',
+        ctrId:'E3',
         devId:'01'
       };
       var lightsetting = new NIMI();
@@ -150,14 +150,10 @@ angular.module('toiletControlModule')
         if(resultOn.from.uid === lighttersetcmdObj.diviceid){
           if (resultOn.data.cmd) {
             var backDataCmd = lightsetting.analysisInstruction(resultOn.data.cmd[0]);
+            alert("backDataCmd"+angular.toJson(backDataCmd))
             if(backDataCmd.flag === "ack"){
               var name = "lightSetting.settingsucc";
-              // if(backDataCmd.cmd === "13"){
-              //   var name = "lightSetting.settingsucc";
-              // }else{
-              //   var name = "";
-              // };
-              if(backDataCmd.ack === "fa"){
+              if(backDataCmd.ack === "1000"){
                 $scope.lightnightmode = !$scope.lightnightmode;
                 $scope.Toast.show($translate.instant(name)+$translate.instant("golabelvariable.directesuccess"));
               }else{
@@ -174,7 +170,7 @@ angular.module('toiletControlModule')
        */
       $scope.toilSetGetImpleteData = function(cmdvalue, name){
         //cloud
-        hmsPopup.showLoading("<span translate='cleargearPlan.loadingdata'></span>");
+        hmsPopup.showLoading("<span translate='golabelvariable.loadingdata'></span>");
         $timeout(function () {
           hmsPopup.hideLoading();
           $scope.Toast.show("发生指令成功");
