@@ -103,6 +103,14 @@ NIMI.prototype._data = {
  * @constructor
  */
 NIMI.prototype.frontRearDry = function (method, temperature, volume, place, flushOptions, mSwitchType) {
+  alert(angular({
+    method:method,
+    temperature:temperature,
+    volume:volume,
+    place:place,
+    mSwitchType:mSwitchType,
+    flushOptions:flushOptions
+  }))
   var cmd = "";
   if (config.FRONT == method) {
     cmd = "01";
@@ -135,6 +143,9 @@ NIMI.prototype.frontRearDry = function (method, temperature, volume, place, flus
  * @returns {string} 指令中的 data串
  */
 NIMI.prototype.feetSeatHeater = function (temperature) {
+  alert(angular({
+    temperature:temperature
+  }))
   var cmd = "05";
   cmd += getHex(fourBitToCheck(temperature.toString(2))) + "0" + "00" + "00" + "00";
   return cmd;
@@ -156,6 +167,20 @@ NIMI.prototype.feetSeatHeater = function (temperature) {
  * @returns {string}
  */
 NIMI.prototype.cleanWand = function (mSwitchType, hour, minute, dateSwitch, MOM, TUE, WED, THU, FRI, SAT, SUM) {
+  alert(angular({
+    mSwitchType:mSwitchType,
+    hour:hour,
+    minute:minute,
+    dateSwitch:dateSwitch,
+    MOM:MOM,
+    TUE:TUE,
+    WED:WED,
+    TUE:TUE,
+    THU:THU,
+    FRI:FRI,
+    SAT:SAT,
+    SUM:SUM
+  }))
   var cmd = "0E";
   var mSwitch = "0";
   (mSwitchType == config.ON) ? mSwitch = "1" : mSwitch = "0";
@@ -316,6 +341,9 @@ function getDataByColor(color) {
  * @returns {string}
  */
 NIMI.prototype.bowlLight = function (lightStalls) {
+  alert(angular({
+    lightStalls:lightStalls
+  }))
   var cmd = "18";
   cmd += "0" + getHex(fourBitToCheck(lightStalls.toString(2))) + "00" + "00" + "00";
   return cmd;
@@ -335,6 +363,17 @@ NIMI.prototype.bowlLight = function (lightStalls) {
  * @returns {string}
  */
 NIMI.prototype.setting = function (welcome, nightLight, bowlLight, autoFlush, PRWash, autoOpenClose, deodorizer, trap, sound) {
+  alert(angular({
+    welcome:welcome,
+    nightLight:nightLight,
+    bowlLight:bowlLight,
+    autoFlush:autoFlush,
+    PRWash:PRWash,
+    autoOpenClose:autoOpenClose,
+    deodorizer:deodorizer,
+    trap:trap,
+    sound:sound
+  }))
   var cmd = "0A";
   var mWelcome = "0";
   (welcome == config.ON) ? mWelcome = "1" : mWelcome = "0";
@@ -366,6 +405,9 @@ NIMI.prototype.setting = function (welcome, nightLight, bowlLight, autoFlush, PR
  * @returns {string}
  */
 NIMI.prototype.powerSaveDelay = function (delayTime) {
+  alert(angular({
+    delayTime:delayTime,
+  }))
   var cmd = "0C";
   cmd += getHex("0" + fourBitToCheck(delayTime.toString(2)) + "000") + "00" + "00" + "00";
   return cmd;
