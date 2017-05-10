@@ -6,11 +6,15 @@
       <span translate="message.message">消息</span>
     </div>
     <div class="row allMess">
-      <div ng-click="showStatus()" class="col col-33"><span translate="message.status"
-                                                            ng-class="statusword">状态及提醒</span></div>
-      <div ng-click="showException()" class="col col-33"><span translate="message.exception" ng-class="exceptionword">异常及保修</span>
+      <div ng-click="showStatus()" class="col col-33">
+        <span translate="message.status" ng-class="statusword">状态及提醒</span>
       </div>
-      <div class="col col-33"><span translate="message.other">其它</span></div>
+      <div ng-click="showException()" class="col col-33">
+        <span translate="message.exception" ng-class="exceptionword">异常及保修</span>
+      </div>
+      <div ng-click="showOther()" class="col col-33">
+        <span translate="message.other" ng-class="otherword">其它</span>
+      </div>
     </div>
   </div>
 
@@ -59,7 +63,6 @@
         </ion-item>
       </ion-list>
 
-
       <!--nostatus-->
       <ion-list ng-show="false">
 
@@ -67,6 +70,7 @@
           <span class="noMessageWord" translate="message.noMessageWord1">暂无设备消息</span></div>
 
       </ion-list>
+
       <!--exception-->
       <ion-list ng-show="hasException" show-delete="data.showDelete">
         <ion-item ng-click="goMessDetail(exceptionitem)" style="background: #212121;border-style:none;"
@@ -106,14 +110,19 @@
 
       </ion-list>
 
-
       <!--noexception-->
       <ion-list ng-show="false">
-
         <div class="noMessage">
           <span class="noMessageWord" translate="message.noMessageWord2">您当前的设备无异常</span></div>
       </ion-list>
-
+      <ion-list>
+        <span class="noMessageWord" translate="message.noMessageWord3">暂无其它消息</span></div>
+      </ion-list>
+      <!--no other message-->
+      <ion-list ng-show="true" style="background-color: #00c8ff;">
+        <div class="noMessage">
+          <span class="noMessageWord" translate="message.noMessageWord3">暂无其它消息</span></div>
+      </ion-list>
 
     </ion-scroll>
   </ion-content>

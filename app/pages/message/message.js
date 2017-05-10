@@ -14,30 +14,25 @@ angular.module('messageModule')
     }
   ])
   .controller('messageCtrl', [
-    '$scope',
-    '$state',
-    '$timeout',
-    'publicMethod', '$ionicPopup', 'hmsPopup', 'hmsHttp', 'SettingsService', 'baseConfig',
-    function ($scope,
-              $state,
-              $timeout,
-              publicMethod, $ionicPopup, hmsPopup, hmsHttp, SettingsService, baseConfig) {
-
-
+    '$scope','$state','$timeout','publicMethod', '$ionicPopup',
+    'hmsPopup', 'hmsHttp', 'SettingsService', 'baseConfig',
+    function ($scope,$state,$timeout,publicMethod, $ionicPopup,
+              hmsPopup, hmsHttp, SettingsService, baseConfig) {
       $scope.data = {
         showDelete: false //左侧选择框是否显示
       };
       $scope.threeBottom = false;
       $scope.hasStaus = true;//defalut no Display
       $scope.hasException = false;//defalut no Display
+      // $scope.hasOther = false;
       $scope.statusword = 'statusword';
-      $scope.exceptionword = 'exceptionword';
+      $scope.exceptionword = '';
+      $scope.otherword = '';
       $scope.exceptionitems = [];
       $scope.statusitems = [];
 
       var circleUrl2 = "build/img/common/radio_h.png";
       var circleUrltemp = "build/img/common/radio_q.png";
-
 
       /**
        *@author:chenjiacheng
@@ -46,7 +41,6 @@ angular.module('messageModule')
        *@return:
        *@disc: Get exception information from interface
        */
-
       function getException() {
         hmsPopup.showLoading();
         var url = baseConfig.basePath + "/r/api/cmm/deviceException/query";
@@ -127,6 +121,7 @@ angular.module('messageModule')
       }
 
       getException();
+
       /**
        *@author:chenjiacheng
        *@name:logout
@@ -135,11 +130,10 @@ angular.module('messageModule')
        *@disc:go  messageDetail list
        */
       $scope.goMessDetail = function (item) {
-
         SettingsService.set("exceptionId", item.id);
         $state.go("messageDetail");
-
       }
+
       /**
        *@author:chenjiacheng
        *@name:logout
@@ -147,9 +141,7 @@ angular.module('messageModule')
        *@return:
        *@disc:判断是否已读
        */
-
       var read = function () {
-
         for (var i = 0; i < $scope.statusitems.length; i++) {
           if ($scope.statusitems[i].hasRead == true) {
             $scope.statusitems[i].readStyle = "hasread";
@@ -162,6 +154,7 @@ angular.module('messageModule')
           }
         }
       }
+
       /**
        *@author:chenjiacheng
        *@name:logout
@@ -175,7 +168,9 @@ angular.module('messageModule')
         $scope.hasException = false;
         $scope.statusword = 'statusword';
         $scope.exceptionword = "";
+        $scope.otherword = '';
       };
+
       /**
        *@author:chenjiacheng
        *@name:showException
@@ -189,7 +184,18 @@ angular.module('messageModule')
         $scope.hasException = true;
         $scope.exceptionword = 'statusword';
         $scope.statusword = "";
+        $scope.otherword = '';
       };
+
+      $scope.showOther = function () {
+        $scope.hasStaus = false;
+        //console.log( $scope.swStatus);
+        $scope.hasException = false;
+        $scope.exceptionword = '';
+        $scope.statusword = "";
+        $scope.otherword = 'statusword';
+      };
+
       /**
        *@author:chenjiacheng
        *@name:goDetele
@@ -197,8 +203,6 @@ angular.module('messageModule')
        *@return:
        *@disc:goDetele item
        */
-
-
       $scope.goDeteleitem = function (item) {
         console.log(item);
         var toDetele = function () {
@@ -217,7 +221,6 @@ angular.module('messageModule')
           );
         }
         hmsPopup.confirmNoTitle("<div ><div>删除后将无法在消息记录中找回,</div><br><div style='text-align:center'>是否要删除此消息?</div></div><br><br>", toDetele);
-
       };
 
       /**
@@ -230,7 +233,6 @@ angular.module('messageModule')
       $scope.manyChoose = function () {
         $scope.threeBottom = true;
         $scope.data.showDelete = true;
-
       }
 
       /**
@@ -241,13 +243,11 @@ angular.module('messageModule')
        *@disc:choose you click
        */
       $scope.onChoose = function (item) {
-
         //alert("statustrue");
         //  alert($scope.data.showDelete);
         //  if($scope.data.showDelete==false){
         //    return;
         //  }
-
         if (item.ischecked == true && item.name == "status") {
           //alert("statustrue");
           for (var i = 0; i < $scope.statusitems.length; i++) {
@@ -292,6 +292,7 @@ angular.module('messageModule')
           ;
         }
       }
+
       /**
        *@author:chenjiacheng
        *@name:bottomGocancel
@@ -300,8 +301,6 @@ angular.module('messageModule')
        *@disc:clickbottomGocancel
        */
       $scope.bottomGocancel = function () {
-
-
         for (var i = 0; i < $scope.statusitems.length; i++) {
           $scope.statusitems[i].ischecked = false;
           $scope.statusitems[i].circleUrl1 = circleUrltemp;
@@ -312,7 +311,6 @@ angular.module('messageModule')
         }
         $scope.threeBottom = false;
         $scope.data.showDelete = false;
-
       }
 
       /**
@@ -332,7 +330,6 @@ angular.module('messageModule')
               $scope.statusitems[i].ischecked = true;
               $scope.statusitems[i].circleUrl1 = circleUrl2;
             }
-
           } else {
             for (var i = 0; i < $scope.statusitems.length; i++) {
 
@@ -340,9 +337,7 @@ angular.module('messageModule')
               $scope.statusitems[i].circleUrl1 = circleUrltemp;
             }
           }
-
         } else {
-
           $scope.hasChooseAllexception = !$scope.hasChooseAllexception;
           if ($scope.hasChooseAllexception == true) {
             for (var i = 0; i < $scope.exceptionitems.length; i++) {
@@ -355,17 +350,10 @@ angular.module('messageModule')
 
               $scope.exceptionitems[i].ischecked = false;
               $scope.exceptionitems[i].circleUrl1 = circleUrltemp;
-
             }
-
           }
-
-
         }
-
-
       }
-
 
       /**
        *@author:chenjiacheng
@@ -374,17 +362,13 @@ angular.module('messageModule')
        *@return:
        *@disc:clickbottomGodetele
        */
-
       $scope.bottomGodetele = function () {
-
         if ($scope.hasStaus == true) {
           var tempArry = [];
           for (var i = 0; i < $scope.statusitems.length; i++) {
             if ($scope.statusitems[i].ischecked == false) {
-
               tempArry.push($scope.statusitems[i]);
             }
-
           }
           $scope.statusitems = tempArry;
 
@@ -399,14 +383,11 @@ angular.module('messageModule')
 
               tempArry.push($scope.exceptionitems[i]);
             }
-
           }
           $scope.exceptionitems = tempArry;
-
         }
         $scope.threeBottom = false;
         $scope.data.showDelete = false;
       }
-
 
     }]);
