@@ -261,7 +261,7 @@ angular.module('indexPageModule')
             errorPictureUrl: "build/img/index/icon_home_device_warnning.png",
             isStatus: true,
             isError: true,
-            sku: "E8:91:E0:DC:20:F1"
+            sku: "F0:F0:87:F5:A2:17"
           },
           {
             id: "8",
@@ -859,8 +859,8 @@ angular.module('indexPageModule')
             SettingsService.set("sku", item.sku);
           }
           if (item.deviceType == "next gen shower") {
-            $state.go('nextgen');
-            SettingsService.set("sku", item.sku);
+            $state.go('nextgen',{deviceSku: item.sku});
+            // SettingsService.set("sku", item.sku);
           }
           if (item.deviceType == "airfoil-shower") {
             $state.go('airfoilShower');
