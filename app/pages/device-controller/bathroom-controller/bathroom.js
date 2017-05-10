@@ -311,7 +311,9 @@ angular.module('bathroomModule')
                 $scope.isTimeout = true;
               }
               //alert("show  " + hourValue + ":" + minuValue);
-              $scope.countDown = hourValue + ":" + minuValue;
+              if(hourValue <= 6){
+                $scope.countDown = hourValue + ":" + minuValue;
+              }
 
               $scope.$apply();
             }
@@ -947,7 +949,11 @@ angular.module('bathroomModule')
         //test();
 
         getCurrentSwitchStatus();
-        localStorage.windType = "bathroom.rock";
+
+        if(!localStorage.windType){
+          localStorage.windType = "bathroom.rock";
+        }
+        $scope.windType.type = localStorage.windType
 
         changeRingCol('#99d5ff');
         if(false){
@@ -1431,15 +1437,16 @@ angular.module('bathroomModule')
         cxt.arc(xLength,yLength,r,0,360,false);
         cxt.lineWidth=$window.innerWidth * 0.07;
         cxt.strokeStyle= color;
-        //cxt.translate(0.5, 0.5);
+        cxt.fillStyle = color;
         cxt.stroke();
+        cxt.scale(2,2);
+        //cxt.fill();
         cxt.closePath();
       };
 
       canvas.height = $window.innerWidth*1.1;
       canvas.width = $window.innerWidth*1;
       var cxt=canvas.getContext("2d");
-      console.log();
       var xLength = $window.innerWidth * 0.5;
       var yLength = $window.innerWidth * 0.95;
       var r = $window.innerWidth * 0.36;
@@ -1447,8 +1454,10 @@ angular.module('bathroomModule')
       cxt.arc(xLength,yLength,r,0,360,false);
       cxt.lineWidth=$window.innerWidth * 0.07;
       cxt.strokeStyle="#99d5ff";
-      cxt.translate(0.5, 0.5);
+      cxt.fillStyle = "#99d5ff";
       cxt.stroke();
+      cxt.scale(2,2);
+      //cxt.fill();
       cxt.closePath();
 
       $scope.screenHeig = window.innerHeight;

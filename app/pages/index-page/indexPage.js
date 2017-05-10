@@ -235,7 +235,7 @@ angular.module('indexPageModule')
             errorPictureUrl: "build/img/index/icon_home_device_warnning.png",
             isStatus: true,
             isError: true,
-            sku: ""
+            sku: "D9:78:06:B6:77:C6"
           },
           {
             id: "9",
@@ -848,6 +848,7 @@ angular.module('indexPageModule')
           }
           if(item.deviceType == "airfoil-shower"){
             $state.go('airfoilShower');
+            SettingsService.set("sku",item.sku);
           }
           if(item.deviceType == "mc镜柜"){
             $state.go('mc');

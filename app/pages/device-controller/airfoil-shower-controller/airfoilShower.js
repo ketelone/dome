@@ -14,6 +14,7 @@ angular.module('airfoilShowerModule')
     '$stateParams',
     'hmsHttp',
     'cmdService',
+    'SettingsService',
     function ($scope,
               $state,
               $ionicSlideBoxDelegate,
@@ -27,7 +28,8 @@ angular.module('airfoilShowerModule')
               $timeout,
               $stateParams,
               hmsHttp,
-              cmdService
+              cmdService,
+              SettingsService
     ) {
       $scope.goBack = function () {
         publicMethod.goBack();
@@ -483,11 +485,23 @@ angular.module('airfoilShowerModule')
       $scope.$watch('',function(){
         //getCurrentSignalStatus();
         //getCurrentTemperate();
-        getCurrentSwitchStatus();
+        getCurrentDeviceStatus();
+        //getCurrentSwitchStatus();
       },true);
 
       var getCurrentSwitchStatus = function(){
 
+      };
+
+      /**
+       *@autor: caolei
+       *@disc: query device all status
+       */
+      var getCurrentDeviceStatus = function(){
+        var data = airfoilShowerService.getAllStatus();
+        var value = getCmdValue(data);
+        alert("value: "+value + "   deviceId: " + getDeviceId());
+        sendCmd(getDeviceId() ,value,"获取出水状态","获取出水状态失败");
       };
 
       /**
@@ -511,20 +525,43 @@ angular.module('airfoilShowerModule')
         //$scope.slideWaterData[0].currentTemp = 20;
       };
 
+      $scope.stemerature = "";
       document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
         var resultOn = result[0];
         if(resultOn.from.uid != getDeviceId()){
           return;
         }
+        alert("start" +　resultOn.data.cmd[0]);
+        alert("length" +　resultOn.data.cmd.length);
         if (resultOn.data.cmd.length > 0) {
-          var temperteValue = airfoilShowerService.explainAck(resultOn.data.cmd[0]);
-          if(temperteValue.temperature){
-            $scope.slideWaterData[0].currentTemp = parseInt(temperteValue.temperature, 16);
+          var data = airfoilShowerService.explainAck(resultOn.data.cmd[0]);
+          alert("in----------"+JSON.stringify(data));
+
+          try{
+            if(data.cmd == 'a6'){
+              $scope.slideWaterData[0].currentTemp = parseInt(data.ctemperature, 16);
+              $scope.stemerature = parseInt(data.stemerature, 16);
+              alert("当前水温："+$scope.slideWaterData[0].currentTemp);
+            }
+          }catch(e){
           }
 
-          changeSwitchStatus(resultOn.data.cmd[0]);
+          try{
+            if(data.cmd == '83'){
+              if(data.status == 'shower off'){
+                alert("不是落水状态");
+              }else if(data.status == 'shower on'){
+                alert("落水,目标水温："+$scope.stemerature);
+              }
+            }
+          }catch(e){
 
-          explainCurrentOperate(resultOn.data.cmd[0]);
+          }
+
+
+          //changeSwitchStatus(resultOn.data.cmd[0]);
+          //
+          //explainCurrentOperate(resultOn.data.cmd[0]);
 
           $scope.$apply();
         }
@@ -582,7 +619,7 @@ angular.module('airfoilShowerModule')
         var deviceList = localStorage.deviceInfo.split(";");
         for(var i = 0; i < deviceList.length; i ++){
           var deviceInfo = deviceList[i].split(",");
-          if(deviceInfo[0] == $stateParams.deviceSku){
+          if(deviceInfo[0] == SettingsService.get('sku')){
             return deviceInfo[1];
           }
         }
@@ -656,21 +693,7 @@ angular.module('airfoilShowerModule')
       };
 
       var pluginToCtrl = function(deviceId, value, successMsg, errorMsg){
-
         cmdService.sendCmd(deviceId, value, localStorage.boxIp);
-
-        /*var cmd = airfoilShowerService.getCmdJsonStr(value, deviceId);
-        cordova.plugins.SocketPlugin.tcpSendCmd({
-          "timeout": "2000",
-          "value": cmd ,
-          "ip": localStorage.boxIp
-        }, success, error);
-        function success(response) {
-          hmsPopup.showShortCenterToast(successMsg);
-        }
-        function error() {
-          hmsPopup.showShortCenterToast(errorMsg);
-        }*/
       };
 
       var cloudToCtrl = function(deviceId, value, successMsg, errorMsg){

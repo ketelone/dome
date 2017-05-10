@@ -6,82 +6,37 @@ angular.module('airfoilShowerModule')
         var service = {
           getCmdValue: getCmdValue,
           getCmdJsonStr: getCmdJsonStr,
-          setShowerPara: setShowerPara,
           explainAck: explainAck,
-          operateShower: operateShower,
           getWaterTemperature: getWaterTemperature,
-          stopAll: stopAll,
-          getAirfoilStatus: getAirfoilStatus
+          getAllStatus: getAllStatus
         };
 
         return service;
 
-        /**
-         *@autor: caolei
-         *@params: arg json object
-         *@return: data
-         *@disc: set shower water parameters
-         */
-        function setShowerPara(arg){
-          var data = '01';
-          if (arg.out == 'HRS') {
-            data = data + arg.temperature + '01' + 'FF';
-          }else if (arg.out == 'HS') {
-            data = data + arg.temperature + '02' + 'FF';
-          }else if (arg.out == 'SP') {
-            data = data + arg.temperature + '04' + 'FF';
-          }else if (arg.out == 'HDS') {
-            data = data + arg.temperature + '08' + 'FF';
-          }
-          return data;
-        }
 
-        /**
-         *@autor: caolei
-         *@params: arg json object
-         *@return: data
-         *@disc: operate shower start or stop
-         */
-        function operateShower(arg){
-          var data = '21';
-          data = data + arg.mode;
-          return data;
-        }
-
-        /**
-         *@autor: caolei
-         *@return: data
-         *@disc: stop data
-         */
-        function stopAll(){
-          var data = '00';
-          return data;
-        }
-
-        /**
-         *@autor: caolei
-         *@return: data
-         *@disc: get current water temperature
-         */
+//7.获取当前水温
         function getWaterTemperature(){
           var data = '721A';
           return data;
         }
+//8.获取设备状态
+        function getDeviceStatus(){
+          return '7203';
+        }
 
-        /**
-         *@autor: caolei
-         *@params: arg json object
-         *@return: code
-         *@disc: explain arg
-         */
+        function getAllStatus(){
+          return '70';
+        }
+
+//arg 这里 8877-----
         function explainAck(arg){
           var code ;
           if (arg.length>=16) {
-            var ackStr = arg.substring(12,arg.length-2);
-            var ack = ackStr.substring(0,2).toLowerCase();
+            var ackStr = arg.substring(12,arg.length-2).toLowerCase();
+            var ack = ackStr.substring(0,2);
             if (ack == 'fa') {
               //valid ack
-              var operate = ackStr.substring(0,4);
+              var operate = ackStr.substring(0,4).toLowerCase();
               code = {'ack':operate};
             }else if(ack == 'fd'){
               //invalid ack
@@ -91,18 +46,11 @@ angular.module('airfoilShowerModule')
               code = {'ack':'1002'};
             }else if (ack == 'fb'){
               //invalid ack
-              code = {'ack':'1001'};
+              code = {'ack':'1001'}; //cmd refuse
             }else if (ack == '83'){
               code = explainShowerStatus(ackStr);
             }else if (ack == 'a6'||ack == 'A6') {
               code = explainWaterTemperature(ackStr);
-            }else if (ack == '91'){
-              code = explainEnvironmentStatus(ackStr);
-            }else if (ack == '81') {
-              //返回设备错误状态
-              code = explainDeviceError(ackStr);
-            }else if (ack == 'b0') {
-              code = explainMemory(ackStr);
             }
           }
 
@@ -114,7 +62,7 @@ angular.module('airfoilShowerModule')
           var cmdStr = arg;
           var status,showerStatus;
           try{
-            status = cmdStr.subString(2,4);
+            status = cmdStr.substring(2,4);
           }catch(error){
             return;
           }
@@ -145,34 +93,30 @@ angular.module('airfoilShowerModule')
           }else {
             showerStatus = {'status':'reserved'};
           }
-          showerStatus['cmd'] = '83';
+          showerStatus["cmd"] = '83';
           return showerStatus;
         }
 
+//6.返回当前水温（A6）	用于当应答STATUS26 REQ n	当排空冷水完成时，推送STATUS26 返回的温度都是16进制数 （两个水温 前面是一个是目标水温  后面是当前水温）
         function explainWaterTemperature(arg){
           var cmdStr = arg;
-          var temperature;
-          if (cmdStr.length>=4) {
+          var ctemperature,stemperature,dict;
+          if (cmdStr.length>=6) {
             try{
-              temperature = cmdStr.subString(2,4);
+              ctemperature = cmdStr.substring(4,6)
+              stemperature = cmdStr.substring(2,4);
             }catch(error){
               return;
             }
           }
-          return {'temperature':temperature};
+          dict = {
+            'cmd':'a6',
+            'ctemperature':ctemperature,
+            'stemerature':stemperature
+          };
+          return dict;
         }
 
-        function explainDeviceError(arg){
-          return arg;
-        }
-
-        function explainMemory(arg){
-          return arg;
-        }
-
-        function getAirfoilStatus(){
-          return "7203";
-        }
 
 
         /**
