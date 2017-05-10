@@ -746,66 +746,145 @@ angular.module('toiletControlModule')
           if (resultOn.data.cmd) {
             // alert("resultOn.data.cmd"+angular.toJson(resultOn.data.cmd))
             var backDataCmd = nimi.analysisInstruction(resultOn.data.cmd[0]);
-            alert("backDataCmd1234" + angular.toJson(backDataCmd))
+            // alert("backDataCmd1234" + angular.toJson(backDataCmd))
             // alert("backDataCmd"+angular.toJson(backDataCmd))
             if(backDataCmd.flag === "ack"){
               if($scope.todeviceFlag === 0) {
                 $scope.todeviceFlag++;
-                alert("backDataCmd" + angular.toJson(backDataCmd))
+                // alert("backDataCmdtoilte" + angular.toJson(backDataCmd))
                 if (backDataCmd.cmd === "07") {
                   var name = "toiletController.chongxi";
+                  if (backDataCmd.ack === "1000") {
+                    $scope.selectChange($scope.selectChangeFlag, $scope.handlenapeSelectedIndex, $scope.selectIsType);
+                    $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
+                  } else {
+                    $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directerror"));
+                  };
                 } else if (backDataCmd.cmd === "01") {
                   var name = "toiletController.nvyong";
+                  if (backDataCmd.ack === "1000") {
+                    $scope.selectChange($scope.selectChangeFlag, $scope.handlenapeSelectedIndex, $scope.selectIsType);
+                    $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
+                  } else {
+                    $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directerror"));
+                  };
                 } else if (backDataCmd.cmd === "02") {
                   var name = "toiletController.tunxi";
+                  if (backDataCmd.ack === "1000") {
+                    $scope.selectChange($scope.selectChangeFlag, $scope.handlenapeSelectedIndex, $scope.selectIsType);
+                    $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
+                  } else {
+                    $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directerror"));
+                  };
                 } else if (backDataCmd.cmd === "05") {
                   var name = "toiletController.heatdirec";
+                  if (backDataCmd.ack === "1000") {
+                    $scope.selectChange($scope.selectChangeFlag, $scope.handlenapeSelectedIndex, $scope.selectIsType);
+                    $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
+                  } else {
+                    $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directerror"));
+                  };
                 } else if (backDataCmd.cmd === "03") {
                   var name = "toiletController.nuanfeng";
+                  if (backDataCmd.ack === "1000") {
+                    $scope.selectChange($scope.selectChangeFlag, $scope.handlenapeSelectedIndex, $scope.selectIsType);
+                    $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
+                  } else {
+                    $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directerror"));
+                  };
                 } else if (backDataCmd.cmd === "11") {
                   var name = "toiletController.arounlight";
+                  if (backDataCmd.ack === "1000") {
+                    $scope.selectChange($scope.selectChangeFlag, $scope.handlenapeSelectedIndex, $scope.selectIsType);
+                    $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
+                  } else {
+                    $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directerror"));
+                  };
                 } else if (backDataCmd.cmd === "18") {
                   var name = "toiletController.tlitelight";
+                  if (backDataCmd.ack === "1000") {
+                    $scope.selectChange($scope.selectChangeFlag, $scope.handlenapeSelectedIndex, $scope.selectIsType);
+                    $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
+                  } else {
+                    $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directerror"));
+                  };
                 } else if (backDataCmd.cmd === "05") {
                   var name = "toiletController.heatdirec";
+                  if (backDataCmd.ack === "1000") {
+                    $scope.selectChange($scope.selectChangeFlag, $scope.handlenapeSelectedIndex, $scope.selectIsType);
+                    $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
+                  } else {
+                    $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directerror"));
+                  };
                 } else if (backDataCmd.cmd === "08") {
                   var name = "toiletController.toiltequan";
+                  if (backDataCmd.ack === "1000") {
+                    $scope.selectChange($scope.selectChangeFlag, $scope.handlenapeSelectedIndex, $scope.selectIsType);
+                    $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
+                  } else {
+                    $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directerror"));
+                  };
                 } else if (backDataCmd.cmd === "17") {
                   var name = "toiletController.clearopen";
+                  if (backDataCmd.ack === "1000") {
+                    $scope.selectChange($scope.selectChangeFlag, $scope.handlenapeSelectedIndex, $scope.selectIsType);
+                    $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
+                  } else {
+                    $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directerror"));
+                  };
                 } else if (backDataCmd.cmd === "15") {
                   var name = "toiletController.clearextend";
+                  if (backDataCmd.ack === "1000") {
+                    $scope.selectChange($scope.selectChangeFlag, $scope.handlenapeSelectedIndex, $scope.selectIsType);
+                    $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
+                  } else {
+                    $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directerror"));
+                  };
                 } else if (backDataCmd.cmd === "0e") {
                   var name = "toiletController.clearinstance";
-                } else {
-                  var name = "设备";
-                };
-                alert("name" + angular.toJson($translate.instant(name)))
-                alert("$scope.selectChangeFlag" + angular.toJson($scope.selectChangeFlag))
-                alert("$scope.handlenapeSelectedIndex" + angular.toJson($scope.handlenapeSelectedIndex))
-                alert("$scope.selectIsType" + angular.toJson($scope.selectIsType))
-                if (backDataCmd.ack === "1000") {
-                  $scope.selectChange($scope.selectChangeFlag, $scope.handlenapeSelectedIndex, $scope.selectIsType);
-                  $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
-                } else {
-                  $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directerror"));
-                };
+                  if (backDataCmd.ack === "1000") {
+                    $scope.selectChange($scope.selectChangeFlag, $scope.handlenapeSelectedIndex, $scope.selectIsType);
+                    $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
+                  } else {
+                    $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directerror"));
+                  };
+                }
+                // } else {
+                //   var name = "toiletController.devicePop";
+                // };
+                // alert("name" + angular.toJson($translate.instant(name)))
+                // alert("$scope.selectChangeFlag" + angular.toJson($scope.selectChangeFlag))
+                // alert("$scope.handlenapeSelectedIndex" + angular.toJson($scope.handlenapeSelectedIndex))
+                // alert("$scope.selectIsType" + angular.toJson($scope.selectIsType))
+                // if (backDataCmd.ack === "1000") {
+                //   $scope.selectChange($scope.selectChangeFlag, $scope.handlenapeSelectedIndex, $scope.selectIsType);
+                //   alert("name" + angular.toJson($translate.instant(name)))
+                //   $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
+                // } else {
+                //   $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directerror"));
+                // };
               }
             }else{
               // alert("backDataCmdstatus" + angular.toJson(backDataCmd));
               if(backDataCmd.cmd === "98") {
                 //get device status
                 if ($scope.tostatustiveOnceFlag === 0) {
-                  alert("status");
-                  alert("backDataCmd"+angular.toJson(backDataCmd))
+                  // alert("status");
+                  // alert("backDataCmd"+angular.toJson(backDataCmd))
                   $scope.tostatustiveOnceFlag++;
                   if (backDataCmd.fontStatus === "1") {
+                    // alert("status");
+                    // alert("backDataCmd"+angular.toJson(backDataCmd))
                     hmsPopup.hideLoading();
-                    $scope.toiletController.deviceUseInfo = $scope.toiletController.useing
+                    $scope.toiletController.deviceUseInfo = $scope.toiletController.useing;
                     $scope.toiletController.deviceinfoflag = true;
+                    $scope.Toast.show($translate.instant("toiletController.devicePop") + $translate.instant("golabelvariable.directesuccess"));
+
                   } else if (backDataCmd.fontStatus === "0") {
                     hmsPopup.hideLoading();
                     $scope.toiletController.deviceinfoflag = false;
                     $scope.toiletController.deviceUseInfo = $scope.toiletController.nouse
+                    $scope.Toast.show($translate.instant("toiletController.devicePop") + $translate.instant("golabelvariable.directesuccess"));
                   } else {
                     $scope.Toast.show($translate.instant("toiletController.devicePop") + $translate.instant("golabelvariable.directerror"));
                   };
@@ -826,8 +905,8 @@ angular.module('toiletControlModule')
         var selectedDataTemp = $scope.handlenapeListNape[index];
         var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx,nimi._data[selectedDataTemp.dataname],tolitercmdObj.ctrId,tolitercmdObj.devId);
         //send instructin
-        console.log(cmdvalue);
-        alert("cmdvalue"+cmdvalue)
+        // console.log(cmdvalue);
+        // alert("cmdvalue"+cmdvalue)
         if(baseConfig.isCloudCtrl){
           $scope.toGetImpleteData(flag,cmdvalue,$scope.handlenapeListNape[index].handleDes,index,isType);
         }else{
@@ -857,8 +936,8 @@ angular.module('toiletControlModule')
         };
         var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx,nimi.frontRearDry(type,temperature,volume,place,flushOptions,mSwitchType),tolitercmdObj.ctrId,tolitercmdObj.devId);
         //send instructin
-        console.log(cmdvalue);
-        alert("cmdvalue"+cmdvalue)
+        // console.log(cmdvalue);
+        // alert("cmdvalue"+cmdvalue)
         if(baseConfig.isCloudCtrl){
           $scope.toGetImpleteData(flag,cmdvalue,$scope.handlenapeListNape[selectedIndex].handleDes,selectedIndex,isType);
         }else{
@@ -887,8 +966,8 @@ angular.module('toiletControlModule')
         };
         var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx,nimi.frontRearDry("暖风",temperature,volume,1,"正常",mSwitchType),tolitercmdObj.ctrId,tolitercmdObj.devId);
         //send instructin
-        console.log(cmdvalue);
-        alert("cmdvalue"+cmdvalue)
+        // console.log(cmdvalue);
+        // alert("cmdvalue"+cmdvalue)
         if(baseConfig.isCloudCtrl){
           $scope.toGetImpleteData(flag,cmdvalue,$scope.handlenapeListNape[selectedIndex].handleDes,selectedIndex,isType);
         }else{
@@ -920,8 +999,8 @@ angular.module('toiletControlModule')
         };
         var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx,nimi.feetSeatHeater(temperature),tolitercmdObj.ctrId,tolitercmdObj.devId);
         //send instructin
-        console.log(cmdvalue);
-        alert("cmdvalue"+cmdvalue)
+        // console.log(cmdvalue);
+        // alert("cmdvalue"+cmdvalue)
         if(baseConfig.isCloudCtrl){
           $scope.toGetImpleteData(flag,cmdvalue,$scope.handlenapeListNape[selectedIndex].handleDes,selectedIndex,isType);
         }else{
@@ -955,7 +1034,7 @@ angular.module('toiletControlModule')
           var FRIC = locastorgeLight.FRIC;
           var SATC = locastorgeLight.SATC;
           var SUMC = locastorgeLight.SUMC;
-          if(lightMode === "Dynamic"){
+          if(lightMode === "Default" && locastorgeLight.flag === false){
             var dynamicCtl = "ON";
           }else {
             var dynamicCtl = "OFF";
@@ -969,7 +1048,7 @@ angular.module('toiletControlModule')
         var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx,nimi.ambientLight(lightMode, lightCtl, dynamicCtl, MOMC, TUEC, WEDC, THUC, FRIC, SATC, SUMC),tolitercmdObj.ctrId,tolitercmdObj.devId);
         //send instructin
         console.log(cmdvalue);
-        alert("cmdvalue"+cmdvalue)
+        // alert("cmdvalue"+cmdvalue)
         if(baseConfig.isCloudCtrl){
           $scope.toGetImpleteData(flag,cmdvalue,$scope.handlenapeListNape[selectedIndex].handleDes,selectedIndex,isType);
         }else{
@@ -991,7 +1070,7 @@ angular.module('toiletControlModule')
         var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx,nimi.bowlLight(lightStalls),tolitercmdObj.ctrId,tolitercmdObj.devId);
         //send instructin
         console.log(cmdvalue);
-        alert("cmdvalue"+cmdvalue)
+        // alert("cmdvalue"+cmdvalue)
         if(baseConfig.isCloudCtrl){
           $scope.toGetImpleteData(flag,cmdvalue,$scope.handlenapeListNape[selectedIndex].handleDes,selectedIndex,isType);
         }else{
@@ -1231,7 +1310,7 @@ angular.module('toiletControlModule')
               if($scope.handlenapeListNape[index].matchdataid === "clear") {
                 //close clear
                 console.log($scope.toiletController.modelTypeClear)
-                alert($scope.toiletController.modelTypeClear)
+                // alert($scope.toiletController.modelTypeClear)
                 if($scope.handlenapeListNape[index].selecFlag){
                   if($scope.toiletController.modelTypeClear !== "toiletController.gaunbi") {
                     if ($scope.toiletController.modelTypeClear === "toiletController.clearopen") {
@@ -1289,12 +1368,12 @@ angular.module('toiletControlModule')
                   $scope.aroundLightIntionCreate(true,"低","0",index);
                   $timeout(function () {
                     $scope.tolLightIntionCreate(false,5,"0",index);
-                  },400)
+                  },1000)
                 }else{
                   $scope.aroundLightIntionCreate(true,'关',"0",index);
                   $timeout(function () {
                     $scope.tolLightIntionCreate(false,0,"0",index);
-                  },400)
+                  },1000)
                 };
               };
             };
