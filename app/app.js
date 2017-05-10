@@ -631,6 +631,12 @@ angular.module('myApp')
           templateUrl: 'build/pages/keyscene-veil/veil.html',
           controller: 'veilCtrl'
         })
+        .state('veilSetting', {
+          url: '/veilSetting',
+          templateUrl: 'build/pages/keyscene-veil/veil-setting/veil-setting.html',
+          controller: 'veilSettingCtrl'
+        })
+
         // 设备控制-马桶
         .state('toiletContrl', {
           url: '/toiletContrl',

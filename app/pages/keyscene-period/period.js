@@ -26,16 +26,10 @@ angular.module('productModule')
        *@params: item
        *@disc: get switch status
        */
-      $scope.getSwitchStatus = function(item){
-        //console.log(item);
-        alert(item.isOff);
-        if(item.isOff){
-          //alert("on");
+      $scope.getSwitchStatus = function(){
+
           $scope.openKeyscene();
 
-        }else{
-          alert("off1");
-        }
       };
 
 
@@ -63,7 +57,7 @@ angular.module('productModule')
        *@disc:openKeysceneSpa
        */
       $scope.openKeyscene = function () {
-        if($scope.config.openFlag == true){
+        if(1==1 ){
           $("#progressAnimation").css({
             "-webkit-animation": "aaa 1.5s linear",
             "background": "#1a1d28"

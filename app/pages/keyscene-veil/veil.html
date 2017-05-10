@@ -2,27 +2,27 @@
   <div class="bar bar-header headColor " style="background-image: none">
     <button class="button button-icon icon ion-ios-arrow-left iconColor" ng-click="goBack()"></button>
     <div class="h1 title"><span translate="veil.goHomeTitle" class="iconColor"></span></div>
-    <button class="button button-icon icon ion-ios-trash-outline iconColor" ng-click="deleteKeyscene()"></button>
+    <button class="button button-icon icon ion-ios-trash-outline iconColor" ></button>
   </div>
 
   <ion-content class="ionContent" >
 
     <div class="nameStyle">
       <span translate="veil.goHomeName"></span>
-    <img class="img-time"  ng-src="build/img/keyscene-veil/icon_scenariodetail_veil_time.png"/>
-   <img class="img-time" ng-src="build/img/keyscene-veil/icon_scenariodetail_veil_brightness.png" />
+    <!--<img class="img-time"  ng-src="build/img/keyscene-veil/icon_scenariodetail_veil_time.png" />-->
+   <img class="img-time" ng-src="build/img/keyscene-veil/icon_scenariodetail_veil_brightness.png" ng-click="goSetting()" />
 
     </div>
     <div class="contentStyle"><span translate="veil.goHomeContent"></span></div>
-   <div class="buttonClick">
-      <label class="switch-btn">
-          <input class="checked-switch" type="checkbox" ng-model="item.isOff"  ng-click="getSwitchStatus(item)"/>
-        <span class="text-switch" data-yes="on" data-no="off" ></span>
-        <span class="toggle-btn only-switch" ></span>
-        <span class="toggle-btn" ></span>
+   <!--<div class="buttonClick">-->
+      <!--<label class="switch-btn">-->
+          <!--<input class="checked-switch" type="checkbox" ng-model="item.isOff"  ng-click="getSwitchStatus(item)"/>-->
+        <!--<span class="text-switch" data-yes="on" data-no="off" ></span>-->
+        <!--<span class="toggle-btn only-switch" ></span>-->
+        <!--<span class="toggle-btn" ></span>-->
 
-        </label>
-   </div>
+        <!--</label>-->
+   <!--</div>-->
 
     <div class="colorTemper"><span translate="veil.colorTemperature"></span></div>
 

@@ -17,8 +17,14 @@ angular.module('productModule')
         device4 : false
       }
 
-
-
+      /**
+       *@autor: zhaocuiwang
+       *@disc: go setting
+       */
+      //进入设置页面
+      $scope.goSetting = function () {
+        $state.go('veilSetting');
+      }
 
 
       /**
@@ -26,16 +32,10 @@ angular.module('productModule')
        *@params: item
        *@disc: get switch status
        */
-      $scope.getSwitchStatus = function(item){
+      $scope.getSwitchStatus = function(){
         //console.log(item);
-        alert(item.isOff);
-        if(item.isOff){
-          //alert("on");
           $scope.openKeyscene();
 
-        }else{
-          alert("off1");
-        }
       };
 
 
