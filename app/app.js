@@ -772,13 +772,13 @@ angular.module('myApp')
 
           if (window.localStorage.getItem('gesturePassword') && window.localStorage.getItem('gesturePassword') != '') {
           } else {
-            $urlRouterProvider.otherwise('/login');
+            $urlRouterProvider.otherwise('/tabs');
           }
         } else {
 
           window.localStorage.isHrms2108 = "true";
 
-          $urlRouterProvider.otherwise('/login');
+          $urlRouterProvider.otherwise('/tabs');
         }
       }
     }]);
