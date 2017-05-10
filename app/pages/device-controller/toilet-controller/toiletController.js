@@ -1246,7 +1246,6 @@ angular.module('toiletControlModule')
         //     $scope.Toast.show($translate.instant($scope.handlenapeListNape[index].handleDes) + $translate.instant("golabelvariable.loadingdataerrror"));
         //   })
       };
-
       // init data
       $scope.handlenapeSelectedIndex = 12;
       $scope.selectChangeFlag = false;
