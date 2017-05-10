@@ -56,8 +56,8 @@ angular.module('utilModule')
           function success(response) {
             // alert('发送成功');
           }
-
           function error() {
+            hmsPopup.showLoading("<span translate='golabelvariable.loadingdataerrror'></span>");
           }
         };
         this.explainAck = function (arg) {
