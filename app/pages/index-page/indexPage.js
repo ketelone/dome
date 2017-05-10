@@ -17,6 +17,7 @@ angular.module('indexPageModule')
     'SettingsService',
     'hmsHttp',
     '$translate',
+    'cmdService',
     function ($scope,
               $state,
               $ionicGesture,
@@ -124,7 +125,7 @@ angular.module('indexPageModule')
             title: "维亚灯光",
             context: "开始您美好的一天",
             isOneButton: false,
-            isTwoButton: true,
+            isTwoButton: false,
             jsonContext: "1",
             isOff:  false,
             lastUpdateDate: "",
@@ -137,7 +138,7 @@ angular.module('indexPageModule')
             title: "大姨了吗",
             context: "女性特殊期洗浴关怀方案",
             isOneButton: false,
-            isTwoButton: true,
+            isTwoButton: false,
             jsonContext: "1",
             isOff:  false,
             lastUpdateDate: "",
@@ -169,12 +170,12 @@ angular.module('indexPageModule')
           $state.go('period');
         }
 
-        db.transaction(function (tx) {
-          tx.executeSql('update T_CTM_PARTY_SCENARIO set LAST_UPDATE_DATE = "' + getNowFormatDate() + '" where SCENARIO_ID = ' + item.id);
-
-        });
-        $scope.modelData = [];
-        getScenarioList();
+        // db.transaction(function (tx) {
+        //   tx.executeSql('update T_CTM_PARTY_SCENARIO set LAST_UPDATE_DATE = "' + getNowFormatDate() + '" where SCENARIO_ID = ' + item.id);
+        //
+        // });
+        // $scope.modelData = [];
+        // getScenarioList();
       };
 
 
@@ -783,6 +784,38 @@ angular.module('indexPageModule')
           $("#line").addClass('height-light2');
         }
       };
+
+      //本地发送指令
+      var pluginToCtrl = function (value, successMsg, errorMsg) {
+        cmdService.sendCmd( value, localStorage.boxIp);
+      };
+
+      var morning = function () {
+        var value = [
+          {
+            "ver": 1,
+            "from": {
+              "ctype":  227,
+              "uid"  : "CN100012"
+            },
+            "to": {
+              "ctype": 228,
+              "uid": "CN112345678"
+            },
+            "ts": 1487213040,
+            "idx": 12,
+            "mtype":  "rqst",
+            "data": {
+              "device_type": "ALL_DEVICE",
+              "act": "SCN_TRIGGER_REQUEST",
+              "act_params": {
+                "scn_id": "000000011"
+              }
+            }
+          }
+        ]
+        pluginToCtrl(deviceId, value, "发送成功", "发送失败");
+      }
 
       /**
        *@autor: caolei
