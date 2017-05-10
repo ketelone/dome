@@ -38,16 +38,8 @@ angular.module('karessControlModule')
 
 
       var statusKaress = function () {
-        var value = cmdService.getCmd("8877", '01', karessService.requestStatus('1A'), 'E3', '02');
-        var value1 = cmdService.getCmd("8877", '01', karessService.requestStatus('1B'), 'E3', '02');
-
-        console.log(value);
-        console.log(value1);
-        return;
+        var value = cmdService.getCmd("8877", '01', '70', 'E3', '02');
         cmdService.sendCmd(deviceId, value, localStorage.boxIp);
-        $timeout(function () {
-          cmdService.sendCmd(deviceId, value1, localStorage.boxIp);
-        }, 230);
       }
       statusKaress();
       //侧滑转档数量jsongulp
@@ -430,8 +422,8 @@ angular.module('karessControlModule')
           currentRadObj.i = 0;
           currentRadObj.j = 0;
           currentRadObj.stoPosPoint = 0;
-          currentRadObj.gearInit = $scope.currentSlideData[index].gearInitTemp;
-          $scope.currentSlideData[index].gearInit = $scope.currentSlideData[index].gearInitTemp;
+          // currentRadObj.gearInit = $scope.currentSlideData[index].gearInitTemp;
+          // $scope.currentSlideData[index].gearInit = $scope.currentSlideData[index].gearInitTemp;
           //当前绑定事件对象
           var currentEventObj = getIdObj($scope.currentSlideData[index].canves02);
           currentRadObj.drawDeliverCircle($scope.currentSlideData[index].gearNum);
@@ -443,8 +435,8 @@ angular.module('karessControlModule')
             //初始化数据
             $('.slider-pager').empty();
           } else {
-            currentRadObj.drawc(currentRadObj.cr2, currentRadObj.starRad, "type");
-            currentEventObj.addEventListener('touchstart', function (e) {
+            currentRadObj.drawc(currentRadObj.cr2,currentRadObj.starRad+ currentRadObj.radRange * ($scope.currentSlideData[index].gearInit-1),"type");
+            currentRadObj.drawCircleFill(currentRadObj.cr3,currentRadObj.starRad+currentRadObj.radRange * ($scope.currentSlideData[index].gearInit-1));            currentEventObj.addEventListener('touchstart', function (e) {
               e.preventDefault();
               var poi = getEvtLocation(e);
               bginX = poi.x;
@@ -862,7 +854,8 @@ angular.module('karessControlModule')
             if (status.ack.indexOf('fb') >= 0 || status.ack.indexOf('fc') >= 0 || status.ack.indexOf('fd') >= 0) {
               $scope.Toast.show("操作失败！");
             }else{
-              return;
+              karessService.resolveCmd(status.ack);
+              console.log(karessService.resolveCmd(status.ack));
             }
           }
 

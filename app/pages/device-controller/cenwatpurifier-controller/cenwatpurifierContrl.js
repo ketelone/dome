@@ -35,7 +35,7 @@ angular.module('toiletControlModule')
         diviceid:'B62EF53F',
         header:'8877',
         idx:1,
-        ctrId:'03',
+        ctrId:'E3',
         devId:'06'
       };
       // alert(angular.toJson(cenwapurcmdObj))
