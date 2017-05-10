@@ -17,6 +17,7 @@ angular.module('indexPageModule')
     'SettingsService',
     'hmsHttp',
     '$translate',
+    'cmdService',
     function ($scope,
               $state,
               $ionicGesture,
@@ -28,7 +29,8 @@ angular.module('indexPageModule')
               hmsPopup,
               SettingsService,
               hmsHttp,
-              $translate) {
+              $translate,
+              cmdService) {
 
       $scope.isSceneModel = true;
       $scope.isDeviceModel = false;
@@ -780,6 +782,38 @@ angular.module('indexPageModule')
           $("#line").addClass('height-light2');
         }
       };
+
+      //本地发送指令
+      var pluginToCtrl = function (value, successMsg, errorMsg) {
+        cmdService.sendCmd( value, localStorage.boxIp);
+      };
+
+      var morning = function () {
+        var value = [
+          {
+            "ver": 1,
+            "from": {
+              "ctype":  227,
+              "uid"  : "CN100012"
+            },
+            "to": {
+              "ctype": 228,
+              "uid": "CN112345678"
+            },
+            "ts": 1487213040,
+            "idx": 12,
+            "mtype":  "rqst",
+            "data": {
+              "device_type": "ALL_DEVICE",
+              "act": "SCN_TRIGGER_REQUEST",
+              "act_params": {
+                "scn_id": "000000011"
+              }
+            }
+          }
+        ]
+        pluginToCtrl(deviceId, value, "发送成功", "发送失败");
+      }
 
       /**
        *@autor: caolei
