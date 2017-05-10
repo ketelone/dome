@@ -46,7 +46,7 @@
 
 
               <div ng-if="isSceneModel">
-                <div ng-repeat="item in modelData" ng-click="goKeyscene(item)">
+                <div ng-repeat="item in modelData track by $index" ng-click="goKeyscene(item)">
                   <img class="imgll" ng-src="{{item.pictureUrl}}"/>
                   <div class="text-center interval-line">
                     <p class="font-color-self-title">{{item.title}}</p>
@@ -57,7 +57,7 @@
                           <input class="checked-switch" type="checkbox" ng-model="item.isOff"  ng-click="getSwitchStatus(item)"/>
                           <span class="text-switch" data-yes="off" data-no="on" ng-if="item.isTwoButton"></span>
                           <span class="toggle-btn" ng-show="item.isTwoButton"></span>
-                          <span class="text-switch font-format" ng-show="item.isOneButton">开启</span>
+                          <span class="text-switch font-format" ng-show="item.isOneButton" translate="index.open"></span>
                           <span class="toggle-btn only-switch" ng-show="item.isOneButton"></span>
                         </label>
                       </center>
@@ -83,18 +83,22 @@
                   <div class="col-25 noPadding">
                     <img class="deviceImg" ng-src="{{item.pictureUrl}}"/>
                   </div>
-                  <div class="col-50 noPadding" style="color: white">
+                  <div class="col-40 noPadding" style="color: white">
                     <div class="row"><div class="deviceName">{{item.deviceType}}</div></div>
                     <div class="row noPadding">
-                      <div class="deviceLine col-30 noPadding">{{item.deviceStatus}}</div>
-                      <div class="deviceLine col-70 noPadding">
-                        <img class="imgLine" ng-src="{{item.statusPictureUrl}}" ng-if="item.isStatus"/>
-                      </div>
+                      <!--<div class="deviceLine col-30 noPadding">{{item.deviceStatus}}</div>-->
+                      <!--<div class="deviceLine col-70 noPadding">-->
+                        <!--<img class="imgLine" ng-src="{{item.statusPictureUrl}}" ng-if="item.isStatus"/>-->
+                      <!--</div>-->
                     </div>
                   </div>
-                  <div class="col-25 deviceStatus text-center">
-                    <img class="error-img" ng-src="{{item.errorPictureUrl}}" ng-if="item.isError"/>
+                  <div class="col-20  deviceStatus text-right">
                     <span>{{item.deviceDesc}}</span>
+                  </div>
+
+                  <div class="col-5 deviceStatus text-center">
+                    <img class="error-img" ng-src="{{item.errorPictureUrl}}" ng-if="item.isError"/>
+
                     <span style="color: #565A64"><i class="ion-ios-arrow-forward" ></i></span>
                   </div>
                 </div>

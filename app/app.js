@@ -27,7 +27,8 @@ var myApp = angular.module('myApp', [
   'karessControlModule',
   'nextgenModule',
   'mcControlModule',
-  'airfoilShowerModule'
+  'airfoilShowerModule',
+  'sceneSupermarketModule'
 ]);
 
 var db = null;
@@ -54,10 +55,10 @@ angular.module('myApp')
       if (window.localStorage.languageFlag == undefined || window.localStorage.language == "default") {
         navigator.globalization.getPreferredLanguage(
           function (language) {
-            alert(language.value == 'zh-Hans-CN');
-            alert(language.value == 'zh-CN' || language.value == 'zh-Hans-CN');
+            //alert(language.value == 'zh-Hans-CN');
+            //alert(language.value == 'zh-CN' || language.value == 'zh-Hans-CN');
             if (language.value == 'zh-CN' || language.value == 'zh-Hans-CN') {
-              alert(language.value + '1');
+              //alert(language.value + '1');
               $translate.use('zh');
 
             }
@@ -66,7 +67,7 @@ angular.module('myApp')
 
             }
             else if (language.value == 'en-US' || language.value == 'en-CN') {
-              alert(language.value + '2');
+              //alert(language.value + '2');
               $translate.use('en');
             }
             else if (language.value == 'en-TH' || language.value == 'th-CN') {
@@ -75,7 +76,7 @@ angular.module('myApp')
             }
             else {
               $translate.use('en');
-              alert(language.value + "a");
+              //alert(language.value + "a");
 
             }
             window.localStorage.languageFlag = true;
@@ -581,6 +582,11 @@ angular.module('myApp')
           templateUrl: 'build/pages/device-add/box-add-device/boxAddDevice.html',
           controller: 'boxAddDeviceCtrl'
         })
+        .state('sceneSupermarket', {
+          url: '/sceneSupermarket',
+          templateUrl: 'build/pages/scene-supermarket/scene-supermarket.html',
+          controller: 'sceneSupermarketCtrl'
+        })
         //一键场景
         //gohome
         .state('goHome', {
@@ -614,6 +620,12 @@ angular.module('myApp')
           templateUrl: 'build/pages/keyscene-period/period.html',
           controller: 'periodCtrl'
         })
+        .state('periodSetting', {
+          url: '/periodSetting',
+          templateUrl: 'build/pages/keyscene-period/period-setting/period-setting.html',
+          controller: 'periodSettingCtrl'
+        })
+
         .state('veil', {
           url: '/veil',
           templateUrl: 'build/pages/keyscene-veil/veil.html',
@@ -695,7 +707,7 @@ angular.module('myApp')
           controller: 'nextgenSetCtrl'
         })
         .state('nextgen', {
-          url: '/nextgen',
+          url: '/nextgen/:deviceSku',
           templateUrl: 'build/pages/device-controller/nextgen-controller/nextgen.html',
           controller: 'nextgenCtrl'
         })

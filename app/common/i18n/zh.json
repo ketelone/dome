@@ -145,7 +145,8 @@
     "searchDeviceSuccess": "搜索已连接设备成功",
     "searchFail": "搜索已连接设备失败",
     "noDeviceSearch": "没有已连接设备，请搜索未连接设备",
-    "noDevice": "没有设备"
+    "noDevice": "没有设备",
+    "open": "开启"
   },
   "bigaunt": {
     "bigauntTitle": "场景详情"
@@ -419,7 +420,8 @@
     "notCloseTimer": "不能开启定时功能",
     "fail": "fail",
     "openLightSuccess": "open light success",
-    "openCoolSuccess": "open Cool success"
+    "openCoolSuccess": "open Cool success",
+    "timeout": "倒计时"
   },
   "spa": {
     "goHomeTitle": "场景详情",
@@ -429,7 +431,7 @@
     "deviceName1": "马桶",
     "deviceName2": "镜柜",
     "deviceName3": "浴霸",
-    "deviceName4": "淋浴",
+    "deviceName4": "浴缸",
     "deviceLineOn": "设备在线",
     "deviceLineOff": "设备离线",
     "deviceFlag": "未安装",
@@ -501,6 +503,9 @@
     "parameterrad": "0",
     "parameterdes": "水温档位",
     "handleSelecDes": "出水方式",
+    "water":"出水",
+    "watering":"正在出水",
+    "waterclosed":"出水结束",
     "chixu": "持续出水",
     "paikong": "排空冷水",
     "stop": "一键停止",
@@ -517,6 +522,9 @@
     "exceptSta": "异常情况统计",
     "restoreDefaults": "恢复默认设置",
     "lookupMess": "查看设备信息",
+    "fail":"失败",
+    "success":"成功",
+    "start":"开启成功",
     "deiveceMess": {
       "deiveceMess": "设备信息",
       "productName": "产品名称",

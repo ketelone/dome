@@ -11,7 +11,8 @@
           stopAllOperation: stopAllOperation,
           explainEnvironmentStatus: explainEnvironmentStatus,
           explainAck: explainAck,
-          explainHeaterStatus: explainHeaterStatus
+          explainHeaterStatus: explainHeaterStatus,
+          setHeaterPara: setHeaterPara
         };
 
         return service;
@@ -259,7 +260,7 @@
           if (arg.mode == 'NORMAL'){
             data = data + '00';
           }else if (arg.mode =='SWING'){
-            data = data + '01';
+            data = data + '40';
           }
           return data;
         }

@@ -21,13 +21,25 @@
       </span>
     </div>
     <div id="cewafiionSliderBox">
+      <ion-slide-box ng-init="lockSlide()" show-pager='false'>
+        <ion-slide ng-repeat='list in currentSlideData track by $index'>
+          <div id={{list.parNodeid}} class='toilet-parameterctl'>
+            <canvas id={{list.canves01}} class='canves-pos'></canvas>
+            <canvas id={{list.canves03}} class='canves-pos'></canvas>
+            <div class='toilet-parameterctl-data' ng-if='!list.parameterctlFlag'>
+              <span class='toilet-parameterctl-raddata toilet-parameterct-span'></span>
+              <div class='toilet-parameterctl-des' translate='{{waterstatus}}'></div>
+            </div>
+          </div>
+        </ion-slide>
+      </ion-slide-box>
     </div>
   </ion-content>
 
   <div class="toilet-handlenape-selec" ng-click="openModal()">
     <div class="row" style="padding: 0rem">
-      <div class="col col-66"><span class="handlenape-selec-des" translate={{toiletController.way}}></span></div>
-      <div class="col col-20"><span class="handlenape-selec-use" translate={{toiletController.modelType}}></span>
+      <div class="col col-66"><span class="handlenape-selec-des" translate="nextgen.handleSelecDes"></span></div>
+      <div class="col col-20"><span class="handlenape-selec-use" translate={{waterway}}></span>
       </div>
       <div class="col"><img class="handlenape-selec-img" src="build/img/nextgen/icon_scenario_arrow.png"></img></div>
     </div>
@@ -38,6 +50,23 @@
       <div class="handlenape-list-napes" ng-class="{true: 'napes-border', false: ''}[list.selecFlag]">
         <img class="list-napes-img" ng-src={{list.imgUrl}} alt="">
         <div class="list-napes-dec" translate={{list.handleDes}}></div>
+      </div>
+    </div>
+    <div class="is-water-switch" ng-if="showWater">
+      <div class="close">
+        <div class="circle-choice" ng-click="closeShowWater()" >
+          <span><img ng-src="build/img/delete@2x.png" class="img-size"/></span>
+        </div>
+      </div>
+      <div class="chixu">
+        <div class="circle-choice" ng-click="chixuWater()" style="background: #D5638E">
+          <span class="chixu-position" translate="nextgen.chixu"></span>
+        </div>
+      </div>
+      <div class="paikong">
+        <div class="circle-choice" ng-click="paikongWater()" style="background: #51D8BD">
+          <span class="paikong-position" translate="nextgen.paikong"></span>
+        </div>
       </div>
     </div>
   </ion-scroll>

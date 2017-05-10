@@ -12,12 +12,15 @@ angular.module('productModule')
       $scope.config = {
         openFlag: true,
 
+        device2: false,
         device3: false,//shebei
         device4: false,
 
+        flagDevice2: false,
         flagDevice3: false,//shifouanzhuang
         flagDevice4: false,
 
+        onOrOff2 : true,
         onOrOff3 : true,//shifouzaixian
         onOrOff4 : true,
 
@@ -80,15 +83,15 @@ angular.module('productModule')
             }, 5700);
           }*/
           //镜柜
-        /*  if($scope.config.flagDevice2 != true) {
-            $("#progressAnimation3").css({
+          if($scope.config.flagDevice2 != true) {
+            $("#progressAnimation2").css({
               "-webkit-animation": "aaa 3.0s linear",
               "background": "#1a1d28"
             });
             $timeout(function () {
-              $scope.config.device3 = true;
+              $scope.config.device2 = true;
             }, 2800);
-          }*/
+          }
           //浴霸
           if($scope.config.flagDevice3 != true) {
             $("#progressAnimation3").css({
@@ -99,7 +102,7 @@ angular.module('productModule')
               $scope.config.device3 = true;
             }, 2000);
           }
-          //淋浴
+          //浴缸
           if($scope.config.flagDevice4 != true) {
             $("#progressAnimation4").css({
               "-webkit-animation": "aaa 4s linear",
@@ -117,6 +120,14 @@ angular.module('productModule')
       $scope.closeKeyscene = function () {
         console.log($scope.config.openFlag);
         if ($scope.config.openFlag == true) {
+          //镜柜
+          if ($scope.config.flagDevice2 != true) {
+            $scope.config.device2 = false;
+            $("#progressAnimation2").css({
+              "-webkit-animation": "bbb 4.0s linear",
+              "background": ''
+            });
+          }
           //浴霸
           if ($scope.config.flagDevice3 != true) {
             $scope.config.device3 = false;
@@ -125,7 +136,7 @@ angular.module('productModule')
               "background": ''
             });
           }
-          //淋浴
+          //浴缸
           if ($scope.config.flagDevice4 != true) {
             $scope.config.device4 = false;
             $("#progressAnimation4").css({

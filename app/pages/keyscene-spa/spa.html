@@ -20,16 +20,18 @@
 
 
     <div class="divAll">
-      <!--浴霸-->
+
+
+      <!--镜柜-->
       <div style="margin-top: 15px;width:6.78rem">
-        <div ng-class="{'deviceStyle' : config.device3,'deviceStyleTwo' : !config.device3}" id="progressAnimation3"
+        <div ng-class="{'deviceStyle' : config.device2,'deviceStyleTwo' : !config.device2}" id="progressAnimation2"
              class="row noPadding">
           <div class="col-25 col noPadding">
             <img class="deviceImg" ng-src="build/img/keyscene-spa/jinggui.png"/>
           </div>
-          <div class="col col-35 noPadding" style="color: white" ng-show="config.device3">
+          <div class="col col-35 noPadding" style="color: white" ng-show="config.device2">
             <div class="row">
-              <div class="deviceName"><span translate="spa.deviceName3"></span></div>
+              <div class="deviceName"><span translate="spa.deviceName2"></span></div>
             </div>
             <div class="row noPadding">
               <div class="deviceLine col col-60 noPadding">
@@ -41,10 +43,10 @@
               </div>
             </div>
           </div>
-          <div class="col col-30 noPadding deviceStatus text-center" ng-show="config.device3">
+          <div class="col col-30 noPadding deviceStatus text-center" ng-show="config.device2">
             <span translate="spa.deviceWen">温度</span>27℃ <span translate="spa.deviceShi">湿度</span>45%
           </div>
-          <div class="col col-10 noPadding deviceStatus text-center" ng-show="config.device3">
+          <div class="col col-10 noPadding deviceStatus text-center" ng-show="config.device2">
             <span class="deviceFontI"><i class="ion-ios-arrow-forward" ></i></span>
           </div>
           <div class="col col-75 deviceStatus text-right" ng-show="config.flagDevice3" translate="spa.deviceFlag">
@@ -54,7 +56,40 @@
       </div>
 
 
-      <!--淋浴-->
+      <!--浴霸-->
+      <div style="margin-top: 15px;width:6.78rem">
+        <div ng-class="{'deviceStyle' : config.device4,'deviceStyleTwo' : !config.device4}" id="progressAnimation3"
+             class="row noPadding">
+          <div class="col-25 col noPadding">
+            <img class="deviceImg" ng-src="build/img/keyscene-spa/yuba.png"/>
+          </div>
+          <div class="col col-35 noPadding" style="color: white" ng-show="config.device4">
+            <div class="row">
+              <div class="deviceName"><span translate="spa.deviceName3"></span></div>
+            </div>
+            <div class="row noPadding">
+              <div class="deviceLine col col-60 noPadding">
+                <span translate="spa.deviceLineOn" ng-show="config.onOrOff4"></span>
+                <span translate="spa.deviceLineOff" ng-hide="config.onOrOff4"></span>
+              </div>
+              <div class="deviceLine col col-40 noPadding">
+                <img class="imgLine" ng-src="{{config.onLinePic4}}"/>
+              </div>
+            </div>
+          </div>
+          <div class="col col-30 noPadding deviceStatus text-center" ng-show="config.device4">
+            <span translate="spa.deviceWen">温度</span>27℃
+          </div>
+          <div class="col col-10 noPadding deviceStatus text-center" ng-show="config.device4">
+            <span class="deviceFontI"><i class="ion-ios-arrow-forward" ></i></span>
+          </div>
+          <div class="col col-75 deviceStatus text-right" ng-show="config.flagDevice4" translate="morning.deviceFlag">
+            未安装
+          </div>
+        </div>
+      </div>
+
+      <!--浴缸-->
       <div style="margin-top: 15px;width:6.78rem">
         <div ng-class="{'deviceStyle' : config.device4,'deviceStyleTwo' : !config.device4}" id="progressAnimation4"
              class="row noPadding">
