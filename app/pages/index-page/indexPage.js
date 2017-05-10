@@ -29,7 +29,10 @@ angular.module('indexPageModule')
               SettingsService,
               hmsHttp,
               $translate) {
-
+      window.localStorage.token = '4f75ed43-aee2-4f35-895e-7d3f086ddf86';
+      window.localStorage.empno = '18620025571';
+      window.localStorage.checkboxSavePwd = 'admin';
+      console.log(window.localStorage.token);
       $scope.isSceneModel = true;
       $scope.isDeviceModel = false;
       $scope.isOneLine = true;
@@ -224,18 +227,18 @@ angular.module('indexPageModule')
             isError: false,
             sku: "D7:12:29:DF:76:06"
           },
-          {
-            id: "5",
-            pictureUrl: "build/img/index/img_home_device_chushuifa.png",
-            deviceType: "RO",
-            deviceStatus: "设备离线",
-            deviceDesc: "",
-            statusPictureUrl: "build/img/index/icon_home_device_no_singal.png",
-            errorPictureUrl: "build/img/index/icon_home_device_warnning.png",
-            isStatus: true,
-            isError: true,
-            sku: "FB:3F:B6:2E:F5:3F"
-          },
+          // {
+          //   id: "5",
+          //   pictureUrl: "build/img/index/img_home_device_chushuifa.png",
+          //   deviceType: "RO",
+          //   deviceStatus: "设备离线",
+          //   deviceDesc: "",
+          //   statusPictureUrl: "build/img/index/icon_home_device_no_singal.png",
+          //   errorPictureUrl: "build/img/index/icon_home_device_warnning.png",
+          //   isStatus: true,
+          //   isError: true,
+          //   sku: "FB:3F:B6:2E:F5:3F"
+          // },
           {
             id: "6",
             pictureUrl: "build/img/index/karess.png",
@@ -898,9 +901,9 @@ angular.module('indexPageModule')
             $state.go('mc');
           }
 
-          if (item.deviceType == "RO") {
-            $state.go('mc');
-          }
+          // if (item.deviceType == "RO") {
+          //   $state.go('mc');
+          // }
 
         }
       };
