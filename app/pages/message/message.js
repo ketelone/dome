@@ -14,125 +14,34 @@ angular.module('messageModule')
     }
   ])
   .controller('messageCtrl', [
-    '$scope','$state','$timeout','publicMethod', '$ionicPopup',
+    '$scope', '$state', '$timeout', 'publicMethod', '$ionicPopup',
     'hmsPopup', 'hmsHttp', 'SettingsService', 'baseConfig',
-    function ($scope,$state,$timeout,publicMethod, $ionicPopup,
+    function ($scope, $state, $timeout, publicMethod, $ionicPopup,
               hmsPopup, hmsHttp, SettingsService, baseConfig) {
       $scope.data = {
         showDelete: false //左侧选择框是否显示
       };
       $scope.threeBottom = false;
-      $scope.hasStaus = true;//defalut no Display
-      $scope.hasException = false;//defalut no Display
-      // $scope.hasOther = false;
-      $scope.statusword = 'statusword';
-      $scope.exceptionword = '';
-      $scope.otherword = '';
-      $scope.exceptionitems = [];
-      $scope.statusitems = [];
+      $scope.exceptionitems = [];//异常消息数组
+      $scope.statusitems = [];//状态消息数组
+      $scope.showMessage=false;//是否显示空消息
+      $scope.message="";//空消息的内容
 
-      var circleUrl2 = "build/img/common/radio_h.png";
-      var circleUrltemp = "build/img/common/radio_q.png";
-
-      /**
-       *@author:chenjiacheng
-       *@name:getException
-       *@params:
-       *@return:
-       *@disc: Get exception information from interface
-       */
-      function getException() {
-        hmsPopup.showLoading();
-        var url = baseConfig.basePath + "/r/api/cmm/deviceException/query";
-        var paramter = [
-          {"partyId": 6, page: 1, pageSize: 10,lang:'zh_CN'}
-        ];
-        hmsHttp.post(url, paramter).success(
-          function (response) {
-            //异常及保修
-            if(response.success == true){
-              for (var i = 0; i < response.rows.length; i++) {
-                if (response.rows[i].exceptionType == 'err') {
-                  //状态及提醒
-                  $scope.statusitems.push({
-                    id: response.rows[i].exceptionId,
-                    statusMessage: response.rows[i].description,
-                    device: response.rows[i].deviceName,
-                    time: response.rows[i].creationDate,
-                    exceptionId : response.rows[i].exceptionId,
-                    circleUrl1: "build/img/common/radio_q.png",
-                    ischecked: false,
-                    name: "status",
-                    hasRead: false,
-                    readStyle: ""
-                  });
-                } else if (response.rows[i].exceptionType == 'warn') {
-                  $scope.exceptionitems.push(
-                    {
-                      id: response.rows[i].exceptionId,
-                      exceptionMessage: response.rows[i].description,
-                      device: response.rows[i].deviceName,
-                      time: response.rows[i].creationDate,
-                      exceptionId : response.rows[i].exceptionId,
-                      circleUrl1: "build/img/common/radio_q.png",
-                      ischecked: false,
-                      name: "exception",
-                      hasRead: false,
-                      readStyle: ""
-                    }
-                  );
-                }
-              }
-            }
-            $scope.exceptionitems.push({
-              id: "200",
-              exceptionMessage: "message.exceptionMessage",
-              device: "message.device1",
-              time: "message.time",
-              circleUrl1: "build/img/common/radio_q.png",
-              ischecked: false,
-              name: "exception",
-              hasRead: true,
-              readStyle: ""
-            });
-
-
-            $scope.statusitems.push({
-              id: "100",
-              statusMessage: "message.statusMessage1",
-              device: "message.device1",
-              messageDel: "message.messageDel1",
-              time: "message.time",
-              circleUrl1: "build/img/common/radio_q.png",
-              ischecked: false,
-              name: "status",
-              hasRead: true,
-              readStyle: ""
-            });
-            console.log($scope.statusitems);
-            read();
-            hmsPopup.hideLoading();
-          }
-        ).error(
-          function (response, status, header, config) {
-          }
-        );
-
-      }
-
-      getException();
-
-      /**
-       *@author:chenjiacheng
-       *@name:logout
-       *@params:
-       *@return:
-       *@disc:go  messageDetail list
-       */
-      $scope.goMessDetail = function (item) {
-        SettingsService.set("exceptionId", item.id);
-        $state.go("messageDetail");
-      }
+      //tab列表
+      $scope.listStatus = [
+        {
+          des: "message.status",
+          isClick: true,
+        },
+        {
+          des: "message.exception",
+          isClick: false,
+        },
+        {
+          des: "message.other",
+          isClick: false,
+        },
+      ]
 
       /**
        *@author:chenjiacheng
@@ -147,7 +56,6 @@ angular.module('messageModule')
             $scope.statusitems[i].readStyle = "hasread";
           }
         }
-
         for (var i = 0; i < $scope.exceptionitems.length; i++) {
           if ($scope.exceptionitems[i].hasRead == true) {
             $scope.exceptionitems[i].readStyle = "hasread";
@@ -157,44 +65,141 @@ angular.module('messageModule')
 
       /**
        *@author:chenjiacheng
-       *@name:logout
+       *@name:getException
        *@params:
        *@return:
-       *@disc:Display status and alert list
+       *@disc: Get exception information from interface
        */
-      $scope.showStatus = function () {
-        $scope.hasStaus = true;
-        // console.log( $scope.swStaus);
-        $scope.hasException = false;
-        $scope.statusword = 'statusword';
-        $scope.exceptionword = "";
-        $scope.otherword = '';
-      };
+      function getException() {
+        // hmsPopup.showLoading();
+        // var url = baseConfig.basePath + "/r/api/cmm/deviceException/query";
+        // var paramter = [
+        //   {"partyId": 6, page: 1, pageSize: 10,lang:'zh_CN'}
+        // ];
+        // hmsHttp.post(url, paramter).success(
+        //   function (response) {
+        //     //异常及保修
+        //     if(response.success == true){
+        //       for (var i = 0; i < response.rows.length; i++) {
+        //         if (response.rows[i].exceptionType == 'err') {
+        //           //状态及提醒
+        //           $scope.statusitems.push({
+        //             id: response.rows[i].exceptionId,
+        //             statusMessage: response.rows[i].description,
+        //             device: response.rows[i].deviceName,
+        //             time: response.rows[i].creationDate,
+        //             exceptionId : response.rows[i].exceptionId,
+        //             circleUrl1: "build/img/common/radio_q.png",
+        //             ischecked: false,
+        //             name: "status",
+        //             hasRead: false,
+        //             readStyle: ""
+        //           });
+        //         }
+        //         else if (response.rows[i].exceptionType == 'warn') {
+        //           $scope.exceptionitems.push(
+        //             {
+        //               id: response.rows[i].exceptionId,
+        //               exceptionMessage: response.rows[i].description,
+        //               device: response.rows[i].deviceName,
+        //               time: response.rows[i].creationDate,
+        //               exceptionId : response.rows[i].exceptionId,
+        //               circleUrl1: "build/img/common/radio_q.png",
+        //               ischecked: false,
+        //               name: "exception",
+        //               hasRead: false,
+        //               readStyle: ""
+        //             }
+        //           );
+        //         }
+        //       }
+        //     }
+        //   }
+        // ).error(
+        //   function (response, status, header, config) {
+        //   }
+        // );
+        $scope.exceptionitems.push({
+          id: "200",
+          exceptionMessage: "message.exceptionMessage",
+          device: "message.device1",
+          time: "message.time",
+          circleUrl1: "build/img/common/radio_q.png",
+          ischecked: false,
+          name: "exception",
+          hasRead: true,
+          readStyle: ""
+        });
+        $scope.statusitems.push({
+          id: "100",
+          statusMessage: "message.statusMessage1",
+          device: "message.device1",
+          messageDel: "message.messageDel1",
+          time: "message.time",
+          circleUrl1: "build/img/common/radio_q.png",
+          ischecked: false,
+          name: "status",
+          hasRead: true,
+          readStyle: ""
+        });
+        // console.log($scope.statusitems);
+        read();
+        // hmsPopup.hideLoading();
+      }
+
+      getException();
+
+      //tab点击，切换内容
+      $scope.listClick = function (index) {
+        switch(index){
+          case 0:
+            $scope.listStatus[0].isClick=true;
+            $scope.listStatus[1].isClick=false;
+            $scope.listStatus[2].isClick=false;
+            if($scope.statusitems.length==0){
+              $scope.message="message.noMessageWord1";
+              $scope.showMessage=true;
+            }else{
+              $scope.showMessage=false;
+              $scope.message="";
+            }
+            break;
+          case 1:
+            $scope.listStatus[0].isClick=false;
+            $scope.listStatus[1].isClick=true;
+            $scope.listStatus[2].isClick=false;
+            if($scope.exceptionitems.length==0){
+              $scope.message="message.noMessageWord2";
+              $scope.showMessage=true;
+            }else{
+              $scope.showMessage=false;
+              $scope.message="";
+            }
+            break;
+          case 2:
+            $scope.listStatus[0].isClick=false;
+            $scope.listStatus[1].isClick=false;
+            $scope.listStatus[2].isClick=true;
+            $scope.message="message.noMessageWord3";
+            $scope.showMessage=true;
+            break;
+        }
+      }
+
+      var circleUrl2 = "build/img/common/radio_h.png";
+      var circleUrltemp = "build/img/common/radio_q.png";
 
       /**
        *@author:chenjiacheng
-       *@name:showException
+       *@name:logout
        *@params:
        *@return:
-       *@disc:Display exception and warranty list
+       *@disc:go  messageDetail list
        */
-      $scope.showException = function () {
-        $scope.hasStaus = false;
-        //console.log( $scope.swStatus);
-        $scope.hasException = true;
-        $scope.exceptionword = 'statusword';
-        $scope.statusword = "";
-        $scope.otherword = '';
-      };
-
-      $scope.showOther = function () {
-        $scope.hasStaus = false;
-        //console.log( $scope.swStatus);
-        $scope.hasException = false;
-        $scope.exceptionword = '';
-        $scope.statusword = "";
-        $scope.otherword = 'statusword';
-      };
+      $scope.goMessDetail = function (item) {
+        SettingsService.set("exceptionId", item.id);
+        $state.go("messageDetail");
+      }
 
       /**
        *@author:chenjiacheng
@@ -215,7 +220,7 @@ angular.module('messageModule')
           var paramter = [{"exceptionId": item.exceptionId}];
           console.log(paramter);
           var url = baseConfig.basePath + "/r/api/cmm/deviceException/delete";
-          hmsHttp.post(url, paramter).success(function(response){
+          hmsHttp.post(url, paramter).success(function (response) {
             console.log(response);
           }).error(
           );
