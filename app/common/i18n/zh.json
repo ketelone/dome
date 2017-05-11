@@ -470,7 +470,8 @@
     "infoTaress3": "SKU号",
     "infoTaress4": "SN号",
     "infoTaress5": "位置信息",
-    "jieneng": "节能"
+    "jieneng": "节能",
+    "tishichushuikou" : "当前状态不能切换出水方式！"
   },
   "mcController": {
     "setting": "设置",

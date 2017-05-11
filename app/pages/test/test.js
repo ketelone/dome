@@ -57,7 +57,7 @@ angular.module('loginModule')
 
 
       $scope.listData = ['zhe1', 'zhe2', 'zhe3', 'zhe4', 'zhe5', 'zhe6', 'zhe7', 'zhe8', 'zhe9',
-        'zhe10', 'zh11', 'zhe12', 'zhe13', 'zhe14', 'zhe15', 'zhe16', 'zhe17', 'zhe18','zhe19','zhe20','zhe21','zhe22','zhe23','zhe24'];
+        'zhe10', 'zh11', 'zhe12', 'zhe13', 'zhe14', 'zhe15', 'zhe16', 'zhe17', 'zhe18', 'zhe19', 'zhe20', 'zhe21', 'zhe22', 'zhe23', 'zhe24'];
 
 
       //滚动啊
@@ -118,9 +118,9 @@ angular.module('loginModule')
       };
 
 
-
       var min = 1;
       var max = 24;
+
       function getNextIndex(nowIndex) {
         var temp = nowIndex + 1;
         if (temp > (weekNum - 1))
@@ -140,6 +140,7 @@ angular.module('loginModule')
         scope.nowIndex = temp < 0 ? (weekNum + temp) : temp;
         refreshData();
       }
+
       function refreshData() {
         scope.nowIndex = Math.round(scope.nowIndex);
         if (scope.nowIndex > (weekNum - 1))
@@ -171,8 +172,66 @@ angular.module('loginModule')
       }
 
       scope.getShowString = function (item) {
-        return scope.listData[item-1];
+        return scope.listData[item - 1];
       };
 
 
     }])
+
+var app=angular.module('animateDemo',["templateCache","serviceModule","directiveModule"])
+  .controller("animateController",['$scope','createEffect', function ($scope,createEffect) {
+
+  }])
+var service=angular.module("serviceModule",[])
+  .factory("createEffect",["$animate","$compile","$rootScope", function ($animate,$compile,$rootScope) {
+    var x;
+    var y;
+    var span=angular.element("<span class='animateSpan'></span>");
+    var scopeNew=$rootScope.$new(true);
+    var spanEffect=$compile(span)(scopeNew);
+    return{
+      addEffect: function (obj) {
+        obj.on("click", function (e) {
+          var e=e||event;
+          obj.empty();
+          $animate.enter(spanEffect,obj);
+          x= e.pageX-this.offsetLeft-parseInt($(obj).find("span").css("width"))/2;
+          y= e.pageY-this.offsetTop-parseInt($(obj).find("span").css("width"))/2;
+          $(obj).find("span").css("left",x);
+          $(obj).find("span").css("top",y);
+          obj.find("span").addClass("animate");
+        })
+      }
+    }
+
+  }])
+var directive=angular.module("directiveModule",["serviceModule"])
+  .directive("spanClick",["$animate","$compile","createEffect", function ($animate,$compile,createEffect) {
+    return{
+      restrict:'EA',
+      replace:true,
+      templateUrl:'spanClick.html',
+      link: function (scope, ele, attr) {
+        /*  var x;
+         var y;
+         var span=angular.element("<span class='animateSpan'></span>");
+         //span.attr("class","animateSpan");
+         var scopeNew=scope.$new(true);
+         var spanEffect=$compile(span)(scopeNew);
+         ele.bind("click", function (e) {
+         ele.empty();
+         $animate.enter(spanEffect,ele);
+         x= e.pageX-this.offsetLeft-parseInt($(ele).find("span").css("width"))/2;
+         y= e.pageY-this.offsetTop-parseInt($(ele).find("span").css("width"))/2;
+         $(ele).find("span").css("left",x);
+         $(ele).find("span").css("top",y);
+         ele.find("span").addClass("animate");
+         })*/
+        createEffect.addEffect(ele)
+      }
+    }
+  }])
+var templateCache=angular.module('templateCache',[])
+  .run(function ($templateCache) {
+    $templateCache.put("spanClick.html","<div  class='spanStyle'></div>")
+  })

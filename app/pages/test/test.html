@@ -17,14 +17,12 @@
   <ion-content style="margin-top: 88px;" overflow-scroll="true" on-scroll="false">
     <div ng-click="goSetting()">设置</div>
     <div ng-click="openModal()">设置</div>
+    <div>
+      <span-click></span-click>
+    </div>
 
 
-
-      <!--<infinity-scroll type='number' title-text='date' min='1' max='31'></infinity-scroll>-->
-
-
-
-
+    <!--<infinity-scroll type='number' title-text='date' min='1' max='31'></infinity-scroll>-->
 
 
   </ion-content>
@@ -52,19 +50,21 @@
         <div class="col noPadding">
           <div class="scroll-container" on-drag="onDragScroll($event)" on-release="onReleaseScroll($event)">
             <div class="stage" ng-style="stageRotate">
-              <div class="scroll-item" ng-repeat="week in weeks track by $index" ng-style="rotates[$index]" ng-class="{true:'selected'}[nowIndex == $index]">{{getShowString(week)}}
+              <div class="scroll-item" ng-repeat="week in weeks track by $index" ng-style="rotates[$index]"
+                   ng-class="{true:'selected'}[nowIndex == $index]">{{getShowString(week)}}
               </div>
             </div>
           </div>
         </div>
         <div class="col noPadding">
-          <!--<div class="scroll-container" on-drag="onDragScroll($event)" on-release="onReleaseScroll($event)">-->
-            <!--<div class="stage" ng-style="stageRotate">-->
-              <!--<div class="scroll-item" ng-repeat="week in weeks track by $index" ng-style="rotates[$index]" ng-class="{true:'selected'}[nowIndex == $index]">{{getShowString(week)}}-->
-              <!--</div>-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</div>-->
+          <div class="scroll-container" on-drag="onDragScroll($event)" on-release="onReleaseScroll($event)">
+            <div class="stage" ng-style="stageRotate">
+              <div class="scroll-item" ng-repeat="week in weeks track by $index" ng-style="rotates[$index]"
+                   ng-class="{true:'selected'}[nowIndex == $index]">{{getShowString(week)}}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
     </ion-content>

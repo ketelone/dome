@@ -222,6 +222,7 @@ angular.module('deviceAddModule')
                 //"device_mac":["data", "data", "data"]/ data is mac(FF:FF:FF:FF:FF:FF),区分大小写
                 "device": [
                   {
+                    "device_sku" : item.device_sku,
                     "mac": item.device_mac,
                     "product_type": 0x01, // device_identity in Controller-Device Interface Specification
                     " cmd_set_id ": 1001,  // 执行动作的设备产品指令集ID

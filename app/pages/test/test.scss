@@ -1,95 +1,147 @@
-.scroll-container{
-  margin-top: 10px;
-  width: 100%;
-  height: 200px;
-  perspective: 800px;
-  perspective-origin: 50% 50%;
-  overflow: hidden;
-}
+.test {
+  .scroll-container {
+    margin-top: 10px;
+    width: 100%;
+    height: 200px;
+    perspective: 800px;
+    perspective-origin: 50% 50%;
+    overflow: hidden;
+  }
 
-.stage {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transform-style: preserve-3d;
-  transition: transform 0.2s;
-  -webkit-transition: transform 0.2s;
-}
+  .stage {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.2s;
+    -webkit-transition: transform 0.2s;
+  }
 
-.scroll-item {
-  background: white;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  position: absolute;
-  width: 30vw;
-  height: 40px;
-  left: 10vw;
-  top: 80px;
-  text-align: center;
-  line-height: 40px;
-  color: #d5d5d5;
-  transition: color 0.5s;
-  -webkit-transition: color 0.5s;
-}
+  .scroll-item {
+    background: white;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    position: absolute;
+    width: 30vw;
+    height: 40px;
+    left: 10vw;
+    top: 80px;
+    text-align: center;
+    line-height: 40px;
+    color: #d5d5d5;
+    transition: color 0.5s;
+    -webkit-transition: color 0.5s;
+  }
 
-.scroll-item.selected{
-  color: #333333;
-  border-bottom: 1px solid black;
-  border-top: 1px solid black;
-}
+  .scroll-item.selected {
+    color: #333333;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+  }
 
-.year{
-  margin-top: 5vh;
-  margin-bottom: 5vh;
-  width: 30vw;
-  margin-left: 35vw;
-  text-align: center;
-  left: 0;
-  height: 40px;
-  line-height: 40px;
-  top: 30px;
-  font-size: 1.2em;
-  border-bottom: 1px solid #959595;
-}
+  .year {
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+    width: 30vw;
+    margin-left: 35vw;
+    text-align: center;
+    left: 0;
+    height: 40px;
+    line-height: 40px;
+    top: 30px;
+    font-size: 1.2em;
+    border-bottom: 1px solid #959595;
+  }
 
-.select-week{
-  margin-top: 5vh;
-  width: 30vw;
-  margin-left: 35vw;
-  border: none;
-  box-shadow: 0 0 1px 1px #959595;
-  height: 40px;
-  line-height: 40px;
-  text-align: center;
-  color: #959595;
-  font-size: 1.2em;
-  border-radius: 20px;
-}
-.noPadding{
-  padding: 0;
-}
+  .select-week {
+    margin-top: 5vh;
+    width: 30vw;
+    margin-left: 35vw;
+    border: none;
+    box-shadow: 0 0 1px 1px #959595;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    color: #959595;
+    font-size: 1.2em;
+    border-radius: 20px;
+  }
+  .noPadding {
+    padding: 0;
+  }
 
+  .hmsModal {
+    top: 60%
+  }
+  .hmsModal .createNewRecord {
+    padding-top: 4px;
+    padding-right: 30px;
+    padding-left: 20px;
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    width: 30px;
+    height: 35px;
+    text-align: center;
+  }
+  .hmsModal .bar-border-bottom {
+    border-bottom: 1px solid rgb(56, 126, 245);
+  }
+  .hmsModal .closeIcon {
+    font-size: 16px;
+  }
 
-.hmsModal{
-  top:60%
+  .spanStyle {
+    width: 200px;
+    height: 50px;
+    position: absolute;
+    left: 200px;
+    top: 60px;
+    background: slateblue;
+    overflow: hidden;
+  }
+  .spanStyle .animateSpan {
+    position: absolute;
+    background: saddlebrown;
+    display: block;
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    -ms-transform: scale(0);
+    -o-transform: scale(0);
+    transform: scale(0);
+  }
+  .animate {
+    -webkit-animation: ripple .5s linear;
+    -moz-animation: ripple .5s linear;
+    -ms-animation: ripple .5s linear;
+    -o-animation: ripple .5s linear;
+    animation: ripple .5s linear
+  }
+  @-webkit-keyframes ripple {
+    100% {
+      opacity: 0;
+      -webkit-transform: scale(1.5);
+    }
+  }
+  @-moz-keyframes ripple {
+    100% {
+      opacity: 0;
+      -moz-transform: scale(1.5);
+    }
+  }
+  @-o-keyframes ripple {
+    100% {
+      opacity: 0;
+      -o-transform: scale(1.5);
+    }
+  }
+  @keyframes ripple {
+    100% {
+      opacity: 0;
+      transform: scale(1.5);
+    }
+  }
 }
-.hmsModal .createNewRecord {
-  padding-top: 4px;
-  padding-right: 30px;
-  padding-left: 20px;
-  position: absolute;
-  right: 8px;
-  top: 8px;
-  width: 30px;
-  height: 35px;
-  text-align: center;
-}
-.hmsModal .bar-border-bottom {
-  border-bottom: 1px solid rgb(56,126,245);
-}
-.hmsModal .closeIcon {
-  font-size:16px;
-}
-
-
-

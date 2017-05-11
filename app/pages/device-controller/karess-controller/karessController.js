@@ -32,14 +32,15 @@ angular.module('karessControlModule')
         }
       };
       var deviceId = getDeviceId();
-      $scope.karessController = {
-        modelType: "karessController.bath",
-      };
+
 
       localStorage.karessTemp = '10';
       localStorage.karessLevel = '4';
       localStorage.karessOutLet = 'Bath Faucet';
       localStorage.karessPressure = '1';
+      $scope.karessController = {
+        modelType: localStorage.karessOutLet,
+      };
       $scope.fontSize = document.documentElement.clientWidth / 7.5;
       $scope.screenHeig = window.innerHeight;
       $scope.screenWidth = window.innerWidth;
@@ -57,6 +58,7 @@ angular.module('karessControlModule')
         gearInit: 1,
         gearInitTemp: 1,
         parameterctlFlag: true,
+        parameterctlImg : false,
         parNodeid: 'toilet-initCtl',
         canves01: "initcanves01",
         canves02: "initcanves02",
@@ -237,8 +239,10 @@ angular.module('karessControlModule')
           "<span class='toilet-parameterctl-des' ng-bind='list.des'></span>" +
           "<span class='toilet-parameterctl-des' ng-bind='list.gearInit+29' ng-if='list.flag == 1'></span>" +
           "</div>" +
-          "<div class='toilet-parameterctl-dataimg' ng-if='list.parameterctlFlag'>" +
-          "<img class='conninfo-parameterctl-img' ng-src='build/img/toilet-controller/btn_devicedetail_scoll.png' alt=''>" +
+          "<div class='toilet-parameterctl-data' ng-if='list.parameterctlFlag'>" +
+          "<img class='conninfo-parameterctl-img' ng-src='build/img/toilet-controller/btn_devicedetail_scoll.png' alt='' ng-if='parameterctlImg'>" +
+          "<span class='toilet-parameterctl-raddata' ng-if='!parameterctlImg'>39℃</span>" +
+          "<span class='toilet-parameterctl-des' ng-if='!parameterctlImg'>95%</span>" +
           "</div>" +
           "</div>" +
           "</ion-slide>" +
@@ -470,7 +474,7 @@ angular.module('karessControlModule')
             currentEventObj.addEventListener('touchmove', function (e) {
               e.preventDefault();
               var poi = getEvtLocation(e);
-              currentRadObj.drawc(currentRadObj.cr2,getAngle($scope.screenWidth/2,2.7*2*$scope.fontSize,poi.x,poi.y));
+              currentRadObj.drawc(currentRadObj.cr2, getAngle($scope.screenWidth / 2, 2.7 * 2 * $scope.fontSize, poi.x, poi.y));
             }, false);
             currentEventObj.addEventListener('touchend', function (e) {
               e.preventDefault();
@@ -542,7 +546,12 @@ angular.module('karessControlModule')
       }, 20);
       $scope.selectNapes = function (index, info) {
         $scope.handlenapeSelectedIndex = index;
+        $scope.slideInitData.parameterctlImg = true;
         if (index == 0) {
+          hmsPopup.showLoading();
+          $timeout(function () {
+            hmsPopup.hideLoading();
+          }, 500);
           if (info.selecFlag == false) {
             //tingzhizhushui
             var value1 = cmdService.getCmd("8877", '01', karessService.data.closeFiller, 'E3', '02');
@@ -575,6 +584,10 @@ angular.module('karessControlModule')
           }
         }
         if (index == 1) {
+          hmsPopup.showLoading();
+          $timeout(function () {
+            hmsPopup.hideLoading();
+          }, 500);
           if (info.selecFlag == false) {
             var value = cmdService.getCmd("8877", '01', karessService.data.openDrain, 'E3', '02');
             if (baseConfig.isCloudCtrl == true) {
@@ -590,7 +603,10 @@ angular.module('karessControlModule')
           }
         }
         if (index == 2) {
-          alert(info.selecFlag);
+          hmsPopup.showLoading();
+          $timeout(function () {
+            hmsPopup.hideLoading();
+          }, 500);
           if (info.selecFlag == false) {
             var value1 = cmdService.getCmd("8877", '01', karessService.setMassageBackPressure('10', '00'), 'E3', '02');
             console.log(value1);
@@ -606,6 +622,10 @@ angular.module('karessControlModule')
           }
         }
         if (index == 3) {
+          hmsPopup.showLoading();
+          $timeout(function () {
+            hmsPopup.hideLoading();
+          }, 500);
           if (info.selecFlag == false) {
             var value = cmdService.getCmd("8877", '01', karessService.data.openMassagePillow, 'E3', '02');
             console.log(value);
@@ -617,6 +637,10 @@ angular.module('karessControlModule')
           }
         }
         if (index == 4) {
+          hmsPopup.showLoading();
+          $timeout(function () {
+            hmsPopup.hideLoading();
+          }, 500);
           return;
           if (info.selecFlag == false) {
             var value = cmdService.getCmd("8877", '01', karessService.data.openHeatBack, 'E3', '02');
@@ -629,11 +653,19 @@ angular.module('karessControlModule')
           }
         }
         if (index == 5) {
+          hmsPopup.showLoading();
+          $timeout(function () {
+            hmsPopup.hideLoading();
+          }, 500);
           var value = cmdService.getCmd("8877", '01', karessService.data.closeAll, 'E3', '02');
           console.log(value);
           cmdService.sendCmd(deviceId, value, localStorage.boxIp);
         }
         if (index == 6) {
+          hmsPopup.showLoading();
+          $timeout(function () {
+            hmsPopup.hideLoading();
+          }, 500);
           if (info.selecFlag == false) {
             var value = cmdService.getCmd("8877", '01', karessService.data.openSanitize, 'E3', '02');
             console.log(value);
@@ -683,7 +715,7 @@ angular.module('karessControlModule')
       $scope.openModal = function () {
         if ($scope.handlenapeSelectedIndex == 0) {
         } else {
-          $scope.toast("当前状态不能切换出水方式");
+          $scope.Toast($translate.instant("golabelvariable.directesuccess"));
           return;
         }
         if ($scope.value.length !== 0) {
@@ -705,6 +737,7 @@ angular.module('karessControlModule')
             $scope.karessController.modelType = $scope.value[i].des;
           }
         }
+        localStorage.karessOutLet = $scope.karessController.modelType;
         if ($scope.karessController.modelType == 'Bath Faucet') {
           var outlet = '10';
         } else {
