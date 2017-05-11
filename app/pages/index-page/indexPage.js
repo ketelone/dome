@@ -17,6 +17,7 @@ angular.module('indexPageModule')
     'SettingsService',
     'hmsHttp',
     '$translate',
+    'cmdService',
     function ($scope,
               $state,
               $ionicGesture,
@@ -29,7 +30,10 @@ angular.module('indexPageModule')
               SettingsService,
               hmsHttp,
               $translate) {
-
+      window.localStorage.token = '4f75ed43-aee2-4f35-895e-7d3f086ddf86';
+      window.localStorage.empno = '18620025571';
+      window.localStorage.checkboxSavePwd = 'admin';
+      console.log(window.localStorage.token);
       $scope.isSceneModel = true;
       $scope.isDeviceModel = false;
       $scope.isOneLine = true;
@@ -121,7 +125,7 @@ angular.module('indexPageModule')
             title: "维亚灯光",
             context: "开始您美好的一天",
             isOneButton: false,
-            isTwoButton: true,
+            isTwoButton: false,
             jsonContext: "1",
             isOff:  false,
             lastUpdateDate: "",
@@ -134,7 +138,7 @@ angular.module('indexPageModule')
             title: "大姨了吗",
             context: "女性特殊期洗浴关怀方案",
             isOneButton: false,
-            isTwoButton: true,
+            isTwoButton: false,
             jsonContext: "1",
             isOff:  false,
             lastUpdateDate: "",
@@ -166,12 +170,12 @@ angular.module('indexPageModule')
           $state.go('period');
         }
 
-        db.transaction(function (tx) {
-          tx.executeSql('update T_CTM_PARTY_SCENARIO set LAST_UPDATE_DATE = "' + getNowFormatDate() + '" where SCENARIO_ID = ' + item.id);
-
-        });
-        $scope.modelData = [];
-        getScenarioList();
+        // db.transaction(function (tx) {
+        //   tx.executeSql('update T_CTM_PARTY_SCENARIO set LAST_UPDATE_DATE = "' + getNowFormatDate() + '" where SCENARIO_ID = ' + item.id);
+        //
+        // });
+        // $scope.modelData = [];
+        // getScenarioList();
       };
 
 
@@ -224,18 +228,18 @@ angular.module('indexPageModule')
             isError: false,
             sku: "D7:12:29:DF:76:06"
           },
-          {
-            id: "5",
-            pictureUrl: "build/img/index/img_home_device_chushuifa.png",
-            deviceType: "RO",
-            deviceStatus: "设备离线",
-            deviceDesc: "",
-            statusPictureUrl: "build/img/index/icon_home_device_no_singal.png",
-            errorPictureUrl: "build/img/index/icon_home_device_warnning.png",
-            isStatus: true,
-            isError: true,
-            sku: "FB:3F:B6:2E:F5:3F"
-          },
+          // {
+          //   id: "5",
+          //   pictureUrl: "build/img/index/img_home_device_chushuifa.png",
+          //   deviceType: "RO",
+          //   deviceStatus: "设备离线",
+          //   deviceDesc: "",
+          //   statusPictureUrl: "build/img/index/icon_home_device_no_singal.png",
+          //   errorPictureUrl: "build/img/index/icon_home_device_warnning.png",
+          //   isStatus: true,
+          //   isError: true,
+          //   sku: "FB:3F:B6:2E:F5:3F"
+          // },
           {
             id: "6",
             pictureUrl: "build/img/index/karess.png",
@@ -258,7 +262,7 @@ angular.module('indexPageModule')
             errorPictureUrl: "build/img/index/icon_home_device_warnning.png",
             isStatus: true,
             isError: true,
-            sku: "E8:91:E0:DC:20:F1"
+            sku: "F0:F0:87:F5:A2:17"
           },
           {
             id: "8",
@@ -270,7 +274,7 @@ angular.module('indexPageModule')
             errorPictureUrl: "build/img/index/icon_home_device_warnning.png",
             isStatus: true,
             isError: true,
-            sku: ""
+            sku: "D9:78:06:B6:77:C6"
           },
           {
             id: "9",
@@ -525,10 +529,10 @@ angular.module('indexPageModule')
 
       $scope.$watch('', function () {
         //getDeviceStatus("");
-        hmsPopup.showLoading();
 
         getWeather();
-        if (localStorage.boxLinkCount == 1) {
+        if(localStorage.boxLinkCount == 1){
+          hmsPopup.showLoading();
           //$timeout(function () {
           searchBox();
           //},1500);
@@ -781,6 +785,38 @@ angular.module('indexPageModule')
         }
       };
 
+      //本地发送指令
+      var pluginToCtrl = function (value, successMsg, errorMsg) {
+        cmdService.sendCmd( value, localStorage.boxIp);
+      };
+
+      var morning = function () {
+        var value = [
+          {
+            "ver": 1,
+            "from": {
+              "ctype":  227,
+              "uid"  : "CN100012"
+            },
+            "to": {
+              "ctype": 228,
+              "uid": "CN112345678"
+            },
+            "ts": 1487213040,
+            "idx": 12,
+            "mtype":  "rqst",
+            "data": {
+              "device_type": "ALL_DEVICE",
+              "act": "SCN_TRIGGER_REQUEST",
+              "act_params": {
+                "scn_id": "000000011"
+              }
+            }
+          }
+        ]
+        pluginToCtrl(deviceId, value, "发送成功", "发送失败");
+      }
+
       /**
        *@autor: caolei
        *@params: item
@@ -856,8 +892,8 @@ angular.module('indexPageModule')
             SettingsService.set("sku", item.sku);
           }
           if (item.deviceType == "next gen shower") {
-            $state.go('nextgen');
-            SettingsService.set("sku", item.sku);
+            $state.go('nextgen',{deviceSku: item.sku});
+            // SettingsService.set("sku", item.sku);
           }
           if (item.deviceType == "airfoil-shower") {
             $state.go('airfoilShower');
@@ -892,14 +928,15 @@ angular.module('indexPageModule')
           }
           if (item.deviceType == "airfoil-shower") {
             $state.go('airfoilShower');
+            SettingsService.set("sku",item.sku);
           }
           if (item.deviceType == "mc镜柜") {
             $state.go('mc');
           }
 
-          if (item.deviceType == "RO") {
-            $state.go('mc');
-          }
+          // if (item.deviceType == "RO") {
+          //   $state.go('mc');
+          // }
 
         }
       };

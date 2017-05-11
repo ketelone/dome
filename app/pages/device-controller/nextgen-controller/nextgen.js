@@ -11,7 +11,7 @@ angular.module('nextgenModule')
       var ctrId = "00";
       var header = "8877";
       var idx = "00";
-      var devId = "03";//E8:91:E0:DC:20:F1
+      var devId = "03";//E8:91:E0:DC:20:F1//F0:F0:87:F5:A2:17
 
       //获取相应格式的cmd指令
       function getValue(data) {
@@ -81,66 +81,8 @@ angular.module('nextgenModule')
       }
 
       //出水方式初始模式选择
-      $scope.waterway = localStorage.waterway?localStorage.waterway:"nextgen.Spout";
-
-      //出水状态
-      $scope.waterstatus = "nextgen.unworking";
-
-      //是否显示出水选项
-      $scope.showWater = false;
-      //关闭出水选项
-      $scope.closeShowWater = function () {
-        $scope.showWater = false;
-      }
-
-      //选中的功能，用于判断高亮的对象
-      var switchType = "";
-
-      //持续出水
-      $scope.chixuWater = function () {
-        chooseWaterWay();//发送选择出水口指令
-        switchType = "chixuWater";
-        var argment = {
-          'mode': '01'    //00表示stop，01表示Start continuous outlet 02表示Start evacuate cold water (turn on, and off when reach 37 degree,Start evacuate cold water 如果5分钟后水温仍达不到37度则自动停止) ,other表示内置设定
-        }
-        var data = nextgenService.operateShower(argment);
-        var value = getValue(data);
-        // alert(value);
-        sendCmd(deviceId, value, "持续出水", "持续出水失败");//"ShownerTurnOn"
-      }
-
-      //排空冷水
-      $scope.paikongWater = function () {
-        chooseWaterWay();//发送选择出水口指令
-        switchType = "paikongWater";
-        var argment = {
-          'mode': '02'    //00表示stop，01表示Start continuous outlet 02表示Start evacuate cold water (turn on, and off when reach 37 degree,Start evacuate cold water 如果5分钟后水温仍达不到37度则自动停止) ,other表示内置设定
-        }
-        var data = nextgenService.operateShower(argment);
-        var value = getValue(data);
-        //  alert(value);
-        sendCmd(deviceId, value, "排空冷水", "排空冷水失败");//"ShownerCoolTurnOn"
-      }
-
-      //关闭
-      function closeWater() {
-        switchType = "closeWater";
-        var argment = {
-          'mode': '00'    //00表示stop，01表示Start continuous outlet 02表示Start evacuate cold water (turn on, and off when reach 37 degree,Start evacuate cold water 如果5分钟后水温仍达不到37度则自动停止) ,other表示内置设定
-        }
-        var data = nextgenService.operateShower(argment);
-        var value = getValue(data);
-        sendCmd(deviceId, value, "关闭", "关闭失败");
-      }
-
-      //一键关闭
-      function closeAll() {
-        switchType = "closeAll";
-        var data = nextgenService.stopAll();
-        var value = getValue(data);
-        //  alert(value);
-        sendCmd(deviceId, value, "一键关闭", "一键关闭失败");
-      }
+      $scope.waterway =
+        localStorage.SET_SHOWER_OUTLET_PARA_EXIT?localStorage.SET_SHOWER_OUTLET_PARA_EXIT:"nextgen.Spout";
 
       //头顶花洒
       function headerHuasa(){
@@ -204,98 +146,95 @@ angular.module('nextgenModule')
         }
       }
 
-      //初次进入页面
-      var nextgenInit = true;
+      //出水状态
+      $scope.waterstatus = "nextgen.unworking";
+
+      //是否显示出水选项
+      $scope.showWater = false;
+      //关闭出水选项
+      $scope.closeShowWater = function () {
+        $scope.showWater = false;
+      }
+
+      //持续出水
+      $scope.chixuWater = function () {
+        $timeout(function () {
+          chooseWaterWay();//发送选择出水口指令
+        }, 500);
+        var argment = {
+          'mode': '01'    //00表示stop，01表示Start continuous outlet 02表示Start evacuate cold water (turn on, and off when reach 37 degree,Start evacuate cold water 如果5分钟后水温仍达不到37度则自动停止) ,other表示内置设定
+        }
+        var data = nextgenService.operateShower(argment);
+        var value = getValue(data);
+        // alert(value);
+        sendCmd(deviceId, value, "持续出水", "持续出水失败");//"ShownerTurnOn"
+      }
+
+      //排空冷水
+      $scope.paikongWater = function () {
+        $timeout(function () {
+          chooseWaterWay();//发送选择出水口指令
+        }, 500);
+        var argment = {
+          'mode': '02'    //00表示stop，01表示Start continuous outlet 02表示Start evacuate cold water (turn on, and off when reach 37 degree,Start evacuate cold water 如果5分钟后水温仍达不到37度则自动停止) ,other表示内置设定
+        }
+        var data = nextgenService.operateShower(argment);
+        var value = getValue(data);
+        //  alert(value);
+        sendCmd(deviceId, value, "排空冷水", "排空冷水失败");//"ShownerCoolTurnOn"
+      }
+
+      //关闭
+      function closeWater() {
+        var argment = {
+          'mode': '00'    //00表示stop，01表示Start continuous outlet 02表示Start evacuate cold water (turn on, and off when reach 37 degree,Start evacuate cold water 如果5分钟后水温仍达不到37度则自动停止) ,other表示内置设定
+        }
+        var data = nextgenService.operateShower(argment);
+        var value = getValue(data);
+        sendCmd(deviceId, value, "关闭", "关闭失败");
+      }
+
+      //关闭的类型，用于判断选择的是否是StopAll
+      // var isCloseAll = false;
+      // //一键关闭
+      // function closeAll() {
+      //   isCloseAll = true;
+      //   var data = nextgenService.stopAll();
+      //   var value = getValue(data);
+      //   //  alert(value);
+      //   sendCmd(deviceId, value, "一键关闭", "一键关闭失败");
+      // }
 
       //操作成功的处理
       function operateSuccess(ackData) {
-        if (!nextgenInit) {
-          if (ackData.ack.indexOf("fa") >= 0) {
-            switch (switchType) {
-              case "chixuWater":
-                // $scope.Toast.show($translate.instant("nextgen.chixu") + $translate.instant("nextgen.start"));
-                // hmsPopup.showShortCenterToast("持续出水开启成功");
-                $scope.showWater = false;
-                $scope.handlenapeListNape[0].selecFlag = true;
-                $scope.handlenapeListNape[0].imgUrl = $scope.handlenapeListNape[0].imgSeledUrl;
-                $scope.waterstatus = "nextgen.watering";
-                break;
-              case "paikongWater":
-                // hmsPopup.showShortCenterToast("排空冷水开启成功");
-                // $scope.Toast.show($translate.instant("nextgen.paikong") + $translate.instant("nextgen.start"));
-                $scope.showWater = false;
-                $scope.handlenapeListNape[0].selecFlag = true;
-                $scope.handlenapeListNape[0].imgUrl = $scope.handlenapeListNape[0].imgSeledUrl;
-                $scope.waterstatus = "nextgen.watering";
-                break;
-              case "closeWater":
-                // hmsPopup.showShortCenterToast("关闭成功");
-                // $scope.Toast.show($translate.instant("nextgen.close") + $translate.instant("nextgen.success"));
-                $scope.handlenapeListNape[0].selecFlag = false;
-                $scope.handlenapeListNape[0].imgUrl = $scope.handlenapeListNape[0].imgUrlTemp;
-                $scope.waterstatus = "nextgen.unworking";
-                break;
-              case "closeAll":
-                // hmsPopup.showShortCenterToast("一键关闭成功");
-                // $scope.Toast.show($translate.instant("nextgen.stop") + $translate.instant("nextgen.success"));
-                $scope.handlenapeListNape[1].selecFlag = true;
-                $scope.handlenapeListNape[1].imgUrl = $scope.handlenapeListNape[1].imgSeledUrl;
-                $scope.handlenapeListNape[0].selecFlag = false;
-                $scope.handlenapeListNape[0].imgUrl = $scope.handlenapeListNape[0].imgUrlTemp;
-                $scope.waterstatus = "nextgen.unworking";
-                $timeout(function () {
-                  $scope.handlenapeListNape[1].selecFlag = false;
-                  $scope.handlenapeListNape[1].imgUrl = $scope.handlenapeListNape[1].imgUrlTemp;
-                }, 2000);
-                break;
-              //出水方式可以不判断，将变量的变化放到modal.choose那里，modal.choose可以不发送指令的
-              case "handHuasa":
-                // hmsPopup.showShortCenterToast("手持花洒开启成功");
-                // $scope.Toast.show($translate.instant("nextgen.yidong") + $translate.instant("nextgen.start"));
-                $scope.waterway = "nextgen.yidong";
-                localStorage.waterway = "nextgen.yidong";
-                break;
-              case "headerHuasa":
-                // hmsPopup.showShortCenterToast("头顶花洒开启成功");
-                // $scope.Toast.show($translate.instant("nextgen.maichong") + $translate.instant("nextgen.start"));
-                $scope.waterway = "nextgen.maichong";
-                localStorage.waterway = "nextgen.maichong";
-                break;
-              case "headerBaidong":
-                // hmsPopup.showShortCenterToast("头顶摆动开启成功");
-                // $scope.Toast.show($translate.instant("nextgen.bodong") + $translate.instant("nextgen.start"));
-                $scope.waterway = 'nextgen.bodong';
-                localStorage.waterway = 'nextgen.bodong';
-                break;
-              case "goSpout":
-                // hmsPopup.showShortCenterToast("spout开启成功");
-                // $scope.Toast.show($translate.instant("nextgen.Spout") + $translate.instant("nextgen.start"));
-                $scope.waterway = 'nextgen.Spout';
-                localStorage.waterway = 'nextgen.Spout';
-                break;
-            }
-            switchType = "";
-          }
+        //ackData.ack.indexOf("fa") >= 0  //发送成功
+        if (ackData.status == "shower on") {//正在出水
+          $scope.showWater = false;
+          $scope.handlenapeListNape[0].selecFlag = true;
+          $scope.handlenapeListNape[0].imgUrl = $scope.handlenapeListNape[0].imgSeledUrl;
+          $scope.waterstatus = "nextgen.watering";
         }
-        else {
-          if (ackData.status) {//第一次进入并有status
-            if (ackData.status == "shower on") {//正在出水
-              $scope.handlenapeListNape[0].selecFlag = true;
-              $scope.handlenapeListNape[0].imgUrl = $scope.handlenapeListNape[0].imgSeledUrl;
-              $scope.waterstatus = "nextgen.watering";
-            }
-            nextgenInit = false;//修改
-          }
+        else if(ackData.status == "shower off"){
+          $scope.handlenapeListNape[0].selecFlag = false;
+          $scope.handlenapeListNape[0].imgUrl = $scope.handlenapeListNape[0].imgUrlTemp;
+          $scope.waterstatus = "nextgen.unworking";
+          // if(isCloseAll){
+          //   $scope.handlenapeListNape[1].selecFlag = true;
+          //   $scope.handlenapeListNape[1].imgUrl = $scope.handlenapeListNape[1].imgSeledUrl;
+          //   $timeout(function () {
+          //     $scope.handlenapeListNape[1].selecFlag = false;
+          //     $scope.handlenapeListNape[1].imgUrl = $scope.handlenapeListNape[1].imgUrlTemp;
+          //   }, 2000);
+          //   isCloseAll = false;
+          // }
         }
       }
 
       //一进入页面就查询出水状态
       $scope.$on('$ionicView.beforeEnter', function () {
-        if (nextgenInit) {
-          var data = nextgenService.getDeviceStatus();
-          var value = getValue(data);
-          pluginToCtrl(deviceId, value, "发送成功", "发送失败");
-        }
+        var data = nextgenService.getDeviceStatus();
+        var value = getValue(data);
+        sendCmd(deviceId, value, "发送成功", "发送失败");
       });
 
       //监听
@@ -322,19 +261,19 @@ angular.module('nextgenModule')
           handledata: $scope.slideLinYuData //cjc初始canves
         },
         {
-          imgUrl: "build/img/nextgen/stop.png",
-          imgSeledUrl: "build/img/nextgen/stopseled.png",
-          imgUrlTemp: "build/img/nextgen/stop.png",
-          handleDes: "nextgen.stop",
-          selecFlag: false
-        },
-        {
           imgUrl: "build/img/nextgen/shezhi.png",
           imgSeledUrl: "build/img/nextgen/shezhiseled.png",
           imgUrlTemp: "build/img/nextgen/shezhi.png",
           handleDes: "nextgen.shezhi",
           selecFlag: false
         },
+        // {
+        //   imgUrl: "build/img/nextgen/stop.png",
+        //   imgSeledUrl: "build/img/nextgen/stopseled.png",
+        //   imgUrlTemp: "build/img/nextgen/stop.png",
+        //   handleDes: "nextgen.stop",
+        //   selecFlag: false
+        // },
       ];
 
       $scope.slideInitData = [{
@@ -424,9 +363,6 @@ angular.module('nextgenModule')
             }
             break;
           case 1:
-            closeAll();
-            break;
-          case 2:
             $state.go("nextgenSet");
             break;
         }
@@ -448,7 +384,7 @@ angular.module('nextgenModule')
         $scope.modal.show();
         setTimeout(function () {
           var ele = document.getElementsByClassName("hmsModal");
-          ele[0].style.top = 68 + '%';
+          ele[0].style.top = 70 + '%';
           ele[0].style.minHeight = 61 + '%';
         }, 10);
       };
@@ -458,27 +394,9 @@ angular.module('nextgenModule')
 
       //出水方式选择
       $scope.choose = function (val) {
-        if (val.id < 6) {
-          $scope.modal.hide();
-          switch (val.id) {
-            case 2:
-              switchType = "headerHuasa";
-              headerHuasa();
-              break;
-            case 3:
-              switchType = "headerBaidong";
-              headerBaidong();
-              break;
-            case 4:
-              switchType = "handHuasa";
-              handHuasa();
-              break;
-            case 5:
-              switchType = "goSpout";
-              goSpout();
-              break;
-          }
-        }
+        $scope.modal.hide();
+        $scope.waterway = val.des;
+        localStorage.SET_SHOWER_OUTLET_PARA_EXIT= val.des;
       };
 
     }]);

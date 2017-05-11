@@ -632,6 +632,12 @@ angular.module('myApp')
           templateUrl: 'build/pages/keyscene-veil/veil.html',
           controller: 'veilCtrl'
         })
+        .state('veilSetting', {
+          url: '/veilSetting',
+          templateUrl: 'build/pages/keyscene-veil/veil-setting/veil-setting.html',
+          controller: 'veilSettingCtrl'
+        })
+
         // 设备控制-马桶
         .state('toiletContrl', {
           url: '/toiletContrl',
@@ -773,13 +779,13 @@ angular.module('myApp')
 
           if (window.localStorage.getItem('gesturePassword') && window.localStorage.getItem('gesturePassword') != '') {
           } else {
-            $urlRouterProvider.otherwise('/login');
+            $urlRouterProvider.otherwise('/tabs');
           }
         } else {
 
           window.localStorage.isHrms2108 = "true";
 
-          $urlRouterProvider.otherwise('/login');
+          $urlRouterProvider.otherwise('/tabs');
         }
       }
     }]);
