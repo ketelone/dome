@@ -27,7 +27,7 @@
             <canvas id={{list.canves01}} class='canves-pos'></canvas>
             <canvas id={{list.canves03}} class='canves-pos'></canvas>
             <div class='toilet-parameterctl-data' ng-if='!list.parameterctlFlag'>
-              <span class='toilet-parameterctl-raddata toilet-parameterct-span'></span>
+              <!--<span class='toilet-parameterctl-raddata toilet-parameterct-span'></span>-->
               <div class='toilet-parameterctl-des' translate='{{waterstatus}}'></div>
             </div>
           </div>
@@ -38,10 +38,10 @@
 
   <div class="toilet-handlenape-selec" ng-click="openModal()">
     <div class="row" style="padding: 0rem">
-      <div class="col col-66"><span class="handlenape-selec-des" translate="nextgen.handleSelecDes"></span></div>
-      <div class="col col-20"><span class="handlenape-selec-use" translate={{waterway}}></span>
+      <div class="col col-75"><span class="handlenape-selec-des" translate="nextgen.handleSelecDes"></span></div>
+      <div class="col col-10"><span class="handlenape-selec-use" translate={{waterway}}></span>
       </div>
-      <div class="col"><img class="handlenape-selec-img" src="build/img/nextgen/icon_scenario_arrow.png"></img></div>
+      <div class="col"><img class="handlenape-selec-img" src="build/img/nextgen/icon_scenario_arrow.png"></div>
     </div>
   </div>
   <ion-scroll class="toilet-handlenape toilet-bg" overflow-scroll="false">
@@ -60,12 +60,12 @@
       </div>
       <div class="chixu">
         <div class="circle-choice" ng-click="chixuWater()" style="background: #D5638E">
-          <span class="chixu-position" translate="nextgen.chixu"></span>
+          <span class="des-position" translate="nextgen.chixu"></span>
         </div>
       </div>
       <div class="paikong">
         <div class="circle-choice" ng-click="paikongWater()" style="background: #51D8BD">
-          <span class="paikong-position" translate="nextgen.paikong"></span>
+          <span class="des-position" translate="nextgen.paikong"></span>
         </div>
       </div>
     </div>

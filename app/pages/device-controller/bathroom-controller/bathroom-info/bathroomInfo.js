@@ -33,7 +33,7 @@ angular.module('bathroomModule')
 
       $scope.deciveInfo = {
         id: "3",
-        deviceName: "Bathroom Header",
+        deviceName: "Bathroom Heater",
         version: "1.2.6-133.0139",
         sku: "1.2.6-133.0139",
         sn: "1.2.6-133.0139",

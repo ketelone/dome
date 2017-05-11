@@ -122,7 +122,7 @@ angular.module('messageModule')
         $scope.exceptionitems.push({
           id: "200",
           exceptionMessage: "message.exceptionMessage",
-          device: "message.device1",
+          device: "message.device2",
           time: "message.time",
           circleUrl1: "build/img/common/radio_q.png",
           ischecked: false,
