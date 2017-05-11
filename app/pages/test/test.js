@@ -178,60 +178,60 @@ angular.module('loginModule')
 
     }])
 
-var app=angular.module('animateDemo',["templateCache","serviceModule","directiveModule"])
-  .controller("animateController",['$scope','createEffect', function ($scope,createEffect) {
-
-  }])
-var service=angular.module("serviceModule",[])
-  .factory("createEffect",["$animate","$compile","$rootScope", function ($animate,$compile,$rootScope) {
-    var x;
-    var y;
-    var span=angular.element("<span class='animateSpan'></span>");
-    var scopeNew=$rootScope.$new(true);
-    var spanEffect=$compile(span)(scopeNew);
-    return{
-      addEffect: function (obj) {
-        obj.on("click", function (e) {
-          var e=e||event;
-          obj.empty();
-          $animate.enter(spanEffect,obj);
-          x= e.pageX-this.offsetLeft-parseInt($(obj).find("span").css("width"))/2;
-          y= e.pageY-this.offsetTop-parseInt($(obj).find("span").css("width"))/2;
-          $(obj).find("span").css("left",x);
-          $(obj).find("span").css("top",y);
-          obj.find("span").addClass("animate");
-        })
-      }
-    }
-
-  }])
-var directive=angular.module("directiveModule",["serviceModule"])
-  .directive("spanClick",["$animate","$compile","createEffect", function ($animate,$compile,createEffect) {
-    return{
-      restrict:'EA',
-      replace:true,
-      templateUrl:'spanClick.html',
-      link: function (scope, ele, attr) {
-        /*  var x;
-         var y;
-         var span=angular.element("<span class='animateSpan'></span>");
-         //span.attr("class","animateSpan");
-         var scopeNew=scope.$new(true);
-         var spanEffect=$compile(span)(scopeNew);
-         ele.bind("click", function (e) {
-         ele.empty();
-         $animate.enter(spanEffect,ele);
-         x= e.pageX-this.offsetLeft-parseInt($(ele).find("span").css("width"))/2;
-         y= e.pageY-this.offsetTop-parseInt($(ele).find("span").css("width"))/2;
-         $(ele).find("span").css("left",x);
-         $(ele).find("span").css("top",y);
-         ele.find("span").addClass("animate");
-         })*/
-        createEffect.addEffect(ele)
-      }
-    }
-  }])
-var templateCache=angular.module('templateCache',[])
-  .run(function ($templateCache) {
-    $templateCache.put("spanClick.html","<div  class='spanStyle'></div>")
-  })
+// var app=angular.module('animateDemo',["templateCache","serviceModule","directiveModule"])
+//   .controller("animateController",['$scope','createEffect', function ($scope,createEffect) {
+//
+//   }])
+// angular.module("serviceModule",[])
+//   .factory("createEffect",["$animate","$compile","$rootScope", function ($animate,$compile,$rootScope) {
+//     var x;
+//     var y;
+//     var span=angular.element("<span class='animateSpan'></span>");
+//     var scopeNew=$rootScope.$new(true);
+//     var spanEffect=$compile(span)(scopeNew);
+//     return{
+//       addEffect: function (obj) {
+//         obj.on("click", function (e) {
+//           var e=e||event;
+//           obj.empty();
+//           $animate.enter(spanEffect,obj);
+//           x= e.pageX-this.offsetLeft-parseInt($(obj).find("span").css("width"))/2;
+//           y= e.pageY-this.offsetTop-parseInt($(obj).find("span").css("width"))/2;
+//           $(obj).find("span").css("left",x);
+//           $(obj).find("span").css("top",y);
+//           obj.find("span").addClass("animate");
+//         })
+//       }
+//     }
+//
+//   }])
+// var directive=angular.module("directiveModule",["serviceModule"])
+//   .directive("spanClick",["$animate","$compile","createEffect", function ($animate,$compile,createEffect) {
+//     return{
+//       restrict:'EA',
+//       replace:true,
+//       templateUrl:'spanClick.html',
+//       link: function (scope, ele, attr) {
+//         /*  var x;
+//          var y;
+//          var span=angular.element("<span class='animateSpan'></span>");
+//          //span.attr("class","animateSpan");
+//          var scopeNew=scope.$new(true);
+//          var spanEffect=$compile(span)(scopeNew);
+//          ele.bind("click", function (e) {
+//          ele.empty();
+//          $animate.enter(spanEffect,ele);
+//          x= e.pageX-this.offsetLeft-parseInt($(ele).find("span").css("width"))/2;
+//          y= e.pageY-this.offsetTop-parseInt($(ele).find("span").css("width"))/2;
+//          $(ele).find("span").css("left",x);
+//          $(ele).find("span").css("top",y);
+//          ele.find("span").addClass("animate");
+//          })*/
+//         createEffect.addEffect(ele)
+//       }
+//     }
+//   }])
+// var templateCache=angular.module('templateCache',[])
+//   .run(function ($templateCache) {
+//     $templateCache.put("spanClick.html","<div  class='spanStyle'></div>")
+//   })

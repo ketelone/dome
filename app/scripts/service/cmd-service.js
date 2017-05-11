@@ -28,7 +28,7 @@ angular.module('utilModule')
           return paramter;
         };
 
-        this.sendCmd = function (deviceId, value, boxId) {return;
+        this.sendCmd = function (deviceId, value, boxId) {
           var cmd = [
             {
               "ver": 1,

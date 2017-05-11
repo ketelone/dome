@@ -38,6 +38,14 @@ angular.module('karessControlModule')
       localStorage.karessLevel = '4';
       localStorage.karessOutLet = 'Bath Faucet';
       localStorage.karessPressure = '1';
+      $scope.config =
+        {
+          "fillerStatus": false,
+          "luoshui": false,
+          "touzhen": false,
+          "chunjun": false,
+          "anmo": false
+        }
       $scope.karessController = {
         modelType: localStorage.karessOutLet,
       };
@@ -50,7 +58,7 @@ angular.module('karessControlModule')
         var value = cmdService.getCmd("8877", '01', '70', 'E3', '02');
         cmdService.sendCmd(deviceId, value, localStorage.boxIp);
       }
-      // statusKaress();
+      statusKaress();
       //侧滑转档数量jsongulp
       $scope.slideInitData = [{
         des: "init",
@@ -58,7 +66,7 @@ angular.module('karessControlModule')
         gearInit: 1,
         gearInitTemp: 1,
         parameterctlFlag: true,
-        parameterctlImg : false,
+        parameterctlImg: false,
         parNodeid: 'toilet-initCtl',
         canves01: "initcanves01",
         canves02: "initcanves02",
@@ -126,7 +134,7 @@ angular.module('karessControlModule')
           imgSeledUrl: "build/img/karess-controller/icon_zhushui.png",
           imgUrlTemp: "build/img/karess-controller/icon_zhushuinor.png",
           handleDes: "karessController.zhushui",
-          selecFlag: false,
+          selecFlag: $scope.config.fillerStatus,
           handledata: $scope.slideTunBuData,
           isManyDirective: true
         },
@@ -135,7 +143,7 @@ angular.module('karessControlModule')
           imgSeledUrl: "build/img/karess-controller/icon_luoshui.png",
           imgUrlTemp: "build/img/karess-controller/icon_luoshuinor.png",
           handleDes: "karessController.luoshui",
-          selecFlag: false,
+          selecFlag: $scope.config.luoshui,
           handledata: $scope.slideInitData
         },
         {
@@ -143,7 +151,7 @@ angular.module('karessControlModule')
           imgSeledUrl: "build/img/karess-controller/icon_shuili.png",
           imgUrlTemp: "build/img/karess-controller/icon_shuilinor.png",
           handleDes: "karessController.shuilianmo",
-          selecFlag: false,
+          selecFlag: $scope.config.anmo,
           handledata: $scope.shuilianmoData,
           isManyDirective: true
         },
@@ -151,8 +159,8 @@ angular.module('karessControlModule')
           imgUrl: "build/img/karess-controller/icon_touzhennor.png",
           imgSeledUrl: "build/img/karess-controller/icon_touzhen.png",
           imgUrlTemp: "build/img/karess-controller/icon_touzhennor.png",
-          handleDes: "karessController.toubuanmo",
-          selecFlag: false,
+          handleDes: "karessController.touzhen",
+          selecFlag: $scope.config.luoshui,
           handledata: $scope.slideInitData
         },
         {
@@ -177,7 +185,7 @@ angular.module('karessControlModule')
           imgSeledUrl: "build/img/karess-controller/icon_guandaochujun.png",
           imgUrlTemp: "build/img/karess-controller/icon_guandaochujunnor.png",
           handleDes: "karessController.guandaochujun",
-          selecFlag: false,
+          selecFlag: $scope.config.chunjun,
           handledata: $scope.slideInitData
         },
         // {
@@ -241,8 +249,8 @@ angular.module('karessControlModule')
           "</div>" +
           "<div class='toilet-parameterctl-data' ng-if='list.parameterctlFlag'>" +
           "<img class='conninfo-parameterctl-img' ng-src='build/img/toilet-controller/btn_devicedetail_scoll.png' alt='' ng-if='parameterctlImg'>" +
-          "<span class='toilet-parameterctl-raddata' ng-if='!parameterctlImg'>39℃</span>" +
-          "<span class='toilet-parameterctl-des' ng-if='!parameterctlImg'>95%</span>" +
+          "<span class='toilet-parameterctl-raddata' ng-if='!parameterctlImg'>{{config.temp}}℃</span>" +
+          "<span class='toilet-parameterctl-des' ng-if='!parameterctlImg'>{{config.level}}%</span>" +
           "</div>" +
           "</div>" +
           "</ion-slide>" +
@@ -825,16 +833,59 @@ angular.module('karessControlModule')
       };
 
 //接受tcp状态
-      document.addEventListener('SocketPlugin.receiveTcpStatus', function (result) {
-        if (result.from.uid == deviceId) {
-
-        }
-      }, false);
+//       document.addEventListener('SocketPlugin.receiveTcpStatus', function (result) {
+//         if (result.from.uid == deviceId) {
+//
+//         }
+//       }, false);
 //接受tcp返回数据
       document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
         if (result[0].data.cmd.length > 0 && result[0].from.uid == deviceId) {
+          var cmd = result[0].data.cmd[0];
           var status = karessService.explainAck(result[0].data.cmd[0]);
-          karessButton(status);
+          if (status.ack.indexOf('fa') >= 0) {
+            karessButton(status);
+          } else if (status.ack.indexOf('1003') >= 0 || status.ack.indexOf('1002') >= 0 || status.ack.indexOf('1001') >= 0) {
+            $scope.Toast.show("操作失败！");
+          } else {
+            var item = karessService.resolveCmd(cmd);
+            if (item.type == "A6") {
+              $scope.config.temp = item.value.temperature;
+            } else if (item.type == "A7") {
+              $scope.config.level = item.value.waterLevel;
+            } else if (item.type == "8A") {
+              if (item.value.status == '0') {
+                $scope.config.fillerStatus = false;
+              } else {
+                $scope.config.fillerStatus = true;
+              }
+            } else if (item.type == "88") {//luoshui
+              if (item.value.status == '2') {
+                $scope.config.luoshui = false;
+              } else {
+                $scope.config.luoshui = true;
+              }
+            } else if (item.type == "83") {//touzhen
+              if (item.value.status == '1') {
+                $scope.config.touzhen = false;
+              } else {
+                $scope.config.touzhen = true;
+              }
+            } else if (item.type == "87") {//chujun
+              if (item.value.status == '1') {
+                $scope.config.chunjun = false;
+              } else {
+                $scope.config.chunjun = true;
+              }
+            } else if (item.type == "84") {//anmo
+              if (item.value.status == '1') {
+                $scope.config.anmo = false;
+              } else {
+                $scope.config.anmo = true;
+              }
+
+            }
+          }
         }
       }, false);
 
@@ -866,71 +917,86 @@ angular.module('karessControlModule')
             if (status.ack == '22') {
               if ($scope.handlenapeListNape[index].selecFlag == false) {
                 $scope.Toast.show("注水开启成功！");
+                changeColor();
               } else {
                 $scope.Toast.show("注水关闭成功！");
+                changeColor();
               }
             }
             if (status.ack == '25') {
               if ($scope.handlenapeListNape[index].selecFlag == false) {
                 $scope.Toast.show("落水开启成功！");
+                changeColor();
               } else {
                 $scope.Toast.show("落水关闭成功！");
+                changeColor();
               }
             }
             if (status.ack == '21') {
               if ($scope.handlenapeListNape[index].selecFlag == false) {
                 $scope.Toast.show("水力按摩开启成功！");
+                changeColor();
               } else {
                 $scope.Toast.show("水力按摩关闭成功！");
+                changeColor();
               }
             }
             if (status.ack == '23') {
               if ($scope.handlenapeListNape[index].selecFlag == false) {
                 $scope.Toast.show("头部按摩开启成功！");
+                changeColor();
               } else {
                 $scope.Toast.show("头部按摩关闭成功！");
+                changeColor();
               }
             }
             if (status.ack == '24') {
               if ($scope.handlenapeListNape[index].selecFlag == false) {
                 $scope.Toast.show("管道除菌开启成功！");
+                changeColor();
               } else {
                 $scope.Toast.show("管道除菌关闭成功！");
+                changeColor();
               }
             }
             if (status.ack == '27') {
               if ($scope.handlenapeListNape[index].selecFlag == false) {
                 $scope.Toast.show("背部加热开启成功！");
+                changeColor();
               } else {
                 $scope.Toast.show("背部加热关闭成功！");
+                changeColor();
               }
             }
             if (status.ack == '00') {
               $scope.Toast.show("一键关闭成功！");
             }
           } else {
-            if (status.ack.indexOf('fb') >= 0 || status.ack.indexOf('fc') >= 0 || status.ack.indexOf('fd') >= 0) {
-              $scope.Toast.show("操作失败！");
-            } else {
-              karessService.resolveCmd(status.ack);
-              console.log(karessService.resolveCmd(status.ack));
+            // if (status.ack.indexOf('fb') >= 0 || status.ack.indexOf('fc') >= 0 || status.ack.indexOf('fd') >= 0) {
+            //   $scope.Toast.show("操作失败！");
+            // } else {
+            //   karessService.resolveCmd(status.ack);
+            //   console.log(karessService.resolveCmd(status.ack));
+            // }
+          }
+
+        }
+        function changeColor(){
+          $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
+          if (index == 5) {
+            for (var i = 0; i < $scope.handlenapeListNape.length; i++) {
+              $scope.handlenapeListNape[i].selecFlag = false;
+              $scope.handlenapeListNape[i].imgUrl = $scope.handlenapeListNape[i].imgUrlTemp;
             }
+          } else {
           }
+          if ($scope.handlenapeListNape[index].selecFlag == true) {
+            $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgSeledUrl;
+          } else {
+            $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgUrlTemp;
 
-        }
-        $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
-        if (index == 5) {
-          for (var i = 0; i < $scope.handlenapeListNape.length; i++) {
-            $scope.handlenapeListNape[i].selecFlag = false;
-            $scope.handlenapeListNape[i].imgUrl = $scope.handlenapeListNape[i].imgUrlTemp;
           }
-        } else {
         }
-        if ($scope.handlenapeListNape[index].selecFlag == true) {
-          $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgSeledUrl;
-        } else {
-          $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgUrlTemp;
 
-        }
       }
     }]);
