@@ -424,7 +424,6 @@ NIMI.prototype.powerSaveSchedule = function (startTime, startMin, endTime, endMi
       + fiveBitToCheck(endTime.toString(2)) + sixBitToCheck(endMin.toString(2)) + "0") + "FE";
   return cmd;
 };
-
 /**
  * 解析指令入口
  * @param cmd
@@ -453,7 +452,6 @@ NIMI.prototype.analysisInstruction = function (arg) {
   }
   return code;
 };
-
 /**
  * 解析返回命令字为98的数据 指设备状态的返回
  * 当flushStatus 为正在冲水时 flushType分大冲小冲 0-小冲 1-大冲
@@ -462,11 +460,16 @@ NIMI.prototype.analysisInstruction = function (arg) {
 function analysisToiletStatus(ackStr) {
   var mJson;
   var data = ackStr.substring(2, ackStr.length);
-  var param_one = byteToCheck(parseInt(data.substring(0, 2)).toString(2));
-  var param_second = byteToCheck(parseInt(data.substring(2, 4)).toString(2));
-  var param_third = byteToCheck(parseInt(data.substring(4, 6)).toString(2));
-  var param_fourth = byteToCheck(parseInt(data.substring(6, 8)).toString(2));
-  var param_fifth = byteToCheck(parseInt(data.substring(8, 10)).toString(2));
+  var param_one = fourBitToCheck(parseInt(data.substring(0, 1)).toString(2))
+    + fourBitToCheck(parseInt(data.substring(1, 2)).toString(2));
+  var param_second = fourBitToCheck(parseInt(data.substring(2, 3)).toString(2))
+    + fourBitToCheck(parseInt(data.substring(3, 4)).toString(2));
+  var param_third = fourBitToCheck(parseInt(data.substring(4, 5)).toString(2))
+    + fourBitToCheck(parseInt(data.substring(5, 6)).toString(2));
+  var param_fourth = fourBitToCheck(parseInt(data.substring(6, 7)).toString(2))
+    + fourBitToCheck(parseInt(data.substring(7, 8)).toString(2));
+  var param_fifth = fourBitToCheck(parseInt(data.substring(8, 9)).toString(2))
+    + fourBitToCheck(parseInt(data.substring(9, 10)).toString(2));
   var flushStatus = param_one.substring(0, 3);
   var lidRingStatus = param_one.substring(3, 6);
   var dryerStatus = param_one.substring(7, 8);
@@ -480,7 +483,7 @@ function analysisToiletStatus(ackStr) {
   var ambientStatus = param_third.substring(6, 7);
   var flushType = param_third.substring(7, 8);
   var wandStatus = param_fourth.substring(0, 1);
-  var UVProgressStatus = param_fourth.substring(1, 3);
+  var UVProgressStatus = parseInt(param_fourth.substring(1, 3),2);
   var ballValve = param_fourth.substring(3, 4);
   var powerSaveLearnByUser = param_fifth.substring(0, 3);
   mJson = {
@@ -492,8 +495,7 @@ function analysisToiletStatus(ackStr) {
     "UVProgressStatus": UVProgressStatus, "ballValve": ballValve, "powerSaveLearnByUser": powerSaveLearnByUser
   };
   return mJson;
-}
-
+};
 /**
  * 一键除菌状态返回
  * @param ackStr
@@ -752,5 +754,5 @@ var a = {
     //dg
     LIGHT_AMBIENT_BRIGHTNESS:1,
     LIGHT_BOWL_BRIGHTNESS:5,
-  };
-// window.localStorage.toilteFaviteSetting= JSON.stringify(a);
+  }
+window.localStorage.toilteFaviteSetting= JSON.stringify(a);
