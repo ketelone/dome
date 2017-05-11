@@ -35,22 +35,28 @@
     <ion-content class="mainApplication" style="bottom:48px;">
 
       <hms-tab-slide-box class="hms">
-        <div class="ion-chevron-up chevron-color" ng-click="linkBox();"></div>
+        <div class="ion-chevron-up chevron-color" style="font-size: 0.3rem;" ng-click="linkBox();"></div>
+        <!--<i class="icon ion-loop" style="color:white;margin-top: 3rem;margin-left: 5rem;"></i>-->
+        <br ng-if="!isBigScreen">
+        <br ng-if="!isBigScreen">
         <div class="tsb-icons">
           <div class="tsb-ic-wrp text-center">
             <ion-scroll direction="y" style="white-space: nowrap;width: 100%;text-align: center;" scrollbar-y="true">
-              <a href="javascript:;" ng-repeat="tab in tabs" on-finish-render ng-click="changeModel(tab)" style="width: 31%;border: none;font-size: 0.32rem; color: white" translate="{{tab.text}}"></a>
+              <a href="javascript:;" ng-repeat="tab in tabs" on-finish-render ng-click="changeModel(tab)" style="width: 31%;border: none;font-size: 0.32rem; color: white;margin:0.05rem;" translate="{{tab.text}}"></a>
               <span id="line" class="height-light" ng-show="isOneLine"></span>
               <br>
+              <!--<br ng-if="!isBigScreen">-->
+              <!--<br ng-if="!isBigScreen">-->
+              <!--<br ng-if="!isBigScreen">-->
               <!--<span class="height-light2" ng-show="isSecondLine"></span>-->
 
 
               <div ng-if="isSceneModel">
-                <div ng-repeat="item in modelData track by $index" ng-click="goKeyscene(item)">
+                <div ng-repeat="item in modelData track by $index" ng-click="goKeyscene(item, $index)" style="height: 2.5rem;">
                   <img class="imgll" ng-src="{{item.pictureUrl}}"/>
                   <div class="text-center interval-line">
-                    <p class="font-color-self-title">{{item.title}}</p>
-                    <p class="font-color-self">{{item.context}}</p>
+                    <p class="font-color-self-title"  translate="{{item.title}}"></p>
+                    <p class="font-color-self" translate="{{item.context}}"></p>
                     <div>
                       <center>
                         <label class="switch-btn">
@@ -75,16 +81,20 @@
                   </div>
                 </div>
 
+
+                <br ng-if="isBigScreen">
+                <br ng-if="isBigScreen">
+
               </div>
 
               <div ng-if="isDeviceModel">
 
-                <div class="deviceStyle row noPadding" ng-repeat="item in deviceModel" ng-click="getDeviceInfo(item)" style="padding-top: 0.24rem;">
+                <div class="deviceStyle row noPadding" ng-repeat="item in deviceModel" ng-click="getDeviceInfo(item, $index)" style="padding-top: 0.24rem;">
                   <div class="col-25 noPadding">
                     <img class="deviceImg" ng-src="{{item.pictureUrl}}"/>
                   </div>
                   <div class="col-40 noPadding" style="color: white">
-                    <div class="row"><div class="deviceName">{{item.deviceType}}</div></div>
+                    <div class="row"><div class="deviceName"><span translate="{{item.deviceType}}"></span></div></div>
                     <div class="row noPadding">
                       <!--<div class="deviceLine col-30 noPadding">{{item.deviceStatus}}</div>-->
                       <!--<div class="deviceLine col-70 noPadding">-->
@@ -112,6 +122,9 @@
                     </div>
                   </div>
                 </div>
+                <br>
+                <br ng-if="isBigScreen">
+                <br ng-if="isBigScreen">
 
               </div>
             </ion-scroll>

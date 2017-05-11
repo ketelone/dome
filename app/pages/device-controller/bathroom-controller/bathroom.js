@@ -165,7 +165,6 @@ angular.module('bathroomModule')
       $scope.windType = {'type': "bathroom.rock"};
 
       $scope.goBack = function(){
-        //closebox();
         $ionicHistory.goBack();
       };
 
@@ -188,9 +187,9 @@ angular.module('bathroomModule')
 
       var pluginToCtrl = function(deviceId, value, successMsg, errorMsg){
 
-        //hmsPopup.showLoading();
+        hmsPopup.showLoading();
         $timeout(function(){
-          //hmsPopup.hideLoading();
+          hmsPopup.hideLoading();
           cmdService.sendCmd(deviceId, value, localStorage.boxIp);
         },500);
       };
@@ -311,6 +310,11 @@ angular.module('bathroomModule')
               }
               //alert("show  " + hourValue + ":" + minuValue);
               if(hourValue <= 6){
+                if(minuValue == '60'){
+                  var h = parseInt(heater.hour, 16) + 1;
+                  hourValue = '0' + h;
+                  minuValue = '00';
+                }
                 $scope.countDown = hourValue + ":" + minuValue;
               }
 
@@ -349,7 +353,7 @@ angular.module('bathroomModule')
         if(headerStatus.cmd == '84'){
           angular.forEach($scope.bathroomData, function(data, index, array) {
             $scope.isShowTime = true;
-            $scope.windType.type = localStorage.windType;
+            //$scope.windType.type = localStorage.windType;
             if(data.switchType == "Hot" && headerStatus.status == 'heater'){
               data.switchPictureUrl = 'build/img/bathroom/hot_wind.png';
               data.isOpen = true;
@@ -385,6 +389,7 @@ angular.module('bathroomModule')
       };
 
       var explainCurrentOperate = function(value){
+        var isWindFlag = true;
         var code = bathroomCmdService.explainAck(value);
         if(!code.ack){
           return;
@@ -436,6 +441,7 @@ angular.module('bathroomModule')
               angular.forEach($scope.bathroomData, function(data, index, array) {
                 if(data.switchType == switchType){
                   data.switchPictureUrl = 'build/img/bathroom/breath.png';
+                  isWindFlag = false;
                   data.isOpen = true;
                   return;
                 }
@@ -444,6 +450,7 @@ angular.module('bathroomModule')
               angular.forEach($scope.bathroomData, function(data, index, array) {
                 if(data.switchType == switchType){
                   data.switchPictureUrl = 'build/img/bathroom/breath_nor.png';
+                  $scope.windType.type = "bathroom.rock";
                   data.isOpen = false;
                   return;
                 }
@@ -469,24 +476,28 @@ angular.module('bathroomModule')
             if(currentBtnStatus.status){
               if(switchType == 'Hot' && data.switchType == switchType){
                 data.switchPictureUrl = 'build/img/bathroom/hot_wind.png';
+                isWindFlag = false;
                 data.isOpen = true;
                 $scope.isWind = true;
                 changeRingCol('#ff6600');
               }
               if(switchType == 'Hot drying' && data.switchType == switchType){
                 data.switchPictureUrl = 'build/img/bathroom/hot_drying.png';
+                isWindFlag = false;
                 data.isOpen = true;
                 $scope.isWind = true;
                 changeRingCol('#ff6600');
               }
               if(switchType == 'Cool' && data.switchType == switchType){
                 data.switchPictureUrl = 'build/img/bathroom/cool_wind.png';
+                isWindFlag = false;
                 data.isOpen = true;
                 $scope.isWind = true;
                 changeRingCol("#99d5ff");
               }
               if(switchType == 'Dryer' && data.switchType == switchType){
                 data.switchPictureUrl = 'build/img/bathroom/cool.png';
+                isWindFlag = false;
                 data.isOpen = true;
                 $scope.isWind = true;
                 changeRingCol("#99d5ff");
@@ -501,26 +512,31 @@ angular.module('bathroomModule')
             }else{
               if(switchType == 'Hot' && data.switchType == switchType){
                 data.switchPictureUrl = 'build/img/bathroom/hot_wind_nor.png';
+                $scope.windType.type = "bathroom.rock";
                 $scope.isShowTime = false;
                 data.isOpen = false;
               }
               if(switchType == 'Cool' && data.switchType == switchType){
                 data.switchPictureUrl = 'build/img/bathroom/cool_wind_nor.png';
+                $scope.windType.type = "bathroom.rock";
                 $scope.isShowTime = false;
                 data.isOpen = false;
               }
               if(switchType == 'Dryer' && data.switchType == switchType){
                 data.switchPictureUrl = 'build/img/bathroom/cool_nor.png';
+                $scope.windType.type = "bathroom.rock";
                 $scope.isShowTime = false;
                 data.isOpen = false;
               }
               if(switchType == 'Hot drying' && data.switchType == switchType){
                 data.switchPictureUrl = 'build/img/bathroom/hot_drying_nor.png';
+                $scope.windType.type = "bathroom.rock";
                 $scope.isShowTime = false;
                 data.isOpen = false;
               }
               if(switchType == 'Purify' && data.switchType == switchType){
                 data.switchPictureUrl = 'build/img/bathroom/purify_nor.png';
+                $scope.windType.type = "bathroom.rock";
                 $scope.isShowTime = false;
                 data.isOpen = false;
               }
@@ -554,6 +570,10 @@ angular.module('bathroomModule')
                 }
               }
             });
+          }
+
+          if(isWindFlag){
+            $scope.windType.type = "bathroom.rock";
           }
         }
 
@@ -952,7 +972,7 @@ angular.module('bathroomModule')
         if(!localStorage.windType){
           localStorage.windType = "bathroom.rock";
         }
-        $scope.windType.type = localStorage.windType
+        $scope.windType.type = localStorage.windType;
 
         changeRingCol('#99d5ff');
         if(false){
@@ -968,6 +988,21 @@ angular.module('bathroomModule')
 
         getDeviceAllStatus();
 
+        //changeWindType();
+
+      };
+
+
+      var changeWindType = function(){
+        var isRock = true;
+        angular.forEach($scope.bathroomData, function(data, index, array) {
+          if(data.isOpen){
+            var isRock = false;
+          }
+        });
+        if(isRock){
+          $scope.windType.type = "bathroom.rock";
+        }
       };
 
       var getDeviceAllStatus = function(){
@@ -1090,18 +1125,38 @@ angular.module('bathroomModule')
               item.isOpen = false;
               if(item.switchType == 'Hot' || item.switchType == 'Hot drying'){
                 if(item.switchType == 'Hot'){
-                  openHot(deviceId, "", "");
+                  if(localStorage.hotTimer != "default"){
+                    var hotTimer = JSON.parse(localStorage.hotTimer);
+                    openHot(deviceId, hotTimer.hour, hotTimer.min);
+                  }else{
+                    openHot(deviceId, "", "");
+                  }
                 }
                 if(item.switchType == 'Hot drying'){
-                  openHotDrying(deviceId, "", "");
+                  if(localStorage.hotDryingTimer != "default"){
+                    var hotDryingTimer = JSON.parse(localStorage.hotDryingTimer);
+                    openHotDrying(deviceId, hotDryingTimer.hour, hotDryingTimer.min);
+                  }else{
+                    openHotDrying(deviceId, "", "");
+                  }
                 }
                 changeRingCol('#ff6600');
               }
               if(item.switchType == 'Cool'){
-                openCool(deviceId, "", "");
+                if(localStorage.coolTimer != "default"){
+                  var coolTimer = JSON.parse(localStorage.coolTimer);
+                  openCool(deviceId, coolTimer.hour, coolTimer.min);
+                }else{
+                  openCool(deviceId, "", "");
+                }
               }
               if(item.switchType == 'Dryer'){
-                openDryer(deviceId, "", "");
+                if(localStorage.dryerTimer != "default"){
+                  var dryerTimer = JSON.parse(localStorage.dryerTimer);
+                  openDryer(deviceId, dryerTimer.hour, dryerTimer.min);
+                }else{
+                  openDryer(deviceId, "", "");
+                }
               }
               if(item.switchType == 'Breath'){
                 //openBreath(deviceId);
@@ -1113,7 +1168,12 @@ angular.module('bathroomModule')
                 openWindDirection(deviceId);
               }
               if(item.switchType == 'Purify'){
-                openPurify(deviceId, "", "");
+                if(localStorage.purityTimer != "default"){
+                  var purityTimer = JSON.parse(localStorage.purityTimer);
+                  openPurify(deviceId, purityTimer.hour, purityTimer.min);
+                }else{
+                  openPurify(deviceId, "", "");
+                }
               }
 
               return true;
@@ -1262,8 +1322,12 @@ angular.module('bathroomModule')
       };
 
       $scope.getCommon = function(item){
-        openBreath(getDeviceId(), "", "");
-        $scope.isWindShow = false;
+        if(localStorage.breathTimer != "default"){
+          var breathTimer = JSON.parse(localStorage.breathTimer);
+          openBreath(getDeviceId(), breathTimer.hour, breathTimer.min);
+        }else{
+          openBreath(getDeviceId(), "", "");
+        }
         /*angular.forEach($scope.bathroomData, function(data, index, array){
          if(data.switchType == 'Breath'){
          data.isOpen = false;
@@ -1379,7 +1443,7 @@ angular.module('bathroomModule')
         $scope.isShowTime = true;
         $scope.countDown = hourValue + ":" + minuValue;
 
-        var hour = "0" + parseInt($scope.timeHour.substring(0,1)).toString(16);
+        var hour = hourValue;
         var min = "";
         if(parseInt($scope.timeMinu.substring (0,$scope.timeMinu.length-1)) < 16){
           min = "0" + parseInt($scope.timeMinu.substring (0,$scope.timeMinu.length-1)).toString(16);
@@ -1393,31 +1457,42 @@ angular.module('bathroomModule')
             currentSwitchType.switchType = data.switchType;
             needTimerFuctionArray.push(currentSwitchType);
             openHot(deviceId, hour, min);
+            $scope.windType.type = "bathroom.rock";
+            localStorage.hotTimer = JSON.stringify({"hour": hour, "min": min});
           }
           if(data.switchType == 'Hot drying' && data.isOpen){
             currentSwitchType.switchType = data.switchType;
             needTimerFuctionArray.push(currentSwitchType);
             openHotDrying(deviceId, hour, min);
+            $scope.windType.type = "bathroom.rock";
+            localStorage.hotDryingTimer = JSON.stringify({"hour": hour, "min": min});
           }
           if(data.switchType == 'Cool' && data.isOpen){
             currentSwitchType.switchType = data.switchType;
             needTimerFuctionArray.push(currentSwitchType);
             openCool(deviceId, hour, min);
+            $scope.windType.type = "bathroom.rock";
+            localStorage.coolTimer = JSON.stringify({"hour": hour, "min": min});
           }
           if(data.switchType == 'Dryer' && data.isOpen){
             currentSwitchType.switchType = data.switchType;
             needTimerFuctionArray.push(currentSwitchType);
             openDryer(deviceId, hour, min);
+            $scope.windType.type = "bathroom.rock";
+            localStorage.dryerTimer = JSON.stringify({"hour": hour, "min": min});
           }
           if(data.switchType == 'Breath' && data.isOpen){
             currentSwitchType.switchType = data.switchType;
             needTimerFuctionArray.push(currentSwitchType);
             openBreath(deviceId, hour, min);
+            $scope.windType.type = "bathroom.rock";
+            localStorage.breathTimer = JSON.stringify({"hour": hour, "min": min});
           }
           if(data.switchType == 'Purify' && data.isOpen){
             currentSwitchType.switchType = data.switchType;
             needTimerFuctionArray.push(currentSwitchType);
             openPurify(deviceId, hour, min);
+            localStorage.purityTimer = JSON.stringify({"hour": hour, "min": min});
           }
         });
       };

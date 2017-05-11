@@ -146,7 +146,14 @@
     "searchFail": "搜索已连接设备失败",
     "noDeviceSearch": "没有已连接设备，请搜索未连接设备",
     "noDevice": "没有设备",
-    "open": "开启"
+    "open": "开启",
+    "toliet": "马桶",
+    "waterPurifier": "中央净水器",
+    "bathroomHeader": "浴霸",
+    "bathtub": "浴缸",
+    "nextgen": "花洒",
+    "airfoilShower": "智感龙头",
+    "mc": "镜柜"
   },
   "bigaunt": {
     "bigauntTitle": "场景详情"
@@ -563,6 +570,10 @@
     "allStop": "一键停止",
     "setting": "&nbsp;&nbsp;&nbsp;设置",
     "waterSuccess": "water success",
-    "stopSuccess": "stop success"
+    "stopSuccess": "stop success",
+    "water": "出水",
+    "setTem": "设置水温",
+    "watering": "出水中",
+    "noUse": "未启用"
   }
 }
