@@ -64,13 +64,13 @@ angular.module('myInfoModule')
           radioImg2: "build/img/common/radio_h.png",
           radioTemp: "build/img/common/radio_q.png"
         },
-        {
-          ischecked: false,
-          language: "한국어",
-          radioImg1: "build/img/common/radio_q.png",
-          radioImg2: "build/img/common/radio_h.png",
-          radioTemp: "build/img/common/radio_q.png"
-        },
+        // {
+        //   ischecked: false,
+        //   language: "한국어",
+        //   radioImg1: "build/img/common/radio_q.png",
+        //   radioImg2: "build/img/common/radio_h.png",
+        //   radioTemp: "build/img/common/radio_q.png"
+        // },
         {
           ischecked: false,
           language: "ภาษาไทย",
@@ -88,7 +88,6 @@ angular.module('myInfoModule')
 
        */
       $scope.initLanguage = function () {
-        alert(window.localStorage.language + " a");
         if (window.localStorage.language == "default") {
           $scope.languageItems[0].ischecked = true;
           $scope.languageItems[0].radioImg1 = "build/img/common/radio_h.png";
@@ -180,22 +179,23 @@ angular.module('myInfoModule')
 
           $translate.use('zh');
 
-          publicMethod.goBack();
+          $ionicHistory.goBack();
         }
         else if (item.language == '中文繁体') {
 
           $translate.use('tw');
-          publicMethod.goBack();
+          $ionicHistory.goBack();
         }
         else if (item.language == 'English') {
 
           $translate.use('en');
-          publicMethod.goBack();
+          $ionicHistory.goBack();
 
         }
         else {
           $translate.use('en');
-          publicMethod.goBack();
+          $ionicHistory.goBack();
+          // publicMethod.goBack();
         }
 
 
