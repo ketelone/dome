@@ -20,21 +20,30 @@ angular.module('bathroomModule')
       $scope.resetDeviceInfo = function(){
 
         hmsPopup.confirmNoTitle('是否恢复默认设置', function(){
+
+          localStorage.windType = "";
+          localStorage.hotTimer = "";
+          localStorage.hotDryingTimer = "";
+          localStorage.coolTimer = "";
+          localStorage.dryerTimer = "";
+          localStorage.purityTimer = "";
+          localStorage.breathTimer = "";
+
           /*var url = baseConfig.basePath + "/dvm/deviceAttribute/update";
-          var paramter = {
-            //""
-          };
-          hmsHttp.post(url, paramter).success(
-            function(response){
-              console.log(response.rows[0]);
-              $scope.deciveInfo.place = response.rows[0];
-              //hmsPopup.showPopup("<span translate='bathroom.saveAlert'></span>");
-            }
-          ).error(
-            function (response, status, header, config){
-              //hmsPopup.showPopup("<span translate='bathroom.saveError'></span>");
-            }
-          );*/
+           var paramter = {
+           //""
+           };
+           hmsHttp.post(url, paramter).success(
+           function(response){
+           console.log(response.rows[0]);
+           $scope.deciveInfo.place = response.rows[0];
+           //hmsPopup.showPopup("<span translate='bathroom.saveAlert'></span>");
+           }
+           ).error(
+           function (response, status, header, config){
+           //hmsPopup.showPopup("<span translate='bathroom.saveError'></span>");
+           }
+           );*/
         });
 
       };

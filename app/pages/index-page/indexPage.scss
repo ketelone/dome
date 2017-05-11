@@ -6,7 +6,7 @@ $applicationColor: white !default;
      height: 2.5rem;
    }
   .scroll{
-    height: 8.4rem;
+    height: 9.4rem;
   }
   .scroll-content{
     top: 3.7rem;
@@ -432,14 +432,15 @@ $applicationColor: white !default;
   }
 
   .switch-btn {
-    position: relative;
+    position: absolute;
     display: block;
     vertical-align: top;
     width: 1.5rem;
     height: 0.56rem;
     border-radius: 0.18rem;
     cursor: pointer;
-    margin-top: 6.8%;
+    margin-top: -1rem;
+    margin-left: 3.1rem;
   }
   .checked-switch {
     position: absolute;
@@ -527,7 +528,8 @@ $applicationColor: white !default;
     //border-top: 1px solid black;
     //border-bottom: 1px;
     //height: 18.7%;
-    height: 2.3rem;;
+    position: relative;
+    //height: 2.1rem;;
     //margin-top: 2.1%;
   }
   .height-light{
@@ -553,16 +555,20 @@ $applicationColor: white !default;
     margin-top: -0.2rem;
   }
   .font-color-self{
+    position: absolute;
     font-size: 0.24rem;
     font-family: PingFangSC-Light;
     color: #ffffff;
-    margin-top: 4%;
+    margin-top: -1.7rem;
+    margin-left: 2.7rem;
   }
   .font-color-self-title{
+    position: absolute;
     font-size: 0.32rem;
     font-family: PingFangSC-Regular;
     color: #ffffff;
-    margin-top: -32%;
+    margin-top: -2.2rem;
+    margin-left: 3.25rem;
   }
   .chevron-color{
     color: #979797;

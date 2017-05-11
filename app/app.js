@@ -107,6 +107,8 @@ angular.module('myApp')
       }
     });
 
+    localStorage.boxLinkCount = 1;
+
     document.addEventListener('deviceready', function () {
       console.log('openDatabase');
       db = window.sqlitePlugin.openDatabase({name: 'ko.db', location: 'default'});
