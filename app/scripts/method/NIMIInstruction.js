@@ -687,30 +687,51 @@ function analysisFlushStatus(ackStr) {
   return mJson;
 }
 /**
-   * 返回cmd字段命令
-   * @param {*} header 头 16进制
-   * @param {*} idx 索引 16进制
-   * @param {*} data 数据段 16进制
-   * @param {*} ctrId 控制段 16进制
-   * @param {*} devId 设备段 16进制
-   */
-  // function getCmd(header, idx, data, ctrId, devId) {
-  //   if (data.length % 2 != 0) {
-  //     data = "0" + data;
-  //   }
-  //   var checksum = parseInt(idx, 16) ^ parseInt(ctrId, 16) ^ parseInt(devId, 16);
-  //   for (var i = 0, len = data.length; i < len; i += 2) {
-  //     var hex = data.substring(i, i + 2);
-  //     checksum ^= parseInt(hex, 16);
-  //   }
-  //   var length = data.length / 2 + 4;
-  //   return header + doStr(length)
-  //     + doStr(idx)
-  //     + doStr(ctrId)
-  //     + doStr(devId)
-  //     + data
-  //     + doStr(checksum.toString(16));
-  // }
+ * 获取设置时间指令
+ * @param year 年份后两位 比如 2016 参数为16
+ * @param month 月{1到12}
+ * @param date 日 {1到31}
+ * @param hour 时 {0到59}
+ * @param minute 分 {0到59}
+ * @param week 周几 {1,2,3,4,5,6,7}
+ */
+NIMI.prototype.setDeviceTime = function (year, month, date, hour, minute, week) {
+  var cmd = "0f";
+  cmd += getHex(sevenBitToCheck(year.toString(2)
+    + fourBitToCheck(month.toString(2))
+    + fiveBitToCheck(date.toString(2))
+    + fiveBitToCheck(hour.toString(2))
+    + sixBitToCheck(minute.toString(2))
+    + threeBitToCheck(week.toString(2))
+    + "00"))
+  return cmd;
+};
+/**
+ * 十进制转二进制 三位补零
+ * @param {String} data
+ */
+function threeBitToCheck(data) {
+  if (data.length < 3) {
+    var l = 3 - data.length;
+    for (var i = 0; i < l; i++) {
+      data = "0" + data;
+    }
+  }
+  return data;
+};
+/**
+ * 十进制转二进制 七位补零
+ * @param {String} data
+ */
+function sevenBitToCheck(data) {
+  if (data.length < 7) {
+    var l = 7 - data.length;
+    for (var i = 0; i < l; i++) {
+      data = "0" + data;
+    }
+  }
+  return data;
+}
 
 var a = {
     //ny
@@ -732,3 +753,4 @@ var a = {
     LIGHT_AMBIENT_BRIGHTNESS:1,
     LIGHT_BOWL_BRIGHTNESS:5,
   };
+// window.localStorage.toilteFaviteSetting= JSON.stringify(a);

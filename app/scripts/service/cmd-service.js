@@ -4,8 +4,8 @@
 
 angular.module('utilModule')
   .service('cmdService',
-    ['baseConfig',
-      function (baseConfig) {
+    ['baseConfig','hmsPopup',
+      function (baseConfig,hmsPopup) {
 
         this.cloudCmd = function (deviceId, value) {
           var paramter = {
@@ -57,7 +57,7 @@ angular.module('utilModule')
             // alert('发送成功');
           }
           function error() {
-            hmsPopup.showLoading("<span translate='golabelvariable.loadingdataerrror'></span>");
+            $scope.Toast.show($translate.instant(golabelvariable.loadingdataerrror))
           }
         };
         this.explainAck = function (arg) {

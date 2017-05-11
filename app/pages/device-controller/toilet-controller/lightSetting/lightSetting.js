@@ -140,7 +140,6 @@ angular.module('toiletControlModule')
           lightsetval.flag = false;
         };
         window.localStorage.lightModal = JSON.stringify(lightsetval);
-        console.log(JSON.parse(window.localStorage.lightModal))
         publicMethod.goBack();
       };
       /**
