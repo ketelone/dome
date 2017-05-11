@@ -179,22 +179,23 @@ angular.module('myInfoModule')
 
           $translate.use('zh');
 
-          publicMethod.goBack();
+          $ionicHistory.goBack();
         }
         else if (item.language == '中文繁体') {
 
           $translate.use('tw');
-          publicMethod.goBack();
+          $ionicHistory.goBack();
         }
         else if (item.language == 'English') {
 
           $translate.use('en');
-          publicMethod.goBack();
+          $ionicHistory.goBack();
 
         }
         else {
           $translate.use('en');
-          publicMethod.goBack();
+          $ionicHistory.goBack();
+          // publicMethod.goBack();
         }
 
 
