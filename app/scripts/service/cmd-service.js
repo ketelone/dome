@@ -60,6 +60,20 @@ angular.module('utilModule')
           function error() {
           }
         };
+        this.sendScanCmd = function (value,ip) {
+          var cmd = value;
+          cordova.plugins.SocketPlugin.tcpSendCmd({
+            "timeout": "5000",
+            "value": cmd,
+            "ip": ip
+          }, success, error);
+          function success(response) {
+             alert('发送成功');
+          }
+
+          function error() {
+          }
+        };
         this.explainAck = function (arg) {
           var code;
           if (arg.length >= 16 && arg.length <= 40) {

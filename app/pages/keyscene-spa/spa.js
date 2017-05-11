@@ -28,7 +28,7 @@ angular.module('productModule')
         onLinePic4 : "build/img/keyscene-spa/icon_home_device_signal5.png",
       }
 
-
+      $scope.isOff = false;
 
 
 
@@ -119,35 +119,31 @@ angular.module('productModule')
 
       $scope.closeKeyscene = function () {
         console.log($scope.config.openFlag);
-        if ($scope.config.openFlag == true) {
+
           //镜柜
-          if ($scope.config.flagDevice2 != true) {
+
             $scope.config.device2 = false;
             $("#progressAnimation2").css({
-              "-webkit-animation": "bbb 4.0s linear",
+              "-webkit-animation": "bbb 0s linear",
               "background": ''
             });
-          }
+
           //浴霸
-          if ($scope.config.flagDevice3 != true) {
+
             $scope.config.device3 = false;
             $("#progressAnimation3").css({
-              "-webkit-animation": "bbb 4.0s linear",
+              "-webkit-animation": "bbb 0s linear",
               "background": ''
             });
-          }
+
           //浴缸
-          if ($scope.config.flagDevice4 != true) {
             $scope.config.device4 = false;
             $("#progressAnimation4").css({
-              "-webkit-animation": "bbb 10s linear",
+              "-webkit-animation": "bbb 0s linear",
               "background": ''
             });
           }
-        } else {
 
-        }
-      }
 
 
       /**

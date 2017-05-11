@@ -41,6 +41,8 @@ angular.module('indexPageModule')
       $scope.isOneLine = true;
       $scope.isSecondLine = false;
       $scope.isBigScreen = $window.innerWidth > 1000 ? false : true;
+      $scope.isMorning =  false;
+      $scope.isLeave = false;
       $scope.homeInfo = {
         temperature: "",
         percentage: "",
@@ -158,6 +160,8 @@ angular.module('indexPageModule')
           $scope.isInPage = 2;
           return;
         }
+        window.localStorage.setItem('crrentScane',item);
+        window.localStorage.setItem('crrentScanesku',"D7:12:29:DF:76:06");
 
         if (item.id == '1') {
           $state.go('leaveHome');
@@ -587,6 +591,7 @@ angular.module('indexPageModule')
       var deviceLinkInfo = "";
       document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
         var resultStr = JSON.stringify(result);
+        console.log('触发结果为:=='+result);
         if (resultStr.indexOf("Who are you") >= 0) {
           return;
         }
@@ -793,7 +798,7 @@ angular.module('indexPageModule')
         cmdService.sendCmd( value, localStorage.boxIp);
       };
 
-      var morning = function () {
+      var sendCmd = function (index) {
         var value = [
           {
             "ver": 1,
@@ -803,7 +808,7 @@ angular.module('indexPageModule')
             },
             "to": {
               "ctype": 228,
-              "uid": "CN112345678"
+              "uid": localStorage.boxId
             },
             "ts": 1487213040,
             "idx": 12,
@@ -816,8 +821,28 @@ angular.module('indexPageModule')
               }
             }
           }
-        ]
-        pluginToCtrl(deviceId, value, "发送成功", "发送失败");
+        ];
+        if($scope.modelData[index].title =='晨起'){
+          value[0].data.act_params.scn_id =  '000000011';
+        }
+        if($scope.modelData[index].title =='离家'){
+          value[0].data.act_params.scn_id =  '000000012';
+        }
+        if($scope.modelData[index].title =='泡澡'){
+          if($scope.modelData[index].isOff == true){
+            value[0].data.act_params.scn_id =  '000000013';
+          }else {
+            value[0].data.act_params.scn_id =  '000000014';
+          }
+        }
+        if($scope.modelData[index].title =='沐浴'){
+          if($scope.modelData[index].isOff == true){
+            value[0].data.act_params.scn_id =  '000000015';
+          }else {
+            value[0].data.act_params.scn_id =  '000000016';
+          }
+        }
+        pluginToCtrl( value, "发送成功", "发送失败");
       }
 
       /**
@@ -826,26 +851,42 @@ angular.module('indexPageModule')
        *@disc: get switch status
        */
       var sceneList = [];
-      $scope.getSwitchStatus = function (item) {
-
-        var scentObj = {sceneType: item.title, status: item.isOff};
+      $scope.getSwitchStatus = function (index) {
+        $scope.modelData[index].isOff = !$scope.modelData[index].isOff;
+        var scentObj = {sceneType: $scope.modelData[index].title, status: $scope.modelData[index].isOff};
         sceneList.push(scentObj);
         localStorage.sceneList = JSON.stringify(sceneList);
         $scope.isInPage = 1;
 
-        if (item.title == '离家') {
-
+        if ($scope.modelData[index].title == '离家') {
+          if($scope.modelData[index].isOff==false){ //是否开启状态
+            $scope.modelData[index].isOff = true;
+            $scope.modelData[0].isOff = false;
+          }
+          sendCmd(index);     //发送指令
+          $scope.modelData[index].isOneButton =false;//隐藏按钮
+          $timeout(function () {
+            $scope.modelData[index].isOneButton =true;
+          }, 5000);
           return;
-        } else if (item.title == '晨起') {
-
+        } else if ($scope.modelData[index].title == '晨起') {
+          if($scope.modelData[index].isOff==false){
+            $scope.modelData[index].isOff = true;
+            $scope.modelData[1].isOff = false;
+          }
+          sendCmd(index);
+          $scope.modelData[index].isOneButton =false;
+          $timeout(function () {
+            $scope.modelData[index].isOneButton =true;
+          }, 5000);
           return;
         }
 
-        if (item.isOff) {
+        if ($scope.modelData[index].isOff) {
           //发送指令并传送当前场景按钮的状态
           angular.forEach($scope.modelData, function (data, index, array) {
-            if (data.id == item.id) {
-              item.isOff = true;
+            if (data.id == $scope.modelData[index].id) {
+              $scope.modelData[index].isOff = true;
               return;
             }
           });
@@ -854,8 +895,8 @@ angular.module('indexPageModule')
           //  tx.executeSql('update T_CTM_PARTY_SCENARIO set scenarioStatus = "N" where DEVICE_ID = '+item.id);
           //});
           angular.forEach($scope.modelData, function (data, index, array) {
-            if (data.id == item.id) {
-              item.isOff = false;
+            if (data.id == $scope.modelData[index].id) {
+              $scope.modelData[index].isOff = false;
               return;
             }
           });
