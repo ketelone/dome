@@ -23,6 +23,8 @@ angular.module('airfoilShowerModule')
       $scope.ctemperature = '22℃';
       $scope.stemerature = '38℃';
       $scope.status = "airfoidShower.water";
+      $scope.waterUrl = "build/img/airfoil-shower/no_water.png";
+      $scope.isUsing = false;
 
       $scope.goBack = function(){
         //closebox();
@@ -72,8 +74,8 @@ angular.module('airfoilShowerModule')
 
           try{
             if(data.cmd == 'a6'){
-              $scope.ctemperature = parseInt(data.ctemperature, 16);
-              $scope.stemerature = parseInt(data.stemerature, 16);
+              $scope.ctemperature = parseInt(data.ctemperature, 16) + "℃";
+              $scope.stemerature = parseInt(data.stemerature, 16) + "℃";
             }
           }catch(e){
           }
@@ -81,15 +83,18 @@ angular.module('airfoilShowerModule')
           try{
             if(data.cmd == '83'){
               if(data.status == 'shower off'){
-                $scope.stemerature = "";
+                $scope.isUsing = false;
+                $scope.stemerature = $scope.ctemperature;
+                $scope.waterUrl = "build/img/airfoil-shower/no_water.png";
               }else if(data.status == 'shower on'){
+                $scope.isUsing = true;
                 $scope.status = "airfoidShower.water";
+                $scope.waterUrl = "build/img/airfoil-shower/airfor_water.png"
               }
             }
+            $scope.$apply();
           }catch(e){
           }
-
-          $scope.$apply();
         }
       }, false);
 

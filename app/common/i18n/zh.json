@@ -570,6 +570,9 @@
     "setting": "&nbsp;&nbsp;&nbsp;设置",
     "waterSuccess": "water success",
     "stopSuccess": "stop success",
-    "water": "出水"
+    "water": "出水",
+    "setTem": "设置水温",
+    "watering": "出水中",
+    "noUse": "未启用"
   }
 }

@@ -528,7 +528,7 @@ angular.module('indexPageModule')
           //},1500);
           localStorage.boxLinkCount = 2;
 
-          //localStorage.windType = "bathroom.rock";
+          localStorage.windType = "bathroom.rock";
           localStorage.hotTimer = "default";
           localStorage.hotDryingTimer = "default";
           localStorage.coolTimer = "default";
@@ -693,7 +693,7 @@ angular.module('indexPageModule')
 
       $timeout(function () {
         hmsPopup.hideLoading();
-      }, 5000);
+      }, 15000);
       var boxLink = function (item) {
         var boxIp = item.data.act_params.ip; //item.payload.cmd_properties.ip
         var deviceId = item.data.act_params.device_id;
