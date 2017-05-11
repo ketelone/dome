@@ -5,8 +5,8 @@ angular.module('productModule')
   .controller('morningCtrl', [
     '$scope',
     '$state',
-    'publicMethod', '$ionicModal', '$ionicPopover', '$timeout', '$ionicHistory', 'hmsHttp', 'hmsPopup',
-    function ($scope, $state, publicMethod, $ionicModal, $ionicPopover, $timeout, $ionicHistory, hmsHttp, hmsPopup) {
+    'publicMethod', '$ionicModal', '$ionicPopover', '$timeout', '$ionicHistory', 'hmsHttp', 'hmsPopup','cmdService','bathroomCmdService',
+    function ($scope, $state, publicMethod, $ionicModal, $ionicPopover, $timeout, $ionicHistory, hmsHttp, hmsPopup,cmdService,bathroomCmdService) {
 
 
       $scope.config = {
@@ -28,6 +28,9 @@ angular.module('productModule')
         onLinePic3 : "build/img/keyscene-morning/icon_home_device_signal5.png",
         onLinePic4 : "build/img/keyscene-morning/icon_home_device_signal5.png",
       }
+
+      $scope.temperate='';
+      $scope.tempPercent = '';
       /**
        *@autor:daidongdong
        *@name:goBack
@@ -53,7 +56,7 @@ angular.module('productModule')
           if($scope.config.flagDevice1 != true){
             console.log($scope.config.flagDevice1);
             $("#progressAnimation1").css({
-              "-webkit-animation": "aaa 6s linear",
+              "-webkit-animation": "aaa 6.0s linear",
               "background": "#1a1d28"
             });
             $timeout(function () {
@@ -68,6 +71,7 @@ angular.module('productModule')
               "background": "#1a1d28"
             });
             $timeout(function () {
+              getCurrentTemplate( getDeviceId());
               $scope.config.device3 = true;
             }, 4000);
           }
@@ -120,24 +124,72 @@ angular.module('productModule')
 
       }
 
+      /**
+       *@autor: caolei
+       *@return: device id
+       *@disc: get device id
+       */
+      var getDeviceId = function(){
+        var deviceList
+        if(localStorage.deviceInfo){
+          deviceList = localStorage.deviceInfo.split(";");
+        }else{
+          localStorage.deviceInfo = ";123456";
+          deviceList = localStorage.deviceInfo.split(";");
+        }
+        for(var i = 0; i < deviceList.length; i ++){
+          var deviceInfo = deviceList[i].split(",");
+          if(deviceInfo[0] == localStorage.crrentScanesku){
+            return deviceInfo[1];
+          }
+        }
+      };
 
-      //连接box
-      $scope.boxClick = function (item) {
-        $scope.boxItem = item;
-        console.log('lian box');
-        cordova.plugins.SocketPlugin.tcpConnect({
-          "timeout": "5000",
-          "ip": item.payload.cmd_properties.ip,
-        }, success, error);
+      var pluginToCtrl = function(deviceId, value, successMsg, errorMsg){
+        //alert('发送指令中')
+        //hmsPopup.showLoading();
+        $timeout(function(){
+          //hmsPopup.hideLoading();
+          cmdService.sendCmd(deviceId, value, localStorage.boxIp);
+        },500);
+      };
 
-        function success(response) {
-          hmsPopup.showShortCenterToast("连接成功");
+      var sendCmd = function(deviceId, value, successMsg, errorMsg){
+         //alert('发送指令开始')
+        //if(baseConfig.isCloudCtrl){
+        //  cloudToCtrl(deviceId, value, successMsg, errorMsg);  //云端发送
+        //}else{
+          pluginToCtrl(deviceId, value, successMsg, errorMsg);
+        //}
+      };
+
+      var getCurrentTemplate = function(deviceId){
+        //alert('获取到deviceid=='+deviceId);
+        sendCmd(deviceId,"887706010005721563","获取温度","获取温度失败");
+      };
+      document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
+
+        var resultOn = result[0];
+
+        if(resultOn.from.uid == getDeviceId()){
+          //alert(JSON.stringify(result[0]));
+          if (resultOn.data.cmd.length > 0) {
+            var data = bathroomCmdService.explainAck(resultOn.data.cmd[0]);
+            if(data.temperature){
+              $scope.temperate = parseInt(data.temperature,16) + "℃";
+              $scope.tempPercent = parseInt(data.humidity,16) + "%";
+              //$scope.$apply();
+              //alert('温度===='+angular.toString($scope.temperate)+'湿度===='+angular.toString($scope.tempPercent));
+            }
+
+            $scope.$apply();
+          }
         }
 
-        function error() {
-          hmsPopup.showShortCenterToast("连接失败");
-        }
-      }
+      }, false);
+
+
+
 
 
     }]);
