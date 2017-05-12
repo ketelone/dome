@@ -28,7 +28,7 @@ angular.module('productModule')
         onLinePic3 : "build/img/keyscene-morning/icon_home_device_signal5.png",
         onLinePic4 : "build/img/keyscene-morning/icon_home_device_signal5.png",
       }
-
+      $scope.scane = localStorage.crrentScane;
       $scope.temperate='';
       $scope.tempPercent = '';
       /**
@@ -187,6 +187,41 @@ angular.module('productModule')
         }
 
       }, false);
+
+
+      //本地发送指令
+      var pluginToCtrl = function (value, successMsg, errorMsg) {
+        cmdService.sendScanCmd( value, localStorage.boxIp);
+      };
+
+      var sendCmd = function (index) {
+        var value = [
+          {
+            "ver": 1,
+            "from": {
+              "ctype":  227,
+              "uid"  : "CN100012"
+            },
+            "to": {
+              "ctype": 228,
+              "uid": localStorage.boxId
+            },
+            "ts": 1487213040,
+            "idx": 12,
+            "mtype":  "rqst",
+            "data": {
+              "device_type": "ALL_DEVICE",
+              "act": "SCN_TRIGGER_REQUEST",
+              "act_params": {
+                "scn_id": "000000011"
+              }
+            }
+          }
+        ];
+
+        alert('发送的信息==='+JSON.stringify(value));
+        pluginToCtrl( value, "发送成功", "发送失败");
+      }
 
 
 

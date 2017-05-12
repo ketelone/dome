@@ -18,6 +18,7 @@ angular.module('indexPageModule')
     'hmsHttp',
     '$translate',
     'cmdService',
+    'indexPageService',
     function ($scope,
               $state,
               $ionicGesture,
@@ -30,7 +31,8 @@ angular.module('indexPageModule')
               SettingsService,
               hmsHttp,
               $translate,
-              cmdService) {
+              cmdService,
+              indexPageService) {
       window.localStorage.token = '4f75ed43-aee2-4f35-895e-7d3f086ddf86';
       window.localStorage.empno = '18620025571';
       window.localStorage.checkboxSavePwd = 'admin';
@@ -58,97 +60,98 @@ angular.module('indexPageModule')
       ];
       $scope.modelData = [];
       if (!baseConfig.isLinkDatabase) {
-        $scope.modelData = [
-          // {
-          //   id: "1",
-          //   pictureUrl: 'build/img/index/img_home_gohome.png',
-          //   title: "回家",
-          //   context: "一键开启指定设备",
-          //   isOneButton: true,
-          //   isTwoButton: false,
-          //   jsonContext: "1",
-          //   isOff: false,
-          //   lastUpdateDate: ""
-          // },
-          {
-            id: "2",
-            pictureUrl: 'build/img/index/img_home_morning.png',
-            title: "晨起",
-            context: "告别匆忙的晨起洗漱",
-            isOneButton: true,
-            isTwoButton: false,
-            jsonContext: "1",
-            isOff: false,
-            lastUpdateDate: "",
-            buttonName:"开启",
-            buttonStatus:false
-          },
-          {
-            id: "1",
-            pictureUrl: 'build/img/index/img_home_leavehome.png',
-            title: "离家",
-            context: "一键关闭所有设备",
-            isOneButton: true,
-            isTwoButton: false,
-            jsonContext: "1",
-            isOff:  false,
-            lastUpdateDate: "",
-            buttonName:"开启",
-            buttonStatus:false
-          },
-          {
-            id: "4",
-            pictureUrl: 'build/img/index/img_home_spa.png',
-            title: "泡澡",
-            context: "出去SPA不如在家泡澡",
-            isOneButton: false,
-            isTwoButton: true,
-            jsonContext: "1",
-            isOff:  false,
-            lastUpdateDate: "",
-            buttonName:"开启",
-            buttonStatus:false
-          },
-          {
-            id: "3",
-            pictureUrl: 'build/img/index/muyu@3x.png',
-            title: "沐浴",
-            context: "享受沐浴",
-            isOneButton: false,
-            isTwoButton: true,
-            jsonContext: "1",
-            isOff:  false,
-            lastUpdateDate: "",
-            buttonName:"开启",
-            buttonStatus:false
-          },
-          {
-            id: "5",
-            pictureUrl: 'build/img/index/img_home_veil.png',
-            title: "维亚灯光",
-            context: "开始您美好的一天",
-            isOneButton: false,
-            isTwoButton: false,
-            jsonContext: "1",
-            isOff:  false,
-            lastUpdateDate: "",
-            buttonName:"开启",
-            buttonStatus:false
-          },
-          {
-            id: "6",
-            pictureUrl: 'build/img/index/img_home_period.png',
-            title: "大姨了吗",
-            context: "女性特殊期洗浴关怀方案",
-            isOneButton: false,
-            isTwoButton: false,
-            jsonContext: "1",
-            isOff:  false,
-            lastUpdateDate: "",
-            buttonName:"开启",
-            buttonStatus:false
-          }
-        ];
+        //$scope.modelData = [
+        //  // {
+        //  //   id: "1",
+        //  //   pictureUrl: 'build/img/index/img_home_gohome.png',
+        //  //   title: "回家",
+        //  //   context: "一键开启指定设备",
+        //  //   isOneButton: true,
+        //  //   isTwoButton: false,
+        //  //   jsonContext: "1",
+        //  //   isOff: false,
+        //  //   lastUpdateDate: ""
+        //  // },
+        //  {
+        //    id: "2",
+        //    pictureUrl: 'build/img/index/img_home_morning.png',
+        //    title: "晨起",
+        //    context: "告别匆忙的晨起洗漱",
+        //    isOneButton: true,
+        //    isTwoButton: false,
+        //    jsonContext: "1",
+        //    isOff: false,
+        //    lastUpdateDate: "",
+        //    buttonName:"开启",
+        //    buttonStatus:false
+        //  },
+        //  {
+        //    id: "1",
+        //    pictureUrl: 'build/img/index/img_home_leavehome.png',
+        //    title: "离家",
+        //    context: "一键关闭所有设备",
+        //    isOneButton: true,
+        //    isTwoButton: false,
+        //    jsonContext: "1",
+        //    isOff:  false,
+        //    lastUpdateDate: "",
+        //    buttonName:"开启",
+        //    buttonStatus:false
+        //  },
+        //  {
+        //    id: "4",
+        //    pictureUrl: 'build/img/index/img_home_spa.png',
+        //    title: "泡澡",
+        //    context: "出去SPA不如在家泡澡",
+        //    isOneButton: false,
+        //    isTwoButton: true,
+        //    jsonContext: "1",
+        //    isOff:  false,
+        //    lastUpdateDate: "",
+        //    buttonName:"开启",
+        //    buttonStatus:false
+        //  },
+        //  {
+        //    id: "3",
+        //    pictureUrl: 'build/img/index/muyu@3x.png',
+        //    title: "沐浴",
+        //    context: "享受沐浴",
+        //    isOneButton: false,
+        //    isTwoButton: true,
+        //    jsonContext: "1",
+        //    isOff:  false,
+        //    lastUpdateDate: "",
+        //    buttonName:"开启",
+        //    buttonStatus:false
+        //  },
+        //  {
+        //    id: "5",
+        //    pictureUrl: 'build/img/index/img_home_veil.png',
+        //    title: "维亚灯光",
+        //    context: "开始您美好的一天",
+        //    isOneButton: false,
+        //    isTwoButton: false,
+        //    jsonContext: "1",
+        //    isOff:  false,
+        //    lastUpdateDate: "",
+        //    buttonName:"开启",
+        //    buttonStatus:false
+        //  },
+        //  {
+        //    id: "6",
+        //    pictureUrl: 'build/img/index/img_home_period.png',
+        //    title: "大姨了吗",
+        //    context: "女性特殊期洗浴关怀方案",
+        //    isOneButton: false,
+        //    isTwoButton: false,
+        //    jsonContext: "1",
+        //    isOff:  false,
+        //    lastUpdateDate: "",
+        //    buttonName:"开启",
+        //    buttonStatus:false
+        //  }
+        //];
+        $scope.modelData = indexPageService.getScaneList();
       }
 
 
@@ -682,6 +685,7 @@ angular.module('indexPageModule')
           $scope.Toast.show($translate.instant("index.searchBox"));
           angular.forEach($scope.boxList, function (data, index, array) {
             $timeout(function () {
+              alert('box值==='+JSON.stringify(data));
               boxLink(data[0]);
             }, 1000);
           });
@@ -793,7 +797,7 @@ angular.module('indexPageModule')
 
       //本地发送指令
       var pluginToCtrl = function (value, successMsg, errorMsg) {
-        cmdService.sendCmd( value, localStorage.boxIp);
+        cmdService.sendScanCmd( value, localStorage.boxIp);
       };
 
       var sendCmd = function (index) {
@@ -840,6 +844,7 @@ angular.module('indexPageModule')
             value[0].data.act_params.scn_id =  '000000016';
           }
         }
+        alert('发送的信息==='+JSON.stringify(value));
         pluginToCtrl( value, "发送成功", "发送失败");
       }
 
@@ -850,7 +855,9 @@ angular.module('indexPageModule')
        */
       var sceneList = [];
       $scope.getSwitchStatus = function (index) {
-        $scope.modelData[index].isOff = !$scope.modelData[index].isOff;
+        //console.log('jinlai'+index+'=='+$scope.modelData[index].isOff)
+        ////$scope.modelData[index].isOff = !$scope.modelData[index].isOff;
+        //console.log('jinlai2'+index+'=='+$scope.modelData[index].isOff)
         var scentObj = {sceneType: $scope.modelData[index].title, status: $scope.modelData[index].isOff};
         sceneList.push(scentObj);
         localStorage.sceneList = JSON.stringify(sceneList);
@@ -880,25 +887,25 @@ angular.module('indexPageModule')
           return;
         }
 
-        if ($scope.modelData[index].isOff) {
-          //发送指令并传送当前场景按钮的状态
-          angular.forEach($scope.modelData, function (data, index, array) {
-            if (data.id == $scope.modelData[index].id) {
-              $scope.modelData[index].isOff = true;
-              return;
-            }
-          });
-        } else {
-          //db.transaction(function(tx) {
-          //  tx.executeSql('update T_CTM_PARTY_SCENARIO set scenarioStatus = "N" where DEVICE_ID = '+item.id);
-          //});
-          angular.forEach($scope.modelData, function (data, index, array) {
-            if (data.id == $scope.modelData[index].id) {
-              $scope.modelData[index].isOff = false;
-              return;
-            }
-          });
-        }
+        //if ($scope.modelData[index].isOff) {
+        //  //发送指令并传送当前场景按钮的状态
+        //  angular.forEach($scope.modelData, function (data, index, array) {
+        //    if (data.id == $scope.modelData[index].id) {
+        //      $scope.modelData[index].isOff = true;
+        //      return;
+        //    }
+        //  });
+        //} else {
+        //  //db.transaction(function(tx) {
+        //  //  tx.executeSql('update T_CTM_PARTY_SCENARIO set scenarioStatus = "N" where DEVICE_ID = '+item.id);
+        //  //});
+        //  angular.forEach($scope.modelData, function (data, index, array) {
+        //    if (data.id == $scope.modelData[index].id) {
+        //      $scope.modelData[index].isOff = false;
+        //      return;
+        //    }
+        //  });
+        //}
 
         /*if(item.isOff){
          //alert("on");
