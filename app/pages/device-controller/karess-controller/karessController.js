@@ -36,12 +36,20 @@ angular.module('karessControlModule')
         modelType: "karessController.bath",
       };
 
+      localStorage.karessTemp = '10';
+      localStorage.karessLevel = '4';
+      localStorage.karessOutLet = 'Bath Faucet';
+      localStorage.karessPressure = '1';
+      $scope.fontSize = document.documentElement.clientWidth / 7.5;
+      $scope.screenHeig = window.innerHeight;
+      $scope.screenWidth = window.innerWidth;
+
 
       var statusKaress = function () {
         var value = cmdService.getCmd("8877", '01', '70', 'E3', '02');
         cmdService.sendCmd(deviceId, value, localStorage.boxIp);
       }
-      statusKaress();
+      // statusKaress();
       //侧滑转档数量jsongulp
       $scope.slideInitData = [{
         des: "init",
@@ -57,7 +65,7 @@ angular.module('karessControlModule')
 
       $scope.shuilianmoData = [{
         des: "按摩档位",
-        desId : "shuilianmodangwei",
+        desId: "shuilianmodangwei",
         gearNum: 1,
         gearInit: 1,
         gearInitTemp: 1,
@@ -70,7 +78,7 @@ angular.module('karessControlModule')
       }];
       $scope.shuiBeiBuData = [{
         des: "温度",
-        desId : "beibujiarewendu",
+        desId: "beibujiarewendu",
         gearNum: 1,
         gearInit: 1,
         gearInitTemp: 1,
@@ -85,8 +93,8 @@ angular.module('karessControlModule')
         des: "水温",
         desId: "zhuishuishuiwen",
         gearNum: 19,
-        gearInit: 1,
-        gearInitTemp: 1,
+        gearInit: localStorage.karessTemp,
+        gearInitTemp: localStorage.karessTemp,
         parameterctlFlag: false,
         parNodeid: 'toilet-TunBuSyCtl',
         canves01: "TunBuSycanves01",
@@ -98,8 +106,8 @@ angular.module('karessControlModule')
           des: "水位",
           desId: "zhuishuishuiwei",
           gearNum: 3,
-          gearInit: 1,
-          gearInitTemp: 1,
+          gearInit: localStorage.karessLevel,
+          gearInitTemp: localStorage.karessLevel,
           parameterctlFlag: false,
           parNodeid: 'toilet-TunBuPosCtl',
           canves01: "TunBuPosPoscanves01",
@@ -200,7 +208,10 @@ angular.module('karessControlModule')
       $scope.currentSlideData = $scope.slideInitData;
       //初始化当前模板数据
       $scope.initHtmlTemplate = function (currentSlideData) {
-        //初始化数据
+        /**
+         init silde-box data
+         初始化slide-box数据
+         */
         if ($('#ionSliderBox').children().length !== 0) {
           $('#ionSliderBox').empty();
         }
@@ -232,21 +243,27 @@ angular.module('karessControlModule')
           "</div>" +
           "</ion-slide>" +
           "</ion-slide-box>"
+        /**
+         bian yi html 数据
+         编译html数据
+         */
         var $checkhtml = $compile(checHtml)($scope); // 编译
-        $('#ionSliderBox').append($checkhtml[0]);
+        $('#ionSliderBox').append($checkhtml[0])
       };
       $scope.initHtmlTemplate($scope.currentSlideData);
       var onceFlag = true;
       var initCircle = function (slideDataObj) {
         //获取父元素高度
+        this.rateInit = document.documentElement.clientWidth / 7.5;
         this.canvsscreenHeight = document.getElementById(slideDataObj.parNodeid).offsetHeight;
         this.canvsscreenWidth = document.getElementById(slideDataObj.parNodeid).offsetWidth;
         // 设置每个canves的宽高
         document.getElementById(slideDataObj.canves01).height = this.canvsscreenHeight;
         document.getElementById(slideDataObj.canves01).width = this.canvsscreenWidth;
         document.getElementById(slideDataObj.canves01).style.zIndex = 1;
+
         document.getElementById(slideDataObj.canves02).height = this.canvsscreenHeight;
-        document.getElementById(slideDataObj.canves01).width = this.canvsscreenWidth;
+        document.getElementById(slideDataObj.canves02).width = this.canvsscreenWidth;
         document.getElementById(slideDataObj.canves02).style.zIndex = 3;
 
         document.getElementById(slideDataObj.canves03).height = this.canvsscreenHeight;
@@ -256,39 +273,37 @@ angular.module('karessControlModule')
         this.cr1 = getCanvesObj(slideDataObj.canves01);//档位canves
         this.cr2 = getCanvesObj(slideDataObj.canves02);//滑动小球档位canves
         this.cr3 = getCanvesObj(slideDataObj.canves03);//颜色填充档位canves
-        // this.cr4 = getCanvesObj(slideDataObj.canves04);//颜色填充档位canves
         //四种圆
         this.deliverCircle = {
           x: this.canvsscreenHeight / 2,
           y: this.canvsscreenWidth / 2,
-          r: this.canvsscreenHeight / 2,
+          r: this.canvsscreenHeight / 2 - 0.1 * this.rateInit,
           color: "#2F3538"
         };//档位圆
         this.HideCircle = {
           x: this.canvsscreenHeight / 2,
           y: this.canvsscreenWidth / 2,
-          r: this.canvsscreenHeight / 2 - 20,
+          r: this.canvsscreenHeight / 2 - 0.5 * this.rateInit,
           color: "black"
         };//档位圆
         this.deliverLine = {
           x: this.canvsscreenHeight / 2,
           y: this.canvsscreenWidth / 2,
-          r: this.canvsscreenHeight / 2,
+          r: this.canvsscreenHeight / 2 - 0.1 * this.rateInit,
           color: "black"
         };//档位线
         this.rollCircle = {
           x: this.canvsscreenHeight / 2,
           y: this.canvsscreenWidth / 2,
-          r: this.canvsscreenHeight / 2 - 10,
+          r: this.canvsscreenHeight / 2 - 0.3 * this.rateInit,
           color: "white"
         };//小球圆
         this.FillCircle = {
           x: this.canvsscreenHeight / 2,
           y: this.canvsscreenWidth / 2,
-          r: this.canvsscreenHeight / 2,
+          r: this.canvsscreenHeight / 2 - 0.1 * this.rateInit,
           color: "#6ACBB3"
         };//填充圆
-        // this.bimianCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2-30,color:"black"};//防触点
         //变量
         this.i = 0;
         this.j = 0;
@@ -309,8 +324,6 @@ angular.module('karessControlModule')
           ;
           // 画白色遮挡
           drawRadian(this.cr1, this.HideCircle, 0, 360);
-
-          // drawRadian(this.cr4,this.bimianCircle,0,360);
         };
         // 画填充圆
         this.drawCircleFill = function (canvesobj, changeRad) {
@@ -344,13 +357,15 @@ angular.module('karessControlModule')
                 if (this.i <= 1) {
                   slideDataObj.gearInit = 1;
                 } else {
+
                   slideDataObj.gearInit = this.i;
                 }
                 ;
                 if (onceFlag) {
                   $scope.$apply();
                 }
-                ;                //画档位线
+                ;
+                //画档位线
                 this.j = 1;
                 for (this.j; this.j < this.i; this.j++) {
                   drawRadian(this.cr3, this.deliverLine, this.radSectionArr[this.i - this.j - 1] - 1, this.radSectionArr[this.i - this.j - 1]);
@@ -358,11 +373,13 @@ angular.module('karessControlModule')
                 ;
               } else {
                 this.stoPosPoint = this.i;
+
                 slideDataObj.gearInit = this.i + 1;
                 if (onceFlag) {
                   $scope.$apply();
                 }
-                ;                //画档位线
+                ;
+                //画档位线
                 this.j = 1;
                 for (this.j; this.j < this.i + 1; this.j++) {
                   drawRadian(this.cr3, this.deliverLine, this.radSectionArr[this.i - this.j] - 1, this.radSectionArr[this.i - this.j]);
@@ -388,70 +405,78 @@ angular.module('karessControlModule')
             canvesobj.beginPath();
             canvesobj.fillStyle = this.rollCircle.color;
             canvesobj.moveTo(x, y);
-            canvesobj.arc(x, y, 10, 0, Math.PI * 2, false);
+            canvesobj.arc(x, y, 0.2 * this.rateInit, 0, Math.PI * 2, false);
             canvesobj.fill();
             canvesobj.closePath();
             //画小球中的指示标识
             canvesobj.beginPath();
             canvesobj.fillStyle = "#191C23";
-            canvesobj.lineWidth = 1;//设置线宽
-            canvesobj.moveTo(x, y - (10 / 4));
-            canvesobj.lineTo(x - (10 / 4) / Math.sqrt(2) - 1, y);
-            canvesobj.lineTo(x, y + (10 / 4));
+            canvesobj.lineWidth = 0.01 * this.rateInit;//设置线宽
+            canvesobj.moveTo(x, y - (0.2 * this.rateInit / 4));
+            canvesobj.lineTo(x - (0.2 * this.rateInit / 4) / Math.sqrt(2) - 0.01 * this.rateInit, y);
+            canvesobj.lineTo(x, y + (0.2 * this.rateInit / 4));
             canvesobj.fill();//填充颜色
-            canvesobj.moveTo(x + 1, y - (10 / 4));
-            canvesobj.lineTo(x + (10 / 4) / Math.sqrt(2) + 2, y);
-            canvesobj.lineTo(x + 1, y + (10 / 4));
+            canvesobj.moveTo(x + 0.01 * this.rateInit, y - (0.2 * this.rateInit / 4));
+            canvesobj.lineTo(x + (0.2 * this.rateInit / 4) / Math.sqrt(2) + 0.02 * this.rateInit, y);
+            canvesobj.lineTo(x + 0.01 * this.rateInit, y + (0.2 * this.rateInit / 4));
             canvesobj.stroke();//画线框
             canvesobj.fill();//填充颜色
             canvesobj.closePath();
             //随小球和指示画fil填充
             if (!type) {
-              this.drawCircleFill(this.cr3, ancr)
+              this.drawCircleFill(this.cr3, ancr);
             }
+            ;
           }
           ;
         };
       };
-      $scope.handleRadSelected;
+      var currentRadObj;
       setTimeout(function () {
+        //保存选择的数据项当前的档位
+        $scope.handleRadSelected;
         $scope.getCurrentObj = function (index) {
           $scope.handleRadSelected = index;
           //当前new实例
-          var currentRadObj = new initCircle($scope.currentSlideData[index]);
+          currentRadObj = new initCircle($scope.currentSlideData[index]);
+          $scope.handlenapeListNape.forEach(function (item, i) {
+            if (item.isManyDirective) {
+              if (item.matchdataid === $scope.currentSlideData[index].id) {
+                currentRadObj.selectedIndex = i;
+                currentRadObj.currentIndex = index;
+              }
+            }
+          });
           currentRadObj.i = 0;
+          currentRadObj.id = $scope.currentSlideData[index].id;
           currentRadObj.j = 0;
           currentRadObj.stoPosPoint = 0;
-          // currentRadObj.gearInit = $scope.currentSlideData[index].gearInitTemp;
-          // $scope.currentSlideData[index].gearInit = $scope.currentSlideData[index].gearInitTemp;
+          currentRadObj.gearInit = $scope.currentSlideData[index].gearInitTemp;
+          $scope.currentSlideData[index].gearInit = $scope.currentSlideData[index].gearInitTemp;
           //当前绑定事件对象
           var currentEventObj = getIdObj($scope.currentSlideData[index].canves02);
           currentRadObj.drawDeliverCircle($scope.currentSlideData[index].gearNum);
-
-
           if ($scope.currentSlideData[index].des === "init") {
             currentRadObj.drawc(currentRadObj.cr2, 405, "type");
             currentRadObj.drawCircleFill(currentRadObj.cr2, 405);
             //初始化数据
             $('.slider-pager').empty();
           } else {
-            currentRadObj.drawc(currentRadObj.cr2,currentRadObj.starRad+ currentRadObj.radRange * ($scope.currentSlideData[index].gearInit-1),"type");
-            currentRadObj.drawCircleFill(currentRadObj.cr3,currentRadObj.starRad+currentRadObj.radRange * ($scope.currentSlideData[index].gearInit-1));            currentEventObj.addEventListener('touchstart', function (e) {
+            currentRadObj.drawc(currentRadObj.cr2, currentRadObj.starRad + currentRadObj.radRange * ($scope.currentSlideData[index].gearInit - 1), "type");
+            currentRadObj.drawCircleFill(currentRadObj.cr3, currentRadObj.starRad + currentRadObj.radRange * ($scope.currentSlideData[index].gearInit - 1));
+            currentEventObj.addEventListener('touchstart', function (e) {
               e.preventDefault();
-              var poi = getEvtLocation(e);
-              bginX = poi.x;
-              bginY = poi.y;
             }, false);
             currentEventObj.addEventListener('touchmove', function (e) {
               e.preventDefault();
               var poi = getEvtLocation(e);
-              currentRadObj.drawc(currentRadObj.cr2, getAngle(currentRadObj.canvsscreenHeight, currentRadObj.canvsscreenWidth, poi.x, poi.y));
+              currentRadObj.drawc(currentRadObj.cr2,getAngle($scope.screenWidth/2,2.7*2*$scope.fontSize,poi.x,poi.y));
             }, false);
             currentEventObj.addEventListener('touchend', function (e) {
               e.preventDefault();
               currentRadObj.drawc(currentRadObj.cr2, currentRadObj.radSectionArr[currentRadObj.stoPosPoint]);
               //档位滑动执行发指令操作
-              $scope.radScrollSendDir();
+              $scope.radScrollSendDir(currentRadObj);
             }, false);
             var getEvtLocation = function (e) {
               var touch = e.touches[0];
@@ -460,8 +485,8 @@ angular.module('karessControlModule')
                 y: touch.clientY
               }
             };
-
           }
+          ;
         };
         $scope.getCurrentObj(0);
         $scope.slideHasChanged = function (index) {
@@ -853,7 +878,7 @@ angular.module('karessControlModule')
           } else {
             if (status.ack.indexOf('fb') >= 0 || status.ack.indexOf('fc') >= 0 || status.ack.indexOf('fd') >= 0) {
               $scope.Toast.show("操作失败！");
-            }else{
+            } else {
               karessService.resolveCmd(status.ack);
               console.log(karessService.resolveCmd(status.ack));
             }
@@ -866,7 +891,7 @@ angular.module('karessControlModule')
             $scope.handlenapeListNape[i].selecFlag = false;
             $scope.handlenapeListNape[i].imgUrl = $scope.handlenapeListNape[i].imgUrlTemp;
           }
-        }else{
+        } else {
         }
         if ($scope.handlenapeListNape[index].selecFlag == true) {
           $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgSeledUrl;

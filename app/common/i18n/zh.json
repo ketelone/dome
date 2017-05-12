@@ -15,9 +15,9 @@
     "shengli":"团结就是胜利",
     "addMember": "添加成员",
     "myBox": "我的BOX",
-    "addNumber": "已添加4个",
+    "addNumber": "已添加7个",
     "myRoom": "我的房间",
-    "roomNumber": "3个房间",
+    "roomNumber": "2个房间",
     "familyManager": "亲友授权管理",
     "personalSetting": "个人资料设置",
     "greenLife": "绿色生活",
@@ -146,7 +146,14 @@
     "searchFail": "搜索已连接设备失败",
     "noDeviceSearch": "没有已连接设备，请搜索未连接设备",
     "noDevice": "没有设备",
-    "open": "开启"
+    "open": "开启",
+    "toliet": "马桶",
+    "waterPurifier": "中央净水器",
+    "bathroomHeader": "浴霸",
+    "bathtub": "浴缸",
+    "nextgen": "花洒",
+    "airfoilShower": "智感龙头",
+    "mc": "镜柜"
   },
   "bigaunt": {
     "bigauntTitle": "场景详情"
@@ -543,11 +550,11 @@
     "other":"其它",
     "statusMessage1":"进水滤芯寿命提醒",
     "messageDel1":"进水滤芯快到使用期限，快去跟换吧!",
-    "device1":"马桶",
+    "device1":"中央净水器",
     "time":"2017-02-08 17:25",
     "statusMessage2":"出水水温达到预警",
     "messageDel2":"实际出水水温达到37°C",
-    "device2":"淋浴",
+    "device2":"马桶",
     "exceptionMessage":"自动开盖功能异常",
     "noMessageWord1":"暂无设备消息",
     "noMessageWord2":"您当前的设备无异常",
@@ -563,6 +570,10 @@
     "allStop": "一键停止",
     "setting": "&nbsp;&nbsp;&nbsp;设置",
     "waterSuccess": "water success",
-    "stopSuccess": "stop success"
+    "stopSuccess": "stop success",
+    "water": "出水",
+    "setTem": "设置水温",
+    "watering": "出水中",
+    "noUse": "未启用"
   }
 }

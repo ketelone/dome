@@ -1,96 +1,457 @@
 .airfoil-shower-controller {
-  .toilet-bg{
-    background-color: $global-head-bg;
+  .ll{
+    height: 0.6rem;
   }
-  .toilet-conninfo{
-    padding-top: 0.86rem;
-    padding-bottom: 0.75rem;
-    width: 100%;
-    height: auto;
-    width: auto;
-    .toilet-conninfo-signal{
-      display: inline-block;
-      margin-left: 0.9rem;
-      height: 0.28rem;
-      line-height: 0.28rem;
-      .conninfo-signal-img{
-        vertical-align: middle;
-        height: 0.25rem;
-        width: 0.354rem;
-        margin-right:0.106rem;
-      }
-      .conninfo-signal-info{
-        display: inline-block;
-        width: 1.21rem;
-        font-size: $font-size-small;
-        color: $color-text-value;
-      }
-    }
-    .toilet-conninfo-isues{
-      display: inline-block;
-      margin-left: 0.49rem;
-      height: 0.28rem;
-      line-height: 0.28rem;
-      .conninfo-isues-img{
-        width: 0.235rem;
-        margin-right:0.075rem;
-      }
-      .conninfo-isues-info{
-        display: inline-block;
-        width: 1.21rem;
-        font-size: $font-size-small;
-        color: $color-text-deviceinfo;
-      }
-    }
+  .font-size{
+    font-size: 0.6rem;
   }
-  .toilet-parameterctl {
+  .device-info{
     position: relative;
-    padding-top: 1.6rem;
-    margin-left: 0.93rem;
-    width: 5.64rem;
-    height: 5.64rem;
-    .canves-pos{
-      position: absolute;
-      left: 0;
-      top: 0;
-    }
-    .toilet-parameterctl-dataimg{
-      position: absolute;
-      top: 1.35rem;
-      left: 1.70rem;
-      height: 2.6rem;
-      width: 2.6rem;
-      text-align: center;
-      z-index: 10;
-      .conninfo-parameterctl-img{
-        width: 100%;
-        height: 100%;
-      }
-    }
-    .toilet-parameterctl-data {
-      z-index: 4;
-      position: absolute;
-      top: 1.90rem;
-      left: 2.18rem;
-      height: 1.38rem;
-      width: 1.38rem;
-      text-align: center;
-      .toilet-parameterctl-raddata{
-        font-size: $font-size-bigger;
-        color: $color-base;
-      }
-      .toilet-parameterctl-des{
-        display: block;
-        margin-top: 0.15rem;
-        font-size: 0.30rem;
-        color: white;
-      }
+  }
+  .device-info-status{
+    position: absolute;
+  }
+
+  .box-img{
+    position: absolute;
+    width: 0.29rem;
+    height: 0.22rem;
+    margin-left: 0.9rem;
+    margin-top: 1.06rem;
+  }
+  .box-text{
+    position: absolute;
+    margin-left: 1.31rem;
+    margin-top: 1.01rem;
+    width: 1.5rem;
+    height: 0.28rem;
+    font-family: PingFangSC-Regular;
+    font-size: 0.24rem;
+    color: #565A64;
+    letter-spacing: 0.01rem;
+    line-height: 0.28rem;
+  }
+  .signal-img{
+    position: absolute;
+    margin-left: 3.06rem;
+    margin-top: 2.08rem;
+    width: 0.235rem;
+    height: 0.2rem;
+  }
+  .signal-text{
+    position: absolute;
+    width: 1.21rem;
+    height: 0.28rem;
+    margin-left: 3.46rem;
+    margin-top: 2.02rem;
+    font-family: PingFangSC-Semibold;
+    font-size: 0.28rem;
+    color: #D5638E;
+    letter-spacing: 0.0117rem;
+    line-height: 0.28rem;
+    .temp{
+      margin-top: 4.02rem;
     }
   }
+  .error-img{
+    //position: absolute;
+    //margin-left: 3.06rem;
+    //margin-top: 2.08rem;
+    //width: 0.235rem;
+    //height: 0.2rem;
+  }
+  .msg{
+    //position: absolute;
+    //width: 1.21rem;
+    //height: 0.28rem;
+    //margin-left: 3.37rem;
+    //margin-top: 2.02rem;
+    //font-family: PingFangSC-Semibold;
+    //font-size: 0.28rem;
+    //color: #D5638E;
+    //letter-spacing: 0.0117rem;
+    //line-height: 0.28rem;
+  }
+  .time-img{
+    position: absolute;
+    margin-left: 5.5rem;
+    margin-top: 1.88rem;
+    width: 0.48rem;
+    height: 0.48rem;
+  }
+  .scroll-position{
+    margin-top: 7.5rem;
+    .scroll{
+      height: 9rem;
+      background-color: #1D2334;
+    }
+  }
+
+  .optation-div{
+    position: relative;
+    width: 7rem;
+  }
+  .hot-img{
+    position: absolute;
+    width: 0.6rem;
+    height: 0.6rem;
+    margin-left: -0.3rem;
+    margin-top: 0.3rem;
+  }
+  .switch-btn {
+    position: relative;
+    display: block;
+    vertical-align: top;
+    width: 1.5rem;
+    height: 0.56rem;
+    border-radius: 0.18rem;
+    cursor: pointer;
+    margin-top: 6.8%;
+  }
+  .checked-switch {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    background: #00c8ff;
+  }
+  .checkbox-size{
+    width: 100px;
+    height: 100px;
+    //background: url("build/img/bathroom/hot.png");
+  }
+  .text-switch {
+    position: relative;
+    //border-radius: inherit;
+    color: black;
+    display: block;
+    height: 1.5rem;
+    width: 1.5rem;
+    margin-left: 0.5rem;
+  }
+  .text-switch:before,
+  .text-switch:after {
+    position: absolute;
+    top: 50%;
+    margin-top: -.5em;
+    line-height: 1;
+    -webkit-transition: inherit;
+    -moz-transition: inherit;
+    -o-transition: inherit;
+    transition: inherit;
+  }
+  .text-switch:before {
+    content: attr(data-yes);
+    right: 0.11rem;
+    font-family: DINCondensed-Bold;
+    font-size: 0.26rem;
+    border: blue;
+    letter-spacing: 0.81px;
+  }
+  .text-switch:after {
+    content: attr(data-no);
+    left: 0.11rem;
+    color: black;
+    opacity: 0;
+    font-family: DINCondensed-Bold;
+    font-size: 0.26rem;
+    border: blue;
+    letter-spacing: 0.81px;
+  }
+  .checked-switch:checked ~ .text-switch {
+    text-transform: uppercase;
+    border: 0.03rem solid #51D8BD;
+    border-radius: 0.08rem;
+  }
+  .checked-switch:checked ~ .text-switch:before {
+    opacity: 0;
+  }
+  .checked-switch:checked ~ .text-switch:after {
+    opacity: 1;
+  }
+  .switch-size{
+    width: 1.7rem;
+    height:1.7rem;
+    float: left;
+    margin-left: 0rem;
+    margin-top: 0.2rem;
+  }
+  .checkboxFour {
+    width: 0.5rem;
+    height: 0.5rem;
+    background: #ddd;
+    margin: 0rem 2rem;
+
+    border-radius: 100%;
+    position: relative;
+    //-webkit-box-shadow: 0px 1px 3px rgba(0,0,0,0.5);
+    //-moz-box-shadow: 0px 1px 3px rgba(0,0,0,0.5);
+    //box-shadow: 0px 1px 3px rgba(0,0,0,0.5);
+  }
+  .checkboxFour label {
+    display: block;
+    width: 1.2rem;
+    height: 1.2rem;
+    border-radius: 1rem;
+
+    -webkit-transition: all .5s ease;
+    -moz-transition: all .5s ease;
+    -o-transition: all .5s ease;
+    -ms-transition: all .5s ease;
+    transition: all .5s ease;
+    cursor: pointer;
+    position: absolute;
+    top: -0.03rem;
+    left: -0.3rem;
+    z-index: 1;
+
+    background: #ddd;
+
+    //-webkit-box-shadow:inset 0px 1px 3px rgba(0,0,0,0.5);
+    //-moz-box-shadow:inset 0px 1px 3px rgba(0,0,0,0.5);
+    //box-shadow:inset 0px 1px 3px rgba(0,0,0,0.5);
+  }
+  .checkboxFour input[type=checkbox]:checked + label {
+    background: #ddd;
+  }
+  .breath{
+    position: absolute;
+    margin-top: 0.8rem;
+    margin-left: 1rem;
+  }
+  .breath-top{
+    position: absolute;
+    margin-top: -1rem;
+    margin-left: -0.95rem;
+  }
+  .checkbox-position{
+    //position: absolute;
+    //margin-left: 1rem;
+  }
+  .breath-x{
+    position: absolute;
+    margin-top: 0.8rem;
+    margin-left: -1rem;
+  }
+  .is-wind-switch{
+    position: relative;
+    width: 1.7rem;
+    height: 1.7rem;
+  }
+  .is-show-wind-switch{
+    position: absolute;
+    margin-top: 1.6rem;
+  }
+  .switch-desc{
+    font-family: PingFangSC-Medium;
+    font-size: 0.24rem;
+    color: #FFFFFF;
+    letter-spacing: 0.01rem;
+  }
+  .switch-desc{
+    position: absolute;
+    margin-left: 0.8rem;
+    margin-top: -0.5rem;
+  }
+  .font-position{
+    margin-left: 0rem;
+    margin-buttom: -1rem;
+    font-size: 0.24rem;
+  }
+  .timer-div{
+    position: absolute;
+    height: 1rem;
+    width: 100%;
+    top: 7.96rem;
+    background-color: #0F0F0F;
+    span{
+      font-size: 0.9rem;
+      color: white;
+      top: 0.1rem;
+    }
+  }
+  .img-size{
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+  .temp-info{
+    position: relative;
+    height: 6.5rem;
+    width: 100%;
+  }
+  .timeout{
+    position: absolute;
+    width: 4.21rem;
+    height: 0.28rem;
+    margin-left: 2.9rem;
+    margin-top: 3rem;
+    font-family: DINCondensed-Bold;
+    font-size: 0.72rem;
+    color: #FFFFFF;
+    letter-spacing: 0.03rem;
+    line-height: 0.72rem;
+  }
+  .timeout-font{
+    position: absolute;
+    width: 4.21rem;
+    height: 0.28rem;
+    margin-left: 3.46rem;
+    margin-top: 2.6rem;
+    font-family: PingFangSC-Regular;
+    font-size: 0.24rem;
+    color: #ACB0B9;
+    letter-spacing: 0.01rem;
+  }
+  .font-col{
+    position: absolute;
+    width: 3rem;
+    height: 0.28rem;
+    margin-left: 3.1rem;
+    margin-top: 4rem;
+    font-family: DINCondensed-Bold;
+    font-size: 0.7rem;
+    color: #FFFFFF;
+    letter-spacing: 0.0292rem;
+  }
+  .font-col-per{
+    position: absolute;
+    width: 3rem;
+    height: 0.28rem;
+    margin-left: 2.6rem;
+    margin-top: 5rem;
+    font-family: PingFangSC-Regular;
+    font-size: 0.24rem;
+    color: #FFFFFF;
+    letter-spacing: 0.01rem;
+  }
+  .font-col-per-c{
+    position: absolute;
+    margin-left: 0.3rem;
+    font-family: PingFangSC-Light;
+    font-size: 0.4rem;
+    color: #FFFFFF;
+    letter-spacing: 0.0167rem;
+  }
+  .font-col-status{
+    position: absolute;
+    width: 3rem;
+    height: 0.28rem;
+    margin-left: 3.5rem;
+    margin-top: 6.2rem;
+    font-size: 0.3rem;
+    color: white;
+  }
+  .detail-temp{
+    position: absolute;
+
+  }
+  canvas {
+    display: block;
+  }
+
+  .scroll-container{
+    margin-top: 10px;
+    width: 100%;
+    height: 2.6rem;
+    perspective: 800px;
+    perspective-origin: 50% 50%;
+    overflow: hidden;
+  }
+
+  .stage {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.2s;
+    -webkit-transition: transform 0.2s;
+  }
+
+  .scroll-item {
+    background: white;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    //position: absolute;
+    width: 0.2rem;
+    height: 0.4rem;
+    left: 10vw;
+    top: 0.3rem;
+    text-align: center;
+    line-height: 0.4rem;
+    color: #d5d5d5;
+    transition: color 0.5s;
+    -webkit-transition: color 0.5s;
+  }
+
+  .scroll-item.selected{
+    color: #333333;
+    //border-bottom: 1px solid gray;
+    //border-top: 1px solid gray;
+  }
+
+  .year{
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+    width: 30vw;
+    margin-left: 35vw;
+    text-align: center;
+    left: 0;
+    height: 0.4rem;
+    line-height: 0.4rem;
+    top: 0.3rem;
+    font-size: 1.2rem;
+    //border-bottom: 1px solid #959595;
+  }
+
+  .select-week{
+    margin-top: 5vh;
+    width: 30vw;
+    margin-left: 35vw;
+    border: none;
+    box-shadow: 0 0 1px 1px #959595;
+    height: 0.4rem;
+    line-height: 0.4rem;
+    text-align: center;
+    color: #959595;
+    font-size: 1.2em;
+    border-radius: 20px 20px 0 0;
+  }
+  .noPadding{
+    padding: 0;
+  }
+
+  .hmsModal{
+    //top:6rem;
+  }
+  .hmsModal .createNewRecord {
+    padding-top: 0.04rem;
+    padding-right: 0.3rem;
+    padding-left: 0.2rem;
+    position: absolute;
+    right: 0.08rem;
+    top: 0.08rem;
+    width: 0.3rem;
+    height: 0.35rem;
+    text-align: center;
+  }
+  .hmsModal .bar-border-bottom {
+    border-bottom:white;
+  }
+  .hmsModal .closeIcon {
+    font-size:0.16rem;
+  }
+  .modal{
+    left:0;
+    margin-top: 6rem;
+  }
+  .modal-backdrop{
+    top: 7rem;
+  }
+
   .toilet-handlenape-selec{
     position: absolute;
-    top: 6.86rem;
-    z-index: 10;
+    top: 7.9rem;
+    z-index: 0;
     width: 100%;
     height: 1.08rem;
     line-height: 1.08rem;
@@ -98,10 +459,11 @@
     font-size: $font-size-liter;
     .handlenape-selec-des{
       margin-left: 0.9rem;
+      margin-right: 4.3rem;
       color: $color-base;
     }
     .handlenape-selec-use{
-      margin-left: 4.34rem;
+      margin-left: 0rem;
       color: $global-border;
     }
     .handlenape-selec-img{
@@ -111,46 +473,36 @@
       right: 0.607rem;
     }
   }
-  .toilet-handlenape{
-    position: absolute;
-    top: 7.54rem;
-    width: 96%;
-    margin-left: 2%;
-    margin-right: 2%;
-    height: 9.5rem;
-    .napes-border{
-      border:0.03rem solid $global-border;
-      border-radius: 0.08rem;
+
+  .toilet-conninfo-signal{
+    display: inline-block;
+    margin-left: 0.9rem;
+    height: 0.28rem;
+    line-height: 0.28rem;
+    .conninfo-signal-img{
+      vertical-align: middle;
+      height: 0.25rem;
+      width: 0.354rem;
+      margin-right:0.106rem;
     }
-    .handlenape-list-napes{
-      position: relative;
-      float: left;
-      width: 25%;
-      height: 1.5rem;
-      line-height: 1.5rem;
-      margin-top: 0.6rem;
-      text-align: center;
-      .list-napes-img{
-        width: 0.6rem;
-        height: 0.6rem;
-      }
-      .list-napes-dec{
-        position: absolute;
-        top: 0.35rem;
-        left: 0.5rem;
-        font-size: $font-size-small;
-        color: white;
-      }
-    }
-    .toilet-handlenape-list:last-child .handlenape-list-napes{
-      margin-bottom: 2.8rem;
-      //margin-bottom: 2.8rem;
+    .conninfo-signal-info{
+      display: inline-block;
+      width: 1.21rem;
+      font-size: $font-size-small;
+      color: $color-text-value;
     }
   }
-  .temperate{
-    position: absolute;
-    float: left;
-    margin-top: 3.8rem;
-    left: 2rem;
+  .font-set{
+    font-family: PingFangSC-Semibold;
+    font-size: 0.4rem;
+    color: #FFFFFF;
+    letter-spacing: 0.167rem;
+    line-height: 0.4rem;
+    padding-top: 0.8rem;
+  }
+  .airfoil-size{
+    width: 2.8rem;
+    height: 2.8rem;
+    margin-top: 0.2rem;
   }
 }

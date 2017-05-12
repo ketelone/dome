@@ -81,7 +81,8 @@ angular.module('nextgenModule')
       }
 
       //出水方式初始模式选择
-      $scope.waterway = localStorage.waterway?localStorage.waterway:"nextgen.Spout";
+      $scope.waterway =
+        localStorage.SET_SHOWER_OUTLET_PARA_EXIT?localStorage.SET_SHOWER_OUTLET_PARA_EXIT:"nextgen.Spout";
 
       //头顶花洒
       function headerHuasa(){
@@ -383,7 +384,7 @@ angular.module('nextgenModule')
         $scope.modal.show();
         setTimeout(function () {
           var ele = document.getElementsByClassName("hmsModal");
-          ele[0].style.top = 68 + '%';
+          ele[0].style.top = 70 + '%';
           ele[0].style.minHeight = 61 + '%';
         }, 10);
       };
@@ -395,7 +396,7 @@ angular.module('nextgenModule')
       $scope.choose = function (val) {
         $scope.modal.hide();
         $scope.waterway = val.des;
-        localStorage.waterway = val.des;
+        localStorage.SET_SHOWER_OUTLET_PARA_EXIT= val.des;
       };
 
     }]);

@@ -18,6 +18,7 @@ angular.module('indexPageModule')
     'hmsHttp',
     '$translate',
     'cmdService',
+    '$window',
     'indexPageService',
     function ($scope,
               $state,
@@ -32,15 +33,18 @@ angular.module('indexPageModule')
               hmsHttp,
               $translate,
               cmdService,
+              $window,
               indexPageService) {
       window.localStorage.token = '4f75ed43-aee2-4f35-895e-7d3f086ddf86';
       window.localStorage.empno = '18620025571';
       window.localStorage.checkboxSavePwd = 'admin';
       console.log(window.localStorage.token);
+
       $scope.isSceneModel = true;
       $scope.isDeviceModel = false;
       $scope.isOneLine = true;
       $scope.isSecondLine = false;
+      $scope.isBigScreen = $window.innerWidth > 1000 ? false : true;
       $scope.isMorning =  false;
       $scope.isLeave = false;
       $scope.homeInfo = {
@@ -156,7 +160,7 @@ angular.module('indexPageModule')
 
 
       $scope.isInPage = 2;
-      $scope.goKeyscene = function (item) {
+      $scope.goKeyscene = function (item, index) {
         if ($scope.isInPage == 1) {
           $scope.isInPage = 2;
           return;
@@ -178,12 +182,16 @@ angular.module('indexPageModule')
           $state.go('period');
         }
 
-        // db.transaction(function (tx) {
-        //   tx.executeSql('update T_CTM_PARTY_SCENARIO set LAST_UPDATE_DATE = "' + getNowFormatDate() + '" where SCENARIO_ID = ' + item.id);
-        //
-        // });
-        // $scope.modelData = [];
-        // getScenarioList();
+        db.transaction(function (tx) {
+          tx.executeSql('update T_CTM_PARTY_SCENARIO set LAST_UPDATE_DATE = "' + getNowFormatDate() + '" where SCENARIO_ID = ' + item.id);
+
+        });
+        var data = $scope.modelData[index];
+
+        $scope.modelData.splice(index, 1);
+        $scope.modelData.splice(0, 0, data);
+        //$scope.modelData = [];
+        //getScenarioList();
       };
 
 
@@ -204,9 +212,9 @@ angular.module('indexPageModule')
           {
             id: "1",
             pictureUrl: "build/img/index/img_home_device_toliet.png",
-            deviceType: "马桶",
+            deviceType: "index.toliet",
             deviceStatus: "设备在线",
-            deviceDesc: "有人使用",
+            deviceDesc: "",
             statusPictureUrl: "build/img/index/icon_home_device_signal5.png",
             errorPictureUrl: "",
             isStatus: true,
@@ -215,9 +223,9 @@ angular.module('indexPageModule')
           }, {
             id: "2",
             pictureUrl: "build/img/index/img_home_device_heater.png",
-            deviceType: "中央净水器",
+            deviceType: "index.waterPurifier",
             deviceStatus: "中央净水器",
-            deviceDesc: "中央净水器",
+            deviceDesc: "",
             statusPictureUrl: "build/img/index/icon_home_device_signal4.png",
             errorPictureUrl: "",
             isStatus: true,
@@ -226,44 +234,31 @@ angular.module('indexPageModule')
           }, {
             id: "3",
             pictureUrl: "build/img/index/img_home_device_heater.png",
-            deviceType: "浴霸",
+            deviceType: "index.bathroomHeader",
             deviceStatus: "设备在线",
-            deviceStatus: "设备在线",
-            deviceDesc: "80%",
+            deviceDesc: "26℃，60%",
             statusPictureUrl: "build/img/index/icon_home_device_signal4.png",
             errorPictureUrl: "",
             isStatus: true,
             isError: false,
             sku: "D7:12:29:DF:76:06"
           },
-          // {
-          //   id: "5",
-          //   pictureUrl: "build/img/index/img_home_device_chushuifa.png",
-          //   deviceType: "RO",
-          //   deviceStatus: "设备离线",
-          //   deviceDesc: "",
-          //   statusPictureUrl: "build/img/index/icon_home_device_no_singal.png",
-          //   errorPictureUrl: "build/img/index/icon_home_device_warnning.png",
-          //   isStatus: true,
-          //   isError: true,
-          //   sku: "FB:3F:B6:2E:F5:3F"
-          // },
           {
             id: "6",
             pictureUrl: "build/img/index/karess.png",
-            deviceType: "karess",
+            deviceType: "index.bathtub",
             deviceStatus: "设备离线",
-            deviceDesc: "",
+            deviceDesc: "26℃",
             statusPictureUrl: "build/img/index/icon_home_device_no_singal.png",
             errorPictureUrl: "build/img/index/icon_home_device_warnning.png",
             isStatus: true,
-            isError: true,
+            isError: false,
             sku: "D2:3D:19:2C:A9:89"
           },
           {
             id: "7",
             pictureUrl: "build/img/index/next.png",
-            deviceType: "nextgen",
+            deviceType: "index.nextgen",
             deviceStatus: "设备离线",
             deviceDesc: "",
             statusPictureUrl: "build/img/index/icon_home_device_no_singal.png",
@@ -275,25 +270,25 @@ angular.module('indexPageModule')
           {
             id: "8",
             pictureUrl: "build/img/index/air.png",
-            deviceType: "airfoil-shower",
+            deviceType: "index.airfoilShower",
             deviceStatus: "设备离线",
-            deviceDesc: "",
+            deviceDesc: "30℃",
             statusPictureUrl: "build/img/index/icon_home_device_no_singal.png",
             errorPictureUrl: "build/img/index/icon_home_device_warnning.png",
             isStatus: true,
-            isError: true,
+            isError: false,
             sku: "D9:78:06:B6:77:C6"
           },
           {
             id: "9",
             pictureUrl: "build/img/index/img_home_device_chushuifa.png",
-            deviceType: "mc镜柜",
+            deviceType: "index.mc",
             deviceStatus: "设备离线",
             deviceDesc: "",
             statusPictureUrl: "build/img/index/icon_home_device_no_singal.png",
             errorPictureUrl: "build/img/index/icon_home_device_warnning.png",
             isStatus: true,
-            isError: true,
+            isError: false,
             sku: ""
           }
         ];
@@ -545,6 +540,15 @@ angular.module('indexPageModule')
           searchBox();
           //},1500);
           localStorage.boxLinkCount = 2;
+
+          localStorage.windType = "bathroom.rock";
+          localStorage.hotTimer = "default";
+          localStorage.hotDryingTimer = "default";
+          localStorage.coolTimer = "default";
+          localStorage.dryerTimer = "default";
+          localStorage.purityTimer = "default";
+          localStorage.breathTimer = "default";
+
         }
         //checkIsOk();
         if (baseConfig.isLinkDatabase) {
@@ -704,7 +708,7 @@ angular.module('indexPageModule')
 
       $timeout(function () {
         hmsPopup.hideLoading();
-      }, 5000);
+      }, 15000);
       var boxLink = function (item) {
         var boxIp = item.data.act_params.ip; //item.payload.cmd_properties.ip
         var deviceId = item.data.act_params.device_id;
@@ -927,7 +931,7 @@ angular.module('indexPageModule')
         return true;
       };
 
-      $scope.getDeviceInfo = function (item) {
+      $scope.getDeviceInfo = function (item, index) {
 
         if (baseConfig.isLinkDatabase == true) {
           if (item.deviceType == "Bathroom Heater") {
@@ -955,39 +959,41 @@ angular.module('indexPageModule')
           db.transaction(function (tx) {
             tx.executeSql('update T_DVM_DEVICE set LAST_UPDATE_DATE = "' + getNowFormatDate() + '" where DEVICE_ID = ' + item.id);
           });
-          $scope.deviceModel = [];
-          getDeviceList();
+
+
+          //$scope.deviceModel = [];
+          //getDeviceList();
         } else {
-          if (item.deviceType == "浴霸") {
+          if (item.deviceType == "index.bathroomHeader") {
             $state.go('bathroom', {deviceSku: item.sku});
           }
-          if (item.deviceType == "马桶") {
+          if (item.deviceType == "index.toliet") {
             $state.go('toiletContrl');
           }
-          if (item.deviceType == "中央净水器") {
+          if (item.deviceType == "index.waterPurifier") {
             $state.go('cenwatpurifierContrl');
           }
-          if (item.deviceType == "karess") {
+          if (item.deviceType == "index.bathtub") {
             $state.go('karess');
             SettingsService.set("sku", item.sku);
           }
-          if (item.deviceType == "nextgen") {
+          if (item.deviceType == "index.nextgen") {
             $state.go('nextgen', {deviceSku: item.sku});
             // SettingsService.set("sku",item.sku);
           }
-          if (item.deviceType == "airfoil-shower") {
+          if (item.deviceType == "index.airfoilShower") {
             $state.go('airfoilShower');
             SettingsService.set("sku",item.sku);
           }
-          if (item.deviceType == "mc镜柜") {
+          if (item.deviceType == "index.mc") {
             $state.go('mc');
           }
-
-          // if (item.deviceType == "RO") {
-          //   $state.go('mc');
-          // }
-
         }
+
+        var data = $scope.deviceModel[index];
+
+        $scope.deviceModel.splice(index, 1);
+        $scope.deviceModel.splice(0, 0, data);
       };
 
 
