@@ -50,15 +50,15 @@ angular.module('toiletControlModule')
         $scope.tosetstatustiveOnceFlag = 0;
         $scope.selectedType = "";
         document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
-          // alert(12);
           // alert("resultOn" + angular.toJson(resultOn))
           var resultOn = result[0];
           if (resultOn.from.uid === tolitersetcmdObj.diviceid) {
             // alert("resultOn" + angular.toJson(resultOn))
             if (resultOn.data.cmd) {
               var backDataCmd = nimisetting.analysisInstruction(resultOn.data.cmd[0]);
+              // alert("backDataCmdsett"+angular.toJson(backDataCmd))
+
               if (backDataCmd.flag === "ack") {
-                // alert("backDataCmdsett"+angular.toJson(backDataCmd))
                 if ($scope.tosetstatustiveOnceFlag === 0) {
                   $scope.tosetstatustiveOnceFlag++;
                   try {
@@ -74,28 +74,29 @@ angular.module('toiletControlModule')
                       }else {
                         $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directerror"));
                       };
-                    } else if (backDataCmd.cmd === "13") {
+                    } else if (backDataCmd.cmd === "13" || backDataCmd.cmd === "00" ||backDataCmd.cmd === "0c" || backDataCmd.cmd === "0f") {
                       var name = "toiletSetting.settingsucc";
                       if (backDataCmd.ack === "1000") {
                         $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
                       } else {
                         $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directerror"));
                       }
-                    }else if (backDataCmd.cmd === "0c") {
-                      var name = "toiletSetting.settingsucc";
-                      if (backDataCmd.ack === "1000") {
-                        $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
-                      } else {
-                        $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directerror"));
-                      }
-                    }else if (backDataCmd.cmd === "0f") {
-                      var name = "toiletSetting.settingsucc";
-                      if (backDataCmd.ack === "1000") {
-                        $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
-                      } else {
-                        $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directerror"));
-                      }
-                    }
+                    };
+                    // else if (backDataCmd.cmd === "0c") {
+                    //   var name = "toiletSetting.settingsucc";
+                    //   if (backDataCmd.ack === "1000") {
+                    //     $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
+                    //   } else {
+                    //     $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directerror"));
+                    //   }
+                    // }else if (backDataCmd.cmd === "0f") {
+                    //   var name = "toiletSetting.settingsucc";
+                    //   if (backDataCmd.ack === "1000") {
+                    //     $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
+                    //   } else {
+                    //     $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directerror"));
+                    //   }
+                    // }
                   } catch (e) {
                     alert(e.message);
                   };
@@ -192,7 +193,7 @@ angular.module('toiletControlModule')
       };
       //synchronous date
       var currentDate = new Date();
-      var currentDateYear = currentDate.getFullYear();
+      var currentDateYear = ((currentDate.getFullYear()).toString()).substring(2,4);
       var currentDateMouth = currentDate.getMonth()+1;
       var currentDateDay = currentDate.getDate();
       var currentDateHour = currentDate.getHours();
@@ -206,9 +207,8 @@ angular.module('toiletControlModule')
       console.log(cmdvalue);
       alert(cmdvalue);
       if(baseConfig.isCloudCtrl){
-        $scope.toilSetGetImpleteData(type,cmdvalue,$translate.instant("toiletSetting.autochongshui"));
+        $scope.toilSetGetImpleteData(type,cmdvalue,$translate.instant(""));
       }else{
-        alert(tolitersetcmdObj.boxid)
         cmdService.sendCmd(tolitersetcmdObj.diviceid, cmdvalue, tolitersetcmdObj.boxid);
       };
       $scope.jiedianval = [{

@@ -216,10 +216,12 @@ angular.module('toiletControlModule')
                 };
               // }
             }else{
+              alert("$scope.initStatusFlag"+$scope.initStatusFlag)
               if(!$scope.initStatusFlag){
                 hmsPopup.hideLoading();
                 $scope.initStatusFlag = true;
               };
+              alert("backDataCmd"+angular.toJson(backDataCmd));
               //status
               if(backDataCmd.cmd === "a5"){
                 if($scope.clearOnceFlag === 0) {
@@ -248,6 +250,10 @@ angular.module('toiletControlModule')
                   if(backDataCmd.flushStatus === "0001"){
                     //complete
                     // $scope.cenwatpurifierCtrl.isShwoClearStatus = false;
+                    if($scope.initStatusFlag){
+                      $scope.selectChange(true,0);
+                      $scope.Toast.show($translate.instant("cenwatpurifier.clearover"));
+                    };
                   }else if(backDataCmd.flushStatus === "0010"){
                     //doing
                     $scope.cenwatpurifierCtrl.clearData = $scope.cenwatpurifierCtrl.clearStatus;
@@ -326,37 +332,41 @@ angular.module('toiletControlModule')
       //处理选择怎加border
       var handlenapeListNapeLen = $scope.handlenapeListNape.length;
       $scope.selectNapes = function (index) {
-        hmsPopup.showLoading("");
-        $timeout(function () {
-          hmsPopup.hideLoading();
-        },500);
-        $scope.handlenapeSelectedIndex = index;
-        if($scope.handlenapeListNape[index].matchdataid === "setting"){
-          $state.go("cenwatpurSetting");
-        }else {
-          if(!$scope.handlenapeListNape[index].selecFlag){
-            $scope.selectChangeFlag = true;
-            var cmdvalue = getCmd(cenwapurcmdObj.header,cenwapurcmdObj.idx,cenwatpurDir._data.startOutlet,cenwapurcmdObj.ctrId,cenwapurcmdObj.devId);
-            if(baseConfig.isCloudCtrl){
-              //cloud send cmd
-              $scope.cpGetImpleteData(true,cmdvalue,name,index);
+        if(!$scope.overTiemFlag){
+          $scope.handlenapeSelectedIndex = index;
+          if($scope.handlenapeListNape[index].matchdataid === "setting"){
+            $state.go("cenwatpurSetting");
+          }else {
+            hmsPopup.showLoading("");
+            $timeout(function () {
+              hmsPopup.hideLoading();
+            },500);
+            if(!$scope.handlenapeListNape[index].selecFlag){
+              $scope.selectChangeFlag = true;
+              var cmdvalue = getCmd(cenwapurcmdObj.header,cenwapurcmdObj.idx,cenwatpurDir._data.startOutlet,cenwapurcmdObj.ctrId,cenwapurcmdObj.devId);
+              if(baseConfig.isCloudCtrl){
+                //cloud send cmd
+                $scope.cpGetImpleteData(true,cmdvalue,name,index);
+              }else{
+                //divice sen cmd
+                //cmdService.sendCmd(deviceId,cmdvalue,boxId);
+                cmdService.sendCmd(cenwapurcmdObj.diviceid, cmdvalue, cenwapurcmdObj.boxid);
+              };
             }else{
-              //divice sen cmd
-              //cmdService.sendCmd(deviceId,cmdvalue,boxId);
-              cmdService.sendCmd(cenwapurcmdObj.diviceid, cmdvalue, cenwapurcmdObj.boxid);
-            };
-          }else{
-            $scope.selectChangeFlag = true;
-            var cmdvalue = getCmd(cenwapurcmdObj.header,cenwapurcmdObj.idx,cenwatpurDir._data.stopOutlet,cenwapurcmdObj.ctrId,cenwapurcmdObj.devId);
-            if(baseConfig.isCloudCtrl){
-              //cloud send cmd
-              $scope.cpGetImpleteData(true,cmdvalue,name,index);
-            }else{
-              //divice sen cmd
-              // cmdService.sendCmd(deviceId,cmdvalue,boxId);
-              cmdService.sendCmd(cenwapurcmdObj.diviceid, cmdvalue, cenwapurcmdObj.boxid);
+              $scope.selectChangeFlag = true;
+              var cmdvalue = getCmd(cenwapurcmdObj.header,cenwapurcmdObj.idx,cenwatpurDir._data.stopOutlet,cenwapurcmdObj.ctrId,cenwapurcmdObj.devId);
+              if(baseConfig.isCloudCtrl){
+                //cloud send cmd
+                $scope.cpGetImpleteData(true,cmdvalue,name,index);
+              }else{
+                //divice sen cmd
+                // cmdService.sendCmd(deviceId,cmdvalue,boxId);
+                cmdService.sendCmd(cenwapurcmdObj.diviceid, cmdvalue, cenwapurcmdObj.boxid);
+              };
             };
           };
-        };
+        }else{
+          $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"))
+        }
       };
     }]);

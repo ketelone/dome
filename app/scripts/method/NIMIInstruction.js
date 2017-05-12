@@ -460,16 +460,11 @@ NIMI.prototype.analysisInstruction = function (arg) {
 function analysisToiletStatus(ackStr) {
   var mJson;
   var data = ackStr.substring(2, ackStr.length);
-  var param_one = fourBitToCheck(parseInt(data.substring(0, 1)).toString(2))
-    + fourBitToCheck(parseInt(data.substring(1, 2)).toString(2));
-  var param_second = fourBitToCheck(parseInt(data.substring(2, 3)).toString(2))
-    + fourBitToCheck(parseInt(data.substring(3, 4)).toString(2));
-  var param_third = fourBitToCheck(parseInt(data.substring(4, 5)).toString(2))
-    + fourBitToCheck(parseInt(data.substring(5, 6)).toString(2));
-  var param_fourth = fourBitToCheck(parseInt(data.substring(6, 7)).toString(2))
-    + fourBitToCheck(parseInt(data.substring(7, 8)).toString(2));
-  var param_fifth = fourBitToCheck(parseInt(data.substring(8, 9)).toString(2))
-    + fourBitToCheck(parseInt(data.substring(9, 10)).toString(2));
+  var param_one = byteToCheck(parseInt(data.substring(0, 2),16).toString(2));
+  var param_second = byteToCheck(parseInt(data.substring(2, 4),16).toString(2));
+  var param_third = byteToCheck(parseInt(data.substring(4, 6),16).toString(2));
+  var param_fourth = byteToCheck(parseInt(data.substring(6, 8),16).toString(2));
+  var param_fifth = byteToCheck(parseInt(data.substring(8, 10),16).toString(2));
   var flushStatus = param_one.substring(0, 3);
   var lidRingStatus = param_one.substring(3, 6);
   var dryerStatus = param_one.substring(7, 8);
@@ -495,7 +490,7 @@ function analysisToiletStatus(ackStr) {
     "UVProgressStatus": UVProgressStatus, "ballValve": ballValve, "powerSaveLearnByUser": powerSaveLearnByUser
   };
   return mJson;
-};
+}
 /**
  * 一键除菌状态返回
  * @param ackStr
@@ -503,7 +498,7 @@ function analysisToiletStatus(ackStr) {
 function analysisSanitizeStatus(ackStr) {
   var mJson;
   var data = ackStr.substring(2, ackStr.length);
-  var param_one = byteToCheck(parseInt(data.substring(0, 2)).toString(2));
+  var param_one = byteToCheck(parseInt(data.substring(0, 2),16).toString(2));
   var UVStatus = param_one.substring(4, 8);
   var hour = parseInt(data.substring(2, 4), 16);
   var minute = parseInt(data.substring(4, 6), 16);
@@ -698,6 +693,14 @@ function analysisFlushStatus(ackStr) {
  * @param week 周几 {1,2,3,4,5,6,7}
  */
 NIMI.prototype.setDeviceTime = function (year, month, date, hour, minute, week) {
+  console.log(angular.toJson({
+    year:year,
+    month:month,
+    date:date,
+    hour:hour,
+    minute:minute,
+    week:week
+  }))
   var cmd = "0f";
   cmd += getHex(sevenBitToCheck(year.toString(2)
     + fourBitToCheck(month.toString(2))
@@ -733,26 +736,4 @@ function sevenBitToCheck(data) {
     }
   }
   return data;
-}
-
-var a = {
-    //ny
-    FRONT_SPRAY_PRESSURE:2,
-    FRONT_SPRAY_POSITION:2,
-    FRONT_SPRAY_TMPT:1,
-    //tx
-    REAR_PRESSURE:2,
-    REAR_POSITION:2,
-    REAR_TMPT:1,
-    //nf
-    DRYER_PRESSURE:2,
-    DRYER_TMPT:1,
-    //nj
-    DRYER_POWER:1,
-    //qw
-    SEAT_TMPT:2,
-    //dg
-    LIGHT_AMBIENT_BRIGHTNESS:1,
-    LIGHT_BOWL_BRIGHTNESS:5,
-  }
-window.localStorage.toilteFaviteSetting= JSON.stringify(a);
+};

@@ -77,7 +77,7 @@ angular.module('toiletControlModule')
       $scope.clearsetOnceFlag = 0;
       document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
         var resultOn = result[0];
-        alert(angular.toJson(resultOn))
+        // alert(angular.toJson(resultOn))
         if(resultOn.from.uid === cleartersetcmdObj.diviceid){
           if (resultOn.data.cmd) {
             var backDataCmd = cleartersetting.analysisInstruction(resultOn.data.cmd[0]);

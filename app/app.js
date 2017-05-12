@@ -771,6 +771,28 @@ angular.module('myApp')
 
         $urlRouterProvider.otherwise('/guide');
         window.localStorage.appCacheVersion = baseConfig.version.currentVersion;
+        //toilte favite set
+        var toilteFaviote = {
+          //ny
+          FRONT_SPRAY_PRESSURE:2,
+          FRONT_SPRAY_POSITION:2,
+          FRONT_SPRAY_TMPT:1,
+          //tx
+          REAR_PRESSURE:2,
+          REAR_POSITION:2,
+          REAR_TMPT:1,
+          //nf
+          DRYER_PRESSURE:2,
+          DRYER_TMPT:1,
+          //nj
+          DRYER_POWER:1,
+          //qw
+          SEAT_TMPT:2,
+          //dg
+          LIGHT_AMBIENT_BRIGHTNESS:1,
+          LIGHT_BOWL_BRIGHTNESS:5,
+        }
+        window.localStorage.toilteFaviteSetting= JSON.stringify(toilteFaviote);
 
       } else {
         if (window.localStorage.token && window.localStorage.token != "" && window.localStorage.isHrms2108) {

@@ -429,7 +429,8 @@ angular.module('toiletControlModule')
        *
        set dang qian ce hau shu ju zhi
        */
-      $scope.currentSlideData = $scope.slideInitData;
+      // $scope.currentSlideData = $scope.slideInitData;
+      $scope.currentSlideData = [];
       /**
        init dang qian mo ban shu ju
        */
@@ -444,6 +445,7 @@ angular.module('toiletControlModule')
         if($('#ionSliderBox').children().length !== 0){
           $('#ionSliderBox').empty();
         };
+
         var checHtml =
           "<ion-slide-box ng-init='lockSlide()' show-pager='true' delegate-handle='boxSlider'>"+
           "<ion-slide ng-repeat='list in currentSlideData track by $index'>"+
@@ -467,6 +469,7 @@ angular.module('toiletControlModule')
          编译html数据
          */
         var $checkhtml = $compile(checHtml)($scope); // 编译
+        // console.log($checkhtml)
         $('#ionSliderBox').append($checkhtml[0])
       };
       // $scope.initHtmlTemplate($scope.currentSlideData);
@@ -705,29 +708,30 @@ angular.module('toiletControlModule')
               $timeout(function () {
                 $scope.getCurrentObj($scope.count);
                 onceFlag = true;
-              },17)
+              },20)
             }else{
               $scope.count = 0;
             }
           };
         };
         $scope.slideHasChangedright = function () {
-          onceFlag = true;
-          var slidecount = $scope.currentSlideData.length;
-          if(slidecount !== 1){
-            onceFlag = false;
-            $scope.count++;
-            if($scope.count <= slidecount-1){
-              currentRadObj = null;
-              $ionicSlideBoxDelegate.$getByHandle('boxSlider').next();
-              $timeout(function () {
-                $scope.getCurrentObj($scope.count);
-                onceFlag = true;
-              },17)
-            }else{
-              $scope.count = slidecount-1;
+            onceFlag = true;
+            var slidecount = $scope.currentSlideData.length;
+            if (slidecount !== 1) {
+              onceFlag = false;
+              $scope.count++;
+              if ($scope.count <= slidecount - 1) {
+                currentRadObj = null;
+                $ionicSlideBoxDelegate.$getByHandle('boxSlider').next();
+                $timeout(function () {
+                  $scope.getCurrentObj($scope.count);
+                  onceFlag = true;
+                }, 20)
+              } else {
+                $scope.count = slidecount - 1;
+              }
+              ;
             };
-          };
         };
       },20);
       /**
@@ -824,33 +828,37 @@ angular.module('toiletControlModule')
        *@disc:use nuamfen Instruction create
        */
       $scope.feetSeatIntionCreate = function (flag,type,temperature,isType,selectedIndex) {
-        $scope.selectChangeFlag = flag;
-        $scope.selectIsType = isType;
-        var selectedDataTemp = $scope.handlenapeListNape[selectedIndex];
-        var handleOriginData = selectedDataTemp.handledata;
-        if(!temperature){
-          var temperature = handleOriginData[0].gearInit;
-          if(type === "quanwen"){
-            if(temperature === 3){
-              temperature = 4;
-            }else if(temperature === 4){
-              temperature = 6;
-            }else if(temperature === 5){
-              temperature = 8;
-            }else if(temperature === 6){
-              temperature = 10;
+        try {
+          $scope.selectChangeFlag = flag;
+          $scope.selectIsType = isType;
+          var selectedDataTemp = $scope.handlenapeListNape[selectedIndex];
+          var handleOriginData = selectedDataTemp.handledata;
+          if (!temperature) {
+            var temperature = handleOriginData[0].gearInit;
+            if (type === "quanwen") {
+              if (temperature === 3) {
+                temperature = 4;
+              } else if (temperature === 4) {
+                temperature = 6;
+              } else if (temperature === 5) {
+                temperature = 8;
+              } else if (temperature === 6) {
+                temperature = 10;
+              };
             };
           };
-        };
-        var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx,nimi.feetSeatHeater(temperature),tolitercmdObj.ctrId,tolitercmdObj.devId);
-        //send instructin
-        // console.log(cmdvalue);
-        // alert("cmdvalue"+cmdvalue)
-        if(baseConfig.isCloudCtrl){
-          $scope.toGetImpleteData(flag,cmdvalue,$scope.handlenapeListNape[selectedIndex].handleDes,selectedIndex,isType);
-        }else{
-          cmdService.sendCmd(tolitercmdObj.diviceid, cmdvalue, tolitercmdObj.boxid);
-        };
+          var cmdvalue = getCmd(tolitercmdObj.header, tolitercmdObj.idx, nimi.feetSeatHeater(temperature), tolitercmdObj.ctrId, tolitercmdObj.devId);
+          //send instructin
+          // console.log(cmdvalue);
+          alert("cmdvalue" + cmdvalue)
+          if (baseConfig.isCloudCtrl) {
+            $scope.toGetImpleteData(flag, cmdvalue, $scope.handlenapeListNape[selectedIndex].handleDes, selectedIndex, isType);
+          } else {
+            cmdService.sendCmd(tolitercmdObj.diviceid, cmdvalue, tolitercmdObj.boxid);
+          };
+        }catch(e){
+          alert(e.message)
+        }
       };
       /**
        *@params:lightCtl(aroundLigh rand) isType(type) selectedIndex(selected index)
@@ -889,7 +897,15 @@ angular.module('toiletControlModule')
         var handleOriginData = selectedDataTemp.handledata;
         if(!lightCtl){
           var lightCtl = handleOriginData[0].gearInit;
-        }
+          alert("lightCtl"+lightCtl)
+          if(lightCtl=== 1){
+            lightCtl = "低";
+          }else if(lightCtl === 2){
+            lightCtl = "中";
+          }else if(lightCtl === 3){
+            lightCtl = "高";
+          };
+        };
         var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx,nimi.ambientLight(lightMode, lightCtl, dynamicCtl, MOMC, TUEC, WEDC, THUC, FRIC, SATC, SUMC),tolitercmdObj.ctrId,tolitercmdObj.devId);
         //send instructin
         console.log(cmdvalue);
@@ -970,12 +986,13 @@ angular.module('toiletControlModule')
       $scope.handleRadSelected;
       //档位滑动执行发指令操作
       $scope.radScrollSendDir = function (currentRadObj) {
+        $scope.todeviceFlag = 0;
         $scope.handlenapeSelectedIndex = currentRadObj.selectedIndex;
         if(currentRadObj.id === "nvyong"){
           $scope.nvyongIntionCreate("true","女用","正常","ON","1",currentRadObj.selectedIndex);
         }else if(currentRadObj.id === "tunxi"){
           $scope.nvyongIntionCreate("true","臀洗","正常","ON","1",currentRadObj.selectedIndex);
-        }else if(currentRadObj.id === "nuanfeng"){
+        }else if(currentRadObj.id === "nuanfen"){
           $scope.nuamfenIntionCreate("true","ON","1",currentRadObj.selectedIndex);
         }else if(currentRadObj.id === "nuanjiao"){
           $scope.feetSeatIntionCreate("true","nuanjiao","","1",currentRadObj.selectedIndex);
@@ -1016,6 +1033,12 @@ angular.module('toiletControlModule')
                     };
                   };
                 };
+                // //click slide
+                // if($scope.currentSlideData[0].des === "init"){
+                //   $scope.clickSlideFlag = false;
+                // }else{
+                //   $scope.clickSlideFlag = true;
+                // };
               }else{
                 //open
                 //repeat scroll
@@ -1033,8 +1056,20 @@ angular.module('toiletControlModule')
                 };
                 // $ionicSlideBoxDelegate.$getByHandle("boxSlider").slide(0);
               };
+              // //click slide
+              // if($scope.currentSlideData[0].des === "init"){
+              //   $scope.clickSlideFlag = false;
+              // }else{
+              //   $scope.clickSlideFlag = true;
+              // };
               $scope.hanleInitTemple(index);
             }else{
+              // //click slide
+              // if($scope.currentSlideData[0].des === "init"){
+              //   $scope.clickSlideFlag = false;
+              // }else{
+              //   $scope.clickSlideFlag = true;
+              // };
               if($scope.handlenapeListNape[index].selecFlag){
                 if($scope.handlenapeListNape[index].matchdataid === "clear"){
                   $scope.value = $scope.Clearvalue;
@@ -1052,6 +1087,12 @@ angular.module('toiletControlModule')
                   $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgUrlTemp;
                 };
               },6000)
+            };
+            //click slide
+            if($scope.currentSlideData[0].des === "init"){
+              $scope.clickSlideFlag = false;
+            }else{
+              $scope.clickSlideFlag = true;
             };
           };
         };
@@ -1114,6 +1155,7 @@ angular.module('toiletControlModule')
        */
       $scope.hanleInitTemple = function (index) {
         $scope.count=0;
+        console.log($scope.currentSlideData)
         $scope.initHtmlTemplate($scope.currentSlideData);
         setTimeout(function () {
           //init every gearInitTemp
@@ -1135,113 +1177,137 @@ angular.module('toiletControlModule')
       //hanle selected border
       var handlenapeListNapeLen = $scope.handlenapeListNape.length;
       $scope.selectNapes = function (index) {
-        hmsPopup.showLoading("");
-        $timeout(function () {
-          hmsPopup.hideLoading();
-        },500);
-        //init randrow
-        // $scope.currentSlideData.forEach(function (item) {
-        //   item.gearInit = item.gearInitTemp;
-        // });
-        $scope.todeviceFlag = 0;
-        $scope.handlenapeSelectedIndex = index;
-        if($scope.handlenapeListNape[index].matchdataid === "setting"){
-          $state.go("toiletSetting");
-        }else {
-          $scope.hanleMutexFlag = true;
-          $scope.hanleMutexInitFlag = true;
-          if(!$scope.handlenapeListNape[index].selecFlag){
-            $scope.hanleMutexInit();
-            $scope.hanleMutex($scope.handlenapeListNape[index].matchdataid);
-          };
-          if($scope.hanleMutexFlag){
-            if(!$scope.handlenapeListNape[index].isManyDirective){
-              if(!$scope.handlenapeListNape[index].selecFlag && $scope.handlenapeListNape[index].matchdataid !== "clear"){
-                $scope.onceTimeIntionCreate("true","0",index);
-              };
-              if($scope.handlenapeListNape[index].matchdataid === "clear") {
-                //close clear
-                console.log($scope.toiletController.modelTypeClear)
-                // alert($scope.toiletController.modelTypeClear)
-                if($scope.handlenapeListNape[index].selecFlag){
-                  if($scope.toiletController.modelTypeClear !== "toiletController.gaunbi") {
-                    if ($scope.toiletController.modelTypeClear === "toiletController.clearopen") {
-                      var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx, nimi._data["closeTrap"],tolitercmdObj.ctrId,tolitercmdObj.devId);
-                    } else if ($scope.toiletController.modelTypeClear === "toiletController.clearextend") {
-                      var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx, nimi._data["closeExtendWand"],tolitercmdObj.ctrId,tolitercmdObj.devId);
-                    } else if ($scope.toiletController.modelTypeClear === "toiletController.clearinstance") {
-                      var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx, nimi._data["closeIntelligentSterilization"],tolitercmdObj.ctrId,tolitercmdObj.devId);
-                    };
-                    $scope.selectChangeFlag = true;
-                    $scope.selectIsType = "0";
-                    if(baseConfig.isCloudCtrl){
-                      var isType = "0";
-                      $scope.toGetImpleteData(true,cmdvalue,$scope.handlenapeListNape[index].handleDes,index,isType);
+        //device connect error and no use
+        if(!$scope.overTiemFlag){
+          //init randrow
+          // $scope.currentSlideData.forEach(function (item) {
+          //   item.gearInit = item.gearInitTemp;
+          // });
+          $scope.todeviceFlag = 0;
+          $scope.handlenapeSelectedIndex = index;
+          if($scope.handlenapeListNape[index].matchdataid === "setting"){
+            $state.go("toiletSetting");
+          }else {
+            hmsPopup.showLoading("");
+            $timeout(function () {
+              hmsPopup.hideLoading();
+            },500);
+            $scope.hanleMutexFlag = true;
+            $scope.hanleMutexInitFlag = true;
+            if(!$scope.handlenapeListNape[index].selecFlag){
+              $scope.hanleMutexInit();
+              $scope.hanleMutex($scope.handlenapeListNape[index].matchdataid);
+            };
+            if($scope.hanleMutexFlag){
+              if(!$scope.handlenapeListNape[index].isManyDirective){
+                if(!$scope.handlenapeListNape[index].selecFlag && $scope.handlenapeListNape[index].matchdataid !== "clear"){
+                  $scope.onceTimeIntionCreate("true","0",index);
+                };
+                if($scope.handlenapeListNape[index].matchdataid === "clear") {
+                  //close clear
+                  console.log($scope.toiletController.modelTypeClear)
+                  // alert($scope.toiletController.modelTypeClear)
+                  if($scope.handlenapeListNape[index].selecFlag){
+                    if($scope.toiletController.modelTypeClear !== "toiletController.gaunbi") {
+                      if ($scope.toiletController.modelTypeClear === "toiletController.clearopen") {
+                        var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx, nimi._data["closeTrap"],tolitercmdObj.ctrId,tolitercmdObj.devId);
+                      } else if ($scope.toiletController.modelTypeClear === "toiletController.clearextend") {
+                        var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx, nimi._data["closeExtendWand"],tolitercmdObj.ctrId,tolitercmdObj.devId);
+                      } else if ($scope.toiletController.modelTypeClear === "toiletController.clearinstance") {
+                        var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx, nimi._data["closeIntelligentSterilization"],tolitercmdObj.ctrId,tolitercmdObj.devId);
+                      };
+                      $scope.selectChangeFlag = true;
+                      $scope.selectIsType = "0";
+                      if(baseConfig.isCloudCtrl){
+                        var isType = "0";
+                        $scope.toGetImpleteData(true,cmdvalue,$scope.handlenapeListNape[index].handleDes,index,isType);
+                      }else{
+                        // $scope.sendCmd(cmdvalue,index);
+                        cmdService.sendCmd(tolitercmdObj.diviceid, cmdvalue, tolitercmdObj.boxid);
+                      }
+                      $scope.toiletController.modelTypeClear = "toiletController.gaunbi";
                     }else{
-                      // $scope.sendCmd(cmdvalue,index);
-                      cmdService.sendCmd(tolitercmdObj.diviceid, cmdvalue, tolitercmdObj.boxid);
+                      $scope.selectChange("true",index,"0");
                     }
-                    $scope.toiletController.modelTypeClear = "toiletController.gaunbi";
                   }else{
                     $scope.selectChange("true",index,"0");
+                  };
+                };
+              }else{
+                //use instruction create
+                if($scope.handlenapeListNape[index].matchdataid === "nvyong"){
+                  if($scope.isSeatedStatusFlag){
+                    if(!$scope.handlenapeListNape[index].selecFlag){
+                      $scope.nvyongIntionCreate(true,"女用","正常","ON","0",index);
+                    }else{
+                      $scope.nvyongIntionCreate(true,"女用","正常","OFF","0",index);
+                    };
+                  }else{
+                    $scope.Toast.show($translate.instant("toiletController.seatstatus"))
+                  };
+                }else if($scope.handlenapeListNape[index].matchdataid === "tunxi"){
+                  if($scope.isSeatedStatusFlag) {
+                    if(!$scope.handlenapeListNape[index].selecFlag){
+                      $scope.nvyongIntionCreate(true,"臀洗","正常","ON","0",index);
+                    }else{
+                      $scope.nvyongIntionCreate(true,"臀洗","正常","OFF","0",index);
+                    };
+                  }else{
+                    $scope.Toast.show($translate.instant("toiletController.seatstatus"));
                   }
-                }else{
-                  $scope.selectChange("true",index,"0");
+                }else if($scope.handlenapeListNape[index].matchdataid === "nuanfen"){
+                  if(!$scope.handlenapeListNape[index].selecFlag){
+                    $scope.nuamfenIntionCreate(true,"ON","0",index);
+                  }else{
+                    $scope.nuamfenIntionCreate(true,"OFF","0",index);
+                  };
+                }else if($scope.handlenapeListNape[index].matchdataid === "nuanjiao" || $scope.handlenapeListNape[index].matchdataid === "quanwen"){
+                  if(!$scope.handlenapeListNape[index].selecFlag){
+                    $scope.feetSeatIntionCreate(true,"",2,"0",index);
+                  }else{
+                    $scope.feetSeatIntionCreate(true,"",1,"0",index);
+                  };
+                }else if($scope.handlenapeListNape[index].matchdataid === "dengguang"){
+                  if(!$scope.handlenapeListNape[index].selecFlag){
+                    $scope.aroundLightIntionCreate(true,"","0",index);
+                    $timeout(function () {
+                      $scope.tolLightIntionCreate(false,"","0",index);
+                    },1000)
+                  }else{
+                    $scope.aroundLightIntionCreate(true,'关',"0",index);
+                    $timeout(function () {
+                      $scope.tolLightIntionCreate(false,0,"0",index);
+                    },1000)
+                  };
                 };
               };
             }else{
-              //use instruction create
-              if($scope.handlenapeListNape[index].matchdataid === "nvyong"){
-                if($scope.isSeatedStatusFlag){
-                  if(!$scope.handlenapeListNape[index].selecFlag){
-                    $scope.nvyongIntionCreate(true,"女用","正常","ON","0",index);
-                  }else{
-                    $scope.nvyongIntionCreate(true,"女用","正常","OFF","0",index);
-                  };
-                }else{
-                  $scope.Toast.show($translate.instant("toiletController.seatstatus"))
-                };
-              }else if($scope.handlenapeListNape[index].matchdataid === "tunxi"){
-                if($scope.isSeatedStatusFlag) {
-                  if(!$scope.handlenapeListNape[index].selecFlag){
-                    $scope.nvyongIntionCreate(true,"臀洗","正常","ON","0",index);
-                  }else{
-                    $scope.nvyongIntionCreate(true,"臀洗","正常","OFF","0",index);
-                  };
-                }else{
-                  $scope.Toast.show($translate.instant("toiletController.seatstatus"));
-                }
-              }else if($scope.handlenapeListNape[index].matchdataid === "nuanfen"){
-                if(!$scope.handlenapeListNape[index].selecFlag){
-                  $scope.nuamfenIntionCreate(true,"ON","0",index);
-                }else{
-                  $scope.nuamfenIntionCreate(true,"OFF","0",index);
-                };
-              }else if($scope.handlenapeListNape[index].matchdataid === "nuanjiao" || $scope.handlenapeListNape[index].matchdataid === "quanwen"){
-                if(!$scope.handlenapeListNape[index].selecFlag){
-                  $scope.feetSeatIntionCreate(true,"",2,"0",index);
-                }else{
-                  $scope.feetSeatIntionCreate(true,"",1,"0",index);
-                };
-              }else if($scope.handlenapeListNape[index].matchdataid === "dengguang"){
-                if(!$scope.handlenapeListNape[index].selecFlag){
-                  $scope.aroundLightIntionCreate(true,"低","0",index);
-                  $timeout(function () {
-                    $scope.tolLightIntionCreate(false,5,"0",index);
-                  },1000)
-                }else{
-                  $scope.aroundLightIntionCreate(true,'关',"0",index);
-                  $timeout(function () {
-                    $scope.tolLightIntionCreate(false,0,"0",index);
-                  },1000)
-                };
-              };
+              $scope.Toast.show($translate.instant($scope.handlenapeListNape[index].handleDes) + $translate.instant("toiletController.mutex"));
             };
-          }else{
-            $scope.Toast.show($translate.instant($scope.handlenapeListNape[index].handleDes) + $translate.instant("toiletController.mutex"));
           };
-        };
+        }else{
+          $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"))
+        }
       };
+      /**
+       *@params:index(selected index),
+       *@disc:init current status
+       */
+      $scope.initRecycleCurnt = function (index) {
+        $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
+        if($scope.handlenapeListNape[index].selecFlag === true){
+          $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgSeledUrl;
+        }else{
+          $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgUrlTemp;
+        };
+        $scope.handlenapeListNape[index].handledata.forEach(function (item) {
+          $scope.currentSlideData.push(item);
+        })
+      }
+
+
+      //init click slide
+      $scope.clickSlideFlag = false;
       //error over time
       $scope.overTiemFlag = true;
       document.addEventListener('SocketPlugin.receiveTcpData',function (result) {
@@ -1397,35 +1463,37 @@ angular.module('toiletControlModule')
             }else{
               // alert("backDataCmdstatus" + angular.toJson(backDataCmd));
               if(backDataCmd.cmd === "98") {
-                $scope.overTiemFlag = false;
                 //get device status
                 if ($scope.tostatustiveOnceFlag === 0) {
                   alert("status");
                   alert("backDataCmd"+angular.toJson(backDataCmd));
+                  alert("resultOn" + angular.toJson(resultOn))
                   $scope.tostatustiveOnceFlag++;
                   //handle status
-                  $scope.initTemplate = true;
                   //flush
                   if(backDataCmd.flushStatus === "001"){
+                    $scope.overTiemFlag = false;
                     if(backDataCmd.flushType === "0"){
-                      $scope.selectChange("true",0,"0");
+                      $scope.initRecycleCurnt(0);
                     }else if(backDataCmd.flushType === "1"){
-                      $scope.selectChange("true",1,"0");
+                      $scope.initRecycleCurnt(1);
                     };
                   };
                   //nv yong
                   if(backDataCmd.fontStatus === "1"){
-                    $timeout(function () {
-                      $scope.selectChange("true",2,"0");
-                    },20)
-                    $scope.initTemplate = false;
+                    $scope.overTiemFlag = false;
+                    // $timeout(function () {
+                    //   $scope.selectChange("true",2,"0");
+                    // },30)
+                    $scope.initRecycleCurnt(2);
                   };
                   //tun xi
                   if(backDataCmd.rearStatus === "1"){
-                    $timeout(function () {
-                      $scope.selectChange("true",3,"0");
-                    },20);
-                    $scope.initTemplate = false;
+                    // $timeout(function () {
+                    //   $scope.selectChange("true",3,"0");
+                    // },30);
+                    $scope.initRecycleCurnt(3);
+                    $scope.overTiemFlag = false;
                   };
                   //quan wenxxxx
                   // if(backDataCmd.ambientStatus === "1"){
@@ -1436,52 +1504,59 @@ angular.module('toiletControlModule')
                   // };
                   //nuanfen
                   if(backDataCmd.dryerStatus === "1"){
-                    $timeout(function () {
-                      $scope.selectChange("true",5,"0");
-                    },20);
-                    $scope.initTemplate = false;
+                    // $timeout(function () {
+                    //   $scope.selectChange("true",5,"0");
+                    // },30);
+                    $scope.initRecycleCurnt(5);
+                    $scope.overTiemFlag = false;
                   };
                   //dengguang
                   if(backDataCmd.ambientStatus === "1"){
-                    $timeout(function () {
-                      $scope.selectChange("true",6,"0");
-                    },20);
-                    $scope.initTemplate = false;
+                    // $timeout(function () {
+                    //   $scope.selectChange("true",6,"0");
+                    // },30);
+                    $scope.initRecycleCurnt(6);
+                    $scope.overTiemFlag = false;
                   };
                   //nuanjiao
                   if(backDataCmd.feetHeater === "1"){
-                    $timeout(function () {
-                      $scope.selectChange("true",7,"0");
-                    },20);
-                    $scope.initTemplate = false;
+                    // $timeout(function () {
+                    //   $scope.selectChange("true",7,"0");
+                    // },30);
+                    $scope.initRecycleCurnt(7);
+                    $scope.overTiemFlag = false;
                   };
                   //guangai
                   if(backDataCmd.lidRingStatus === "110"){
-                    $timeout(function () {
-                      $scope.selectChange("true",8,"0");
-                    },20);
-                    $scope.initTemplate = false;
+                    // $timeout(function () {
+                    //   $scope.selectChange("true",8,"0");
+                    // },30);
+                    $scope.initRecycleCurnt(8);
+                    $scope.overTiemFlag = false;
                   };
                   //fangai
                   if(backDataCmd.lidRingStatus === "011"){
-                    $timeout(function () {
-                      $scope.selectChange("true",9,"0");
-                    },20);
-                    $scope.initTemplate = false;
+                    // $timeout(function () {
+                    //   $scope.selectChange("true",9,"0");
+                    // },30);
+                    $scope.initRecycleCurnt(9);
+                    $scope.overTiemFlag = false;
                   };
-                  //fangai
+                  //fanquan
                   if(backDataCmd.lidRingStatus === "100"){
-                    $timeout(function () {
-                      $scope.selectChange("true",10,"0");
-                    },20);
-                    $scope.initTemplate = false;
+                    // $timeout(function () {
+                    //   $scope.selectChange("true",10,"0");
+                    // },30);
+                    $scope.initRecycleCurnt(10);
+                    $scope.overTiemFlag = false;
                   };
                   //fangai
                   if(backDataCmd.wandStatus === "1" || backDataCmd.UVProgressStatus != "0" || backDataCmd.ballValve === "1"){
                     $timeout(function () {
                       $scope.handlenapeListNape[11].selecFlag = !$scope.handlenapeListNape[11].selecFlag;
                       // $scope.selectChange("true",11,"0");
-                    },20);
+                    },30);
+                    $scope.overTiemFlag = false;
                     // $scope.initTemplate = false;
                     if(backDataCmd.wandStatus === "1"){
                       $scope.toiletController.modelTypeClear === "toiletController.clearextend";
@@ -1491,11 +1566,29 @@ angular.module('toiletControlModule')
                       $scope.toiletController.modelTypeClear === "toiletController.clearopen";
                     };
                   };
-                  if($scope.initTemplate){
+                  alert(angular.toJson($scope.currentSlideData))
+                  if($scope.currentSlideData.length>0){
+                    $scope.initHtmlTemplate($scope.currentSlideData);
+                    setTimeout(function () {
+                      $scope.getCurrentObj(0);
+                      $scope.clickSlideFlag = true;
+                    },20)
+                  }else{
+                    $scope.overTiemFlag = false;
+                    $scope.clickSlideFlag = false;
                     $timeout(function () {
+                      $scope.currentSlideData = $scope.slideInitData;
                       $scope.hanleInitTemple(12);
                     },20);
                   };
+                  // alert("$scope.initTemplate"+$scope.initTemplate)
+                  // if($scope.initTemplate){
+                  //   $scope.overTiemFlag = false;
+                  //   $scope.clickSlideFlag = false;
+                  //   $timeout(function () {
+                  //     $scope.hanleInitTemple(12);
+                  //   },20);
+                  // };
                   hmsPopup.hideLoading();
                   if(backDataCmd.seatedStatus === "1") {
                     $scope.isSeatedStatusFlag = true;
@@ -1523,10 +1616,7 @@ angular.module('toiletControlModule')
           $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"));
         };
       },10000)
-      // // $scope.selectChange("true",6,"0");
-      // $timeout(function () {
-      //   // $scope.selectChange("true",7,"0");
-      // },20)
+
       $scope.setSingalModalTop = "toiletSingalModalTop";
       $ionicModal.fromTemplateUrl('build/pages/model/hmsModal.html', {
         scope: $scope,
@@ -1567,13 +1657,13 @@ angular.module('toiletControlModule')
           for(var i=0;i<$scope.value.length;i++){
             if($scope.value[i].id === val.id){
               $scope.toiletController.modelType = $scope.value[i].des;
-            }
+            };
           };
         }else if($scope.value[0].id === "clearopen"){
           for(var i=0;i<$scope.value.length;i++){
             if($scope.value[i].id === val.id){
               $scope.toiletController.modelTypeClear = $scope.value[i].des;
-            }
+            };
           };
         };
         if($scope.value[0].id===0){

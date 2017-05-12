@@ -162,7 +162,7 @@ angular.module('toiletControlModule')
                   $scope.Toast.show($translate.instant(name)+$translate.instant("golabelvariable.directerror"));
                 };
               };
-            }
+            };
             $scope.$apply();
           };
         };

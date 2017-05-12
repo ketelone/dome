@@ -5,7 +5,7 @@
     "PopupConfire":"确定",
     "PopupCancle":"取消",
     "loadingdata":"正在连接",
-    "loadingdataerrror":"设备连接异常",
+    "loadingdataerrror":"网络连接异常",
     "directerror":"指令发生失败",
     "directesuccess":"指令发送成功"
   },
@@ -344,6 +344,7 @@
     "surplus":"正在清洁",
     "complete":"完成",
     "autoclear":"手动清洗",
+    "clearover":"清洁完毕",
     "devicestats":"设备状态",
     "setting":"设置",
     "errortotal": "异常情况统计",
