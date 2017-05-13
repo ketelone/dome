@@ -1,16 +1,10 @@
 <ion-view view-title="nextgen-shower" class="nextgen">
-  <!--<ion-header-bar style="background-image: none">
-    <button class="button button-icon icon ion-ios-arrow-left" ng-click="goBack()"></button>
-    <div class="h1 title" translate="nextgen.title"></div>
-    &lt;!&ndash;<button class="button button-icon icon ion-more" ng-click="openPopover($event)"></button>&ndash;&gt;
-  </ion-header-bar>-->
-  <div class="bar bar-header headColor " style="background-image: none">
-    <button class="button button-icon icon ion-ios-arrow-left iconColor" ng-click="goBack()"></button>
-    <div class="h1 title"><span class="iconColor">next&nbsp;gen&nbsp;shower&nbsp;</span></div>
-    <button class="button button-icon icon iconColor"></button>
-  </div>
-  <ion-content class="has-header" style="overflow-y:hidden;background-color: #0F0F0F">
-    <div class="toilet-conninfo">
+  <ion-header-bar style="background-image: none" class="toilet-bg">
+    <button class="button button-icon icon ion-ios-arrow-left colorhead" ng-click="goBack()"></button>
+    <div class="h1 title colorhead" translate="nextgen.title"></div>
+  </ion-header-bar>
+  <ion-content class="toilet-bg" overflow-scroll="true" style="overflow: hidden">
+    <div class="toilet-conninfo" style="background-color:#0D0F11">
       <span class="toilet-conninfo-signal">
         <img class="conninfo-signal-img" src="build/img/nextgen/icon_devicedetail_wifi.png" alt="">
         <span class="conninfo-signal-info" translate="nextgen.deviceWifiInfo"></span>
@@ -20,7 +14,7 @@
         <!--<span class="conninfo-isues-info" translate="nextgen.deviceUseInfo"></span>-->
       <!--</span>-->
     </div>
-    <div id="cewafiionSliderBox">
+    <div id="cewafiionSliderBox" style="background-color:#0D0F11">
       <ion-slide-box ng-init="lockSlide()" show-pager='false'>
         <ion-slide ng-repeat='list in currentSlideData track by $index'>
           <div id={{list.parNodeid}} class='toilet-parameterctl'>
@@ -34,41 +28,38 @@
         </ion-slide>
       </ion-slide-box>
     </div>
+    <div class="toilet-handlenape-selec" ng-click="openModal()">
+      <span class="handlenape-selec-des" translate="nextgen.handleSelecDes"></span>
+      <img class="handlenape-selec-img" src="build/img/nextgen/icon_scenario_arrow.png">
+      <span class="handlenape-selec-use" translate={{waterway}}></span>
+    </div>
+    <ion-scroll class="toilet-handlenape" overflow-scroll="false">
+      <div class="toilet-handlenape-list" ng-repeat="list in handlenapeListNape track by $index"
+           ng-click="selectNapes($index)">
+        <div class="handlenape-list-napes" ng-class="{true: 'napes-border', false: ''}[list.selecFlag]">
+          <span>
+            <img class="list-napes-img" ng-src={{list.imgUrl}} alt="" />
+          </span>
+          <p class="list-napes-dec" translate={{list.handleDes}}></p>
+        </div>
+      </div>
+      <div class="is-water-switch" ng-if="showWater">
+        <div class="close">
+          <div class="circle-choice" ng-click="closeShowWater()" >
+            <span><img ng-src="build/img/delete@2x.png" class="img-size"/></span>
+          </div>
+        </div>
+        <div class="chixu">
+          <div class="circle-choice" ng-click="chixuWater()" style="background: #D5638E">
+            <span class="des-position" translate="nextgen.chixu"></span>
+          </div>
+        </div>
+        <div class="paikong">
+          <div class="circle-choice" ng-click="paikongWater()" style="background: #51D8BD">
+            <span class="des-position" translate="nextgen.paikong"></span>
+          </div>
+        </div>
+      </div>
+    </ion-scroll>
   </ion-content>
-
-  <div class="toilet-handlenape-selec" ng-click="openModal()">
-    <div class="row" style="padding: 0rem">
-      <div class="col col-75"><span class="handlenape-selec-des" translate="nextgen.handleSelecDes"></span></div>
-      <div class="col col-10"><span class="handlenape-selec-use" translate={{waterway}}></span>
-      </div>
-      <div class="col"><img class="handlenape-selec-img" src="build/img/nextgen/icon_scenario_arrow.png"></div>
-    </div>
-  </div>
-  <ion-scroll class="toilet-handlenape toilet-bg" overflow-scroll="false">
-    <div class="toilet-handlenape-list" ng-repeat="list in handlenapeListNape track by $index"
-         ng-click="selectNapes($index)">
-      <div class="handlenape-list-napes" ng-class="{true: 'napes-border', false: ''}[list.selecFlag]">
-        <img class="list-napes-img" ng-src={{list.imgUrl}} alt="">
-        <div class="list-napes-dec" translate={{list.handleDes}}></div>
-      </div>
-    </div>
-    <div class="is-water-switch" ng-if="showWater">
-      <div class="close">
-        <div class="circle-choice" ng-click="closeShowWater()" >
-          <span><img ng-src="build/img/delete@2x.png" class="img-size"/></span>
-        </div>
-      </div>
-      <div class="chixu">
-        <div class="circle-choice" ng-click="chixuWater()" style="background: #D5638E">
-          <span class="des-position" translate="nextgen.chixu"></span>
-        </div>
-      </div>
-      <div class="paikong">
-        <div class="circle-choice" ng-click="paikongWater()" style="background: #51D8BD">
-          <span class="des-position" translate="nextgen.paikong"></span>
-        </div>
-      </div>
-    </div>
-  </ion-scroll>
-
 </ion-view>
