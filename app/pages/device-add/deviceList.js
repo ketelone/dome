@@ -297,7 +297,8 @@ angular.module('deviceAddModule')
           hmsPopup.showShortCenterToast("断开box");
         }
       }
-
+      $scope.$on('$destroy', function() {
+      });
     }]);
 
 

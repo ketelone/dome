@@ -184,7 +184,7 @@ angular.module('karessControlModule')
               value:{}
             };
             var type = this.data._returnCmdType;
-            console.log(data);
+            console.log(data+"====");
             switch(code){
               //返回设备状态
               case type.DEVICE_STATUS.CODE:
@@ -226,6 +226,10 @@ angular.module('karessControlModule')
                 out.value = valStatus;
                 break;
               case type.SANTIZE_STATUS.CODE:
+                var valStatus = {status:data.substring(2,4)}; // 返回
+                out.value = valStatus;
+                break;
+              case type.MASSAGE_BACK_STATUS.CODE:
                 var valStatus = {status:data.substring(2,4)}; // 返回
                 out.value = valStatus;
                 break;

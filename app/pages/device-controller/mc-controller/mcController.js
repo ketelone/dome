@@ -640,4 +640,6 @@ angular.module('mcControlModule')
 
         }
       }
+      $scope.$on('$destroy', function() {
+      });
     }]);

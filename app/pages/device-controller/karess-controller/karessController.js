@@ -33,7 +33,10 @@ angular.module('karessControlModule')
       };
       var deviceId = getDeviceId();
 
-
+      hmsPopup.showLoading();
+      $timeout(function () {
+        hmsPopup.hideLoading();
+      }, 15000);
       localStorage.karessTemp = '10';
       localStorage.karessLevel = '4';
       localStorage.karessOutLet = 'Bath Faucet';
@@ -235,7 +238,7 @@ angular.module('karessControlModule')
           "<canvas id={{list.canves03}} class='canves-pos'></canvas>" +
           "<canvas id={{list.canves04}} class=''canves-pos'></canvas>" +
           "<div class='toilet-parameterctl-data' ng-if='!list.parameterctlFlag'>" +
-          "<span class='toilet-parameterctl-raddata' ng-bind='list.gearInit+29' ng-if='list.flag == 1'></span>" +
+          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 1'>{{config.temp}}</span>" +
           "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 2  && list.gearInit == 1'>25%</span>" +
           "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 2  && list.gearInit == 2'>50%</span>" +
           "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 2  && list.gearInit == 3'>75%</span>" +
@@ -552,6 +555,8 @@ angular.module('karessControlModule')
           ;
         };
       }, 20);
+
+      //slelect button
       $scope.selectNapes = function (index, info) {
         $scope.handlenapeSelectedIndex = index;
         $scope.slideInitData.parameterctlImg = true;
@@ -569,7 +574,19 @@ angular.module('karessControlModule')
             } else {
               var outlet = '23';
             }
-            var value2 = cmdService.getCmd("8877", '01', karessService.setFillerParams(38, 95, outlet), 'E3', '02');
+            var temp = $scope.slideTunBuData[0].gearInit + 29;
+            if ($scope.slideTunBuData[1].gearInit == 1) {
+              var level = 25;
+            } else if ($scope.slideTunBuData[1].gearInit == 2) {
+              var level = 50;
+            }
+            else if ($scope.slideTunBuData[1].gearInit == 3) {
+              var level = 75;
+            }
+            else if ($scope.slideTunBuData[1].gearInit == 4) {
+              var level = 95;
+            }
+            var value2 = cmdService.getCmd("8877", '01', karessService.setFillerParams(temp, level, outlet), 'E3', '02');
             console.log(value2);
             var value = cmdService.getCmd("8877", '01', karessService.data.openFiller, 'E3', '02');
             console.log(baseConfig.isCloudCtrl);
@@ -747,9 +764,9 @@ angular.module('karessControlModule')
         }
         localStorage.karessOutLet = $scope.karessController.modelType;
         if ($scope.karessController.modelType == 'Bath Faucet') {
-          var outlet = '10';
+          var outlet = '13';
         } else {
-          var outlet = '50';
+          var outlet = '23';
         }
         var temp = $scope.slideTunBuData[0].gearInit + 29;
         if ($scope.slideTunBuData[1].gearInit == 1) {
@@ -766,7 +783,7 @@ angular.module('karessControlModule')
         //tingzhizhushui
         var value1 = cmdService.getCmd("8877", '01', karessService.data.closeFiller, 'E3', '02');
         var value = cmdService.getCmd("8877", '01', karessService.data.openFiller, 'E3', '02');
-        var value2 = cmdService.getCmd("8877", '01', karessService.setFillerParams(temp, level, '13'), 'E3', '02');
+        var value2 = cmdService.getCmd("8877", '01', karessService.setFillerParams(temp, level, outlet), 'E3', '02');
         cmdService.sendCmd(deviceId, value1, localStorage.boxIp);
         $timeout(function () {
           cmdService.sendCmd(deviceId, value2, localStorage.boxIp);
@@ -842,53 +859,96 @@ angular.module('karessControlModule')
       document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
         if (result[0].data.cmd.length > 0 && result[0].from.uid == deviceId) {
           var cmd = result[0].data.cmd[0];
+          console.log(angular.toJson(cmd)+"=======");
           var status = karessService.explainAck(result[0].data.cmd[0]);
           if (status.ack.indexOf('fa') >= 0) {
             karessButton(status);
+            hmsPopup.hideLoading();
           } else if (status.ack.indexOf('1003') >= 0 || status.ack.indexOf('1002') >= 0 || status.ack.indexOf('1001') >= 0) {
             $scope.Toast.show("操作失败！");
           } else {
             var item = karessService.resolveCmd(cmd);
-            if (item.type == "A6") {
+            if (item.type.indexOf('A6')>=0) {
               $scope.config.temp = item.value.temperature;
-            } else if (item.type == "A7") {
+              console.log(angular.toJson(item)+"=======");
+              console.log(angular.toJson($scope.config)+"========");
+              buttonChange();
+            } else if (item.type.indexOf('A7')>=0) {
               $scope.config.level = item.value.waterLevel;
-            } else if (item.type == "8A") {
-              if (item.value.status == '0') {
+              console.log(angular.toJson(item)+"=======");
+              console.log(angular.toJson($scope.config)+"========");
+              if($scope.config.level == $scope.slideTunBuData[1].gearInit){
+                $scope.config.fillerStatus = false;
+                $scope.handlenapeListNape[1].selecFlag = $scope.config.fillerStatus;
+                buttonChange();
+              }else{
+                buttonChange();
+              }
+            } else if (item.type.indexOf('8A')>=0) {//zhushui
+              if (item.value.status == '00') {
                 $scope.config.fillerStatus = false;
               } else {
                 $scope.config.fillerStatus = true;
               }
-            } else if (item.type == "88") {//luoshui
-              if (item.value.status == '2') {
+              $scope.handlenapeListNape[0].selecFlag = $scope.config.fillerStatus;
+              console.log(angular.toJson(item)+"=======");
+              console.log(angular.toJson($scope.config)+"========");
+              buttonChange();
+            } else if (item.type.indexOf('88')>=0) {//luoshui
+              if (item.value.status == '02') {
                 $scope.config.luoshui = false;
               } else {
                 $scope.config.luoshui = true;
               }
-            } else if (item.type == "83") {//touzhen
+              console.log(angular.toJson(item)+"=======");
+              console.log(angular.toJson($scope.config)+"========");
+              $scope.handlenapeListNape[1].selecFlag = $scope.config.luoshui;
+              buttonChange();
+            } else if (item.type.indexOf('84')>=0) {//anmo
+              if (item.value.status == '01') {
+                $scope.config.anmo = false;
+              } else {
+                $scope.config.anmo = true;
+              }
+              console.log(angular.toJson(item)+"=======");
+              console.log(angular.toJson($scope.config)+"========");
+              $scope.handlenapeListNape[2].selecFlag = $scope.config.anmo;
+              buttonChange();
+            }
+            else if (item.type.indexOf('83')>=0) {//touzhen
               if (item.value.status == '1') {
                 $scope.config.touzhen = false;
               } else {
                 $scope.config.touzhen = true;
               }
-            } else if (item.type == "87") {//chujun
-              if (item.value.status == '1') {
+              console.log(angular.toJson(item)+"=======");
+              console.log(angular.toJson($scope.config)+"========");
+              $scope.handlenapeListNape[3].selecFlag = $scope.config.touzhen;
+              buttonChange();
+            } else if (item.type.indexOf('87')>=0) {//chujun
+              if (item.value.status == '01') {
                 $scope.config.chunjun = false;
               } else {
                 $scope.config.chunjun = true;
               }
-            } else if (item.type == "84") {//anmo
-              if (item.value.status == '1') {
-                $scope.config.anmo = false;
-              } else {
-                $scope.config.anmo = true;
-              }
-
+              console.log(angular.toJson(item)+"=======");
+              console.log(angular.toJson($scope.config)+"========");
+              $scope.handlenapeListNape[6].selecFlag = $scope.config.chunjun;
+              buttonChange();
             }
           }
         }
       }, false);
-
+      function buttonChange(){
+        for(var i=0;i<$scope.handlenapeListNape.length;i++){
+          if ($scope.handlenapeListNape[i].selecFlag == true) {
+            $scope.handlenapeListNape[i].imgUrl = $scope.handlenapeListNape[i].imgSeledUrl;
+          } else {
+            $scope.handlenapeListNape[i].imgUrl = $scope.handlenapeListNape[i].imgUrlTemp;
+          }
+        }
+        $scope.$apply();
+      }
 
       var test = function (index, value, deviceId) {
         var url = baseConfig.basePath + "/r/api/message/sendMessage";
@@ -970,6 +1030,7 @@ angular.module('karessControlModule')
             }
             if (status.ack == '00') {
               $scope.Toast.show("一键关闭成功！");
+              changeColor();
             }
           } else {
             // if (status.ack.indexOf('fb') >= 0 || status.ack.indexOf('fc') >= 0 || status.ack.indexOf('fd') >= 0) {
@@ -988,7 +1049,7 @@ angular.module('karessControlModule')
               $scope.handlenapeListNape[i].selecFlag = false;
               $scope.handlenapeListNape[i].imgUrl = $scope.handlenapeListNape[i].imgUrlTemp;
             }
-          } else {
+            return;
           }
           if ($scope.handlenapeListNape[index].selecFlag == true) {
             $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgSeledUrl;
