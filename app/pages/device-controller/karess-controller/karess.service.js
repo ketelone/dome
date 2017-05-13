@@ -88,8 +88,14 @@ angular.module('karessControlModule')
               Run_Massage_Pillow:"2",
               Diagnostic:"B"
             },
-            MASSAGE_BACK_STATUS:4,
-            SANTIZE_STATUS:7,
+            MASSAGE_BACK_STATUS:{
+              CODE:"84",
+            },
+            SANTIZE_STATUS:{
+              CODE:"87",
+              open:"01", //TODO
+              close:"10", //TODO
+            },
             DRAIN_STATUS:{
               CODE:"88",
               Init:"0",
@@ -145,6 +151,7 @@ angular.module('karessControlModule')
         this.setFillerParams = function(temp, level, outlet) {
           var t = doStr(temp.toString(16));
           var l = doStr(level.toString(16));
+          console.log("02" + t + l + outlet);
           return "02" + t + l + outlet;
         };
 
@@ -178,7 +185,7 @@ angular.module('karessControlModule')
               value:{}
             };
             var type = this.data._returnCmdType;
-            console.log(data);
+            console.log(data+"====");
             switch(code){
               //返回设备状态
               case type.DEVICE_STATUS.CODE:
@@ -215,7 +222,18 @@ angular.module('karessControlModule')
                 var valStatus = {status:data.substring(2,4)}; // 返回
                 out.value = valStatus;
                 break;
-
+              case type.DRAIN_STATUS.CODE:
+                var valStatus = {status:data.substring(2,4)}; // 返回
+                out.value = valStatus;
+                break;
+              case type.SANTIZE_STATUS.CODE:
+                var valStatus = {status:data.substring(2,4)}; // 返回
+                out.value = valStatus;
+                break;
+              case type.MASSAGE_BACK_STATUS.CODE:
+                var valStatus = {status:data.substring(2,4)}; // 返回
+                out.value = valStatus;
+                break;
             }
           }
           return out;
@@ -262,6 +280,8 @@ angular.module('karessControlModule')
             } else if (ack == 'fb') {
               //invalid ack
               code = {'ack': '1001'};
+            }else{
+              code = {'ack': 'status'};
             }
           }
           return code;

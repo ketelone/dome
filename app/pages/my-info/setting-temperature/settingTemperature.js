@@ -28,7 +28,6 @@ angular.module('myInfoModule')
               $ionicScrollDelegate,
               hmsPopup,
               $rootScope, publicMethod,SettingsService) {
-alert("OK");
       var   radioImg3="build/img/common/radio_h.png";
       var   radioTemp="build/img/common/radio_q.png";
       $scope.goBack = function(){

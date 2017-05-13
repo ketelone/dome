@@ -108,6 +108,8 @@ angular.module('myApp')
       }
     });
 
+    localStorage.boxLinkCount = 1;
+
     document.addEventListener('deviceready', function () {
       console.log('openDatabase');
       db = window.sqlitePlugin.openDatabase({name: 'ko.db', location: 'default'});
@@ -650,6 +652,14 @@ angular.module('myApp')
           templateUrl: 'build/pages/device-controller/toilet-controller/toiletSetting/toiletSetting.html',
           controller: 'toiletSettingCtrl'
         })
+        //马桶设置
+        .state('toiletLearning', {
+          url: '/toiletLearning',
+          templateUrl: 'build/pages/device-controller/toilet-controller/toilet-learning/toilet.learning.html',
+          controller: 'toiletLearningCtrl'
+        })
+
+
         //灯光设置
         .state('lightSetting', {
           url: '/lightSetting',
@@ -689,8 +699,13 @@ angular.module('myApp')
           url: '/karessInfo',
           templateUrl: 'build/pages/device-controller/karess-controller/info-karess/karessInfo.html',
           controller: 'karessInfoControllerCtrl'
-
         })
+        .state('karessLearning', {
+          url: '/karessLearning',
+          templateUrl: 'build/pages/device-controller/karess-controller/karess-learning/karess.learning.html',
+          controller: 'karessLearningCtrl'
+        })
+
         //设备控制-mc
         .state('mc', {
           url: '/mc',
@@ -706,8 +721,13 @@ angular.module('myApp')
           url: '/mcInfo',
           templateUrl: 'build/pages/device-controller/mc-controller/info-mc/mcInfo.html',
           controller: 'mcInfoControllerCtrl'
-
         })
+        .state('mcLearning', {
+          url: '/mcLearning',
+          templateUrl: 'build/pages/device-controller/mc-controller/mc-learning/mc.learning.html',
+          controller: 'mcLearningCtrl'
+        })
+
         .state('nextgenSet', {
           url: '/nextgenSet',
           templateUrl: 'build/pages/device-controller/nextgen-controller/nextgen-set/nextgenSet.html',
@@ -739,6 +759,12 @@ angular.module('myApp')
           templateUrl: 'build/pages/device-controller/bathroom-controller/bathroom-info/bathroomInfo.html',
           controller: 'bathroomInfoCtrl'
         })
+        .state('bathroomLearning', {
+          url: '/bathroomLearning',
+          templateUrl: 'build/pages/device-controller/bathroom-controller/bathroom-learning/bathroom.learning.html',
+          controller: 'bathroomLearningCtrl'
+        })
+
         .state('airfoilShower', {
           url: '/airfoilShower',
           templateUrl: 'build/pages/device-controller/airfoil-shower-controller/airfoilShower.html',

@@ -13,6 +13,7 @@ angular.module('toiletControlModule')
     'cmdService',
     'baseConfig',
     'checkVersionService',
+    '$ionicPopover',
     function ($scope,
               $state,
               $translate,
@@ -25,7 +26,8 @@ angular.module('toiletControlModule')
               $compile,
               cmdService,
               baseConfig,
-              checkVersionService
+              checkVersionService,
+              $ionicPopover
     ) {
       $scope.screenHeig = window.innerHeight;
       $scope.screenWidth = window.innerWidth;
@@ -2175,4 +2177,42 @@ angular.module('toiletControlModule')
         $scope.value = [];
         $scope.modal.hide();
       };
+
+      $scope.goLearn = function () {
+        $state.go("toiletLearning");
+      }
+      $scope.operating = [{
+        text:'重命名'
+      },{
+        text:'移动'
+      },{
+        text:'解除绑定'
+      },{
+        text:'机器学习设置'
+      }];
+
+      $scope.popover = $ionicPopover.fromTemplateUrl('build/pages/modal/popover.html', {
+        scope: $scope
+      });
+
+      // .fromTemplateUrl() 方法
+      $ionicPopover.fromTemplateUrl('build/pages/model/popover.html', {
+        scope: $scope
+      }).then(function(popover) {
+        $scope.popover = popover;
+      });
+
+
+      $scope.openPopover = function($event) {
+        $scope.popover.show($event);
+      };
+
+      $scope.closePopover = function(index) {
+        console.log(index);
+        $scope.popover.hide();
+        if(index==3){
+          $scope.goLearn();
+        }
+      }
+
     }]);

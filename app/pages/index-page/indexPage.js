@@ -18,6 +18,8 @@ angular.module('indexPageModule')
     'hmsHttp',
     '$translate',
     'cmdService',
+    '$window',
+    'indexPageService',
     function ($scope,
               $state,
               $ionicGesture,
@@ -29,20 +31,28 @@ angular.module('indexPageModule')
               hmsPopup,
               SettingsService,
               hmsHttp,
-              $translate) {
+              $translate,
+              cmdService,
+              $window,
+              indexPageService) {
       window.localStorage.token = '4f75ed43-aee2-4f35-895e-7d3f086ddf86';
       window.localStorage.empno = '18620025571';
       window.localStorage.checkboxSavePwd = 'admin';
       console.log(window.localStorage.token);
+
       $scope.isSceneModel = true;
       $scope.isDeviceModel = false;
       $scope.isOneLine = true;
       $scope.isSecondLine = false;
+      $scope.isBigScreen = $window.innerWidth > 1000 ? false : true;
+      $scope.isMorning =  false;
+      $scope.isLeave = false;
       $scope.homeInfo = {
         temperature: "",
         percentage: "",
         temperatureCh: ""
       };
+      var ishidden = false;
       $scope.tabs = [
         {
           text: "index.model",
@@ -55,106 +65,109 @@ angular.module('indexPageModule')
       ];
       $scope.modelData = [];
       if (!baseConfig.isLinkDatabase) {
-        $scope.modelData = [
-          // {
-          //   id: "1",
-          //   pictureUrl: 'build/img/index/img_home_gohome.png',
-          //   title: "回家",
-          //   context: "一键开启指定设备",
-          //   isOneButton: true,
-          //   isTwoButton: false,
-          //   jsonContext: "1",
-          //   isOff: false,
-          //   lastUpdateDate: ""
-          // },
-          {
-            id: "2",
-            pictureUrl: 'build/img/index/img_home_morning.png',
-            title: "晨起",
-            context: "告别匆忙的晨起洗漱",
-            isOneButton: true,
-            isTwoButton: false,
-            jsonContext: "1",
-            isOff: false,
-            lastUpdateDate: "",
-            buttonName:"开启",
-            buttonStatus:false
-          },
-          {
-            id: "1",
-            pictureUrl: 'build/img/index/img_home_leavehome.png',
-            title: "离家",
-            context: "一键关闭所有设备",
-            isOneButton: true,
-            isTwoButton: false,
-            jsonContext: "1",
-            isOff:  false,
-            lastUpdateDate: "",
-            buttonName:"开启",
-            buttonStatus:false
-          },
-          {
-            id: "4",
-            pictureUrl: 'build/img/index/img_home_spa.png',
-            title: "泡澡",
-            context: "出去SPA不如在家泡澡",
-            isOneButton: false,
-            isTwoButton: true,
-            jsonContext: "1",
-            isOff:  false,
-            lastUpdateDate: "",
-            buttonName:"开启",
-            buttonStatus:false
-          },
-          {
-            id: "3",
-            pictureUrl: 'build/img/index/muyu@3x.png',
-            title: "沐浴",
-            context: "享受沐浴",
-            isOneButton: false,
-            isTwoButton: true,
-            jsonContext: "1",
-            isOff:  false,
-            lastUpdateDate: "",
-            buttonName:"开启",
-            buttonStatus:false
-          },
-          {
-            id: "5",
-            pictureUrl: 'build/img/index/img_home_veil.png',
-            title: "维亚灯光",
-            context: "开始您美好的一天",
-            isOneButton: false,
-            isTwoButton: false,
-            jsonContext: "1",
-            isOff:  false,
-            lastUpdateDate: "",
-            buttonName:"开启",
-            buttonStatus:false
-          },
-          {
-            id: "6",
-            pictureUrl: 'build/img/index/img_home_period.png',
-            title: "大姨了吗",
-            context: "女性特殊期洗浴关怀方案",
-            isOneButton: false,
-            isTwoButton: false,
-            jsonContext: "1",
-            isOff:  false,
-            lastUpdateDate: "",
-            buttonName:"开启",
-            buttonStatus:false
-          }
-        ];
+        //$scope.modelData = [
+        //  // {
+        //  //   id: "1",
+        //  //   pictureUrl: 'build/img/index/img_home_gohome.png',
+        //  //   title: "回家",
+        //  //   context: "一键开启指定设备",
+        //  //   isOneButton: true,
+        //  //   isTwoButton: false,
+        //  //   jsonContext: "1",
+        //  //   isOff: false,
+        //  //   lastUpdateDate: ""
+        //  // },
+        //  {
+        //    id: "2",
+        //    pictureUrl: 'build/img/index/img_home_morning.png',
+        //    title: "晨起",
+        //    context: "告别匆忙的晨起洗漱",
+        //    isOneButton: true,
+        //    isTwoButton: false,
+        //    jsonContext: "1",
+        //    isOff: false,
+        //    lastUpdateDate: "",
+        //    buttonName:"开启",
+        //    buttonStatus:false
+        //  },
+        //  {
+        //    id: "1",
+        //    pictureUrl: 'build/img/index/img_home_leavehome.png',
+        //    title: "离家",
+        //    context: "一键关闭所有设备",
+        //    isOneButton: true,
+        //    isTwoButton: false,
+        //    jsonContext: "1",
+        //    isOff:  false,
+        //    lastUpdateDate: "",
+        //    buttonName:"开启",
+        //    buttonStatus:false
+        //  },
+        //  {
+        //    id: "4",
+        //    pictureUrl: 'build/img/index/img_home_spa.png',
+        //    title: "泡澡",
+        //    context: "出去SPA不如在家泡澡",
+        //    isOneButton: false,
+        //    isTwoButton: true,
+        //    jsonContext: "1",
+        //    isOff:  false,
+        //    lastUpdateDate: "",
+        //    buttonName:"开启",
+        //    buttonStatus:false
+        //  },
+        //  {
+        //    id: "3",
+        //    pictureUrl: 'build/img/index/muyu@3x.png',
+        //    title: "沐浴",
+        //    context: "享受沐浴",
+        //    isOneButton: false,
+        //    isTwoButton: true,
+        //    jsonContext: "1",
+        //    isOff:  false,
+        //    lastUpdateDate: "",
+        //    buttonName:"开启",
+        //    buttonStatus:false
+        //  },
+        //  {
+        //    id: "5",
+        //    pictureUrl: 'build/img/index/img_home_veil.png',
+        //    title: "维亚灯光",
+        //    context: "开始您美好的一天",
+        //    isOneButton: false,
+        //    isTwoButton: false,
+        //    jsonContext: "1",
+        //    isOff:  false,
+        //    lastUpdateDate: "",
+        //    buttonName:"开启",
+        //    buttonStatus:false
+        //  },
+        //  {
+        //    id: "6",
+        //    pictureUrl: 'build/img/index/img_home_period.png',
+        //    title: "大姨了吗",
+        //    context: "女性特殊期洗浴关怀方案",
+        //    isOneButton: false,
+        //    isTwoButton: false,
+        //    jsonContext: "1",
+        //    isOff:  false,
+        //    lastUpdateDate: "",
+        //    buttonName:"开启",
+        //    buttonStatus:false
+        //  }
+        //];
+        $scope.modelData = indexPageService.getScaneList();
       }
 
 
       $scope.isInPage = 2;
-      $scope.goKeyscene = function (item) {
+      $scope.goKeyscene = function (item, index) {
         if ($scope.isInPage == 1) {
           $scope.isInPage = 2;
           return;
         }
+        window.localStorage.setItem('crrentScane',item);
+        window.localStorage.setItem('crrentScanesku',"D7:12:29:DF:76:06");
 
         if (item.id == '1') {
           $state.go('leaveHome');
@@ -170,12 +183,16 @@ angular.module('indexPageModule')
           $state.go('period');
         }
 
-        // db.transaction(function (tx) {
-        //   tx.executeSql('update T_CTM_PARTY_SCENARIO set LAST_UPDATE_DATE = "' + getNowFormatDate() + '" where SCENARIO_ID = ' + item.id);
+        db.transaction(function (tx) {
+          tx.executeSql('update T_CTM_PARTY_SCENARIO set LAST_UPDATE_DATE = "' + getNowFormatDate() + '" where SCENARIO_ID = ' + item.id);
+
+        });
+        //var data = $scope.modelData[index];
         //
-        // });
-        // $scope.modelData = [];
-        // getScenarioList();
+        //$scope.modelData.splice(index, 1);
+        //$scope.modelData.splice(0, 0, data);
+        //$scope.modelData = [];
+        //getScenarioList();
       };
 
 
@@ -196,9 +213,9 @@ angular.module('indexPageModule')
           {
             id: "1",
             pictureUrl: "build/img/index/img_home_device_toliet.png",
-            deviceType: "马桶",
+            deviceType: "index.toliet",
             deviceStatus: "设备在线",
-            deviceDesc: "有人使用",
+            deviceDesc: "",
             statusPictureUrl: "build/img/index/icon_home_device_signal5.png",
             errorPictureUrl: "",
             isStatus: true,
@@ -207,9 +224,9 @@ angular.module('indexPageModule')
           }, {
             id: "2",
             pictureUrl: "build/img/index/img_home_device_heater.png",
-            deviceType: "中央净水器",
+            deviceType: "index.waterPurifier",
             deviceStatus: "中央净水器",
-            deviceDesc: "中央净水器",
+            deviceDesc: "",
             statusPictureUrl: "build/img/index/icon_home_device_signal4.png",
             errorPictureUrl: "",
             isStatus: true,
@@ -218,74 +235,62 @@ angular.module('indexPageModule')
           }, {
             id: "3",
             pictureUrl: "build/img/index/img_home_device_heater.png",
-            deviceType: "浴霸",
+            deviceType: "index.bathroomHeader",
             deviceStatus: "设备在线",
-            deviceStatus: "设备在线",
-            deviceDesc: "80%",
+            deviceDesc: "26℃，60%",
             statusPictureUrl: "build/img/index/icon_home_device_signal4.png",
             errorPictureUrl: "",
             isStatus: true,
             isError: false,
-            sku: "D7:12:29:DF:76:06"
+            sku: "EB:4E:28:49:09:9D"
+            //sku: "D7:12:29:DF:76:06"
           },
-          // {
-          //   id: "5",
-          //   pictureUrl: "build/img/index/img_home_device_chushuifa.png",
-          //   deviceType: "RO",
-          //   deviceStatus: "设备离线",
-          //   deviceDesc: "",
-          //   statusPictureUrl: "build/img/index/icon_home_device_no_singal.png",
-          //   errorPictureUrl: "build/img/index/icon_home_device_warnning.png",
-          //   isStatus: true,
-          //   isError: true,
-          //   sku: "FB:3F:B6:2E:F5:3F"
-          // },
           {
             id: "6",
             pictureUrl: "build/img/index/karess.png",
-            deviceType: "karess",
+            deviceType: "index.bathtub",
             deviceStatus: "设备离线",
-            deviceDesc: "",
+            deviceDesc: "26℃",
             statusPictureUrl: "build/img/index/icon_home_device_no_singal.png",
             errorPictureUrl: "build/img/index/icon_home_device_warnning.png",
             isStatus: true,
-            isError: true,
+            isError: false,
             sku: "D2:3D:19:2C:A9:89"
           },
           {
             id: "7",
             pictureUrl: "build/img/index/next.png",
-            deviceType: "nextgen",
+            deviceType: "index.nextgen",
             deviceStatus: "设备离线",
             deviceDesc: "",
             statusPictureUrl: "build/img/index/icon_home_device_no_singal.png",
             errorPictureUrl: "build/img/index/icon_home_device_warnning.png",
             isStatus: true,
-            isError: true,
+            isError: false,
             sku: "F0:F0:87:F5:A2:17"
           },
           {
             id: "8",
             pictureUrl: "build/img/index/air.png",
-            deviceType: "airfoil-shower",
+            deviceType: "index.airfoilShower",
             deviceStatus: "设备离线",
-            deviceDesc: "",
+            deviceDesc: "30℃",
             statusPictureUrl: "build/img/index/icon_home_device_no_singal.png",
             errorPictureUrl: "build/img/index/icon_home_device_warnning.png",
             isStatus: true,
-            isError: true,
+            isError: false,
             sku: "D9:78:06:B6:77:C6"
           },
           {
             id: "9",
             pictureUrl: "build/img/index/img_home_device_chushuifa.png",
-            deviceType: "mc镜柜",
+            deviceType: "index.mc",
             deviceStatus: "设备离线",
             deviceDesc: "",
             statusPictureUrl: "build/img/index/icon_home_device_no_singal.png",
             errorPictureUrl: "build/img/index/icon_home_device_warnning.png",
             isStatus: true,
-            isError: true,
+            isError: false,
             sku: ""
           }
         ];
@@ -296,8 +301,15 @@ angular.module('indexPageModule')
 
       $scope.boxList = [];
 
+      var islinkHidden = true;
       $scope.linkBox = function () {
         hmsPopup.showLoading();
+        $timeout(function(){
+          if(!islinkHidden){
+            hmsPopup.hideLoading();
+            alert("超时，请重试！");
+          }
+        },30000);
         searchBox();
       };
 
@@ -527,16 +539,33 @@ angular.module('indexPageModule')
         });
       };
 
+
+
       $scope.$watch('', function () {
         //getDeviceStatus("");
 
         getWeather();
         if(localStorage.boxLinkCount == 1){
           hmsPopup.showLoading();
+          $timeout(function(){
+            if(!ishidden){
+              hmsPopup.hideLoading();
+              alert("超时，请重试！");
+            }
+          },30000);
           //$timeout(function () {
           searchBox();
           //},1500);
           localStorage.boxLinkCount = 2;
+
+          localStorage.windType = "bathroom.rock";
+          localStorage.hotTimer = "default";
+          localStorage.hotDryingTimer = "default";
+          localStorage.coolTimer = "default";
+          localStorage.dryerTimer = "default";
+          localStorage.purityTimer = "default";
+          localStorage.breathTimer = "default";
+
         }
         //checkIsOk();
         if (baseConfig.isLinkDatabase) {
@@ -580,10 +609,12 @@ angular.module('indexPageModule')
 
        }, false);*/
 
+
       var deviceStatus = [];
       var deviceLinkInfo = "";
       document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
         var resultStr = JSON.stringify(result);
+        console.log('触发结果为:=='+result);
         if (resultStr.indexOf("Who are you") >= 0) {
           return;
         }
@@ -602,6 +633,8 @@ angular.module('indexPageModule')
           localStorage.deviceStatus = JSON.stringify(deviceStatus);
 
           hmsPopup.hideLoading();
+          ishidden = true;
+          islinkHidden = true;
         }
 
         /*if (resultOn.payload.cmd == "SCAN_RETURN") {
@@ -631,7 +664,7 @@ angular.module('indexPageModule')
               "ctype": 0XE4,
               "uid": "peerId"
             },
-            "ts": Date.parse(new Date()) / 1000,
+            "ts": new Date().getTime(),
             "idx": 12,
             "mtype": "rqst",
             "data": {
@@ -676,6 +709,7 @@ angular.module('indexPageModule')
           $scope.Toast.show($translate.instant("index.searchBox"));
           angular.forEach($scope.boxList, function (data, index, array) {
             $timeout(function () {
+              alert('box值==='+JSON.stringify(data));
               boxLink(data[0]);
             }, 1000);
           });
@@ -692,9 +726,6 @@ angular.module('indexPageModule')
        *@disc: link box
        */
 
-      $timeout(function () {
-        hmsPopup.hideLoading();
-      }, 5000);
       var boxLink = function (item) {
         var boxIp = item.data.act_params.ip; //item.payload.cmd_properties.ip
         var deviceId = item.data.act_params.device_id;
@@ -738,7 +769,7 @@ angular.module('indexPageModule')
               "ctype": 0xE4,
               "uid": device_id
             },
-            "ts": 1487213040,
+            "ts": new Date().getTime(),
             "idx": 12,
             "mtype": "rqst",
             "data": {
@@ -787,10 +818,10 @@ angular.module('indexPageModule')
 
       //本地发送指令
       var pluginToCtrl = function (value, successMsg, errorMsg) {
-        cmdService.sendCmd( value, localStorage.boxIp);
+        cmdService.sendScanCmd( value, localStorage.boxIp);
       };
 
-      var morning = function () {
+      var sendCmd = function (index) {
         var value = [
           {
             "ver": 1,
@@ -800,7 +831,7 @@ angular.module('indexPageModule')
             },
             "to": {
               "ctype": 228,
-              "uid": "CN112345678"
+              "uid": localStorage.boxId
             },
             "ts": 1487213040,
             "idx": 12,
@@ -813,8 +844,29 @@ angular.module('indexPageModule')
               }
             }
           }
-        ]
-        pluginToCtrl(deviceId, value, "发送成功", "发送失败");
+        ];
+        if($scope.modelData[index].title =='晨起'){
+          value[0].data.act_params.scn_id =  '000000011';
+        }
+        if($scope.modelData[index].title =='离家'){
+          value[0].data.act_params.scn_id =  '000000012';
+        }
+        if($scope.modelData[index].title =='泡澡'){
+          if($scope.modelData[index].isOff == true){
+            value[0].data.act_params.scn_id =  '000000013';
+          }else {
+            value[0].data.act_params.scn_id =  '000000014';
+          }
+        }
+        if($scope.modelData[index].title =='沐浴'){
+          if($scope.modelData[index].isOff == true){
+            value[0].data.act_params.scn_id =  '000000015';
+          }else {
+            value[0].data.act_params.scn_id =  '000000016';
+          }
+        }
+        alert('发送的信息==='+JSON.stringify(value));
+        pluginToCtrl( value, "发送成功", "发送失败");
       }
 
       /**
@@ -823,40 +875,58 @@ angular.module('indexPageModule')
        *@disc: get switch status
        */
       var sceneList = [];
-      $scope.getSwitchStatus = function (item) {
-
-        var scentObj = {sceneType: item.title, status: item.isOff};
+      $scope.getSwitchStatus = function (index) {
+        //console.log('jinlai'+index+'=='+$scope.modelData[index].isOff)
+        ////$scope.modelData[index].isOff = !$scope.modelData[index].isOff;
+        //console.log('jinlai2'+index+'=='+$scope.modelData[index].isOff)
+        var scentObj = {sceneType: $scope.modelData[index].title, status: $scope.modelData[index].isOff};
         sceneList.push(scentObj);
         localStorage.sceneList = JSON.stringify(sceneList);
         $scope.isInPage = 1;
 
-        if (item.title == '离家') {
-
+        if ($scope.modelData[index].title == '离家') {
+          if($scope.modelData[index].isOff==false){ //是否开启状态
+            $scope.modelData[index].isOff = true;
+            $scope.modelData[0].isOff = false;
+          }
+          sendCmd(index);     //发送指令
+          $scope.modelData[index].isOneButton =false;//隐藏按钮
+          $timeout(function () {
+            $scope.modelData[index].isOneButton =true;
+          }, 5000);
           return;
-        } else if (item.title == '晨起') {
-
+        } else if ($scope.modelData[index].title == '晨起') {
+          if($scope.modelData[index].isOff==false){
+            $scope.modelData[index].isOff = true;
+            $scope.modelData[1].isOff = false;
+          }
+          sendCmd(index);
+          $scope.modelData[index].isOneButton =false;
+          $timeout(function () {
+            $scope.modelData[index].isOneButton =true;
+          }, 5000);
           return;
         }
 
-        if (item.isOff) {
-          //发送指令并传送当前场景按钮的状态
-          angular.forEach($scope.modelData, function (data, index, array) {
-            if (data.id == item.id) {
-              item.isOff = true;
-              return;
-            }
-          });
-        } else {
-          //db.transaction(function(tx) {
-          //  tx.executeSql('update T_CTM_PARTY_SCENARIO set scenarioStatus = "N" where DEVICE_ID = '+item.id);
-          //});
-          angular.forEach($scope.modelData, function (data, index, array) {
-            if (data.id == item.id) {
-              item.isOff = false;
-              return;
-            }
-          });
-        }
+        //if ($scope.modelData[index].isOff) {
+        //  //发送指令并传送当前场景按钮的状态
+        //  angular.forEach($scope.modelData, function (data, index, array) {
+        //    if (data.id == $scope.modelData[index].id) {
+        //      $scope.modelData[index].isOff = true;
+        //      return;
+        //    }
+        //  });
+        //} else {
+        //  //db.transaction(function(tx) {
+        //  //  tx.executeSql('update T_CTM_PARTY_SCENARIO set scenarioStatus = "N" where DEVICE_ID = '+item.id);
+        //  //});
+        //  angular.forEach($scope.modelData, function (data, index, array) {
+        //    if (data.id == $scope.modelData[index].id) {
+        //      $scope.modelData[index].isOff = false;
+        //      return;
+        //    }
+        //  });
+        //}
 
         /*if(item.isOff){
          //alert("on");
@@ -878,7 +948,7 @@ angular.module('indexPageModule')
         return true;
       };
 
-      $scope.getDeviceInfo = function (item) {
+      $scope.getDeviceInfo = function (item, index) {
 
         if (baseConfig.isLinkDatabase == true) {
           if (item.deviceType == "Bathroom Heater") {
@@ -906,39 +976,42 @@ angular.module('indexPageModule')
           db.transaction(function (tx) {
             tx.executeSql('update T_DVM_DEVICE set LAST_UPDATE_DATE = "' + getNowFormatDate() + '" where DEVICE_ID = ' + item.id);
           });
-          $scope.deviceModel = [];
-          getDeviceList();
+
+
+          //$scope.deviceModel = [];
+          //getDeviceList();
         } else {
-          if (item.deviceType == "浴霸") {
-            $state.go('bathroom', {deviceSku: item.sku});
+          if (item.deviceType == "index.bathroomHeader") {
+            $state.go('bathroom');
+            SettingsService.set("sku",item.sku);
           }
-          if (item.deviceType == "马桶") {
+          if (item.deviceType == "index.toliet") {
             $state.go('toiletContrl');
           }
-          if (item.deviceType == "中央净水器") {
+          if (item.deviceType == "index.waterPurifier") {
             $state.go('cenwatpurifierContrl');
           }
-          if (item.deviceType == "karess") {
+          if (item.deviceType == "index.bathtub") {
             $state.go('karess');
             SettingsService.set("sku", item.sku);
           }
-          if (item.deviceType == "nextgen") {
+          if (item.deviceType == "index.nextgen") {
             $state.go('nextgen', {deviceSku: item.sku});
             // SettingsService.set("sku",item.sku);
           }
-          if (item.deviceType == "airfoil-shower") {
+          if (item.deviceType == "index.airfoilShower") {
             $state.go('airfoilShower');
             SettingsService.set("sku",item.sku);
           }
-          if (item.deviceType == "mc镜柜") {
+          if (item.deviceType == "index.mc") {
             $state.go('mc');
           }
-
-          // if (item.deviceType == "RO") {
-          //   $state.go('mc');
-          // }
-
         }
+
+        //var data = $scope.deviceModel[index];
+        //
+        //$scope.deviceModel.splice(index, 1);
+        //$scope.deviceModel.splice(0, 0, data);
       };
 
 

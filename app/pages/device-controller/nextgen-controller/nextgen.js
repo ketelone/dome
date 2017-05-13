@@ -397,6 +397,7 @@ angular.module('nextgenModule')
         $scope.modal.hide();
         $scope.waterway = val.des;
         localStorage.SET_SHOWER_OUTLET_PARA_EXIT= val.des;
+        chooseWaterWay();//发送选择出水口指令
       };
 
     }]);

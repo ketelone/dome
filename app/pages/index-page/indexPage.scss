@@ -6,10 +6,10 @@ $applicationColor: white !default;
      height: 2.5rem;
    }
   .scroll{
-    height: 8.4rem;
+    height: 9.8rem;
   }
   .scroll-content{
-    top: 3.7rem;
+    top: 3.1rem;
   }
   .application-header{
     width: 100vw;
@@ -432,14 +432,15 @@ $applicationColor: white !default;
   }
 
   .switch-btn {
-    position: relative;
+    position: absolute;
     display: block;
     vertical-align: top;
     width: 1.5rem;
     height: 0.56rem;
     border-radius: 0.18rem;
     cursor: pointer;
-    margin-top: 6.8%;
+    margin-top: -1rem;
+    margin-left: 3.1rem;
   }
   .checked-switch {
     position: absolute;
@@ -527,42 +528,49 @@ $applicationColor: white !default;
     //border-top: 1px solid black;
     //border-bottom: 1px;
     //height: 18.7%;
-    height: 2.3rem;;
+    position: relative;
+    //height: 2.1rem;;
     //margin-top: 2.1%;
   }
   .height-light{
-    border-bottom: 2px solid white;
+    border-bottom: 0.03rem solid white;
     transition: all .3s;
     display: block;
     z-index: 10;
-    height: 8px;
+    height: 0.15rem;
     width: 19%;
     margin-left: 24%;
+    margin-bottom: 0.2rem;
   }
   .height-light2{
-    border-bottom: 2px solid white;
+    border-bottom: 0.03rem solid white;
     transition: all .3s;
     display: block;
     z-index: 10;
-    height: 8px;
+    height: 0.15rem;
     width: 19%;
     margin-left: 57%;
+    margin-bottom: 0.2rem;
   }
   .position-chevron{
     margin-left: 5rem;
     margin-top: -0.2rem;
   }
   .font-color-self{
+    position: absolute;
     font-size: 0.24rem;
     font-family: PingFangSC-Light;
     color: #ffffff;
-    margin-top: 4%;
+    margin-top: -1.7rem;
+    margin-left: 2.7rem;
   }
   .font-color-self-title{
+    position: absolute;
     font-size: 0.32rem;
     font-family: PingFangSC-Regular;
     color: #ffffff;
-    margin-top: -32%;
+    margin-top: -2.2rem;
+    margin-left: 3.25rem;
   }
   .chevron-color{
     color: #979797;
@@ -581,7 +589,7 @@ $applicationColor: white !default;
   .home-info{
     position: relative;
     height: 0.6rem;
-    margin-top: 0.5rem;
+    margin-top: 0.4rem;
   }
   .temperature{
     position: absolute;
@@ -595,7 +603,7 @@ $applicationColor: white !default;
   .percentage{
     position:absolute;
     margin-left: 4rem;
-    margin-top: 0.8rem;
+    margin-top: 0.86rem;
     font-size: 0.28rem;
     color: #FFFFFF;
     font-family: DINCondensed-Bold;
@@ -603,7 +611,7 @@ $applicationColor: white !default;
   .temperature-ch{
     position: absolute;
     margin-left: 4rem;
-    margin-top:  1.1rem;
+    margin-top:  1.15rem;
     font-size: 0.18rem;
     color: #FFFFFF;
     font-family: PingFangSC-Medium;
@@ -670,7 +678,7 @@ $applicationColor: white !default;
   }
   .data-info{
     position: relative;
-    margin-top: 0.5rem;
+    margin-top: 0.4rem;
   }
   .home-position{
     margin-left: 2.3rem;

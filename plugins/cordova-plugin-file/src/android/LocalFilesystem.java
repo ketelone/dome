@@ -93,7 +93,7 @@ public class LocalFilesystem extends Filesystem {
         if (!subPath.isEmpty()) {
             b.appendEncodedPath(subPath);
         }
-        if (f.isDirectory()) {
+        if (f.isDirectory() || inputURL.getPath().endsWith("/")) {
             // Add trailing / for directories.
             b.appendEncodedPath("");
         }
