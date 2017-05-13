@@ -10,13 +10,13 @@
     <!--<button class="button button-icon icon ion-more header_buttonRig" ng-click="openPopover($event)"></button>-->
   </div>
 
-  <ion-content style="background-color: #0F0F0F">
+  <ion-content overflow-scroll="true" style="background-color: #0F0F0F;overflow: hidden;">
     <div class="device-info">
       <div class="device-info-status">
         <img ng-src="build/img/bathroom/icon_devicedetail_wifi.png" class="box-img" ng-if="isBox"/>
         <span class="box-text" translate="{{signalStatus}}"  ng-if="isBox"></span>
-        <img ng-src="build/img/bathroom/icon_devicedetail_warning.png" class="signal-img"/>
-        <span class="signal-text" translate="bathroom.using"></span>
+        <!--<img ng-src="build/img/bathroom/icon_devicedetail_warning.png" class="signal-img"/>-->
+        <!--<span class="signal-text" translate="bathroom.using"></span>-->
         <span class="timeout-font" translate="bathroom.timeout" ng-if="isShowTime"></span>
         <span class="timeout" ng-if="isShowTime">{{countDown}}</span>
         <img ng-src="build/img/bathroom/icon_devicedetail_warning.png" class="error-img"/>
@@ -66,21 +66,26 @@
         <div class="breath" ng-if="isBreath">
           <div class="checkboxFour">
             <input type="checkbox" id="checkboxFourInput"  ng-model="t" ng-click="getCommon(t)"/>
-            <label for="checkboxFourInput" style="background: #D5638E"><span class="font-position" style="color: white;position: absolute;margin-left: -0.5rem;margin-top: 0.4rem;" translate="bathroom.commonModel"></span></label>
+            <label for="checkboxFourInput">
+              <img ng-src="build/img/bathroom/duo.png" class="img-size"/>
+              <span class="font-position" style="color: white;position: absolute;margin-left: -1.1rem;margin-top: 0.4rem;" translate="bathroom.commonModel"></span></label>
           </div>
         </div>
 
         <div class="breath-top" ng-if="isBreath">
           <div class="checkboxFour">
             <input type="checkbox" class="checkbox-position"  id="checkboxFourInput2" ng-model="m" ng-click="getAllDay(m)"/>
-            <label for="checkboxFourInput2" style="background: #51D8BD"><br><span class="font-position" style="color: white;position: absolute;margin-left: -0.35rem;margin-top: 0rem;" translate="bathroom.twentyModel"></span></label>
+            <label for="checkboxFourInput2">
+              <img ng-src="build/img/bathroom/duo.png" class="img-size"/>
+              <br>
+              <span class="font-position" style="color: white;position: absolute;margin-left: -0.35rem;margin-top: -1rem;" translate="bathroom.twentyModel"></span></label>
           </div>
         </div>
         <div class="breath-x" ng-if="isBreath">
           <div class="checkboxFour">
             <input type="checkbox" class="checkbox-position"  id="checkboxFourInput3" ng-model="m" ng-click="closeNav(m)"/>
             <!--<label for="checkboxFourInput3"><br><span class="font-position"><img ng-src="build/img/delete@2x.png" class="img-size"/></span></label>-->
-            <label for="checkboxFourInput3"><img ng-src="build/img/delete@2x.png" class="img-size"/></label>
+            <label for="checkboxFourInput3"><img ng-src="build/img/bathroom/delete.png" class="img-size"/></label>
           </div>
         </div>
       </div>

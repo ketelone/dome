@@ -103,7 +103,7 @@ angular.module('airfoilShowerModule')
           var ctemperature,stemperature,dict;
           if (cmdStr.length>=6) {
             try{
-              ctemperature = cmdStr.substring(4,6)
+              ctemperature = cmdStr.substring(4,6);
               stemperature = cmdStr.substring(2,4);
             }catch(error){
               return;
