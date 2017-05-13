@@ -4,8 +4,8 @@
 
 angular.module('utilModule')
   .service('cmdService',
-    ['baseConfig',
-      function (baseConfig) {
+    ['baseConfig','hmsPopup',
+      function (baseConfig,hmsPopup) {
 
         this.cloudCmd = function (deviceId, value) {
           var paramter = {
@@ -56,8 +56,8 @@ angular.module('utilModule')
           function success(response) {
             // alert('发送成功');
           }
-
           function error() {
+            $scope.Toast.show($translate.instant(golabelvariable.loadingdataerrror))
           }
         };
         this.sendScanCmd = function (value,ip) {

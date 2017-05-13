@@ -187,6 +187,8 @@ angular.module('toiletControlModule')
       $scope.directiveOnceFlag = 0;
       $scope.clearOnceFlag = 0;
       $scope.statustiveOnceFlag = 0;
+      //error over time
+      $scope.overTiemFlag = true;
 
       document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
         // alert(angular.toJson(result))
@@ -205,8 +207,6 @@ angular.module('toiletControlModule')
               //   $scope.directiveOnceFlag++;
                 if(backDataCmd.cmd === "25"){
                   var name = "cenwatpurifier.autoclear";
-                  // alert("$scope.selectChangeFlag");
-                  // alert($scope.selectChangeFlag);
                   if(backDataCmd.ack === "1000"){
                     $scope.selectChange($scope.selectChangeFlag,$scope.handlenapeSelectedIndex);
                     $scope.Toast.show($translate.instant(name)+$translate.instant("golabelvariable.directesuccess"));
@@ -216,15 +216,18 @@ angular.module('toiletControlModule')
                 };
               // }
             }else{
+              alert("$scope.initStatusFlag"+$scope.initStatusFlag)
               if(!$scope.initStatusFlag){
                 hmsPopup.hideLoading();
                 $scope.initStatusFlag = true;
               };
+              alert("backDataCmd"+angular.toJson(backDataCmd));
               //status
               if(backDataCmd.cmd === "a5"){
                 if($scope.clearOnceFlag === 0) {
                   $scope.clearOnceFlag++;
                   $scope.initStatusFlag = false;
+                  $scope.overTiemFlag = false;
                   //get device status lv xin
                   if(backDataCmd.FiltrationRemain>100){
                     backDataCmd.FiltrationRemain = 0+"%";
@@ -243,9 +246,14 @@ angular.module('toiletControlModule')
                 if($scope.statustiveOnceFlag === 0) {
                   $scope.statustiveOnceFlag++;
                   $scope.initStatusFlag = false;
+                  $scope.overTiemFlag = false;
                   if(backDataCmd.flushStatus === "0001"){
                     //complete
                     // $scope.cenwatpurifierCtrl.isShwoClearStatus = false;
+                    if($scope.initStatusFlag){
+                      $scope.selectChange(true,0);
+                      $scope.Toast.show($translate.instant("cenwatpurifier.clearover"));
+                    };
                   }else if(backDataCmd.flushStatus === "0010"){
                     //doing
                     $scope.cenwatpurifierCtrl.clearData = $scope.cenwatpurifierCtrl.clearStatus;
@@ -258,6 +266,12 @@ angular.module('toiletControlModule')
           };
         };
       }, false);
+      $timeout(function(){
+        if($scope.overTiemFlag){
+          hmsPopup.hideLoading();
+          $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"));
+        };
+      },10000)
       /**
        *@params:index(selected index),deviceId(device id),cmdvalue(directive value),name(directive name)
        *@disc:impletemnet get data
@@ -318,35 +332,41 @@ angular.module('toiletControlModule')
       //处理选择怎加border
       var handlenapeListNapeLen = $scope.handlenapeListNape.length;
       $scope.selectNapes = function (index) {
-        // $scope.directiveOnceFlag = 0;
-        // $scope.cpGetImpleteData();
-        $scope.handlenapeSelectedIndex = index;
-        if($scope.handlenapeListNape[index].matchdataid === "setting"){
-          $state.go("cenwatpurSetting");
-        }else {
-          if(!$scope.handlenapeListNape[index].selecFlag){
-            $scope.selectChangeFlag = true;
-            var cmdvalue = getCmd(cenwapurcmdObj.header,cenwapurcmdObj.idx,cenwatpurDir._data.startOutlet,cenwapurcmdObj.ctrId,cenwapurcmdObj.devId);
-            if(baseConfig.isCloudCtrl){
-              //cloud send cmd
-              $scope.cpGetImpleteData(true,cmdvalue,name,index);
+        if(!$scope.overTiemFlag){
+          $scope.handlenapeSelectedIndex = index;
+          if($scope.handlenapeListNape[index].matchdataid === "setting"){
+            $state.go("cenwatpurSetting");
+          }else {
+            hmsPopup.showLoading("");
+            $timeout(function () {
+              hmsPopup.hideLoading();
+            },500);
+            if(!$scope.handlenapeListNape[index].selecFlag){
+              $scope.selectChangeFlag = true;
+              var cmdvalue = getCmd(cenwapurcmdObj.header,cenwapurcmdObj.idx,cenwatpurDir._data.startOutlet,cenwapurcmdObj.ctrId,cenwapurcmdObj.devId);
+              if(baseConfig.isCloudCtrl){
+                //cloud send cmd
+                $scope.cpGetImpleteData(true,cmdvalue,name,index);
+              }else{
+                //divice sen cmd
+                //cmdService.sendCmd(deviceId,cmdvalue,boxId);
+                cmdService.sendCmd(cenwapurcmdObj.diviceid, cmdvalue, cenwapurcmdObj.boxid);
+              };
             }else{
-              //divice sen cmd
-              //cmdService.sendCmd(deviceId,cmdvalue,boxId);
-              cmdService.sendCmd(cenwapurcmdObj.diviceid, cmdvalue, cenwapurcmdObj.boxid);
-            };
-          }else{
-            $scope.selectChangeFlag = true;
-            var cmdvalue = getCmd(cenwapurcmdObj.header,cenwapurcmdObj.idx,cenwatpurDir._data.stopOutlet,cenwapurcmdObj.ctrId,cenwapurcmdObj.devId);
-            if(baseConfig.isCloudCtrl){
-              //cloud send cmd
-              $scope.cpGetImpleteData(true,cmdvalue,name,index);
-            }else{
-              //divice sen cmd
-              // cmdService.sendCmd(deviceId,cmdvalue,boxId);
-              cmdService.sendCmd(cenwapurcmdObj.diviceid, cmdvalue, cenwapurcmdObj.boxid);
+              $scope.selectChangeFlag = true;
+              var cmdvalue = getCmd(cenwapurcmdObj.header,cenwapurcmdObj.idx,cenwatpurDir._data.stopOutlet,cenwapurcmdObj.ctrId,cenwapurcmdObj.devId);
+              if(baseConfig.isCloudCtrl){
+                //cloud send cmd
+                $scope.cpGetImpleteData(true,cmdvalue,name,index);
+              }else{
+                //divice sen cmd
+                // cmdService.sendCmd(deviceId,cmdvalue,boxId);
+                cmdService.sendCmd(cenwapurcmdObj.diviceid, cmdvalue, cenwapurcmdObj.boxid);
+              };
             };
           };
-        };
+        }else{
+          $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"))
+        }
       };
     }]);

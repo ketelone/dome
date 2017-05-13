@@ -140,7 +140,6 @@ angular.module('toiletControlModule')
           lightsetval.flag = false;
         };
         window.localStorage.lightModal = JSON.stringify(lightsetval);
-        console.log(JSON.parse(window.localStorage.lightModal))
         publicMethod.goBack();
       };
       /**
@@ -163,7 +162,7 @@ angular.module('toiletControlModule')
                   $scope.Toast.show($translate.instant(name)+$translate.instant("golabelvariable.directerror"));
                 };
               };
-            }
+            };
             $scope.$apply();
           };
         };

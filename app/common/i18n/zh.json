@@ -4,8 +4,8 @@
     "PopupTitle":"提示",
     "PopupConfire":"确定",
     "PopupCancle":"取消",
-    "loadingdata":"正在获取数据",
-    "loadingdataerrror":"数据获取失败",
+    "loadingdata":"正在连接",
+    "loadingdataerrror":"网络连接异常",
     "directerror":"指令发生失败",
     "directesuccess":"指令发送成功"
   },
@@ -230,7 +230,6 @@
     "title": "马桶",
     "deviceWifiInfo": "信号好",
     "deviceUseInfo": "使用中",
-    "parameterrad": "0",
     "parameterdes": "水温档位",
     "handleSelecMode": "模式",
     "dachong01": "大冲",
@@ -279,7 +278,8 @@
     "qwfw":"圈温温度档位",
     "heatdirec":"加热",
     "devicePop":"获取设备状态",
-    "devicenouse":"无人使用"
+    "devicenouse":"无人使用",
+    "seatstatus":"此功能只能在落座状态下使用"
   },
   "toiletSetting": {
     "title": "马桶设置",
@@ -302,6 +302,7 @@
     "danwei": "小时",
     "interngent": "智能学习",
     "settingsucc": "设置",
+    "timetongbu":"同步时间",
     "popmessage":"确定要恢复默认设置吗?\n恢复默认设置后当前设置会被清空"
   },
   "lightSetting": {
@@ -349,10 +350,9 @@
     "unConnected":"未连接",
     "surplus":"正在清洁",
     "complete":"完成",
-    "autoclear":"自动清洗",
+    "autoclear":"手动清洗",
+    "clearover":"清洁完毕",
     "devicestats":"设备状态",
-    "handleclear":"手动清洗",
-    "onekeystop":"一键停止",
     "setting":"设置",
     "errortotal": "异常情况统计",
     "recoverset": "恢复默认设置",

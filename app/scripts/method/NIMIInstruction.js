@@ -135,7 +135,7 @@ NIMI.prototype.frontRearDry = function (method, temperature, volume, place, flus
 };
 
 /**
- * Feet Heater 暖脚 坐垫加热
+ * Feet Heater 暖脚
  * @param{int} temperature - 暖风档位
  * @returns {string} 指令中的 data串
  */
@@ -147,6 +147,17 @@ NIMI.prototype.feetSeatHeater = function (temperature) {
   cmd += getHex(fourBitToCheck(temperature.toString(2))) + "0" + "00" + "00" + "00";
   return cmd;
 };
+/**
+ * Feet Heater 圈温
+ * @param{int} temperature - 暖风档位
+ * @returns {string} 指令中的 data串
+ */
+NIMI.prototype.SeatHeater = function (temperature) {
+  var cmd = "06";
+  cmd += getHex(fourBitToCheck(temperature.toString(2))) + "0" + "00" + "00" + "00";
+  return cmd;
+};
+
 
 /**
  *
@@ -334,7 +345,7 @@ function getDataByColor(color) {
 
 /**
  * 坐便灯;
- * @param{int} lightStalls 灯光档位 {0,4,,8,12,15} [15表示 learn by self]
+ * @param{int} lightStalls
  * @returns {string}
  */
 NIMI.prototype.bowlLight = function (lightStalls) {
@@ -424,7 +435,6 @@ NIMI.prototype.powerSaveSchedule = function (startTime, startMin, endTime, endMi
       + fiveBitToCheck(endTime.toString(2)) + sixBitToCheck(endMin.toString(2)) + "0") + "FE";
   return cmd;
 };
-
 /**
  * 解析指令入口
  * @param cmd
@@ -453,7 +463,6 @@ NIMI.prototype.analysisInstruction = function (arg) {
   }
   return code;
 };
-
 /**
  * 解析返回命令字为98的数据 指设备状态的返回
  * 当flushStatus 为正在冲水时 flushType分大冲小冲 0-小冲 1-大冲
@@ -462,11 +471,11 @@ NIMI.prototype.analysisInstruction = function (arg) {
 function analysisToiletStatus(ackStr) {
   var mJson;
   var data = ackStr.substring(2, ackStr.length);
-  var param_one = byteToCheck(parseInt(data.substring(0, 2)).toString(2));
-  var param_second = byteToCheck(parseInt(data.substring(2, 4)).toString(2));
-  var param_third = byteToCheck(parseInt(data.substring(4, 6)).toString(2));
-  var param_fourth = byteToCheck(parseInt(data.substring(6, 8)).toString(2));
-  var param_fifth = byteToCheck(parseInt(data.substring(8, 10)).toString(2));
+  var param_one = byteToCheck(parseInt(data.substring(0, 2),16).toString(2));
+  var param_second = byteToCheck(parseInt(data.substring(2, 4),16).toString(2));
+  var param_third = byteToCheck(parseInt(data.substring(4, 6),16).toString(2));
+  var param_fourth = byteToCheck(parseInt(data.substring(6, 8),16).toString(2));
+  var param_fifth = byteToCheck(parseInt(data.substring(8, 10),16).toString(2));
   var flushStatus = param_one.substring(0, 3);
   var lidRingStatus = param_one.substring(3, 6);
   var dryerStatus = param_one.substring(7, 8);
@@ -480,7 +489,7 @@ function analysisToiletStatus(ackStr) {
   var ambientStatus = param_third.substring(6, 7);
   var flushType = param_third.substring(7, 8);
   var wandStatus = param_fourth.substring(0, 1);
-  var UVProgressStatus = param_fourth.substring(1, 3);
+  var UVProgressStatus = parseInt(param_fourth.substring(1, 3),2);
   var ballValve = param_fourth.substring(3, 4);
   var powerSaveLearnByUser = param_fifth.substring(0, 3);
   mJson = {
@@ -493,7 +502,6 @@ function analysisToiletStatus(ackStr) {
   };
   return mJson;
 }
-
 /**
  * 一键除菌状态返回
  * @param ackStr
@@ -501,7 +509,7 @@ function analysisToiletStatus(ackStr) {
 function analysisSanitizeStatus(ackStr) {
   var mJson;
   var data = ackStr.substring(2, ackStr.length);
-  var param_one = byteToCheck(parseInt(data.substring(0, 2)).toString(2));
+  var param_one = byteToCheck(parseInt(data.substring(0, 2),16).toString(2));
   var UVStatus = param_one.substring(4, 8);
   var hour = parseInt(data.substring(2, 4), 16);
   var minute = parseInt(data.substring(4, 6), 16);
@@ -687,27 +695,58 @@ function analysisFlushStatus(ackStr) {
   return mJson;
 }
 /**
-   * 返回cmd字段命令
-   * @param {*} header 头 16进制
-   * @param {*} idx 索引 16进制
-   * @param {*} data 数据段 16进制
-   * @param {*} ctrId 控制段 16进制
-   * @param {*} devId 设备段 16进制
-   */
-  // function getCmd(header, idx, data, ctrId, devId) {
-  //   if (data.length % 2 != 0) {
-  //     data = "0" + data;
-  //   }
-  //   var checksum = parseInt(idx, 16) ^ parseInt(ctrId, 16) ^ parseInt(devId, 16);
-  //   for (var i = 0, len = data.length; i < len; i += 2) {
-  //     var hex = data.substring(i, i + 2);
-  //     checksum ^= parseInt(hex, 16);
-  //   }
-  //   var length = data.length / 2 + 4;
-  //   return header + doStr(length)
-  //     + doStr(idx)
-  //     + doStr(ctrId)
-  //     + doStr(devId)
-  //     + data
-  //     + doStr(checksum.toString(16));
-  // }
+ * 获取设置时间指令
+ * @param year 年份后两位 比如 2016 参数为16
+ * @param month 月{1到12}
+ * @param date 日 {1到31}
+ * @param hour 时 {0到59}
+ * @param minute 分 {0到59}
+ * @param week 周几 {1,2,3,4,5,6,7}
+ */
+NIMI.prototype.setDeviceTime = function (year, month, date, hour, minute, week) {
+  console.log(angular.toJson({
+    year:year,
+    month:month,
+    date:date,
+    hour:hour,
+    minute:minute,
+    week:week
+  }))
+  var cmd = "0f";
+  cmd += getHex(sevenBitToCheck(year.toString(2))
+    + fourBitToCheck(month.toString(2))
+    + fiveBitToCheck(date.toString(2))
+    + fiveBitToCheck(hour.toString(2))
+    + sixBitToCheck(minute.toString(2))
+    + threeBitToCheck(week.toString(2))
+    + "00");
+  return cmd;
+};
+
+
+/**
+ * 十进制转二进制 三位补零
+ * @param {String} data
+ */
+function threeBitToCheck(data) {
+  if (data.length < 3) {
+    var l = 3 - data.length;
+    for (var i = 0; i < l; i++) {
+      data = "0" + data;
+    }
+  }
+  return data;
+};
+/**
+ * 十进制转二进制 七位补零
+ * @param {String} data
+ */
+function sevenBitToCheck(data) {
+  if (data.length < 7) {
+    var l = 7 - data.length;
+    for (var i = 0; i < l; i++) {
+      data = "0" + data;
+    }
+  }
+  return data;
+};

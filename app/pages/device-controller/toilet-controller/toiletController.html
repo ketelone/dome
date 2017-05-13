@@ -17,10 +17,10 @@
     </div>
     <div id="ionSliderBox" style="background-color:#171A1C">
     </div>
-    <div class="slidehandle-left" ng-click='slideHasChangedleft()'>
+    <div class="slidehandle-left" ng-click='slideHasChangedleft()' ng-if="clickSlideFlag">
       <img class="slidehandle-left-img" src="build/img/toilet-controller/icon_right_arrow.png" alt="">
     </div>
-    <div class="slidehandle-right" ng-click='slideHasChangedright()'>
+    <div class="slidehandle-right" ng-click='slideHasChangedright()' ng-if="clickSlideFlag">
       <img class="slidehandle-right-img" src="build/img/toilet-controller/icon_left_arrow.png" alt="">
     </div>
     <div class="toilet-handlenape-selec" ng-click="openModal('mode')">

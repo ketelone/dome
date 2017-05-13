@@ -28,12 +28,8 @@ angular.module('toiletControlModule')
       };
       $scope.chongshuisetval = false,
       $scope.chuchousetval = false,
-      // $scope.anjianvoicesetval = true,
-      // $scope.welcomemsetval = false
       $scope.toilteSettingData={
-        // gaiganyin:"toiletSetting.ganyinggai",
         gaiganyinDistance:"toiletSetting.close",
-        //jiedian setting
         jieDianSeting:"toiletSetting.never",
         jiedianDanwei:""
       };
@@ -50,49 +46,68 @@ angular.module('toiletControlModule')
        *@params:
        *@disc:accept ack or status;
        */
-      $scope.tosetstatustiveOnceFlag = 0;
-      $scope.selectedType="";
-      document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
-        var resultOn = result[0];
-        if(resultOn.from.uid === tolitersetcmdObj.diviceid){
-          if (resultOn.data.cmd) {
-            var backDataCmd = nimisetting.analysisInstruction(resultOn.data.cmd[0]);
-            if(backDataCmd.flag === "ack"){
+      try {
+        $scope.tosetstatustiveOnceFlag = 0;
+        $scope.selectedType = "";
+        document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
+          // alert("resultOn" + angular.toJson(resultOn))
+          var resultOn = result[0];
+          if (resultOn.from.uid === tolitersetcmdObj.diviceid) {
+            // alert("resultOn" + angular.toJson(resultOn))
+            if (resultOn.data.cmd) {
+              var backDataCmd = nimisetting.analysisInstruction(resultOn.data.cmd[0]);
               // alert("backDataCmdsett"+angular.toJson(backDataCmd))
-              if($scope.tosetstatustiveOnceFlag === 0){
-                $scope.tosetstatustiveOnceFlag++;
-                try {
-                  if (backDataCmd.cmd === "0a") {
-                    var name = "toiletSetting.settingsucc";
-                    if (backDataCmd.ack === "1000") {
-                      $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
-                      if ($scope.selectedType === "autochongshui") {
-                        $scope.chongshuisetval = !$scope.chongshuisetval;
-                      } else if ($scope.selectedType === "autochuchou") {
-                        $scope.chuchousetval = !$scope.chuchousetval;
+              if (backDataCmd.flag === "ack") {
+                if ($scope.tosetstatustiveOnceFlag === 0) {
+                  $scope.tosetstatustiveOnceFlag++;
+                  try {
+                    if (backDataCmd.cmd === "0a") {
+                      var name = "toiletSetting.settingsucc";
+                      if (backDataCmd.ack === "1000") {
+                        $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
+                        if ($scope.selectedType === "autochongshui") {
+                          $scope.chongshuisetval = !$scope.chongshuisetval;
+                        } else if ($scope.selectedType === "autochuchou") {
+                          $scope.chuchousetval = !$scope.chuchousetval;
+                        };
+                      }else {
+                        $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directerror"));
                       };
-                    } else {
-                      $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directerror"));
+                    } else if (backDataCmd.cmd === "13" || backDataCmd.cmd === "00" ||backDataCmd.cmd === "0c" || backDataCmd.cmd === "0f") {
+                      var name = "toiletSetting.settingsucc";
+                      if (backDataCmd.ack === "1000") {
+                        $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
+                      } else {
+                        $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directerror"));
+                      }
                     };
-                  }else if(backDataCmd.cmd === "13") {
-                    // alert(1)
-                    // alert("backDataCmdsett" + angular.toJson(backDataCmd))
-                    var name = "toiletSetting.settingsucc";
-                    if (backDataCmd.ack === "1000") {
-                      $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
-                    } else {
-                      $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directerror"));
-                    }
+                    // else if (backDataCmd.cmd === "0c") {
+                    //   var name = "toiletSetting.settingsucc";
+                    //   if (backDataCmd.ack === "1000") {
+                    //     $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
+                    //   } else {
+                    //     $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directerror"));
+                    //   }
+                    // }else if (backDataCmd.cmd === "0f") {
+                    //   var name = "toiletSetting.settingsucc";
+                    //   if (backDataCmd.ack === "1000") {
+                    //     $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
+                    //   } else {
+                    //     $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directerror"));
+                    //   }
+                    // }
+                  } catch (e) {
+                    alert(e.message);
                   };
-                }catch(e){
-                  alert(e.message);
-                }
-              }
-            }
-            $scope.$apply();
+                };
+              };
+              $scope.$apply();
+            };
           };
-        };
-      }, false);
+        }, false);
+      }catch(e){
+        alert(e.message)
+      }
       /**
        *@params:cmdvalue(value) type(chu fa type) name(current chu fa name)
        *@disc:send clound Instruction;
@@ -171,10 +186,30 @@ angular.module('toiletControlModule')
               $scope.toilSetGetImpleteData(type,cmdvalue,$translate.instant("toiletSetting.autochongshui"));
             }else{
               cmdService.sendCmd(tolitersetcmdObj.diviceid, cmdvalue, tolitersetcmdObj.boxid);
-            }
-          }
-        }
+            };
+          };
+        };
       };
+      //synchronous date
+      var currentDate = new Date();
+      var currentDateYear = Number(((currentDate.getFullYear()).toString()).substring(2,4));
+      var currentDateMouth = currentDate.getMonth()+1;
+      var currentDateDay = currentDate.getDate();
+      var currentDateHour = currentDate.getHours();
+      var currentDateMinute = currentDate.getMinutes();
+      var currentDateWeek = currentDate.getDay();
+      if(currentDateWeek == 0){
+        currentDateWeek = 7;
+      };
+      // var cmdvalue = cmdService.getCmd(tolitersetcmdObj.header,tolitersetcmdObj.idx,nimisetting.setDeviceTime(currentDateYear,currentDateMouth,currentDateDay,currentDateHour,currentDateMinute,currentDateWeek),tolitersetcmdObj.ctrId,tolitersetcmdObj.devId);
+      // //send instructin
+      // console.log(cmdvalue);
+      // alert(cmdvalue);
+      // if(baseConfig.isCloudCtrl){
+      //   $scope.toilSetGetImpleteData(type,cmdvalue,$translate.instant(""));
+      // }else{
+      //   cmdService.sendCmd(tolitersetcmdObj.diviceid, cmdvalue, tolitersetcmdObj.boxid);
+      // };
       $scope.jiedianval = [{
         id:"jiedianval",des:'toiletSetting.never','danwei':""
       },{id:"jiedianval",des:'4','danwei':"toiletSetting.danwei"
@@ -241,7 +276,7 @@ angular.module('toiletControlModule')
             if (baseConfig.isCloudCtrl) {
               $scope.toilSetGetImpleteData("jiedian", cmdvalue, $translate.instant("toiletSetting.jiedianset"));
             } else {
-              cmdService.sendCmd(tolitersetcmdObj.diviceid, cmdvalue, tolitersetcmdObj.boxId);
+              cmdService.sendCmd(tolitersetcmdObj.diviceid, cmdvalue, tolitersetcmdObj.boxid);
             }
             ;
           }catch(e){
@@ -266,9 +301,8 @@ angular.module('toiletControlModule')
             if (baseConfig.isCloudCtrl) {
               $scope.toilSetGetImpleteData("autofangai", cmdvalue, $translate.instant("toiletSetting.autofangai"));
             } else {
-              cmdService.sendCmd(tolitersetcmdObj.diviceid, cmdvalue, tolitersetcmdObj.boxId);
-            }
-            ;
+              cmdService.sendCmd(tolitersetcmdObj.diviceid, cmdvalue, tolitersetcmdObj.boxid);
+            };
           }catch(e){
           alert(e.message);
         }
