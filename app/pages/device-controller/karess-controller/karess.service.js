@@ -151,6 +151,7 @@ angular.module('karessControlModule')
         this.setFillerParams = function(temp, level, outlet) {
           var t = doStr(temp.toString(16));
           var l = doStr(level.toString(16));
+          console.log("02" + t + l + outlet);
           return "02" + t + l + outlet;
         };
 

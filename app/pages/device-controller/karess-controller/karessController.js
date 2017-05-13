@@ -37,10 +37,19 @@ angular.module('karessControlModule')
       $timeout(function () {
         hmsPopup.hideLoading();
       }, 15000);
-      localStorage.karessTemp = '10';
-      localStorage.karessLevel = '4';
-      localStorage.karessOutLet = 'Bath Faucet';
-      localStorage.karessPressure = '1';
+      if (angular.isUndefined(localStorage.karessTemp)) {
+        localStorage.karessTemp = '10';
+      }
+      console.log(localStorage.karessTemp);
+      if (angular.isUndefined(localStorage.karessLevel)) {
+        localStorage.karessLevel = '4';
+      }
+      if (angular.isUndefined(localStorage.karessPressure)) {
+        localStorage.karessPressure = '1';
+      }
+      if (angular.isUndefined(localStorage.karessOutLet)) {
+        localStorage.karessOutLet = 'karessController.bath';
+      }
       $scope.config =
         {
           "fillerStatus": false,
@@ -55,7 +64,6 @@ angular.module('karessControlModule')
       $scope.fontSize = document.documentElement.clientWidth / 7.5;
       $scope.screenHeig = window.innerHeight;
       $scope.screenWidth = window.innerWidth;
-
 
       var statusKaress = function () {
         var value = cmdService.getCmd("8877", '01', '70', 'E3', '02');
@@ -80,8 +88,8 @@ angular.module('karessControlModule')
         des: "按摩档位",
         desId: "shuilianmodangwei",
         gearNum: 1,
-        gearInit: 1,
-        gearInitTemp: 1,
+        gearInit: localStorage.karessPressure,
+        gearInitTemp: localStorage.karessPressure,
         parameterctlFlag: false,
         parNodeid: 'toilet-NvYongSyCtl',
         canves01: "NvYongSycanves01",
@@ -567,9 +575,10 @@ angular.module('karessControlModule')
           }, 500);
           if (info.selecFlag == false) {
             //tingzhizhushui
-            var value1 = cmdService.getCmd("8877", '01', karessService.data.closeFiller, 'E3', '02');
+            var value1 = cmdService.getCmd("8877", '01', karessService.data.closeDrain, 'E3', '02');
+
             //wendu
-            if ($scope.karessController.modelType == 'Bath Faucet') {
+            if ($scope.karessController.modelType == 'karessController.bath') {
               var outlet = '13';
             } else {
               var outlet = '23';
@@ -591,10 +600,14 @@ angular.module('karessControlModule')
             var value = cmdService.getCmd("8877", '01', karessService.data.openFiller, 'E3', '02');
             console.log(baseConfig.isCloudCtrl);
             if (baseConfig.isCloudCtrl == true) {
-              console.log('121');
               test(index, value, 'karessOnWater');
             } else {
-              cmdService.sendCmd(deviceId, value1, localStorage.boxIp);
+              if ($scope.handlenapeListNape[1].selecFlag == true) {
+                cmdService.sendCmd(deviceId, value1, localStorage.boxIp);
+                $scope.openFillerFlag = true;
+              } else {
+                $scope.openFillerFlag = false;
+              }
               $timeout(function () {
                 cmdService.sendCmd(deviceId, value2, localStorage.boxIp);
               }, 260);
@@ -763,7 +776,8 @@ angular.module('karessControlModule')
           }
         }
         localStorage.karessOutLet = $scope.karessController.modelType;
-        if ($scope.karessController.modelType == 'Bath Faucet') {
+        console.log($scope.karessController.modelType);
+        if ($scope.karessController.modelType == 'karessController.bath') {
           var outlet = '13';
         } else {
           var outlet = '23';
@@ -784,13 +798,13 @@ angular.module('karessControlModule')
         var value1 = cmdService.getCmd("8877", '01', karessService.data.closeFiller, 'E3', '02');
         var value = cmdService.getCmd("8877", '01', karessService.data.openFiller, 'E3', '02');
         var value2 = cmdService.getCmd("8877", '01', karessService.setFillerParams(temp, level, outlet), 'E3', '02');
-        cmdService.sendCmd(deviceId, value1, localStorage.boxIp);
-        $timeout(function () {
-          cmdService.sendCmd(deviceId, value2, localStorage.boxIp);
-        }, 260);
-        $timeout(function () {
-          cmdService.sendCmd(deviceId, value, localStorage.boxIp);
-        }, 500);
+        // cmdService.sendCmd(deviceId, value1, localStorage.boxIp);
+        // $timeout(function () {
+        cmdService.sendCmd(deviceId, value2, localStorage.boxIp);
+        // }, 260);
+        // $timeout(function () {
+        //   cmdService.sendCmd(deviceId, value, localStorage.boxIp);
+        // }, 500);
       };
 
       //保存选择的数据项
@@ -808,6 +822,8 @@ angular.module('karessControlModule')
         console.log($scope.handlenapeListNape[$scope.handlenapeSelectedIndex]);
         if (diedes == 'zhuishuishuiwen' || diedes == 'zhuishuishuiwei') {
           var temp = $scope.slideTunBuData[0].gearInit + 29;
+          localStorage.karessTemp = $scope.slideTunBuData[0].gearInit + 1;
+          console.log(localStorage.karessTemp);
           if ($scope.slideTunBuData[1].gearInit == 1) {
             var level = 25;
           } else if ($scope.slideTunBuData[1].gearInit == 2) {
@@ -819,13 +835,14 @@ angular.module('karessControlModule')
           else if ($scope.slideTunBuData[1].gearInit == 4) {
             var level = 95;
           }
-
-          if ($scope.karessController.modelType == 'Bath Faucet') {
-            var outlet = '10';
+          localStorage.karessLevel = $scope.slideTunBuData[1].gearInit;
+          if ($scope.karessController.modelType == 'karessController.bath') {
+            var outlet = '13';
           } else {
-            var outlet = '50';
+            var outlet = '23';
           }
-          var value2 = cmdService.getCmd("8877", '01', karessService.setFillerParams(temp, level, '13'), 'E3', '02');
+          localStorage.karessOutLet = $scope.karessController.modelType;
+          var value2 = cmdService.getCmd("8877", '01', karessService.setFillerParams(temp, level, outlet), 'E3', '02');
           console.log(value2);
           cmdService.sendCmd(deviceId, value2, localStorage.boxIp);
         } else if (diedes == 'shuilianmodangwei') {
@@ -834,7 +851,8 @@ angular.module('karessControlModule')
           } else {
             var temp = '50';
           }
-          var value = cmdService.getCmd("8877", '01', karessService.setMassageBackPressure(temp, 0), 'E3', '02');
+          localStorage.karessPressure = $scope.shuilianmoData[0].gearInit;
+          var value = cmdService.getCmd("8877", '01', karessService.setMassageBackPressure(temp, '00'), 'E3', '02');
           console.log(value);
           cmdService.sendCmd(deviceId, value, localStorage.boxIp);
         } else if (diedes == 'beibujiarewendu') {
@@ -859,94 +877,102 @@ angular.module('karessControlModule')
       document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
         if (result[0].data.cmd.length > 0 && result[0].from.uid == deviceId) {
           var cmd = result[0].data.cmd[0];
-          console.log(angular.toJson(cmd)+"=======");
+          console.log(angular.toJson(cmd) + "=======");
           var status = karessService.explainAck(result[0].data.cmd[0]);
           if (status.ack.indexOf('fa') >= 0) {
             karessButton(status);
-            hmsPopup.hideLoading();
           } else if (status.ack.indexOf('1003') >= 0 || status.ack.indexOf('1002') >= 0 || status.ack.indexOf('1001') >= 0) {
             $scope.Toast.show("操作失败！");
           } else {
             var item = karessService.resolveCmd(cmd);
-            if (item.type.indexOf('A6')>=0) {
+            if (item.type.indexOf('A6') >= 0) {
               $scope.config.temp = item.value.temperature;
-              console.log(angular.toJson(item)+"=======");
-              console.log(angular.toJson($scope.config)+"========");
               buttonChange();
-            } else if (item.type.indexOf('A7')>=0) {
+              hmsPopup.hideLoading();
+            } else if (item.type.indexOf('A7') >= 0) {
               $scope.config.level = item.value.waterLevel;
-              console.log(angular.toJson(item)+"=======");
-              console.log(angular.toJson($scope.config)+"========");
-              if($scope.config.level == $scope.slideTunBuData[1].gearInit){
+              if ($scope.config.level == $scope.slideTunBuData[1].gearInit) {
                 $scope.config.fillerStatus = false;
                 $scope.handlenapeListNape[1].selecFlag = $scope.config.fillerStatus;
                 buttonChange();
-              }else{
+              } else {
                 buttonChange();
               }
-            } else if (item.type.indexOf('8A')>=0) {//zhushui
+              hmsPopup.hideLoading();
+            } else if (item.type.indexOf('8A') >= 0) {//zhushui
               if (item.value.status == '00') {
                 $scope.config.fillerStatus = false;
               } else {
                 $scope.config.fillerStatus = true;
               }
               $scope.handlenapeListNape[0].selecFlag = $scope.config.fillerStatus;
-              console.log(angular.toJson(item)+"=======");
-              console.log(angular.toJson($scope.config)+"========");
               buttonChange();
-            } else if (item.type.indexOf('88')>=0) {//luoshui
+            } else if (item.type.indexOf('88') >= 0) {//luoshui
               if (item.value.status == '02') {
                 $scope.config.luoshui = false;
               } else {
                 $scope.config.luoshui = true;
               }
-              console.log(angular.toJson(item)+"=======");
-              console.log(angular.toJson($scope.config)+"========");
               $scope.handlenapeListNape[1].selecFlag = $scope.config.luoshui;
               buttonChange();
-            } else if (item.type.indexOf('84')>=0) {//anmo
+            } else if (item.type.indexOf('84') >= 0) {//anmo
               if (item.value.status == '01') {
                 $scope.config.anmo = false;
               } else {
                 $scope.config.anmo = true;
               }
-              console.log(angular.toJson(item)+"=======");
-              console.log(angular.toJson($scope.config)+"========");
               $scope.handlenapeListNape[2].selecFlag = $scope.config.anmo;
               buttonChange();
             }
-            else if (item.type.indexOf('83')>=0) {//touzhen
+            else if (item.type.indexOf('83') >= 0) {//touzhen
               if (item.value.status == '1') {
                 $scope.config.touzhen = false;
               } else {
                 $scope.config.touzhen = true;
               }
-              console.log(angular.toJson(item)+"=======");
-              console.log(angular.toJson($scope.config)+"========");
               $scope.handlenapeListNape[3].selecFlag = $scope.config.touzhen;
               buttonChange();
-            } else if (item.type.indexOf('87')>=0) {//chujun
+            } else if (item.type.indexOf('87') >= 0) {//chujun
               if (item.value.status == '01') {
                 $scope.config.chunjun = false;
               } else {
                 $scope.config.chunjun = true;
               }
-              console.log(angular.toJson(item)+"=======");
-              console.log(angular.toJson($scope.config)+"========");
               $scope.handlenapeListNape[6].selecFlag = $scope.config.chunjun;
               buttonChange();
             }
           }
         }
       }, false);
-      function buttonChange(){
-        for(var i=0;i<$scope.handlenapeListNape.length;i++){
+      function buttonChange() {
+        for (var i = 0; i < $scope.handlenapeListNape.length; i++) {
           if ($scope.handlenapeListNape[i].selecFlag == true) {
             $scope.handlenapeListNape[i].imgUrl = $scope.handlenapeListNape[i].imgSeledUrl;
           } else {
             $scope.handlenapeListNape[i].imgUrl = $scope.handlenapeListNape[i].imgUrlTemp;
           }
         }
+        // if ($scope.handlenapeListNape[0].selecFlag == true && $scope.handlenapeListNape[2].selecFlag == true) {
+        //   $scope.currentSlideData = $scope.shuilianmoData.concat($scope.shuilianmoData);
+        //   $scope.initHtmlTemplate($scope.currentSlideData);
+        //   setTimeout(function () {
+        //     $scope.getCurrentObj(0);
+        //   }, 20)
+        // } else if ($scope.handlenapeListNape[0].selecFlag == true) {
+        //   $scope.currentSlideData = $scope.slideTunBuData;
+        //   $scope.initHtmlTemplate($scope.currentSlideData);
+        //   setTimeout(function () {
+        //     $scope.getCurrentObj(0);
+        //   }, 20)
+        // } else if ($scope.handlenapeListNape[2].selecFlag == true) {
+        //   $scope.currentSlideData = $scope.shuilianmoData;
+        //   $scope.initHtmlTemplate($scope.currentSlideData);
+        //   setTimeout(function () {
+        //     $scope.getCurrentObj(0);
+        //   }, 20)
+        // } else {
+        // }
+
         $scope.$apply();
       }
 
@@ -984,6 +1010,10 @@ angular.module('karessControlModule')
               }
             }
             if (status.ack == '25') {
+              // if($scope.openFillerFlag == true){
+              //   $scope.openFillerFlag = false;
+              //   return;
+              // }
               if ($scope.handlenapeListNape[index].selecFlag == false) {
                 $scope.Toast.show("落水开启成功！");
                 changeColor();
@@ -1032,6 +1062,9 @@ angular.module('karessControlModule')
               $scope.Toast.show("一键关闭成功！");
               changeColor();
             }
+            if (status.ack == '70') {
+              $scope.flagStatus = true;
+            }
           } else {
             // if (status.ack.indexOf('fb') >= 0 || status.ack.indexOf('fc') >= 0 || status.ack.indexOf('fd') >= 0) {
             //   $scope.Toast.show("操作失败！");
@@ -1042,12 +1075,15 @@ angular.module('karessControlModule')
           }
 
         }
-        function changeColor(){
+        function changeColor() {
           $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
           if (index == 5) {
             for (var i = 0; i < $scope.handlenapeListNape.length; i++) {
-              $scope.handlenapeListNape[i].selecFlag = false;
-              $scope.handlenapeListNape[i].imgUrl = $scope.handlenapeListNape[i].imgUrlTemp;
+              if (index == 1) {
+              } else {
+                $scope.handlenapeListNape[i].selecFlag = false;
+                $scope.handlenapeListNape[i].imgUrl = $scope.handlenapeListNape[i].imgUrlTemp;
+              }
             }
             return;
           }
