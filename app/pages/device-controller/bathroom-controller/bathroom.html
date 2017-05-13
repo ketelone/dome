@@ -66,21 +66,26 @@
         <div class="breath" ng-if="isBreath">
           <div class="checkboxFour">
             <input type="checkbox" id="checkboxFourInput"  ng-model="t" ng-click="getCommon(t)"/>
-            <label for="checkboxFourInput" style="background: #D5638E"><span class="font-position" style="color: white;position: absolute;margin-left: -0.5rem;margin-top: 0.4rem;" translate="bathroom.commonModel"></span></label>
+            <label for="checkboxFourInput">
+              <img ng-src="build/img/bathroom/duo.png" class="img-size"/>
+              <span class="font-position" style="color: white;position: absolute;margin-left: -1.1rem;margin-top: 0.4rem;" translate="bathroom.commonModel"></span></label>
           </div>
         </div>
 
         <div class="breath-top" ng-if="isBreath">
           <div class="checkboxFour">
             <input type="checkbox" class="checkbox-position"  id="checkboxFourInput2" ng-model="m" ng-click="getAllDay(m)"/>
-            <label for="checkboxFourInput2" style="background: #51D8BD"><br><span class="font-position" style="color: white;position: absolute;margin-left: -0.35rem;margin-top: 0rem;" translate="bathroom.twentyModel"></span></label>
+            <label for="checkboxFourInput2">
+              <img ng-src="build/img/bathroom/duo.png" class="img-size"/>
+              <br>
+              <span class="font-position" style="color: white;position: absolute;margin-left: -0.35rem;margin-top: -1rem;" translate="bathroom.twentyModel"></span></label>
           </div>
         </div>
         <div class="breath-x" ng-if="isBreath">
           <div class="checkboxFour">
             <input type="checkbox" class="checkbox-position"  id="checkboxFourInput3" ng-model="m" ng-click="closeNav(m)"/>
             <!--<label for="checkboxFourInput3"><br><span class="font-position"><img ng-src="build/img/delete@2x.png" class="img-size"/></span></label>-->
-            <label for="checkboxFourInput3"><img ng-src="build/img/delete@2x.png" class="img-size"/></label>
+            <label for="checkboxFourInput3"><img ng-src="build/img/bathroom/delete.png" class="img-size"/></label>
           </div>
         </div>
       </div>
