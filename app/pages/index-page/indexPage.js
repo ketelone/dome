@@ -48,6 +48,7 @@ angular.module('indexPageModule')
         percentage: "",
         temperatureCh: ""
       };
+      var ishidden = false;
       $scope.tabs = [
         {
           text: "index.model",
@@ -181,10 +182,10 @@ angular.module('indexPageModule')
           tx.executeSql('update T_CTM_PARTY_SCENARIO set LAST_UPDATE_DATE = "' + getNowFormatDate() + '" where SCENARIO_ID = ' + item.id);
 
         });
-        var data = $scope.modelData[index];
-
-        $scope.modelData.splice(index, 1);
-        $scope.modelData.splice(0, 0, data);
+        //var data = $scope.modelData[index];
+        //
+        //$scope.modelData.splice(index, 1);
+        //$scope.modelData.splice(0, 0, data);
         //$scope.modelData = [];
         //getScenarioList();
       };
@@ -259,7 +260,7 @@ angular.module('indexPageModule')
             statusPictureUrl: "build/img/index/icon_home_device_no_singal.png",
             errorPictureUrl: "build/img/index/icon_home_device_warnning.png",
             isStatus: true,
-            isError: true,
+            isError: false,
             sku: "F0:F0:87:F5:A2:17"
           },
           {
@@ -294,8 +295,15 @@ angular.module('indexPageModule')
 
       $scope.boxList = [];
 
+      var islinkHidden = true;
       $scope.linkBox = function () {
         hmsPopup.showLoading();
+        $timeout(function(){
+          if(!islinkHidden){
+            hmsPopup.hideLoading();
+            alert("超时，请重试！");
+          }
+        },30000);
         searchBox();
       };
 
@@ -525,12 +533,20 @@ angular.module('indexPageModule')
         });
       };
 
+
+
       $scope.$watch('', function () {
         //getDeviceStatus("");
 
         getWeather();
         if(localStorage.boxLinkCount == 1){
           hmsPopup.showLoading();
+          $timeout(function(){
+            if(!ishidden){
+              hmsPopup.hideLoading();
+              alert("超时，请重试！");
+            }
+          },30000);
           //$timeout(function () {
           searchBox();
           //},1500);
@@ -587,6 +603,7 @@ angular.module('indexPageModule')
 
        }, false);*/
 
+
       var deviceStatus = [];
       var deviceLinkInfo = "";
       document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
@@ -610,6 +627,8 @@ angular.module('indexPageModule')
           localStorage.deviceStatus = JSON.stringify(deviceStatus);
 
           hmsPopup.hideLoading();
+          ishidden = true;
+          islinkHidden = true;
         }
 
         /*if (resultOn.payload.cmd == "SCAN_RETURN") {
@@ -639,7 +658,7 @@ angular.module('indexPageModule')
               "ctype": 0XE4,
               "uid": "peerId"
             },
-            "ts": Date.parse(new Date()) / 1000,
+            "ts": new Date().getTime(),
             "idx": 12,
             "mtype": "rqst",
             "data": {
@@ -700,9 +719,6 @@ angular.module('indexPageModule')
        *@disc: link box
        */
 
-      $timeout(function () {
-        hmsPopup.hideLoading();
-      }, 15000);
       var boxLink = function (item) {
         var boxIp = item.data.act_params.ip; //item.payload.cmd_properties.ip
         var deviceId = item.data.act_params.device_id;
@@ -746,7 +762,7 @@ angular.module('indexPageModule')
               "ctype": 0xE4,
               "uid": device_id
             },
-            "ts": 1487213040,
+            "ts": new Date().getTime(),
             "idx": 12,
             "mtype": "rqst",
             "data": {
@@ -956,7 +972,8 @@ angular.module('indexPageModule')
           //getDeviceList();
         } else {
           if (item.deviceType == "index.bathroomHeader") {
-            $state.go('bathroom', {deviceSku: item.sku});
+            $state.go('bathroom');
+            SettingsService.set("sku",item.sku);
           }
           if (item.deviceType == "index.toliet") {
             $state.go('toiletContrl');
@@ -981,10 +998,10 @@ angular.module('indexPageModule')
           }
         }
 
-        var data = $scope.deviceModel[index];
-
-        $scope.deviceModel.splice(index, 1);
-        $scope.deviceModel.splice(0, 0, data);
+        //var data = $scope.deviceModel[index];
+        //
+        //$scope.deviceModel.splice(index, 1);
+        //$scope.deviceModel.splice(0, 0, data);
       };
 
 

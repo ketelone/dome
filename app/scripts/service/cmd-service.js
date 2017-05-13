@@ -40,7 +40,7 @@ angular.module('utilModule')
                 "ctype": 0xE5,
                 "uid": deviceId
               },
-              "ts": 1487213040,
+              "ts": new Date().getTime(),
               "idx": 12,
               "mtype":  "ctl",
               "data": {

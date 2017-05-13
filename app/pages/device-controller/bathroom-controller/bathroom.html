@@ -10,13 +10,13 @@
     <!--<button class="button button-icon icon ion-more header_buttonRig" ng-click="openPopover($event)"></button>-->
   </div>
 
-  <ion-content style="background-color: #0F0F0F">
+  <ion-content overflow-scroll="true" style="background-color: #0F0F0F;overflow: hidden;">
     <div class="device-info">
       <div class="device-info-status">
         <img ng-src="build/img/bathroom/icon_devicedetail_wifi.png" class="box-img" ng-if="isBox"/>
         <span class="box-text" translate="{{signalStatus}}"  ng-if="isBox"></span>
-        <img ng-src="build/img/bathroom/icon_devicedetail_warning.png" class="signal-img"/>
-        <span class="signal-text" translate="bathroom.using"></span>
+        <!--<img ng-src="build/img/bathroom/icon_devicedetail_warning.png" class="signal-img"/>-->
+        <!--<span class="signal-text" translate="bathroom.using"></span>-->
         <span class="timeout-font" translate="bathroom.timeout" ng-if="isShowTime"></span>
         <span class="timeout" ng-if="isShowTime">{{countDown}}</span>
         <img ng-src="build/img/bathroom/icon_devicedetail_warning.png" class="error-img"/>

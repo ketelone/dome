@@ -419,7 +419,7 @@
     "fourHour": "四时",
     "fiveHour": "五时",
     "sixHour": "六时",
-    "timeout": "您选择的时间已超出范围，请重新选择",
+    "alertTimeout": "您选择的时间已超出范围，请重新选择",
     "twentyModel": "24小时<br>模式",
     "commonModel": "普通模式",
     "pof": "请打开热风或者凉风或者冷干或者热干的功能",
