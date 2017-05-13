@@ -5,13 +5,13 @@ angular.module('mcControlModule')
     '$ionicModal',
     '$compile',
     'baseConfig',
-    'checkVersionService', 'SettingsService', '$ionicHistory', '$ionicSlideBoxDelegate', 'mcService', 'hmsHttp', 'cmdService','hmsPopup','$timeout',
+    'checkVersionService', 'SettingsService', '$ionicHistory', '$ionicSlideBoxDelegate', 'mcService', 'hmsHttp', 'cmdService','hmsPopup','$timeout','$ionicPopover',
     function ($scope,
               $state,
               $ionicModal,
               $compile,
               baseConfig,
-              checkVersionService, SettingsService, $ionicHistory, $ionicSlideBoxDelegate, mcService, hmsHttp, cmdService,hmsPopup,$timeout) {
+              checkVersionService, SettingsService, $ionicHistory, $ionicSlideBoxDelegate, mcService, hmsHttp, cmdService,hmsPopup,$timeout,$ionicPopover) {
       var sku = SettingsService.get('sku')
       $scope.fontSize = document.documentElement.clientWidth / 7.5;
       $scope.screenHeig = window.innerHeight;
@@ -588,5 +588,40 @@ angular.module('mcControlModule')
           }
         );
       };
+      $scope.goLearn = function () {
+        $state.go("mcLearning");
+      }
+      $scope.operating = [{
+        text:'重命名'
+      },{
+        text:'移动'
+      },{
+        text:'解除绑定'
+      },{
+        text:'机器学习设置'
+      }];
 
+      $scope.popover = $ionicPopover.fromTemplateUrl('build/pages/modal/popover.html', {
+        scope: $scope
+      });
+
+      // .fromTemplateUrl() 方法
+      $ionicPopover.fromTemplateUrl('build/pages/model/popover.html', {
+        scope: $scope
+      }).then(function(popover) {
+        $scope.popover = popover;
+      });
+
+
+      $scope.openPopover = function($event) {
+        $scope.popover.show($event);
+      };
+
+      $scope.closePopover = function(index) {
+        console.log(index);
+        $scope.popover.hide();
+        if(index==3){
+          $scope.goLearn();
+        }
+      }
     }]);

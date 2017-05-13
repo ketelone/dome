@@ -1,4 +1,14 @@
 .mc-controller {
+  .right-image{
+    right: 0.2rem;
+    width: 23px;
+    height: 23px;
+    position: absolute;
+    top: 0;
+    border: 10px solid transparent;
+    box-sizing: content-box;
+    z-index: 5;
+  }
   .toilet-bg {
     background-color: $global-head-bg;
   }

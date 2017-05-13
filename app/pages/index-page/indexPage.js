@@ -241,7 +241,8 @@ angular.module('indexPageModule')
             errorPictureUrl: "",
             isStatus: true,
             isError: false,
-            sku: "D7:12:29:DF:76:06"
+            sku: "EB:4E:28:49:09:9D"
+            //sku: "D7:12:29:DF:76:06"
           },
           {
             id: "6",

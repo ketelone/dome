@@ -4,6 +4,7 @@
     <div class="h1 title header_title">
       <span translate="bathroom.bathroom"></span>
     </div>
+    <img class="right-image" src="build/img/icon_dot@3x.png" ng-click="openPopover($event)"/>
     <div ng-click="openTimer()">
       <img ng-src="build/img/bathroom/btn_devicedetail_bathroomheater_time.png" class="time-img"/>
     </div>
@@ -13,7 +14,7 @@
   <ion-content style="background-color: #0F0F0F">
     <div class="device-info">
       <div class="device-info-status">
-        <img ng-src="build/img/bathroom/icon_devicedetail_wifi.png" class="box-img" ng-if="isBox"/>
+        <img ng-src="build/img/bathroom/icon_devicedetail_wifi.png" class="box-img" ng-if="isBox" />
         <span class="box-text" translate="{{signalStatus}}"  ng-if="isBox"></span>
         <img ng-src="build/img/bathroom/icon_devicedetail_warning.png" class="signal-img"/>
         <span class="signal-text" translate="bathroom.using"></span>

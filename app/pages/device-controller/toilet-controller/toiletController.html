@@ -2,10 +2,11 @@
   <div class="bar bar-header header" style="background-image: none">
     <button class="button button-icon icon ion-ios-arrow-left header_buttonRig" ng-click="goBack()"></button>
     <div class="h1 title header_title" translate="toiletController.title"></div>
+    <img class="right-image" src="build/img/icon_dot@3x.png" ng-click="openPopover($event)"/>
   </div>
   <ion-content class="toilet-bg" overflow-scroll="true" style="overflow: hidden">
     <div class="toilet-conninfo">
-      <span class="toilet-conninfo-signal">
+      <span class="toilet-conninfo-signal" ng-click="goLearn()">
         <img class="conninfo-signal-img" src="build/img/toilet-controller/icon_devicedetail_wifi.png" alt="">
         <span class="conninfo-signal-info" translate="toiletController.deviceWifiInfo"></span>
       </span>
