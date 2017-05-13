@@ -2,11 +2,12 @@
   <ion-header-bar style="background-image: none" class="toilet-bg">
     <button class="button button-icon icon ion-ios-arrow-left header_buttonRig colorhead" ng-click="goBack()"></button>
     <div class="h1 title header_title colorhead" translate="karessController.title"></div>
-    <button class="button button-icon icon ion-qr-scanner header_buttonRig colorhead" ng-click="openPopover($event)"></button>
+    <!--<button class="button button-icon icon ion-qr-scanner header_buttonRig colorhead" ng-click="openPopover($event)"></button>-->
+    <img class="right-image" src="build/img/icon_dot@3x.png" ng-click="openPopover($event)"/>
   </ion-header-bar>
   <ion-content class="toilet-bg" overflow-scroll="true" style="overflow: hidden">
     <div class="toilet-conninfo " style="background-color:#0D0F11">
-      <span class="toilet-conninfo-signal">
+      <span class="toilet-conninfo-signal" ng-click="goLearn()">
         <img class="conninfo-signal-img" src="build/img/karess-controller/icon_devicedetail_wifi.png" alt="">
         <span class="conninfo-signal-info" translate="karessController.deviceWifiInfo"></span>
       </span>

@@ -17,9 +17,9 @@ angular.module('bathroomModule')
     'baseConfig',
     'hmsHttp',
     'cmdService',
-    '$translate',
+    '$translate','$ionicPopover',
     'SettingsService',
-    function($scope, $state, $interval, $window, $ionicModal, $ionicHistory, hmsPopup, $stateParams, bathroomService, bathroomCmdService, $timeout, baseConfig, hmsHttp, cmdService, $translate, SettingsService){
+    function($scope, $state, $interval, $window, $ionicModal, $ionicHistory, hmsPopup, $stateParams, bathroomService, bathroomCmdService, $timeout, baseConfig, hmsHttp, cmdService, $translate, SettingsService,$ionicPopover){
 
       $scope.bathroomData = [
         {
@@ -1864,5 +1864,42 @@ angular.module('bathroomModule')
         }
         $scope.setmodal.hide();
       };
+      $scope.goLearn = function () {
+        $state.go("bathroomLearning");
+      }
+
+      $scope.operating = [{
+        text:'重命名'
+      },{
+        text:'移动'
+      },{
+        text:'解除绑定'
+      },{
+        text:'机器学习设置'
+      }];
+
+      $scope.popover = $ionicPopover.fromTemplateUrl('build/pages/modal/popover.html', {
+        scope: $scope
+      });
+
+      // .fromTemplateUrl() 方法
+      $ionicPopover.fromTemplateUrl('build/pages/model/popover.html', {
+        scope: $scope
+      }).then(function(popover) {
+        $scope.popover = popover;
+      });
+
+
+      $scope.openPopover = function($event) {
+        $scope.popover.show($event);
+      };
+
+      $scope.closePopover = function(index) {
+        console.log(index);
+        $scope.popover.hide();
+        if(index==3){
+          $scope.goLearn();
+        }
+      }
 
     }]);
