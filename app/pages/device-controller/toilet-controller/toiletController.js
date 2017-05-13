@@ -31,31 +31,9 @@ angular.module('toiletControlModule')
       $scope.screenWidth = window.innerWidth;
       $scope.fontSize = document.documentElement.clientWidth / 7.5;
       $scope.goBack = function () {
+        document.removeEventListener("SocketPlugin.receiveTcpData", receiveTcpDatahandle, false);
         publicMethod.goBack();
       };
-      $scope.value = [];
-      //选择模式和清洁方式
-      $scope.ModelvalueNvYTunX = [{
-        id:0,
-        des:'toiletController.maichong'
-      },{
-        id:1,
-        des:'toiletController.bodong'
-      },{
-        id:2,
-        des:'toiletController.yidong'
-      },{
-        id:3,
-        des:'toiletController.zhengchang'
-      }];
-      //选择模式和清洁方式
-      $scope.Clearvalue = [{
-        id:"clearopen",des:'toiletController.clearopen',
-      },{
-        id:"clearextend",des:'toiletController.clearextend',
-      },{
-        id:"clearinstance",des:'toiletController.clearinstance',
-      }];
       var tolitercmdObj = {
         boxid:localStorage.boxIp,
         diviceid:'8BE850C2',
@@ -81,356 +59,379 @@ angular.module('toiletControlModule')
         deviceUseInfo:"",
         deviceinfoflag:false
       };
-      // tolite favoite localstarge
-      // window.localStorage.toilteFaviteSetting = JSON.stringify(a);
-
-      $scope.toilteFaviteSetting = JSON.parse(window.localStorage.toilteFaviteSetting);
-      /**
-       moren-json
-       init默认
-       **/
-      $scope.slideInitData =[{
-        des: "init",
-        gearNum: 1,
-        gearInit: 1,
-        gearInitTemp: 1,
-        parameterctlFlag: true,
-        parNodeid: 'toilet-initCtl',
-        canves01: "initcanves01",
-        canves02: "initcanves02",
-        canves03: "initcanves03",
-      }]
-      /*
-       nuanjiao-json
-       暖脚
-       */
-      $scope.slideNuanjioaData =[{
-        id:"nuanjiao",
-        des: "toiletController.njfl",
-        gearNum: 9,
-        gearInit: 1,
-        gearInitTemp: 1,
-        parameterctlFlag: false,
-        parNodeid: 'toilet-NuanjioaFlCtl',
-        canves01: "NuanjioaFlcanves01",
-        canves02: "NuanjioaFlcanves02",
-        canves03: "NuanjioaFlcanves03",
-      }]
-      /*
-       nvyong-json
-       女用
-       */
-      $scope.slideNvYongData =[{
-        id:"nvyong",
-        des: "toiletController.nvsy",
-        gearNum: 4,
-        gearInit: $scope.toilteFaviteSetting.FRONT_SPRAY_PRESSURE,
-        gearInitTemp: $scope.toilteFaviteSetting.FRONT_SPRAY_PRESSURE,
-        parameterctlFlag: false,
-        parNodeid: 'toilet-NvYongSyCtl',
-        canves01: "NvYongSycanves01",
-        canves02: "NvYongSycanves02",
-        canves03: "NvYongSycanves03",
-      },{
-        id:"nvyong",
-        des:"toiletController.nvpos",
-        gearNum:4,
-        gearInit:$scope.toilteFaviteSetting.FRONT_SPRAY_POSITION,
-        gearInitTemp:$scope.toilteFaviteSetting.FRONT_SPRAY_POSITION,
-        parameterctlFlag:false,
-        parNodeid:'toilet-NvYongPosCtl',
-        canves01:"NvYongSyPoscanves01",
-        canves02:"NvYongSyPoscanves02",
-        canves03:"NvYongSyPoscanves03",
-      },{
-        id:"nvyong",
-        des:"toiletController.nvtemper",
-        gearNum:5,
-        gearInit:$scope.toilteFaviteSetting.FRONT_SPRAY_TMPT,
-        gearInitTemp:$scope.toilteFaviteSetting.FRONT_SPRAY_TMPT,
-        parameterctlFlag:false,
-        parNodeid:'toilet-NvYongTemCtl',
-        canves01:"NvYongTemcanves01",
-        canves02:"NvYongTemcanves02",
-        canves03:"NvYongTemcanves03",
-      }];
-      /*
-       tunxi-json
-       臀洗
-       */
-      $scope.slideTunBuData =[{
-        id:"tunxi",
-        des: "toiletController.txsy",
-        gearNum: 4,
-        gearInit: $scope.toilteFaviteSetting.REAR_PRESSURE,
-        gearInitTemp: $scope.toilteFaviteSetting.REAR_PRESSURE,
-        parameterctlFlag: false,
-        parNodeid: 'toilet-TunBuSyCtl',
-        canves01: "TunBuSycanves01",
-        canves02: "TunBuSycanves02",
-        canves03: "TunBuSycanves03",
-      },
-        {
-          id:"tunxi",
-          des:"toiletController.txpos",
-          gearNum:4,
-          gearInit:$scope.toilteFaviteSetting.REAR_POSITION,
-          gearInitTemp:$scope.toilteFaviteSetting.REAR_POSITION,
-          parameterctlFlag:false,
-          parNodeid:'toilet-TunBuPosCtl',
-          canves01:"TunBuPosPoscanves01",
-          canves02:"TunBuPosPoscanves02",
-          canves03:"TunBuPosPoscanves03",
-        },{
-          id:"tunxi",
-          des:"toiletController.txtemper",
-          gearNum:5,
-          gearInit:$scope.toilteFaviteSetting.REAR_TMPT,
-          gearInitTemp:$scope.toilteFaviteSetting.REAR_TMPT,
-          parameterctlFlag:false,
-          parNodeid:'toilet-TunBuTemCtl',
-          canves01:"TunBuTemTemcanves01",
-          canves02:"TunBuTemTemcanves02",
-          canves03:"TunBuTemTemcanves03",
-        }];
-      /*
-       light-json
-       灯光
-       */
-      $scope.slidelightData = [{
-        id:"dengguang",
-        des: "toiletController.aroundlight",
-        gearNum: 2,
-        gearInit: $scope.toilteFaviteSetting.LIGHT_AMBIENT_BRIGHTNESS,
-        gearInitTemp: $scope.toilteFaviteSetting.LIGHT_AMBIENT_BRIGHTNESS,
-        parameterctlFlag: false,
-        parNodeid: 'toilet-lightCtl',
-        canves01: "lightcanves01",
-        canves02: "lightcanves02",
-        canves03: "lightcanves03",
-      },{
-          id:"dengguang",
-          des: "toiletController.toiltelight",
-          gearNum: 8,
-          gearInit: $scope.toilteFaviteSetting.LIGHT_BOWL_BRIGHTNESS,
-          gearInitTemp: $scope.toilteFaviteSetting.LIGHT_BOWL_BRIGHTNESS,
-          parameterctlFlag: false,
-          parNodeid: 'toilet-contioCtl',
-          canves01: "contiocanves01",
-          canves02: "contiocanves02",
-          canves03: "contiocanves03",
-        }]
-      /*
-       nuanfeng-json
-       暖风
-       */
-      $scope.slidedryerData =[{
-        id:"nuanfen",
-        des: "toiletController.nffl",
-        gearNum: 4,
-        gearInit: $scope.toilteFaviteSetting.DRYER_TMPT,
-        gearInitTemp: $scope.toilteFaviteSetting.DRYER_TMPT,
-        parameterctlFlag: false,
-        parNodeid: 'toilet-dryerFlCtl',
-        canves01: "dryerFlcanves01",
-        canves02: "dryerFlcanves02",
-        canves03: "dryerFlcanves03",
-      },{
-        id:"nuanfen",
-        des: "toiletController.nffw",
-        gearNum: 5,
-        gearInit: $scope.toilteFaviteSetting.DRYER_PRESSURE,
-        gearInitTemp: $scope.toilteFaviteSetting.DRYER_PRESSURE,
-        parameterctlFlag: false,
-        parNodeid: 'toilet-dryerFwCtl',
-        canves01: "dryerFwcanves01",
-        canves02: "dryerFwcanves02",
-        canves03: "dryerFwcanves03",
-      }]
-      /*
-       nuanjiao-json
-       暖角
-       */
-      $scope.slidewarmjData =[{
-        id:"nuanjiao",
-        des: "toiletController.njfl",
-        gearNum: 9,
-        gearInit: $scope.toilteFaviteSetting.DRYER_POWER,
-        gearInitTemp: $scope.toilteFaviteSetting.DRYER_POWER,
-        parameterctlFlag: false,
-        parNodeid: 'toilet-warmjCtl',
-        canves01: "warmjcanves01",
-        canves02: "warmjcanves02",
-        canves03: "warmjcanves03",
-      }];
-      /*
-       quanwen-json
-       圈温
-       */
-      $scope.slidequanwenData =[{
-        id:"quanwen",
-        des: "toiletController.qwfw",
-        gearNum: 5,
-        gearInit: $scope.toilteFaviteSetting.SEAT_TMPT,
-        gearInitTemp: $scope.toilteFaviteSetting.SEAT_TMPT,
-        parameterctlFlag: false,
-        parNodeid: 'toilet-quanwenCtl',
-        canves01: "quanwencanves01",
-        canves02: "quanwencanves02",
-        canves03: "quanwencanves03",
-      }]
-      /**
-       gongnenglist-json
-       功能列表数据
-       **/
-      $scope.handlenapeListNape = [
-        {
-          imgUrl: "build/img/toilet-controller/dachong.png",
-          imgSeledUrl: "build/img/toilet-controller/dachongseled.png",
-          imgUrlTemp:"build/img/toilet-controller/dachong.png",
-          handleDes: "toiletController.dachong01",
-          selecFlag:false,
-          matchdataid:"bigFlush",
-          isManyDirective:false,
-          dataname:"bigFlush",
-          handledata:$scope.slideInitData,
-          cloudId:"NIMIbigFlush",
-        },
-        {
-          imgUrl: "build/img/toilet-controller/xiaochong.png",
-          imgSeledUrl: "build/img/toilet-controller/xiaochongseled.png",
-          imgUrlTemp:"build/img/toilet-controller/xiaochong.png",
-          handleDes: "toiletController.xioachong",
-          selecFlag:false,
-          matchdataid:"smallFlush",
-          dataname:"smallFlush",
-          isManyDirective:false,
-          handledata:$scope.slideInitData,
-        },
-        {
-          imgUrl: "build/img/toilet-controller/nvyong.png",
-          imgSeledUrl: "build/img/toilet-controller/nvyongseled.png",
-          imgUrlTemp:"build/img/toilet-controller/nvyong.png",
-          handleDes: "toiletController.nvyong",
-          selecFlag:false,
-          matchdataid:"nvyong",
-          isManyDirective:true,
-          handledata:$scope.slideNvYongData,
-          cloudId:"NIMInvyong ",
-        },
-        {
-          imgUrl: "build/img/toilet-controller/tunxi.png",
-          imgSeledUrl: "build/img/toilet-controller/tunxiseled.png",
-          imgUrlTemp:"build/img/toilet-controller/tunxi.png",
-          handleDes: "toiletController.tunxi",
-          selecFlag:false,
-          matchdataid:"tunxi",
-          isManyDirective:true,
-          handledata:$scope.slideTunBuData
-        },
-        {
-          imgUrl: "build/img/toilet-controller/quanwen.png",
-          imgSeledUrl: "build/img/toilet-controller/quanwenseled.png",
-          imgUrlTemp:"build/img/toilet-controller/quanwen.png",
-          handleDes: "toiletController.quanwen",
-          isManyDirective:true,
-          selecFlag:false,
-          matchdataid:"quanwen",
-          handledata:$scope.slidequanwenData
-        },
-        {
-          imgUrl: "build/img/toilet-controller/nuanfeng.png",
-          imgSeledUrl: "build/img/toilet-controller/nuanfengseled.png",
-          imgUrlTemp:"build/img/toilet-controller/nuanfeng.png",
-          handleDes: "toiletController.nuanfeng",
-          isManyDirective:true,
-          selecFlag:false,
-          matchdataid:"nuanfen",
-          handledata:$scope.slidedryerData
-        },
-        {
-          imgUrl: "build/img/toilet-controller/dengguan.png",
-          imgSeledUrl: "build/img/toilet-controller/dengguanseled.png",
-          imgUrlTemp:"build/img/toilet-controller/dengguan.png",
-          handleDes: "toiletController.dengguang",
-          isManyDirective:true,
-          selecFlag:false,
-          matchdataid:"dengguang",
-          handledata:$scope.slidelightData
-        },
-        {
-          imgUrl: "build/img/toilet-controller/nuanjiao.png",
-          imgSeledUrl: "build/img/toilet-controller/nuanjiaoseled.png",
-          imgUrlTemp:"build/img/toilet-controller/nuanjiao.png",
-          handleDes: "toiletController.nuanjiao",
-          selecFlag:false,
-          matchdataid:"nuanjiao",
-          isManyDirective:true,
-          handledata:$scope.slidewarmjData
-        },
-        {
-          imgUrl: "build/img/toilet-controller/kaigai.png",
-          imgSeledUrl: "build/img/toilet-controller/kaigaiseled.png",
-          imgUrlTemp:"build/img/toilet-controller/kaigai.png",
-          handleDes: "toiletController.guangai",
-          isManyDirective:false,
-          selecFlag:false,
-          matchdataid:"guangai",
-          handledata:$scope.slideInitData,
-          dataname:"closeLid",
-        },{
-          imgUrl: "build/img/toilet-controller/fangai.png",
-          imgSeledUrl: "build/img/toilet-controller/fangaiseled.png",
-          imgUrlTemp:"build/img/toilet-controller/fangai.png",
-          handleDes: "toiletController.fangai",
-          isManyDirective:false,
-          selecFlag:false,
-          matchdataid:"fangai",
-          handledata:$scope.slideInitData,
-          dataname:"openLid",
-        },{
-          imgUrl: "build/img/toilet-controller/fanquan.png",
-          imgSeledUrl: "build/img/toilet-controller/fanquanseled.png",
-          imgUrlTemp:"build/img/toilet-controller/fanquan.png",
-          handleDes: "toiletController.fanquan",
-          isManyDirective:false,
-          selecFlag:false,
-          matchdataid:"fanquan",
-          handledata:$scope.slideInitData,
-          dataname:"openRing",
-        },{
-          imgUrl: "build/img/toilet-controller/qingjie.png",
-          imgSeledUrl: "build/img/toilet-controller/qingjieseled.png",
-          imgUrlTemp:"build/img/toilet-controller/qingjie.png",
-          handleDes: "toiletController.qingjie",
-          matchdataid:"clear",
-          isManyDirective:false,
-          selecFlag:false,
-          handledata:$scope.slideInitData,
-        },{
-          imgUrl: "build/img/toilet-controller/qingjie.png",
-          imgSeledUrl: "build/img/toilet-controller/qingjieseled.png",
-          imgUrlTemp:"build/img/toilet-controller/qingjie.png",
-          handleDes: "toiletController.devicePop",
-          matchdataid:"devicePop",
-          isManyDirective:false,
-          selecFlag:false,
-          handledata:$scope.slideInitData,
-        },{
-          imgUrl: "build/img/toilet-controller/shezhi.png",
-          imgSeledUrl: "build/img/toilet-controller/shezhiseled.png",
-          imgUrlTemp:"build/img/toilet-controller/shezhi.png",
-          handleDes: "toiletController.shezhi",
-          matchdataid:"setting",
-          selecFlag:false
-        },
-      ];
+      // $scope.value = [];
+      // //选择模式和清洁方式
+      // $scope.ModelvalueNvYTunX = [{
+      //   id:0,
+      //   des:'toiletController.maichong'
+      // },{
+      //   id:1,
+      //   des:'toiletController.bodong'
+      // },{
+      //   id:2,
+      //   des:'toiletController.yidong'
+      // },{
+      //   id:3,
+      //   des:'toiletController.zhengchang'
+      // }];
+      // //选择模式和清洁方式
+      // $scope.Clearvalue = [{
+      //   id:"clearopen",des:'toiletController.clearopen',
+      // },{
+      //   id:"clearextend",des:'toiletController.clearextend',
+      // },{
+      //   id:"clearinstance",des:'toiletController.clearinstance',
+      // }];
+      // // tolite favoite localstarge
+      // // window.localStorage.toilteFaviteSetting = JSON.stringify(a);
+      //
+      // $scope.toilteFaviteSetting = JSON.parse(window.localStorage.toilteFaviteSetting);
+      // /**
+      //  moren-json
+      //  init默认
+      //  **/
+      // $scope.slideInitData =[{
+      //   des: "init",
+      //   gearNum: 1,
+      //   gearInit: 1,
+      //   gearInitTemp: 1,
+      //   parameterctlFlag: true,
+      //   parNodeid: 'toilet-initCtl',
+      //   canves01: "initcanves01",
+      //   canves02: "initcanves02",
+      //   canves03: "initcanves03",
+      // }]
+      // /*
+      //  nuanjiao-json
+      //  暖脚
+      //  */
+      // $scope.slideNuanjioaData =[{
+      //   id:"nuanjiao",
+      //   des: "toiletController.njfl",
+      //   gearNum: 9,
+      //   gearInit: 1,
+      //   gearInitTemp: 1,
+      //   parameterctlFlag: false,
+      //   parNodeid: 'toilet-NuanjioaFlCtl',
+      //   canves01: "NuanjioaFlcanves01",
+      //   canves02: "NuanjioaFlcanves02",
+      //   canves03: "NuanjioaFlcanves03",
+      // }]
+      // /*
+      //  nvyong-json
+      //  女用
+      //  */
+      // $scope.slideNvYongData =[{
+      //   id:"nvyong",
+      //   des: "toiletController.nvsy",
+      //   gearNum: 4,
+      //   gearInit: $scope.toilteFaviteSetting.FRONT_SPRAY_PRESSURE,
+      //   gearInitTemp: $scope.toilteFaviteSetting.FRONT_SPRAY_PRESSURE,
+      //   parameterctlFlag: false,
+      //   parNodeid: 'toilet-NvYongSyCtl',
+      //   canves01: "NvYongSycanves01",
+      //   canves02: "NvYongSycanves02",
+      //   canves03: "NvYongSycanves03",
+      // },{
+      //   id:"nvyong",
+      //   des:"toiletController.nvpos",
+      //   gearNum:4,
+      //   gearInit:$scope.toilteFaviteSetting.FRONT_SPRAY_POSITION,
+      //   gearInitTemp:$scope.toilteFaviteSetting.FRONT_SPRAY_POSITION,
+      //   parameterctlFlag:false,
+      //   parNodeid:'toilet-NvYongPosCtl',
+      //   canves01:"NvYongSyPoscanves01",
+      //   canves02:"NvYongSyPoscanves02",
+      //   canves03:"NvYongSyPoscanves03",
+      // },{
+      //   id:"nvyong",
+      //   des:"toiletController.nvtemper",
+      //   gearNum:5,
+      //   gearInit:$scope.toilteFaviteSetting.FRONT_SPRAY_TMPT,
+      //   gearInitTemp:$scope.toilteFaviteSetting.FRONT_SPRAY_TMPT,
+      //   parameterctlFlag:false,
+      //   parNodeid:'toilet-NvYongTemCtl',
+      //   canves01:"NvYongTemcanves01",
+      //   canves02:"NvYongTemcanves02",
+      //   canves03:"NvYongTemcanves03",
+      // }];
+      // /*
+      //  tunxi-json
+      //  臀洗
+      //  */
+      // $scope.slideTunBuData =[{
+      //   id:"tunxi",
+      //   des: "toiletController.txsy",
+      //   gearNum: 4,
+      //   gearInit: $scope.toilteFaviteSetting.REAR_PRESSURE,
+      //   gearInitTemp: $scope.toilteFaviteSetting.REAR_PRESSURE,
+      //   parameterctlFlag: false,
+      //   parNodeid: 'toilet-TunBuSyCtl',
+      //   canves01: "TunBuSycanves01",
+      //   canves02: "TunBuSycanves02",
+      //   canves03: "TunBuSycanves03",
+      // },
+      //   {
+      //     id:"tunxi",
+      //     des:"toiletController.txpos",
+      //     gearNum:4,
+      //     gearInit:$scope.toilteFaviteSetting.REAR_POSITION,
+      //     gearInitTemp:$scope.toilteFaviteSetting.REAR_POSITION,
+      //     parameterctlFlag:false,
+      //     parNodeid:'toilet-TunBuPosCtl',
+      //     canves01:"TunBuPosPoscanves01",
+      //     canves02:"TunBuPosPoscanves02",
+      //     canves03:"TunBuPosPoscanves03",
+      //   },{
+      //     id:"tunxi",
+      //     des:"toiletController.txtemper",
+      //     gearNum:5,
+      //     gearInit:$scope.toilteFaviteSetting.REAR_TMPT,
+      //     gearInitTemp:$scope.toilteFaviteSetting.REAR_TMPT,
+      //     parameterctlFlag:false,
+      //     parNodeid:'toilet-TunBuTemCtl',
+      //     canves01:"TunBuTemTemcanves01",
+      //     canves02:"TunBuTemTemcanves02",
+      //     canves03:"TunBuTemTemcanves03",
+      //   }];
+      // /*
+      //  light-json
+      //  灯光
+      //  */
+      // $scope.slidelightData = [{
+      //   id:"dengguang",
+      //   des: "toiletController.aroundlight",
+      //   gearNum: 2,
+      //   gearInit: $scope.toilteFaviteSetting.LIGHT_AMBIENT_BRIGHTNESS,
+      //   gearInitTemp: $scope.toilteFaviteSetting.LIGHT_AMBIENT_BRIGHTNESS,
+      //   parameterctlFlag: false,
+      //   parNodeid: 'toilet-lightCtl',
+      //   canves01: "lightcanves01",
+      //   canves02: "lightcanves02",
+      //   canves03: "lightcanves03",
+      // },{
+      //     id:"dengguang",
+      //     des: "toiletController.toiltelight",
+      //     gearNum: 8,
+      //     gearInit: $scope.toilteFaviteSetting.LIGHT_BOWL_BRIGHTNESS,
+      //     gearInitTemp: $scope.toilteFaviteSetting.LIGHT_BOWL_BRIGHTNESS,
+      //     parameterctlFlag: false,
+      //     parNodeid: 'toilet-contioCtl',
+      //     canves01: "contiocanves01",
+      //     canves02: "contiocanves02",
+      //     canves03: "contiocanves03",
+      //   }]
+      // /*
+      //  nuanfeng-json
+      //  暖风
+      //  */
+      // $scope.slidedryerData =[{
+      //   id:"nuanfen",
+      //   des: "toiletController.nffl",
+      //   gearNum: 4,
+      //   gearInit: $scope.toilteFaviteSetting.DRYER_TMPT,
+      //   gearInitTemp: $scope.toilteFaviteSetting.DRYER_TMPT,
+      //   parameterctlFlag: false,
+      //   parNodeid: 'toilet-dryerFlCtl',
+      //   canves01: "dryerFlcanves01",
+      //   canves02: "dryerFlcanves02",
+      //   canves03: "dryerFlcanves03",
+      // },{
+      //   id:"nuanfen",
+      //   des: "toiletController.nffw",
+      //   gearNum: 5,
+      //   gearInit: $scope.toilteFaviteSetting.DRYER_PRESSURE,
+      //   gearInitTemp: $scope.toilteFaviteSetting.DRYER_PRESSURE,
+      //   parameterctlFlag: false,
+      //   parNodeid: 'toilet-dryerFwCtl',
+      //   canves01: "dryerFwcanves01",
+      //   canves02: "dryerFwcanves02",
+      //   canves03: "dryerFwcanves03",
+      // }]
+      // /*
+      //  nuanjiao-json
+      //  暖角
+      //  */
+      // $scope.slidewarmjData =[{
+      //   id:"nuanjiao",
+      //   des: "toiletController.njfl",
+      //   gearNum: 9,
+      //   gearInit: $scope.toilteFaviteSetting.DRYER_POWER,
+      //   gearInitTemp: $scope.toilteFaviteSetting.DRYER_POWER,
+      //   parameterctlFlag: false,
+      //   parNodeid: 'toilet-warmjCtl',
+      //   canves01: "warmjcanves01",
+      //   canves02: "warmjcanves02",
+      //   canves03: "warmjcanves03",
+      // }];
+      // /*
+      //  quanwen-json
+      //  圈温
+      //  */
+      // $scope.slidequanwenData =[{
+      //   id:"quanwen",
+      //   des: "toiletController.qwfw",
+      //   gearNum: 5,
+      //   gearInit: $scope.toilteFaviteSetting.SEAT_TMPT,
+      //   gearInitTemp: $scope.toilteFaviteSetting.SEAT_TMPT,
+      //   parameterctlFlag: false,
+      //   parNodeid: 'toilet-quanwenCtl',
+      //   canves01: "quanwencanves01",
+      //   canves02: "quanwencanves02",
+      //   canves03: "quanwencanves03",
+      // }]
+      // /**
+      //  gongnenglist-json
+      //  功能列表数据
+      //  **/
+      // $scope.handlenapeListNape = [
+      //   {
+      //     imgUrl: "build/img/toilet-controller/dachong.png",
+      //     imgSeledUrl: "build/img/toilet-controller/dachongseled.png",
+      //     imgUrlTemp:"build/img/toilet-controller/dachong.png",
+      //     handleDes: "toiletController.dachong01",
+      //     selecFlag:false,
+      //     matchdataid:"bigFlush",
+      //     isManyDirective:false,
+      //     dataname:"bigFlush",
+      //     handledata:$scope.slideInitData,
+      //     cloudId:"NIMIbigFlush",
+      //   },
+      //   {
+      //     imgUrl: "build/img/toilet-controller/xiaochong.png",
+      //     imgSeledUrl: "build/img/toilet-controller/xiaochongseled.png",
+      //     imgUrlTemp:"build/img/toilet-controller/xiaochong.png",
+      //     handleDes: "toiletController.xioachong",
+      //     selecFlag:false,
+      //     matchdataid:"smallFlush",
+      //     dataname:"smallFlush",
+      //     isManyDirective:false,
+      //     handledata:$scope.slideInitData,
+      //   },
+      //   {
+      //     imgUrl: "build/img/toilet-controller/nvyong.png",
+      //     imgSeledUrl: "build/img/toilet-controller/nvyongseled.png",
+      //     imgUrlTemp:"build/img/toilet-controller/nvyong.png",
+      //     handleDes: "toiletController.nvyong",
+      //     selecFlag:false,
+      //     matchdataid:"nvyong",
+      //     isManyDirective:true,
+      //     handledata:$scope.slideNvYongData,
+      //     cloudId:"NIMInvyong ",
+      //   },
+      //   {
+      //     imgUrl: "build/img/toilet-controller/tunxi.png",
+      //     imgSeledUrl: "build/img/toilet-controller/tunxiseled.png",
+      //     imgUrlTemp:"build/img/toilet-controller/tunxi.png",
+      //     handleDes: "toiletController.tunxi",
+      //     selecFlag:false,
+      //     matchdataid:"tunxi",
+      //     isManyDirective:true,
+      //     handledata:$scope.slideTunBuData
+      //   },
+      //   {
+      //     imgUrl: "build/img/toilet-controller/quanwen.png",
+      //     imgSeledUrl: "build/img/toilet-controller/quanwenseled.png",
+      //     imgUrlTemp:"build/img/toilet-controller/quanwen.png",
+      //     handleDes: "toiletController.quanwen",
+      //     isManyDirective:true,
+      //     selecFlag:false,
+      //     matchdataid:"quanwen",
+      //     handledata:$scope.slidequanwenData
+      //   },
+      //   {
+      //     imgUrl: "build/img/toilet-controller/nuanfeng.png",
+      //     imgSeledUrl: "build/img/toilet-controller/nuanfengseled.png",
+      //     imgUrlTemp:"build/img/toilet-controller/nuanfeng.png",
+      //     handleDes: "toiletController.nuanfeng",
+      //     isManyDirective:true,
+      //     selecFlag:false,
+      //     matchdataid:"nuanfen",
+      //     handledata:$scope.slidedryerData
+      //   },
+      //   {
+      //     imgUrl: "build/img/toilet-controller/dengguan.png",
+      //     imgSeledUrl: "build/img/toilet-controller/dengguanseled.png",
+      //     imgUrlTemp:"build/img/toilet-controller/dengguan.png",
+      //     handleDes: "toiletController.dengguang",
+      //     isManyDirective:true,
+      //     selecFlag:false,
+      //     matchdataid:"dengguang",
+      //     handledata:$scope.slidelightData
+      //   },
+      //   {
+      //     imgUrl: "build/img/toilet-controller/nuanjiao.png",
+      //     imgSeledUrl: "build/img/toilet-controller/nuanjiaoseled.png",
+      //     imgUrlTemp:"build/img/toilet-controller/nuanjiao.png",
+      //     handleDes: "toiletController.nuanjiao",
+      //     selecFlag:false,
+      //     matchdataid:"nuanjiao",
+      //     isManyDirective:true,
+      //     handledata:$scope.slidewarmjData
+      //   },
+      //   {
+      //     imgUrl: "build/img/toilet-controller/kaigai.png",
+      //     imgSeledUrl: "build/img/toilet-controller/kaigaiseled.png",
+      //     imgUrlTemp:"build/img/toilet-controller/kaigai.png",
+      //     handleDes: "toiletController.guangai",
+      //     isManyDirective:false,
+      //     selecFlag:false,
+      //     matchdataid:"guangai",
+      //     handledata:$scope.slideInitData,
+      //     dataname:"closeLid",
+      //   },{
+      //     imgUrl: "build/img/toilet-controller/fangai.png",
+      //     imgSeledUrl: "build/img/toilet-controller/fangaiseled.png",
+      //     imgUrlTemp:"build/img/toilet-controller/fangai.png",
+      //     handleDes: "toiletController.fangai",
+      //     isManyDirective:false,
+      //     selecFlag:false,
+      //     matchdataid:"fangai",
+      //     handledata:$scope.slideInitData,
+      //     dataname:"openLid",
+      //   },{
+      //     imgUrl: "build/img/toilet-controller/fanquan.png",
+      //     imgSeledUrl: "build/img/toilet-controller/fanquanseled.png",
+      //     imgUrlTemp:"build/img/toilet-controller/fanquan.png",
+      //     handleDes: "toiletController.fanquan",
+      //     isManyDirective:false,
+      //     selecFlag:false,
+      //     matchdataid:"fanquan",
+      //     handledata:$scope.slideInitData,
+      //     dataname:"openRing",
+      //   },{
+      //     imgUrl: "build/img/toilet-controller/qingjie.png",
+      //     imgSeledUrl: "build/img/toilet-controller/qingjieseled.png",
+      //     imgUrlTemp:"build/img/toilet-controller/qingjie.png",
+      //     handleDes: "toiletController.qingjie",
+      //     matchdataid:"clear",
+      //     isManyDirective:false,
+      //     selecFlag:false,
+      //     handledata:$scope.slideInitData,
+      //   },{
+      //     imgUrl: "build/img/toilet-controller/qingjie.png",
+      //     imgSeledUrl: "build/img/toilet-controller/qingjieseled.png",
+      //     imgUrlTemp:"build/img/toilet-controller/qingjie.png",
+      //     handleDes: "toiletController.devicePop",
+      //     matchdataid:"devicePop",
+      //     isManyDirective:false,
+      //     selecFlag:false,
+      //     handledata:$scope.slideInitData,
+      //   },{
+      //     imgUrl: "build/img/toilet-controller/shezhi.png",
+      //     imgSeledUrl: "build/img/toilet-controller/shezhiseled.png",
+      //     imgUrlTemp:"build/img/toilet-controller/shezhi.png",
+      //     handleDes: "toiletController.shezhi",
+      //     matchdataid:"setting",
+      //     selecFlag:false
+      //   },
+      // ];
       /**
        *
        set dang qian ce hau shu ju zhi
        */
       // $scope.currentSlideData = $scope.slideInitData;
-      $scope.currentSlideData = [];
+      // $scope.currentSlideData = [];
       /**
        init dang qian mo ban shu ju
        */
@@ -546,9 +547,10 @@ angular.module('toiletControlModule')
               if(Math.abs(this.radSectionArr[this.i]-this.radSectionArr[this.i-1]) < Math.abs(this.radSectionArr[this.i]-this.radSectionArr[this.i+1])){
                 this.stoPosPoint = this.i-1;
                 if(this.i<=1){
-                  if(slideDataObj.parNodeid === "toilet-warmjCtl"){
-                    slideDataObj.gearInit = 2;
-                  }else if(slideDataObj.parNodeid === "toilet-lightCtl"){
+                  // if(slideDataObj.parNodeid === "toilet-warmjCtl"){
+                  //   slideDataObj.gearInit = 2;
+                  // }else
+                    if(slideDataObj.parNodeid === "toilet-lightCtl"){
                     if(this.i === 1){
                       slideDataObj.gearInit = "低";
                     };
@@ -556,9 +558,10 @@ angular.module('toiletControlModule')
                     slideDataObj.gearInit = 1;
                   }
                 }else{
-                  if(slideDataObj.parNodeid === "toilet-warmjCtl"){
-                    slideDataObj.gearInit = this.i+1;
-                  }else if(slideDataObj.parNodeid === "toilet-lightCtl"){
+                  // if(slideDataObj.parNodeid === "toilet-warmjCtl"){
+                  //   slideDataObj.gearInit = this.i+1;
+                  // }else
+                    if(slideDataObj.parNodeid === "toilet-lightCtl"){
                     if(this.i === 2){
                       slideDataObj.gearInit = '中';
                     }else if(this.i === 3){
@@ -578,9 +581,10 @@ angular.module('toiletControlModule')
                 };
               }else{
                 this.stoPosPoint = this.i;
-                if(slideDataObj.parNodeid === "toilet-warmjCtl"){
-                  slideDataObj.gearInit = this.i+2;
-                }else if(slideDataObj.parNodeid === "toilet-lightCtl"){
+                // if(slideDataObj.parNodeid === "toilet-warmjCtl"){
+                //   slideDataObj.gearInit = this.i+2;
+                // }else
+                  if(slideDataObj.parNodeid === "toilet-lightCtl"){
                   if(this.i+1 === 2){
                     slideDataObj.gearInit = "中";
                   }else if(this.i+1 === 3){
@@ -670,6 +674,15 @@ angular.module('toiletControlModule')
             //初始化数据
             $('.slider-pager').empty();
           }else{
+            if($scope.currentSlideData[index].parNodeid === "toilet-lightCtl"){
+              if($scope.currentSlideData[index].gearInit=== "低"){
+                $scope.currentSlideData[index].gearInit = 1;
+              }else if($scope.currentSlideData[index].gearInit=== "中"){
+                $scope.currentSlideData[index].gearInit = 2;
+              }else if($scope.currentSlideData[index].gearInit=== "高"){
+                $scope.currentSlideData[index].gearInit = 3;
+              };
+            };
             currentRadObj.drawc(currentRadObj.cr2,currentRadObj.starRad+ currentRadObj.radRange * ($scope.currentSlideData[index].gearInit-1),"type");
             currentRadObj.drawCircleFill(currentRadObj.cr3,currentRadObj.starRad+currentRadObj.radRange * ($scope.currentSlideData[index].gearInit-1));
             currentEventObj.addEventListener( 'touchstart', function( e ){
@@ -738,12 +751,12 @@ angular.module('toiletControlModule')
        *@params:
        *@disc:accept ack or status;
        */
-      $scope.isSeatedStatusFlag = true;
-      $scope.handlenapeSelectedIndex = 12;
-      $scope.selectChangeFlag = false;
-      $scope.selectIsType = 1;
-      $scope.tostatustiveOnceFlag = 0;
-      $scope.todeviceFlag = 0;
+      // $scope.isSeatedStatusFlag = true;
+      // $scope.handlenapeSelectedIndex = 12;
+      // $scope.selectChangeFlag = false;
+      // $scope.selectIsType = 1;
+      // $scope.tostatustiveOnceFlag = 0;
+      // $scope.todeviceFlag = 0;
       /**
        *@params:flushOptions(nvyong mode) mSwitchType(turn or off)
        *@disc:use nvyong Instruction create;
@@ -771,18 +784,18 @@ angular.module('toiletControlModule')
         $scope.selectIsType = isType;
         var selectedDataTemp = $scope.handlenapeListNape[selectedIndex];
         var handleOriginData = selectedDataTemp.handledata;
-        var temperature = handleOriginData[2].gearInit;
+        var temperature = handleOriginData[2].gearInit*2;
         var volume = handleOriginData[0].gearInit*2;
         var place = handleOriginData[1].gearInit*2;
-        if(temperature === 3){
-          temperature = 4;
-        }else if(temperature === 4){
-          temperature = 6;
-        }else if(temperature === 5){
-          temperature = 8;
-        }else if(temperature === 6){
-          temperature = 10;
-        };
+        // if(temperature === 3){
+        //   temperature = 4;
+        // }else if(temperature === 4){
+        //   temperature = 6;
+        // }else if(temperature === 5){
+        //   temperature = 8;
+        // }else if(temperature === 6){
+        //   temperature = 10;
+        // };
         var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx,nimi.frontRearDry(type,temperature,volume,place,flushOptions,mSwitchType),tolitercmdObj.ctrId,tolitercmdObj.devId);
         //send instructin
         // console.log(cmdvalue);
@@ -802,17 +815,17 @@ angular.module('toiletControlModule')
         $scope.selectIsType = isType;
         var selectedDataTemp = $scope.handlenapeListNape[selectedIndex];
         var handleOriginData = selectedDataTemp.handledata;
-        var temperature = handleOriginData[1].gearInit;
+        var temperature = handleOriginData[1].gearInit*2;
         var volume = handleOriginData[0].gearInit*2;
-        if(temperature === 3){
-          temperature = 4;
-        }else if(temperature === 4){
-          temperature = 6;
-        }else if(temperature === 5){
-          temperature = 8;
-        }else if(temperature === 6){
-          temperature = 10;
-        };
+        // if(temperature === 3){
+        //   temperature = 4;
+        // }else if(temperature === 4){
+        //   temperature = 6;
+        // }else if(temperature === 5){
+        //   temperature = 8;
+        // }else if(temperature === 6){
+        //   temperature = 10;
+        // };
         var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx,nimi.frontRearDry("暖风",temperature,volume,1,"正常",mSwitchType),tolitercmdObj.ctrId,tolitercmdObj.devId);
         //send instructin
         // console.log(cmdvalue);
@@ -827,7 +840,7 @@ angular.module('toiletControlModule')
        *@params:flushOptions(nvyong mode) mSwitchType(turn or off)
        *@disc:use nuamfen Instruction create
        */
-      $scope.feetSeatIntionCreate = function (flag,type,temperature,isType,selectedIndex) {
+      $scope.feetSeatIntionCreate = function (flag,temperature,isType,selectedIndex) {
         try {
           $scope.selectChangeFlag = flag;
           $scope.selectIsType = isType;
@@ -835,24 +848,47 @@ angular.module('toiletControlModule')
           var handleOriginData = selectedDataTemp.handledata;
           if (!temperature) {
             var temperature = handleOriginData[0].gearInit;
-            if (type === "quanwen") {
-              if (temperature === 3) {
-                temperature = 4;
-              } else if (temperature === 4) {
-                temperature = 6;
-              } else if (temperature === 5) {
-                temperature = 8;
-              } else if (temperature === 6) {
-                temperature = 10;
-              };
-            };
+            // if (type === "quanwen") {
+            //   if (temperature === 3) {
+            //     temperature = 4;
+            //   } else if (temperature === 4) {
+            //     temperature = 6;
+            //   } else if (temperature === 5) {
+            //     temperature = 8;
+            //   } else if (temperature === 6) {
+            //     temperature = 10;
+            //   };
+            // };
           };
           var cmdvalue = getCmd(tolitercmdObj.header, tolitercmdObj.idx, nimi.feetSeatHeater(temperature), tolitercmdObj.ctrId, tolitercmdObj.devId);
           //send instructin
           // console.log(cmdvalue);
-          alert("cmdvalue" + cmdvalue)
+          // alert("cmdvalue" + cmdvalue)
           if (baseConfig.isCloudCtrl) {
             $scope.toGetImpleteData(flag, cmdvalue, $scope.handlenapeListNape[selectedIndex].handleDes, selectedIndex, isType);
+          } else {
+            cmdService.sendCmd(tolitercmdObj.diviceid, cmdvalue, tolitercmdObj.boxid);
+          };
+        }catch(e){
+          alert(e.message)
+        }
+      };
+      //quanwen
+      $scope.SeatHeaterIntionCreate = function (flag,temperature,isType,selectedIndex) {
+        try {
+          $scope.selectChangeFlag = flag;
+          $scope.selectIsType = isType;
+          var selectedDataTemp = $scope.handlenapeListNape[selectedIndex];
+          var handleOriginData = selectedDataTemp.handledata;
+          if (!temperature) {
+            var temperature = handleOriginData[0].gearInit*2;
+          };
+          var cmdvalue = getCmd(tolitercmdObj.header, tolitercmdObj.idx, nimi.SeatHeater(temperature), tolitercmdObj.ctrId, tolitercmdObj.devId);
+          //send instructin
+          // console.log(cmdvalue);
+          // alert("cmdvalue" + cmdvalue)
+          if (baseConfig.isCloudCtrl) {
+            $scope.toGetImpleteData(flag,cmdvalue,$scope.handlenapeListNape[selectedIndex].handleDes,selectedIndex,isType);
           } else {
             cmdService.sendCmd(tolitercmdObj.diviceid, cmdvalue, tolitercmdObj.boxid);
           };
@@ -897,7 +933,7 @@ angular.module('toiletControlModule')
         var handleOriginData = selectedDataTemp.handledata;
         if(!lightCtl){
           var lightCtl = handleOriginData[0].gearInit;
-          alert("lightCtl"+lightCtl)
+          // alert("lightCtl"+lightCtl)
           if(lightCtl=== 1){
             lightCtl = "低";
           }else if(lightCtl === 2){
@@ -995,9 +1031,9 @@ angular.module('toiletControlModule')
         }else if(currentRadObj.id === "nuanfen"){
           $scope.nuamfenIntionCreate("true","ON","1",currentRadObj.selectedIndex);
         }else if(currentRadObj.id === "nuanjiao"){
-          $scope.feetSeatIntionCreate("true","nuanjiao","","1",currentRadObj.selectedIndex);
+          $scope.feetSeatIntionCreate("true","","1",currentRadObj.selectedIndex);
         }else if(currentRadObj.id === "quanwen"){
-          $scope.feetSeatIntionCreate("true","quanwen","","1",currentRadObj.selectedIndex);
+          $scope.SeatHeaterIntionCreate("true","","1",currentRadObj.selectedIndex);
         }else if(currentRadObj.id === "dengguang"){
           if(currentRadObj.currentIndex===0){
             $scope.aroundLightIntionCreate(true,"","1",currentRadObj.selectedIndex);
@@ -1132,15 +1168,405 @@ angular.module('toiletControlModule')
         //     $scope.Toast.show($translate.instant($scope.handlenapeListNape[index].handleDes) + $translate.instant("golabelvariable.loadingdataerrror"));
         //   })
       };
-      // init data
-      $scope.handlenapeSelectedIndex = 12;
-      $scope.selectChangeFlag = false;
-      $scope.selectIsType = "1";
+      // // init data
+      // $scope.handlenapeSelectedIndex = 12;
+      // $scope.selectChangeFlag = false;
+      // $scope.selectIsType = "1";
       // flag,index,isTyp
       //get devic status
       var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx,nimi._data["synchronizeReq"],tolitercmdObj.ctrId,tolitercmdObj.devId);
       //send instructin
       console.log(cmdvalue)
+      $scope.$on("$ionicView.beforeEnter",function () {
+        $scope.value = [];
+        //选择模式和清洁方式
+        $scope.ModelvalueNvYTunX = [{
+          id:0,
+          des:'toiletController.maichong'
+        },{
+          id:1,
+          des:'toiletController.bodong'
+        },{
+          id:2,
+          des:'toiletController.yidong'
+        },{
+          id:3,
+          des:'toiletController.zhengchang'
+        }];
+        //选择模式和清洁方式
+        $scope.Clearvalue = [{
+          id:"clearopen",des:'toiletController.clearopen',
+        },{
+          id:"clearextend",des:'toiletController.clearextend',
+        },{
+          id:"clearinstance",des:'toiletController.clearinstance',
+        }];
+        // tolite favoite localstarge
+        // window.localStorage.toilteFaviteSetting = JSON.stringify(a);
+
+        $scope.toilteFaviteSetting = JSON.parse(window.localStorage.toilteFaviteSetting);
+        /**
+         moren-json
+         init默认
+         **/
+        $scope.slideInitData =[{
+          des: "init",
+          gearNum: 1,
+          gearInit: 1,
+          gearInitTemp: 1,
+          parameterctlFlag: true,
+          parNodeid: 'toilet-initCtl',
+          canves01: "initcanves01",
+          canves02: "initcanves02",
+          canves03: "initcanves03",
+        }]
+        /*
+         nuanjiao-json
+         暖脚
+         */
+        $scope.slideNuanjioaData =[{
+          id:"nuanjiao",
+          des: "toiletController.njfl",
+          gearNum: 9,
+          gearInit: 1,
+          gearInitTemp: 1,
+          parameterctlFlag: false,
+          parNodeid: 'toilet-NuanjioaFlCtl',
+          canves01: "NuanjioaFlcanves01",
+          canves02: "NuanjioaFlcanves02",
+          canves03: "NuanjioaFlcanves03",
+        }]
+        /*
+         nvyong-json
+         女用
+         */
+        $scope.slideNvYongData =[{
+          id:"nvyong",
+          des: "toiletController.nvsy",
+          gearNum: 4,
+          gearInit: $scope.toilteFaviteSetting.FRONT_SPRAY_PRESSURE,
+          gearInitTemp: $scope.toilteFaviteSetting.FRONT_SPRAY_PRESSURE,
+          parameterctlFlag: false,
+          parNodeid: 'toilet-NvYongSyCtl',
+          canves01: "NvYongSycanves01",
+          canves02: "NvYongSycanves02",
+          canves03: "NvYongSycanves03",
+        },{
+          id:"nvyong",
+          des:"toiletController.nvpos",
+          gearNum:4,
+          gearInit:$scope.toilteFaviteSetting.FRONT_SPRAY_POSITION,
+          gearInitTemp:$scope.toilteFaviteSetting.FRONT_SPRAY_POSITION,
+          parameterctlFlag:false,
+          parNodeid:'toilet-NvYongPosCtl',
+          canves01:"NvYongSyPoscanves01",
+          canves02:"NvYongSyPoscanves02",
+          canves03:"NvYongSyPoscanves03",
+        },{
+          id:"nvyong",
+          des:"toiletController.nvtemper",
+          gearNum:5,
+          gearInit:$scope.toilteFaviteSetting.FRONT_SPRAY_TMPT,
+          gearInitTemp:$scope.toilteFaviteSetting.FRONT_SPRAY_TMPT,
+          parameterctlFlag:false,
+          parNodeid:'toilet-NvYongTemCtl',
+          canves01:"NvYongTemcanves01",
+          canves02:"NvYongTemcanves02",
+          canves03:"NvYongTemcanves03",
+        }];
+        /*
+         tunxi-json
+         臀洗
+         */
+        $scope.slideTunBuData =[{
+          id:"tunxi",
+          des: "toiletController.txsy",
+          gearNum: 4,
+          gearInit: $scope.toilteFaviteSetting.REAR_PRESSURE,
+          gearInitTemp: $scope.toilteFaviteSetting.REAR_PRESSURE,
+          parameterctlFlag: false,
+          parNodeid: 'toilet-TunBuSyCtl',
+          canves01: "TunBuSycanves01",
+          canves02: "TunBuSycanves02",
+          canves03: "TunBuSycanves03",
+        },
+          {
+            id:"tunxi",
+            des:"toiletController.txpos",
+            gearNum:4,
+            gearInit:$scope.toilteFaviteSetting.REAR_POSITION,
+            gearInitTemp:$scope.toilteFaviteSetting.REAR_POSITION,
+            parameterctlFlag:false,
+            parNodeid:'toilet-TunBuPosCtl',
+            canves01:"TunBuPosPoscanves01",
+            canves02:"TunBuPosPoscanves02",
+            canves03:"TunBuPosPoscanves03",
+          },{
+            id:"tunxi",
+            des:"toiletController.txtemper",
+            gearNum:5,
+            gearInit:$scope.toilteFaviteSetting.REAR_TMPT,
+            gearInitTemp:$scope.toilteFaviteSetting.REAR_TMPT,
+            parameterctlFlag:false,
+            parNodeid:'toilet-TunBuTemCtl',
+            canves01:"TunBuTemTemcanves01",
+            canves02:"TunBuTemTemcanves02",
+            canves03:"TunBuTemTemcanves03",
+          }];
+        /*
+         light-json
+         灯光
+         */
+        $scope.slidelightData = [{
+          id:"dengguang",
+          des: "toiletController.aroundlight",
+          gearNum: 2,
+          gearInit: $scope.toilteFaviteSetting.LIGHT_AMBIENT_BRIGHTNESS,
+          gearInitTemp: $scope.toilteFaviteSetting.LIGHT_AMBIENT_BRIGHTNESS,
+          parameterctlFlag: false,
+          parNodeid: 'toilet-lightCtl',
+          canves01: "lightcanves01",
+          canves02: "lightcanves02",
+          canves03: "lightcanves03",
+        },{
+          id:"dengguang",
+          des: "toiletController.toiltelight",
+          gearNum: 9,
+          gearInit: $scope.toilteFaviteSetting.LIGHT_BOWL_BRIGHTNESS,
+          gearInitTemp: $scope.toilteFaviteSetting.LIGHT_BOWL_BRIGHTNESS,
+          parameterctlFlag: false,
+          parNodeid: 'toilet-contioCtl',
+          canves01: "contiocanves01",
+          canves02: "contiocanves02",
+          canves03: "contiocanves03",
+        }]
+        /*
+         nuanfeng-json
+         暖风
+         */
+        $scope.slidedryerData =[{
+          id:"nuanfen",
+          des: "toiletController.nffl",
+          gearNum: 4,
+          gearInit: $scope.toilteFaviteSetting.DRYER_TMPT,
+          gearInitTemp: $scope.toilteFaviteSetting.DRYER_TMPT,
+          parameterctlFlag: false,
+          parNodeid: 'toilet-dryerFlCtl',
+          canves01: "dryerFlcanves01",
+          canves02: "dryerFlcanves02",
+          canves03: "dryerFlcanves03",
+        },{
+          id:"nuanfen",
+          des: "toiletController.nffw",
+          gearNum: 5,
+          gearInit: $scope.toilteFaviteSetting.DRYER_PRESSURE,
+          gearInitTemp: $scope.toilteFaviteSetting.DRYER_PRESSURE,
+          parameterctlFlag: false,
+          parNodeid: 'toilet-dryerFwCtl',
+          canves01: "dryerFwcanves01",
+          canves02: "dryerFwcanves02",
+          canves03: "dryerFwcanves03",
+        }]
+        /*
+         nuanjiao-json
+         暖角
+         */
+        $scope.slidewarmjData =[{
+          id:"nuanjiao",
+          des: "toiletController.njfl",
+          gearNum: 9,
+          gearInit: $scope.toilteFaviteSetting.DRYER_POWER,
+          gearInitTemp: $scope.toilteFaviteSetting.DRYER_POWER,
+          parameterctlFlag: false,
+          parNodeid: 'toilet-warmjCtl',
+          canves01: "warmjcanves01",
+          canves02: "warmjcanves02",
+          canves03: "warmjcanves03",
+        }];
+        /*
+         quanwen-json
+         圈温
+         */
+        $scope.slidequanwenData =[{
+          id:"quanwen",
+          des: "toiletController.qwfw",
+          gearNum: 5,
+          gearInit: $scope.toilteFaviteSetting.SEAT_TMPT,
+          gearInitTemp: $scope.toilteFaviteSetting.SEAT_TMPT,
+          parameterctlFlag: false,
+          parNodeid: 'toilet-quanwenCtl',
+          canves01: "quanwencanves01",
+          canves02: "quanwencanves02",
+          canves03: "quanwencanves03",
+        }]
+        /**
+         gongnenglist-json
+         功能列表数据
+         **/
+        $scope.handlenapeListNape = [
+          {
+            imgUrl: "build/img/toilet-controller/dachong.png",
+            imgSeledUrl: "build/img/toilet-controller/dachongseled.png",
+            imgUrlTemp:"build/img/toilet-controller/dachong.png",
+            handleDes: "toiletController.dachong01",
+            selecFlag:false,
+            matchdataid:"bigFlush",
+            isManyDirective:false,
+            dataname:"bigFlush",
+            handledata:$scope.slideInitData,
+            cloudId:"NIMIbigFlush",
+          },
+          {
+            imgUrl: "build/img/toilet-controller/xiaochong.png",
+            imgSeledUrl: "build/img/toilet-controller/xiaochongseled.png",
+            imgUrlTemp:"build/img/toilet-controller/xiaochong.png",
+            handleDes: "toiletController.xioachong",
+            selecFlag:false,
+            matchdataid:"smallFlush",
+            dataname:"smallFlush",
+            isManyDirective:false,
+            handledata:$scope.slideInitData,
+          },
+          {
+            imgUrl: "build/img/toilet-controller/nvyong.png",
+            imgSeledUrl: "build/img/toilet-controller/nvyongseled.png",
+            imgUrlTemp:"build/img/toilet-controller/nvyong.png",
+            handleDes: "toiletController.nvyong",
+            selecFlag:false,
+            matchdataid:"nvyong",
+            isManyDirective:true,
+            handledata:$scope.slideNvYongData,
+            cloudId:"NIMInvyong ",
+          },
+          {
+            imgUrl: "build/img/toilet-controller/tunxi.png",
+            imgSeledUrl: "build/img/toilet-controller/tunxiseled.png",
+            imgUrlTemp:"build/img/toilet-controller/tunxi.png",
+            handleDes: "toiletController.tunxi",
+            selecFlag:false,
+            matchdataid:"tunxi",
+            isManyDirective:true,
+            handledata:$scope.slideTunBuData
+          },
+          {
+            imgUrl: "build/img/toilet-controller/quanwen.png",
+            imgSeledUrl: "build/img/toilet-controller/quanwenseled.png",
+            imgUrlTemp:"build/img/toilet-controller/quanwen.png",
+            handleDes: "toiletController.quanwen",
+            isManyDirective:true,
+            selecFlag:false,
+            matchdataid:"quanwen",
+            handledata:$scope.slidequanwenData
+          },
+          {
+            imgUrl: "build/img/toilet-controller/nuanfeng.png",
+            imgSeledUrl: "build/img/toilet-controller/nuanfengseled.png",
+            imgUrlTemp:"build/img/toilet-controller/nuanfeng.png",
+            handleDes: "toiletController.nuanfeng",
+            isManyDirective:true,
+            selecFlag:false,
+            matchdataid:"nuanfen",
+            handledata:$scope.slidedryerData
+          },
+          {
+            imgUrl: "build/img/toilet-controller/dengguan.png",
+            imgSeledUrl: "build/img/toilet-controller/dengguanseled.png",
+            imgUrlTemp:"build/img/toilet-controller/dengguan.png",
+            handleDes: "toiletController.dengguang",
+            isManyDirective:true,
+            selecFlag:false,
+            matchdataid:"dengguang",
+            handledata:$scope.slidelightData
+          },
+          {
+            imgUrl: "build/img/toilet-controller/nuanjiao.png",
+            imgSeledUrl: "build/img/toilet-controller/nuanjiaoseled.png",
+            imgUrlTemp:"build/img/toilet-controller/nuanjiao.png",
+            handleDes: "toiletController.nuanjiao",
+            selecFlag:false,
+            matchdataid:"nuanjiao",
+            isManyDirective:true,
+            handledata:$scope.slidewarmjData
+          },
+          {
+            imgUrl: "build/img/toilet-controller/kaigai.png",
+            imgSeledUrl: "build/img/toilet-controller/kaigaiseled.png",
+            imgUrlTemp:"build/img/toilet-controller/kaigai.png",
+            handleDes: "toiletController.guangai",
+            isManyDirective:false,
+            selecFlag:false,
+            matchdataid:"guangai",
+            handledata:$scope.slideInitData,
+            dataname:"closeLid",
+          },{
+            imgUrl: "build/img/toilet-controller/fangai.png",
+            imgSeledUrl: "build/img/toilet-controller/fangaiseled.png",
+            imgUrlTemp:"build/img/toilet-controller/fangai.png",
+            handleDes: "toiletController.fangai",
+            isManyDirective:false,
+            selecFlag:false,
+            matchdataid:"fangai",
+            handledata:$scope.slideInitData,
+            dataname:"openLid",
+          },{
+            imgUrl: "build/img/toilet-controller/fanquan.png",
+            imgSeledUrl: "build/img/toilet-controller/fanquanseled.png",
+            imgUrlTemp:"build/img/toilet-controller/fanquan.png",
+            handleDes: "toiletController.fanquan",
+            isManyDirective:false,
+            selecFlag:false,
+            matchdataid:"fanquan",
+            handledata:$scope.slideInitData,
+            dataname:"openRing",
+          },{
+            imgUrl: "build/img/toilet-controller/qingjie.png",
+            imgSeledUrl: "build/img/toilet-controller/qingjieseled.png",
+            imgUrlTemp:"build/img/toilet-controller/qingjie.png",
+            handleDes: "toiletController.qingjie",
+            matchdataid:"clear",
+            isManyDirective:false,
+            selecFlag:false,
+            handledata:$scope.slideInitData,
+          },{
+            imgUrl: "build/img/toilet-controller/qingjie.png",
+            imgSeledUrl: "build/img/toilet-controller/qingjieseled.png",
+            imgUrlTemp:"build/img/toilet-controller/qingjie.png",
+            handleDes: "toiletController.devicePop",
+            matchdataid:"devicePop",
+            isManyDirective:false,
+            selecFlag:false,
+            handledata:$scope.slideInitData,
+          },{
+            imgUrl: "build/img/toilet-controller/shezhi.png",
+            imgSeledUrl: "build/img/toilet-controller/shezhiseled.png",
+            imgUrlTemp:"build/img/toilet-controller/shezhi.png",
+            handleDes: "toiletController.shezhi",
+            matchdataid:"setting",
+            selecFlag:false
+          },
+        ];
+        var handlenapeListNapeLen = $scope.handlenapeListNape.length;
+
+        $scope.currentSlideData = [];
+        $scope.isSeatedStatusFlag = true;
+        $scope.handlenapeSelectedIndex = 12;
+        $scope.selectChangeFlag = false;
+        $scope.selectIsType = 1;
+        $scope.tostatustiveOnceFlag = 0;
+        $scope.todeviceFlag = 0;
+        //init click slide
+        $scope.clickSlideFlag = false;
+        //error over time
+        $scope.overTiemFlag = true;
+        // alert("cmdvalue"+cmdvalue)
+        if(baseConfig.isCloudCtrl){
+          // flag,cmdvalue, name,index,isType
+          $scope.toGetImpleteData("false",cmdvalue,$translate.instant('toiletController.devicePop'),12,"1");
+        }else{
+          hmsPopup.showLoading("<span translate='golabelvariable.loadingdata'></span>");
+          cmdService.sendCmd(tolitercmdObj.diviceid, cmdvalue, tolitercmdObj.boxid);
+        };
+      })
       // alert("cmdvalue"+cmdvalue)
       if(baseConfig.isCloudCtrl){
         // flag,cmdvalue, name,index,isType
@@ -1155,7 +1581,7 @@ angular.module('toiletControlModule')
        */
       $scope.hanleInitTemple = function (index) {
         $scope.count=0;
-        console.log($scope.currentSlideData)
+        // console.log($scope.currentSlideData)
         $scope.initHtmlTemplate($scope.currentSlideData);
         setTimeout(function () {
           //init every gearInitTemp
@@ -1175,7 +1601,7 @@ angular.module('toiletControlModule')
         },20);
       };
       //hanle selected border
-      var handlenapeListNapeLen = $scope.handlenapeListNape.length;
+      // var handlenapeListNapeLen = $scope.handlenapeListNape.length;
       $scope.selectNapes = function (index) {
         //device connect error and no use
         if(!$scope.overTiemFlag){
@@ -1201,7 +1627,15 @@ angular.module('toiletControlModule')
             if($scope.hanleMutexFlag){
               if(!$scope.handlenapeListNape[index].isManyDirective){
                 if(!$scope.handlenapeListNape[index].selecFlag && $scope.handlenapeListNape[index].matchdataid !== "clear"){
-                  $scope.onceTimeIntionCreate("true","0",index);
+                  if($scope.handlenapeListNape[index].matchdataid === "guangai" || $scope.handlenapeListNape[index].matchdataid === "fanquan"){
+                    if($scope.isSeatedStatusFlag){
+                      $scope.onceTimeIntionCreate("true","0",index);
+                    }else{
+                      $scope.Toast.show($translate.instant("toiletController.seatstatus"));
+                    }
+                  }else{
+                    $scope.onceTimeIntionCreate("true","0",index);
+                  }
                 };
                 if($scope.handlenapeListNape[index].matchdataid === "clear") {
                   //close clear
@@ -1256,16 +1690,26 @@ angular.module('toiletControlModule')
                     $scope.Toast.show($translate.instant("toiletController.seatstatus"));
                   }
                 }else if($scope.handlenapeListNape[index].matchdataid === "nuanfen"){
-                  if(!$scope.handlenapeListNape[index].selecFlag){
-                    $scope.nuamfenIntionCreate(true,"ON","0",index);
+                  if($scope.isSeatedStatusFlag){
+                    if(!$scope.handlenapeListNape[index].selecFlag){
+                      $scope.nuamfenIntionCreate(true,"ON","0",index);
+                    }else{
+                      $scope.nuamfenIntionCreate(true,"OFF","0",index);
+                    };
                   }else{
-                    $scope.nuamfenIntionCreate(true,"OFF","0",index);
+                    $scope.Toast.show($translate.instant("toiletController.seatstatus"))
                   };
-                }else if($scope.handlenapeListNape[index].matchdataid === "nuanjiao" || $scope.handlenapeListNape[index].matchdataid === "quanwen"){
+                }else if($scope.handlenapeListNape[index].matchdataid === "nuanjiao"){
                   if(!$scope.handlenapeListNape[index].selecFlag){
-                    $scope.feetSeatIntionCreate(true,"",2,"0",index);
+                    $scope.feetSeatIntionCreate(true,"","0",index);
                   }else{
-                    $scope.feetSeatIntionCreate(true,"",1,"0",index);
+                    $scope.feetSeatIntionCreate(true,1,"0",index);
+                  };
+                }else if($scope.handlenapeListNape[index].matchdataid === "quanwen"){
+                  if(!$scope.handlenapeListNape[index].selecFlag){
+                    $scope.SeatHeaterIntionCreate(true,2,"0",index);
+                  }else{
+                    $scope.SeatHeaterIntionCreate(true,1,"0",index);
                   };
                 }else if($scope.handlenapeListNape[index].matchdataid === "dengguang"){
                   if(!$scope.handlenapeListNape[index].selecFlag){
@@ -1276,7 +1720,7 @@ angular.module('toiletControlModule')
                   }else{
                     $scope.aroundLightIntionCreate(true,'关',"0",index);
                     $timeout(function () {
-                      $scope.tolLightIntionCreate(false,0,"0",index);
+                      $scope.tolLightIntionCreate(false,1,"0",index);
                     },1000)
                   };
                 };
@@ -1294,7 +1738,7 @@ angular.module('toiletControlModule')
        *@disc:init current status
        */
       $scope.initRecycleCurnt = function (index) {
-        $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
+        $scope.handlenapeListNape[index].selecFlag = true;
         if($scope.handlenapeListNape[index].selecFlag === true){
           $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgSeledUrl;
         }else{
@@ -1303,24 +1747,38 @@ angular.module('toiletControlModule')
         $scope.handlenapeListNape[index].handledata.forEach(function (item) {
           $scope.currentSlideData.push(item);
         })
-      }
-
-
-      //init click slide
-      $scope.clickSlideFlag = false;
-      //error over time
-      $scope.overTiemFlag = true;
-      document.addEventListener('SocketPlugin.receiveTcpData',function (result) {
+      };
+      $scope.initRecycleRedce = function (index) {
+        $scope.reducefalg = false;
+        $scope.currentSlideData.forEach(function (obj) {
+          $scope.handlenapeListNape[index].handledata.forEach(function (item) {
+            if(obj.parNodeid === item.parNodeid){
+              $scope.currentSlideData.unshift(item);
+              $scope.reducefalg = true;
+            };
+          });
+        });
+        if($scope.reducefalg){
+          $scope.handlenapeListNape[index].selecFlag = false;
+          if($scope.handlenapeListNape[index].selecFlag === true){
+            $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgSeledUrl;
+          }else{
+            $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgUrlTemp;
+          };
+        };
+      };
+      // //init click slide
+      // $scope.clickSlideFlag = false;
+      // //error over time
+      // $scope.overTiemFlag = true;
+      var receiveTcpDatahandle = function (result) {
         var resultOn = result[0];
-        // alert("resultOn"+angular.toJson(resultOn))
         if(resultOn.from.uid === tolitercmdObj.diviceid){
           if (resultOn.data.cmd) {
-            // alert("resultOn.data.cmd"+angular.toJson(resultOn.data.cmd))
             var backDataCmd = nimi.analysisInstruction(resultOn.data.cmd[0]);
             if(backDataCmd.flag === "ack"){
               if($scope.todeviceFlag === 0) {
                 $scope.todeviceFlag++;
-                alert("resultOn" + angular.toJson(resultOn))
                 if (backDataCmd.cmd === "07") {
                   var name = "toiletController.chongxi";
                   if (backDataCmd.ack === "1000") {
@@ -1362,24 +1820,33 @@ angular.module('toiletControlModule')
                     $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directerror"));
                   };
                 } else if (backDataCmd.cmd === "05") {
-                  var name = "toiletController.heatdirec";
+                  var name = "toiletController.nuanjiao";
                   if (backDataCmd.ack === "1000") {
                     $scope.selectChange($scope.selectChangeFlag, $scope.handlenapeSelectedIndex, $scope.selectIsType);
                     var selectedDataTemp = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex];
                     var handleOriginData = selectedDataTemp.handledata;
                     $scope.toilteFaviteTemp = JSON.parse(window.localStorage.toilteFaviteSetting);
-                    if (selectedDataTemp.matchdataid === "nuanjiao") {
-                      $scope.toilteFaviteTemp.DRYER_POWER = handleOriginData[0].gearInit;
-                    } else if (selectedDataTemp.matchdataid === "quanwen") {
-                      $scope.toilteFaviteTemp.SEAT_TMPT = handleOriginData[0].gearInit;
-                    };
+                    $scope.toilteFaviteTemp.DRYER_POWER = handleOriginData[0].gearInit;
                     window.localStorage.toilteFaviteSetting = JSON.stringify($scope.toilteFaviteTemp);
                     $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
                   } else {
                     $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directerror"));
                   };
-
-                } else if (backDataCmd.cmd === "03") {
+                } else if (backDataCmd.cmd === "06") {
+                  var name = "toiletController.quanwen";
+                  if (backDataCmd.ack === "1000") {
+                    $scope.selectChange($scope.selectChangeFlag, $scope.handlenapeSelectedIndex, $scope.selectIsType);
+                    var selectedDataTemp = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex];
+                    var handleOriginData = selectedDataTemp.handledata;
+                    $scope.toilteFaviteTemp = JSON.parse(window.localStorage.toilteFaviteSetting);
+                    $scope.toilteFaviteTemp.SEAT_TMPT = handleOriginData[0].gearInit;
+                    window.localStorage.toilteFaviteSetting = JSON.stringify($scope.toilteFaviteTemp);
+                    $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
+                  } else {
+                    $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directerror"));
+                  };
+                }
+                else if (backDataCmd.cmd === "03") {
                   var name = "toiletController.nuanfeng";
                   if (backDataCmd.ack === "1000") {
                     $scope.selectChange($scope.selectChangeFlag, $scope.handlenapeSelectedIndex, $scope.selectIsType);
@@ -1461,162 +1928,153 @@ angular.module('toiletControlModule')
                 };
               };
             }else{
-              // alert("backDataCmdstatus" + angular.toJson(backDataCmd));
               if(backDataCmd.cmd === "98") {
+                $scope.currentSlideData = [];
                 //get device status
-                if ($scope.tostatustiveOnceFlag === 0) {
-                  alert("status");
-                  alert("backDataCmd"+angular.toJson(backDataCmd));
-                  alert("resultOn" + angular.toJson(resultOn))
-                  $scope.tostatustiveOnceFlag++;
-                  //handle status
-                  //flush
-                  if(backDataCmd.flushStatus === "001"){
-                    $scope.overTiemFlag = false;
-                    if(backDataCmd.flushType === "0"){
-                      $scope.initRecycleCurnt(0);
-                    }else if(backDataCmd.flushType === "1"){
-                      $scope.initRecycleCurnt(1);
+                // if ($scope.tostatustiveOnceFlag === 0) {
+                // alert("status");
+                // alert("backDataCmd"+angular.toJson(backDataCmd));
+                // alert("resultOn" + angular.toJson(resultOn))
+                // $scope.tostatustiveOnceFlag++;
+                //handle status
+                //flush
+                // if(backDataCmd.flushStatus === "001"){
+                //   $scope.overTiemFlag = false;
+                //   if(backDataCmd.flushType === "0"){
+                //     $scope.initRecycleCurnt(0);
+                //   }else if(backDataCmd.flushType === "1"){
+                //     $scope.initRecycleCurnt(1);
+                //   };
+                // };
+                //nv yong
+                if(backDataCmd.fontStatus === "1"){
+                  $scope.overTiemFlag = false;
+                  $scope.initRecycleCurnt(2);
+                }else{
+                  $scope.initRecycleRedce(2)
+                }
+                //tun xi
+                if(backDataCmd.rearStatus === "1"){
+                  $scope.initRecycleCurnt(3);
+                  $scope.overTiemFlag = false;
+                }else{
+                  $scope.initRecycleRedce(3)
+                }
+                //quan wenxxxx
+                // if(backDataCmd.ambientStatus === "1"){
+                //   $timeout(function () {
+                //     $scope.selectChange("true",4,"0");
+                //   },20);
+                //   $scope.initTemplate = false;
+                // };
+                //nuanfen
+                if(backDataCmd.dryerStatus === "1"){
+                  $scope.initRecycleCurnt(5);
+                  $scope.overTiemFlag = false;
+                }else{
+                  $scope.initRecycleRedce(5)
+                }
+                //dengguang
+                if(backDataCmd.ambientStatus === "1"){
+                  $scope.initRecycleCurnt(6);
+                  $scope.overTiemFlag = false;
+                }else{
+                  $scope.initRecycleRedce(6)
+                }
+                //nuanjiao
+                if(backDataCmd.feetHeater === "1"){
+                  $scope.initRecycleCurnt(7);
+                  $scope.overTiemFlag = false;
+                }else{
+                  $scope.initRecycleRedce(7)
+                }
+                // //guangai
+                // if(backDataCmd.lidRingStatus === "110"){
+                //   $scope.initRecycleCurnt(8);
+                //   $scope.overTiemFlag = false;
+                // };
+                // //fangai
+                // if(backDataCmd.lidRingStatus === "011"){
+                //   $scope.initRecycleCurnt(9);
+                //   $scope.overTiemFlag = false;
+                // };
+                // //fanquan
+                // if(backDataCmd.lidRingStatus === "100"){
+                //   $scope.initRecycleCurnt(10);
+                //   $scope.overTiemFlag = false;
+                // };
+                //clear
+                if(backDataCmd.wandStatus === "1" || backDataCmd.UVProgressStatus != "0" || backDataCmd.ballValve === "1"){
+                  $timeout(function () {
+                    $scope.handlenapeListNape[11].selecFlag = !$scope.handlenapeListNape[11].selecFlag;
+                    if($scope.handlenapeListNape[11].selecFlag === true){
+                      $scope.handlenapeListNape[11].imgUrl = $scope.handlenapeListNape[11].imgSeledUrl;
+                    }else{
+                      $scope.handlenapeListNape[11].imgUrl = $scope.handlenapeListNape[11].imgUrlTemp;
+                    };
+                  },30);
+                  $scope.overTiemFlag = false;
+                  if(backDataCmd.wandStatus === "1"){
+                    $scope.toiletController.modelTypeClear === "toiletController.clearextend";
+                  }else if(backDataCmd.UVProgressStatus !== "00"){
+                    $scope.toiletController.modelTypeClear === "toiletController.clearinstance";
+                  }else if(backDataCmd.ballValve === "1"){
+                    $scope.toiletController.modelTypeClear === "toiletController.clearopen";
+                  };
+                }else{
+                  if($scope.toiletController.modelTypeClear !== "toiletController.gaunbi"){
+                    $scope.handlenapeListNape[11].selecFlag = !$scope.handlenapeListNape[11].selecFlag;
+                    if($scope.handlenapeListNape[11].selecFlag === true){
+                      $scope.handlenapeListNape[11].imgUrl = $scope.handlenapeListNape[11].imgSeledUrl;
+                    }else{
+                      $scope.handlenapeListNape[11].imgUrl = $scope.handlenapeListNape[11].imgUrlTemp;
                     };
                   };
-                  //nv yong
-                  if(backDataCmd.fontStatus === "1"){
-                    $scope.overTiemFlag = false;
-                    // $timeout(function () {
-                    //   $scope.selectChange("true",2,"0");
-                    // },30)
-                    $scope.initRecycleCurnt(2);
-                  };
-                  //tun xi
-                  if(backDataCmd.rearStatus === "1"){
-                    // $timeout(function () {
-                    //   $scope.selectChange("true",3,"0");
-                    // },30);
-                    $scope.initRecycleCurnt(3);
-                    $scope.overTiemFlag = false;
-                  };
-                  //quan wenxxxx
-                  // if(backDataCmd.ambientStatus === "1"){
-                  //   $timeout(function () {
-                  //     $scope.selectChange("true",4,"0");
-                  //   },20);
-                  //   $scope.initTemplate = false;
-                  // };
-                  //nuanfen
-                  if(backDataCmd.dryerStatus === "1"){
-                    // $timeout(function () {
-                    //   $scope.selectChange("true",5,"0");
-                    // },30);
-                    $scope.initRecycleCurnt(5);
-                    $scope.overTiemFlag = false;
-                  };
-                  //dengguang
-                  if(backDataCmd.ambientStatus === "1"){
-                    // $timeout(function () {
-                    //   $scope.selectChange("true",6,"0");
-                    // },30);
-                    $scope.initRecycleCurnt(6);
-                    $scope.overTiemFlag = false;
-                  };
-                  //nuanjiao
-                  if(backDataCmd.feetHeater === "1"){
-                    // $timeout(function () {
-                    //   $scope.selectChange("true",7,"0");
-                    // },30);
-                    $scope.initRecycleCurnt(7);
-                    $scope.overTiemFlag = false;
-                  };
-                  //guangai
-                  if(backDataCmd.lidRingStatus === "110"){
-                    // $timeout(function () {
-                    //   $scope.selectChange("true",8,"0");
-                    // },30);
-                    $scope.initRecycleCurnt(8);
-                    $scope.overTiemFlag = false;
-                  };
-                  //fangai
-                  if(backDataCmd.lidRingStatus === "011"){
-                    // $timeout(function () {
-                    //   $scope.selectChange("true",9,"0");
-                    // },30);
-                    $scope.initRecycleCurnt(9);
-                    $scope.overTiemFlag = false;
-                  };
-                  //fanquan
-                  if(backDataCmd.lidRingStatus === "100"){
-                    // $timeout(function () {
-                    //   $scope.selectChange("true",10,"0");
-                    // },30);
-                    $scope.initRecycleCurnt(10);
-                    $scope.overTiemFlag = false;
-                  };
-                  //fangai
-                  if(backDataCmd.wandStatus === "1" || backDataCmd.UVProgressStatus != "0" || backDataCmd.ballValve === "1"){
-                    $timeout(function () {
-                      $scope.handlenapeListNape[11].selecFlag = !$scope.handlenapeListNape[11].selecFlag;
-                      // $scope.selectChange("true",11,"0");
-                    },30);
-                    $scope.overTiemFlag = false;
-                    // $scope.initTemplate = false;
-                    if(backDataCmd.wandStatus === "1"){
-                      $scope.toiletController.modelTypeClear === "toiletController.clearextend";
-                    }else if(backDataCmd.UVProgressStatus !== "00"){
-                      $scope.toiletController.modelTypeClear === "toiletController.clearinstance";
-                    }else if(backDataCmd.ballValve === "1"){
-                      $scope.toiletController.modelTypeClear === "toiletController.clearopen";
-                    };
-                  };
-                  alert(angular.toJson($scope.currentSlideData))
-                  if($scope.currentSlideData.length>0){
-                    $scope.initHtmlTemplate($scope.currentSlideData);
-                    setTimeout(function () {
-                      $scope.getCurrentObj(0);
-                      $scope.clickSlideFlag = true;
-                    },20)
-                  }else{
-                    $scope.overTiemFlag = false;
-                    $scope.clickSlideFlag = false;
-                    $timeout(function () {
-                      $scope.currentSlideData = $scope.slideInitData;
-                      $scope.hanleInitTemple(12);
-                    },20);
-                  };
-                  // alert("$scope.initTemplate"+$scope.initTemplate)
-                  // if($scope.initTemplate){
-                  //   $scope.overTiemFlag = false;
-                  //   $scope.clickSlideFlag = false;
-                  //   $timeout(function () {
-                  //     $scope.hanleInitTemple(12);
-                  //   },20);
-                  // };
-                  hmsPopup.hideLoading();
-                  if(backDataCmd.seatedStatus === "1") {
-                    $scope.isSeatedStatusFlag = true;
-                    $scope.toiletController.deviceUseInfo = $scope.toiletController.useing;
-                    $scope.toiletController.deviceinfoflag = true;
-                    $scope.Toast.show($translate.instant("toiletController.devicePop") + $translate.instant("golabelvariable.directesuccess"));
-                  }else if (backDataCmd.seatedStatus === "0") {
-                    $scope.isSeatedStatusFlag = false;
-                    $scope.toiletController.deviceinfoflag = false;
-                    $scope.toiletController.deviceUseInfo = $scope.toiletController.nouse
-                    $scope.Toast.show($translate.instant("toiletController.devicePop") + $translate.instant("golabelvariable.directesuccess"));
-                  } else {
-                    $scope.Toast.show($translate.instant("toiletController.devicePop") + $translate.instant("golabelvariable.directerror"));
-                  };
+                  $scope.toiletController.modelTypeClear = "toiletController.gaunbi";
                 };
+                // alert("11"+angular.toJson($scope.currentSlideData))
+                if($scope.currentSlideData.length>0){
+                  $scope.initHtmlTemplate($scope.currentSlideData);
+                  setTimeout(function () {
+                    $scope.getCurrentObj(0);
+                    $scope.clickSlideFlag = true;
+                  },20)
+                }else{
+                  $scope.overTiemFlag = false;
+                  $scope.clickSlideFlag = false;
+                  $timeout(function () {
+                    $scope.currentSlideData = $scope.slideInitData;
+                    $scope.hanleInitTemple(12);
+                  },20);
+                };
+                hmsPopup.hideLoading();
+                if(backDataCmd.seatedStatus === "1") {
+                  $scope.isSeatedStatusFlag = true;
+                  $scope.toiletController.deviceUseInfo = $scope.toiletController.useing;
+                  $scope.toiletController.deviceinfoflag = true;
+                  $scope.Toast.show($translate.instant("toiletController.devicePop") + $translate.instant("golabelvariable.directesuccess"));
+                }else if (backDataCmd.seatedStatus === "0") {
+                  $scope.isSeatedStatusFlag = false;
+                  $scope.toiletController.deviceinfoflag = false;
+                  $scope.toiletController.deviceUseInfo = $scope.toiletController.nouse
+                  $scope.Toast.show($translate.instant("toiletController.devicePop") + $translate.instant("golabelvariable.directesuccess"));
+                } else {
+                  $scope.Toast.show($translate.instant("toiletController.devicePop") + $translate.instant("golabelvariable.directerror"));
+                };
+                // };
               };
             };
             $scope.$apply();
           };
         };
-      }, false);
+      };
+      document.addEventListener('SocketPlugin.receiveTcpData',receiveTcpDatahandle,false);
       $timeout(function(){
         if($scope.overTiemFlag){
           hmsPopup.hideLoading();
           $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"));
         };
-      },10000)
-
+      },10000);
       $scope.setSingalModalTop = "toiletSingalModalTop";
       $ionicModal.fromTemplateUrl('build/pages/model/hmsModal.html', {
         scope: $scope,
@@ -1702,7 +2160,7 @@ angular.module('toiletControlModule')
             var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx,nimi._data[desTemp],tolitercmdObj.ctrId,tolitercmdObj.devId);
             //send instructin
             console.log(cmdvalue);
-            alert("cmdvalue"+cmdvalue)
+            // alert("cmdvalue"+cmdvalue)
             $scope.selectChangeFlag = true;
             $scope.selectIsType = "1";
             if(baseConfig.isCloudCtrl){

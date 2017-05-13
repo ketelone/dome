@@ -140,36 +140,39 @@
     }
   }
   .toilet-handlenape{
+    overflow: hidden;
     position: absolute;
     top: 7.54rem;
     width: 96%;
     margin-left: 2%;
     margin-right: 2%;
-    height: 9.5rem;
     background-color:#1A1E28;
     .napes-border{
       border:0.03rem solid $global-border;
       border-radius: 0.08rem;
     }
-    .handlenape-list-napes{
+    .toilet-handlenape-list{
       float: left;
       width: 23%;
       height: 1.5rem;
-      margin-top: 0.6rem;
+      padding-top: 0.6rem;
+      margin-bottom: 0.3rem;
       margin-right: 2%;
       text-align: center;
-      .list-napes-img{
-        width: 0.6rem;
-        height: 0.6rem;
-      }
-      .list-napes-dec{
-        font-size: $font-size-small;
-        color: white;
+      .handlenape-list-napes{
+        .list-napes-img{
+          width: 0.6rem;
+          height: 0.6rem;
+        }
+        .list-napes-dec{
+          font-size: $font-size-small;
+          color: white;
+        }
       }
     }
     .toilet-handlenape-list:last-child .handlenape-list-napes{
-      margin-bottom: 5.5rem;
-      //margin-bottom: 2.8rem;
+      //margin-bottom: 5.5rem;
+      margin-bottom: 2.5rem;
     }
   }
 }

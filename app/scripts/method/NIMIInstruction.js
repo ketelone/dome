@@ -135,7 +135,7 @@ NIMI.prototype.frontRearDry = function (method, temperature, volume, place, flus
 };
 
 /**
- * Feet Heater 暖脚 坐垫加热
+ * Feet Heater 暖脚
  * @param{int} temperature - 暖风档位
  * @returns {string} 指令中的 data串
  */
@@ -147,6 +147,17 @@ NIMI.prototype.feetSeatHeater = function (temperature) {
   cmd += getHex(fourBitToCheck(temperature.toString(2))) + "0" + "00" + "00" + "00";
   return cmd;
 };
+/**
+ * Feet Heater 圈温
+ * @param{int} temperature - 暖风档位
+ * @returns {string} 指令中的 data串
+ */
+NIMI.prototype.SeatHeater = function (temperature) {
+  var cmd = "06";
+  cmd += getHex(fourBitToCheck(temperature.toString(2))) + "0" + "00" + "00" + "00";
+  return cmd;
+};
+
 
 /**
  *
@@ -334,7 +345,7 @@ function getDataByColor(color) {
 
 /**
  * 坐便灯;
- * @param{int} lightStalls 灯光档位 {0,4,,8,12,15} [15表示 learn by self]
+ * @param{int} lightStalls
  * @returns {string}
  */
 NIMI.prototype.bowlLight = function (lightStalls) {
@@ -702,15 +713,17 @@ NIMI.prototype.setDeviceTime = function (year, month, date, hour, minute, week) 
     week:week
   }))
   var cmd = "0f";
-  cmd += getHex(sevenBitToCheck(year.toString(2)
+  cmd += getHex(sevenBitToCheck(year.toString(2))
     + fourBitToCheck(month.toString(2))
     + fiveBitToCheck(date.toString(2))
     + fiveBitToCheck(hour.toString(2))
     + sixBitToCheck(minute.toString(2))
     + threeBitToCheck(week.toString(2))
-    + "00"))
+    + "00");
   return cmd;
 };
+
+
 /**
  * 十进制转二进制 三位补零
  * @param {String} data

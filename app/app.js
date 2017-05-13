@@ -766,9 +766,8 @@ angular.module('myApp')
         || !window.localStorage.appCacheVersion || window.localStorage.appCacheVersion != baseConfig.version.currentVersion
       ) {
         if (baseConfig.debug) {
-          console.log('app.js into guide ');
-        }
-
+          console.log('app.js into guide');
+        };
         $urlRouterProvider.otherwise('/guide');
         window.localStorage.appCacheVersion = baseConfig.version.currentVersion;
         //toilte favite set
@@ -787,7 +786,7 @@ angular.module('myApp')
           //nj
           DRYER_POWER:1,
           //qw
-          SEAT_TMPT:2,
+          SEAT_TMPT:1,
           //dg
           LIGHT_AMBIENT_BRIGHTNESS:1,
           LIGHT_BOWL_BRIGHTNESS:5,
