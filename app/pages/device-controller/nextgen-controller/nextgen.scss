@@ -1,5 +1,16 @@
 .nextgen {
 
+  .right-image{
+    right: 0.2rem;
+    width: 23px;
+    height: 23px;
+    position: absolute;
+    top: 0;
+    border: 10px solid transparent;
+    box-sizing: content-box;
+    z-index: 5;
+  }
+
   .toilet-bg {
     background-color: $global-head-bg;
   }
@@ -9,7 +20,7 @@
   }
 
   .toilet-conninfo {
-    padding-top: 0.6rem;
+    padding-top: 0.86rem;
     width: 100%;
     height: auto;
     .toilet-conninfo-signal {
@@ -17,6 +28,7 @@
       height: 0.28rem;
       line-height: 0.28rem;
       .conninfo-signal-img {
+        //vertical-align: middle;
         height: 0.25rem;
         width: 0.354rem;
         margin-right: 0.106rem;
@@ -47,10 +59,10 @@
 
   .toilet-parameterctl {
     position: relative;
-    margin-top: 0.66rem;
+    margin-top: 0.8rem;
     margin-left: 0.93rem;
-    width: 5.64rem;
-    height: 5.64rem;
+    width: 5.6rem;
+    height: 5.6rem;
     .canves-pos {
       position: absolute;
       left: 0;
@@ -73,9 +85,9 @@
       z-index: 4;
       position: absolute;
       left: 0;
-      top: 2.65rem;
-      width: 5.64rem;
-      height: 5.64rem;
+      top: 2.6rem;
+      width: 5.6rem;
+      height: 5.6rem;
       text-align: center;
       .toilet-parameterctl-des {
         color: white;
@@ -87,7 +99,7 @@
 
   .toilet-handlenape-selec {
     position: absolute;
-    top: 6.5rem;
+    top: 6.86rem;
     z-index: 10;
     width: 100%;
     height: 1.08rem;
@@ -152,12 +164,6 @@
       position: absolute;
       margin-top: 0.7rem;
       margin-left: 0.2rem;
-      .img-size {
-        position: absolute;
-        width: 1.2rem;
-        height: 1.2rem;
-        margin: 0.1rem;
-      }
     }
     .chixu {
       position: absolute;
@@ -179,13 +185,16 @@
       text-align: center;
     }
     .circle-choice {
-      width: 1.4rem;
-      height: 1.4rem;
-      background: #ddd;
-      border-radius: 100%;
+      //width: 1.4rem;
+      //height: 1.4rem;
+      //border-radius: 100%;
       position: relative;
+      .img-size {
+        position: absolute;
+        width: 1.4rem;
+        height: 1.4rem;
+      }
     }
-
   }
 
 }
