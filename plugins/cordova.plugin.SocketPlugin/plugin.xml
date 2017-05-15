@@ -42,13 +42,23 @@ xmlns:android="http://schemas.android.com/apk/res/android">
             <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
             <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
        </config-file>
-
+		
         <source-file src="src/android/cordova/plugin/socket/SocketPlugin.java" target-dir="src/cordova/plugin/socket/"/>
         <source-file src="src/android/cordova/plugin/socket/AppUtil.java" target-dir="src/cordova/plugin/socket/"/>
         <source-file src="src/android/cordova/plugin/socket/ISocketCallback.java" target-dir="src/cordova/plugin/socket/"/>
         <source-file src="src/android/cordova/plugin/socket/TcpSocket.java" target-dir="src/cordova/plugin/socket/"/>
         <source-file src="src/android/cordova/plugin/socket/UDPBroadCast.java" target-dir="src/cordova/plugin/socket/"/>
         <source-file src="src/android/cordova/plugin/socket/UDPBroadCastCallBack.java" target-dir="src/cordova/plugin/socket/"/>
+		<source-file src="src/android/cordova/plugin/socket/TcpSocketService.java" target-dir="src/cordova/plugin/socket/"/>
+		
+		<config-file target="AndroidManifest.xml" parent="/manifest/application">
+		    <service
+             android:name="cordova.plugin.socket.TcpSocketService">
+             <intent-filter>
+                 <action android:name="com.plugin.socket.tcpSocketService" />
+             </intent-filter>
+			</service>
+		</config-file>
     </platform>
 
 </plugin>
