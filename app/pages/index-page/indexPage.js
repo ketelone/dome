@@ -634,10 +634,7 @@ angular.module('indexPageModule')
 
           hmsPopup.hideLoading();
           ishidden = true;
-          if(localStorage.boxLinkCount = 2){
-            islinkHidden = true;
-            localStorage.boxLinkCount = 3;
-          }
+          islinkHidden = true;
         }
 
         /*if (resultOn.payload.cmd == "SCAN_RETURN") {
