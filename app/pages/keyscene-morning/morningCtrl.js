@@ -39,6 +39,7 @@ angular.module('productModule')
        *@disc:goback
        */
       $scope.goBack = function () {
+        document.removeEventListener("SocketPlugin.receiveTcpData",  morning, false);
         $ionicHistory.goBack();
       }
 
@@ -167,7 +168,8 @@ angular.module('productModule')
         //alert('获取到deviceid=='+deviceId);
         sendCmd(deviceId,"887706010005721563","获取温度","获取温度失败");
       };
-      document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
+      document.addEventListener('SocketPlugin.receiveTcpData',morning , false);
+      var morning = function (result) {
 
         var resultOn = result[0];
 
@@ -186,7 +188,9 @@ angular.module('productModule')
           }
         }
 
-      }, false);
+      }
+
+
 
 
       //本地发送指令
