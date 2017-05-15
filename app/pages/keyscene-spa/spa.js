@@ -60,7 +60,7 @@ angular.module('productModule')
        *@disc:goback
        */
       $scope.goBack = function () {
-        document.removeEventListener("SocketPlugin.receiveTcpData",  morning, false);
+        document.removeEventListener("SocketPlugin.receiveTcpData",  spa, false);
         $ionicHistory.goBack();
       }
 
