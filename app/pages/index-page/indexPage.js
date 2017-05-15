@@ -221,7 +221,7 @@ angular.module('indexPageModule')
             errorPictureUrl: "",
             isStatus: true,
             isError: false,
-            sku: "D7:9C:8B:E8:50:C2"
+            sku: "K-3900T"
           }, {
             id: "2",
             pictureUrl: "build/img/index/img_home_device_heater.png",
@@ -232,7 +232,7 @@ angular.module('indexPageModule')
             errorPictureUrl: "",
             isStatus: true,
             isError: false,
-            sku: "FB:3F:B6:2E:F5:3F"
+            sku: "K-78436T-PPX10-01R"
           }, {
             id: "3",
             pictureUrl: "build/img/index/img_home_device_heater.png",
@@ -243,8 +243,7 @@ angular.module('indexPageModule')
             errorPictureUrl: "",
             isStatus: true,
             isError: false,
-            sku: "D7:12:29:DF:76:06"
-            //sku: "D7:12:29:DF:76:06"
+            sku: "K-77316T-X-MZ"
           },
           {
             id: "6",
@@ -256,7 +255,7 @@ angular.module('indexPageModule')
             errorPictureUrl: "build/img/index/icon_home_device_warnning.png",
             isStatus: true,
             isError: false,
-            sku: "D2:3D:19:2C:A9:89"
+            sku: "K-99879T-7-CP"
           },
           {
             id: "7",
