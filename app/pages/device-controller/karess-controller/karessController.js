@@ -5,13 +5,13 @@ angular.module('karessControlModule')
     '$ionicModal',
     '$compile',
     'baseConfig',
-    'checkVersionService', 'SettingsService', '$ionicHistory', '$ionicSlideBoxDelegate', 'karessService', 'hmsPopup', 'hmsHttp', 'cmdService', '$timeout','$ionicPopover',
+    'checkVersionService', 'SettingsService', '$ionicHistory', '$ionicSlideBoxDelegate', 'karessService', 'hmsPopup', 'hmsHttp', 'cmdService', '$timeout', '$ionicPopover',
     function ($scope,
               $state,
               $ionicModal,
               $compile,
               baseConfig,
-              checkVersionService, SettingsService, $ionicHistory, $ionicSlideBoxDelegate, karessService, hmsPopup, hmsHttp, cmdService, $timeout,$ionicPopover) {
+              checkVersionService, SettingsService, $ionicHistory, $ionicSlideBoxDelegate, karessService, hmsPopup, hmsHttp, cmdService, $timeout, $ionicPopover) {
       var sku = SettingsService.get('sku');
       /**
        *@autor: caolei
@@ -69,7 +69,7 @@ angular.module('karessControlModule')
         var value = cmdService.getCmd("8877", '01', '70', 'E3', '02');
         cmdService.sendCmd(deviceId, value, localStorage.boxIp);
       }
-      statusKaress();
+      // statusKaress();
       //侧滑转档数量jsongulp
       $scope.slideInitData = [{
         des: "init",
@@ -217,6 +217,7 @@ angular.module('karessControlModule')
       ];
 
       $scope.goBack = function () {
+        document.removeEventListener("SocketPlugin.receiveTcpData", receiveKaresssTcpDatahandle, false);
         $ionicHistory.goBack();
       }
       /**
@@ -874,7 +875,7 @@ angular.module('karessControlModule')
 //         }
 //       }, false);
 //接受tcp返回数据
-      document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
+      var receiveKaresssTcpDatahandle = function (result) {
         if (result[0].data.cmd.length > 0 && result[0].from.uid == deviceId) {
           var cmd = result[0].data.cmd[0];
           console.log(angular.toJson(cmd) + "=======");
@@ -943,7 +944,8 @@ angular.module('karessControlModule')
             }
           }
         }
-      }, false);
+      }
+      document.addEventListener('SocketPlugin.receiveTcpData', receiveKaresssTcpDatahandle, false);
       function buttonChange() {
         for (var i = 0; i < $scope.handlenapeListNape.length; i++) {
           if ($scope.handlenapeListNape[i].selecFlag == true) {
@@ -1096,39 +1098,40 @@ angular.module('karessControlModule')
         }
 
       }
+
       $scope.goLearn = function () {
         $state.go("karessLearning");
       }
       $scope.operating = [{
-        text:'重命名'
-      },{
-        text:'移动'
-      },{
-        text:'解除绑定'
-      },{
-        text:'机器学习设置'
+        text: '重命名'
+      }, {
+        text: '移动'
+      }, {
+        text: '解除绑定'
+      }, {
+        text: '机器学习设置'
       }];
 
-      $scope.popover = $ionicPopover.fromTemplateUrl('build/pages/modal/popover.html', {
+      $scope.popover = $ionicPopover.fromTemplateUrl('build/pages/device-controller/karess-controller/modal/popover.html', {
         scope: $scope
       });
 
       // .fromTemplateUrl() 方法
-      $ionicPopover.fromTemplateUrl('build/pages/model/popover.html', {
+      $ionicPopover.fromTemplateUrl('build/pages/device-controller/karess-controller/modal/popover.html', {
         scope: $scope
-      }).then(function(popover) {
+      }).then(function (popover) {
         $scope.popover = popover;
       });
 
 
-      $scope.openPopover = function($event) {
+      $scope.openPopover = function ($event) {
         $scope.popover.show($event);
       };
 
-      $scope.closePopover = function(index) {
+      $scope.closePopover = function (index) {
         console.log(index);
         $scope.popover.hide();
-        if(index==3){
+        if (index == 3) {
           $scope.goLearn();
         }
       }

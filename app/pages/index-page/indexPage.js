@@ -243,7 +243,7 @@ angular.module('indexPageModule')
             errorPictureUrl: "",
             isStatus: true,
             isError: false,
-            sku: "EB:4E:28:49:09:9D"
+            sku: "D7:12:29:DF:76:06"
             //sku: "D7:12:29:DF:76:06"
           },
           {
@@ -302,7 +302,7 @@ angular.module('indexPageModule')
 
       $scope.boxList = [];
 
-      var islinkHidden = true;
+      var islinkHidden = false;
       $scope.linkBox = function () {
         hmsPopup.showLoading();
         $timeout(function(){
