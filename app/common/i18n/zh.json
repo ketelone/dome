@@ -486,7 +486,12 @@
     "infoTaress4": "SN号",
     "infoTaress5": "位置信息",
     "jieneng": "节能",
-    "tishichushuikou" : "当前状态不能切换出水方式！"
+    "tishichushuikou" : "当前状态不能切换出水方式！",
+    "anmo":"按摩档位",
+    "wenDu":"温度",
+    "shuiWen":"水温",
+    "shuiWei":"水位",
+    "loading" : "网络连接异常！"
   },
   "mcController": {
     "setting": "设置",
@@ -509,7 +514,9 @@
     "infoTaress3": "SKU号",
     "infoTaress4": "SN号",
     "infoTaress5": "位置信息",
-    "jieneng": "节能"
+    "jieneng": "节能",
+    "liangDu": "亮度",
+    "seWen": "色温"
   },
   "nextgen": {
     "title": "next gen shower",

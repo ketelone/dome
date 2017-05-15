@@ -1,8 +1,8 @@
 {
-  "tabs":{
-    "index":"Home",
-    "message":"Message",
-    "my-info":"Profile"
+  "tabs": {
+    "index": "Home",
+    "message": "Message",
+    "my-info": "Profile"
   },
   "golabelvariable": {
     "loading": "loading",
@@ -68,7 +68,6 @@
       "fenDevice": "Water Consumption by Device"
     }
   },
-
   "login": {
     "login": "Log In",
     "rememberPassword": "Forget Password?",
@@ -154,7 +153,7 @@
     "noDeviceSearch": "No connected devices，Pls search new devices",
     "noDevice": "No devices",
     "open": "On",
-	"toliet": "Toilet",
+    "toliet": "Toilet",
     "waterPurifier": "Central ",
     "bathroomHeader": "Heater",
     "bathtub": "Bathtub",
@@ -330,7 +329,7 @@
   },
   "cleargearPlan": {
     "title": "UV Schedule",
-	"settingopen":"Pls Turn on your Schedule first!",
+    "settingopen": "Pls Turn on your Schedule first!",
     "startTimeDes": "Start",
     "hour": "Hour",
     "minute": "Minute",
@@ -345,7 +344,6 @@
     "weekValDanwei": "Every",
     "selectPoup": "Pls select",
     "settingsucc": "Confirm"
-
   },
   "cenwatpurifier": {
     "title": "Central Purification",
@@ -483,7 +481,11 @@
     "infoTaress4": "SN",
     "infoTaress5": "Location",
     "jieneng": "Power Save",
-	"tishichushuikou" : "Can not change outlet mode now"
+    "tishichushuikou": "Can not change outlet mode now",
+    "anmo": "Massage stalls",
+    "wenDu": "temperature",
+    "shuiWen": "Water temperature",
+    "shuiWei": "Water level"
   },
   "mcController": {
     "setting": "Seetings",
@@ -506,7 +508,9 @@
     "infoTaress3": "SKU",
     "infoTaress4": "SN",
     "infoTaress5": "Location",
-    "jieneng": "Power Save"
+    "jieneng": "Power Save",
+    "liangDu": "brightness",
+    "seWen": "Color temperature"
   },
   "nextgen": {
     "title": "next gen shower",
@@ -577,7 +581,7 @@
     "setting": "&nbsp;&nbsp;&nbsp;Settings",
     "waterSuccess": "Water success",
     "stopSuccess": "stop success",
-	"water": "Water",
+    "water": "Water",
     "setTem": "Set temp",
     "watering": "Watering",
     "noUse": "Not Use"
