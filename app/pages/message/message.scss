@@ -15,17 +15,17 @@
   }
 
   .allMess {
-    padding: 0rem 0rem 0rem 0.89rem;
     font-size: 0.32rem;
     white-space: nowrap;
-
     color: #565A64;
     position: absolute;
-    top: 2.22rem;
+    top: 2rem;
+    padding: 0;
+    text-align: center;
   }
   .statusword {
     border-bottom: solid 0.05rem #FFFFFF;
-    padding-bottom: 0.2rem;
+    padding-bottom: 0.3rem;
     color: #FFFFFF;
   }
 
@@ -45,8 +45,7 @@
   .oneModel {
     color: #FFFFFF;
     background: #212121;
-    // border:  solid #2D3234;
-    border-bottom: 0.05rem solid #2D3234;
+    border-bottom: 0.01rem solid #2D3234;
     .col {
       padding: 0.15rem
     }

@@ -66,6 +66,13 @@
       "todayUsecleanWater":"当日用纯净水量(L)",
       "todayUseElectricity":"当日用电量(度)",
       "fenDevice":"分设备查看用水用电量"
+    },
+    "my-room":{
+      "restroom":"卫生间",
+      "device":"4个设备",
+      "rename":"重命名",
+      "disband":"解散",
+      "manage":"管理"
     }
   },
 

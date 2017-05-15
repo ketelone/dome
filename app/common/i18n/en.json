@@ -66,6 +66,13 @@
       "todayUsecleanWater": "Daily Pure Water Consumption(L)",
       "todayUseElectricity": "Daily Power Consumption(kw/h)",
       "fenDevice": "Water Consumption by Device"
+    },
+    "my-room":{
+      "restroom":"Bathroom",
+      "device":"4 devices",
+      "rename":"Rename",
+      "disband":"Delete",
+      "manage":"Manage"
     }
   },
 
@@ -132,8 +139,8 @@
     "startNiceDay": "Have a nice day",
     "period": "FemaleCare",
     "periodDesc": "Customerized Menstruation Care",
-    "bathroom": "Bath",
-    "enjoyBath": "Enjoy Bath"
+    "bathroom": "Shower",
+    "enjoyBath": "Enjoy your Shower"
   },
   "index": {
     "myHome": "Home",
