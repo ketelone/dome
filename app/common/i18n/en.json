@@ -125,7 +125,9 @@
     "weiLight": "Veil lighting",
     "startNiceDay": "Have a nice day",
     "period": "FemaleCare",
-    "periodDesc": "Customerized Menstruation Care"
+    "periodDesc": "Customerized Menstruation Care",
+    "bathroom": "Bath",
+    "enjoyBath": "Enjoy Bath"
   },
   "index": {
     "myHome": "Home",

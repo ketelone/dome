@@ -121,12 +121,14 @@
     "startDevice": "一键开启指定设备",
     "leaveHome": "离家",
     "closeAllDevice": "一键关闭所有设备",
-    "homeSpa": "家庭SPA",
+    "homeSpa": "泡澡",
     "spaDesc": "出去SPA不如在家泡澡",
     "weiLight": "维亚灯光",
     "startNiceDay": "开始您美好的一天",
     "period": "大姨了吗",
-    "periodDesc": "女性特殊期洗浴关怀方案"
+    "periodDesc": "女性特殊期洗浴关怀方案",
+    "bathroom": "沐浴",
+    "enjoyBath": "享受沐浴"
   },
   "index": {
     "myHome": "我家",
