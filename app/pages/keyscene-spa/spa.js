@@ -5,8 +5,8 @@ angular.module('productModule')
   .controller('spaCtrl', [
     '$scope',
     '$state',
-    'publicMethod', '$ionicModal', '$ionicPopover', '$timeout', '$ionicHistory', 'hmsHttp','hmsPopup','cmdService','bathroomCmdService',
-    function ($scope, $state, publicMethod, $ionicModal, $ionicPopover, $timeout, $ionicHistory, hmsHttp,hmsPopup,cmdService,bathroomCmdService) {
+    'publicMethod', '$ionicModal', '$ionicPopover', '$timeout', '$ionicHistory', 'hmsHttp','hmsPopup','cmdService','bathroomCmdService','indexPageService',
+    function ($scope, $state, publicMethod, $ionicModal, $ionicPopover, $timeout, $ionicHistory, hmsHttp,hmsPopup,cmdService,bathroomCmdService,indexPageService) {
 
 
       $scope.config = {
@@ -29,6 +29,7 @@ angular.module('productModule')
       }
 
       $scope.isOff = false;
+      $scope.isFirst = true;
       $scope.temperate='';
       $scope.tempPercent = '';
       $scope.scane = JSON.parse(localStorage.crrentScane);
@@ -41,9 +42,9 @@ angular.module('productModule')
        *@disc: get switch status
        */
 
-      $scope.getSwitchStatus = function (item) {
-        console.log(item);
-        if (item.isOff == true) {
+      $scope.getSwitchStatus = function () {
+        sendCmd1();
+        if ($scope.isOff == true) {
           $scope.openKeyscene();
         } else {
           $scope.closeKeyscene();
@@ -60,6 +61,7 @@ angular.module('productModule')
        *@disc:goback
        */
       $scope.goBack = function () {
+        indexPageService.edit($scope.scane);
         document.removeEventListener("SocketPlugin.receiveTcpData",  spa, false);
         $ionicHistory.goBack();
       }
@@ -117,6 +119,52 @@ angular.module('productModule')
               $scope.config.device4 = true;
             }, 4000);
           }
+        } else {
+
+        }
+      }
+
+      $scope.openKeyscenefast = function () {
+        console.log($scope.config.openFlag);
+        if ($scope.config.openFlag == true) {
+          //马桶
+          /* if($scope.config.flagDevice1 != true){
+           console.log($scope.config.flagDevice1);
+           $("#progressAnimation1").css({
+           "-webkit-animation": "aaa 5.5s linear",
+           "background": "#1a1d28"
+           });
+           $timeout(function () {
+           $scope.config.device1 = true;
+           $scope.config.openFlag = false;
+           }, 5700);
+           }*/
+          //镜柜
+          if($scope.config.flagDevice2 != true) {
+            $("#progressAnimation2").css({
+              "-webkit-animation": "aaa 0s linear",
+              "background": "#1a1d28"
+            });
+              $scope.config.device2 = true;
+          }
+          //浴霸
+          if($scope.config.flagDevice3 != true) {
+            $("#progressAnimation3").css({
+              "-webkit-animation": "aaa 0s linear",
+              "background": "#1a1d28"
+            });
+
+              $scope.config.device3 = true;
+          }
+          //浴缸
+          if($scope.config.flagDevice4 != true) {
+            $("#progressAnimation4").css({
+              "-webkit-animation": "aaa 0s linear",
+              "background": "#1a1d28"
+            });
+              $scope.config.device4 = true;
+          }
+          getCurrentTemplate( getDeviceId());
         } else {
 
         }
@@ -247,7 +295,7 @@ angular.module('productModule')
         cmdService.sendScanCmd( value, localStorage.boxIp);
       };
 
-      var sendCmd = function (index) {
+      var sendCmd1 = function (index) {
         var value = [
           {
             "ver": 1,
@@ -273,16 +321,20 @@ angular.module('productModule')
         ];
 
 
-          if($scope.scane.isOff == true){
+          if($scope.isOff == true){
             value[0].data.act_params.scn_id =  '000000013';
+            $scope.scane.isOff = true;
           }else {
             value[0].data.act_params.scn_id =  '000000014';
+            $scope.scane.isOff = false;
           }
 
 
         alert('发送的信息==='+JSON.stringify(value));
         pluginToCtrl( value, "发送成功", "发送失败");
       }
-
+      if($scope.scane.isOff==true){
+        $scope.openKeyscenefast();
+      }
 
     }]);

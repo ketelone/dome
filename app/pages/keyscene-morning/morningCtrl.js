@@ -28,9 +28,11 @@ angular.module('productModule')
         onLinePic3 : "build/img/keyscene-morning/icon_home_device_signal5.png",
         onLinePic4 : "build/img/keyscene-morning/icon_home_device_signal5.png",
       }
-      $scope.scane = localStorage.crrentScane;
+      $scope.scane = JSON.parse(localStorage.crrentScane);
       $scope.temperate='';
       $scope.tempPercent = '';
+      $scope.disables = false;
+
       /**
        *@autor:daidongdong
        *@name:goBack
@@ -51,6 +53,7 @@ angular.module('productModule')
        *@disc:openKeysceneMorning
        */
       $scope.openKeyscene = function () {
+        $scope.disables = true;
         console.log($scope.config.openFlag);
         if ($scope.config.openFlag == true) {
           //马桶
@@ -72,6 +75,7 @@ angular.module('productModule')
               "background": "#1a1d28"
             });
             $timeout(function () {
+              $scope.disables = false;
               getCurrentTemplate( getDeviceId());
               $scope.config.device3 = true;
             }, 4000);
@@ -96,6 +100,53 @@ angular.module('productModule')
               $scope.config.device4 = true;
             }, 10000);
           }
+
+          sendCmd1();
+        } else {
+
+        }
+      }
+
+      $scope.openKeyscenefast = function () {
+        console.log($scope.config.openFlag);
+        if ($scope.config.openFlag == true) {
+          //马桶
+          if($scope.config.flagDevice1 != true){
+            console.log($scope.config.flagDevice1);
+            $("#progressAnimation1").css({
+              "-webkit-animation": "aaa 0s linear",
+              "background": "#1a1d28"
+            });
+              $scope.config.device1 = true;
+              $scope.config.openFlag = false;
+          }
+          //浴霸
+          if($scope.config.flagDevice2 != true) {
+            $("#progressAnimation3").css({
+              "-webkit-animation": "aaa 0s linear",
+              "background": "#1a1d28"
+            });
+
+              $scope.config.device3 = true;
+
+          }
+          //淋浴
+          if($scope.config.flagDevice3 != true) {
+            $("#progressAnimation2").css({
+              "-webkit-animation": "aaa 0s linear",
+              "background": "#1a1d28"
+            });
+              $scope.config.device2 = true;
+          }
+          //净水
+          if($scope.config.flagDevice4 != true) {
+            $("#progressAnimation4").css({
+              "-webkit-animation": "aaa 0s linear",
+              "background": "#1a1d28"
+            });
+              $scope.config.device4 = true;
+          }
+          getCurrentTemplate( getDeviceId());
         } else {
 
         }
@@ -198,7 +249,7 @@ angular.module('productModule')
         cmdService.sendScanCmd( value, localStorage.boxIp);
       };
 
-      var sendCmd = function (index) {
+      var sendCmd1 = function () {
         var value = [
           {
             "ver": 1,
@@ -228,7 +279,9 @@ angular.module('productModule')
       }
 
 
-
+      if($scope.scane.isOff==true){
+        $scope.openKeyscenefast();
+      }
 
 
     }]);
