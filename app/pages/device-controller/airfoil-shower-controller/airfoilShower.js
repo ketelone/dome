@@ -25,6 +25,7 @@ angular.module('airfoilShowerModule')
       $scope.status = "airfoidShower.water";
       $scope.waterUrl = "build/img/airfoil-shower/no_water.png";
       $scope.isUsing = false;
+      $scope.isBig = $window.innerWidth > 1000 ? true : false;
 
       $scope.goBack = function(){
         //closebox();
@@ -32,7 +33,20 @@ angular.module('airfoilShowerModule')
       };
 
       $scope.$watch('',function(){
-        getCurrentDeviceStatus();
+        var did = getDeviceId();
+        if(did != ""){
+          getCurrentDeviceStatus();
+        }else{
+          //alert("该设备没有绑定！");
+        }
+        changeRingCol('#99d5ff');
+        hmsPopup.showLoading();
+        $timeout(function(){
+          if(!isLinkOk){
+            hmsPopup.hideLoading();
+            $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"));
+          }
+        }, 10000);
       },true);
 
       /**
@@ -55,13 +69,16 @@ angular.module('airfoilShowerModule')
        *@disc: get device id
        */
       var getDeviceId = function(){
+        var deviceId = "";
         var deviceList = localStorage.deviceInfo.split(";");
         for(var i = 0; i < deviceList.length; i ++){
           var deviceInfo = deviceList[i].split(",");
           if(deviceInfo[0] == SettingsService.get('sku')){
-            return deviceInfo[1];
+            deviceId = deviceInfo[1];
           }
         }
+
+        return deviceId;
       };
 
       document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
@@ -179,33 +196,17 @@ angular.module('airfoilShowerModule')
       var changeRingCol = function(color){
         var cxt=canvas.getContext("2d");
         var xLength = $window.innerWidth * 0.5;
-        var yLength = $window.innerWidth * 0.7;
-        var r = $window.innerWidth * 0.36;
+        var yLength = $window.innerWidth > 1000 ? $window.innerWidth * 0.73 : $window.innerWidth * 0.65;
+        var r = $window.innerWidth * 0.34;
         cxt.beginPath();
-        cxt.arc(xLength,yLength,r,0,360,false);
-        cxt.lineWidth=$window.innerWidth * 0.07;
-        cxt.strokeStyle= color;
+        cxt.arc(xLength,yLength,r,Math.PI*0.75,Math.PI*2.25,false);
+        cxt.lineWidth =  $window.innerWidth * 0.055;
+        cxt.strokeStyle = color;
         cxt.fillStyle = color;
         cxt.stroke();
-        cxt.scale(2,2);
         //cxt.fill();
         cxt.closePath();
+        cxt.scale(2, 2);
       };
-
-      canvas.height = $window.innerWidth*1.1;
-      canvas.width = $window.innerWidth*1;
-      var cxt=canvas.getContext("2d");
-      var xLength = $window.innerWidth * 0.5;
-      var yLength = $window.innerWidth * 0.7;
-      var r = $window.innerWidth * 0.36;
-      cxt.beginPath();
-      cxt.arc(xLength,yLength,r,0,360,false);
-      cxt.lineWidth=$window.innerWidth * 0.07;
-      cxt.strokeStyle="#99d5ff";
-      cxt.fillStyle = "#99d5ff";
-      cxt.stroke();
-      cxt.scale(2,2);
-      //cxt.fill();
-      cxt.closePath();
 
     }]);
