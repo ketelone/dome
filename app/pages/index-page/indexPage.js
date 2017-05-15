@@ -166,7 +166,8 @@ angular.module('indexPageModule')
           $scope.isInPage = 2;
           return;
         }
-        window.localStorage.setItem('crrentScane',item);
+        window.localStorage.setItem('crrentScane',JSON.stringify($scope.modelData[index]));
+        console.log('过去='+JSON.stringify($scope.modelData[index]));
         window.localStorage.setItem('crrentScanesku',"D7:12:29:DF:76:06");
 
         if (item.id == '1') {
@@ -416,19 +417,19 @@ angular.module('indexPageModule')
               }
 
               var deviceInfo =
-                {
-                  id: device.DEVICE_ID,
-                  pictureUrl: pictureUrl,
-                  deviceType: deviceName,
-                  deviceStatus: deviceStatus,
-                  deviceDesc: deviceDesc,
-                  statusPictureUrl: "build/img/index/icon_home_device_signal5.png",
-                  errorPictureUrl: "",
-                  isStatus: true,
-                  isError: false,
-                  sku: device.SKU_ID,
-                  productId: device.PRODUCT_ID
-                };
+              {
+                id: device.DEVICE_ID,
+                pictureUrl: pictureUrl,
+                deviceType: deviceName,
+                deviceStatus: deviceStatus,
+                deviceDesc: deviceDesc,
+                statusPictureUrl: "build/img/index/icon_home_device_signal5.png",
+                errorPictureUrl: "",
+                isStatus: true,
+                isError: false,
+                sku: device.SKU_ID,
+                productId: device.PRODUCT_ID
+              };
 
               $scope.deviceModel.push(deviceInfo);
 
@@ -471,17 +472,17 @@ angular.module('indexPageModule')
                 pictureUrl = 'build/img/index/img_home_period.png';
               }
               var model =
-                {
-                  id: scenarioId,
-                  pictureUrl: pictureUrl,
-                  title: scenarioName,
-                  context: "一键开启指定设备",
-                  isOneButton: isOneButton,
-                  isTwoButton: isTwoButton,
-                  jsonContext: "1",
-                  isOff: false,
-                  lastUpdateDate: ""
-                };
+              {
+                id: scenarioId,
+                pictureUrl: pictureUrl,
+                title: scenarioName,
+                context: "一键开启指定设备",
+                isOneButton: isOneButton,
+                isTwoButton: isTwoButton,
+                jsonContext: "1",
+                isOff: false,
+                lastUpdateDate: ""
+              };
               $scope.modelData.push(model);
 
             }
@@ -876,7 +877,8 @@ angular.module('indexPageModule')
        */
       var sceneList = [];
       $scope.getSwitchStatus = function (index) {
-        //console.log('jinlai'+index+'=='+$scope.modelData[index].isOff)
+        console.log('jinlai'+index+'=='+$scope.modelData[index].isOff);
+        console.log($scope.modelData[index].title);
         ////$scope.modelData[index].isOff = !$scope.modelData[index].isOff;
         //console.log('jinlai2'+index+'=='+$scope.modelData[index].isOff)
         var scentObj = {sceneType: $scope.modelData[index].title, status: $scope.modelData[index].isOff};
@@ -889,7 +891,7 @@ angular.module('indexPageModule')
             $scope.modelData[index].isOff = true;
             $scope.modelData[0].isOff = false;
           }
-          sendCmd(index);     //发送指令
+
           $scope.modelData[index].isOneButton =false;//隐藏按钮
           $timeout(function () {
             $scope.modelData[index].isOneButton =true;
@@ -900,13 +902,14 @@ angular.module('indexPageModule')
             $scope.modelData[index].isOff = true;
             $scope.modelData[1].isOff = false;
           }
-          sendCmd(index);
+          //sendCmd(index);
           $scope.modelData[index].isOneButton =false;
           $timeout(function () {
             $scope.modelData[index].isOneButton =true;
           }, 5000);
           return;
         }
+        sendCmd(index);     //发送指令
 
         //if ($scope.modelData[index].isOff) {
         //  //发送指令并传送当前场景按钮的状态
@@ -1027,7 +1030,7 @@ angular.module('indexPageModule')
       function setUnit() {
         var url = baseConfig.basePath + "/r/api/ctm/insertPartyUtil";
         var paramter =
-          {"temperature": "°C", "PartySettingId": 100};
+        {"temperature": "°C", "PartySettingId": 100};
         hmsHttp.post(url, paramter).success(
           function (response) {
             console.log(response);

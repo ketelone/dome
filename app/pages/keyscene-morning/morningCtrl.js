@@ -28,7 +28,7 @@ angular.module('productModule')
         onLinePic3 : "build/img/keyscene-morning/icon_home_device_signal5.png",
         onLinePic4 : "build/img/keyscene-morning/icon_home_device_signal5.png",
       }
-      $scope.scane = localStorage.crrentScane;
+      $scope.scane = JSON.parse(localStorage.crrentScane);
       $scope.temperate='';
       $scope.tempPercent = '';
       /**
