@@ -301,7 +301,7 @@ angular.module('indexPageModule')
 
       $scope.boxList = [];
 
-      var islinkHidden = true;
+      var islinkHidden = false;
       $scope.linkBox = function () {
         hmsPopup.showLoading();
         $timeout(function(){
@@ -634,7 +634,10 @@ angular.module('indexPageModule')
 
           hmsPopup.hideLoading();
           ishidden = true;
-          islinkHidden = true;
+          if(localStorage.boxLinkCount = 2){
+            islinkHidden = true;
+            localStorage.boxLinkCount = 3;
+          }
         }
 
         /*if (resultOn.payload.cmd == "SCAN_RETURN") {
