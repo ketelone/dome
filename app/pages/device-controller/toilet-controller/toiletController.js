@@ -1209,22 +1209,16 @@ angular.module('toiletControlModule')
                         var isType = "0";
                         $scope.toGetImpleteData(true,cmdvalue,$scope.handlenapeListNape[index].handleDes,index,isType);
                       }else{
-                        // $scope.sendCmd(cmdvalue,index);
                         cmdService.sendCmd(tolitercmdObj.diviceid, cmdvalue, tolitercmdObj.boxid);
                       }
                       $scope.toiletController.modelTypeClear = "toiletController.gaunbi";
-                    }else{
-                      $scope.selectChange("true",index,"0");
-                      if($scope.handlenapeListNape[index].matchdataid === "clear"){
-                        $scope.value = $scope.Clearvalue;
-                        $scope.toiletController.modelTypeClear = "toiletController.gaunbi";
-                        $scope.openModal();
-                      };
                     }
+                  }else{
+                    // $scope.selectChange("true",index,"0");
+                    $scope.value = $scope.Clearvalue;
+                    $scope.toiletController.modelTypeClear = "toiletController.gaunbi";
+                    $scope.openModal();
                   }
-                  else{
-                    $scope.selectChange("true",index,"0");
-                  };
                 };
               }else{
                 //use instruction create
@@ -1583,13 +1577,13 @@ angular.module('toiletControlModule')
                       $scope.toiletController.modelTypeClear === "toiletController.clearopen";
                     };
                   }else{
-                    if($scope.toiletController.modelTypeClear !== "toiletController.gaunbi"){
-                      $scope.handlenapeListNape[11].selecFlag = false;
-                      $scope.handlenapeListNape[11].imgUrl = $scope.handlenapeListNape[11].imgUrlTemp;
-                    };
+                    // if($scope.toiletController.modelTypeClear !== "toiletController.gaunbi"){
+                    $scope.handlenapeListNape[11].selecFlag = false;
+                    $scope.handlenapeListNape[11].imgUrl = $scope.handlenapeListNape[11].imgUrlTemp;
+                    // };
                     $scope.toiletController.modelTypeClear = "toiletController.gaunbi";
                   };
-                  // alert(angular.toJson($scope.currentSlideData));
+                  alert(angular.toJson($scope.currentSlideData));
                   if(!$scope.overTiemFlag && $scope.currentSlideData[0].des !== "init"){
                     // alert("3" +$scope.overTiemFlag)
                     $scope.hanleInitTemple($scope.handlenapeSelectedIndex);
