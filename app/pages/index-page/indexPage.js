@@ -20,6 +20,7 @@ angular.module('indexPageModule')
     'cmdService',
     '$window',
     'indexPageService',
+    '$rootScope',
     function ($scope,
               $state,
               $ionicGesture,
@@ -34,7 +35,8 @@ angular.module('indexPageModule')
               $translate,
               cmdService,
               $window,
-              indexPageService) {
+              indexPageService,
+              $rootScope) {
       window.localStorage.token = '4f75ed43-aee2-4f35-895e-7d3f086ddf86';
       window.localStorage.empno = '18620025571';
       window.localStorage.checkboxSavePwd = 'admin';
@@ -897,6 +899,7 @@ angular.module('indexPageModule')
           $timeout(function () {
             $scope.modelData[index].isOneButton =true;
           }, 5000);
+          sendCmd(index);
           return;
         } else if ($scope.modelData[index].id == '2') {
           if($scope.modelData[index].isOff==false){
@@ -908,6 +911,7 @@ angular.module('indexPageModule')
           $timeout(function () {
             $scope.modelData[index].isOneButton =true;
           }, 5000);
+          sendCmd(index);
           return;
         }
         indexPageService.setScaneList($scope.modelData);
@@ -1048,7 +1052,13 @@ angular.module('indexPageModule')
 
       }
 
+      $rootScope.$on('$ionicView.beforeEnter',function(){
+        console.log('view。enter');
+        $scope.modelData = indexPageService.getScaneList();
+      });
+
       // setUnit();
+
     }
   ]);
 

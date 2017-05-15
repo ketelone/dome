@@ -23,7 +23,7 @@ angular.module('productModule')
         onOrOff2 : true,
         onOrOff3 : true,//shifouzaixian
         onOrOff4 : true,
-
+        isOff :    false,
         onLinePic3 : "build/img/keyscene-spa/icon_home_device_signal5.png",
         onLinePic4 : "build/img/keyscene-spa/icon_home_device_signal5.png",
       }
@@ -43,12 +43,13 @@ angular.module('productModule')
        */
 
       $scope.getSwitchStatus = function () {
-        sendCmd1();
-        if ($scope.isOff == true) {
+        console.log('状态=='+$scope.config.isOff);
+        if ($scope.config.isOff) {
           $scope.openKeyscene();
         } else {
           $scope.closeKeyscene();
         }
+        sendCmd1()
       };
 
 
@@ -61,7 +62,14 @@ angular.module('productModule')
        *@disc:goback
        */
       $scope.goBack = function () {
-        indexPageService.edit($scope.scane);
+        indexPageService.edits($scope.scane);
+        //var  scan =  indexPageService.getScaneList();
+        //for(var i=0;i<scan.length;i++){
+        //  if(scan[i].id==$scope.scane.id){
+        //    console.log('当前情况=='+$scope.scane.isOff+'service读出状态==='+scan[i].isOff);
+        //  }
+        //}
+
         document.removeEventListener("SocketPlugin.receiveTcpData",  spa, false);
         $ionicHistory.goBack();
       }
@@ -321,7 +329,7 @@ angular.module('productModule')
         ];
 
 
-          if($scope.isOff == true){
+          if($scope.config.isOff == true){
             value[0].data.act_params.scn_id =  '000000013';
             $scope.scane.isOff = true;
           }else {

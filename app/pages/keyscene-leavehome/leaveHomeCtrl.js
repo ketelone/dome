@@ -97,6 +97,13 @@ angular.module('productModule')
             $scope.config.device4 = true;
           }, 2000);
         }
+        $timeout(function () {
+          $scope.closeKeyscene();
+          $scope.config.device4 = false;
+          $scope.config.device3 = false;
+          $scope.config.device2 = false;
+          $scope.config.device1 = false;
+        }, 8000);
         sendCmd1();
       } else {
 
@@ -114,7 +121,7 @@ angular.module('productModule')
             "background": "#1a1d28"
           });
             $scope.config.device1 = true;
-            $scope.config.openFlag = false;
+            $scope.config.openFlag = true;
         }
         //浴霸
         if($scope.config.flagDevice2 != true) {
@@ -140,10 +147,44 @@ angular.module('productModule')
           });
             $scope.config.device4 = true;
         }
+        $timeout(function () {
+          $scope.closeKeyscene();
+          $scope.config.device4 = false;
+          $scope.config.device3 = false;
+          $scope.config.device2 = false;
+          $scope.config.device1 = false;
+        }, 5000);
       } else {
 
       }
     }
+
+    $scope.closeKeyscene = function () {
+      console.log($scope.config.openFlag);
+        //马桶
+          console.log($scope.config.flagDevice1);
+          $("#progressAnimation1").css({
+            "-webkit-animation": "bbb 0s linear",
+            "background": ""
+          });
+
+        //浴霸
+          $("#progressAnimation3").css({
+            "-webkit-animation": "bbb 0s linear",
+            "background": ""
+          });
+        //淋浴
+          $("#progressAnimation2").css({
+            "-webkit-animation": "bbb 0s linear",
+            "background": ""
+          });
+
+        //净水
+          $("#progressAnimation4").css({
+            "-webkit-animation": "bbb 0s linear",
+            "background": ""
+          });
+      }
 
     /**
      *@autor:daidongdong
@@ -193,7 +234,7 @@ angular.module('productModule')
             "device_type": "ALL_DEVICE",
             "act": "SCN_TRIGGER_REQUEST",
             "act_params": {
-              "scn_id": "000000011"
+              "scn_id": "000000012"
             }
           }
         }

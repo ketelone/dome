@@ -53,9 +53,9 @@ angular.module('productModule')
        *@disc:openKeysceneMorning
        */
       $scope.openKeyscene = function () {
-        $scope.disables = true;
         console.log($scope.config.openFlag);
         if ($scope.config.openFlag == true) {
+          $scope.disables = true;
           //马桶
           if($scope.config.flagDevice1 != true){
             console.log($scope.config.flagDevice1);
@@ -65,7 +65,7 @@ angular.module('productModule')
             });
             $timeout(function () {
               $scope.config.device1 = true;
-              $scope.config.openFlag = false;
+              $scope.config.openFlag = true;
             }, 6000);
           }
           //浴霸
@@ -76,7 +76,8 @@ angular.module('productModule')
             });
             $timeout(function () {
               $scope.disables = false;
-              getCurrentTemplate( getDeviceId());
+              console.log('解除禁用!');
+              //getCurrentTemplate( getDeviceId());
               $scope.config.device3 = true;
             }, 4000);
           }
@@ -100,9 +101,17 @@ angular.module('productModule')
               $scope.config.device4 = true;
             }, 10000);
           }
+          $timeout(function () {
+            $scope.closeKeyscene();
+            $scope.config.device4 = false;
+            $scope.config.device3 = false;
+            $scope.config.device2 = false;
+            $scope.config.device1 = false;
+          }, 15000);
 
           sendCmd1();
         } else {
+          $scope.config.openFlag= true;
 
         }
       }
@@ -118,7 +127,7 @@ angular.module('productModule')
               "background": "#1a1d28"
             });
               $scope.config.device1 = true;
-              $scope.config.openFlag = false;
+              $scope.config.openFlag = true;
           }
           //浴霸
           if($scope.config.flagDevice2 != true) {
@@ -146,11 +155,51 @@ angular.module('productModule')
             });
               $scope.config.device4 = true;
           }
+          $timeout(function () {
+            $scope.closeKeyscene();
+            $scope.config.device4 = false;
+            $scope.config.device3 = false;
+            $scope.config.device2 = false;
+            $scope.config.device1 = false;
+          }, 5000);
           getCurrentTemplate( getDeviceId());
         } else {
 
         }
       }
+
+      $scope.closeKeyscene = function () {
+        console.log($scope.config.openFlag);
+
+          //马桶
+            console.log($scope.config.flagDevice1);
+            $("#progressAnimation1").css({
+              "-webkit-animation": "bbb 0s linear",
+              "background": ""
+            });
+
+          //浴霸
+            $("#progressAnimation3").css({
+              "-webkit-animation": "bbb 0s linear",
+              "background": ""
+            });
+
+
+
+          //淋浴
+            $("#progressAnimation2").css({
+              "-webkit-animation": "bbb 0s linear",
+              "background": ""
+            });
+
+          //净水
+
+            $("#progressAnimation4").css({
+              "-webkit-animation": "bbb 0s linear",
+              "background": ""
+            });
+
+        }
 
       /**
        *@autor:daidongdong

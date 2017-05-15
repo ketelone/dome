@@ -36,17 +36,17 @@ angular.module('productModule')
        *@disc:goback
        */
       $scope.goBack = function () {
-        indexPageService.edit($scope.scane);
+        indexPageService.edits($scope.scane);
         $ionicHistory.goBack();
       }
 
       $scope.getSwitchStatus = function (item) {
-        sendCmd1()
         if ($scope.config.isOff) {
           $scope.openKeyscene();
         } else {
           $scope.closeKeyscene();
         }
+        sendCmd1()
       };
       /**
        *@autor:daidongdong
@@ -189,10 +189,12 @@ angular.module('productModule')
         ];
 
 
-        if($scope.scane.isOff == true){
+        if($scope.config.isOff == true){
           value[0].data.act_params.scn_id =  '000000015';
+          $scope.scane.isOff = true;
         }else {
           value[0].data.act_params.scn_id =  '000000016';
+          $scope.scane.isOff = false;
         }
 
 
