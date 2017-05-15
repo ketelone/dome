@@ -78,6 +78,9 @@ angular.module('nextgenModule')
 
       //返回
       $scope.goBack = function () {
+        //receiveTcpDatahandle：你处理逻辑函数
+        document.removeEventListener("SocketPlugin.receiveTcpData",
+          listenrDeal, false);
         $ionicHistory.goBack();
       }
 
@@ -238,8 +241,7 @@ angular.module('nextgenModule')
         sendCmd(deviceId, value, "发送成功", "发送失败");
       });
 
-      //监听
-      document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
+      var listenrDeal=function (result) {
         var resultOn = result[0];
         if (resultOn.from.uid == deviceId) {
           if (resultOn.data.cmd.length > 0) {
@@ -249,7 +251,10 @@ angular.module('nextgenModule')
           }
           $scope.$apply();
         }
-      }, false);
+      };
+
+      //监听
+      document.addEventListener('SocketPlugin.receiveTcpData',listenrDeal , false);
 
       //Function list
       $scope.handlenapeListNape = [
