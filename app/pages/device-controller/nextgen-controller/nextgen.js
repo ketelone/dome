@@ -3,11 +3,12 @@ angular.module('nextgenModule')
     '$scope', '$state', '$ionicModal', 'baseConfig', 'checkVersionService',
     '$ionicHistory', 'hmsPopup', 'nextgenService', '$timeout', 'SettingsService',
     '$ionicSlideBoxDelegate', 'hmsHttp', 'cmdService', '$translate','$stateParams',
+    '$ionicPopover',
     function ($scope, $state, $ionicModal, baseConfig,
               checkVersionService, $ionicHistory, hmsPopup,
               nextgenService, $timeout, SettingsService,
               $ionicSlideBoxDelegate, hmsHttp, cmdService,
-              $translate,$stateParams) {
+              $translate,$stateParams,$ionicPopover) {
       var ctrId = "00";
       var header = "8877";
       var idx = "00";
@@ -399,5 +400,44 @@ angular.module('nextgenModule')
         localStorage.SET_SHOWER_OUTLET_PARA_EXIT= val.des;
         chooseWaterWay();//发送选择出水口指令
       };
+
+      // $scope.goLearn = function () {
+      //   $state.go("karessLearning");
+      // }
+      $scope.operating = [{
+        text:'重命名'
+      },{
+        text:'移动'
+      },{
+        text:'解除绑定'
+      },{
+        text:'机器学习设置'
+      }];
+
+      $scope.popover = $ionicPopover.fromTemplateUrl(
+        'build/pages/device-controller/nextgen-controller/modal/popover.html', {
+        scope: $scope
+      });
+
+      // .fromTemplateUrl() 方法
+      $ionicPopover.fromTemplateUrl(
+        'build/pages/device-controller/nextgen-controller/modal/popover.html', {
+        scope: $scope
+      }).then(function(popover) {
+        $scope.popover = popover;
+      });
+
+
+      $scope.openPopover = function($event) {
+        $scope.popover.show($event);
+      };
+
+      $scope.closePopover = function(index) {
+        console.log(index);
+        $scope.popover.hide();
+        if(index==3){
+          // $scope.goLearn();
+        }
+      }
 
     }]);
