@@ -22,6 +22,9 @@ angular.module('mcControlModule')
        *@disc: get device id
        */
       var getDeviceId = function () {
+        if (localStorage.deviceInfo == undefined) {
+          return;
+        }
         var deviceList = localStorage.deviceInfo.split(";");
         for (var i = 0; i < deviceList.length; i++) {
           var deviceInfo = deviceList[i].split(",");
@@ -147,6 +150,7 @@ angular.module('mcControlModule')
           "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 2  && list.gearInit == 1'>30</span>" +
           "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 2  && list.gearInit == 2'>50</span>" +
           "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 2  && list.gearInit == 3'>100</span>" +
+          "<span class='toilet-parameterctl-des' ng-bind='list.des'></span>" +
 
           "</div>" +
           "<div class='toilet-parameterctl-dataimg' ng-if='list.parameterctlFlag'>" +
@@ -601,29 +605,6 @@ angular.module('mcControlModule')
           }
         );
       };
-      $scope.goLearn = function () {
-        $state.go("mcLearning");
-      }
-      $scope.operating = [{
-        text:'重命名'
-      },{
-        text:'移动'
-      },{
-        text:'解除绑定'
-      },{
-        text:'机器学习设置'
-      }];
-
-      $scope.popover = $ionicPopover.fromTemplateUrl('build/pages/modal/popover.html', {
-        scope: $scope
-      });
-
-      // .fromTemplateUrl() 方法
-      $ionicPopover.fromTemplateUrl('build/pages/model/popover.html', {
-        scope: $scope
-      }).then(function(popover) {
-        $scope.popover = popover;
-      });
 
       function karessButton(status) {
         var index = $scope.handlenapeSelectedIndex;
@@ -677,4 +658,28 @@ angular.module('mcControlModule')
           $scope.goLearn();
         }
       }
+
+      $scope.goLearn = function () {
+        $state.go("mcLearning");
+      }
+      $scope.operating = [{
+        text:'重命名'
+      },{
+        text:'移动'
+      },{
+        text:'解除绑定'
+      },{
+        text:'机器学习设置'
+      }];
+
+      $scope.popover = $ionicPopover.fromTemplateUrl('build/pages/device-controller/mc-controller/modal/popover.html', {
+        scope: $scope
+      });
+
+      // .fromTemplateUrl() 方法
+      $ionicPopover.fromTemplateUrl('build/pages/device-controller/mc-controller/modal/popover.html', {
+        scope: $scope
+      }).then(function(popover) {
+        $scope.popover = popover;
+      });
     }]);

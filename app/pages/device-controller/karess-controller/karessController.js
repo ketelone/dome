@@ -69,7 +69,7 @@ angular.module('karessControlModule')
         var value = cmdService.getCmd("8877", '01', '70', 'E3', '02');
         cmdService.sendCmd(deviceId, value, localStorage.boxIp);
       }
-      // statusKaress();
+      statusKaress();
       //侧滑转档数量jsongulp
       $scope.slideInitData = [{
         des: "init",
