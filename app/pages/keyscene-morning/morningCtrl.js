@@ -16,7 +16,7 @@ angular.module('productModule')
         device3: false,
         device4: false,
         flagDevice1: false,//shifouanzhuang
-      flagDevice2: false,
+        flagDevice2: false,
         flagDevice3: false,
         flagDevice4: false,
         onOrOff1 : true,//shifouzaixian
@@ -28,7 +28,7 @@ angular.module('productModule')
         onLinePic3 : "build/img/keyscene-morning/icon_home_device_signal5.png",
         onLinePic4 : "build/img/keyscene-morning/icon_home_device_signal5.png",
       }
-      $scope.scane = localStorage.crrentScane;
+      $scope.scane = JSON.parse(localStorage.crrentScane);
       $scope.temperate='';
       $scope.tempPercent = '';
       /**
@@ -156,11 +156,11 @@ angular.module('productModule')
       };
 
       var sendCmd = function(deviceId, value, successMsg, errorMsg){
-         //alert('发送指令开始')
+        //alert('发送指令开始')
         //if(baseConfig.isCloudCtrl){
         //  cloudToCtrl(deviceId, value, successMsg, errorMsg);  //云端发送
         //}else{
-          pluginToCtrl(deviceId, value, successMsg, errorMsg);
+        pluginToCtrl(deviceId, value, successMsg, errorMsg);
         //}
       };
 

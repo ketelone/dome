@@ -52,7 +52,7 @@ angular.module('productModule')
 
 
 
-/**
+      /**
        *@author:chenjiacheng
        *@name:goBack
        *@params:
@@ -60,7 +60,7 @@ angular.module('productModule')
        *@disc:goback
        */
       $scope.goBack = function () {
-        document.removeEventListener("SocketPlugin.receiveTcpData",  morning, false);
+        document.removeEventListener("SocketPlugin.receiveTcpData",  spa, false);
         $ionicHistory.goBack();
       }
 
@@ -75,17 +75,17 @@ angular.module('productModule')
         console.log($scope.config.openFlag);
         if ($scope.config.openFlag == true) {
           //马桶
-         /* if($scope.config.flagDevice1 != true){
-            console.log($scope.config.flagDevice1);
-            $("#progressAnimation1").css({
-              "-webkit-animation": "aaa 5.5s linear",
-              "background": "#1a1d28"
-            });
-            $timeout(function () {
-              $scope.config.device1 = true;
-              $scope.config.openFlag = false;
-            }, 5700);
-          }*/
+          /* if($scope.config.flagDevice1 != true){
+           console.log($scope.config.flagDevice1);
+           $("#progressAnimation1").css({
+           "-webkit-animation": "aaa 5.5s linear",
+           "background": "#1a1d28"
+           });
+           $timeout(function () {
+           $scope.config.device1 = true;
+           $scope.config.openFlag = false;
+           }, 5700);
+           }*/
           //镜柜
           if($scope.config.flagDevice2 != true) {
             $("#progressAnimation2").css({
@@ -125,29 +125,29 @@ angular.module('productModule')
       $scope.closeKeyscene = function () {
         console.log($scope.config.openFlag);
 
-          //镜柜
+        //镜柜
 
-            $scope.config.device2 = false;
-            $("#progressAnimation2").css({
-              "-webkit-animation": "bbb 0s linear",
-              "background": ''
-            });
+        $scope.config.device2 = false;
+        $("#progressAnimation2").css({
+          "-webkit-animation": "bbb 0s linear",
+          "background": ''
+        });
 
-          //浴霸
+        //浴霸
 
-            $scope.config.device3 = false;
-            $("#progressAnimation3").css({
-              "-webkit-animation": "bbb 0s linear",
-              "background": ''
-            });
+        $scope.config.device3 = false;
+        $("#progressAnimation3").css({
+          "-webkit-animation": "bbb 0s linear",
+          "background": ''
+        });
 
-          //浴缸
-            $scope.config.device4 = false;
-            $("#progressAnimation4").css({
-              "-webkit-animation": "bbb 0s linear",
-              "background": ''
-            });
-          }
+        //浴缸
+        $scope.config.device4 = false;
+        $("#progressAnimation4").css({
+          "-webkit-animation": "bbb 0s linear",
+          "background": ''
+        });
+      }
 
 
 
@@ -273,11 +273,11 @@ angular.module('productModule')
         ];
 
 
-          if($scope.scane.isOff == true){
-            value[0].data.act_params.scn_id =  '000000013';
-          }else {
-            value[0].data.act_params.scn_id =  '000000014';
-          }
+        if($scope.scane.isOff == true){
+          value[0].data.act_params.scn_id =  '000000013';
+        }else {
+          value[0].data.act_params.scn_id =  '000000014';
+        }
 
 
         alert('发送的信息==='+JSON.stringify(value));

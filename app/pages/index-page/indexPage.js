@@ -417,19 +417,19 @@ angular.module('indexPageModule')
               }
 
               var deviceInfo =
-                {
-                  id: device.DEVICE_ID,
-                  pictureUrl: pictureUrl,
-                  deviceType: deviceName,
-                  deviceStatus: deviceStatus,
-                  deviceDesc: deviceDesc,
-                  statusPictureUrl: "build/img/index/icon_home_device_signal5.png",
-                  errorPictureUrl: "",
-                  isStatus: true,
-                  isError: false,
-                  sku: device.SKU_ID,
-                  productId: device.PRODUCT_ID
-                };
+              {
+                id: device.DEVICE_ID,
+                pictureUrl: pictureUrl,
+                deviceType: deviceName,
+                deviceStatus: deviceStatus,
+                deviceDesc: deviceDesc,
+                statusPictureUrl: "build/img/index/icon_home_device_signal5.png",
+                errorPictureUrl: "",
+                isStatus: true,
+                isError: false,
+                sku: device.SKU_ID,
+                productId: device.PRODUCT_ID
+              };
 
               $scope.deviceModel.push(deviceInfo);
 
@@ -472,17 +472,17 @@ angular.module('indexPageModule')
                 pictureUrl = 'build/img/index/img_home_period.png';
               }
               var model =
-                {
-                  id: scenarioId,
-                  pictureUrl: pictureUrl,
-                  title: scenarioName,
-                  context: "一键开启指定设备",
-                  isOneButton: isOneButton,
-                  isTwoButton: isTwoButton,
-                  jsonContext: "1",
-                  isOff: false,
-                  lastUpdateDate: ""
-                };
+              {
+                id: scenarioId,
+                pictureUrl: pictureUrl,
+                title: scenarioName,
+                context: "一键开启指定设备",
+                isOneButton: isOneButton,
+                isTwoButton: isTwoButton,
+                jsonContext: "1",
+                isOff: false,
+                lastUpdateDate: ""
+              };
               $scope.modelData.push(model);
 
             }
@@ -1030,7 +1030,7 @@ angular.module('indexPageModule')
       function setUnit() {
         var url = baseConfig.basePath + "/r/api/ctm/insertPartyUtil";
         var paramter =
-          {"temperature": "°C", "PartySettingId": 100};
+        {"temperature": "°C", "PartySettingId": 100};
         hmsHttp.post(url, paramter).success(
           function (response) {
             console.log(response);
