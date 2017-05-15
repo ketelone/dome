@@ -1,4 +1,9 @@
 {
+  "tabs":{
+    "index":"Home",
+    "message":"Message",
+    "my-info":"Profile"
+  },
   "golabelvariable": {
     "loading": "loading",
     "PopupTitle": "Prompt",
@@ -546,8 +551,8 @@
   },
   "message": {
     "message": "Messages",
-    "status": "Status and Warning",
-    "exception": "Exceptions&Mantainance",
+    "status": "Status",
+    "exception": "Exceptions",
     "other": "Others",
     "statusMessage1": "Water filtration cartridge life End",
     "messageDel1": "Water filtration cartridge life End，Shop now",
@@ -556,7 +561,7 @@
     "statusMessage2": "Water temp is out of range",
     "messageDel2": "Actual water temp is 37℃",
     "device2": "Toilet",
-    "exceptionMessage": "Auto Auto Lid Open/Close Exception",
+    "exceptionMessage": "Auto Lid Exception",
     "noMessageWord1": "No Messages",
     "noMessageWord2": "No Exception",
     "noMessageWord3": "No Messages",

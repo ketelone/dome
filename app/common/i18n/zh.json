@@ -1,4 +1,9 @@
 {
+  "tabs":{
+    "index":"首页",
+    "message":"消息",
+    "my-info":"我的"
+  },
   "golabelvariable":{
     "loading":"加载中",
     "PopupTitle":"提示",
