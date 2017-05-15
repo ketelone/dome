@@ -8,7 +8,7 @@
       <div class="tab-item ink" ng-repeat="tab in tabs" ng-click="clickTab(tab)"
            ng-class="tab.isActive?'backColor-on':'backColor-off'">
         <i class="icon main-on" ng-class="tab.isActive?tab.onClass:tab.offClass"></i>
-        <span ng-class="tab.isActive?'fontColor-on':'fontColor-off'">{{tab.name}}</span>
+        <span ng-class="tab.isActive?'fontColor-on':'fontColor-off'">{{tab.name | translate}}</span>
       </div>
     </div>
   </div>

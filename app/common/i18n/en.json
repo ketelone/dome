@@ -1,4 +1,9 @@
 {
+  "tabs":{
+    "index":"Home",
+    "message":"Message",
+    "my-info":"Profile"
+  },
   "golabelvariable": {
     "loading": "loading",
     "PopupTitle": "Prompt",
