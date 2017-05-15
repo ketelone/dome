@@ -51,7 +51,7 @@ public class SocketPlugin extends CordovaPlugin {
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
-        mLocalBroadcastManager = LocalBroadcastManager.getInstance(cordova.getActivity());
+        mLocalBroadcastManager = LocalBroadcastManager.getInstance(cordova.getActivity().getApplicationContext());
         if(localBroadcastReceiver == null){
             localBroadcastReceiver = new BroadcastReceiver() {
                 @Override
@@ -68,7 +68,7 @@ public class SocketPlugin extends CordovaPlugin {
         }
         mLocalBroadcastManager.registerReceiver(localBroadcastReceiver, new IntentFilter(SOCKET_RESULT));
         //初始化
-        Intent intent = new Intent("com.plugin.socket.tcpSocketService");
+        final Intent intent = new Intent(cordova.getActivity(),TcpSocketService.class);
         //绑定Service
         cordova.getActivity().bindService(intent, conn, Service.BIND_AUTO_CREATE);
     }
