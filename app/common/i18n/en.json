@@ -27,7 +27,7 @@
     "personalSetting": "Personal info",
     "greenLife": "Eco-life",
     "intelligentLinkage": "CrossTalking",
-    "openNumber": "2 devices On",
+    "openNumber": "2 enabled",
     "settingWord": "Settings",
     "setting": {
       "setting": "Settings",
@@ -66,6 +66,13 @@
       "todayUsecleanWater": "Daily Pure Water Consumption(L)",
       "todayUseElectricity": "Daily Power Consumption(kw/h)",
       "fenDevice": "Water Consumption by Device"
+    },
+    "my-room":{
+      "restroom":"Bathroom",
+      "device":"4 devices",
+      "rename":"Rename",
+      "disband":"Delete",
+      "manage":"Manage"
     }
   },
   "login": {
@@ -131,8 +138,8 @@
     "startNiceDay": "Have a nice day",
     "period": "FemaleCare",
     "periodDesc": "Customerized Menstruation Care",
-    "bathroom": "Bath",
-    "enjoyBath": "Enjoy Bath"
+    "bathroom": "Shower",
+    "enjoyBath": "Enjoy your Shower"
   },
   "index": {
     "myHome": "Home",
@@ -153,13 +160,13 @@
     "noDeviceSearch": "No connected devices，Pls search new devices",
     "noDevice": "No devices",
     "open": "On",
-    "toliet": "Toilet",
-    "waterPurifier": "Central ",
-    "bathroomHeader": "Heater",
+	  "toliet": "Toilet",
+    "waterPurifier": "Central Purification",
+    "bathroomHeader": "Bathroom Heater",
     "bathtub": "Bathtub",
     "nextgen": "Shower",
     "airfoilShower": "Airfoil",
-    "mc": "MC"
+    "mc": "Mirror Cabinet"
   },
   "bigaunt": {
     "bigauntTitle": "Scenario Detail"
@@ -423,8 +430,8 @@
     "fiveHour": "5Hr",
     "sixHour": "6Hr",
     "timeout": "Your choice is out of range,Please re-select",
-    "twentyModel": "24Hrbr>Mode",
-    "commonModel": "Normal Mode",
+    "twentyModel": "24Hr",
+    "commonModel": "Normal",
     "pof": "Pls turn on Heater/Fan/Cool Dry/Hot Dry",
     "closeOtherFunction": "Pls turn off other funcions",
     "notCloseTimer": "No Timing funcion",
@@ -533,8 +540,8 @@
     "powerFailure": "Power off",
     "lowPower": "low power",
     "maichong": "Head rain",
-    "bodong": "Head swing:",
-    "yidong": "Handshower",
+    "bodong": "Head swing",
+    "yidong": "Hand shower",
     "Spout": "Spout",
     "exceptSta": "Historical Exception Records",
     "restoreDefaults": "Reset All",
@@ -542,6 +549,10 @@
     "fail": "Failed",
     "success": "Success",
     "start": "Turn on Successfully",
+    "rename":"Rename",
+    "move":"Move",
+    "delete":"Delete",
+    "ml":"Machine Learning",
     "deiveceMess": {
       "deiveceMess": "Device info",
       "productName": "Name",
