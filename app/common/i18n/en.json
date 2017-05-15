@@ -162,12 +162,12 @@
     "noDevice": "No devices",
     "open": "On",
 	  "toliet": "Toilet",
-    "waterPurifier": "Central ",
-    "bathroomHeader": "Heater",
+    "waterPurifier": "Central Purification",
+    "bathroomHeader": "Bathroom Heater",
     "bathtub": "Bathtub",
     "nextgen": "Shower",
     "airfoilShower": "Airfoil",
-    "mc": "MC"
+    "mc": "Mirror Cabinet"
   },
   "bigaunt": {
     "bigauntTitle": "Scenario Detail"
