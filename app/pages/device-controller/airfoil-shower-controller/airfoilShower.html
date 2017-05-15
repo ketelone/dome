@@ -9,15 +9,17 @@
       <div class="device-info-status">
         <img ng-src="build/img/toilet-controller/icon_devicedetail_wifi.png" class="box-img"/>
         <span class="box-text" translate="toiletController.deviceWifiInfo"></span>
-        <p class="font-col" translate="{{ctemperature}}"></p>
-        <span class="font-col-per" translate="airfoidShower.setTem"></span><span class="font-col-per-c" translate="{{stemerature}}"></span>
+        <p class="font-col" translate="{{ctemperature}}" ng-if="!isBig"></p>
+        <span class="font-col-per" translate="airfoidShower.setTem"  ng-if="!isBig"></span><span class="font-col-per-c" translate="{{stemerature}}"  ng-if="!isBig"></span>
+        <p class="font-col-b" translate="{{ctemperature}}" ng-if="isBig"></p>
+        <span class="font-col-per-b" translate="airfoidShower.setTem"  ng-if="isBig"></span><span class="font-col-per-c-b" translate="{{stemerature}}"  ng-if="isBig"></span>
 
         <!--<p class="font-col-status" translate="{{status}}"></p>-->
       </div>
     </div>
 
 
-    <div class="temp-info" style="height: 6.5rem;width:100%;">
+    <div class="temp-info" style="height: 7.5rem;width:100%;">
       <center>
         <canvas id="canvas" width="1800" height="1200"></canvas>
       </center>

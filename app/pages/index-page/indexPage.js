@@ -20,6 +20,7 @@ angular.module('indexPageModule')
     'cmdService',
     '$window',
     'indexPageService',
+    '$rootScope',
     function ($scope,
               $state,
               $ionicGesture,
@@ -34,7 +35,8 @@ angular.module('indexPageModule')
               $translate,
               cmdService,
               $window,
-              indexPageService) {
+              indexPageService,
+              $rootScope) {
       window.localStorage.token = '4f75ed43-aee2-4f35-895e-7d3f086ddf86';
       window.localStorage.empno = '18620025571';
       window.localStorage.checkboxSavePwd = 'admin';
@@ -45,7 +47,7 @@ angular.module('indexPageModule')
       $scope.isOneLine = true;
       $scope.isSecondLine = false;
       $scope.isBigScreen = $window.innerWidth > 1000 ? false : true;
-      $scope.isMorning =  false;
+      $scope.isMorning = false;
       $scope.isLeave = false;
       $scope.homeInfo = {
         temperature: "",
@@ -166,9 +168,9 @@ angular.module('indexPageModule')
           $scope.isInPage = 2;
           return;
         }
-        window.localStorage.setItem('crrentScane',JSON.stringify($scope.modelData[index]));
-        console.log('过去='+JSON.stringify($scope.modelData[index]));
-        window.localStorage.setItem('crrentScanesku',"D7:12:29:DF:76:06");
+        window.localStorage.setItem('crrentScane', JSON.stringify($scope.modelData[index]));
+        console.log('过去=' + JSON.stringify($scope.modelData[index]));
+        window.localStorage.setItem('crrentScanesku', "D7:12:29:DF:76:06");
 
         if (item.id == '1') {
           $state.go('leaveHome');
@@ -199,10 +201,10 @@ angular.module('indexPageModule')
 
       $scope.changeStatus = function (index) {
         console.log('调用方法');
-        if($scope.modelData[index].buttonName=='开启中'){
+        if ($scope.modelData[index].buttonName == '开启中') {
           return 0;
-        }else {
-          $scope.modelData[index].buttonName='开启中'
+        } else {
+          $scope.modelData[index].buttonName = '开启中'
           $scope.modelData[index].buttonStatus = true;
         }
 
@@ -221,7 +223,7 @@ angular.module('indexPageModule')
             errorPictureUrl: "",
             isStatus: true,
             isError: false,
-            sku: "D7:9C:8B:E8:50:C2"
+            sku: "K-3900T"
           }, {
             id: "2",
             pictureUrl: "build/img/index/img_home_device_heater.png",
@@ -232,7 +234,7 @@ angular.module('indexPageModule')
             errorPictureUrl: "",
             isStatus: true,
             isError: false,
-            sku: "FB:3F:B6:2E:F5:3F"
+            sku: "K-78436T-PPX10-01R"
           }, {
             id: "3",
             pictureUrl: "build/img/index/img_home_device_heater.png",
@@ -243,8 +245,7 @@ angular.module('indexPageModule')
             errorPictureUrl: "",
             isStatus: true,
             isError: false,
-            sku: "D7:12:29:DF:76:06"
-            //sku: "D7:12:29:DF:76:06"
+            sku: "K-77316T-X-MZ"
           },
           {
             id: "6",
@@ -256,7 +257,7 @@ angular.module('indexPageModule')
             errorPictureUrl: "build/img/index/icon_home_device_warnning.png",
             isStatus: true,
             isError: false,
-            sku: "D2:3D:19:2C:A9:89"
+            sku: "K-99879T-7-CP"
           },
           {
             id: "7",
@@ -305,12 +306,12 @@ angular.module('indexPageModule')
       var islinkHidden = false;
       $scope.linkBox = function () {
         hmsPopup.showLoading();
-        $timeout(function(){
-          if(!islinkHidden){
+        $timeout(function () {
+          if (!islinkHidden) {
             hmsPopup.hideLoading();
-            alert("超时，请重试！");
+            $scope.Toast.show($translate.instant("golabelvariable.linkError"));
           }
-        },15000);
+        }, 15000);
         searchBox();
       };
 
@@ -417,19 +418,19 @@ angular.module('indexPageModule')
               }
 
               var deviceInfo =
-              {
-                id: device.DEVICE_ID,
-                pictureUrl: pictureUrl,
-                deviceType: deviceName,
-                deviceStatus: deviceStatus,
-                deviceDesc: deviceDesc,
-                statusPictureUrl: "build/img/index/icon_home_device_signal5.png",
-                errorPictureUrl: "",
-                isStatus: true,
-                isError: false,
-                sku: device.SKU_ID,
-                productId: device.PRODUCT_ID
-              };
+                {
+                  id: device.DEVICE_ID,
+                  pictureUrl: pictureUrl,
+                  deviceType: deviceName,
+                  deviceStatus: deviceStatus,
+                  deviceDesc: deviceDesc,
+                  statusPictureUrl: "build/img/index/icon_home_device_signal5.png",
+                  errorPictureUrl: "",
+                  isStatus: true,
+                  isError: false,
+                  sku: device.SKU_ID,
+                  productId: device.PRODUCT_ID
+                };
 
               $scope.deviceModel.push(deviceInfo);
 
@@ -472,17 +473,17 @@ angular.module('indexPageModule')
                 pictureUrl = 'build/img/index/img_home_period.png';
               }
               var model =
-              {
-                id: scenarioId,
-                pictureUrl: pictureUrl,
-                title: scenarioName,
-                context: "一键开启指定设备",
-                isOneButton: isOneButton,
-                isTwoButton: isTwoButton,
-                jsonContext: "1",
-                isOff: false,
-                lastUpdateDate: ""
-              };
+                {
+                  id: scenarioId,
+                  pictureUrl: pictureUrl,
+                  title: scenarioName,
+                  context: "一键开启指定设备",
+                  isOneButton: isOneButton,
+                  isTwoButton: isTwoButton,
+                  jsonContext: "1",
+                  isOff: false,
+                  lastUpdateDate: ""
+                };
               $scope.modelData.push(model);
 
             }
@@ -541,22 +542,22 @@ angular.module('indexPageModule')
       };
 
 
-
       $scope.$watch('', function () {
         //getDeviceStatus("");
 
         getWeather();
-        if(localStorage.boxLinkCount == 1){
+        if (localStorage.boxLinkCount == 1) {
           hmsPopup.showLoading();
-          $timeout(function(){
-            if(!ishidden){
+          $timeout(function () {
+            if (!ishidden) {
               hmsPopup.hideLoading();
-              alert("超时，请重试！");
+              $scope.Toast.show($translate.instant("golabelvariable.linkError"));
             }
-          },15000);
-          //$timeout(function () {
-          searchBox();
-          //},1500);
+          }, 15000);
+
+          $timeout(function () {
+            searchBox();
+          }, 1500);
           localStorage.boxLinkCount = 2;
 
           localStorage.windType = "bathroom.rock";
@@ -615,7 +616,7 @@ angular.module('indexPageModule')
       var deviceLinkInfo = "";
       document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
         var resultStr = JSON.stringify(result);
-        console.log('触发结果为:=='+result);
+        console.log('触发结果为:==' + result);
         if (resultStr.indexOf("Who are you") >= 0) {
           return;
         }
@@ -710,7 +711,6 @@ angular.module('indexPageModule')
           $scope.Toast.show($translate.instant("index.searchBox"));
           angular.forEach($scope.boxList, function (data, index, array) {
             $timeout(function () {
-              alert('box值==='+JSON.stringify(data));
               boxLink(data[0]);
             }, 1000);
           });
@@ -819,7 +819,7 @@ angular.module('indexPageModule')
 
       //本地发送指令
       var pluginToCtrl = function (value, successMsg, errorMsg) {
-        cmdService.sendScanCmd( value, localStorage.boxIp);
+        cmdService.sendScanCmd(value, localStorage.boxIp);
       };
 
       var sendCmd = function (index) {
@@ -827,8 +827,8 @@ angular.module('indexPageModule')
           {
             "ver": 1,
             "from": {
-              "ctype":  227,
-              "uid"  : "CN100012"
+              "ctype": 227,
+              "uid": "CN100012"
             },
             "to": {
               "ctype": 228,
@@ -836,7 +836,7 @@ angular.module('indexPageModule')
             },
             "ts": 1487213040,
             "idx": 12,
-            "mtype":  "rqst",
+            "mtype": "rqst",
             "data": {
               "device_type": "ALL_DEVICE",
               "act": "SCN_TRIGGER_REQUEST",
@@ -846,28 +846,28 @@ angular.module('indexPageModule')
             }
           }
         ];
-        if($scope.modelData[index].title =='晨起'){
-          value[0].data.act_params.scn_id =  '000000011';
+
+        if ($scope.modelData[index].id == '2') {
+          value[0].data.act_params.scn_id = '000000011';
         }
-        if($scope.modelData[index].title =='离家'){
-          value[0].data.act_params.scn_id =  '000000012';
+        if ($scope.modelData[index].id == '1') {
+          value[0].data.act_params.scn_id = '000000012';
         }
-        if($scope.modelData[index].title =='泡澡'){
-          if($scope.modelData[index].isOff == true){
-            value[0].data.act_params.scn_id =  '000000013';
-          }else {
-            value[0].data.act_params.scn_id =  '000000014';
+        if ($scope.modelData[index].id == '4') {
+          if ($scope.modelData[index].isOff == true) {
+            value[0].data.act_params.scn_id = '000000013';
+          } else {
+            value[0].data.act_params.scn_id = '000000014';
           }
         }
-        if($scope.modelData[index].title =='沐浴'){
-          if($scope.modelData[index].isOff == true){
-            value[0].data.act_params.scn_id =  '000000015';
-          }else {
-            value[0].data.act_params.scn_id =  '000000016';
+        if ($scope.modelData[index].id == '3') {
+          if ($scope.modelData[index].isOff == true) {
+            value[0].data.act_params.scn_id = '000000015';
+          } else {
+            value[0].data.act_params.scn_id = '000000016';
           }
         }
-        alert('发送的信息==='+JSON.stringify(value));
-        pluginToCtrl( value, "发送成功", "发送失败");
+        pluginToCtrl(value, "发送成功", "发送失败");
       }
 
       /**
@@ -877,7 +877,7 @@ angular.module('indexPageModule')
        */
       var sceneList = [];
       $scope.getSwitchStatus = function (index) {
-        console.log('jinlai'+index+'=='+$scope.modelData[index].isOff);
+        console.log('jinlai' + index + '==' + $scope.modelData[index].isOff);
         console.log($scope.modelData[index].title);
         ////$scope.modelData[index].isOff = !$scope.modelData[index].isOff;
         //console.log('jinlai2'+index+'=='+$scope.modelData[index].isOff)
@@ -886,30 +886,37 @@ angular.module('indexPageModule')
         localStorage.sceneList = JSON.stringify(sceneList);
         $scope.isInPage = 1;
 
-        if ($scope.modelData[index].title == '离家') {
-          if($scope.modelData[index].isOff==false){ //是否开启状态
+
+        if ($scope.modelData[index].id == '1') {
+          if ($scope.modelData[index].isOff == false) { //是否开启状态
             $scope.modelData[index].isOff = true;
             $scope.modelData[0].isOff = false;
           }
 
-          $scope.modelData[index].isOneButton =false;//隐藏按钮
+          $scope.modelData[index].isOneButton = false;//隐藏按钮
           $timeout(function () {
-            $scope.modelData[index].isOneButton =true;
+            $scope.modelData[index].isOneButton = true;
           }, 5000);
+          sendCmd(index);
           return;
-        } else if ($scope.modelData[index].title == '晨起') {
-          if($scope.modelData[index].isOff==false){
+
+        } else if ($scope.modelData[index].id == '2') {
+          if ($scope.modelData[index].isOff == false) {
             $scope.modelData[index].isOff = true;
             $scope.modelData[1].isOff = false;
           }
           //sendCmd(index);
-          $scope.modelData[index].isOneButton =false;
+          $scope.modelData[index].isOneButton = false;
           $timeout(function () {
-            $scope.modelData[index].isOneButton =true;
+            $scope.modelData[index].isOneButton = true;
           }, 5000);
+          sendCmd(index);
           return;
         }
-        sendCmd(index);     //发送指令
+        indexPageService.setScaneList($scope.modelData);
+        if ($scope.modelData[index].id != '5' && $scope.modelData[index].id != '6') {
+          sendCmd(index);
+        }     //发送指令
 
         //if ($scope.modelData[index].isOff) {
         //  //发送指令并传送当前场景按钮的状态
@@ -965,7 +972,7 @@ angular.module('indexPageModule')
             SettingsService.set("sku", item.sku);
           }
           if (item.deviceType == "next gen shower") {
-            $state.go('nextgen',{deviceSku: item.sku});
+            $state.go('nextgen', {deviceSku: item.sku});
             // SettingsService.set("sku", item.sku);
           }
           if (item.deviceType == "airfoil-shower") {
@@ -986,7 +993,7 @@ angular.module('indexPageModule')
         } else {
           if (item.deviceType == "index.bathroomHeader") {
             $state.go('bathroom');
-            SettingsService.set("sku",item.sku);
+            SettingsService.set("sku", item.sku);
           }
           if (item.deviceType == "index.toliet") {
             $state.go('toiletContrl');
@@ -1004,7 +1011,7 @@ angular.module('indexPageModule')
           }
           if (item.deviceType == "index.airfoilShower") {
             $state.go('airfoilShower');
-            SettingsService.set("sku",item.sku);
+            SettingsService.set("sku", item.sku);
           }
           if (item.deviceType == "index.mc") {
             $state.go('mc');
@@ -1018,7 +1025,7 @@ angular.module('indexPageModule')
       };
 
 
-      $scope.addModule = function(){
+      $scope.addModule = function () {
         $state.go('sceneSupermarket');
       };
 
@@ -1030,7 +1037,7 @@ angular.module('indexPageModule')
       function setUnit() {
         var url = baseConfig.basePath + "/r/api/ctm/insertPartyUtil";
         var paramter =
-        {"temperature": "°C", "PartySettingId": 100};
+          {"temperature": "°C", "PartySettingId": 100};
         hmsHttp.post(url, paramter).success(
           function (response) {
             console.log(response);
@@ -1044,7 +1051,13 @@ angular.module('indexPageModule')
 
       }
 
+      $rootScope.$on('$ionicView.beforeEnter', function () {
+        console.log('view。enter');
+        $scope.modelData = indexPageService.getScaneList();
+      });
+
       // setUnit();
+
     }
   ]);
 
