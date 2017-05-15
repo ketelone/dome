@@ -10,14 +10,14 @@
     "directesuccess": "Command sent successfully"
   },
   "my-info": {
-    "myhome": "MyHome",
+    "myhome": "Home",
     "gexing": "Signature",
     "shengli": "Unity is Power",
     "addMember": "Add ",
-    "myBox": "MyBOX",
+    "myBox": "My BOX",
     "addNumber": "7 devices",
-    "myRoom": "MYROOM",
-    "roomNumber": "Two ROOM",
+    "myRoom": "My ROOM",
+    "roomNumber": "2 Rooms",
     "familyManager": "Family and Friends",
     "personalSetting": "Personal info",
     "greenLife": "Eco-life",
@@ -31,7 +31,7 @@
       "unitSetting": "Unit Settings",
       "centigrade": "Celsius°C",
       "firmwareUpdate": "Firmware upgrade",
-      "versionUpdate": "VersionUpdate",
+      "versionUpdate": "Version Update",
       "byToupdate": "2 Devices for Update",
       "versionNumber": "Version 1.4.0.17",
       "followLanguage": "Follow System language",
@@ -63,13 +63,14 @@
       "fenDevice": "Water Consumption by Device"
     }
   },
+
   "login": {
     "login": "Log In",
     "rememberPassword": "Forget Password?",
     "usernamePlaceholder": "Your User Name",
     "passwordPlaceholder": "Password",
     "createNew": {
-      "createAccount": "Create ",
+      "createAccount": "Create Account",
       "country": "Country",
       "region": "(Region)",
       "phoneNumber": "Phone Number",
@@ -147,7 +148,14 @@
     "searchFail": "Search Connected device failed",
     "noDeviceSearch": "No connected devices，Pls search new devices",
     "noDevice": "No devices",
-    "open": "On"
+    "open": "On",
+	"toliet": "Toilet",
+    "waterPurifier": "Central ",
+    "bathroomHeader": "Heater",
+    "bathtub": "Bathtub",
+    "nextgen": "Shower",
+    "airfoilShower": "Airfoil",
+    "mc": "MC"
   },
   "bigaunt": {
     "bigauntTitle": "Scenario Detail"
@@ -252,7 +260,7 @@
     "clearopen": "Open Valve",
     "clearextend": "Extend Wand",
     "clearinstance": "Sterilization",
-    "mutex": "互斥",
+    "mutex": "Exclusion",
     "loadingdata": "Loading Data",
     "loadingdataerrror": "loading data Error",
     "directerror": "Command sent failed",
@@ -282,7 +290,7 @@
     "autochuchou": "Deodorize",
     "dengguanset": "Lighting",
     "jiedianset": "Power Save",
-    "toiletclear": "UV Sanitization Schedule",
+    "toiletclear": "UV Schedule",
     "errortotal": "Historical Exception Records",
     "recoverset": "All Reset",
     "checkdeviceInfo": "Device info",
@@ -316,8 +324,9 @@
     "settingsucc": "Confirm"
   },
   "cleargearPlan": {
-    "title": "UV Sanitization Schedule",
-    "startTimeDes": "Start time",
+    "title": "UV Schedule",
+	"settingopen":"Pls Turn on your Schedule first!",
+    "startTimeDes": "Start",
     "hour": "Hour",
     "minute": "Minute",
     "clearRepeat": "Repeat",
@@ -328,9 +337,10 @@
     "zhouwu": "Friday",
     "zhouliu": "Saturday",
     "zhoutian": "Sunday",
-    "weekValDanwei": "EveryDay",
+    "weekValDanwei": "Every",
     "selectPoup": "Pls select",
     "settingsucc": "Confirm"
+
   },
   "cenwatpurifier": {
     "title": "Central Purification",
@@ -386,7 +396,7 @@
     "signalStatus": "Good",
     "signalBadStatus": "Poor",
     "boxLink": "Box link",
-    "using": "occupied",
+    "using": "Occupied",
     "bathroom": "Hathroom Heater",
     "cancel": "Cancel",
     "confirm": "Confirm",
@@ -396,11 +406,11 @@
     "hotDrying": "Hot Dry",
     "breath": "Ventilation",
     "purify": "Air-Care",
-    "windDirection": "Air Flow",
+    "windDirection": "Flow",
     "light": "&nbsp;&nbsp;&nbsp;Light",
     "closeAll": "Stop all",
-    "setting": "&nbsp;&nbsp;&nbsp;Seetings",
-    "wind": "Air Flow",
+    "setting": "&nbsp;&nbsp;&nbsp;Setings",
+    "wind": "Flow",
     "fixed": "Fix",
     "rock": "Swing",
     "oneHour": "1Hr",
@@ -410,7 +420,7 @@
     "fiveHour": "5Hr",
     "sixHour": "6Hr",
     "timeout": "Your choice is out of range,Please re-select",
-    "twentyModel": "24Hr",
+    "twentyModel": "24Hrbr>Mode",
     "commonModel": "Normal Mode",
     "pof": "Pls turn on Heater/Fan/Cool Dry/Hot Dry",
     "closeOtherFunction": "Pls turn off other funcions",
@@ -426,13 +436,13 @@
     "goHomeName": "HomeSPA",
     "buttonClick": "On",
     "deviceName1": "Toilet",
-    "deviceName2": "Mirror Cabinet",
-    "deviceName3": "Bathroom Heater",
+    "deviceName2": "MC",
+    "deviceName3": "Heater",
     "deviceName4": "Shower",
     "deviceLineOn": "Online",
     "deviceLineOff": "Offline",
     "deviceFlag": "Not Installed",
-    "deviceWen": "Temperature",
+    "deviceWen": "Temp",
     "deviceShi": "Humidity"
   },
   "karessController": {
@@ -444,9 +454,9 @@
     "parameterdes": "Water Temp",
     "handleSelecDes": "Outlet Mode",
     "zhushui": "Filling",
-    "luoshui": "Drain",
+    "luoshui": "E-Drain",
     "shuilianmo": "Water Massage",
-    "toubuanmo": "Massage-Pillow",
+    "toubuanmo": "Pillow Massage",
     "beibujiare": "Back heater",
     "yijiantingzhi": "Stop All",
     "guandaochujun": "Sanitize",
@@ -454,7 +464,7 @@
     "gaunbi": "Normal",
     "maichong": "pulsate",
     "bodong": "oscillate",
-    "yidong": "wave",
+    "yidong": "Wave",
     "zhengchang": "Normal",
     "bath": "Bath Faucet",
     "handshower": "Handshower",
@@ -467,7 +477,8 @@
     "infoTaress3": "SKU",
     "infoTaress4": "SN",
     "infoTaress5": "Location",
-    "jieneng": "Power Save"
+    "jieneng": "Power Save",
+	"tishichushuikou" : "Can not change outlet mode now"
   },
   "mcController": {
     "setting": "Seetings",
@@ -499,14 +510,14 @@
     "unworking": "Not Working",
     "parameterrad": "0",
     "parameterdes": "Water Temp",
-    "handleSelecDes": "Outlet mode",
+    "handleSelecDes": "Outlet Mode",
     "water": "Shower",
     "watering": "Showering",
     "waterclosed": "Shower over",
     "chixu": "Continuous",
     "paikong": "Evacuate",
     "stop": "Stop all",
-    "jieneng": "power save",
+    "jieneng": "Power save",
     "shezhi": "Settings",
     "close": "Off",
     "sleep": "Sleep",
@@ -530,7 +541,7 @@
       "SNnumber": "SN",
       "positionMess": "Location",
       "saveAlert": "Save successfully",
-      "saveError": "save failed"
+      "saveError": "Save failed"
     }
   },
   "message": {
@@ -560,6 +571,10 @@
     "allStop": "Stop all",
     "setting": "&nbsp;&nbsp;&nbsp;Settings",
     "waterSuccess": "Water success",
-    "stopSuccess": "stop success"
+    "stopSuccess": "stop success",
+	"water": "Water",
+    "setTem": "Set temp",
+    "watering": "Watering",
+    "noUse": "Not Use"
   }
 }
