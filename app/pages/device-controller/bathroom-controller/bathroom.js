@@ -17,8 +17,9 @@ angular.module('bathroomModule')
     'baseConfig',
     'hmsHttp',
     'cmdService',
-    '$translate','$ionicPopover',
+    '$translate',
     'SettingsService',
+    '$ionicPopover',
     function($scope, $state, $interval, $window, $ionicModal, $ionicHistory, hmsPopup, $stateParams, bathroomService, bathroomCmdService, $timeout, baseConfig, hmsHttp, cmdService, $translate, SettingsService,$ionicPopover){
 
       $scope.bathroomData = [
@@ -166,7 +167,81 @@ angular.module('bathroomModule')
       $scope.windType = {'type': "bathroom.rock"};
 
       $scope.goBack = function(){
+        document.removeEventListener("SocketPlugin.receiveTcpData", receiveBathroomTcpData, false);
         $ionicHistory.goBack();
+      };
+
+      var receiveBathroomTcpData = function (result) {
+
+        var resultOn = result[0];
+
+        if(resultOn.from.uid == getDeviceId()){
+          if (resultOn.data.cmd.length > 0) {
+
+            changeLightStatus(resultOn.data.cmd[0]);
+            changeHeaderStatus(resultOn.data.cmd[0]);
+            changeAirStatus(resultOn.data.cmd[0]);
+
+            var data = bathroomCmdService.explainAck(resultOn.data.cmd[0]);
+            if(data.temperature){
+              $scope.temperate = parseInt(data.temperature,16) + "℃";
+              $scope.tempPercent = parseInt(data.humidity,16) + "%";
+              //$scope.$apply();
+            }
+
+            var heater = bathroomCmdService.explainAck(resultOn.data.cmd[0]);
+
+            try{
+              if(heater.status || heater.cmd == '85'){
+                //alert(heater.hour + ":"+　heater.min);
+                $scope.countDown = "";
+                $scope.isShowTime = true;
+
+                var hourValue = parseInt(heater.hour, 16);
+                if(hourValue < 10){
+                  hourValue = "0" + hourValue;
+                }else{
+                  hourValue = hourValue;
+                }
+                var minuValue = parseInt(heater.min, 16);
+                if(heater.second != '00'){
+                  minuValue = minuValue + 1;
+                }
+                if(minuValue < 10){
+                  minuValue = "0" + minuValue;
+                }else{
+                  minuValue = minuValue;
+                }
+                if(heater.hour == '00' && heater.min == '00'){
+                  $scope.isTimeout = true;
+                }
+                //alert("show  " + hourValue + ":" + minuValue);
+                if(hourValue <= 24){
+                  if(minuValue == '60'){
+                    var h = parseInt(heater.hour, 16) + 1;
+                    if(h < 10 ){
+                      hourValue = '0' + h;
+                    }else{
+                      hourValue = h;
+                    }
+                    minuValue = '00';
+                  }
+                  $scope.countDown = hourValue + ":" + minuValue;
+                }
+
+                $scope.$apply();
+              }
+
+              explainCurrentOperate(resultOn.data.cmd[0]);
+            }catch(e){
+            }
+
+            if($scope.isTimeout){
+              changeTimeStatus();
+            }
+            $scope.$apply();
+          }
+        }
       };
 
       /**
@@ -267,79 +342,7 @@ angular.module('bathroomModule')
 
       var flag = false;
       $scope.isTimeout = false;
-      document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
-
-        var resultOn = result[0];
-
-        if(resultOn.from.uid == getDeviceId()){
-          if (resultOn.data.cmd.length > 0) {
-
-            changeLightStatus(resultOn.data.cmd[0]);
-            changeHeaderStatus(resultOn.data.cmd[0]);
-            changeAirStatus(resultOn.data.cmd[0]);
-
-            var data = bathroomCmdService.explainAck(resultOn.data.cmd[0]);
-            if(data.temperature){
-              $scope.temperate = parseInt(data.temperature,16) + "℃";
-              $scope.tempPercent = parseInt(data.humidity,16) + "%";
-              //$scope.$apply();
-            }
-
-            var heater = bathroomCmdService.explainAck(resultOn.data.cmd[0]);
-
-            try{
-              if(heater.status || heater.cmd == '85'){
-                //alert(heater.hour + ":"+　heater.min);
-                $scope.countDown = "";
-                $scope.isShowTime = true;
-
-                var hourValue = parseInt(heater.hour, 16);
-                if(hourValue < 10){
-                  hourValue = "0" + hourValue;
-                }else{
-                  hourValue = hourValue;
-                }
-                var minuValue = parseInt(heater.min, 16);
-                if(heater.second != '00'){
-                  minuValue = minuValue + 1;
-                }
-                if(minuValue < 10){
-                  minuValue = "0" + minuValue;
-                }else{
-                  minuValue = minuValue;
-                }
-                if(heater.hour == '00' && heater.min == '00'){
-                  $scope.isTimeout = true;
-                }
-                //alert("show  " + hourValue + ":" + minuValue);
-                if(hourValue <= 24){
-                  if(minuValue == '60'){
-                    var h = parseInt(heater.hour, 16) + 1;
-                    if(h < 10 ){
-                      hourValue = '0' + h;
-                    }else{
-                      hourValue = h;
-                    }
-                    minuValue = '00';
-                  }
-                  $scope.countDown = hourValue + ":" + minuValue;
-                }
-
-                $scope.$apply();
-              }
-
-              explainCurrentOperate(resultOn.data.cmd[0]);
-            }catch(e){
-            }
-
-            if($scope.isTimeout){
-              changeTimeStatus();
-            }
-            $scope.$apply();
-          }
-        }
-
-      }, false);
+      document.addEventListener('SocketPlugin.receiveTcpData', receiveBathroomTcpData, false);
 
       var changeLightStatus = function(value){
         var lightStatus = bathroomCmdService.explainAck(value);
@@ -556,6 +559,8 @@ angular.module('bathroomModule')
                 data.isOpen = false;
               }
 
+              //changeSwitchHidden(switchType);
+
               $scope.isTimeOk = true;
             }else{
               if(switchType == 'Hot' && data.switchType == switchType){
@@ -629,6 +634,37 @@ angular.module('bathroomModule')
           }
         }
 
+      };
+
+      var changeSwitchHidden = function(switchType){
+        angular.forEach($scope.bathroomData, function(data, index, array) {
+          if(data.switchType != switchType && data.isOpen){
+            if(data.switchType == 'Hot'){
+              data.switchPictureUrl = 'build/img/bathroom/hot_wind_nor.png';
+              data.isOpen = false;
+            }
+            if(data.switchType == 'Cool'){
+              data.switchPictureUrl = 'build/img/bathroom/cool_wind_nor.png';
+              data.isOpen = false;
+            }
+            if(data.switchType == 'Dryer'){
+              data.switchPictureUrl = 'build/img/bathroom/cool_nor.png';
+              data.isOpen = false;
+            }
+            if(data.switchType == 'Hot drying'){
+              data.switchPictureUrl = 'build/img/bathroom/hot_drying_nor.png';
+              data.isOpen = false;
+            }
+            if(data.switchType == 'Purify'){
+              data.switchPictureUrl = 'build/img/bathroom/purify_nor.png';
+              data.isOpen = false;
+            }
+            if(data.switchType == 'Breath'){
+              data.switchPictureUrl = 'build/img/bathroom/breath_nor.png';
+              data.isOpen = false;
+            }
+          }
+        });
       };
 
       var changeTimeStatus = function(){
@@ -1878,12 +1914,12 @@ angular.module('bathroomModule')
         text:'机器学习设置'
       }];
 
-      $scope.popover = $ionicPopover.fromTemplateUrl('build/pages/modal/popover.html', {
+      $scope.popover = $ionicPopover.fromTemplateUrl('build/pages/device-controller/bathroom-controller/model/popover.html', {
         scope: $scope
       });
 
       // .fromTemplateUrl() 方法
-      $ionicPopover.fromTemplateUrl('build/pages/model/popover.html', {
+      $ionicPopover.fromTemplateUrl('build/pages/device-controller/bathroom-controller/model/popover.html', {
         scope: $scope
       }).then(function(popover) {
         $scope.popover = popover;

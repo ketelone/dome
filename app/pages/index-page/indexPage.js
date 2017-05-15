@@ -301,7 +301,7 @@ angular.module('indexPageModule')
 
       $scope.boxList = [];
 
-      var islinkHidden = true;
+      var islinkHidden = false;
       $scope.linkBox = function () {
         hmsPopup.showLoading();
         $timeout(function(){
