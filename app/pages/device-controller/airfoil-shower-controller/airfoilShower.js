@@ -32,6 +32,7 @@ angular.module('airfoilShowerModule')
         $ionicHistory.goBack();
       };
 
+      var isLinkOk = false;
       $scope.$watch('',function(){
         var did = getDeviceId();
         if(did != ""){
@@ -87,6 +88,7 @@ angular.module('airfoilShowerModule')
           return;
         }
         if (resultOn.data.cmd.length > 0) {
+          isLinkOk = true;
           var data = airfoilShowerService.explainAck(resultOn.data.cmd[0]);
 
           try{
