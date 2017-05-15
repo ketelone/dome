@@ -1,6 +1,15 @@
 package cordova.plugin.socket;
 
+import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.os.Handler;
+import android.os.IBinder;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -15,23 +24,58 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class SocketPlugin extends CordovaPlugin {
+    private static final String SOCKET_RESULT = "com.socket.status";
 
     private static final String TAG = "SocketPlugin";
 
-    private TcpSocketReceiveListener receiveListener;
-
-    private Map<String, TcpSocket> mapSocket;
-
-    private ExecutorService service;
-
     private CallbackContext mCallbackContext;
+
+    private TcpSocketService mService;
+
+    private LocalBroadcastManager mLocalBroadcastManager;
+
+    private BroadcastReceiver localBroadcastReceiver;
+    private ServiceConnection conn = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            TcpSocketService.LocalBinder binder = (TcpSocketService.LocalBinder) service;
+            mService = binder.getService();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            mService = null;
+        }
+    };
+
+    @Override
+    public void initialize(CordovaInterface cordova, CordovaWebView webView) {
+        super.initialize(cordova, webView);
+        mLocalBroadcastManager = LocalBroadcastManager.getInstance(cordova.getActivity());
+        if(localBroadcastReceiver == null){
+            localBroadcastReceiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    String type = intent.getStringExtra("TYPE");
+                    String data = intent.getStringExtra("DATA");
+                    if ("STATUS".equals(type)) {
+                        sendStatusUpdate(data);
+                    } else if ("DATA".equals(type)) {
+                        sendDataUpdate(data);
+                    }
+                }
+            };
+        }
+        mLocalBroadcastManager.registerReceiver(localBroadcastReceiver, new IntentFilter(SOCKET_RESULT));
+        //初始化
+        Intent intent = new Intent("com.plugin.socket.tcpSocketService");
+        //绑定Service
+        cordova.getActivity().bindService(intent, conn, Service.BIND_AUTO_CREATE);
+    }
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         mCallbackContext = callbackContext;
-        if (service == null) {
-            service = Executors.newCachedThreadPool();
-        }
         Log.d(TAG, "execute: action=" + action + " args=" + args.toString());
         if ("udpBroadCast".equals(action)) {
             udpBroadcast(args, callbackContext);
@@ -50,18 +94,8 @@ public class SocketPlugin extends CordovaPlugin {
         return true;
     }
 
-
-    private String getCode(int code) {
-        JSONObject err = new JSONObject();
-        try {
-            err.put("code", code);
-        } catch (JSONException e) {
-            return "{\"code\":-1}";
-        }
-        return err.toString();
-    }
-
     private int udpPort = 5037;
+
     private void udpBroadcast(final JSONArray args, final CallbackContext callbackContext) {
         try {
             Log.d(TAG, "tcpConnect: args = " + args.toString());
@@ -81,7 +115,7 @@ public class SocketPlugin extends CordovaPlugin {
                     UDPBroadCast.getInstance(udpPort).stopUDPBroadCast();
                     callbackContext.success(arr);
                 }
-            },timeout);
+            }, timeout);
             UDPBroadCast.getInstance(udpPort).sendUDPBroadCast(value.toString(), ipBroad);
             UDPBroadCast.getInstance(udpPort).getUDPBroadCastResponse(ipLocal, new UDPBroadCastCallBack() {
                 @Override
@@ -99,107 +133,24 @@ public class SocketPlugin extends CordovaPlugin {
         }
     }
 
-    private int defTcpPort = 5036;
-
     private void tcpConnect(JSONArray args, final CallbackContext callbackContext) {
-
-        try {
-            Log.d(TAG, "tcpConnect: args = " + args.toString());
-            TcpSocket socket = null;
-            JSONObject object = args.optJSONObject(0);
-            String ip = object.optString("ip");
-            String port = object.optString("port");
-            int p = -1;
-            if (port != null && !port.isEmpty()) {
-                p = Integer.parseInt(port);
-            } else {
-                p = defTcpPort;
-            }
-
-            if (mapSocket == null) {
-                mapSocket = new HashMap<String, TcpSocket>();
-                receiveListener = new TcpSocketReceiveListener();
-            }
-            socket = mapSocket.get(ip);
-            if (socket != null) {
-                callbackContext.success(0x00);
-            } else {
-                socket = new TcpSocket(receiveListener, service);
-                mapSocket.put(ip, socket);
-                socket.connect(ip, p);
-            }
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            callbackContext.error(0x00);
-        }
+        mService.tcpConnect(args, callbackContext);
     }
 
     private void tcpSendCmd(JSONArray args, CallbackContext callbackContext) {
-        Log.d(TAG, "tcpSocket: args=" + args.toString());
-        try {
-            JSONObject obj = args.getJSONObject(0);
-            JSONArray value = obj.getJSONArray("value");
-            String ip = obj.optString("ip");
-            if (mapSocket != null && mapSocket.get(ip) != null) {
-                mapSocket.get(ip).send(value.toString());
-                callbackContext.success(getCode(0));
-            } else {
-                throw new Exception();
-            }
-        } catch (Exception ex) {
-            callbackContext.error(getCode(0x06));
-        }
+        mService.tcpSendCmd(args, callbackContext);
     }
 
     private void tcpCLose(JSONArray args, CallbackContext callbackContext) {
-        try {
-            Log.d(TAG, "tcpCLose: " + args.toString());
-            JSONObject jsonObject = args.getJSONObject(0);
-            String ip = jsonObject.getString("ip");
-            TcpSocket tcpSocket = mapSocket.get(ip);
-            Toast.makeText(cordova.getActivity(), tcpSocket == null ? "null" : ip, Toast.LENGTH_SHORT).show();
-            if (tcpSocket != null) {
-                tcpSocket.close();
-                mapSocket.remove(ip);
-                callbackContext.success(getCode(0));
-            } else {
-                callbackContext.error(getCode(1));
-            }
-        } catch (Exception e) {
-            callbackContext.error(0x01);
-        }
+        mService.tcpCLose(args, callbackContext);
     }
 
     private void getTcpStatus(JSONArray args, CallbackContext callbackContext) {
         callbackContext.success(0);
     }
 
-    class TcpSocketReceiveListener implements ISocketCallback {
-
-        @Override
-        public void onConnected() {
-            sendStatusUpdate(getCode(0x00));
-        }
-
-        @Override
-        public void onReceived(String data) {
-            sendDataUpdate(data);
-        }
-
-        @Override
-        public void onDisconnected() {
-            sendStatusUpdate(getCode(0x03));
-        }
-
-        @Override
-        public void onError(Exception ex) {
-            sendStatusUpdate(getCode(0x01));
-        }
-    }
-
     private void sendDataUpdate(String info) {
-        if(info !=null && !info.isEmpty() && info.contains("Who are you")){
+        if (info != null && !info.isEmpty() && info.contains("Who are you")) {
             mCallbackContext.success();
         }
         final String data = String.format("cordova.fireDocumentEvent('SocketPlugin.receiveTcpData',%s)", info);
@@ -223,16 +174,21 @@ public class SocketPlugin extends CordovaPlugin {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
-        if (mapSocket != null) {
-            for (TcpSocket t : mapSocket.values()) {
-                if (!t.isClosed()) {
-                    t.close();
-                }
-            }
-            mapSocket.clear();
-            mapSocket = null;
+        if (localBroadcastReceiver != null && mLocalBroadcastManager != null) {
+            mLocalBroadcastManager.unregisterReceiver(localBroadcastReceiver);
         }
-        sendStatusUpdate(getCode(0x00));
+        cordova.getActivity().unbindService(conn);
+        super.onDestroy();
     }
+
+    private String getCode(int code) {
+        JSONObject err = new JSONObject();
+        try {
+            err.put("code", code);
+        } catch (JSONException e) {
+            return "{\"code\":-1}";
+        }
+        return err.toString();
+    }
+
 }

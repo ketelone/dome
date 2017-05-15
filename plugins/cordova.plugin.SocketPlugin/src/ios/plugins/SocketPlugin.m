@@ -94,14 +94,14 @@
                           @"ver":@(1),
                           @"from":@{
                                   @"ctype":@(0xE3),
-                                  @"uid":@"peerId"
+                                  @"uid":@""
                                   },
                           @"ctype":@"",
                           @"to": @{
                                   @"ctype": @(0XE4),
-                                  @"uid": @"peerId"
+                                  @"uid": @""
                                   },
-                          @"ts":@([NSDate date].timeIntervalSince1970),
+                          @"ts":@((NSInteger)([NSDate date].timeIntervalSince1970*1000)),
                           @"idx":@(0),
                           @"mtype":@"rqst",
                           @"data":@{

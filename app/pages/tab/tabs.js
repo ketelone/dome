@@ -13,17 +13,17 @@ angular.module('loginModule').controller('TabsCtrl', ['$scope', '$rootScope', '$
         }
       });
       $scope.tabs = [{
-        name: '首页',
+        name: 'tabs.index',
         isActive: true,
         onClass: 'main-on',
         offClass: 'main-off'
       }, {
-        name: '消息',
+        name: 'tabs.message',
         isActive: false,
         onClass: 'app-on',
         offClass: 'app-off'
       }, {
-        name: '我的',
+        name: 'tabs.my-info',
         isActive: false,
         onClass: 'my-on',
         offClass: 'my-off'

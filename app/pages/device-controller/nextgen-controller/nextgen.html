@@ -2,6 +2,7 @@
   <ion-header-bar style="background-image: none" class="toilet-bg">
     <button class="button button-icon icon ion-ios-arrow-left colorhead" ng-click="goBack()"></button>
     <div class="h1 title colorhead" translate="nextgen.title"></div>
+    <img class="right-image" src="build/img/icon_dot@3x.png" ng-click="openPopover($event)"/>
   </ion-header-bar>
   <ion-content class="toilet-bg" overflow-scroll="true" style="overflow: hidden">
     <div class="toilet-conninfo" style="background-color:#0D0F11">
@@ -46,16 +47,18 @@
       <div class="is-water-switch" ng-if="showWater">
         <div class="close">
           <div class="circle-choice" ng-click="closeShowWater()" >
-            <span><img ng-src="build/img/delete@2x.png" class="img-size"/></span>
+            <span><img ng-src="build/img/nextgen/close.png" class="img-size"/></span>
           </div>
         </div>
         <div class="chixu">
-          <div class="circle-choice" ng-click="chixuWater()" style="background: #D5638E">
+          <div class="circle-choice" ng-click="chixuWater()">
+            <span><img ng-src="build/img/nextgen/choice.png" class="img-size"/></span>
             <span class="des-position" translate="nextgen.chixu"></span>
           </div>
         </div>
         <div class="paikong">
-          <div class="circle-choice" ng-click="paikongWater()" style="background: #51D8BD">
+          <div class="circle-choice" ng-click="paikongWater()">
+            <span><img ng-src="build/img/nextgen/choice.png" class="img-size"/></span>
             <span class="des-position" translate="nextgen.paikong"></span>
           </div>
         </div>

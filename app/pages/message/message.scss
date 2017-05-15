@@ -6,10 +6,8 @@
     position: relative;
     background: no-repeat url("../img/my-info/img_home_topbackground.png");
     background-size: cover;
-
   }
   .mesHeader {
-
     padding: 0.82rem 0rem 0rem 3.11rem;
     font-size: 0.6rem;
     color: #FFFFFF;
@@ -61,6 +59,11 @@
       color: #FFFFFF;
       letter-spacing: 1px;
       line-height: 0.32rem;
+      display:block;
+      overflow:hidden;
+      word-break:keep-all;
+      white-space:nowrap;
+      text-overflow:ellipsis;
     }
     .leftWord2 {
       border: 1px solid #979797;
