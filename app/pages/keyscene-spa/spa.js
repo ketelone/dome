@@ -31,8 +31,10 @@ angular.module('productModule')
       $scope.isOff = false;
       $scope.temperate='';
       $scope.tempPercent = '';
-      $scope.scane = localStorage.crrentScane;
-
+      $scope.scane = JSON.parse(localStorage.crrentScane);
+      $scope.isOff = $scope.scane.isOff;
+      console.log('泡澡=='+localStorage.crrentScane);
+      console.log('开关=='+$scope.isOff);
       /**
        *@autor: caolei
        *@params: item
@@ -58,6 +60,7 @@ angular.module('productModule')
        *@disc:goback
        */
       $scope.goBack = function () {
+        document.removeEventListener("SocketPlugin.receiveTcpData",  morning, false);
         $ionicHistory.goBack();
       }
 
@@ -217,7 +220,8 @@ angular.module('productModule')
         //alert('获取到deviceid=='+deviceId);
         sendCmd(deviceId,"887706010005721563","获取温度","获取温度失败");
       };
-      document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
+      document.addEventListener('SocketPlugin.receiveTcpData',spa, false);
+      var spa = function (result) {
 
         var resultOn = result[0];
 
@@ -236,8 +240,7 @@ angular.module('productModule')
           }
         }
 
-      }, false);
-
+      }
 
       //本地发送指令
       var pluginToCtrl = function (value, successMsg, errorMsg) {
