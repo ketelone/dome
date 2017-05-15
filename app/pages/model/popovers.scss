@@ -1,11 +1,11 @@
 .popovers{
   .item{
-    height: 40px;
+    height: 80rem;
     width: 100%;
     background: white;
     padding: 0px;
     text-align: center;
-    line-height: 40px;
+    line-height: 80rem;
     font-size: 0.32rem;
     border-style:none ;
     border-bottom: 2px solid #ddd;
@@ -24,7 +24,7 @@
 }
 
 .popover{
-  height: 160px!important;
+  height: 3.2rem!important;
   top: 187px;
   //left: 179px!important;
   margin-left: 0px;
@@ -33,7 +33,7 @@
   position: absolute;
   z-index: 10;
   display: block;
-  width: 180px;
+  width: 3.2rem;
 }
 .platform-ios .popover .scroll-content{
   margin: 0!important;
