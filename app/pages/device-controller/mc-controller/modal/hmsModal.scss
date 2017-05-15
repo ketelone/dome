@@ -1,0 +1,31 @@
+.hmsModal {
+
+  .item {
+    height: 1rem;
+    line-height: 0.4rem;
+    border-color: #ddd;
+    background-color: #fff;
+    color: #444;
+    position: relative;
+    z-index: 2;
+    display: block;
+    margin: -1px;
+    padding: 0.30rem;
+    border-width: 1px;
+    border-style: solid;
+    font-size: 0.32rem;
+  }
+  .contentCase {
+    background-color:#4F5C79;
+    //margin-top: 44px;
+    z-index:-1;
+  }
+  .listItem{
+    margin: 0;
+    background-color:#4F5C79;
+    color:$color-base;
+    border-width: 0px;
+    border-bottom: 1px solid black;
+    text-align: center;
+  }
+}

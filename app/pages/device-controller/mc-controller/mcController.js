@@ -5,23 +5,35 @@ angular.module('mcControlModule')
     '$ionicModal',
     '$compile',
     'baseConfig',
-    'checkVersionService', 'SettingsService', '$ionicHistory', '$ionicSlideBoxDelegate', 'mcService', 'hmsHttp', 'cmdService','hmsPopup','$timeout','$ionicPopover',
+    'checkVersionService', 'SettingsService', '$ionicHistory', '$ionicSlideBoxDelegate', 'mcService', 'hmsHttp', 'cmdService','hmsPopup','$timeout','$ionicPopover','$translate',
     function ($scope,
               $state,
               $ionicModal,
               $compile,
               baseConfig,
-              checkVersionService, SettingsService, $ionicHistory, $ionicSlideBoxDelegate, mcService, hmsHttp, cmdService,hmsPopup,$timeout,$ionicPopover) {
+              checkVersionService, SettingsService, $ionicHistory, $ionicSlideBoxDelegate, mcService, hmsHttp, cmdService,hmsPopup,$timeout,$ionicPopover,$translate) {
       var sku = SettingsService.get('sku')
       $scope.fontSize = document.documentElement.clientWidth / 7.5;
       $scope.screenHeig = window.innerHeight;
       $scope.screenWidth = window.innerWidth;
+
+      var flagLoading = false;
+      hmsPopup.showLoading();
+      $timeout(function () {
+        if(flagLoading == false){
+          hmsPopup.hideLoading();
+          $scope.Toast.show($translate.instant("karessController.loading"));
+        }
+      }, 10000);
       /**
        *@autor: caolei
        *@return: device id
        *@disc: get device id
        */
       var getDeviceId = function () {
+        if (localStorage.deviceInfo == undefined) {
+          return;
+        }
         var deviceList = localStorage.deviceInfo.split(";");
         for (var i = 0; i < deviceList.length; i++) {
           var deviceInfo = deviceList[i].split(",");
@@ -30,10 +42,23 @@ angular.module('mcControlModule')
           }
         }
       };
+      $scope.config =
+        {
+          "liangDu": false,
+          "seWen": false
+        }
+      if (angular.isUndefined(localStorage.mcLiangdu)) {
+        localStorage.mcLiangdu = '1';
+      }
+      if (angular.isUndefined(localStorage.mcWendu)) {
+        localStorage.mcWendu = '1';
+      }
       var deviceId = getDeviceId();
-      $scope.karessController = {
-        modelType: "karessController.bath",
-      };
+      var statusKaress = function () {
+        var value = cmdService.getCmd("8877", '01', '70', 'E3', '02');
+        cmdService.sendCmd(deviceId, value, localStorage.boxIp);
+      }
+      statusKaress();
       //侧滑转档数量json
       $scope.slideInitData = [{
         des: "init",
@@ -48,10 +73,11 @@ angular.module('mcControlModule')
       }]
 
       $scope.slideTunBuData = [{
-        des: "亮度",
+        des: "mcController.liangDu",
+        diedes : "liangdu",
         gearNum: 2,
-        gearInit: 1,
-        gearInitTemp: 1,
+        gearInit: localStorage.mcLiangdu,
+        gearInitTemp: localStorage.mcLiangdu,
         parameterctlFlag: false,
         parNodeid: 'toilet-TunBuSyCtl',
         canves01: "TunBuSycanves01",
@@ -60,9 +86,11 @@ angular.module('mcControlModule')
         flag: "1"
       },
         {
-          des: "色温",
+          des: "mcController.seWen",
+          diedes : "sewen",
           gearNum: 2,
-          gearInit: 1,
+          gearNum:  localStorage.mcWendu,
+          gearInit:  localStorage.mcWendu,
           gearInitTemp: 1,
           parameterctlFlag: false,
           parNodeid: 'toilet-TunBuPosCtl',
@@ -80,7 +108,7 @@ angular.module('mcControlModule')
           imgSeledUrl: "build/img/mc-controller/icon_dengguang.png",
           imgUrlTemp: "build/img/mc-controller/icon_dengguangnor.png",
           handleDes: "mcController.zhushui",
-          selecFlag: false,
+          selecFlag: $scope.config.liangDu,
           handledata: $scope.slideTunBuData,
           isManyDirective: true
         },
@@ -89,7 +117,7 @@ angular.module('mcControlModule')
           imgSeledUrl: "build/img/mc-controller/icon_chuwu.png",
           imgUrlTemp: "build/img/mc-controller/icon_chuwunor.png",
           handleDes: "mcController.luoshui",
-          selecFlag: false,
+          selecFlag: $scope.config.seWen,
           handledata: $scope.slideInitData
         },
         {
@@ -111,6 +139,7 @@ angular.module('mcControlModule')
       ];
 
       $scope.goBack = function () {
+        document.removeEventListener("SocketPlugin.receiveTcpData", receiveMcTcpDatahandle, false);
         $ionicHistory.goBack();
       }
       /**
@@ -147,6 +176,7 @@ angular.module('mcControlModule')
           "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 2  && list.gearInit == 1'>30</span>" +
           "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 2  && list.gearInit == 2'>50</span>" +
           "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 2  && list.gearInit == 3'>100</span>" +
+          "<span class='toilet-parameterctl-des' translate={{list.des}}></span>" +
 
           "</div>" +
           "<div class='toilet-parameterctl-dataimg' ng-if='list.parameterctlFlag'>" +
@@ -489,23 +519,21 @@ angular.module('mcControlModule')
           if (info.selecFlag == false) {
             var value = mcService.getCmd("8877", 1, mcService.data.openLight, 0, 5);
             console.log(value);
-
             if (baseConfig.isCloudCtrl == true) {
-
               test(index, value, 'mcOpenLight');
             } else {
               console.log(value);
               cmdService.sendCmd(deviceId, value, localStorage.boxIp);
             }
           } else {
-            var value = mcService.getCmd("8877", 1, mcService.data.closeLight, 0, 5);
+            var value = mcService.getCmd("8877", '01', mcService.data.closeLight, 0, '05');
             console.log(value);
-            sendCmd(deviceId, value, '灯光关闭成功！', '灯光关闭失败！');
+            cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           }
         }
         if (index == 1) {
           if (info.selecFlag == false) {
-            var value = mcService.getCmd("8877", 1, mcService.data.openDemist, 0, 5);
+            var value = mcService.getCmd("8877", '01', mcService.data.openDemist, 0, '05');
             if (baseConfig.isCloudCtrl == true) {
               test(index, value, 'mcDefogging');
             } else {
@@ -513,18 +541,18 @@ angular.module('mcControlModule')
               cmdService.sendCmd(deviceId, value, localStorage.boxIp);
             }
           } else {
-            var value = mcService.getCmd("8877", 1, mcService.data.closeDemist, 0, 5);
+            var value = mcService.getCmd("8877", '01', mcService.data.closeDemist, 0, '05');
             console.log(value);
             cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           }
         }
         if (index == 2) {
-          var value = mcService.getCmd("8877", 1, mcService.data.closeAll, 0, 5);
+          var value = mcService.getCmd("8877", '01', mcService.data.closeAll, 0, '05');
           console.log(value);
           cmdService.sendCmd(deviceId, value, localStorage.boxIp);
         }
         if (index == 3) {
-          $state.go('karessSetting');
+          $state.go('mcSetting');
         }
 
 
@@ -543,18 +571,6 @@ angular.module('mcControlModule')
           }, 20)
         }
       };
-      $scope.$on('$destroy', function () {
-        $scope.modal.remove();
-      });
-      $scope.choose = function (val) {
-        $scope.modal.hide();
-        for (var i = 0; i < $scope.value.length; i++) {
-          if ($scope.value[i].id === val.id) {
-            $scope.karessController.modelType = $scope.value[i].des;
-          }
-        }
-        ;
-      };
       //保存选择的数据项
       $scope.handleRadSelected;
       $scope.handlenapeSelectedIndex;
@@ -562,29 +578,75 @@ angular.module('mcControlModule')
       $scope.radScrollSendDir = function () {
         if ($scope.handlenapeListNape[$scope.handlenapeSelectedIndex].isManyDirective) {
           var selectRad = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].gearInit;
+          $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].gearInitTemp = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].gearInit;
           console.log(selectRad);
-          var diedes = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].des;
+          var diedes = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].desId;
+          console.log(diedes);
         }
-        if ($scope.handlenapeListNape == 0) {
-          var value = mcService.getCmd("8877", 1, mcService.data.closeSanitize, 0, 5);
-          cmdService.sendCmd(deviceId, value, localStorage.boxIp);
+        if (diedes == 'sewen' || diedes == 'liangdu') {
+          if ($scope.slideTunBuData[0].gearInit == 1) {
+            var luminance = '1E';
+          } else if ($scope.slideTunBuData[0].gearInit == 2) {
+            var luminance = '32';
+          }else if ($scope.slideTunBuData[0].gearInit == 3) {
+            var luminance = '64';
+          }
+          localStorage.mcLiangdu = $scope.slideTunBuData[0].gearInit;
+          if ($scope.slideTunBuData[1].gearInit == 1) {
+            var color = '1B';
+          } else if ($scope.slideTunBuData[1].gearInit == 2) {
+            var color = '28';
+          }else if ($scope.slideTunBuData[1].gearInit == 3) {
+            var color = '41';
+          }
+          localStorage.mcWendu = $scope.slideTunBuData[1].gearInit;
+          var value2 = cmdService.getCmd("8877", '01', mcService.setLightParam(luminance,color), 'E3', '02');
+          console.log(value2);
+          cmdService.sendCmd(deviceId, value2, localStorage.boxIp);
         }
       };
 
-
-      //接受tcp状态
-      document.addEventListener('SocketPlugin.receiveTcpStatus', function (result) {
-        if (result.from.uid == deviceId) {
-
-        }
-      }, false);
-//接受tcp返回数据
-      document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
+      var receiveMcTcpDatahandle = function (result) {
         if (result[0].data.cmd.length > 0 && result[0].from.uid == deviceId) {
-          var status = karessService.explainAck(result[0].data.cmd[0]);
-          karessButton(status);
+          var cmd = result[0].data.cmd[0];
+          var status = mcService.explainAck(result[0].data.cmd[0]);
+          if (status.ack.indexOf('fa') >= 0) {
+            karessButton(status);
+          } else if (status.ack.indexOf('1003') >= 0 || status.ack.indexOf('1002') >= 0 || status.ack.indexOf('1001') >= 0) {
+            $scope.Toast.show("操作失败！");
+          } else {
+            var item = mcService.requestStatus(cmd);
+            if (item.type.indexOf('0A') >= 0) {
+              $scope.config.temp = item.value.temperature;
+              buttonChange();
+              hmsPopup.hideLoading();
+            } else if (item.type.indexOf('06') >= 0) {
+              $scope.config.level = item.value.waterLevel;
+              if ($scope.config.level == $scope.slideTunBuData[1].gearInit) {
+                $scope.config.fillerStatus = false;
+                $scope.handlenapeListNape[1].selecFlag = $scope.config.fillerStatus;
+                buttonChange();
+              } else {
+                buttonChange();
+              }
+              hmsPopup.hideLoading();
+            }
+          }
         }
-      }, false);
+      }
+      function buttonChange() {
+        for (var i = 0; i < $scope.handlenapeListNape.length; i++) {
+          if ($scope.handlenapeListNape[i].selecFlag == true) {
+            $scope.handlenapeListNape[i].imgUrl = $scope.handlenapeListNape[i].imgSeledUrl;
+          } else {
+            $scope.handlenapeListNape[i].imgUrl = $scope.handlenapeListNape[i].imgUrlTemp;
+          }
+        }
+        $scope.$apply();
+      }
+      //接受tcp返回数据
+      document.addEventListener('SocketPlugin.receiveTcpData', receiveMcTcpDatahandle, false);
+
       var test = function (index, value, deviceId) {
         var url = baseConfig.basePath + "/r/api/message/sendMessage";
         var paramter = cmdService.cloudCmd(deviceId, value);
@@ -592,7 +654,7 @@ angular.module('mcControlModule')
         hmsHttp.post(url, paramter).success(
           function (response) {
             if (response.code == 200) {
-              var status = karessService.explainAck(response.data.data.cmd[0]);
+              var status = mcService.explainAck(response.data.data.cmd[0]);
               karessButton(status);
             }
           }
@@ -601,6 +663,66 @@ angular.module('mcControlModule')
           }
         );
       };
+
+      function karessButton(status) {
+        var index = $scope.handlenapeSelectedIndex;
+        if (status == '') {
+        } else {
+          if (status.ack.indexOf('fa') >= 0) {
+            status.ack = status.ack.substring(2, 4);
+            console.log(status)
+            if (status.ack == 28) {
+              $scope.Toast.show("开灯成功！");
+              changeColor();
+            }
+            if (status.ack == 26) {
+              $scope.Toast.show("除雾成功！");
+              changeColor();
+            }
+            if (status.ack == '00') {
+              $scope.Toast.show("一键关闭成功！");
+              changeColor();
+            }
+            if (status.ack == '70') {
+              hmsPopup.hideLoading();
+              flagLoading = true;
+            }
+          } else {
+          }
+        }
+        function changeColor() {
+          $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
+          if (index == 5) {
+            for (var i = 0; i < $scope.handlenapeListNape.length; i++) {
+              if (index == 1) {
+              } else {
+                $scope.handlenapeListNape[i].selecFlag = false;
+                $scope.handlenapeListNape[i].imgUrl = $scope.handlenapeListNape[i].imgUrlTemp;
+              }
+            }
+            return;
+          }
+          if ($scope.handlenapeListNape[index].selecFlag == true) {
+            $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgSeledUrl;
+          } else {
+            $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgUrlTemp;
+
+          }
+        }
+      }
+
+      $scope.openPopover = function($event) {
+        $scope.popover.show($event);
+      };
+
+      $scope.closePopover = function(index) {
+        console.log(index);
+        $scope.popover.hide();
+        if(index==3){
+          $scope.goLearn();
+        }
+      }
+
       $scope.goLearn = function () {
         $state.go("mcLearning");
       }
@@ -614,67 +736,14 @@ angular.module('mcControlModule')
         text:'机器学习设置'
       }];
 
-      $scope.popover = $ionicPopover.fromTemplateUrl('build/pages/modal/popover.html', {
+      $scope.popover = $ionicPopover.fromTemplateUrl('build/pages/device-controller/mc-controller/modal/popover.html', {
         scope: $scope
       });
 
       // .fromTemplateUrl() 方法
-      $ionicPopover.fromTemplateUrl('build/pages/model/popover.html', {
+      $ionicPopover.fromTemplateUrl('build/pages/device-controller/mc-controller/modal/popover.html', {
         scope: $scope
       }).then(function(popover) {
         $scope.popover = popover;
       });
-
-      function karessButton(status) {
-        var index = $scope.handlenapeSelectedIndex;
-        if (status == '') {
-        } else {
-          if (status.ack.indexOf('fa') >= 0) {
-            status.ack = status.ack.substring(2, 4);
-            console.log(status)
-            if (status.ack == 28) {
-              hmsPopup.showShortCenterToast("开灯成功！");
-            }
-            if (status.ack == 26) {
-              hmsPopup.showShortCenterToast("除雾成功！");
-            }
-          } else {
-            if (status.ack.indexOf('fb') >= 0 || status.ack.indexOf('fc') >= 0 || status.ack.indexOf('fd') >= 0) {
-              $scope.Toast.show("操作失败！");
-            } else {
-              karessService.resolveCmd(status.ack);
-              console.log(karessService.resolveCmd(status.ack));
-            }
-          }
-
-        }
-        $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
-        if (index == 5) {
-          for (var i = 0; i < $scope.handlenapeListNape.length; i++) {
-            $scope.handlenapeListNape[i].selecFlag = false;
-            $scope.handlenapeListNape[i].imgUrl = $scope.handlenapeListNape[i].imgUrlTemp;
-          }
-        } else {
-        }
-        if ($scope.handlenapeListNape[index].selecFlag == true) {
-          $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgSeledUrl;
-        } else {
-          $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgUrlTemp;
-
-        }
-      }
-      $scope.$on('$destroy', function() {
-      });
-
-      $scope.openPopover = function($event) {
-        $scope.popover.show($event);
-      };
-
-      $scope.closePopover = function(index) {
-        console.log(index);
-        $scope.popover.hide();
-        if(index==3){
-          $scope.goLearn();
-        }
-      }
     }]);

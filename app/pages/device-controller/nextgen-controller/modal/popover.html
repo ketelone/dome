@@ -1,7 +1,8 @@
-<ion-popover-view class="popovers" >
+<ion-popover-view class="nextgen-popovers">
   <ion-content>
-    <ion-list>
-      <ion-item ng-repeat="x in operating" ng-click="closePopover($index)">{{x.text}}</ion-item>
+    <ion-list >
+      <ion-item ng-repeat="x in operating" ng-click="closePopover($index)">{{x.text | translate}}</ion-item>
     </ion-list>
   </ion-content>
 </ion-popover-view>
+

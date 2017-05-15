@@ -5,13 +5,13 @@ angular.module('karessControlModule')
     '$ionicModal',
     '$compile',
     'baseConfig',
-    'checkVersionService', 'SettingsService', '$ionicHistory', '$ionicSlideBoxDelegate', 'karessService', 'hmsPopup', 'hmsHttp', 'cmdService', '$timeout', '$ionicPopover',
+    'checkVersionService', 'SettingsService', '$ionicHistory', '$ionicSlideBoxDelegate', 'karessService', 'hmsPopup', 'hmsHttp', 'cmdService', '$timeout', '$ionicPopover','$translate',
     function ($scope,
               $state,
               $ionicModal,
               $compile,
               baseConfig,
-              checkVersionService, SettingsService, $ionicHistory, $ionicSlideBoxDelegate, karessService, hmsPopup, hmsHttp, cmdService, $timeout, $ionicPopover) {
+              checkVersionService, SettingsService, $ionicHistory, $ionicSlideBoxDelegate, karessService, hmsPopup, hmsHttp, cmdService, $timeout, $ionicPopover,$translate) {
       var sku = SettingsService.get('sku');
       /**
        *@autor: caolei
@@ -32,11 +32,14 @@ angular.module('karessControlModule')
         }
       };
       var deviceId = getDeviceId();
-
+      var flagLoading = false;
       hmsPopup.showLoading();
       $timeout(function () {
-        hmsPopup.hideLoading();
-      }, 15000);
+        if(flagLoading == false){
+          hmsPopup.hideLoading();
+          $scope.Toast.show($translate.instant("karessController.loading"));
+        }
+      }, 10000);
       if (angular.isUndefined(localStorage.karessTemp)) {
         localStorage.karessTemp = '10';
       }
@@ -69,7 +72,7 @@ angular.module('karessControlModule')
         var value = cmdService.getCmd("8877", '01', '70', 'E3', '02');
         cmdService.sendCmd(deviceId, value, localStorage.boxIp);
       }
-      // statusKaress();
+      statusKaress();
       //侧滑转档数量jsongulp
       $scope.slideInitData = [{
         des: "init",
@@ -85,7 +88,7 @@ angular.module('karessControlModule')
       }]
 
       $scope.shuilianmoData = [{
-        des: "按摩档位",
+        des: "karessController.anmo",
         desId: "shuilianmodangwei",
         gearNum: 1,
         gearInit: localStorage.karessPressure,
@@ -98,7 +101,7 @@ angular.module('karessControlModule')
         flag: '4'
       }];
       $scope.shuiBeiBuData = [{
-        des: "温度",
+        des: "karessController.wenDu",
         desId: "beibujiarewendu",
         gearNum: 1,
         gearInit: 1,
@@ -111,7 +114,7 @@ angular.module('karessControlModule')
         flag: '5'
       }];
       $scope.slideTunBuData = [{
-        des: "水温",
+        des: "karessController.shuiWen",
         desId: "zhuishuishuiwen",
         gearNum: 19,
         gearInit: localStorage.karessTemp,
@@ -124,7 +127,7 @@ angular.module('karessControlModule')
         flag: "1"
       },
         {
-          des: "水位",
+          des: "karessController.shuiWei",
           desId: "zhuishuishuiwei",
           gearNum: 3,
           gearInit: localStorage.karessLevel,
@@ -256,7 +259,7 @@ angular.module('karessControlModule')
           "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 4  && list.gearInit == 2'>L2</span>" +
           "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 5  && list.gearInit == 1'>低档</span>" +
           "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 5  && list.gearInit == 2'>高档</span>" +
-          "<span class='toilet-parameterctl-des' ng-bind='list.des'></span>" +
+          "<span class='toilet-parameterctl-des' ng-bind={{list.des}}></span>" +
           "<span class='toilet-parameterctl-des' ng-bind='list.gearInit+29' ng-if='list.flag == 1'></span>" +
           "</div>" +
           "<div class='toilet-parameterctl-data' ng-if='list.parameterctlFlag'>" +
@@ -796,16 +799,8 @@ angular.module('karessControlModule')
           var level = 95;
         }
         //tingzhizhushui
-        var value1 = cmdService.getCmd("8877", '01', karessService.data.closeFiller, 'E3', '02');
-        var value = cmdService.getCmd("8877", '01', karessService.data.openFiller, 'E3', '02');
         var value2 = cmdService.getCmd("8877", '01', karessService.setFillerParams(temp, level, outlet), 'E3', '02');
-        // cmdService.sendCmd(deviceId, value1, localStorage.boxIp);
-        // $timeout(function () {
         cmdService.sendCmd(deviceId, value2, localStorage.boxIp);
-        // }, 260);
-        // $timeout(function () {
-        //   cmdService.sendCmd(deviceId, value, localStorage.boxIp);
-        // }, 500);
       };
 
       //保存选择的数据项
@@ -877,8 +872,9 @@ angular.module('karessControlModule')
 //接受tcp返回数据
       var receiveKaresssTcpDatahandle = function (result) {
         if (result[0].data.cmd.length > 0 && result[0].from.uid == deviceId) {
+          flagLoading = true;
+          hmsPopup.hideLoading();
           var cmd = result[0].data.cmd[0];
-          console.log(angular.toJson(cmd) + "=======");
           var status = karessService.explainAck(result[0].data.cmd[0]);
           if (status.ack.indexOf('fa') >= 0) {
             karessButton(status);
@@ -1068,12 +1064,6 @@ angular.module('karessControlModule')
               $scope.flagStatus = true;
             }
           } else {
-            // if (status.ack.indexOf('fb') >= 0 || status.ack.indexOf('fc') >= 0 || status.ack.indexOf('fd') >= 0) {
-            //   $scope.Toast.show("操作失败！");
-            // } else {
-            //   karessService.resolveCmd(status.ack);
-            //   console.log(karessService.resolveCmd(status.ack));
-            // }
           }
 
         }

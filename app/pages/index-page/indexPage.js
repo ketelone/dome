@@ -310,7 +310,7 @@ angular.module('indexPageModule')
             hmsPopup.hideLoading();
             alert("超时，请重试！");
           }
-        },30000);
+        },15000);
         searchBox();
       };
 
@@ -553,7 +553,7 @@ angular.module('indexPageModule')
               hmsPopup.hideLoading();
               alert("超时，请重试！");
             }
-          },30000);
+          },15000);
           //$timeout(function () {
           searchBox();
           //},1500);
