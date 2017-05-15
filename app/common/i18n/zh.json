@@ -548,6 +548,10 @@
     "fail":"失败",
     "success":"成功",
     "start":"开启成功",
+    "rename":"重命名",
+    "move":"移动",
+    "delete":"解除绑定",
+    "ml":"机器学习设置",
     "deiveceMess": {
       "deiveceMess": "设备信息",
       "productName": "产品名称",

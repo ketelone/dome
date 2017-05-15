@@ -234,16 +234,27 @@ angular.module('nextgenModule')
         }
       }
 
+      var islinkHidden = false;
       //一进入页面就查询出水状态
       $scope.$on('$ionicView.beforeEnter', function () {
+        hmsPopup.showLoading("<span translate='golabelvariable.loadingdata'></span>");
+        $timeout(function () {
+          if(!islinkHidden) {
+            alert("超时，请重试！");
+            hmsPopup.hideLoading();
+          }
+        }, 10000);
         var data = nextgenService.getDeviceStatus();
         var value = getValue(data);
-        sendCmd(deviceId, value, "发送成功", "发送失败");
+        pluginToCtrl(deviceId, value, "发送成功", "发送失败");
       });
 
+      var init=true;
       var listenrDeal=function (result) {
         var resultOn = result[0];
         if (resultOn.from.uid == deviceId) {
+          hmsPopup.hideLoading();
+          islinkHidden=true;
           if (resultOn.data.cmd.length > 0) {
             var tempData = nextgenService.explainAck(resultOn.data.cmd[0]);
             // alert('alet:'+JSON.stringify(tempData));
@@ -410,13 +421,13 @@ angular.module('nextgenModule')
       //   $state.go("karessLearning");
       // }
       $scope.operating = [{
-        text:'重命名'
+        text:'nextgen.rename'
       },{
-        text:'移动'
+        text:'nextgen.move'
       },{
-        text:'解除绑定'
+        text:'nextgen.delete'
       },{
-        text:'机器学习设置'
+        text:'nextgen.ml'
       }];
 
       $scope.popover = $ionicPopover.fromTemplateUrl(
@@ -440,9 +451,9 @@ angular.module('nextgenModule')
       $scope.closePopover = function(index) {
         console.log(index);
         $scope.popover.hide();
-        if(index==3){
-          // $scope.goLearn();
-        }
+        // if(index==3){
+        //   // $scope.goLearn();
+        // }
       }
 
     }]);
