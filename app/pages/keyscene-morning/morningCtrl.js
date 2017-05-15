@@ -16,7 +16,7 @@ angular.module('productModule')
         device3: false,
         device4: false,
         flagDevice1: false,//shifouanzhuang
-      flagDevice2: false,
+        flagDevice2: false,
         flagDevice3: false,
         flagDevice4: false,
         onOrOff1 : true,//shifouzaixian
@@ -39,6 +39,7 @@ angular.module('productModule')
        *@disc:goback
        */
       $scope.goBack = function () {
+        document.removeEventListener("SocketPlugin.receiveTcpData",  morning, false);
         $ionicHistory.goBack();
       }
 
@@ -155,11 +156,11 @@ angular.module('productModule')
       };
 
       var sendCmd = function(deviceId, value, successMsg, errorMsg){
-         //alert('发送指令开始')
+        //alert('发送指令开始')
         //if(baseConfig.isCloudCtrl){
         //  cloudToCtrl(deviceId, value, successMsg, errorMsg);  //云端发送
         //}else{
-          pluginToCtrl(deviceId, value, successMsg, errorMsg);
+        pluginToCtrl(deviceId, value, successMsg, errorMsg);
         //}
       };
 
@@ -167,7 +168,8 @@ angular.module('productModule')
         //alert('获取到deviceid=='+deviceId);
         sendCmd(deviceId,"887706010005721563","获取温度","获取温度失败");
       };
-      document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
+      document.addEventListener('SocketPlugin.receiveTcpData',morning , false);
+      var morning = function (result) {
 
         var resultOn = result[0];
 
@@ -186,7 +188,9 @@ angular.module('productModule')
           }
         }
 
-      }, false);
+      }
+
+
 
 
       //本地发送指令
