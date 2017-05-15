@@ -109,7 +109,7 @@ angular.module('indexPageModule')
         this.edits = function (item) {
           for(var i=0;i<scaneList.length;i++){
             if(scaneList[i].id==item.id){
-              scaneList[i] = item;
+              scaneList[i].isOff = item.isOff;
             }
           }
         }

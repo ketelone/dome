@@ -20,6 +20,7 @@ angular.module('indexPageModule')
     'cmdService',
     '$window',
     'indexPageService',
+    '$rootScope',
     function ($scope,
               $state,
               $ionicGesture,
@@ -34,7 +35,8 @@ angular.module('indexPageModule')
               $translate,
               cmdService,
               $window,
-              indexPageService) {
+              indexPageService,
+              $rootScope) {
       window.localStorage.token = '4f75ed43-aee2-4f35-895e-7d3f086ddf86';
       window.localStorage.empno = '18620025571';
       window.localStorage.checkboxSavePwd = 'admin';
@@ -844,20 +846,21 @@ angular.module('indexPageModule')
             }
           }
         ];
-        if ($scope.modelData[index].title == '晨起') {
+
+        if ($scope.modelData[index].id == '2') {
           value[0].data.act_params.scn_id = '000000011';
         }
-        if ($scope.modelData[index].title == '离家') {
+        if ($scope.modelData[index].id == '1') {
           value[0].data.act_params.scn_id = '000000012';
         }
-        if ($scope.modelData[index].title == '泡澡') {
+        if ($scope.modelData[index].id == '4') {
           if ($scope.modelData[index].isOff == true) {
             value[0].data.act_params.scn_id = '000000013';
           } else {
             value[0].data.act_params.scn_id = '000000014';
           }
         }
-        if ($scope.modelData[index].title == '沐浴') {
+        if ($scope.modelData[index].id == '3') {
           if ($scope.modelData[index].isOff == true) {
             value[0].data.act_params.scn_id = '000000015';
           } else {
@@ -883,7 +886,8 @@ angular.module('indexPageModule')
         localStorage.sceneList = JSON.stringify(sceneList);
         $scope.isInPage = 1;
 
-        if ($scope.modelData[index].title == '离家') {
+
+        if ($scope.modelData[index].id == '1') {
           if ($scope.modelData[index].isOff == false) { //是否开启状态
             $scope.modelData[index].isOff = true;
             $scope.modelData[0].isOff = false;
@@ -893,8 +897,10 @@ angular.module('indexPageModule')
           $timeout(function () {
             $scope.modelData[index].isOneButton = true;
           }, 5000);
+          sendCmd(index);
           return;
-        } else if ($scope.modelData[index].title == '晨起') {
+
+        } else if ($scope.modelData[index].id == '2') {
           if ($scope.modelData[index].isOff == false) {
             $scope.modelData[index].isOff = true;
             $scope.modelData[1].isOff = false;
@@ -904,9 +910,13 @@ angular.module('indexPageModule')
           $timeout(function () {
             $scope.modelData[index].isOneButton = true;
           }, 5000);
+          sendCmd(index);
           return;
         }
-        sendCmd(index);     //发送指令
+        indexPageService.setScaneList($scope.modelData);
+        if ($scope.modelData[index].id != '5' && $scope.modelData[index].id != '6') {
+          sendCmd(index);
+        }     //发送指令
 
         //if ($scope.modelData[index].isOff) {
         //  //发送指令并传送当前场景按钮的状态
@@ -1041,7 +1051,13 @@ angular.module('indexPageModule')
 
       }
 
+      $rootScope.$on('$ionicView.beforeEnter', function () {
+        console.log('view。enter');
+        $scope.modelData = indexPageService.getScaneList();
+      });
+
       // setUnit();
+
     }
   ]);
 
