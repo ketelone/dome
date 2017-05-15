@@ -308,9 +308,9 @@ angular.module('indexPageModule')
         $timeout(function(){
           if(!islinkHidden){
             hmsPopup.hideLoading();
-            alert("超时，请重试！");
+            $scope.Toast.show($translate.instant("golabelvariable.linkError"));
           }
-        },30000);
+        },15000);
         searchBox();
       };
 
@@ -551,12 +551,12 @@ angular.module('indexPageModule')
           $timeout(function(){
             if(!ishidden){
               hmsPopup.hideLoading();
-              alert("超时，请重试！");
+              $scope.Toast.show($translate.instant("golabelvariable.linkError"));
             }
-          },30000);
-          //$timeout(function () {
-          searchBox();
-          //},1500);
+          },15000);
+          $timeout(function () {
+            searchBox();
+          },1500);
           localStorage.boxLinkCount = 2;
 
           localStorage.windType = "bathroom.rock";
@@ -710,7 +710,6 @@ angular.module('indexPageModule')
           $scope.Toast.show($translate.instant("index.searchBox"));
           angular.forEach($scope.boxList, function (data, index, array) {
             $timeout(function () {
-              alert('box值==='+JSON.stringify(data));
               boxLink(data[0]);
             }, 1000);
           });
@@ -866,7 +865,6 @@ angular.module('indexPageModule')
             value[0].data.act_params.scn_id =  '000000016';
           }
         }
-        alert('发送的信息==='+JSON.stringify(value));
         pluginToCtrl( value, "发送成功", "发送失败");
       }
 

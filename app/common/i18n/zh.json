@@ -12,7 +12,8 @@
     "loadingdata":"正在连接",
     "loadingdataerrror":"网络连接异常",
     "directerror":"指令发生失败",
-    "directesuccess":"指令发送成功"
+    "directesuccess":"指令发送成功",
+    "linkError": "超时，请重试"
   },
   "my-info": {
     "myhome": "我家",

@@ -12,7 +12,8 @@
     "loadingdata": "Loading Data",
     "loadingdataerrror": "Loading Data Error",
     "directerror": "Command sent Failed",
-    "directesuccess": "Command sent successfully"
+    "directesuccess": "Command sent successfully",
+    "linkError": "timed out，Try again"
   },
   "my-info": {
     "myhome": "Home",
@@ -132,7 +133,7 @@
     "startNiceDay": "Have a nice day",
     "period": "FemaleCare",
     "periodDesc": "Customerized Menstruation Care",
-    "bathroom": "Bath",
+    "bathroom": "Shower",
     "enjoyBath": "Enjoy Bath"
   },
   "index": {
@@ -414,7 +415,7 @@
     "windDirection": "Flow",
     "light": "&nbsp;&nbsp;&nbsp;Light",
     "closeAll": "Stop all",
-    "setting": "&nbsp;&nbsp;&nbsp;Setings",
+    "setting": "Setings",
     "wind": "Flow",
     "fixed": "Fix",
     "rock": "Swing",
