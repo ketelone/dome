@@ -554,6 +554,7 @@
     "move":"Move",
     "delete":"Delete",
     "ml":"Machine Learning",
+    "deviceNoSignal":"Bad",
     "deiveceMess": {
       "deiveceMess": "Device info",
       "productName": "Name",

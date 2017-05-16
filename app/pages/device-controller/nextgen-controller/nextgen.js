@@ -15,6 +15,7 @@ angular.module('nextgenModule')
       var devId = "03";//E8:91:E0:DC:20:F1//F0:F0:87:F5:A2:17
       var isLink=false;//是否连接到了box
       var isLight=false;//是否高亮
+      $scope.isLinkOK=false;
 
       //获取相应格式的cmd指令
       function getValue(data) {
@@ -269,6 +270,7 @@ angular.module('nextgenModule')
         if (resultOn.from.uid == deviceId) {
           hmsPopup.hideLoading();
           isLink=true;
+          $scope.isLinkOK=true;
           if (resultOn.data.cmd.length > 0) {
             var tempData = nextgenService.explainAck(resultOn.data.cmd[0]);
             // alert('alet:'+JSON.stringify(tempData));
