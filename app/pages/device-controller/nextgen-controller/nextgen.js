@@ -16,6 +16,7 @@ angular.module('nextgenModule')
       var isLink=false;//是否连接到了box
       var isLight=false;//是否高亮
       $scope.isLinkOK=false;
+      var currentTime;
 
       //获取相应格式的cmd指令
       function getValue(data) {
@@ -49,15 +50,16 @@ angular.module('nextgenModule')
       //本地发送指令
       var pluginToCtrl = function (deviceId, value, successMsg, errorMsg) {
         isLight=false;
+        currentTime=new Date().getTime();
         hmsPopup.showLoading();
         cmdService.sendCmd(deviceId, value, localStorage.boxIp);
-        // $timeout(function(){
-        //   if(!isLight){
-        //     hmsPopup.hideLoading();
-        //     $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"));
-        //     $scope.isLinkOK=false;
-        //   }
-        // }, 10000);
+        $timeout(function(){
+          if(new Date().getTime()-currentTime>=10000&&!isLight){
+            hmsPopup.hideLoading();
+            $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"));
+            $scope.isLinkOK=false;
+          }
+        }, 10000);
       };
 
       //通过云端发送指令 bug
@@ -241,9 +243,6 @@ angular.module('nextgenModule')
           $scope.waterstatus = "nextgen.watering";
         }
         else if(ackData.status == "shower off"){
-          isLight=true;
-          $scope.isLinkOK=true;
-          hmsPopup.hideLoading();
           $scope.handlenapeListNape[0].selecFlag = false;
           $scope.handlenapeListNape[0].imgUrl = $scope.handlenapeListNape[0].imgUrlTemp;
           $scope.waterstatus = "nextgen.unworking";
@@ -263,6 +262,7 @@ angular.module('nextgenModule')
           $scope.isLinkOK=true;
           hmsPopup.hideLoading();
         }else if(ackData.ack.indexOf("fb")>=0||ackData.ack.indexOf("fd")>=0||ackData.ack.indexOf("fc")>=0){
+            isLight=true;
             hmsPopup.hideLoading();
             $scope.Toast.show($translate.instant("golabelvariable.directerror"));
         }
