@@ -107,7 +107,7 @@ angular.module('bathroomModule')
           switchType: "Light",
           desc: "bathroom.light"
         },
-        {
+       /* {
           id: "8",
           switchPictureUrl: "build/img/bathroom/wind_nor.png",
           isOpen: false,
@@ -118,7 +118,7 @@ angular.module('bathroomModule')
           setTime: "",
           switchType: "Wind direction",
           desc: "bathroom.windDirection"
-        },
+        },*/
         {
           id: "9",
           switchPictureUrl: "build/img/bathroom/stop_nor.png",
@@ -182,10 +182,12 @@ angular.module('bathroomModule')
         if(resultOn.from.uid == getDeviceId()){
           if (resultOn.data.cmd.length > 0) {
             isLinkOk = true;
+            isOpenOk = true;
 
             changeLightStatus(resultOn.data.cmd[0]);
             changeHeaderStatus(resultOn.data.cmd[0]);
             changeAirStatus(resultOn.data.cmd[0]);
+            changeAllStatus(resultOn.data.cmd[0]);
 
             var data = bathroomCmdService.explainAck(resultOn.data.cmd[0]);
             if(data.temperature){
@@ -217,7 +219,8 @@ angular.module('bathroomModule')
                 }else{
                   minuValue = minuValue;
                 }
-                if(heater.hour == '00' && heater.min == '00'){
+                //if(heater.hour == '00' && heater.min == '00'){
+                if(heater.status == 'heater finished'){
                   $scope.isTimeout = true;
                 }
                 //alert("show  " + hourValue + ":" + minuValue);
@@ -238,12 +241,25 @@ angular.module('bathroomModule')
               }
 
               explainCurrentOperate(resultOn.data.cmd[0]);
+
             }catch(e){
             }
 
             if($scope.isTimeout){
               changeTimeStatus();
             }
+
+            var isCloseTime = false;
+            angular.forEach($scope.bathroomData, function(data, index, array) {
+              if(data.isOpen){
+                isCloseTime = true;
+              }
+            });
+
+            if(!isCloseTime){
+              $scope.isShowTime = false;
+            }
+
             $scope.$apply();
           }
         }
@@ -269,6 +285,7 @@ angular.module('bathroomModule')
       var pluginToCtrl = function(deviceId, value, successMsg, errorMsg){
         if(!$scope.isNetOk){
           $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"));
+          localStorage.deviceInfo = "";
           return;
         }else{
           if(isLightSwitch){
@@ -279,11 +296,11 @@ angular.module('bathroomModule')
             hmsPopup.hideLoading();
             cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           },500);
-          $timeout(function(){
-            if(!isLight){
-              $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"));
-            }
-          }, 3000);
+          //$timeout(function(){
+          //  if(!isOpenOk){
+          //    $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"));
+          //  }
+          //}, 1500);
           isLightSwitch = false;
         }
       };
@@ -369,6 +386,9 @@ angular.module('bathroomModule')
             if(data.switchType == "Light" && lightStatus.state == 'lighting_on'){
               data.switchPictureUrl = 'build/img/bathroom/light.png';
               data.isOpen = true;
+            }else if(data.switchType == "Light" && lightStatus.state == 'lighting_off'){
+              data.switchPictureUrl = 'build/img/bathroom/light_nor.png';
+              data.isOpen = false;
             }
           });
           $scope.$apply();
@@ -378,6 +398,7 @@ angular.module('bathroomModule')
       var changeHeaderStatus = function(value){
         var headerStatus = bathroomCmdService.explainAck(value);
         if(headerStatus.cmd == '84'){
+          changeSwitchHidden();
           angular.forEach($scope.bathroomData, function(data, index, array) {
             $scope.isShowTime = true;
             //$scope.windType.type = localStorage.windType;
@@ -402,13 +423,33 @@ angular.module('bathroomModule')
         }
       };
 
+      var changeAllStatus = function(value){
+        var code = bathroomCmdService.explainAck(value);
+        try{
+          if(code.ack == 'fa00'){
+            changeSwitchHidden();
+            angular.forEach($scope.bathroomData, function(data, index, array) {
+              if(data.switchType == 'Light'){
+                data.switchPictureUrl = 'build/img/bathroom/light_nor.png';
+                data.isOpen = false;
+              }
+            });
+          }
+        }catch (e){
+        }
+      };
+
       var changeAirStatus = function(value){
         var airStatus = bathroomCmdService.explainAck(value);
         if(airStatus.cmd == '85'){
           angular.forEach($scope.bathroomData, function(data, index, array) {
             if(data.switchType == "Purify" && airStatus.acs == 'Air-care on'){
+              changeSwitchHidden();
               data.switchPictureUrl = 'build/img/bathroom/purify.png';
               data.isOpen = true;
+            }else if(data.switchType == "Purify" && airStatus.acs == 'Air-care off'){
+              data.switchPictureUrl = 'build/img/bathroom/purify_nor.png';
+              data.isOpen = false;
             }
           });
           $scope.$apply();
@@ -433,6 +474,7 @@ angular.module('bathroomModule')
                   isLight = true;
                   data.switchPictureUrl = 'build/img/bathroom/light.png';
                   data.isOpen = true;
+
                   //changeRingCol('#ff6600');
                   return;
                 }
@@ -472,6 +514,7 @@ angular.module('bathroomModule')
             if(currentBtnStatus.status){
               angular.forEach($scope.bathroomData, function(data, index, array) {
                 if(data.switchType == switchType){
+                  //changeSwitchHidden(switchType);
                   data.switchPictureUrl = 'build/img/bathroom/breath.png';
                   isWindFlag = false;
                   data.isOpen = true;
@@ -521,6 +564,8 @@ angular.module('bathroomModule')
               });
             }
 
+            //changeSwitchHidden(switchType);
+
           }else if(switchType == 'CloseAll'){
             angular.forEach($scope.bathroomData, function(data, index, array) {
               if(data.switchType == switchType){
@@ -535,6 +580,7 @@ angular.module('bathroomModule')
                 return;
               }
             });
+            //changeSwitchHidden(switchType);
           }
 
           angular.forEach($scope.bathroomData, function(data, index, array) {
@@ -579,9 +625,6 @@ angular.module('bathroomModule')
                 data.switchPictureUrl = 'build/img/bathroom/breath_nor.png';
                 data.isOpen = false;
               }
-
-              changeSwitchHidden(switchType);
-
               $scope.isTimeOk = true;
             }else{
               if(switchType == 'Hot' && data.switchType == switchType){
@@ -654,12 +697,12 @@ angular.module('bathroomModule')
             //$scope.windType.type = "bathroom.rock";
           }
         }
-
       };
 
-      var changeSwitchHidden = function(switchType){
+      var changeSwitchHidden = function(){
         angular.forEach($scope.bathroomData, function(data, index, array) {
-          if(data.switchType != switchType && data.isOpen){
+          //if(data.switchType != switchType && data.isOpen){
+          if(data.isOpen){
             if(data.switchType == 'Hot'){
               data.switchPictureUrl = 'build/img/bathroom/hot_wind_nor.png';
               data.isOpen = false;
@@ -1085,20 +1128,17 @@ angular.module('bathroomModule')
           }
           $scope.windType.type = localStorage.windType;
 
-          if(false){
-            getCurrentTemplate(getDeviceId());
-            getDeviceStatus();
-          }
         }else{
+          hmsPopup.showLoading('<span translate="golabelvariable.loadingdata"></span>');
+          $timeout(function(){
+            if(!isLinkOk){
+              hmsPopup.hideLoading();
+              $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"));
+              $scope.isNetOk = false;
+            }
+          }, 10000);
         }
-        hmsPopup.showLoading('<span translate="golabelvariable.loadingdata"></span>');
-        $timeout(function(){
-          if(!isLinkOk){
-            hmsPopup.hideLoading();
-            $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"));
-            $scope.isNetOk = false;
-          }
-        }, 10000);
+
         changeRingCol('#6ACBB3');
 
       }, true);
@@ -1134,9 +1174,9 @@ angular.module('bathroomModule')
           if(baseConfig.isCloudCtrl){
 
           }else{
-            hmsPopup.showLoading();
+            //hmsPopup.showLoading();
             $timeout(function () {
-              hmsPopup.hideLoading();
+              //hmsPopup.hideLoading();
             },600);
             sendCmd(getDeviceId(), value ,"","");
           }
@@ -1208,9 +1248,10 @@ angular.module('bathroomModule')
         status: ""
       }
 
-      var  isLightSwitch = false;
+      var isLightSwitch = false;
+      var isOpenOk = false;
       var startCommand = function(item){
-
+        isOpenOk = false;
         currentBtnStatus.type = item.switchType;
         currentBtnStatus.status = item.isOpen;
 
@@ -1930,7 +1971,7 @@ angular.module('bathroomModule')
 
         if(oneStep && twoStep){
           angular.forEach($scope.bathroomData, function(data, index, array) {
-            if(data.switchType == "Purify"){
+            if(data.switchType == "Purify" && data.isOpen){
               if($scope.timeHour.substring(0,$scope.timeHour.length-1) > 2){
                 hmsPopup.showPopup('<span translate="bathroom.alertTimeout"></span>');
                 threeStep = false;
