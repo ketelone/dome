@@ -262,13 +262,6 @@ angular.module('toiletControlModule')
           cmdService.sendCmd(cenwapurcmdObj.diviceid, cmdvalue, cenwapurcmdObj.boxid);
         };
       })
-      // $scope.initStatusFlag = true;
-      // //handle once
-      // $scope.directiveOnceFlag = 0;
-      // $scope.clearOnceFlag = 0;
-      // $scope.statustiveOnceFlag = 0;
-      // //error over time
-      // $scope.overTiemFlag = true;
       var centreceiveTcpDatahandle = function (result) {
           var resultOn = result[0];
           if(resultOn.from.uid === cenwapurcmdObj.diviceid){
@@ -281,7 +274,6 @@ angular.module('toiletControlModule')
                   if(backDataCmd.cmd === "25"){
                     var name = "cenwatpurifier.autoclear";
                     if(backDataCmd.ack === "1000"){
-                      // alert(12)
                       // $scope.selectChange($scope.selectChangeFlag,$scope.handlenapeSelectedIndex);
                       $scope.Toast.show($translate.instant(name)+$translate.instant("golabelvariable.directesuccess"));
                     }else{
@@ -320,14 +312,12 @@ angular.module('toiletControlModule')
                     $scope.overTiemFlag = false;
                     if(backDataCmd.flushStatus === "0001"){
                       //complete
-                      // $scope.selectChange(true,0);
                       $scope.cenwatpurifierCtrl.isShwoClearStatus = false;
+                      $scope.handlenapeListNape[0].selecFlag = false;
+
                       $scope.handlenapeListNape[0].imgUrl = $scope.handlenapeListNape[0].imgUrlTemp;
-                      // if($scope.initStatusFlag){
-                        $scope.cenwatpurifierCtrl.clearData = $scope.cenwatpurifierCtrl.clearComplete;
-                        $scope.cenwatpurifierCtrl.isShwoClearStatus = false;
+                      $scope.cenwatpurifierCtrl.clearData = $scope.cenwatpurifierCtrl.clearComplete;
                         // $scope.Toast.show($translate.instant("cenwatpurifier.clearover"));
-                      // };
                     }else if(backDataCmd.flushStatus === "0010"){
                       //doing
                       // $scope.selectChange(true,0);
@@ -340,7 +330,9 @@ angular.module('toiletControlModule')
                   };
                   if($scope.handlenapeListNape[0].selecFlag){
                     $scope.cenwatpurifierCtrl.isShwoClearStatus = false;
-                  };
+                  }else{
+                    $scope.cenwatpurifierCtrl.isShwoClearStatus = true;
+                  }
                 }
               };
               $scope.$apply();

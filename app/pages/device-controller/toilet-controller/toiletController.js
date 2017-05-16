@@ -734,10 +734,6 @@ angular.module('toiletControlModule')
           $scope.selectChange(flag,index,isType);
         },1000)
       };
-      //get devic status
-      var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx,nimi._data["synchronizeReq"],tolitercmdObj.ctrId,tolitercmdObj.devId);
-      //send instructin
-      console.log(cmdvalue)
       $scope.$on("$ionicView.beforeEnter",function () {
         $scope.value = [];
         //选择模式和清洁方式
@@ -1123,6 +1119,10 @@ angular.module('toiletControlModule')
         $scope.clickSlideFlag = false;
         //error over time
         $scope.overTiemFlag = true;
+        //get devic status
+        var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx,nimi._data["synchronizeReq"],tolitercmdObj.ctrId,tolitercmdObj.devId);
+        //send instructin
+        console.log(cmdvalue)
         // alert("cmdvalue"+cmdvalue)
         if(baseConfig.isCloudCtrl){
           // flag,cmdvalue, name,index,isType
@@ -1132,14 +1132,15 @@ angular.module('toiletControlModule')
           cmdService.sendCmd(tolitercmdObj.diviceid, cmdvalue, tolitercmdObj.boxid);
         };
       })
-      // alert("cmdvalue"+cmdvalue)
-      if(baseConfig.isCloudCtrl){
-        // flag,cmdvalue, name,index,isType
-        $scope.toGetImpleteData("false",cmdvalue,$translate.instant('toiletController.devicePop'),12,"1");
-      }else{
-        hmsPopup.showLoading("<span translate='golabelvariable.loadingdata'></span>");
-        cmdService.sendCmd(tolitercmdObj.diviceid, cmdvalue, tolitercmdObj.boxid);
-      };
+      $scope.sendCmdTimeout = function () {
+        hmsPopup.showLoading("");
+        $scope.getStatusBackFalg = false;
+        var cmdTimeout = $timeout(function(){
+            hmsPopup.hideLoading();
+            $scope.Toast.show($translate.instant("golabelvariable.linkError"));
+        },10000);
+      }
+
       /**
        *@params:index(selected index)
        *@disc:handle light or gary
@@ -1170,13 +1171,6 @@ angular.module('toiletControlModule')
           if($scope.handlenapeListNape[index].matchdataid === "setting"){
             $state.go("toiletSetting");
           }else {
-            if($scope.handlenapeListNape[index].matchdataid !== "clear"){
-              // hmsPopup.showLoading("");
-              // $scope.getStatusBackFalg = false;
-              // $timeout(function () {
-              //   hmsPopup.hideLoading();
-              // },500);
-            };
             $scope.hanleMutexFlag = true;
             $scope.hanleMutexInitFlag = true;
             if(!$scope.handlenapeListNape[index].selecFlag){
@@ -1218,8 +1212,7 @@ angular.module('toiletControlModule')
                       $scope.Toast.show($translate.instant("toiletController.seatstatus"));
                     }
                   }else{
-                    hmsPopup.showLoading("");
-                    $scope.getStatusBackFalg = false;
+                    $scope.sendCmdTimeout();
                     $scope.onceTimeIntionCreate("true","0",index);
                   }
                 };
@@ -1242,8 +1235,7 @@ angular.module('toiletControlModule')
                       };
                       $scope.selectChangeFlag = true;
                       $scope.selectIsType = "0";
-                      hmsPopup.showLoading("");
-                      $scope.getStatusBackFalg = false;
+                      $scope.sendCmdTimeout();
                       if(baseConfig.isCloudCtrl){
                         var isType = "0";
                         $scope.toGetImpleteData(true,cmdvalue,$scope.handlenapeListNape[index].handleDes,index,isType);
@@ -1263,8 +1255,7 @@ angular.module('toiletControlModule')
                 //use instruction create
                 if($scope.handlenapeListNape[index].matchdataid === "nvyong"){
                   if($scope.isSeatedStatusFlag){
-                    hmsPopup.showLoading("");
-                    $scope.getStatusBackFalg = false;
+                    $scope.sendCmdTimeout();
                     if(!$scope.handlenapeListNape[index].selecFlag){
                       $scope.nvyongIntionCreate(true,"女用","正常","ON","0",index);
                     }else{
@@ -1275,8 +1266,7 @@ angular.module('toiletControlModule')
                   };
                 }else if($scope.handlenapeListNape[index].matchdataid === "tunxi"){
                   if($scope.isSeatedStatusFlag) {
-                    hmsPopup.showLoading("");
-                    $scope.getStatusBackFalg = false;
+                    $scope.sendCmdTimeout();
                     if(!$scope.handlenapeListNape[index].selecFlag){
                       $scope.nvyongIntionCreate(true,"臀洗","正常","ON","0",index);
                     }else{
@@ -1287,8 +1277,7 @@ angular.module('toiletControlModule')
                   }
                 }else if($scope.handlenapeListNape[index].matchdataid === "nuanfen"){
                   if($scope.isSeatedStatusFlag){
-                    hmsPopup.showLoading("");
-                    $scope.getStatusBackFalg = false;
+                    $scope.sendCmdTimeout();
                     if(!$scope.handlenapeListNape[index].selecFlag){
                       $scope.nuamfenIntionCreate(true,"ON","0",index);
                     }else{
@@ -1298,24 +1287,21 @@ angular.module('toiletControlModule')
                     $scope.Toast.show($translate.instant("toiletController.seatstatus"))
                   };
                 }else if($scope.handlenapeListNape[index].matchdataid === "nuanjiao"){
-                  hmsPopup.showLoading("");
-                  $scope.getStatusBackFalg = false;
+                  $scope.sendCmdTimeout();
                   if(!$scope.handlenapeListNape[index].selecFlag){
                     $scope.feetSeatIntionCreate(true,"","0",index);
                   }else{
                     $scope.feetSeatIntionCreate(true,1,"0",index);
                   };
                 }else if($scope.handlenapeListNape[index].matchdataid === "quanwen"){
-                  hmsPopup.showLoading("");
-                  $scope.getStatusBackFalg = false;
+                  $scope.sendCmdTimeout();
                   if(!$scope.handlenapeListNape[index].selecFlag){
                     $scope.SeatHeaterIntionCreate(true,2,"0",index);
                   }else{
                     $scope.SeatHeaterIntionCreate(true,1,"0",index);
                   };
                 }else if($scope.handlenapeListNape[index].matchdataid === "dengguang"){
-                  hmsPopup.showLoading("");
-                  $scope.getStatusBackFalg = false;
+                  $scope.sendCmdTimeout();
                   if(!$scope.handlenapeListNape[index].selecFlag){
                     $scope.aroundLightIntionCreate(true,"","0",index);
                     $timeout(function () {
@@ -1541,6 +1527,9 @@ angular.module('toiletControlModule')
               if(backDataCmd.cmd === "98") {
                 if(!$scope.getStatusBackFalg){
                   hmsPopup.hideLoading();
+                  if(cmdTimeout){
+                    cmdTimeout = null;
+                  }
                 };
                 if($scope.cmdReturnData !== resultOn.data.cmd[0].substring(12, resultOn.data.cmd[0].length - 2)){
                   $scope.cmdReturnData = resultOn.data.cmd[0].substring(12, resultOn.data.cmd[0].length - 2);
@@ -1650,7 +1639,9 @@ angular.module('toiletControlModule')
                     $scope.clickSlideFlag = false;
                     $scope.hanleInitTemple(12);
                   };
-                  hmsPopup.hideLoading();
+                  if($scope.getStatusBackFalg){
+                    hmsPopup.hideLoading();
+                  };
                   if(backDataCmd.seatedStatus === "1") {
                     $scope.isSeatedStatusFlag = true;
                     $scope.toiletController.deviceUseInfo = $scope.toiletController.useing;
@@ -1746,8 +1737,7 @@ angular.module('toiletControlModule')
                 desTemp = "正常";
               };
             });
-            hmsPopup.showLoading("");
-            $scope.getStatusBackFalg = false;
+            $scope.sendCmdTimeout();
             // $timeout(function () {
             //   hmsPopup.hideLoading();
             // },500);
@@ -1779,8 +1769,7 @@ angular.module('toiletControlModule')
             var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx,nimi._data[desTemp],tolitercmdObj.ctrId,tolitercmdObj.devId);
             //send instructin
             console.log(cmdvalue);
-            hmsPopup.showLoading("");
-            $scope.getStatusBackFalg = false;
+            $scope.sendCmdTimeout();
             // $timeout(function () {
             //   hmsPopup.hideLoading();
             // },500);
