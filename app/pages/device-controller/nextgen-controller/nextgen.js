@@ -33,6 +33,8 @@ angular.module('nextgenModule')
           localStorage.deviceInfo = ";123456";
           deviceList = localStorage.deviceInfo.split(";");
         }
+        // alert($stateParams.deviceSku);
+        // alert(deviceList);
         for(var i = 0; i < deviceList.length; i ++){
           var deviceInfo = deviceList[i].split(",");
           if(deviceInfo[0] == $stateParams.deviceSku){
@@ -41,20 +43,21 @@ angular.module('nextgenModule')
         }
       };
       var deviceId =getDeviceId();
+      // var deviceId="87F5A217";
+      // alert(deviceId);
 
       //本地发送指令
       var pluginToCtrl = function (deviceId, value, successMsg, errorMsg) {
+        isLight=false;
         hmsPopup.showLoading();
-        $timeout(function(){
-          hmsPopup.hideLoading();
-          cmdService.sendCmd(deviceId, value, localStorage.boxIp);
-          isLight=true;
-        },500);
-        $timeout(function(){
-          if(!isLight){
-            $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"));
-          }
-        }, 3000);
+        cmdService.sendCmd(deviceId, value, localStorage.boxIp);
+        // $timeout(function(){
+        //   if(!isLight){
+        //     hmsPopup.hideLoading();
+        //     $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"));
+        //     $scope.isLinkOK=false;
+        //   }
+        // }, 10000);
       };
 
       //通过云端发送指令 bug
@@ -82,6 +85,7 @@ angular.module('nextgenModule')
 
       //根据配置选择发送指令的方式
       var sendCmd = function (deviceId, value, successMsg, errorMsg) {
+        // pluginToCtrl(deviceId, value, successMsg, errorMsg);
         if(isLink){
           if (baseConfig.isCloudCtrl) {
             cloudToCtrl(deviceId, value, successMsg, errorMsg);
@@ -228,14 +232,18 @@ angular.module('nextgenModule')
 
       //操作成功的处理
       function operateSuccess(ackData) {
-        //ackData.ack.indexOf("fa") >= 0  //发送成功
-        if (ackData.status == "shower on") {//正在出水
+        // alert("json"+JSON.stringify(ackData));
+        if (ackData.status === 'shower on') {//正在出水
+          // alert("status"+ackData.status);
           $scope.showWater = false;
           $scope.handlenapeListNape[0].selecFlag = true;
           $scope.handlenapeListNape[0].imgUrl = $scope.handlenapeListNape[0].imgSeledUrl;
           $scope.waterstatus = "nextgen.watering";
         }
         else if(ackData.status == "shower off"){
+          isLight=true;
+          $scope.isLinkOK=true;
+          hmsPopup.hideLoading();
           $scope.handlenapeListNape[0].selecFlag = false;
           $scope.handlenapeListNape[0].imgUrl = $scope.handlenapeListNape[0].imgUrlTemp;
           $scope.waterstatus = "nextgen.unworking";
@@ -249,20 +257,29 @@ angular.module('nextgenModule')
           //   isCloseAll = false;
           // }
         }
+        if(ackData.ack.indexOf("fa")>=0){//发送成功
+          // alert("fa");
+          isLight=true;
+          $scope.isLinkOK=true;
+          hmsPopup.hideLoading();
+        }else if(ackData.ack.indexOf("fb")>=0||ackData.ack.indexOf("fd")>=0||ackData.ack.indexOf("fc")>=0){
+            hmsPopup.hideLoading();
+            $scope.Toast.show($translate.instant("golabelvariable.directerror"));
+        }
       }
 
       //一进入页面就查询出水状态
       $scope.$on('$ionicView.beforeEnter', function () {
         hmsPopup.showLoading("<span translate='golabelvariable.loadingdata'></span>");
+        var data = nextgenService.getDeviceStatus();
+        var value = getValue(data);
+        cmdService.sendCmd(deviceId, value, localStorage.boxIp);
         $timeout(function () {
           if(!isLink) {
             hmsPopup.hideLoading();
             $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"));
           }
         }, 10000);
-        var data = nextgenService.getDeviceStatus();
-        var value = getValue(data);
-        cmdService.sendCmd(deviceId, value, localStorage.boxIp);
       });
 
       var listenrDeal=function (result) {
@@ -271,6 +288,7 @@ angular.module('nextgenModule')
           hmsPopup.hideLoading();
           isLink=true;
           $scope.isLinkOK=true;
+          // alert(isLink);
           if (resultOn.data.cmd.length > 0) {
             var tempData = nextgenService.explainAck(resultOn.data.cmd[0]);
             // alert('alet:'+JSON.stringify(tempData));
