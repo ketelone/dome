@@ -5,8 +5,8 @@ angular.module('productModule')
   .controller('spaCtrl', [
     '$scope',
     '$state',
-    'publicMethod', '$ionicModal', '$ionicPopover', '$timeout', '$ionicHistory', 'hmsHttp', 'hmsPopup', 'cmdService', 'bathroomCmdService', 'indexPageService',
-    function ($scope, $state, publicMethod, $ionicModal, $ionicPopover, $timeout, $ionicHistory, hmsHttp, hmsPopup, cmdService, bathroomCmdService, indexPageService) {
+    'publicMethod', '$ionicModal', '$ionicPopover', '$timeout', '$ionicHistory', 'hmsHttp', 'hmsPopup', 'cmdService', 'bathroomCmdService', 'indexPageService','$ionicPlatform',
+    function ($scope, $state, publicMethod, $ionicModal, $ionicPopover, $timeout, $ionicHistory, hmsHttp, hmsPopup, cmdService, bathroomCmdService, indexPageService,$ionicPlatform) {
 
 
       $scope.config = {
@@ -36,6 +36,34 @@ angular.module('productModule')
       $scope.config.isOff = $scope.scane.isOff;
       console.log('泡澡==' + localStorage.crrentScane);
       console.log('开关==' + $scope.isOff);
+
+
+      /**
+       *@autor:zhaocuiwang
+       *@name:物理返回按钮
+       *@params:
+       *@return:
+       *@disc:goback
+       */
+      $ionicPlatform.registerBackButtonAction(function (e) {
+        // Is there a page to go back to
+        //alert('进入物理返回键2!')
+          indexPageService.edits($scope.scane);
+          $ionicHistory.goBack();
+
+        e.preventDefault();
+        return false;
+      }, 101);
+
+      //platform.registerBackButtonAction(function (e) {
+      //  alert('进入物理返回键!')
+      //    indexPageService.edits($scope.scane);
+      //    $ionicHistory.goBack();
+      //
+      //  e.preventDefault();
+      //  return false;
+      //},101);
+
       /**
        *@autor: caolei
        *@params: item
