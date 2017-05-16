@@ -261,7 +261,8 @@ angular.module('nextgenModule')
           isLight=true;
           $scope.isLinkOK=true;
           hmsPopup.hideLoading();
-        }else if(ackData.ack.indexOf("fb")>=0||ackData.ack.indexOf("fd")>=0||ackData.ack.indexOf("fc")>=0){
+        }
+        else if(ackData.ack.indexOf("fb")>=0||ackData.ack.indexOf("fd")>=0||ackData.ack.indexOf("fc")>=0){
             isLight=true;
             hmsPopup.hideLoading();
             $scope.Toast.show($translate.instant("golabelvariable.directerror"));
@@ -270,7 +271,7 @@ angular.module('nextgenModule')
 
       //一进入页面就查询出水状态
       $scope.$on('$ionicView.beforeEnter', function () {
-        hmsPopup.showLoading("<span translate='golabelvariable.loadingdata'></span>");
+        hmsPopup.showLoading();
         var data = nextgenService.getDeviceStatus();
         var value = getValue(data);
         cmdService.sendCmd(deviceId, value, localStorage.boxIp);
@@ -422,6 +423,8 @@ angular.module('nextgenModule')
       //模式选择
       //获取屏幕高度
       $scope.screenHeig = window.innerHeight;
+      $scope.screenWidth = window.innerWidth;
+      $scope.fontSize = document.documentElement.clientWidth / 7.5;
       $ionicModal.fromTemplateUrl('build/pages/model/hmsModal.html', {
         scope: $scope,
         animation: 'slide-in-up'
@@ -435,8 +438,10 @@ angular.module('nextgenModule')
         $scope.modal.show();
         setTimeout(function () {
           var ele = document.getElementsByClassName("hmsModal");
-          ele[0].style.top = 70 + '%';
-          ele[0].style.minHeight = 61 + '%';
+          ele[0].style.top = $scope.screenHeig - 1*$scope.fontSize*$scope.value.length + 'px';
+          ele[0].style.minHeight = 1*$scope.fontSize*$scope.value.length + 'px';
+          // ele[0].style.top = 70 + '%';
+          // ele[0].style.minHeight = 61 + '%';
         }, 10);
       };
       $scope.$on('$destroy', function () {
