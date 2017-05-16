@@ -1632,14 +1632,12 @@ angular.module('toiletControlModule')
                     // };
                     $scope.toiletController.modelTypeClear = "toiletController.gaunbi";
                   };
-                  // alert("modelTypeClear"+$scope.toiletController.modelTypeClear);
-                  // alert(angular.toJson($scope.currentSlideData));
                   if(!$scope.overTiemFlag && $scope.currentSlideData[0].des !== "init"){
-                    // alert("3" +$scope.overTiemFlag)
-                    $scope.hanleInitTemple($scope.handlenapeSelectedIndex);
-                    $scope.clickSlideFlag = true;
+                    if($scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[0].des !== "init"){
+                      $scope.hanleInitTemple($scope.handlenapeSelectedIndex);
+                      $scope.clickSlideFlag = true;
+                    };
                   }else{
-                    // alert("4" +$scope.overTiemFlag)
                     $scope.overTiemFlag = false;
                     $scope.clickSlideFlag = false;
                     $scope.hanleInitTemple(12);
