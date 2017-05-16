@@ -32,14 +32,17 @@ angular.module('karessControlModule')
         }
       };
       var deviceId = getDeviceId();
-      var flagLoading = false;
-      hmsPopup.showLoading();
-      $timeout(function () {
-        if(flagLoading == false){
-          hmsPopup.hideLoading();
-          $scope.Toast.show($translate.instant("karessController.loading"));
-        }
-      }, 10000);
+      var init = function(){
+        var flagLoading = false;
+        hmsPopup.showLoading();
+        $timeout(function () {
+          if(flagLoading == false){
+            hmsPopup.hideLoading();
+            $scope.Toast.show($translate.instant("karessController.loading"));
+          }
+        }, 10000);
+      }
+      init();
       if (angular.isUndefined(localStorage.karessTemp)) {
         localStorage.karessTemp = '10';
       }

@@ -17,14 +17,18 @@ angular.module('mcControlModule')
       $scope.screenHeig = window.innerHeight;
       $scope.screenWidth = window.innerWidth;
 
-      var flagLoading = false;
-      hmsPopup.showLoading();
-      $timeout(function () {
-        if(flagLoading == false){
-          hmsPopup.hideLoading();
-          $scope.Toast.show($translate.instant("karessController.loading"));
-        }
-      }, 10000);
+
+      var init = function(){
+        var flagLoading = false;
+        hmsPopup.showLoading();
+        $timeout(function () {
+          if(flagLoading == false){
+            hmsPopup.hideLoading();
+            $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"));
+          }
+        }, 10000);
+      }
+      init();
       /**
        *@autor: caolei
        *@return: device id
