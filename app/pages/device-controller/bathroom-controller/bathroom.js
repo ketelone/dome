@@ -165,6 +165,9 @@ angular.module('bathroomModule')
       $scope.setHour = "";
       $scope.setMinu = "";
       $scope.windType = {'type': "bathroom.rock"};
+      var isLight = false;
+      var isBreathOk = false;
+      $scope.isNetOk = true;
 
       $scope.goBack = function(){
         document.removeEventListener("SocketPlugin.receiveTcpData", receiveBathroomTcpData, false);
@@ -264,20 +267,25 @@ angular.module('bathroomModule')
       };
 
       var pluginToCtrl = function(deviceId, value, successMsg, errorMsg){
-        if(isLightSwitch){
-          isLight = false;
-        }
-        hmsPopup.showLoading();
-        $timeout(function(){
-          hmsPopup.hideLoading();
-          cmdService.sendCmd(deviceId, value, localStorage.boxIp);
-        },500);
-        $timeout(function(){
-          if(!isLight){
-            $scope.Toast.show($translate.instant("golabelvariable.directerror"));
+        if(!$scope.isNetOk){
+          $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"));
+          return;
+        }else{
+          if(isLightSwitch){
+            isLight = false;
           }
-        }, 3000);
-        isLightSwitch = false;
+          hmsPopup.showLoading();
+          $timeout(function(){
+            hmsPopup.hideLoading();
+            cmdService.sendCmd(deviceId, value, localStorage.boxIp);
+          },500);
+          $timeout(function(){
+            if(!isLight){
+              $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"));
+            }
+          }, 3000);
+          isLightSwitch = false;
+        }
       };
 
       var cloudToCtrl = function(deviceId, value, successMsg, errorMsg){
@@ -407,7 +415,6 @@ angular.module('bathroomModule')
         }
       };
 
-      var isLight = false;
       var explainCurrentOperate = function(value){
         var isWindFlag = true;
         var code = bathroomCmdService.explainAck(value);
@@ -461,6 +468,7 @@ angular.module('bathroomModule')
               });
             }
           }else if(switchType == 'Breath'){
+            isBreathOk = true;
             if(currentBtnStatus.status){
               angular.forEach($scope.bathroomData, function(data, index, array) {
                 if(data.switchType == switchType){
@@ -1083,14 +1091,15 @@ angular.module('bathroomModule')
           }
         }else{
         }
-        hmsPopup.showLoading();
+        hmsPopup.showLoading('<span translate="golabelvariable.loadingdata"></span>');
         $timeout(function(){
           if(!isLinkOk){
             hmsPopup.hideLoading();
             $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"));
+            $scope.isNetOk = false;
           }
         }, 10000);
-        changeRingCol('#99d5ff');
+        changeRingCol('#6ACBB3');
 
       }, true);
 
@@ -1463,9 +1472,13 @@ angular.module('bathroomModule')
           type: 'Breath',
           status: true
         };
-        //$timeout(function(){
-        //  closeOthers();
-        //}, 500);
+        if(!$scope.isNetOk){
+          $timeout(function(){
+            if(!isBreathOk){
+              closeThreeBtn(item);
+            }
+          }, 1000);
+        }
       };
 
       var closeOthers = function(){
@@ -1493,7 +1506,7 @@ angular.module('bathroomModule')
         });
       };
 
-      var isAllDay = false;isOthers
+      var isAllDay = false;
       $scope.getAllDay = function(item){
         isAllDay = true;
         isOthers = true;
@@ -1503,14 +1516,18 @@ angular.module('bathroomModule')
           type: 'Breath',
           status: true
         };
-        //$timeout(function(){
-        //  closeOthers();
-        //},500);
-        /*angular.forEach($scope.bathroomData, function(data, index, array){
-         if(data.switchType == 'Breath'){
-         data.isOpen = false;
-         }
-         });*/
+        if(!$scope.isNetOk){
+          $timeout(function(){
+            if(!isBreathOk){
+              angular.forEach($scope.bathroomData, function(data, index, array){
+                if(data.switchType == 'Breath'){
+                  data.isOpen = false;
+                  data.switchPictureUrl = "build/img/bathroom/breath_nor.png";
+                }
+              });
+            }
+          }, 1000);
+        }
       };
 
       /**
@@ -1543,7 +1560,6 @@ angular.module('bathroomModule')
               data.isOpen = false;
             }
             if(data.switchType == 'Cool' && data.isOpen){
-              alert("in----cool");
               data.switchPictureUrl = 'build/img/bathroom/cool_wind_nor.png';
               localStorage.windType = "bathroom.rock";
               $scope.isShowTime = false;
@@ -1571,6 +1587,10 @@ angular.module('bathroomModule')
        *@disc: close navigation button
        */
       $scope.closeNav = function(item){
+        closeThreeBtn(item);
+      };
+
+      var closeThreeBtn = function(item){
         angular.forEach($scope.bathroomData, function(data, index, array){
           if(data.switchType == 'Breath' && isAllDay && isOthers){
             data.switchPictureUrl = "build/img/bathroom/breath.png";
@@ -1584,7 +1604,7 @@ angular.module('bathroomModule')
         });
 
         $scope.isWindShow = false;
-      };
+      }
 
       /**
        *@autor: caolei

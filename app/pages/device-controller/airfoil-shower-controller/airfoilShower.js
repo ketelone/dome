@@ -40,14 +40,16 @@ angular.module('airfoilShowerModule')
         }else{
           //alert("该设备没有绑定！");
         }
-        changeRingCol('#99d5ff');
-        hmsPopup.showLoading();
+
+        hmsPopup.showLoading('<span translate="golabelvariable.loadingdata"></span>');
         $timeout(function(){
           if(!isLinkOk){
             hmsPopup.hideLoading();
             $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"));
           }
         }, 10000);
+
+        changeRingCol('#6ACBB3');
       },true);
 
       /**
@@ -133,24 +135,6 @@ angular.module('airfoilShowerModule')
         var url = baseConfig.basePath + "/r/api/message/sendMessage";
         var paramter = cmdService.cloudCmd(deviceId, value);
 
-        /*var paramter = {
-         "ver":1,
-         "from":{
-         "ctype":240,
-         "uid": deviceId
-         },
-         "to":{
-         "ctype":229,
-         "uid":"hand-residential"
-         },
-         "ts":1493013672695,
-         "idx":1,
-         "mtype":"ctl",
-         "data":{
-         "cmd":[value]
-         }
-         };*/
-
         hmsHttp.post(url, paramter).success(
 
           function(response){
@@ -196,6 +180,7 @@ angular.module('airfoilShowerModule')
        *@disc: change the color of the ring
        */
       var changeRingCol = function(color){
+        var c = '#6ACBB3';
         var cxt=canvas.getContext("2d");
         var xLength = $window.innerWidth * 0.5;
         var yLength = $window.innerWidth > 1000 ? $window.innerWidth * 0.73 : $window.innerWidth * 0.65;
@@ -203,8 +188,8 @@ angular.module('airfoilShowerModule')
         cxt.beginPath();
         cxt.arc(xLength,yLength,r,Math.PI*0.75,Math.PI*2.25,false);
         cxt.lineWidth =  $window.innerWidth * 0.055;
-        cxt.strokeStyle = color;
-        cxt.fillStyle = color;
+        cxt.strokeStyle = c;
+        cxt.fillStyle = c;
         cxt.stroke();
         //cxt.fill();
         cxt.closePath();
