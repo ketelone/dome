@@ -50,16 +50,14 @@ angular.module('nextgenModule')
       var pluginToCtrl = function (deviceId, value, successMsg, errorMsg) {
         isLight=false;
         hmsPopup.showLoading();
-        $timeout(function(){
-          hmsPopup.hideLoading();
-          cmdService.sendCmd(deviceId, value, localStorage.boxIp);
-        },500);
-        $timeout(function(){
-          if(!isLight){
-            $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"));
-            $scope.isLinkOK=false;
-          }
-        }, 3000);
+        cmdService.sendCmd(deviceId, value, localStorage.boxIp);
+        // $timeout(function(){
+        //   if(!isLight){
+        //     hmsPopup.hideLoading();
+        //     $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"));
+        //     $scope.isLinkOK=false;
+        //   }
+        // }, 10000);
       };
 
       //通过云端发送指令 bug
@@ -234,12 +232,9 @@ angular.module('nextgenModule')
 
       //操作成功的处理
       function operateSuccess(ackData) {
-        // if(ackData.ack.indexOf("fa")>=0){//发送成功
-        // }
-        if (ackData.status == "shower on") {//正在出水
-          isLight=true;
-          $scope.isLinkOK=true;
-          // alert(ackData.status);
+        // alert("json"+JSON.stringify(ackData));
+        if (ackData.status === 'shower on') {//正在出水
+          // alert("status"+ackData.status);
           $scope.showWater = false;
           $scope.handlenapeListNape[0].selecFlag = true;
           $scope.handlenapeListNape[0].imgUrl = $scope.handlenapeListNape[0].imgSeledUrl;
@@ -248,6 +243,7 @@ angular.module('nextgenModule')
         else if(ackData.status == "shower off"){
           isLight=true;
           $scope.isLinkOK=true;
+          hmsPopup.hideLoading();
           $scope.handlenapeListNape[0].selecFlag = false;
           $scope.handlenapeListNape[0].imgUrl = $scope.handlenapeListNape[0].imgUrlTemp;
           $scope.waterstatus = "nextgen.unworking";
@@ -260,6 +256,15 @@ angular.module('nextgenModule')
           //   }, 2000);
           //   isCloseAll = false;
           // }
+        }
+        if(ackData.ack.indexOf("fa")>=0){//发送成功
+          // alert("fa");
+          isLight=true;
+          $scope.isLinkOK=true;
+          hmsPopup.hideLoading();
+        }else if(ackData.ack.indexOf("fb")>=0||ackData.ack.indexOf("fd")>=0||ackData.ack.indexOf("fc")>=0){
+            hmsPopup.hideLoading();
+            $scope.Toast.show($translate.instant("golabelvariable.directerror"));
         }
       }
 
