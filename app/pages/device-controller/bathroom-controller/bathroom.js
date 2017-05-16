@@ -296,11 +296,11 @@ angular.module('bathroomModule')
             hmsPopup.hideLoading();
             cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           },500);
-          $timeout(function(){
-            if(!isOpenOk){
-              $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"));
-            }
-          }, 3000);
+          //$timeout(function(){
+          //  if(!isOpenOk){
+          //    $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"));
+          //  }
+          //}, 1500);
           isLightSwitch = false;
         }
       };
