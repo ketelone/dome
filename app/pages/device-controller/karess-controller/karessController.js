@@ -32,17 +32,7 @@ angular.module('karessControlModule')
         }
       };
       var deviceId = getDeviceId();
-      var init = function(){
-        var flagLoading = false;
-        hmsPopup.showLoading();
-        $timeout(function () {
-          if(flagLoading == false){
-            hmsPopup.hideLoading();
-            $scope.Toast.show($translate.instant("karessController.loading"));
-          }
-        }, 10000);
-      }
-      init();
+
       if (angular.isUndefined(localStorage.karessTemp)) {
         localStorage.karessTemp = '10';
       }
@@ -75,7 +65,18 @@ angular.module('karessControlModule')
         var value = cmdService.getCmd("8877", '01', '70', 'E3', '02');
         cmdService.sendCmd(deviceId, value, localStorage.boxIp);
       }
-      statusKaress();
+      var flagLoading = false;
+      $scope.init = function(){
+        hmsPopup.showLoading($translate.instant("golabelvariable.loadingdata"));
+        $timeout(function () {
+          if(flagLoading == false){
+            hmsPopup.hideLoading();
+            $scope.Toast.show($translate.instant("karessController.loading"));
+          }
+          statusKaress();
+        }, 10000);
+      }
+      $scope.init();
       //侧滑转档数量jsongulp
       $scope.slideInitData = [{
         des: "init",
@@ -573,6 +574,10 @@ angular.module('karessControlModule')
 
       //slelect button
       $scope.selectNapes = function (index, info) {
+        if(flagLoading == false){
+          $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"));
+          return;
+        }
         $scope.handlenapeSelectedIndex = index;
         $scope.slideInitData.parameterctlImg = true;
         if (index == 0) {

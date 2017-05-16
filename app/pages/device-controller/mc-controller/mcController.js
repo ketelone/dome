@@ -5,30 +5,23 @@ angular.module('mcControlModule')
     '$ionicModal',
     '$compile',
     'baseConfig',
-    'checkVersionService', 'SettingsService', '$ionicHistory', '$ionicSlideBoxDelegate', 'mcService', 'hmsHttp', 'cmdService','hmsPopup','$timeout','$ionicPopover','$translate',
+    'checkVersionService', 'SettingsService', '$ionicHistory', '$ionicSlideBoxDelegate', 'mcService', 'hmsHttp', 'cmdService', 'hmsPopup', '$timeout', '$ionicPopover', '$translate',
     function ($scope,
               $state,
               $ionicModal,
               $compile,
               baseConfig,
-              checkVersionService, SettingsService, $ionicHistory, $ionicSlideBoxDelegate, mcService, hmsHttp, cmdService,hmsPopup,$timeout,$ionicPopover,$translate) {
+              checkVersionService, SettingsService, $ionicHistory, $ionicSlideBoxDelegate, mcService, hmsHttp, cmdService, hmsPopup, $timeout, $ionicPopover, $translate) {
       var sku = SettingsService.get('sku')
       $scope.fontSize = document.documentElement.clientWidth / 7.5;
       $scope.screenHeig = window.innerHeight;
       $scope.screenWidth = window.innerWidth;
 
 
-      var init = function(){
-        var flagLoading = false;
-        hmsPopup.showLoading();
-        $timeout(function () {
-          if(flagLoading == false){
-            hmsPopup.hideLoading();
-            $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"));
-          }
-        }, 10000);
+      $scope.init = function () {
+
       }
-      init();
+      // init();
       /**
        *@autor: caolei
        *@return: device id
@@ -62,7 +55,17 @@ angular.module('mcControlModule')
         var value = cmdService.getCmd("8877", '01', '70', 'E3', '02');
         cmdService.sendCmd(deviceId, value, localStorage.boxIp);
       }
-      statusKaress();
+      var flagLoading = false;
+      $scope.onload = function () {
+        hmsPopup.showLoading($translate.instant("golabelvariable.loadingdata"));
+        $timeout(function () {
+          if (flagLoading == false) {
+            hmsPopup.hideLoading();
+            $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"));
+          }
+        }, 10000);
+        statusKaress();
+      }
       //侧滑转档数量json
       $scope.slideInitData = [{
         des: "init",
@@ -78,7 +81,7 @@ angular.module('mcControlModule')
 
       $scope.slideTunBuData = [{
         des: "mcController.liangDu",
-        diedes : "liangdu",
+        diedes: "liangdu",
         gearNum: 2,
         gearInit: localStorage.mcLiangdu,
         gearInitTemp: localStorage.mcLiangdu,
@@ -91,10 +94,10 @@ angular.module('mcControlModule')
       },
         {
           des: "mcController.seWen",
-          diedes : "sewen",
+          diedes: "sewen",
           gearNum: 2,
-          gearNum:  localStorage.mcWendu,
-          gearInit:  localStorage.mcWendu,
+          gearNum: localStorage.mcWendu,
+          gearInit: localStorage.mcWendu,
           gearInitTemp: 1,
           parameterctlFlag: false,
           parNodeid: 'toilet-TunBuPosCtl',
@@ -517,6 +520,10 @@ angular.module('mcControlModule')
       //处理选择怎加border
       var handlenapeListNapeLen = $scope.handlenapeListNape.length;
       $scope.selectNapes = function (index, info) {
+        if (flagLoading == false) {
+          $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"));
+          return;
+        }
         $scope.handlenapeSelectedIndex = index;
         console.log(info.selecFlag);
         if (index == 0) {
@@ -592,7 +599,7 @@ angular.module('mcControlModule')
             var luminance = '1E';
           } else if ($scope.slideTunBuData[0].gearInit == 2) {
             var luminance = '32';
-          }else if ($scope.slideTunBuData[0].gearInit == 3) {
+          } else if ($scope.slideTunBuData[0].gearInit == 3) {
             var luminance = '64';
           }
           localStorage.mcLiangdu = $scope.slideTunBuData[0].gearInit;
@@ -600,11 +607,11 @@ angular.module('mcControlModule')
             var color = '1B';
           } else if ($scope.slideTunBuData[1].gearInit == 2) {
             var color = '28';
-          }else if ($scope.slideTunBuData[1].gearInit == 3) {
+          } else if ($scope.slideTunBuData[1].gearInit == 3) {
             var color = '41';
           }
           localStorage.mcWendu = $scope.slideTunBuData[1].gearInit;
-          var value2 = cmdService.getCmd("8877", '01', mcService.setLightParam(luminance,color), 'E3', '02');
+          var value2 = cmdService.getCmd("8877", '01', mcService.setLightParam(luminance, color), 'E3', '02');
           console.log(value2);
           cmdService.sendCmd(deviceId, value2, localStorage.boxIp);
         }
@@ -612,6 +619,7 @@ angular.module('mcControlModule')
 
       var receiveMcTcpDatahandle = function (result) {
         if (result[0].data.cmd.length > 0 && result[0].from.uid == deviceId) {
+          flagLoading = true;
           var cmd = result[0].data.cmd[0];
           var status = mcService.explainAck(result[0].data.cmd[0]);
           if (status.ack.indexOf('fa') >= 0) {
@@ -638,6 +646,7 @@ angular.module('mcControlModule')
           }
         }
       }
+
       function buttonChange() {
         for (var i = 0; i < $scope.handlenapeListNape.length; i++) {
           if ($scope.handlenapeListNape[i].selecFlag == true) {
@@ -648,6 +657,7 @@ angular.module('mcControlModule')
         }
         $scope.$apply();
       }
+
       //接受tcp返回数据
       document.addEventListener('SocketPlugin.receiveTcpData', receiveMcTcpDatahandle, false);
 
@@ -689,7 +699,6 @@ angular.module('mcControlModule')
             }
             if (status.ack == '70') {
               hmsPopup.hideLoading();
-              flagLoading = true;
             }
           } else {
           }
@@ -715,14 +724,14 @@ angular.module('mcControlModule')
         }
       }
 
-      $scope.openPopover = function($event) {
+      $scope.openPopover = function ($event) {
         $scope.popover.show($event);
       };
 
-      $scope.closePopover = function(index) {
+      $scope.closePopover = function (index) {
         console.log(index);
         $scope.popover.hide();
-        if(index==3){
+        if (index == 3) {
           $scope.goLearn();
         }
       }
@@ -731,13 +740,13 @@ angular.module('mcControlModule')
         $state.go("mcLearning");
       }
       $scope.operating = [{
-        text:'重命名'
-      },{
-        text:'移动'
-      },{
-        text:'解除绑定'
-      },{
-        text:'机器学习设置'
+        text: '重命名'
+      }, {
+        text: '移动'
+      }, {
+        text: '解除绑定'
+      }, {
+        text: '机器学习设置'
       }];
 
       $scope.popover = $ionicPopover.fromTemplateUrl('build/pages/device-controller/mc-controller/modal/popover.html', {
@@ -747,7 +756,7 @@ angular.module('mcControlModule')
       // .fromTemplateUrl() 方法
       $ionicPopover.fromTemplateUrl('build/pages/device-controller/mc-controller/modal/popover.html', {
         scope: $scope
-      }).then(function(popover) {
+      }).then(function (popover) {
         $scope.popover = popover;
       });
     }]);
