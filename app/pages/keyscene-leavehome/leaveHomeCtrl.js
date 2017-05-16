@@ -5,8 +5,8 @@ angular.module('productModule')
   .controller('leaveHomeCtrl',     [
   '$scope',
   '$state',
-  'publicMethod','$ionicModal','$ionicPopover','$timeout','$ionicHistory','hmsHttp',
-  function ($scope, $state,publicMethod,$ionicModal,$ionicPopover,$timeout,$ionicHistory,hmsHttp) {
+  'publicMethod','$ionicModal','$ionicPopover','$timeout','$ionicHistory','hmsHttp','cmdService',
+  function ($scope, $state,publicMethod,$ionicModal,$ionicPopover,$timeout,$ionicHistory,hmsHttp,cmdService) {
 
     $scope.config = {
       openFlag: true,
@@ -212,7 +212,10 @@ angular.module('productModule')
 
     //本地发送指令
     var pluginToCtrl = function (value, successMsg, errorMsg) {
-      cmdService.sendScanCmd( value, localStorage.boxIp);
+      $timeout(function () {
+        //hmsPopup.hideLoading();
+        cmdService.sendCmd(deviceId, value, localStorage.boxIp);
+      }, 500);
     };
 
     var sendCmd1 = function () {

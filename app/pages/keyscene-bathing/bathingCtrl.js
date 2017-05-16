@@ -5,8 +5,8 @@ angular.module('productModule')
   .controller('bathingCtrl', [
     '$scope',
     '$state',
-    'publicMethod', '$ionicModal', '$ionicPopover', '$timeout', '$ionicHistory', 'hmsHttp', 'hmsPopup','cmdService','indexPageService',
-    function ($scope, $state, publicMethod, $ionicModal, $ionicPopover, $timeout, $ionicHistory, hmsHttp, hmsPopup,cmdService,indexPageService) {
+    'publicMethod', '$ionicModal', '$ionicPopover', '$timeout', '$ionicHistory', 'hmsHttp', 'hmsPopup','cmdService','indexPageService','$ionicPlatform',
+    function ($scope, $state, publicMethod, $ionicModal, $ionicPopover, $timeout, $ionicHistory, hmsHttp, hmsPopup,cmdService,indexPageService,$ionicPlatform) {
 
 
       $scope.config = {
@@ -29,6 +29,21 @@ angular.module('productModule')
       console.log('开关=='+$scope.config.isOff);
 
       /**
+       *@autor:zhaocuiwang
+       *@name:物理返回按钮
+       *@params:
+       *@return:
+       *@disc:goback
+       */
+      $ionicPlatform.registerBackButtonAction(function (e) {
+        // Is there a page to go back to
+            indexPageService.edits($scope.scane);
+            $ionicHistory.goBack();
+        e.preventDefault();
+        return false;
+      }, 101);
+
+      /**
        *@autor:daidongdong
        *@name:goBack
        *@params:
@@ -39,6 +54,7 @@ angular.module('productModule')
         indexPageService.edits($scope.scane);
         $ionicHistory.goBack();
       }
+
 
       $scope.getSwitchStatus = function () {
         if ($scope.config.isOff==true) {

@@ -75,7 +75,7 @@ angular.module('productModule')
               "background": "#1a1d28"
             });
             $timeout(function () {
-              //getCurrentTemplate( getDeviceId());
+              getCurrentTemplate( getDeviceId());
               $scope.config.device3 = true;
             }, 4000);
           }
@@ -119,6 +119,7 @@ angular.module('productModule')
       $scope.openKeyscenefast = function () {
         console.log($scope.config.openFlag);
         if ($scope.config.openFlag == true) {
+          getCurrentTemplate( getDeviceId());
           //马桶
           if($scope.config.flagDevice1 != true){
             console.log($scope.config.flagDevice1);
