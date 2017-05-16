@@ -1971,7 +1971,7 @@ angular.module('bathroomModule')
 
         if(oneStep && twoStep){
           angular.forEach($scope.bathroomData, function(data, index, array) {
-            if(data.switchType == "Purify"){
+            if(data.switchType == "Purify" && data.isOpen){
               if($scope.timeHour.substring(0,$scope.timeHour.length-1) > 2){
                 hmsPopup.showPopup('<span translate="bathroom.alertTimeout"></span>');
                 threeStep = false;
