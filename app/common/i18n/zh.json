@@ -366,7 +366,7 @@
     "surplus": "正在清洁",
     "complete": "完成",
     "autoclear": "手动清洗",
-    "clearover": "清洁完毕",
+    "clearover": "清洁完毕，延迟两分钟后按钮变化",
     "devicestats": "设备状态",
     "setting": "设置",
     "errortotal": "异常情况统计",

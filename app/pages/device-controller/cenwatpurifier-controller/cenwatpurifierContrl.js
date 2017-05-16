@@ -243,7 +243,7 @@ angular.module('toiletControlModule')
         //handle once
         $scope.directiveOnceFlag = 0;
         $scope.clearOnceFlag = 0;
-        $scope.statustiveOnceFlag = 0;
+        $scope.statustiveOnceFlag = false;
         //error over time
         $scope.overTiemFlag = true;
 
@@ -275,6 +275,9 @@ angular.module('toiletControlModule')
                     var name = "cenwatpurifier.autoclear";
                     if(backDataCmd.ack === "1000"){
                       // $scope.selectChange($scope.selectChangeFlag,$scope.handlenapeSelectedIndex);
+                      if($scope.handlenapeListNape[0].selecFlag){
+                        $scope.Toast.show($translate.instant("cenwatpurifier.clearover"));
+                      };
                       $scope.Toast.show($translate.instant(name)+$translate.instant("golabelvariable.directesuccess"));
                     }else{
                       $scope.Toast.show($translate.instant(name)+$translate.instant("golabelvariable.directerror"));
@@ -282,9 +285,9 @@ angular.module('toiletControlModule')
                   };
                 }
               }else{
-                  if(!$scope.initStatusFlag){
+                  // if(!$scope.overTiemFlag){
                     hmsPopup.hideLoading();
-                  };
+                  // };
                   // alert("backDataCmd"+angular.toJson(backDataCmd));
                   //status
                   if(backDataCmd.cmd === "a5"){
@@ -317,7 +320,10 @@ angular.module('toiletControlModule')
 
                       $scope.handlenapeListNape[0].imgUrl = $scope.handlenapeListNape[0].imgUrlTemp;
                       $scope.cenwatpurifierCtrl.clearData = $scope.cenwatpurifierCtrl.clearComplete;
-                        // $scope.Toast.show($translate.instant("cenwatpurifier.clearover"));
+                      // if($scope.statustiveOnceFlag) {
+                      //   $scope.Toast.show($translate.instant("cenwatpurifier.clearover"));
+                      // }
+                      $scope.statustiveOnceFlag = true;
                     }else if(backDataCmd.flushStatus === "0010"){
                       //doing
                       // $scope.selectChange(true,0);
