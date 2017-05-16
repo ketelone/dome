@@ -1132,15 +1132,15 @@ angular.module('toiletControlModule')
           cmdService.sendCmd(tolitercmdObj.diviceid, cmdvalue, tolitercmdObj.boxid);
         };
       })
+      var cmdTimeout;
       $scope.sendCmdTimeout = function () {
         hmsPopup.showLoading("");
         $scope.getStatusBackFalg = false;
-        var cmdTimeout = $timeout(function(){
+        cmdTimeout = $timeout(function(){
             hmsPopup.hideLoading();
-            $scope.Toast.show($translate.instant("golabelvariable.linkError"));
+            $scope.Toast.show($translate.instant("golabelvariable.directiveError"));
         },10000);
-      }
-
+      };
       /**
        *@params:index(selected index)
        *@disc:handle light or gary
@@ -1182,29 +1182,28 @@ angular.module('toiletControlModule')
                 if(!$scope.handlenapeListNape[index].selecFlag && $scope.handlenapeListNape[index].matchdataid !== "clear"){
                   if($scope.handlenapeListNape[index].matchdataid === "fangai" || $scope.handlenapeListNape[index].matchdataid === "guangai" || $scope.handlenapeListNape[index].matchdataid === "fanquan"){
                     if(!$scope.isSeatedStatusFlag){
-
                       if($scope.handlenapeListNape[index].matchdataid === "fangai" || $scope.handlenapeListNape[index].matchdataid === "guangai"){
                         if($scope.cmdBackValue.lidRingStatus === "011" || $scope.cmdBackValue.lidRingStatus === "100"){
                           $scope.Toast.show($translate.instant("golabelvariable.mixt"));
-                          return;
+                          return false;
                         }
                       };
                       if($scope.handlenapeListNape[index].matchdataid === "fangai" || $scope.handlenapeListNape[index].matchdataid === "fanquan"){
                         if($scope.cmdBackValue.lidRingStatus === "001"){
                           $scope.Toast.show($translate.instant("golabelvariable.mixt"));
-                          return;
+                          return false;
                         };
                       };
                       if($scope.handlenapeListNape[index].matchdataid === "guangai"){
                         if($scope.cmdBackValue.lidRingStatus === "00"){
                           $scope.Toast.show($translate.instant("golabelvariable.mixt"));
-                          return;
+                          return false;
                         }
                       };
                       if($scope.handlenapeListNape[index].matchdataid === "fangai"){
                         if($scope.cmdBackValue.lidRingStatus === "010"){
                           $scope.Toast.show($translate.instant("golabelvariable.mixt"));
-                          return;
+                          return false;
                         }
                       };
                       $scope.onceTimeIntionCreate("true","0",index);
@@ -1219,7 +1218,7 @@ angular.module('toiletControlModule')
                 if($scope.handlenapeListNape[index].matchdataid === "clear") {
                   if($scope.cmdBackValue.lidRingStatus === "00" || $scope.cmdBackValue.lidRingStatus === "101" || $scope.cmdBackValue.lidRingStatus === "110"){
                     $scope.Toast.show($translate.instant("golabelvariable.mixt"));
-                    return;
+                    return false;
                   }
                   //close clear
                   // console.log($scope.toiletController.modelTypeClear)
@@ -1335,12 +1334,14 @@ angular.module('toiletControlModule')
         if($scope.currentSlideData[0].des === "init"){
           $scope.currentSlideData = [];
         };
-        $scope.currentSlideDataTemp = $scope.currentSlideData.concat($scope.handlenapeListNape[index].handledata);
-        $scope.currentSlideData = [];
-        $scope.currentSlideDataTemp.forEach(function (item) {
-          $scope.currentSlideData.push(item);
-        });
-        $scope.currentSlideData = uniqeByKeys($scope.currentSlideData,["des"]);
+        if($scope.handlenapeListNape[index].handledata[0].des !== "init"){
+          $scope.currentSlideDataTemp = $scope.currentSlideData.concat($scope.handlenapeListNape[index].handledata);
+          $scope.currentSlideData = [];
+          $scope.currentSlideDataTemp.forEach(function (item) {
+            $scope.currentSlideData.push(item);
+          });
+          $scope.currentSlideData = uniqeByKeys($scope.currentSlideData,["des"]);
+        };
         // alert("1"+angular.toJson($scope.currentSlideData))
       };
       $scope.initRecycleRedce = function (index) {
@@ -1372,7 +1373,7 @@ angular.module('toiletControlModule')
         if(resultOn.from.uid === tolitercmdObj.diviceid){
           if (resultOn.data.cmd) {
             var backDataCmd = nimi.analysisInstruction(resultOn.data.cmd[0]);
-            $scope.cmdBackValue = backDataCmd;
+            // $scope.cmdBackValue = backDataCmd;
             if(backDataCmd.flag === "ack"){
               if($scope.todeviceFlag === 0) {
                 $scope.todeviceFlag++;
@@ -1525,11 +1526,16 @@ angular.module('toiletControlModule')
               };
             }else{
               if(backDataCmd.cmd === "98") {
-                if(!$scope.getStatusBackFalg){
-                  hmsPopup.hideLoading();
-                  if(cmdTimeout){
-                    cmdTimeout = null;
-                  }
+                $scope.cmdBackValue = backDataCmd;
+                try{
+                  if(!$scope.getStatusBackFalg) {
+                    hmsPopup.hideLoading();
+                    if (cmdTimeout) {
+                      cmdTimeout = null;
+                    };
+                  };
+                }catch(e){
+                  alert(e.message)
                 };
                 if($scope.cmdReturnData !== resultOn.data.cmd[0].substring(12, resultOn.data.cmd[0].length - 2)){
                   $scope.cmdReturnData = resultOn.data.cmd[0].substring(12, resultOn.data.cmd[0].length - 2);
@@ -1613,12 +1619,11 @@ angular.module('toiletControlModule')
                     // },30);
                     $scope.overTiemFlag = false;
                     if(backDataCmd.wandStatus === "1"){
-                      $scope.toiletController.modelTypeClear === "toiletController.clearextend";
+                      $scope.toiletController.modelTypeClear = "toiletController.clearextend";
                     }else if(backDataCmd.UVProgressStatus !== 0){
-                      // alert(1)
-                      $scope.toiletController.modelTypeClear === "toiletController.clearinstance";
+                      $scope.toiletController.modelTypeClear = "toiletController.clearinstance";
                     }else if(backDataCmd.ballValve === "1"){
-                      $scope.toiletController.modelTypeClear === "toiletController.clearopen";
+                      $scope.toiletController.modelTypeClear = "toiletController.clearopen";
                     };
                   }else{
                     // if($scope.toiletController.modelTypeClear !== "toiletController.gaunbi"){
@@ -1627,14 +1632,12 @@ angular.module('toiletControlModule')
                     // };
                     $scope.toiletController.modelTypeClear = "toiletController.gaunbi";
                   };
-                  // alert("modelTypeClear"+$scope.toiletController.modelTypeClear)
-                  // alert(angular.toJson($scope.currentSlideData));
                   if(!$scope.overTiemFlag && $scope.currentSlideData[0].des !== "init"){
-                    // alert("3" +$scope.overTiemFlag)
-                    $scope.hanleInitTemple($scope.handlenapeSelectedIndex);
-                    $scope.clickSlideFlag = true;
+                    if($scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[0].des !== "init"){
+                      $scope.hanleInitTemple($scope.handlenapeSelectedIndex);
+                      $scope.clickSlideFlag = true;
+                    };
                   }else{
-                    // alert("4" +$scope.overTiemFlag)
                     $scope.overTiemFlag = false;
                     $scope.clickSlideFlag = false;
                     $scope.hanleInitTemple(12);

@@ -14,7 +14,8 @@
     "directerror": "指令发生失败",
     "directesuccess": "指令发送成功",
     "linkError": "超时，请重试",
-    "mixt": "此功能与执行功能互斥"
+    "mixt": "此功能与执行功能互斥",
+    "directiveError": "指令执行失败,请重试"
   },
   "my-info": {
     "myhome": "我家",
