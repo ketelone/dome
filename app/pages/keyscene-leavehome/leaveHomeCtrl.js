@@ -64,7 +64,7 @@ angular.module('productModule')
           });
           $timeout(function () {
             $scope.config.device1 = true;
-            $scope.config.openFlag = false;
+            $scope.config.openFlag = true;
           }, 2000);
         }
         //浴霸
@@ -103,10 +103,11 @@ angular.module('productModule')
           $scope.config.device3 = false;
           $scope.config.device2 = false;
           $scope.config.device1 = false;
+          $scope.config.openFlag = true;
         }, 8000);
         sendCmd1();
       } else {
-
+        $scope.config.openFlag = true;
       }
     }
 
@@ -153,9 +154,10 @@ angular.module('productModule')
           $scope.config.device3 = false;
           $scope.config.device2 = false;
           $scope.config.device1 = false;
+          $scope.config.openFlag = true;
         }, 5000);
       } else {
-
+        $scope.config.openFlag = true;
       }
     }
 
