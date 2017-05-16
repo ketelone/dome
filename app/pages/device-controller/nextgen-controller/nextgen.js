@@ -13,6 +13,8 @@ angular.module('nextgenModule')
       var header = "8877";
       var idx = "00";
       var devId = "03";//E8:91:E0:DC:20:F1//F0:F0:87:F5:A2:17
+      var isLink=false;//是否连接到了box
+      var isLight=false;//是否高亮
 
       //获取相应格式的cmd指令
       function getValue(data) {
@@ -41,7 +43,17 @@ angular.module('nextgenModule')
 
       //本地发送指令
       var pluginToCtrl = function (deviceId, value, successMsg, errorMsg) {
-        cmdService.sendCmd(deviceId, value, localStorage.boxIp);
+        hmsPopup.showLoading();
+        $timeout(function(){
+          hmsPopup.hideLoading();
+          cmdService.sendCmd(deviceId, value, localStorage.boxIp);
+          isLight=true;
+        },500);
+        $timeout(function(){
+          if(!isLight){
+            $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"));
+          }
+        }, 3000);
       };
 
       //通过云端发送指令 bug
@@ -69,10 +81,14 @@ angular.module('nextgenModule')
 
       //根据配置选择发送指令的方式
       var sendCmd = function (deviceId, value, successMsg, errorMsg) {
-        if (baseConfig.isCloudCtrl) {
-          cloudToCtrl(deviceId, value, successMsg, errorMsg);
-        } else {
-          pluginToCtrl(deviceId, value, successMsg, errorMsg);
+        if(isLink){
+          if (baseConfig.isCloudCtrl) {
+            cloudToCtrl(deviceId, value, successMsg, errorMsg);
+          } else {
+            pluginToCtrl(deviceId, value, successMsg, errorMsg);
+          }
+        }else{
+          $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"));
         }
       };
 
@@ -162,30 +178,30 @@ angular.module('nextgenModule')
 
       //持续出水
       $scope.chixuWater = function () {
+        chooseWaterWay();//发送选择出水口指令
         $timeout(function () {
-          chooseWaterWay();//发送选择出水口指令
+          var argment = {
+            'mode': '01'    //00表示stop，01表示Start continuous outlet 02表示Start evacuate cold water (turn on, and off when reach 37 degree,Start evacuate cold water 如果5分钟后水温仍达不到37度则自动停止) ,other表示内置设定
+          }
+          var data = nextgenService.operateShower(argment);
+          var value = getValue(data);
+          // alert(value);
+          sendCmd(deviceId, value, "持续出水", "持续出水失败");//"ShownerTurnOn"
         }, 500);
-        var argment = {
-          'mode': '01'    //00表示stop，01表示Start continuous outlet 02表示Start evacuate cold water (turn on, and off when reach 37 degree,Start evacuate cold water 如果5分钟后水温仍达不到37度则自动停止) ,other表示内置设定
-        }
-        var data = nextgenService.operateShower(argment);
-        var value = getValue(data);
-        // alert(value);
-        sendCmd(deviceId, value, "持续出水", "持续出水失败");//"ShownerTurnOn"
       }
 
       //排空冷水
       $scope.paikongWater = function () {
+        chooseWaterWay();//发送选择出水口指令
         $timeout(function () {
-          chooseWaterWay();//发送选择出水口指令
+          var argment = {
+            'mode': '02'    //00表示stop，01表示Start continuous outlet 02表示Start evacuate cold water (turn on, and off when reach 37 degree,Start evacuate cold water 如果5分钟后水温仍达不到37度则自动停止) ,other表示内置设定
+          }
+          var data = nextgenService.operateShower(argment);
+          var value = getValue(data);
+          //  alert(value);
+          sendCmd(deviceId, value, "排空冷水", "排空冷水失败");//"ShownerCoolTurnOn"
         }, 500);
-        var argment = {
-          'mode': '02'    //00表示stop，01表示Start continuous outlet 02表示Start evacuate cold water (turn on, and off when reach 37 degree,Start evacuate cold water 如果5分钟后水温仍达不到37度则自动停止) ,other表示内置设定
-        }
-        var data = nextgenService.operateShower(argment);
-        var value = getValue(data);
-        //  alert(value);
-        sendCmd(deviceId, value, "排空冷水", "排空冷水失败");//"ShownerCoolTurnOn"
       }
 
       //关闭
@@ -234,27 +250,25 @@ angular.module('nextgenModule')
         }
       }
 
-      var islinkHidden = false;
       //一进入页面就查询出水状态
       $scope.$on('$ionicView.beforeEnter', function () {
         hmsPopup.showLoading("<span translate='golabelvariable.loadingdata'></span>");
         $timeout(function () {
-          if(!islinkHidden) {
-            alert("超时，请重试！");
+          if(!isLink) {
             hmsPopup.hideLoading();
+            $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"));
           }
         }, 10000);
         var data = nextgenService.getDeviceStatus();
         var value = getValue(data);
-        pluginToCtrl(deviceId, value, "发送成功", "发送失败");
+        cmdService.sendCmd(deviceId, value, localStorage.boxIp);
       });
 
-      var init=true;
       var listenrDeal=function (result) {
         var resultOn = result[0];
         if (resultOn.from.uid == deviceId) {
           hmsPopup.hideLoading();
-          islinkHidden=true;
+          isLink=true;
           if (resultOn.data.cmd.length > 0) {
             var tempData = nextgenService.explainAck(resultOn.data.cmd[0]);
             // alert('alet:'+JSON.stringify(tempData));
@@ -426,8 +440,6 @@ angular.module('nextgenModule')
         text:'nextgen.move'
       },{
         text:'nextgen.delete'
-      },{
-        text:'nextgen.ml'
       }];
 
       $scope.popover = $ionicPopover.fromTemplateUrl(
