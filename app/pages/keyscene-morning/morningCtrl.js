@@ -75,8 +75,6 @@ angular.module('productModule')
               "background": "#1a1d28"
             });
             $timeout(function () {
-              $scope.disables = false;
-              console.log('解除禁用!');
               //getCurrentTemplate( getDeviceId());
               $scope.config.device3 = true;
             }, 4000);
@@ -107,6 +105,8 @@ angular.module('productModule')
             $scope.config.device3 = false;
             $scope.config.device2 = false;
             $scope.config.device1 = false;
+            $scope.disables = false;
+            console.log('解除禁用!');
           }, 15000);
 
           sendCmd1();

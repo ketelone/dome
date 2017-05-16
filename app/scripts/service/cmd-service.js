@@ -57,7 +57,8 @@ angular.module('utilModule')
             // alert('发送成功');
           }
           function error() {
-            $scope.Toast.show($translate.instant(golabelvariable.loadingdataerrror))
+            $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"))
+            alert("进入指令发生error")
           }
         };
         this.sendScanCmd = function (value,ip) {

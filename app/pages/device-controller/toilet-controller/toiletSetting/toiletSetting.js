@@ -201,15 +201,15 @@ angular.module('toiletControlModule')
       if(currentDateWeek == 0){
         currentDateWeek = 7;
       };
-      // var cmdvalue = cmdService.getCmd(tolitersetcmdObj.header,tolitersetcmdObj.idx,nimisetting.setDeviceTime(currentDateYear,currentDateMouth,currentDateDay,currentDateHour,currentDateMinute,currentDateWeek),tolitersetcmdObj.ctrId,tolitersetcmdObj.devId);
-      // //send instructin
-      // console.log(cmdvalue);
-      // alert(cmdvalue);
-      // if(baseConfig.isCloudCtrl){
-      //   $scope.toilSetGetImpleteData(type,cmdvalue,$translate.instant(""));
-      // }else{
-      //   cmdService.sendCmd(tolitersetcmdObj.diviceid, cmdvalue, tolitersetcmdObj.boxid);
-      // };
+      var cmdvalue = cmdService.getCmd(tolitersetcmdObj.header,tolitersetcmdObj.idx,nimisetting.setDeviceTime(currentDateYear,currentDateMouth,currentDateDay,currentDateHour,currentDateMinute,currentDateWeek),tolitersetcmdObj.ctrId,tolitersetcmdObj.devId);
+      //send instructin
+      console.log(cmdvalue);
+      alert(cmdvalue);
+      if(baseConfig.isCloudCtrl){
+        $scope.toilSetGetImpleteData(type,cmdvalue,$translate.instant(""));
+      }else{
+        cmdService.sendCmd(tolitersetcmdObj.diviceid, cmdvalue, tolitersetcmdObj.boxid);
+      };
       $scope.jiedianval = [{
         id:"jiedianval",des:'toiletSetting.never','danwei':""
       },{id:"jiedianval",des:'4','danwei':"toiletSetting.danwei"
@@ -310,9 +310,9 @@ angular.module('toiletControlModule')
       };
       //确定是否清除设备设置
       $scope.isCheckDeviceInfoSet = function () {
-        hmsPopup.confirmNoTitle($translate.instant('toiletSetting.popmessage'),$translate.instant('golabelvariable.PopupConfire'),$translate.instant('golabelvariable.PopupCancle'),function () {
-          console.log("你点击了确定")
-        });
+        // hmsPopup.confirmNoTitle($translate.instant('toiletSetting.popmessage'),$translate.instant('golabelvariable.PopupConfire'),$translate.instant('golabelvariable.PopupCancle'),function () {
+        //   console.log("你点击了确定")
+        // });
       };
       //进入各个设置的具体界面
       $scope.goSettingInfo = function (url) {

@@ -153,11 +153,10 @@ angular.module('toiletControlModule')
           hmsPopup.showShortCenterToast("请选择数据项!");
         }
       };
-
       //确定是否清除设备设置
       $scope.isCheckDeviceInfoSet = function () {
-        hmsPopup.confirmNoTitle("确定要恢复默认设置吗?</br>恢复默认设置后当前设置会被清空",function () {
-          console.log("你点击了确定")
-        });
+        // hmsPopup.confirmNoTitle("确定要恢复默认设置吗?</br>恢复默认设置后当前设置会被清空",function () {
+        //   console.log("你点击了确定")
+        // });
       };
     }]);

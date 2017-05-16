@@ -40,8 +40,8 @@ angular.module('productModule')
         $ionicHistory.goBack();
       }
 
-      $scope.getSwitchStatus = function (item) {
-        if ($scope.config.isOff) {
+      $scope.getSwitchStatus = function () {
+        if ($scope.config.isOff==true) {
           $scope.openKeyscene();
         } else {
           $scope.closeKeyscene();

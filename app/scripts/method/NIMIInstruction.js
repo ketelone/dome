@@ -77,7 +77,7 @@ NIMI.prototype._data = {
   //智感除菌 开
   "openIntelligentSterilization": "0E80000000",
   //智感除菌 关
-  "closeIntelligentSterilization": "0E00000000",
+  "closeIntelligentSterilization": "0001000000",
   //重置
   "reset": "7D1E0301",
   //获取设备状态
@@ -89,7 +89,7 @@ NIMI.prototype._data = {
 };
 
 /**
- * NIMI front rear dry
+ * NIMI front rear
  * @param method{string} - 方法 {女用，臀洗，暖风}
  * @param temperature{int} - 温度档位 - 1-10
  * @param volume{int} - 流量档位 - 1-10
@@ -622,10 +622,7 @@ function getCmd(header, idx, data, ctrId, devId) {
     + doStr(devId)
     + data
     + doStr(checksum.toString(16));
-}
-
-
-
+};
 function RoController(){};
 
 RoController.prototype._data={

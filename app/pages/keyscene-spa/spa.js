@@ -33,7 +33,7 @@ angular.module('productModule')
       $scope.temperate = '';
       $scope.tempPercent = '';
       $scope.scane = JSON.parse(localStorage.crrentScane);
-      $scope.isOff = $scope.scane.isOff;
+      $scope.config.isOff = $scope.scane.isOff;
       console.log('泡澡==' + localStorage.crrentScane);
       console.log('开关==' + $scope.isOff);
       /**
@@ -44,7 +44,7 @@ angular.module('productModule')
 
       $scope.getSwitchStatus = function () {
         console.log('状态==' + $scope.config.isOff);
-        if ($scope.config.isOff) {
+        if ($scope.config.isOff==true) {
           $scope.openKeyscene();
         } else {
           $scope.closeKeyscene();
@@ -98,7 +98,7 @@ angular.module('productModule')
           //镜柜
           if ($scope.config.flagDevice2 != true) {
             $("#progressAnimation2").css({
-              "-webkit-animation": "aaa 3.0s linear",
+              "-webkit-animation": "aaa 2.0s linear",
               "background": "#1a1d28"
             });
             $timeout(function () {
@@ -108,7 +108,7 @@ angular.module('productModule')
           //浴霸
           if ($scope.config.flagDevice3 != true) {
             $("#progressAnimation3").css({
-              "-webkit-animation": "aaa 2.0s linear",
+              "-webkit-animation": "aaa 4.0s linear",
               "background": "#1a1d28"
             });
             $timeout(function () {

@@ -1076,6 +1076,7 @@ angular.module('indexPageModule')
         console.log('view。enter');
         $scope.modelData = indexPageService.getScaneList();
       });
+      //document.documentElement.style.fontSize = document.documentElement.clientWidth / 10 + 'px';
 
       // setUnit();
 

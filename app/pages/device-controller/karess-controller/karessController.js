@@ -1008,10 +1008,10 @@ angular.module('karessControlModule')
             console.log(status);
             if (status.ack == '22') {
               if ($scope.handlenapeListNape[index].selecFlag == false) {
-                $scope.Toast.show("注水开启成功！");
+                // $scope.Toast.show("注水开启成功！");
                 changeColor();
               } else {
-                $scope.Toast.show("注水关闭成功！");
+                // $scope.Toast.show("注水关闭成功！");
                 changeColor();
               }
             }
@@ -1021,46 +1021,46 @@ angular.module('karessControlModule')
               //   return;
               // }
               if ($scope.handlenapeListNape[index].selecFlag == false) {
-                $scope.Toast.show("落水开启成功！");
+                // $scope.Toast.show("落水开启成功！");
                 changeColor();
               } else {
-                $scope.Toast.show("落水关闭成功！");
+                // $scope.Toast.show("落水关闭成功！");
                 changeColor();
               }
             }
             if (status.ack == '21') {
               if ($scope.handlenapeListNape[index].selecFlag == false) {
-                $scope.Toast.show("水力按摩开启成功！");
+                // $scope.Toast.show("水力按摩开启成功！");
                 changeColor();
               } else {
-                $scope.Toast.show("水力按摩关闭成功！");
+                // $scope.Toast.show("水力按摩关闭成功！");
                 changeColor();
               }
             }
             if (status.ack == '23') {
               if ($scope.handlenapeListNape[index].selecFlag == false) {
-                $scope.Toast.show("头部按摩开启成功！");
+                // $scope.Toast.show("头部按摩开启成功！");
                 changeColor();
               } else {
-                $scope.Toast.show("头部按摩关闭成功！");
+                // $scope.Toast.show("头部按摩关闭成功！");
                 changeColor();
               }
             }
             if (status.ack == '24') {
               if ($scope.handlenapeListNape[index].selecFlag == false) {
-                $scope.Toast.show("管道除菌开启成功！");
+                // $scope.Toast.show("管道除菌开启成功！");
                 changeColor();
               } else {
-                $scope.Toast.show("管道除菌关闭成功！");
+                // $scope.Toast.show("管道除菌关闭成功！");
                 changeColor();
               }
             }
             if (status.ack == '27') {
               if ($scope.handlenapeListNape[index].selecFlag == false) {
-                $scope.Toast.show("背部加热开启成功！");
+                // $scope.Toast.show("背部加热开启成功！");
                 changeColor();
               } else {
-                $scope.Toast.show("背部加热关闭成功！");
+                // $scope.Toast.show("背部加热关闭成功！");
                 changeColor();
               }
             }
