@@ -132,4 +132,70 @@ angular.module('mcControlModule')
           return code;
         }
 
+        this.explainAllStatus = function(arg){
+          if (arg.length>=16 && arg.length<=40) {
+            var ackStr = arg.substring(12,arg.length-2).toLowerCase();
+            var ack = ackStr.substring(0,2);
+            var dict = '';;
+            switch(ack){
+              case '86':{
+                dict = explainDemistStatus(ackStr);
+              }break;
+              case '89':{
+                dict = explainHumanDetectStatus(ackStr);
+              }break;
+              case '8a':{
+                dict = expalainLightingStatus(ackStr);
+              }break;
+              default:break;
+            }
+
+          }
+          return dict;
+        }
+
+        /*!
+         *	返回系统除雾状态 86H
+         */
+        function explainDemistStatus(arg){
+          var str = arg.substring(2,4);
+          var status = str;
+          if (str == '01') {
+            status = 'off';
+          }else if (str == '02') {
+            status = 'on';
+          }
+          var dict = {"cmd":"86","status":status};
+          return dict;
+        }
+
+        /*!
+         *	返回人体感应检测状态 89H
+         */
+        function explainHumanDetectStatus(arg){
+          var str =  arg.substring(2,4);
+          var status = 'init';
+          if (str == '01') {
+            status = 'No human';
+          }else if (str == '02') {
+            status = 'Human Detected';
+          }
+          return {"cmd":"89","status":status};
+        }
+
+        /*!
+         *	返回lighting状态 8aH
+         */
+        function expalainLightingStatus(arg){
+          var str = arg.substring(2,4);
+          var status = 'init';
+          if (str == '01') {
+            status = 'lighting off';
+          }else if (str == '02') {
+            status = 'lighting on';
+          }
+          return {"cmd":"8a","status":status};
+        }
+
+
       }]);
