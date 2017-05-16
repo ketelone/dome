@@ -198,8 +198,8 @@
     "deviceFengOn": "Deodorize On",
     "deviceGaiOn": "Lid On",
     "deviceDongOff": "Light Off",
-    "deviceFengOff": "Deodorize Off",
-    "deviceGaiOff": "Lid Closed"
+    "deviceFengOff": "",
+    "deviceGaiOff": ""
   },
   "morning": {
     "goHomeTitle": "Scenario Detail",
@@ -213,8 +213,8 @@
     "deviceLineOn": "Online",
     "deviceLineOff": "Offline",
     "deviceFlag": "Not Installed",
-    "deviceWen": "Temp",
-    "deviceShi": "Humidity"
+    "deviceWen": "",
+    "deviceShi": ""
   },
   "bathing": {
     "goHomeTitle": "Scenario Detail",
@@ -228,8 +228,8 @@
     "deviceLineOn": "Online",
     "deviceLineOff": "Offline",
     "deviceFlag": "Not Installed",
-    "deviceWen": "Temp",
-    "deviceShi": "Humidity"
+    "deviceWen": "",
+    "deviceShi": ""
   },
   "period": {
     "goHomeTitle": "Scenario Detail",
@@ -453,8 +453,8 @@
     "deviceLineOn": "Online",
     "deviceLineOff": "Offline",
     "deviceFlag": "Not Installed",
-    "deviceWen": "Temp",
-    "deviceShi": "Humidity"
+    "deviceWen": "",
+    "deviceShi": ""
   },
   "karessController": {
     "setting": "Settings",

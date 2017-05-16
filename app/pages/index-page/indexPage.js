@@ -269,7 +269,7 @@ angular.module('indexPageModule')
             errorPictureUrl: "build/img/index/icon_home_device_warnning.png",
             isStatus: true,
             isError: false,
-            sku: "F0:F0:87:F5:A2:17"
+            sku: "E8:91:E0:DC:20:F1"
           },
           {
             id: "8",
