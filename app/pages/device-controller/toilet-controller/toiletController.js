@@ -1805,12 +1805,12 @@ angular.module('toiletControlModule')
         text:'机器学习设置'
       }];
 
-      $scope.popover = $ionicPopover.fromTemplateUrl('build/pages/modal/popover.html', {
+      $scope.popover = $ionicPopover.fromTemplateUrl('build/pages/device-controller/toilet-controller/modal/popover.html', {
         scope: $scope
       });
 
       // .fromTemplateUrl() 方法
-      $ionicPopover.fromTemplateUrl('build/pages/model/popover.html', {
+      $ionicPopover.fromTemplateUrl('build/pages/device-controller/toilet-controller/modal/popover.html', {
         scope: $scope
       }).then(function(popover) {
         $scope.popover = popover;

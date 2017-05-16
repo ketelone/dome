@@ -54,6 +54,7 @@
 @import "../pages/model/windModal";
 @import "../pages/device-controller/toilet-controller/toiletController";
 @import "../pages/device-controller/toilet-controller/toiletSetting/toiletSetting";
+@import "../pages/device-controller/toilet-controller/modal/popovers.to";
 @import "../pages/device-controller/toilet-controller/lightSetting/lightSetting";
 @import "../pages/device-controller/toilet-controller/cleargearPlan/cleargearPlan";
 @import "../pages/device-controller/cenwatpurifier-controller/cenwatpurifierContrl";
@@ -61,12 +62,14 @@
 
 
 @import "../pages/device-controller/bathroom-controller/bathroom";
-@import "../pages/device-controller/bathroom-controller/model/popovers";
+@import "../pages/device-controller/bathroom-controller/model/popovers.bathroom";
 @import "../pages/device-controller/karess-controller/karessController";
+@import "../pages/device-controller/karess-controller/modal/popovers.karess";
 @import "../pages/device-controller/karess-controller/setting-karess/karessSet";
 
 @import "../pages/device-controller/mc-controller/mcController";
 @import "../pages/device-controller/mc-controller/setting-mc/mcSet";
+@import "../pages/device-controller/mc-controller/modal/popovers.mc";
 
 @import "../pages/device-controller/nextgen-controller/nextgen";
 @import "../pages/device-controller/nextgen-controller/nextgen-set/nextgenSet";
