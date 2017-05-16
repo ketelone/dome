@@ -305,7 +305,7 @@ angular.module('indexPageModule')
 
       var islinkHidden = false;
       $scope.linkBox = function () {
-        hmsPopup.showLoading();
+        hmsPopup.showLoading('<span translate="golabelvariable.loadingdata"></span>');
         $timeout(function () {
           if (!islinkHidden) {
             hmsPopup.hideLoading();
@@ -545,9 +545,11 @@ angular.module('indexPageModule')
       $scope.$watch('', function () {
         //getDeviceStatus("");
 
+        getShowDate();
+
         getWeather();
         if (localStorage.boxLinkCount == 1) {
-          hmsPopup.showLoading();
+          hmsPopup.showLoading('<span translate="golabelvariable.loadingdata"></span>');
           $timeout(function () {
             if (!ishidden) {
               hmsPopup.hideLoading();
@@ -577,6 +579,25 @@ angular.module('indexPageModule')
         }
 
       }, true);
+
+      var getShowDate = function(){
+        var date = new Date().Format("yyyy-MM-dd");
+        console.log("===="+date);
+        var currentTemper = "20";
+        var currentHumidity = "30";
+        if(date == '2017-05-31'){
+          currentTemper = "20";
+          currentHumidity = "30";
+        }else if(date == '2017-06-01'){
+          currentTemper = "25";
+          currentHumidity = "35";
+        }else if(date == '2017-06-02'){
+          currentTemper = "28";
+          currentHumidity = "33";
+        }
+        $scope.temperature = currentTemper;
+        $scope.humidity = currentHumidity;
+      };
 
       /*document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
        var resultOn = result;
