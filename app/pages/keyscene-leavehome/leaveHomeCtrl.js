@@ -50,9 +50,6 @@ angular.module('productModule')
      */
     $scope.openKeyscene = function () {
       $scope.disables = true;
-      $timeout(function () {
-        $scope.disables = false;
-      }, 4000);
       console.log($scope.config.openFlag);
       if ($scope.config.openFlag == true) {
         //马桶
@@ -104,6 +101,7 @@ angular.module('productModule')
           $scope.config.device2 = false;
           $scope.config.device1 = false;
           $scope.config.openFlag = true;
+          $scope.disables = false;
         }, 8000);
         sendCmd1();
       } else {
