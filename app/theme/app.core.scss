@@ -1,0 +1,81 @@
+// http://ionicframework.com/docs/v2/theming/
+
+// App Shared Imports
+// --------------------------------------------------
+// These are the various page imports which make up this app.
+// By default each design mode includes these shared imports.
+// App Shared Sass variables belong in app.variables.scss.
+@import "../scss/_Variables.scss";
+@import "../scss/animate.scss";
+@import "../scss/col.min.scss";
+@import "../scss/common";
+@import "../pages/index-page/indexPage";
+@import "../pages/login/login";
+@import "../pages/login/registered/registered.scss";
+@import "../pages/login/forget-password/forgetPassword.scss";
+@import "../pages/message/message";
+@import "../pages/message/message-detail/messageDetail";
+@import "../pages/my-info/myInfo";
+@import "../pages/my-info/add-members/addMembers";
+@import "../pages/my-info/green-life/greenLife";
+@import "../pages/my-info/setting/setting";
+@import "../pages/my-info/personal-setting/personalSetting";
+@import "../pages/my-info/setting-language/settingLanguage";
+@import "../pages/my-info/setting-temperature/settingTemperature";
+@import "../pages/my-info/my-room/myRoom";
+
+@import "../pages/guide/guide";
+@import "../pages/device-add/deviceList";
+@import "../pages/tab/tabs";
+//热更插件的scss
+
+
+@import "../lib/handLib/hmsDirective";
+
+@import "../pages/test/test";
+
+//一键场景
+@import "../pages/keyscene-gohome/goHome";
+@import "../pages/keyscene-leavehome/leaveHome";
+@import "../pages/keyscene-morning/morning";
+@import "../pages/keyscene-spa/spa";
+@import "../pages/keyscene-bathing/bathing";
+@import "../pages/keyscene-period/period";
+@import "../pages/keyscene-period/period-setting/period-setting";
+@import "../pages/keyscene-veil/veil";
+@import "../pages/keyscene-veil/veil-setting/veil-setting";
+@import "../pages/scene-supermarket/scene-supermarket";
+
+//设备控制
+@import "../pages/model/hmsModal";
+@import "../pages/model/lightModal";
+@import "../pages/model/hmsiot-setSelect";
+@import "../pages/model/hmsiot-manySelect";
+@import "../pages/model/windModal";
+@import "../pages/device-controller/toilet-controller/toiletController";
+@import "../pages/device-controller/toilet-controller/toiletSetting/toiletSetting";
+@import "../pages/device-controller/toilet-controller/modal/popovers.to";
+@import "../pages/device-controller/toilet-controller/lightSetting/lightSetting";
+@import "../pages/device-controller/toilet-controller/cleargearPlan/cleargearPlan";
+@import "../pages/device-controller/cenwatpurifier-controller/cenwatpurifierContrl";
+@import "../pages/device-controller/cenwatpurifier-controller/cenwatpurSetting/cenwatpurSetting";
+
+
+@import "../pages/device-controller/bathroom-controller/bathroom";
+@import "../pages/device-controller/bathroom-controller/model/popovers.bathroom";
+@import "../pages/device-controller/karess-controller/karessController";
+@import "../pages/device-controller/karess-controller/modal/popovers.karess";
+@import "../pages/device-controller/karess-controller/setting-karess/karessSet";
+
+@import "../pages/device-controller/mc-controller/mcController";
+@import "../pages/device-controller/mc-controller/setting-mc/mcSet";
+@import "../pages/device-controller/mc-controller/modal/popovers.mc";
+
+@import "../pages/device-controller/nextgen-controller/nextgen";
+@import "../pages/device-controller/nextgen-controller/nextgen-set/nextgenSet";
+@import "../pages/device-controller/nextgen-controller/nextgen-info/nextgenInfo";
+@import "../pages/device-controller/nextgen-controller/modal/popovers.next";
+
+@import "../pages/device-controller/airfoil-shower-controller/airfoilShower";
+@import "../pages/device-controller/airfoil-shower-controller/airfoil-shower-setting-controller/airfoilShowerSetting";
+
