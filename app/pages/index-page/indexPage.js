@@ -559,7 +559,7 @@ angular.module('indexPageModule')
 
           $timeout(function () {
             searchBox();
-          }, 1500);
+          }, 2000);
           localStorage.boxLinkCount = 2;
 
           localStorage.windType = "bathroom.rock";
