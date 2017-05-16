@@ -257,7 +257,7 @@ angular.module('indexPageModule')
             errorPictureUrl: "build/img/index/icon_home_device_warnning.png",
             isStatus: true,
             isError: false,
-            sku: "K-99879T-7-CP"
+            sku: "K-76448T-XW-0"
           },
           {
             id: "7",
