@@ -39,10 +39,10 @@
         <!--<i class="icon ion-loop" style="color:white;margin-top: 3rem;margin-left: 5rem;"></i>-->
         <br ng-if="!isBigScreen">
         <br ng-if="!isBigScreen">
-        <div class="tsb-icons">
+        <div class="tsb-icons" style="height: 0.6rem;">
           <div class="tsb-ic-wrp text-center">
             <ion-scroll direction="y" style="white-space: nowrap;width: 100%;text-align: center;" scrollbar-y="true">
-              <a href="javascript:;" ng-repeat="tab in tabs" on-finish-render ng-click="changeModel(tab)" style="width: 31%;border: none;font-size: 0.32rem; color: white;margin:0.05rem;" translate="{{tab.text}}"></a>
+              <a href="javascript:;" ng-repeat="tab in tabs" on-finish-render ng-click="changeModel(tab)" style="width: 31%;border: none;font-size: 0.32rem; color: white;margin:0.05rem;margin-top: 0.1rem;" translate="{{tab.text}}"></a>
               <span id="line" class="height-light" ng-show="isOneLine"></span>
               <br>
               <!--<br ng-if="!isBigScreen">-->
