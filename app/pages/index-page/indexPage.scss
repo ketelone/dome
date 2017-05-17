@@ -477,6 +477,7 @@ $applicationColor: white !default;
     font-size: 0.26rem;
     color: #0F0F10;
     letter-spacing: 0.81px;
+    margin-right: 0.06rem;
   }
   .text-switch:after {
     content: attr(data-no);
@@ -487,6 +488,7 @@ $applicationColor: white !default;
     font-size: 0.26rem;
     color: #0F0F10;
     letter-spacing: 0.81px;
+    margin-left: 0.14rem;
   }
   .checked-switch:checked ~ .text-switch {
     background-color: white;

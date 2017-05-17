@@ -58,6 +58,7 @@
       font-size: 0.26rem;
       color: #0F0F10;
       letter-spacing: 0.81px;
+      margin-right: 0.06rem;
     }
     .text-switch:after {
       content: attr(data-no);
@@ -68,6 +69,7 @@
       font-size: 0.26rem;
       color: #0F0F10;
       letter-spacing: 0.81px;
+      margin-left: 0.14rem;
     }
     .checked-switch:checked ~ .text-switch {
       background-color: white;
@@ -193,7 +195,7 @@
       line-height: 1.4rem;
     }
     .imgLine {
-      width: 0.6rem;
+      //width: 0.6rem;
       height: 0.25rem;
     }
     .deviceStyleTwo {
