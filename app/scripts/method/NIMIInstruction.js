@@ -707,19 +707,21 @@ NIMI.prototype.setDeviceTime = function (year, month, date, hour, minute, week) 
   var param_month_d = "";
   var param_minute_h = "";
   var param_minute_d = "";
-  if (mounth.length > 1) {
+  var ms = month.toString();
+  var mins = minute.toString();
+  if (ms.length > 1) {
     param_month_h = "1";
-    param_month_d = threeBitToCheck(month.subString(mounth.length - 1, month.length).toString(2));
+    param_month_d = threeBitToCheck(parseInt(ms.subString(ms.size - 1, ms.size)).toString(2));
   } else {
     param_month_h = "0";
     param_month_d = threeBitToCheck(month.toString(2));
   }
-  if (minute.length > 1) {
-    param_minute_h = threeBitToCheck(minute.substring(0, 1).toString(2));
-    param_minute_d = threeBitToCheck(minute.substring(minute.length - 1, minute.length).toString(2));
+  if (mins.length > 1) {
+    param_minute_h = threeBitToCheck(parseInt(mins.substring(0, 1)).toString(2));
+    param_minute_d = threeBitToCheck(parseInt(mins.substring(mins.length - 1, mins.length)).toString(2));
   } else {
     param_minute_h = "000";
-    param_minute_d = threeBitToCheck(minute.substring(minute.length - 1, minute.length).toString(2));
+    param_minute_d = threeBitToCheck(parseInt(mins.substring(mins.length - 1, mins.length)).toString(2));
   }
   cmd += getHex(param_year
     + param_month_h
@@ -728,10 +730,11 @@ NIMI.prototype.setDeviceTime = function (year, month, date, hour, minute, week) 
     + fiveBitToCheck(hour.toString(2))
     + param_minute_h
     + param_minute_d
-    + threeBitToCheck((week-1).toString(2))
+    + threeBitToCheck((week - 1).toString(2))
     + "00");
   return cmd;
 };
+
 
 /**
  * 十进制转二进制 三位补零
