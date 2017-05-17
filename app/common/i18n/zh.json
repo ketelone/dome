@@ -291,12 +291,13 @@
     "toiltelight": "便座灯档位",
     "nffl": "暖风风力档位",
     "nffw": "暖风风温档位",
-    "njfl": "暖脚风力档位",
     "qwfw": "圈温温度档位",
     "heatdirec": "加热",
     "devicePop": "获取设备状态",
     "devicenouse": "无人使用",
-    "seatstatus": "此功能只能在落座状态下使用"
+    "seatstatus": "此功能只能在落座状态下使用",
+    "unseatstatus":"此功能只能在未落座状态下使用",
+    "doinghanle":"正在执行当前功能"
   },
   "toiletSetting": {
     "title": "马桶设置",
@@ -367,7 +368,7 @@
     "surplus": "正在清洁",
     "complete": "完成",
     "autoclear": "手动清洗",
-    "clearover": "清洁完毕，延迟两分钟后按钮变化",
+    "clearover": "清洁4分钟后完毕,按钮自动变化,请等待...",
     "devicestats": "设备状态",
     "setting": "设置",
     "errortotal": "异常情况统计",

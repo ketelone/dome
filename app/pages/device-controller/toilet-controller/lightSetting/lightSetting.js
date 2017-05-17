@@ -140,13 +140,14 @@ angular.module('toiletControlModule')
           lightsetval.flag = false;
         };
         window.localStorage.lightModal = JSON.stringify(lightsetval);
+        document.removeEventListener("SocketPlugin.receiveTcpData", receiveTcpDatalightset, false);
         publicMethod.goBack();
       };
       /**
        *@params:
        *@disc:accept ack or status;
        */
-      document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
+      var receiveTcpDatalightset =  function (result) {
         var resultOn = result[0];
         if(resultOn.from.uid === lighttersetcmdObj.diviceid){
           if (resultOn.data.cmd) {
@@ -166,7 +167,8 @@ angular.module('toiletControlModule')
             $scope.$apply();
           };
         };
-      }, false);
+      };
+      document.addEventListener('SocketPlugin.receiveTcpData',receiveTcpDatalightset, false);
       /**
        *@params:cmdvalue(value) type(chu fa type) name(current chu fa name)
        *@disc:send clound Instruction;

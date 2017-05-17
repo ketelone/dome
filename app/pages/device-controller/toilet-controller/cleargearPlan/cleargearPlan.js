@@ -22,6 +22,7 @@ angular.module('toiletControlModule')
               cmdService
     ) {
       $scope.goBack = function () {
+        document.removeEventListener("SocketPlugin.receiveTcpData", receiveTcpDataclearset, false);
         publicMethod.goBack();
       };
       var cleartersetcmdObj = {
@@ -75,7 +76,7 @@ angular.module('toiletControlModule')
        *@disc:accept ack or status;
        */
       $scope.clearsetOnceFlag = 0;
-      document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
+      var receiveTcpDataclearset =  function (result) {
         var resultOn = result[0];
         // alert(angular.toJson(resultOn))
         if(resultOn.from.uid === cleartersetcmdObj.diviceid){
@@ -99,7 +100,8 @@ angular.module('toiletControlModule')
             $scope.$apply();
           };
         };
-      }, false);
+      };
+      document.addEventListener('SocketPlugin.receiveTcpData',receiveTcpDataclearset, false);
       /**
       /**
        *@params:cmdvalue(value) name(current chu fa name)

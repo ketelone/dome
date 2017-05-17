@@ -24,6 +24,7 @@ angular.module('toiletControlModule')
               cmdService
     ) {
       $scope.goBack = function () {
+        document.removeEventListener("SocketPlugin.receiveTcpData", receiveTcpDatatoseting, false);
         publicMethod.goBack();
       };
       $scope.chongshuisetval = false,
@@ -49,7 +50,8 @@ angular.module('toiletControlModule')
       try {
         $scope.tosetstatustiveOnceFlag = 0;
         $scope.selectedType = "";
-        document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
+
+        var receiveTcpDatatoseting =  function (result) {
           // alert("resultOn" + angular.toJson(resultOn))
           var resultOn = result[0];
           if (resultOn.from.uid === tolitersetcmdObj.diviceid) {
@@ -104,7 +106,8 @@ angular.module('toiletControlModule')
               $scope.$apply();
             };
           };
-        }, false);
+        };
+        document.addEventListener('SocketPlugin.receiveTcpData',receiveTcpDatatoseting, false);
       }catch(e){
         alert(e.message)
       }
@@ -119,31 +122,6 @@ angular.module('toiletControlModule')
           hmsPopup.hideLoading();
           $scope.Toast.show("发生指令成功");
         },1000);
-        // hmsPopup.showLoading("<span translate='toiletSetting.loadingdata'></span>");
-        // var url = baseConfig.basePath + "/r/api/message/sendMessage";
-        // var paramter = cmdService.cloudCmd(cmdvalue,$scope.handlenapeListNape[index].cloudId);
-        // hmsHttp.post(url, paramter).success(
-        //   function(response){
-        //     hmsPopup.hideLoading();
-        //     //resolve
-        //     if(response.code == 200){
-        //       if(value.ack.toLowerCase() == "fa27"){
-        //         $scope.Toast.show(name+$translate.instant("toiletSetting.directesuccess"));
-        //         if(type === "autochongshui"){
-        //           $scope.chongshuisetval = !$scope.chongshuisetval;
-        //         }else if(type === "autochuchou"){
-        //           $scope.chuchousetval = !$scope.chuchousetval;
-        //         }
-        //         // $scope.selectChange(index);
-        //       }
-        //     }else{
-        //       $scope.Toast.show(name+$translate.instant("toiletSetting.directerror"));
-        //     }
-        //   }).
-        // error(function () {
-        //   hmsPopup.hideLoading();
-        //   $scope.Toast.show(name + $translate.instant("toiletSetting.loadingdataerrror"));
-        // })
       };
       $scope.changeCheckVal = function (type) {
         $scope.tosetstatustiveOnceFlag = 0;

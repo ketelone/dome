@@ -42,57 +42,6 @@ angular.module('toiletControlModule')
       // alert(angular.toJson(cenwapurcmdObj))
       //init zhiling obj
       var cenwatpurDir = new RoController();
-      // /*
-      //  Central water purifier shu ju
-      //  */
-      // $scope.cenwatpurifierCtrl = {
-      //   //status
-      //   connectStatus:"",
-      //   //clear
-      //   clearComplete:"cenwatpurifier.complete",
-      //   clearStatus:"cenwatpurifier.surplus",
-      //   clearData:"",
-      //   isShwoClearStatus:true
-      // }
-      // /*
-      //  moren-json
-      //  init默认
-      //  **/
-      // $scope.slideInitData =[{
-      //   des: "init",
-      //   parNodeid: 'toilet-initCtl',
-      //   canves01: "initcanves01",
-      //   canves03: "initcanves03",
-      // }]
-      // /**
-      //  gong neng list-json
-      //  功能列表数据
-      //  **/
-      // $scope.handlenapeListNape = [{
-      //   imgUrl: "build/img/cenwatpurifier-controller/icon_handleclear.png",
-      //   imgSeledUrl: "build/img/cenwatpurifier-controller/icon_handlecleared.png",
-      //   imgUrlTemp:"build/img/cenwatpurifier-controller/icon_handleclear.png",
-      //   handleDes: "cenwatpurifier.autoclear",
-      //   matchdataid:"clear",
-      //   selecFlag:false,
-      //   cloudId:"cenwapurclear"
-      // },{
-      //   imgUrl: "build/img/cenwatpurifier-controller/icon_setting.png",
-      //   imgSeledUrl: "build/img/cenwatpurifier-controller/icon_settinged.png",
-      //   imgUrlTemp:"build/img/cenwatpurifier-controller/icon_setting.png",
-      //   matchdataid:"device",
-      //   cloudId:"device",
-      //   handleDes: "cenwatpurifier.devicestats",
-      //   selecFlag:false,
-      // },{
-      //   imgUrl: "build/img/cenwatpurifier-controller/icon_setting.png",
-      //   imgSeledUrl: "build/img/cenwatpurifier-controller/icon_settinged.png",
-      //   imgUrlTemp:"build/img/cenwatpurifier-controller/icon_setting.png",
-      //   handleDes: "cenwatpurifier.setting",
-      //   matchdataid:"setting",
-      //   selecFlag:false,
-      // }];
-      // /**
       //  *
       //  set dang qian ce hau shu ju zhi
       //  */
@@ -144,12 +93,10 @@ angular.module('toiletControlModule')
         this.canvsscreenHeight = document.getElementById(slideDataObj.parNodeid).offsetHeight;
         this.canvsscreenWidth = document.getElementById(slideDataObj.parNodeid).offsetWidth;
         this.rateInit = document.documentElement.clientWidth / 7.5;
-
         // 设置每个canves的宽高
         document.getElementById(slideDataObj.canves01).height = this.canvsscreenHeight;
         document.getElementById(slideDataObj.canves01).width = this.canvsscreenWidth;
         document.getElementById(slideDataObj.canves01).style.zIndex = 1;
-
         document.getElementById(slideDataObj.canves03).height = this.canvsscreenHeight;
         document.getElementById(slideDataObj.canves03).width = this.canvsscreenWidth;
         document.getElementById(slideDataObj.canves03).style.zIndex = 2;
@@ -278,12 +225,12 @@ angular.module('toiletControlModule')
                       if($scope.handlenapeListNape[0].selecFlag){
                         $scope.Toast.show($translate.instant("cenwatpurifier.clearover"));
                       };
-                      $scope.Toast.show($translate.instant(name)+$translate.instant("golabelvariable.directesuccess"));
+                      // $scope.Toast.show($translate.instant(name)+$translate.instant("golabelvariable.directesuccess"));
                     }else{
                       $scope.Toast.show($translate.instant(name)+$translate.instant("golabelvariable.directerror"));
                     };
                   };
-                }
+                };
               }else{
                   // if(!$scope.overTiemFlag){
                     hmsPopup.hideLoading();
@@ -317,12 +264,8 @@ angular.module('toiletControlModule')
                       //complete
                       $scope.cenwatpurifierCtrl.isShwoClearStatus = false;
                       $scope.handlenapeListNape[0].selecFlag = false;
-
                       $scope.handlenapeListNape[0].imgUrl = $scope.handlenapeListNape[0].imgUrlTemp;
                       $scope.cenwatpurifierCtrl.clearData = $scope.cenwatpurifierCtrl.clearComplete;
-                      // if($scope.statustiveOnceFlag) {
-                      //   $scope.Toast.show($translate.instant("cenwatpurifier.clearover"));
-                      // }
                       $scope.statustiveOnceFlag = true;
                     }else if(backDataCmd.flushStatus === "0010"){
                       //doing
