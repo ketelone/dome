@@ -3,12 +3,12 @@ angular.module('nextgenModule')
     '$scope', '$state', '$ionicModal', 'baseConfig', 'checkVersionService',
     '$ionicHistory', 'hmsPopup', 'nextgenService', '$timeout', 'SettingsService',
     '$ionicSlideBoxDelegate', 'hmsHttp', 'cmdService', '$translate','$stateParams',
-    '$ionicPopover',
+    '$ionicPopover','$window',
     function ($scope, $state, $ionicModal, baseConfig,
               checkVersionService, $ionicHistory, hmsPopup,
               nextgenService, $timeout, SettingsService,
               $ionicSlideBoxDelegate, hmsHttp, cmdService,
-              $translate,$stateParams,$ionicPopover) {
+              $translate,$stateParams,$ionicPopover,$window) {
       var ctrId = "00";
       var header = "8877";
       var idx = "00";
@@ -270,16 +270,17 @@ angular.module('nextgenModule')
 
       //一进入页面就查询出水状态
       $scope.$on('$ionicView.beforeEnter', function () {
+        changeRingCol('#6ACBB3');
         hmsPopup.showLoading();
-        var data = nextgenService.getDeviceStatus();
-        var value = getValue(data);
-        cmdService.sendCmd(deviceId, value, localStorage.boxIp);
         $timeout(function () {
           if(!isLink) {
             hmsPopup.hideLoading();
             $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"));
           }
         }, 10000);
+        var data = nextgenService.getDeviceStatus();
+        var value = getValue(data);
+        cmdService.sendCmd(deviceId, value, localStorage.boxIp);
       });
 
       var listenrDeal=function (result) {
@@ -327,78 +328,196 @@ angular.module('nextgenModule')
         // },
       ];
 
-      $scope.slideInitData = [{
-        des: "nextgen.unworking",
-        parameterctlFlag: false,
-        parNodeid: 'toilet-initCtl',
-        canves01: "initcanves01",
-        canves02: "initcanves02",
-        canves03: "initcanves03",
-      }]
+      var canvas=document.getElementById("canvas");
 
       /**
-       set dang qian ce hau shu ju zhi
-       设置当前侧滑数据为侧滑初始化数据
+       *@autor: caolei
+       *@params: color
+       *@disc: change the color of the ring
        */
-      $scope.currentSlideData = $scope.slideInitData;
-
-      /**
-       init dang qian mo ban shu ju
-       初始化当前模板数据
-       */
-      $scope.lockSlide = function () {
-        $ionicSlideBoxDelegate.enableSlide(false);
+      var changeRingCol = function(color){
+        var c = '#6ACBB3';
+        var cxt=canvas.getContext("2d");
+        var xLength = $window.innerWidth * 0.5;
+        var yLength = $window.innerWidth > 1000 ? $window.innerWidth * 0.73 : $window.innerWidth * 0.65;
+        var r = $window.innerWidth * 0.34;
+        cxt.beginPath();
+        cxt.arc(xLength,yLength,r,Math.PI*0.75,Math.PI*2.25,false);
+        cxt.lineWidth =  $window.innerWidth * 0.055;
+        cxt.strokeStyle = c;
+        cxt.fillStyle = c;
+        cxt.stroke();
+        //cxt.fill();
+        cxt.closePath();
+        cxt.scale(2, 2);
       };
 
-      var initCircle = function (slideDataObj) {
-        //获取父元素高度
-        this.canvsscreenHeight = document.getElementById(slideDataObj.parNodeid).offsetHeight;
-        this.canvsscreenWidth = document.getElementById(slideDataObj.parNodeid).offsetWidth;
-        this.rateInit = document.documentElement.clientWidth / 7.5;
-
-        // 设置每个canves的宽高
-        document.getElementById(slideDataObj.canves01).height = this.canvsscreenHeight;
-        document.getElementById(slideDataObj.canves01).width = this.canvsscreenWidth;
-        document.getElementById(slideDataObj.canves01).style.zIndex = 1;
-
-        document.getElementById(slideDataObj.canves03).height = this.canvsscreenHeight;
-        document.getElementById(slideDataObj.canves03).width = this.canvsscreenWidth;
-        document.getElementById(slideDataObj.canves03).style.zIndex = 2;
-        // 获取canvesobj
-        this.cr1 = getCanvesObj(slideDataObj.canves01);//档位canves
-        this.cr3 = getCanvesObj(slideDataObj.canves03);//颜色填充档位canves
-        //四种圆
-        this.deliverCircle = {
-          x: this.canvsscreenHeight / 2,
-          y: this.canvsscreenWidth / 2,
-          r: this.canvsscreenHeight / 2,
-          color: "#6ACBB3"
-        };//档位圆
-        this.HideCircle = {
-          x: this.canvsscreenHeight / 2,
-          y: this.canvsscreenWidth / 2,
-          r: this.canvsscreenHeight / 2 - 0.4 * this.rateInit,
-          color: "black"
-        };//档位圆
-        //画档位圆
-        this.drawDeliverCircle = function () {
-          drawRadian(this.cr1, this.deliverCircle, 0, 360);
-          drawRadian(this.cr3, this.HideCircle, 0, 360);
-        };
-      };
-
-      var currentRadObj;
-      setTimeout(function () {
-        //实现画布
-        $scope.getCurrentObj = function (index) {
-          //当前new实例
-          currentRadObj = new initCircle($scope.currentSlideData[index]);
-          //当前绑定事件对象
-          var currentEventObj = getIdObj($scope.currentSlideData[index].canves02);
-          currentRadObj.drawDeliverCircle();
-        };
-        $scope.getCurrentObj(0);
-      }, 20);
+      // $scope.slideInitData = [{
+      //   des: "nextgen.unworking",
+      //   parameterctlFlag: false,
+      //   parNodeid: 'toilet-initCtl',
+      //   canves01: "initcanves01",
+      //   canves02: "initcanves02",
+      //   canves03: "initcanves03",
+      // }]
+      //
+      // /**
+      //  set dang qian ce hau shu ju zhi
+      //  设置当前侧滑数据为侧滑初始化数据
+      //  */
+      // $scope.currentSlideData = $scope.slideInitData;
+      //
+      // /**
+      //  init dang qian mo ban shu ju
+      //  初始化当前模板数据
+      //  */
+      // $scope.lockSlide = function () {
+      //   $ionicSlideBoxDelegate.enableSlide(false);
+      // };
+      //
+      // //初始化当前模板数据
+      // $scope.initHtmlTemplate = function (currentSlideData) {
+      //   /**
+      //    init silde-box data
+      //    初始化slide-box数据
+      //    */
+      //   if ($('#nextgenSliderBox').children().length !== 0) {
+      //     $('#nextgenSliderBox').empty();
+      //   }
+      //   ;
+      //   var checHtml =
+      //     "<ion-slide-box ng-init='lockSlide()' show-pager='false' delegate-handle='boxSlider'>" +
+      //     "<ion-slide ng-repeat='list in currentSlideData track by $index'>" +
+      //     "<div id={{list.parNodeid}} class='toilet-parameterctl'>" +
+      //     "<canvas id={{list.canves01}} class='canves-pos'></canvas>" +
+      //     "<canvas id={{list.canves02}} class='canves-pos'></canvas>" +
+      //     "<canvas id={{list.canves03}} class='canves-pos'></canvas>" +
+      //     // "<canvas id={{list.canves04}} class='canves-pos'></canvas>" +
+      //     "<div class='toilet-parameterctl-data' ng-if='!list.parameterctlFlag'>"+
+      //     // "<span class='toilet-parameterctl-raddata toilet-parameterct-span'></span>"+
+      //     "<div class='toilet-parameterctl-des' translate='{{waterstatus}}'></div>"+
+      //     "</div>" +
+      //     "</ion-slide>" +
+      //     "</ion-slide-box>"
+      //   /**
+      //    bian yi html 数据
+      //    编译html数据
+      //    */
+      //   var $checkhtml = $compile(checHtml)($scope); // 编译
+      //   $('#nextgenSliderBox').append($checkhtml[0])
+      // };
+      // $scope.initHtmlTemplate($scope.currentSlideData);
+      //
+      // var initCircle = function (slideDataObj) {
+      //   //获取父元素高度
+      //   this.canvsscreenHeight = document.getElementById(slideDataObj.parNodeid).offsetHeight;
+      //   this.canvsscreenWidth = document.getElementById(slideDataObj.parNodeid).offsetWidth;
+      //   this.rateInit = document.documentElement.clientWidth / 7.5;
+      //
+      //   // 设置每个canves的宽高
+      //   document.getElementById(slideDataObj.canves01).height = this.canvsscreenHeight;
+      //   document.getElementById(slideDataObj.canves01).width = this.canvsscreenWidth;
+      //   document.getElementById(slideDataObj.canves01).style.zIndex = 1;
+      //
+      //   document.getElementById(slideDataObj.canves02).height = this.canvsscreenHeight;
+      //   document.getElementById(slideDataObj.canves02).width = this.canvsscreenWidth;
+      //   document.getElementById(slideDataObj.canves02).style.zIndex = 3;
+      //
+      //   document.getElementById(slideDataObj.canves03).height = this.canvsscreenHeight;
+      //   document.getElementById(slideDataObj.canves03).width = this.canvsscreenWidth;
+      //   document.getElementById(slideDataObj.canves03).style.zIndex = 2;
+      //   // 获取canvesobj
+      //   this.cr1 = getCanvesObj(slideDataObj.canves01);//档位canves
+      //   this.cr2 = getCanvesObj(slideDataObj.canves02);//滑动小球档位canves
+      //   this.cr3 = getCanvesObj(slideDataObj.canves03);//颜色填充档位canves
+      //   //四种圆
+      //   this.deliverCircle = {
+      //     x: this.canvsscreenHeight / 2,
+      //     y: this.canvsscreenWidth / 2,
+      //     r: this.canvsscreenHeight / 2 - 0.1 * this.rateInit,
+      //     color: "#2F3538"
+      //   };//档位圆
+      //   this.HideCircle = {
+      //     x: this.canvsscreenHeight / 2,
+      //     y: this.canvsscreenWidth / 2,
+      //     r: this.canvsscreenHeight / 2 - 0.5 * this.rateInit,
+      //     color: "black"
+      //   };//档位圆
+      //   this.deliverLine = {
+      //     x: this.canvsscreenHeight / 2,
+      //     y: this.canvsscreenWidth / 2,
+      //     r: this.canvsscreenHeight / 2 - 0.1 * this.rateInit,
+      //     color: "black"
+      //   };//档位线
+      //   this.rollCircle = {
+      //     x: this.canvsscreenHeight / 2,
+      //     y: this.canvsscreenWidth / 2,
+      //     r: this.canvsscreenHeight / 2 - 0.3 * this.rateInit,
+      //     color: "white"
+      //   };//小球圆
+      //   this.FillCircle = {
+      //     x: this.canvsscreenHeight / 2,
+      //     y: this.canvsscreenWidth / 2,
+      //     r: this.canvsscreenHeight / 2 - 0.1 * this.rateInit,
+      //     color: "#6ACBB3"
+      //   };//填充圆
+      //   this.drawDeliverCircle = function () {
+      //     drawRadian(this.cr1, this.deliverCircle, 0, 360);
+      //     drawRadian(this.cr3, this.HideCircle, 0, 360);
+      //   };
+      //   //变量
+      //   // this.i = 0;
+      //   // this.j = 0;
+      //   // this.stoPosPoint = 0;
+      //   // this.starRad = 135;
+      //   // this.radSectionArr = [];
+      //   // this.radRange;
+      //   // //画档位圆
+      //   // this.drawDeliverCircle = function (n) {
+      //   //   this.radRange = (270 - (n - 1)) / n;
+      //   //   this.radSectionArr.push(this.starRad);
+      //   //   var tempstrAngle = this.starRad;
+      //   //   for (var k = 1; k <= n; k++) {
+      //   //     drawRadian(this.cr1, this.deliverCircle, tempstrAngle, tempstrAngle + this.radRange);
+      //   //     tempstrAngle = tempstrAngle + this.radRange + 1;
+      //   //     this.radSectionArr.push(tempstrAngle);
+      //   //   }
+      //   //   ;
+      //   //   // 画白色遮挡
+      //   //   drawRadian(this.cr1, this.HideCircle, 0, 360);
+      //   // };
+      //   // //四种圆
+      //   // this.deliverCircle = {
+      //   //   x: this.canvsscreenHeight / 2,
+      //   //   y: this.canvsscreenWidth / 2,
+      //   //   r: this.canvsscreenHeight / 2,
+      //   //   color: "#6ACBB3"
+      //   // };//档位圆
+      //   // this.HideCircle = {
+      //   //   x: this.canvsscreenHeight / 2,
+      //   //   y: this.canvsscreenWidth / 2,
+      //   //   r: this.canvsscreenHeight / 2 - 0.4 * this.rateInit,
+      //   //   color: "black"
+      //   // };//档位圆
+      //   // //画档位圆
+      //   // this.drawDeliverCircle = function () {
+      //   //   drawRadian(this.cr1, this.deliverCircle, 0, 360);
+      //   //   drawRadian(this.cr3, this.HideCircle, 0, 360);
+      //   // };
+      // };
+      //
+      // var currentRadObj;
+      // setTimeout(function () {
+      //   //实现画布
+      //   $scope.getCurrentObj = function (index) {
+      //     //当前new实例
+      //     currentRadObj = new initCircle($scope.currentSlideData[index]);
+      //     //当前绑定事件对象
+      //     var currentEventObj = getIdObj($scope.currentSlideData[index].canves02);
+      //     currentRadObj.drawDeliverCircle();
+      //   };
+      //   $scope.getCurrentObj(0);
+      // }, 20);
 
       //处理选择怎加border
       var handlenapeListNapeLen = $scope.handlenapeListNape.length;

@@ -1,14 +1,14 @@
 .chooseDevice{
+
   .headColor {
     background-color: $global-head-bg;
   }
   .iconColor {
-    color: $color-base
+    color: $color-base;
   }
 
-  .content {
-    color: rgba(255, 255, 255, 1);
-    background: rgba(15, 17, 18, 1);
+  .itemColor{
+    background-color: #0D0F11;
   }
 
 }

@@ -10,22 +10,31 @@
 
   <ion-content class="content has-header has-footer">
     <div class="row">
-      <div class="col col-33"><span translate="my-info.greenLife.day " class="redWord">日</span></div>
-      <div class="col col-33"><span translate="my-info.greenLife.week" class="whiteWord">周</span></div>
-      <div class="col col-33"><span translate="my-info.greenLife.month" class="whiteWord">月</span></div>
+      <div class="col col-33" ng-click="getData(1)">
+        <span translate="my-info.greenLife.day "
+              ng-class="{redWord:index==1,whiteWord:index!=1}">日</span>
+      </div>
+      <div class="col col-33" ng-click="getData(2)">
+        <span translate="my-info.greenLife.week"
+              ng-class="{redWord:index==2,whiteWord:index!=2}">周</span>
+      </div>
+      <div class="col col-33" ng-click="getData(3)">
+        <span translate="my-info.greenLife.month"
+              ng-class="{redWord:index==3,whiteWord:index!=3}">月</span>
+      </div>
     </div>
     <div class="title">
-      <div class="number">46.9</div>
+      <div class="number">{{data.waterConsumption}}</div>
       <div class="useWater" translate="my-info.greenLife.todayUsewater">当日用水量(L)</div>
       <div class="toCenter"><img class="waterImg" ng-src="build/img/my-info/Group 2.png"/></div>
     </div>
     <div class="title">
-      <div class="number">17.2</div>
+      <div class="number">{{data.pureWaterConsumption}}</div>
       <div class="useWater" translate="my-info.greenLife.todayUsecleanWater">当日纯净水用量(L)</div>
       <div class="toCenter"><img class="waterImg" ng-src="build/img/my-info/Group 2.png"/></div>
     </div>
     <div class="title">
-      <div class="number">4.5</div>
+      <div class="number">{{data.electricityConsumption}}</div>
       <div class="useWater" translate="my-info.greenLife.todayUseElectricity">当日用电量(度)</div>
       <div class="toCenter"><img class="waterImg" ng-src="build/img/my-info/Group 4.png"/></div>
     </div>
