@@ -72,15 +72,18 @@ angular.module('airfoilShowerModule')
        *@disc: get device id
        */
       var getDeviceId = function(){
+        var skuList = SettingsService.get('sku');
         var deviceId = "";
         var deviceList = localStorage.deviceInfo.split(";");
         for(var i = 0; i < deviceList.length; i ++){
           var deviceInfo = deviceList[i].split(",");
-          if(deviceInfo[0] == SettingsService.get('sku')){
-            deviceId = deviceInfo[1];
+          for(var j =0 ; j < skuList.length; j ++){
+            if(deviceInfo[0] == skuList[j]){
+              deviceId =  deviceInfo[1];
+              return deviceId;
+            }
           }
         }
-
         return deviceId;
       };
 
@@ -117,6 +120,9 @@ angular.module('airfoilShowerModule')
           }catch(e){
           }
         }
+
+        hmsPopup.hideLoading();
+
       }, false);
 
       var sendCmd = function(deviceId, value, successMsg, errorMsg){
