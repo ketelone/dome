@@ -1,8 +1,8 @@
 /**
- * Created by chenjiacheng on 2017/3/28.
+ * Created by Angela on 2017/5/17.
  */
 angular.module('myInfoModule')
-  .controller('greenLifeCtrl', [
+  .controller('chooseDeviceCtrl', [
     '$scope',
     '$state',
     'baseConfig',
@@ -14,8 +14,6 @@ angular.module('myInfoModule')
     '$ionicScrollDelegate',
     'hmsPopup',
     '$rootScope',
-    'publicMethod',
-    '$stateParams',
     function ($scope,
               $state,
               baseConfig,
@@ -31,7 +29,5 @@ angular.module('myInfoModule')
       $scope.goBack = function(){
         $ionicHistory.goBack();
       }
-
-
 
     }]);

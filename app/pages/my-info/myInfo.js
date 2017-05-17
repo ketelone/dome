@@ -16,6 +16,11 @@ angular.module('myInfoModule')
           templateUrl: 'build/pages/my-info/green-life/greenLife.html',
           controller: 'greenLifeCtrl'
         })
+        .state('chooseDevice', {
+          url: '/chooseDevice',
+          templateUrl: 'build/pages/my-info/choose-device/chooseDevice.html',
+          controller: 'chooseDeviceCtrl'
+        })
         .state('setting', {
           cache: false,
           url: '/setting',
