@@ -27,22 +27,21 @@ angular.module('nextgenModule')
       // var deviceId = "E0DC20F1";
       //获取设备Id bug
       var getDeviceId = function(){
-        var deviceList;
-        if(localStorage.deviceInfo){
-          deviceList = localStorage.deviceInfo.split(";");
-        }else{
-          localStorage.deviceInfo = ";123456";
-          deviceList = localStorage.deviceInfo.split(";");
-        }
-        // alert($stateParams.deviceSku);
-        // alert(deviceList);
+        var skuList = SettingsService.get('sku');
+        var deviceId = "";
+        var deviceList = localStorage.deviceInfo.split(";");
         for(var i = 0; i < deviceList.length; i ++){
           var deviceInfo = deviceList[i].split(",");
-          if(deviceInfo[0] == $stateParams.deviceSku){
-            return deviceInfo[1];
+          for(var j =0 ; j < skuList.length; j ++){
+            if(deviceInfo[0] == skuList[j]){
+              deviceId =  deviceInfo[1];
+              return deviceId;
+            }
           }
         }
+        return deviceId;
       };
+
       var deviceId =getDeviceId();
       // var deviceId="87F5A217";
       // alert(deviceId);
