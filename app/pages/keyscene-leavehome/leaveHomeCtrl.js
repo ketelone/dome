@@ -214,7 +214,7 @@ angular.module('productModule')
     var pluginToCtrl = function (value, successMsg, errorMsg) {
       $timeout(function () {
         //hmsPopup.hideLoading();
-        cmdService.sendCmd(deviceId, value, localStorage.boxIp);
+        cmdService.sendScanCmd( value, localStorage.boxIp);
       }, 500);
     };
 

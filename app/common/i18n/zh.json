@@ -11,11 +11,12 @@
     "PopupCancle": "取消",
     "loadingdata": "正在连接",
     "loadingdataerrror": "网络连接异常",
-    "directerror": "指令发生失败",
+    "directerror": "指令发送失败",
     "directesuccess": "指令发送成功",
     "linkError": "超时，请重试",
     "mixt": "此功能与执行功能互斥",
-    "directiveError": "指令执行失败,请重试"
+    "directiveError": "指令执行失败,请重试",
+    "nowError" : "该功能暂不可用"
   },
   "my-info": {
     "myhome": "我家",
