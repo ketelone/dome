@@ -200,9 +200,10 @@ angular.module('toiletControlModule')
                 this.stoPosPoint = this.i-1;
                 if(this.i<=1){
                   if(slideDataObj.parNodeid === "toilet-warmjCtl"){
-                    slideDataObj.gearInit = 2;
-                  }else
-                    if(slideDataObj.parNodeid === "toilet-lightCtl"){
+                    if(this.i === 1){
+                      slideDataObj.gearInit = 2;
+                    };
+                  }else if(slideDataObj.parNodeid === "toilet-lightCtl"){
                     if(this.i === 1){
                       slideDataObj.gearInit = "低";
                     };
@@ -211,9 +212,8 @@ angular.module('toiletControlModule')
                   }
                 }else{
                     if(slideDataObj.parNodeid === "toilet-warmjCtl"){
-                      slideDataObj.gearInit = this.i+1;
-                    }else
-                    if(slideDataObj.parNodeid === "toilet-lightCtl"){
+                      slideDataObj.gearInit = this.i;
+                    }else if(slideDataObj.parNodeid === "toilet-lightCtl"){
                     if(this.i === 2){
                       slideDataObj.gearInit = '中';
                     }else if(this.i === 3){
@@ -234,7 +234,7 @@ angular.module('toiletControlModule')
               }else{
                 this.stoPosPoint = this.i;
                 if(slideDataObj.parNodeid === "toilet-warmjCtl"){
-                  slideDataObj.gearInit = this.i+2;
+                  slideDataObj.gearInit = this.i+1;
                 }else
                 if(slideDataObj.parNodeid === "toilet-lightCtl"){
                   if(this.i+1 === 2){
@@ -334,6 +334,9 @@ angular.module('toiletControlModule')
               }else if($scope.currentSlideData[index].gearInit=== "高"){
                 $scope.currentSlideData[index].gearInit = 3;
               };
+            };
+            if(slideDataObj.parNodeid === "toilet-warmjCtl"){
+              $scope.currentSlideData[index].gearInit =$scope.currentSlideData[index].gearInit-1;
             };
             currentRadObj.drawc(currentRadObj.cr2,currentRadObj.starRad+ currentRadObj.radRange * ($scope.currentSlideData[index].gearInit-1),"type");
             currentRadObj.drawCircleFill(currentRadObj.cr3,currentRadObj.starRad+currentRadObj.radRange * ($scope.currentSlideData[index].gearInit-1));
@@ -739,7 +742,7 @@ angular.module('toiletControlModule')
         $timeout(function () {
           hmsPopup.hideLoading();
           $scope.selectChange(flag,index,isType);
-        },1000)
+        },1000);
       };
       $scope.$on("$ionicView.beforeEnter",function () {
         $scope.value = [];
@@ -1113,13 +1116,11 @@ angular.module('toiletControlModule')
         $scope.count=0;
         var handlenapeListNapeLen = $scope.handlenapeListNape.length;
         $scope.cmdReturnData = "";
+        $scope.deviceReturnTime = 0;
+        $scope.deviceInitFlag = false;
         $scope.currentSlideData = $scope.slideInitData;
         $scope.getStatusBackFalg = true;
         $scope.isSeatedStatusFlag = true;
-        // $scope.handleOnceActionType="";
-        //yuan huan add or reduce select index
-        $scope.yhRadSelectedIndex;
-
         $scope.handlenapeSelectedIndex = 12;
         $scope.selectChangeFlag = true;
         $scope.selectIsType = 0;
@@ -1223,7 +1224,7 @@ angular.module('toiletControlModule')
                         };
                       };
                       if($scope.handlenapeListNape[index].matchdataid === "guangai"){
-                        if($scope.cmdBackValue.lidRingStatus === "00"){
+                        if($scope.cmdBackValue.lidRingStatus === "000"){
                           $scope.Toast.show($translate.instant("golabelvariable.mixt"));
                           return false;
                         }
@@ -1245,7 +1246,7 @@ angular.module('toiletControlModule')
                   }
                 };
                 if($scope.handlenapeListNape[index].matchdataid === "clear") {
-                  if($scope.cmdBackValue.lidRingStatus === "00" || $scope.cmdBackValue.lidRingStatus === "101" || $scope.cmdBackValue.lidRingStatus === "110"){
+                  if($scope.cmdBackValue.lidRingStatus === "000" || $scope.cmdBackValue.lidRingStatus === "101" || $scope.cmdBackValue.lidRingStatus === "110"){
                     $scope.Toast.show($translate.instant("golabelvariable.mixt"));
                     return false;
                   }
@@ -1349,7 +1350,7 @@ angular.module('toiletControlModule')
           };
         }else{
           $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"))
-        }
+        };
       };
       /**
        *@params:index(selected index),
@@ -1373,7 +1374,6 @@ angular.module('toiletControlModule')
         };
       };
       $scope.initRecycleRedce = function (index) {
-        $scope.yhRadSelectedIndex= index;
         if($scope.handlenapeListNape[index].selecFlag){
           $scope.handlenapeListNape[index].selecFlag = false;
           $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgUrlTemp;
@@ -1596,18 +1596,53 @@ angular.module('toiletControlModule')
                       $scope.initRecycleCurnt(1);
                     };
                   }else{
-                    if($scope.cmdBackValue.flushStatus === "000"){
-                      if($scope.cmdBackValue.flushType==="0"){
+                    if(backDataCmd.flushStatus === "000"){
+                      if(backDataCmd.flushType==="0"){
                         if($scope.handlenapeListNape[1].selecFlag){
                           $scope.handlenapeListNape[1].selecFlag = false;
+                          $scope.handlenapeListNape[1].imgUrl = $scope.handlenapeListNape[1].imgUrlTemp;
                         };
                       }else{
                         if($scope.handlenapeListNape[0].selecFlag){
                           $scope.handlenapeListNape[0].selecFlag = false;
+                          $scope.handlenapeListNape[0].imgUrl = $scope.handlenapeListNape[0].imgUrlTemp;
                         };
                       };
                     };
                   };
+                    //guangai
+                    if(backDataCmd.lidRingStatus === "110"){
+                      $scope.initRecycleCurnt(8);
+                    }else{
+                      if(backDataCmd.lidRingStatus === "000"){
+                        if($scope.handlenapeListNape[8].selecFlag){
+                          $scope.handlenapeListNape[8].selecFlag = false;
+                          $scope.handlenapeListNape[8].imgUrl = $scope.handlenapeListNape[8].imgUrlTemp;
+                        };
+                      };
+                    };
+                    //fangai
+                    if(backDataCmd.lidRingStatus === "011"){
+                      $scope.initRecycleCurnt(9);
+                    }else{
+                      if(backDataCmd.lidRingStatus === "001" || backDataCmd.lidRingStatus === "010"){
+                        if($scope.handlenapeListNape[9].selecFlag){
+                          $scope.handlenapeListNape[9].selecFlag = false;
+                          $scope.handlenapeListNape[9].imgUrl = $scope.handlenapeListNape[9].imgUrlTemp;
+                        };
+                      };
+                    };
+                    //fanquan
+                    if(backDataCmd.lidRingStatus === "100"){
+                      $scope.initRecycleCurnt(10);
+                    }else{
+                      if(backDataCmd.lidRingStatus === "001"){
+                        if($scope.handlenapeListNape[10].selecFlag){
+                          $scope.handlenapeListNape[10].selecFlag = false;
+                          $scope.handlenapeListNape[10].imgUrl = $scope.handlenapeListNape[10].imgUrlTemp;
+                        };
+                      };
+                    };
                     //nv yong
                     if(backDataCmd.seatedStatus === "1") {
                       if(backDataCmd.fontStatus === "1"){
@@ -1657,36 +1692,6 @@ angular.module('toiletControlModule')
                   }else{
                     $scope.initRecycleRedce(7);
                   };
-                  //guangai
-                  if(backDataCmd.lidRingStatus === "110"){
-                    $scope.initRecycleCurnt(8);
-                  }else{
-                    if($scope.cmdBackValue.lidRingStatus === "00"){
-                      if($scope.handlenapeListNape[8].selecFlag){
-                        $scope.handlenapeListNape[8].selecFlag = false;
-                      };
-                    };
-                  };
-                  //fangai
-                  if(backDataCmd.lidRingStatus === "011"){
-                    $scope.initRecycleCurnt(9);
-                  }else{
-                    if($scope.cmdBackValue.lidRingStatus === "001" || $scope.cmdBackValue.lidRingStatus === "010"){
-                      if($scope.handlenapeListNape[9].selecFlag){
-                        $scope.handlenapeListNape[9].selecFlag = false;
-                      };
-                    };
-                  };
-                  //fanquan
-                  if(backDataCmd.lidRingStatus === "100"){
-                    $scope.initRecycleCurnt(10);
-                  }else{
-                    if($scope.cmdBackValue.lidRingStatus === "001"){
-                      if($scope.handlenapeListNape[10].selecFlag){
-                        $scope.handlenapeListNape[10].selecFlag = false;
-                      };
-                    };
-                  };
                   //clear
                   if(backDataCmd.wandStatus === "1" || backDataCmd.UVProgressStatus != 0 || backDataCmd.ballValve === "1"){
                     $scope.handlenapeListNape[11].selecFlag = true;
@@ -1705,18 +1710,37 @@ angular.module('toiletControlModule')
                     },0);
                     $scope.toiletController.modelTypeClear = "toiletController.gaunbi";
                   };
-
-
+                  // alert("$scope.currentSlideData"+angular.toJson($scope.currentSlideData))
                   var matchId = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].matchdataid;
                   if($scope.currentSlideData[0].des !== "init"){
-                    if(matchId === "bigFlush" || matchId === "smallFlush" || matchId === "guangai" || matchId === "fangai" || matchId === "fanquan" || matchId === "clear"){
-                      // return false;
+                    $scope.deviceReturnTime++;
+                    if(matchId !== "clear"){
+                      $timeout(function () {
+                        $scope.hanleInitTemple($scope.handlenapeSelectedIndex);
+                        $scope.clickSlideFlag = true;
+                        $scope.deviceReturnTime = 0;
+                      },0);
+                      // if(!$scope.deviceInitFlag){
+                      //   $scope.hanleInitTemple($scope.handlenapeSelectedIndex);
+                      //   $scope.clickSlideFlag = true;
+                      //   $scope.deviceInitFlag = true;
+                      //   $scope.deviceReturnTime = 0;
+                      // }else{
+                      //   if($scope.deviceReturnTime >= 2){
+                      //     alert("$scope.deviceReturnTime"+$scope.deviceReturnTime);
+                      //     $timeout(function () {
+                      //       $scope.hanleInitTemple($scope.handlenapeSelectedIndex);
+                      //       $scope.clickSlideFlag = true;
+                      //       $scope.deviceReturnTime = 0;
+                      //     },0);
+                      //   };
+                      // };
                     }else{
-                      $scope.hanleInitTemple($scope.handlenapeSelectedIndex);
-                      $scope.clickSlideFlag = true;
+                      $scope.deviceReturnTime = 0;
                     };
                   }else{
-                    if(matchId === "devicePop" || matchId === "bigFlush" || matchId === "smallFlush" || matchId === "guangai" || matchId === "fangai" || matchId === "fanquan" || matchId === "clear"){
+                    $scope.deviceReturnTime = 0;
+                    if(matchId === "devicePop" || matchId === "bigFlush" || matchId === "smallFlush" || matchId === "guangai" || matchId === "fangai" || matchId === "fanquan"){
                       // return false;
                     }else{
                       $scope.clickSlideFlag = false;
@@ -1820,7 +1844,7 @@ angular.module('toiletControlModule')
                 desTemp = "正常";
               };
             });
-            $scope.sendCmdTimeout();
+            // $scope.sendCmdTimeout();
             // $timeout(function () {
             //   hmsPopup.hideLoading();
             // },500);
@@ -1831,7 +1855,7 @@ angular.module('toiletControlModule')
             };
           }else{
             $scope.Toast.show($translate.instant("toiletController.doinghanle"));
-          }
+          };
           $scope.valueTemp = val;
         }else if($scope.value[0].id === "clearopen"){
           // if(val.id !== $scope.valueTemp.id){
@@ -1854,7 +1878,7 @@ angular.module('toiletControlModule')
             if(desTemp === "openIntelligentSterilization"){
               if($scope.cmdBackValue.seatedStatus === "1"){
                 $scope.Toast.show($translate.instant("toiletController.unseatstatus"));
-                return false;
+                return;
               };
             };
             var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx,nimi._data[desTemp],tolitercmdObj.ctrId,tolitercmdObj.devId);

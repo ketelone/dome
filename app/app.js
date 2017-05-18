@@ -810,7 +810,7 @@ angular.module('myApp')
           DRYER_PRESSURE:2,
           DRYER_TMPT:2,
           //nj
-          DRYER_POWER:1,
+          DRYER_POWER:2,
           //qw
           SEAT_TMPT:2,
           //dg
