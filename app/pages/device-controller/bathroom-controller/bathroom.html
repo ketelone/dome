@@ -6,7 +6,8 @@
     </div>
     <img class="right-image" src="build/img/icon_dot@3x.png" ng-click="openPopover($event)"/>
     <div ng-click="openTimer()">
-      <img ng-src="build/img/bathroom/btn_devicedetail_bathroomheater_time.png" class="time-img"/>
+      <img ng-src="build/img/bathroom/btn_devicedetail_bathroomheater_time.png" class="time-img"  ng-if="isBigScreenOk" />
+      <img ng-src="build/img/bathroom/btn_devicedetail_bathroomheater_time.png" class="time-img2" ng-if="!isBigScreenOk" />
     </div>
     <!--<button class="button button-icon icon ion-more header_buttonRig" ng-click="openPopover($event)"></button>-->
   </div>
@@ -14,8 +15,10 @@
   <ion-content overflow-scroll="true" style="background-color: #0F0F0F;overflow: hidden;">
     <div class="device-info">
       <div class="device-info-status">
-        <img ng-src="build/img/bathroom/icon_devicedetail_wifi.png" class="box-img" ng-if="isBox" />
-        <span class="box-text" translate="{{signalStatus}}"  ng-if="isBox"></span>
+        <img ng-src="build/img/bathroom/icon_devicedetail_wifi.png" class="box-img" ng-if="isBigScreenOk" />
+        <span class="box-text" translate="{{signalStatus}}"  ng-if="isBigScreenOk"></span>
+        <img ng-src="build/img/bathroom/icon_devicedetail_wifi.png" class="box-img2" ng-if="!isBigScreenOk" />
+        <span class="box-text2" translate="{{signalStatus}}"  ng-if="!isBigScreenOk"></span>
         <!--<img ng-src="build/img/bathroom/icon_devicedetail_warning.png" class="signal-img"/>-->
         <!--<span class="signal-text" translate="bathroom.using"></span>-->
         <span class="timeout-font" translate="bathroom.timeout" ng-if="isShowTime"></span>

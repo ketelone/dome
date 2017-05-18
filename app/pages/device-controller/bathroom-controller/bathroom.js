@@ -168,6 +168,7 @@ angular.module('bathroomModule')
       var isLight = false;
       var isBreathOk = false;
       $scope.isNetOk = true;
+      $scope.isBigScreenOk = $window.innerWidth > 1000 ? true : false;
 
       $scope.goBack = function(){
         document.removeEventListener("SocketPlugin.receiveTcpData", receiveBathroomTcpData, false);
