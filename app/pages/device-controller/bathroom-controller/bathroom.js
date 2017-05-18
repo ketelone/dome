@@ -107,7 +107,7 @@ angular.module('bathroomModule')
           switchType: "Light",
           desc: "bathroom.light"
         },
-       /* {
+        {
           id: "8",
           switchPictureUrl: "build/img/bathroom/wind_nor.png",
           isOpen: false,
@@ -118,7 +118,7 @@ angular.module('bathroomModule')
           setTime: "",
           switchType: "Wind direction",
           desc: "bathroom.windDirection"
-        },*/
+        },
         {
           id: "9",
           switchPictureUrl: "build/img/bathroom/stop_nor.png",
@@ -1446,8 +1446,12 @@ angular.module('bathroomModule')
 
         //$scope.isTouchSwitch = true;
         //$scope.bathroomItem = item;
-
-        startCommand(item);
+        if(item.switchType == 'Wind direction'){
+          item.isOpen = false;
+          openModal();
+        }else {
+          startCommand(item);
+        }
 
       };
 
@@ -1827,7 +1831,7 @@ angular.module('bathroomModule')
         $scope.modal = modal;
       });
       $scope.value = [{id:2,des:'bathroom.fixed'}, {id:3,des:'bathroom.rock'}];
-      $scope.openModal = function () {
+      var openModal = function () {
         if($scope.value.length!==0) {
           $scope.modal.show();
           setTimeout(function () {
