@@ -10,6 +10,7 @@ angular.module('toiletControlModule')
     'checkVersionService',
     'hmsPopup',
     'cmdService',
+    'SettingsService',
     'hmsHttp',
     function ($scope,
               $state,
@@ -21,11 +22,27 @@ angular.module('toiletControlModule')
               checkVersionService,
               hmsPopup,
               cmdService,
+              SettingsService,
               hmsHttp
     ) {
+      var getDeviceIlightset = function(){
+        var skuList = SettingsService.get('sku');
+        var deviceId = "";
+        var deviceList = localStorage.deviceInfo.split(";");
+        for(var i = 0; i < deviceList.length; i ++){
+          var deviceInfo = deviceList[i].split(",");
+          for(var j =0 ; j < skuList.length; j ++){
+            if(deviceInfo[0] == skuList[j]){
+              deviceId =  deviceInfo[1];
+              return deviceId;
+            };
+          };
+        };
+        return deviceId;
+      };
       var lighttersetcmdObj = {
         boxid:localStorage.boxIp,
-        diviceid:'8BE850C2',
+        diviceid:getDeviceIlightset(),
         header:'8877',
         idx:1,
         ctrId:'E3',
@@ -140,13 +157,14 @@ angular.module('toiletControlModule')
           lightsetval.flag = false;
         };
         window.localStorage.lightModal = JSON.stringify(lightsetval);
+        document.removeEventListener("SocketPlugin.receiveTcpData", receiveTcpDatalightset, false);
         publicMethod.goBack();
       };
       /**
        *@params:
        *@disc:accept ack or status;
        */
-      document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
+      var receiveTcpDatalightset =  function (result) {
         var resultOn = result[0];
         if(resultOn.from.uid === lighttersetcmdObj.diviceid){
           if (resultOn.data.cmd) {
@@ -166,7 +184,8 @@ angular.module('toiletControlModule')
             $scope.$apply();
           };
         };
-      }, false);
+      };
+      document.addEventListener('SocketPlugin.receiveTcpData',receiveTcpDatalightset, false);
       /**
        *@params:cmdvalue(value) type(chu fa type) name(current chu fa name)
        *@disc:send clound Instruction;

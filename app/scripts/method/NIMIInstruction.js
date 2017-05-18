@@ -701,21 +701,36 @@ function analysisFlushStatus(ackStr) {
  * @param week 周几 {1,2,3,4,5,6,7}
  */
 NIMI.prototype.setDeviceTime = function (year, month, date, hour, minute, week) {
-  console.log(angular.toJson({
-    year:year,
-    month:month,
-    date:date,
-    hour:hour,
-    minute:minute,
-    week:week
-  }))
   var cmd = "0f";
-  cmd += getHex(sevenBitToCheck(year.toString(2))
-    + fourBitToCheck(month.toString(2))
+  var param_year = sevenBitToCheck(year.toString(2));
+  var param_month_h = "";
+  var param_month_d = "";
+  var param_minute_h = "";
+  var param_minute_d = "";
+  var ms = month.toString();
+  var mins = minute.toString();
+  if (ms.length > 1) {
+    param_month_h = "1";
+    param_month_d = threeBitToCheck(parseInt(ms.subString(ms.size - 1, ms.size)).toString(2));
+  } else {
+    param_month_h = "0";
+    param_month_d = threeBitToCheck(month.toString(2));
+  }
+  if (mins.length > 1) {
+    param_minute_h = threeBitToCheck(parseInt(mins.substring(0, 1)).toString(2));
+    param_minute_d = threeBitToCheck(parseInt(mins.substring(mins.length - 1, mins.length)).toString(2));
+  } else {
+    param_minute_h = "000";
+    param_minute_d = threeBitToCheck(parseInt(mins.substring(mins.length - 1, mins.length)).toString(2));
+  }
+  cmd += getHex(param_year
+    + param_month_h
+    + param_month_d
     + fiveBitToCheck(date.toString(2))
     + fiveBitToCheck(hour.toString(2))
-    + sixBitToCheck(minute.toString(2))
-    + threeBitToCheck(week.toString(2))
+    + param_minute_h
+    + param_minute_d
+    + threeBitToCheck((week - 1).toString(2))
     + "00");
   return cmd;
 };

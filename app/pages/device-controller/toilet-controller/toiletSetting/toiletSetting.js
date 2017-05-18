@@ -11,6 +11,7 @@ angular.module('toiletControlModule')
     'checkVersionService',
     'hmsPopup',
     'cmdService',
+    'SettingsService',
     function ($scope,
               $state,
               $translate,
@@ -21,9 +22,11 @@ angular.module('toiletControlModule')
               baseConfig,
               checkVersionService,
               hmsPopup,
-              cmdService
+              cmdService,
+              SettingsService
     ) {
       $scope.goBack = function () {
+        document.removeEventListener("SocketPlugin.receiveTcpData", receiveTcpDatatoseting, false);
         publicMethod.goBack();
       };
       $scope.chongshuisetval = false,
@@ -33,9 +36,24 @@ angular.module('toiletControlModule')
         jieDianSeting:"toiletSetting.never",
         jiedianDanwei:""
       };
+      var getDeviceItoset = function(){
+        var skuList = SettingsService.get('sku');
+        var deviceId = "";
+        var deviceList = localStorage.deviceInfo.split(";");
+        for(var i = 0; i < deviceList.length; i ++){
+          var deviceInfo = deviceList[i].split(",");
+          for(var j =0 ; j < skuList.length; j ++){
+            if(deviceInfo[0] == skuList[j]){
+              deviceId =  deviceInfo[1];
+              return deviceId;
+            };
+          };
+        };
+        return deviceId;
+      };
       var tolitersetcmdObj = {
         boxid:localStorage.boxIp,
-        diviceid:'8BE850C2',
+        diviceid:getDeviceItoset(),
         header:'8877',
         idx:1,
         ctrId:'E3',
@@ -49,7 +67,8 @@ angular.module('toiletControlModule')
       try {
         $scope.tosetstatustiveOnceFlag = 0;
         $scope.selectedType = "";
-        document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
+
+        var receiveTcpDatatoseting =  function (result) {
           // alert("resultOn" + angular.toJson(resultOn))
           var resultOn = result[0];
           if (resultOn.from.uid === tolitersetcmdObj.diviceid) {
@@ -104,7 +123,8 @@ angular.module('toiletControlModule')
               $scope.$apply();
             };
           };
-        }, false);
+        };
+        document.addEventListener('SocketPlugin.receiveTcpData',receiveTcpDatatoseting, false);
       }catch(e){
         alert(e.message)
       }
@@ -119,31 +139,6 @@ angular.module('toiletControlModule')
           hmsPopup.hideLoading();
           $scope.Toast.show("发生指令成功");
         },1000);
-        // hmsPopup.showLoading("<span translate='toiletSetting.loadingdata'></span>");
-        // var url = baseConfig.basePath + "/r/api/message/sendMessage";
-        // var paramter = cmdService.cloudCmd(cmdvalue,$scope.handlenapeListNape[index].cloudId);
-        // hmsHttp.post(url, paramter).success(
-        //   function(response){
-        //     hmsPopup.hideLoading();
-        //     //resolve
-        //     if(response.code == 200){
-        //       if(value.ack.toLowerCase() == "fa27"){
-        //         $scope.Toast.show(name+$translate.instant("toiletSetting.directesuccess"));
-        //         if(type === "autochongshui"){
-        //           $scope.chongshuisetval = !$scope.chongshuisetval;
-        //         }else if(type === "autochuchou"){
-        //           $scope.chuchousetval = !$scope.chuchousetval;
-        //         }
-        //         // $scope.selectChange(index);
-        //       }
-        //     }else{
-        //       $scope.Toast.show(name+$translate.instant("toiletSetting.directerror"));
-        //     }
-        //   }).
-        // error(function () {
-        //   hmsPopup.hideLoading();
-        //   $scope.Toast.show(name + $translate.instant("toiletSetting.loadingdataerrror"));
-        // })
       };
       $scope.changeCheckVal = function (type) {
         $scope.tosetstatustiveOnceFlag = 0;
