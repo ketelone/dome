@@ -199,10 +199,9 @@ angular.module('toiletControlModule')
               if(Math.abs(this.radSectionArr[this.i]-this.radSectionArr[this.i-1]) < Math.abs(this.radSectionArr[this.i]-this.radSectionArr[this.i+1])){
                 this.stoPosPoint = this.i-1;
                 if(this.i<=1){
-                  // if(slideDataObj.parNodeid === "toilet-warmjCtl"){
-                  //   slideDataObj.gearInit = 2;
-                  // }else
-
+                  if(slideDataObj.parNodeid === "toilet-warmjCtl"){
+                    slideDataObj.gearInit = 2;
+                  }else
                     if(slideDataObj.parNodeid === "toilet-lightCtl"){
                     if(this.i === 1){
                       slideDataObj.gearInit = "低";
@@ -211,9 +210,9 @@ angular.module('toiletControlModule')
                     slideDataObj.gearInit = 1;
                   }
                 }else{
-                    // if(slideDataObj.parNodeid === "toilet-warmjCtl"){
-                    //   slideDataObj.gearInit = this.i+1;
-                    // }else
+                    if(slideDataObj.parNodeid === "toilet-warmjCtl"){
+                      slideDataObj.gearInit = this.i+1;
+                    }else
                     if(slideDataObj.parNodeid === "toilet-lightCtl"){
                     if(this.i === 2){
                       slideDataObj.gearInit = '中';
@@ -234,9 +233,9 @@ angular.module('toiletControlModule')
                 };
               }else{
                 this.stoPosPoint = this.i;
-                // if(slideDataObj.parNodeid === "toilet-warmjCtl"){
-                //   slideDataObj.gearInit = this.i+2;
-                // }else
+                if(slideDataObj.parNodeid === "toilet-warmjCtl"){
+                  slideDataObj.gearInit = this.i+2;
+                }else
                 if(slideDataObj.parNodeid === "toilet-lightCtl"){
                   if(this.i+1 === 2){
                     slideDataObj.gearInit = "中";
@@ -297,7 +296,7 @@ angular.module('toiletControlModule')
         };
       };
       var currentRadObj;
-      setTimeout(function () {
+      $timeout(function () {
         //保存选择的数据项当前的档位
         $scope.handleRadSelected;
         $scope.getCurrentObj = function (index) {
@@ -497,7 +496,7 @@ angular.module('toiletControlModule')
             cmdService.sendCmd(tolitercmdObj.diviceid, cmdvalue, tolitercmdObj.boxid);
           };
         }catch(e){
-          alert(e.message)
+          alert(e.message);
         }
       };
       //quanwen
@@ -1117,7 +1116,10 @@ angular.module('toiletControlModule')
         $scope.currentSlideData = $scope.slideInitData;
         $scope.getStatusBackFalg = true;
         $scope.isSeatedStatusFlag = true;
-        $scope.handleOnceActionType="";
+        // $scope.handleOnceActionType="";
+        //yuan huan add or reduce select index
+        $scope.yhRadSelectedIndex;
+
         $scope.handlenapeSelectedIndex = 12;
         $scope.selectChangeFlag = true;
         $scope.selectIsType = 0;
@@ -1173,7 +1175,7 @@ angular.module('toiletControlModule')
       $scope.hanleInitTemple = function (index) {
         $scope.count=0;
         $scope.initHtmlTemplate($scope.currentSlideData);
-        setTimeout(function () {
+        $timeout(function () {
           $scope.getCurrentObj(0);
           //处理指令数据
           //处理女用和臀洗的模式选择
@@ -1355,24 +1357,10 @@ angular.module('toiletControlModule')
        */
       $scope.initRecycleCurnt = function (index) {
         $scope.handlenapeSelectedIndex = index;
-        if($scope.handleOnceActionType !== $scope.handlenapeListNape[index].matchdataid){
+        if(!$scope.handlenapeListNape[index].selecFlag){
           $scope.handlenapeListNape[index].selecFlag = true;
           $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgSeledUrl;
-          $scope.timelong= 15000;
-          if($scope.handlenapeListNape[index].matchdataid === "bigFlush" || $scope.handlenapeListNape[index].matchdataid === "smallFlush"){
-            $scope.timelong= 20000;
-          };
-          if(!$scope.handlenapeListNape[index].isManyDirective && $scope.handlenapeListNape[index].matchdataid !== "clear"){
-            $timeout(function () {
-              $scope.handlenapeListNape[index].selecFlag = false;
-              $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgUrlTemp;
-            },$scope.timelong)
-          };
         };
-        $scope.handleOnceActionType = $scope.handlenapeListNape[index].matchdataid;
-        // if($scope.currentSlideData[0].des === "init"){
-        //   $scope.currentSlideData = [];
-        // };
         if($scope.handlenapeListNape[index].handledata[0].des !== "init"){
           $scope.currentSlideDataTemp = $scope.currentSlideData.concat($scope.handlenapeListNape[index].handledata);
           $scope.currentSlideData = [];
@@ -1385,8 +1373,11 @@ angular.module('toiletControlModule')
         };
       };
       $scope.initRecycleRedce = function (index) {
-        $scope.handlenapeListNape[index].selecFlag = false;
-        $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgUrlTemp;
+        $scope.yhRadSelectedIndex= index;
+        if($scope.handlenapeListNape[index].selecFlag){
+          $scope.handlenapeListNape[index].selecFlag = false;
+          $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgUrlTemp;
+        };
         $scope.judgeIsHaveHandlesFlag = true;
         $scope.judgeIsHaveHandles();
         if($scope.judgeIsHaveHandlesFlag){
@@ -1482,24 +1473,12 @@ angular.module('toiletControlModule')
                       }else{
                         $scope.initRecycleRedce(4)
                       };
-                      var matchId = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].matchdataid;
-                      if(!$scope.overTiemFlag && $scope.currentSlideData[0].des !== "init"){
-                        if(matchId === "bigFlush" || matchId === "smallFlush" || matchId === "guangai" || matchId === "fangai" || matchId === "fanquan" || matchId === "clear"){
-                          return false;
-                        }else{
-                          $scope.$apply(function () {
-                            $scope.hanleInitTemple($scope.handlenapeSelectedIndex);
-                            $scope.clickSlideFlag = true;
-                          })
-                        };
+                      if($scope.currentSlideData[0].des !== "init"){
+                        $scope.hanleInitTemple($scope.handlenapeSelectedIndex);
+                        $scope.clickSlideFlag = true;
                       }else{
-                        if(matchId === "devicePop" || matchId === "bigFlush" || matchId === "smallFlush" || matchId === "guangai" || matchId === "fangai" || matchId === "fanquan" || matchId === "clear"){
-                          return false;
-                        }else{
-                          // $scope.overTiemFlag = false;
-                          $scope.clickSlideFlag = false;
-                          $scope.hanleInitTemple(12);
-                        };
+                        $scope.clickSlideFlag = false;
+                        $scope.hanleInitTemple(12);
                       };
                     };
                     // $scope.selectChange($scope.selectChangeFlag, $scope.handlenapeSelectedIndex, $scope.selectIsType);
@@ -1607,28 +1586,34 @@ angular.module('toiletControlModule')
                 };
                 if($scope.cmdReturnData !== resultOn.data.cmd[0].substring(12, resultOn.data.cmd[0].length - 2)){
                   $scope.cmdReturnData = resultOn.data.cmd[0].substring(12, resultOn.data.cmd[0].length - 2);
-                  //get device status
-                  // alert("status");
                   // alert("backDataCmd"+angular.toJson(backDataCmd));
-                  // alert("resultOn" + angular.toJson(resultOn))
-                  //handle status
                   //flush
                   try{
                   if(backDataCmd.flushStatus !== "000"){
-                    // $scope.overTiemFlag = false;
                     if(backDataCmd.flushType === "1"){
                       $scope.initRecycleCurnt(0);
                     }else if(backDataCmd.flushType === "0"){
                       $scope.initRecycleCurnt(1);
                     };
+                  }else{
+                    if($scope.cmdBackValue.flushStatus === "000"){
+                      if($scope.cmdBackValue.flushType==="0"){
+                        if($scope.handlenapeListNape[1].selecFlag){
+                          $scope.handlenapeListNape[1].selecFlag = false;
+                        };
+                      }else{
+                        if($scope.handlenapeListNape[0].selecFlag){
+                          $scope.handlenapeListNape[0].selecFlag = false;
+                        };
+                      };
+                    };
                   };
                     //nv yong
                     if(backDataCmd.seatedStatus === "1") {
                       if(backDataCmd.fontStatus === "1"){
-                        // $scope.overTiemFlag = false;
                         $scope.initRecycleCurnt(2);
                       }else{
-                        $scope.initRecycleRedce(2)
+                        $scope.initRecycleRedce(2);
                       };
                     }else{
                       $scope.initRecycleRedce(2);
@@ -1637,67 +1622,75 @@ angular.module('toiletControlModule')
                     if(backDataCmd.seatedStatus === "1") {
                       if(backDataCmd.rearStatus === "1"){
                         $scope.initRecycleCurnt(3);
-                        // $scope.overTiemFlag = false;
                       }else{
                         $scope.initRecycleRedce(3);
                       };
                     }else{
                       $scope.initRecycleRedce(3);
                     };
-                    //quan wenxxxx
-                    // if(backDataCmd.ambientStatus === "1"){
-                    //   $timeout(function () {
-                    //     $scope.selectChange("true",4,"0");
-                    //   },20);
-                    //   $scope.initTemplate = false;
-                    // };
-                    //nuanfen
-                    if(backDataCmd.seatedStatus === "1") {
-                      if(backDataCmd.dryerStatus === "1"){
-                        $scope.initRecycleCurnt(5);
-                        // $scope.overTiemFlag = false;
-                      }else{
-                        $scope.initRecycleRedce(5)
-                      };
+                  //quan wenxxxx
+                  // if(backDataCmd.ambientStatus === "1"){
+                  //   $timeout(function () {
+                  //     $scope.selectChange("true",4,"0");
+                  //   },20);
+                  //   $scope.initTemplate = false;
+                  // };
+                  //nuanfen
+                  if(backDataCmd.seatedStatus === "1") {
+                    if(backDataCmd.dryerStatus === "1"){
+                      $scope.initRecycleCurnt(5);
                     }else{
                       $scope.initRecycleRedce(5);
                     };
+                  }else{
+                    $scope.initRecycleRedce(5);
+                  };
                   //dengguan
                   if(backDataCmd.ambientStatus === "1"){
                     $scope.initRecycleCurnt(6);
-                    // $scope.overTiemFlag = false;
                   }else{
-                    $scope.initRecycleRedce(6)
-                  }
+                    $scope.initRecycleRedce(6);
+                  };
                   //nuanjiao
                   if(backDataCmd.feetHeater === "1"){
                     $scope.initRecycleCurnt(7);
-                    // $scope.overTiemFlag = false;
                   }else{
-                    $scope.initRecycleRedce(7)
+                    $scope.initRecycleRedce(7);
                   };
                   //guangai
                   if(backDataCmd.lidRingStatus === "110"){
                     $scope.initRecycleCurnt(8);
-                    // $scope.overTiemFlag = false;
+                  }else{
+                    if($scope.cmdBackValue.lidRingStatus === "00"){
+                      if($scope.handlenapeListNape[8].selecFlag){
+                        $scope.handlenapeListNape[8].selecFlag = false;
+                      };
+                    };
                   };
                   //fangai
                   if(backDataCmd.lidRingStatus === "011"){
                     $scope.initRecycleCurnt(9);
-                    // $scope.overTiemFlag = false;
+                  }else{
+                    if($scope.cmdBackValue.lidRingStatus === "001" || $scope.cmdBackValue.lidRingStatus === "010"){
+                      if($scope.handlenapeListNape[9].selecFlag){
+                        $scope.handlenapeListNape[9].selecFlag = false;
+                      };
+                    };
                   };
                   //fanquan
                   if(backDataCmd.lidRingStatus === "100"){
                     $scope.initRecycleCurnt(10);
-                    // $scope.overTiemFlag = false;
+                  }else{
+                    if($scope.cmdBackValue.lidRingStatus === "001"){
+                      if($scope.handlenapeListNape[10].selecFlag){
+                        $scope.handlenapeListNape[10].selecFlag = false;
+                      };
+                    };
                   };
                   //clear
                   if(backDataCmd.wandStatus === "1" || backDataCmd.UVProgressStatus != 0 || backDataCmd.ballValve === "1"){
-                    // $timeout(function () {
                     $scope.handlenapeListNape[11].selecFlag = true;
                     $scope.handlenapeListNape[11].imgUrl = $scope.handlenapeListNape[11].imgSeledUrl;
-                    // },30);
-                    // $scope.overTiemFlag = false;
                     if(backDataCmd.wandStatus === "1"){
                       $scope.toiletController.modelTypeClear = "toiletController.clearextend";
                     }else if(backDataCmd.UVProgressStatus != 0){
@@ -1706,38 +1699,30 @@ angular.module('toiletControlModule')
                       $scope.toiletController.modelTypeClear = "toiletController.clearopen";
                     };
                   }else{
-                    // if($scope.toiletController.modelTypeClear !== "toiletController.gaunbi"){
-                    try{
-                    $scope.$apply(function () {
+                    $timeout(function () {
                       $scope.handlenapeListNape[11].selecFlag = false;
                       $scope.handlenapeListNape[11].imgUrl = $scope.handlenapeListNape[11].imgUrlTemp;
-                    });
-                    }catch(e){
-                      alert(e.message)
-                    }
-                    // };
+                    },0);
                     $scope.toiletController.modelTypeClear = "toiletController.gaunbi";
                   };
+
+
                   var matchId = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].matchdataid;
-                  if(!$scope.overTiemFlag && $scope.currentSlideData[0].des !== "init"){
+                  if($scope.currentSlideData[0].des !== "init"){
                     if(matchId === "bigFlush" || matchId === "smallFlush" || matchId === "guangai" || matchId === "fangai" || matchId === "fanquan" || matchId === "clear"){
                       // return false;
                     }else{
-                      $scope.$apply(function () {
-                        $scope.hanleInitTemple($scope.handlenapeSelectedIndex);
-                        $scope.clickSlideFlag = true;
-                      })
+                      $scope.hanleInitTemple($scope.handlenapeSelectedIndex);
+                      $scope.clickSlideFlag = true;
                     };
                   }else{
                     if(matchId === "devicePop" || matchId === "bigFlush" || matchId === "smallFlush" || matchId === "guangai" || matchId === "fangai" || matchId === "fanquan" || matchId === "clear"){
                       // return false;
                     }else{
-                      // $scope.overTiemFlag = false;
                       $scope.clickSlideFlag = false;
                       $scope.hanleInitTemple(12);
                     };
                   };
-                  // alert("$scope.getStatusBackFalg"+$scope.getStatusBackFalg)
                   if($scope.getStatusBackFalg){
                     hmsPopup.hideLoading();
                   };
@@ -1754,7 +1739,6 @@ angular.module('toiletControlModule')
                   } else {
                     // $scope.Toast.show($translate.instant("toiletController.devicePop") + $translate.instant("golabelvariable.directerror"));
                   };
-                  // alert("11"+$scope.cmdReturnData);
                   }catch(e){
                     alert(e.message)
                   }
@@ -1788,14 +1772,14 @@ angular.module('toiletControlModule')
           };
           if(($scope.handlenapeListNape[2].selecFlag || $scope.handlenapeListNape[3].selecFlag) && type){
             $scope.modal.show();
-            setTimeout(function () {
+            $timeout(function () {
               var ele = document.getElementsByClassName("toiletSingalModalTop");
               ele[0].style.top = $scope.screenHeig - 1*$scope.fontSize*$scope.value.length + 'px';
               ele[0].style.minHeight = 1*$scope.fontSize*$scope.value.length + 'px';
             },10)
           }else if($scope.handlenapeListNape[11].selecFlag===false && type === undefined){
             $scope.modal.show();
-            setTimeout(function () {
+            $timeout(function () {
               var ele = document.getElementsByClassName("toiletSingalModalTop");
               ele[0].style.top = $scope.screenHeig - 1*$scope.fontSize*$scope.value.length + 'px';
               ele[0].style.minHeight = 1*$scope.fontSize*$scope.value.length + 'px';
