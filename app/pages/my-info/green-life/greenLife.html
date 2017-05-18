@@ -1,35 +1,48 @@
 <ion-view view-title="绿色生活" class="greenLife" style="background-image: none">
 
- <div class="bar bar-header headColor " style="background-image: none">
-      <button class="button button-icon icon ion-ios-arrow-left iconColor" ng-click="goBack()" ></button>
-      <div class="h1 title"><span  class="iconColor" translate="my-info.greenLife.greenLife">绿&nbsp;色&nbsp;生&nbsp;活</span></div>
-      <button class="button button-icon icon iconColor" ></button>
+  <div class="bar bar-header headColor " style="background-image: none">
+    <button class="button button-icon icon ion-ios-arrow-left iconColor" ng-click="goBack()"></button>
+    <div class="h1 title">
+      <span class="iconColor" translate="my-info.greenLife.greenLife">绿&nbsp;色&nbsp;生&nbsp;活</span>
     </div>
+    <!--<button class="button button-icon icon ion-power"></button>-->
+  </div>
 
-  <ion-content class="content has-header has-footer" >
+  <ion-content class="content has-header has-footer">
     <div class="row">
-      <div class="col col-33"><span translate="my-info.greenLife.day " class="redWord">日</span></div>
-      <div class="col col-33"><span translate="my-info.greenLife.week" class="whiteWord">周</span></div>
-      <div class="col col-33"><span  translate="my-info.greenLife.month" class="whiteWord">月</span></div>
+      <div class="col col-33" ng-click="getData(1)">
+        <span translate="my-info.greenLife.day "
+              ng-class="{redWord:index==1,whiteWord:index!=1}">日</span>
+      </div>
+      <div class="col col-33" ng-click="getData(2)">
+        <span translate="my-info.greenLife.week"
+              ng-class="{redWord:index==2,whiteWord:index!=2}">周</span>
+      </div>
+      <div class="col col-33" ng-click="getData(3)">
+        <span translate="my-info.greenLife.month"
+              ng-class="{redWord:index==3,whiteWord:index!=3}">月</span>
+      </div>
     </div>
     <div class="title">
-      <div class="number">46.9</div>
+      <div class="number">{{data.waterConsumption}}</div>
       <div class="useWater" translate="my-info.greenLife.todayUsewater">当日用水量(L)</div>
       <div class="toCenter"><img class="waterImg" ng-src="build/img/my-info/Group 2.png"/></div>
     </div>
     <div class="title">
-      <div class="number">17.2</div>
+      <div class="number">{{data.pureWaterConsumption}}</div>
       <div class="useWater" translate="my-info.greenLife.todayUsecleanWater">当日纯净水用量(L)</div>
       <div class="toCenter"><img class="waterImg" ng-src="build/img/my-info/Group 2.png"/></div>
     </div>
     <div class="title">
-      <div class="number">4.5</div>
+      <div class="number">{{data.electricityConsumption}}</div>
       <div class="useWater" translate="my-info.greenLife.todayUseElectricity">当日用电量(度)</div>
       <div class="toCenter"><img class="waterImg" ng-src="build/img/my-info/Group 4.png"/></div>
     </div>
-  </ion-content >
-  <ion-footer-bar align-title="center" class="footer" >
-
-    <div translate="my-info.greenLife.fenDevice" class="title">分设备查看用水用电量</div>
+  </ion-content>
+  <ion-footer-bar align-title="center" class="footer" ng-click="goBack()">
+    <div class="title">
+      {{"my-info.greenLife.fenDevice" | translate}}
+      <button class="button button-icon icon ion-ios-arrow-right iconColor right-arrow"></button>
+    </div>
   </ion-footer-bar>
 </ion-view>
