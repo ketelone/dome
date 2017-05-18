@@ -14,9 +14,11 @@ angular.module('mcControlModule')
               publicMethod
              ) {
 
-
-      $scope.image = 'build/img/mc-controller/jg.png';
-
+      if (window.localStorage.language == "default"||window.localStorage.language == '中文简体') {
+        $scope.image = 'build/img/mc-controller/jg.png';
+      }else if(window.localStorage.language == 'English'){
+        $scope.image = 'build/img/mc-controller/jgen.png';
+      }
       $scope.goBack = function () {
         publicMethod.goBack();
       };

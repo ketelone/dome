@@ -243,7 +243,7 @@ angular.module('productModule')
         }
       ];
 
-      alert('发送的信息==='+JSON.stringify(value));
+      //alert('发送的信息==='+JSON.stringify(value));
       pluginToCtrl( value, "发送成功", "发送失败");
     }
 

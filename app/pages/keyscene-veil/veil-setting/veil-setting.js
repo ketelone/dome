@@ -26,26 +26,18 @@ angular.module('productModule')
       $scope.goBack = function () {
         publicMethod.goBack();
       };
-      $scope.chongshuisetval = false,
-      $scope.chuchousetval = false,
+      $scope.chongshuisetval = false;
+      $scope.chuchousetval = false;
       // $scope.anjianvoicesetval = true,
       // $scope.welcomemsetval = false
-      $scope.images = ['build/img/keyscene-period/period-setting/1.png',
-                        'build/img/keyscene-period/period-setting/2.png',
-                        'build/img/keyscene-period/period-setting/3.png',
-                        'build/img/keyscene-period/period-setting/4.png'];
-      $scope.index = 0;
-      $scope.image = $scope.images[0];
 
-      $scope.next = function () {
-        $scope.index += 1;
-        if($scope.index <4){
-          $scope.image = $scope.images[$scope.index];
-        }else{
-          $scope.index = 0;
-          $scope.image = $scope.images[0];
-        }
+      $scope.index = 0;
+      if (window.localStorage.language == "default"||window.localStorage.language == '中文简体') {
+        $scope.image = 'build/img/keyscene-veil/5.png';
+      }else if(window.localStorage.language == 'English'){
+        $scope.image = 'build/img/keyscene-veil/veilen.png';
       }
+
 
 
 
