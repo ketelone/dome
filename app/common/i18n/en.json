@@ -181,6 +181,9 @@
     "airfoilShower": "Airfoil",
     "mc": "Mirror Cabinet"
   },
+  "scene":{
+    "sceneSetting":"Scene Setting"
+  },
   "bigaunt": {
     "bigauntTitle": "Scenario Detail"
   },

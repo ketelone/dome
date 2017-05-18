@@ -181,6 +181,9 @@
     "airfoilShower": "智感龙头",
     "mc": "镜柜"
   },
+  "scene":{
+    "sceneSetting":"场景设置"
+  },
   "bigaunt": {
     "bigauntTitle": "场景详情"
   },

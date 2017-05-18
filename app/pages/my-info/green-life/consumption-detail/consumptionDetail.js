@@ -30,16 +30,19 @@ angular.module('myInfoModule')
       // 指定图表的配置项和数据
       var option = {
         title: {
-          text: ''
         },
         tooltip: {
         },
         legend: {
         },
-        color:['#A5FFF6'],
-        textStyle:{
-          color:'white',
+        grid:{
+          show:true,
+          left:0,
+          top:0,
+          right:0,
+          // bottom:0,
         },
+        color:['#A5FFF6'],
         xAxis: {
           type: 'category',
           data: [1,2,3,4,5,6,7],
@@ -52,11 +55,20 @@ angular.module('myInfoModule')
           axisLabel:{
             textStyle:{
               fontSize:24,
+              color:'white',
             }
           },
           axisPointer:{
             show:true,
-          }
+            label:{
+              show:false,
+            },
+            lineStyle:{
+              width:3,
+              color:'white',
+            }
+          },
+          // triggerEvent:true,
         },
         yAxis: {
           show:false,
