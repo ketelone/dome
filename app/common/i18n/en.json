@@ -69,7 +69,16 @@
       "todayUsewater": "Daily Water Consumption(L)",
       "todayUsecleanWater": "Daily Pure Water Consumption(L)",
       "todayUseElectricity": "Daily Power Consumption(kw/h)",
-      "fenDevice": "Water Consumption by Device"
+      "fenDevice": "Water Consumption by Device",
+      "device":{
+        "toilet": "Toilet",
+        "waterPurifier": "Central Purification",
+        "bathroomHeader": "Bathroom Heater",
+        "bathtub": "Bathtub",
+        "nextgen": "Shower",
+        "airfoilShower": "Airfoil",
+        "mc": "Mirror Cabinet"
+      }
     },
     "my-room":{
       "restroom":"Bathroom",
@@ -172,6 +181,9 @@
     "airfoilShower": "Airfoil",
     "mc": "Mirror Cabinet",
     "online": "Online"
+  },
+  "scene":{
+    "sceneSetting":"Scene Setting"
   },
   "bigaunt": {
     "bigauntTitle": "Scenario Detail"

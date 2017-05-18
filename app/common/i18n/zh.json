@@ -70,7 +70,16 @@
       "todayUsewater": "当日用水量(L)",
       "todayUsecleanWater": "当日用纯净水量(L)",
       "todayUseElectricity": "当日用电量(度)",
-      "fenDevice": "分设备查看用水用电量"
+      "fenDevice": "分设备查看用水用电量",
+      "device":{
+        "toilet": "马桶",
+        "waterPurifier": "中央净水器",
+        "bathroomHeader": "浴霸",
+        "bathtub": "浴缸",
+        "nextgen": "花洒",
+        "airfoilShower": "智感龙头",
+        "mc": "镜柜"
+      }
     },
     "my-room": {
       "restroom": "卫生间",
@@ -173,6 +182,9 @@
     "airfoilShower": "智感龙头",
     "mc": "镜柜",
     "online": "设备在线"
+  },
+  "scene":{
+    "sceneSetting":"场景设置"
   },
   "bigaunt": {
     "bigauntTitle": "场景详情"

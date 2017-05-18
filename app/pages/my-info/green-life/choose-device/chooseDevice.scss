@@ -1,0 +1,26 @@
+.chooseDevice{
+
+  .headColor{
+    background-color: $global-head-bg;
+    background-image: none;
+  }
+  .whiteColor {
+    color: $color-base;
+  }
+
+  .itemStyle{
+    background-color: #0D0F11;
+    color: $color-base;
+    //border: 0;
+    border-top:0 ;
+    border-bottom: 0.01rem solid #2D3234;
+    margin:0;
+  }
+
+  .item-icon{
+    color:#565A64;
+    margin-right:0.3rem;
+    font-size:0.6rem;
+  }
+
+}
