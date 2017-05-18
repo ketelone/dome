@@ -335,9 +335,9 @@ angular.module('toiletControlModule')
                 $scope.currentSlideData[index].gearInit = 3;
               };
             };
-            if(slideDataObj.parNodeid === "toilet-warmjCtl"){
-              $scope.currentSlideData[index].gearInit =$scope.currentSlideData[index].gearInit-1;
-            };
+            // if(slideDataObj.parNodeid === "toilet-warmjCtl"){
+            //   $scope.currentSlideData[index].gearInit =$scope.currentSlideData[index].gearInit-1;
+            // };
             currentRadObj.drawc(currentRadObj.cr2,currentRadObj.starRad+ currentRadObj.radRange * ($scope.currentSlideData[index].gearInit-1),"type");
             currentRadObj.drawCircleFill(currentRadObj.cr3,currentRadObj.starRad+currentRadObj.radRange * ($scope.currentSlideData[index].gearInit-1));
             currentEventObj.addEventListener( 'touchstart', function( e ){
