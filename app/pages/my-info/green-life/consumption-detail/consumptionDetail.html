@@ -1,0 +1,50 @@
+<ion-view view-title="绿色生活" class="consumptionDetail" style="background-image: none">
+
+  <ion-header-bar class="headColor">
+    <button class="button button-icon icon ion-ios-arrow-left whiteColor" ng-click="goBack()"></button>
+    <div class="h1 title whiteColor" translate={{device}}></div>
+  </ion-header-bar>
+
+  <ion-content style="background-color: #0D0F11;">
+
+    <div class="data-echarts">
+      <div class="row">
+        <div class="col col-33" ng-click="getData(1)">
+        <span translate="my-info.greenLife.day "
+              ng-class="{selectedWord:index==1,unselectedWord:index!=1}">日</span>
+        </div>
+        <div class="col col-33" ng-click="getData(2)">
+        <span translate="my-info.greenLife.week"
+              ng-class="{selectedWord:index==2,unselectedWord:index!=2}">周</span>
+        </div>
+        <div class="col col-33" ng-click="getData(3)">
+        <span translate="my-info.greenLife.month"
+              ng-class="{selectedWord:index==3,unselectedWord:index!=3}">月</span>
+        </div>
+      </div>
+      <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+      <div id="main" style="width: 100%;height:100%;"></div>
+    </div>
+
+    <div class="row consumptionPosition">
+      <div class="col col-33">
+        <div class="number">{{data.waterConsumption}}</div>
+        <div class="useWater" translate="my-info.greenLife.todayUsewater">当日用水量(L)</div>
+        <img class="waterImg" ng-src="build/img/my-info/Group 2.png"/>
+      </div>
+      <div class="col col-33">
+        <div class="number">{{data.waterConsumption}}</div>
+        <div class="useWater" translate="my-info.greenLife.todayUsewater">当日用水量(L)</div>
+        <img class="waterImg" ng-src="build/img/my-info/Group 2.png"/>
+      </div>
+      <div class="col col-33">
+        <div class="number">{{data.waterConsumption}}</div>
+        <div class="useWater" translate="my-info.greenLife.todayUsewater">当日用水量(L)</div>
+        <img class="waterImg" ng-src="build/img/my-info/Group 2.png"/>
+      </div>
+    </div>
+
+  </ion-content>
+
+</ion-view>
+

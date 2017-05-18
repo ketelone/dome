@@ -1,5 +1,8 @@
+/**
+ * Created by Angela on 2017/5/17.
+ */
 angular.module('myInfoModule')
-  .controller('greenLifeCtrl', [
+  .controller('consumptionDetailCtrl', [
     '$scope','$state','baseConfig','$ionicLoading',
     '$http','$timeout','$ionicHistory','$ionicPlatform',
     '$ionicScrollDelegate','hmsPopup','$rootScope',
@@ -9,7 +12,7 @@ angular.module('myInfoModule')
               $ionicPlatform,$ionicScrollDelegate,
               hmsPopup,$rootScope, publicMethod,$stateParams) {
 
-      //后退
+
       $scope.goBack = function(){
         $ionicHistory.goBack();
       };
@@ -20,6 +23,57 @@ angular.module('myInfoModule')
       //用水量和用电量的单位
       $scope.waterUnit=localStorage.waterUnit?localStorage.waterUnit:'greenLife.waterUnit';
       $scope.electricityUnit=localStorage.electricityUnit?localStorage.electricityUnit:'greenLife.electricityUnit';
+
+      // 基于准备好的dom，初始化echarts实例
+      var myChart = echarts.init(document.getElementById('main'));
+
+      // 指定图表的配置项和数据
+      var option = {
+        title: {
+          text: ''
+        },
+        tooltip: {
+        },
+        legend: {
+        },
+        color:['#A5FFF6'],
+        textStyle:{
+          color:'white',
+        },
+        xAxis: {
+          type: 'category',
+          data: [1,2,3,4,5,6,7],
+          axisLine:{
+            show:false,
+          },
+          axisTick:{
+            show:false,
+          },
+          axisLabel:{
+            textStyle:{
+              fontSize:24,
+            }
+          },
+          axisPointer:{
+            show:true,
+          }
+        },
+        yAxis: {
+          show:false,
+        },
+        series: [{
+          type: 'line',
+          data: [5, 20, 36, 10, 10, 20,0],
+          lineStyle:{
+            normal:{
+              width:4,
+            }
+          }
+        }]
+      };
+
+      // 使用刚指定的配置项和数据显示图表。
+      myChart.setOption(option);
 
       //绿色房间数据
       $scope.data={
@@ -60,13 +114,6 @@ angular.module('myInfoModule')
         // $timeout(function () {
         //   hmsPopup.hideLoading();
         // },1000);
-      };
-
-      $scope.getDetail=function () {
-        $state.go('consumptionDetail',{
-          "device":$scope.device,
-          "index":$scope.index
-        });
       };
 
     }]);

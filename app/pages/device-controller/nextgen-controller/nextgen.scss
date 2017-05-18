@@ -1,49 +1,5 @@
 .nextgen {
-
-  .device-info{
-    position: relative;
-  }
-
-  .box-img{
-    position: absolute;
-    width: 0.29rem;
-    height: 0.22rem;
-    margin-left: 0.9rem;
-    margin-top: 1.06rem;
-  }
-  .box-text{
-    position: absolute;
-    margin-left: 1.31rem;
-    margin-top: 1.01rem;
-    width: 1.5rem;
-    height: 0.28rem;
-    font-family: PingFangSC-Regular;
-    font-size: 0.24rem;
-    color: #565A64;
-    letter-spacing: 0.01rem;
-    line-height: 0.28rem;
-  }
-
-  .temp-info{
-    height: 6.5rem;
-    width:100%;
-    position: relative;
-  }
-
-  canvas {
-    display: block;
-  }
-
-  .font-col-b{
-    position: absolute;
-    width: 100%;
-    top:5rem;
-    font-family: DINCondensed-Bold;
-    font-size: 0.7rem;
-    color: #FFFFFF;
-  }
-
-  .right-image{
+  .right-image {
     right: 0.2rem;
     width: 23px;
     height: 23px;
@@ -53,18 +9,91 @@
     box-sizing: content-box;
     z-index: 5;
   }
-
   .toilet-bg {
     background-color: $global-head-bg;
   }
-
   .colorhead {
     color: white;
   }
-
+  .toilet-conninfo {
+    padding-top: 0.86rem;
+    width: 100%;
+    height: auto;
+    .toilet-conninfo-signal {
+      margin-left: 0.9rem;
+      height: 0.28rem;
+      line-height: 0.28rem;
+      .conninfo-signal-img {
+        vertical-align: middle;
+        height: 0.25rem;
+        width: 0.354rem;
+        margin-right: 0.106rem;
+      }
+      .conninfo-signal-info {
+        width: 1.21rem;
+        font-size: $font-size-small;
+        color: $color-text-value;
+      }
+    }
+    .toilet-conninfo-isues {
+      display: inline-block;
+      margin-left: 0.49rem;
+      height: 0.28rem;
+      line-height: 0.28rem;
+      .conninfo-isues-img {
+        width: 0.235rem;
+        margin-right: 0.075rem;
+      }
+      .conninfo-isues-info {
+        display: inline-block;
+        width: 1.21rem;
+        font-size: $font-size-small;
+        color: $color-text-deviceinfo;
+      }
+    }
+  }
+  .toilet-parameterctl {
+    position: relative;
+    margin-top: 0.8rem;
+    margin-left: 0.93rem;
+    width: 5.6rem;
+    height: 5.6rem;
+    .canves-pos {
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+    .toilet-parameterctl-dataimg {
+      position: absolute;
+      top: 1.35rem;
+      left: 1.70rem;
+      height: 2.6rem;
+      width: 2.6rem;
+      text-align: center;
+      z-index: 10;
+      .conninfo-parameterctl-img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .toilet-parameterctl-data {
+      z-index: 4;
+      position: absolute;
+      left: 0;
+      top: 2.6rem;
+      width: 5.6rem;
+      height: 5.6rem;
+      text-align: center;
+      .toilet-parameterctl-des {
+        color: white;
+        font-size: 0.7rem;
+        white-space: nowrap;
+      }
+    }
+  }
   .toilet-handlenape-selec {
     position: absolute;
-    top: 7.75rem;
+    top: 6.86rem;
     z-index: 10;
     width: 100%;
     height: 1.08rem;
@@ -79,22 +108,22 @@
       color: $global-border;
       white-space: nowrap;
       float: right;
-      margin-right:0.3rem;
+      margin-right: 0.3rem;
     }
     .handlenape-selec-img {
       width: 0.193rem;
       height: 0.308rem;
-      float:right;
-      margin-right:0.9rem;
-      margin-top:0.4rem;
+      float: right;
+      margin-right: 0.9rem;
+      margin-top: 0.4rem;
     }
   }
-
   .toilet-handlenape {
     position: absolute;
-    top: 8.5rem;
+    top: 7.55rem;
     width: 100%;
-    height: 5rem;
+
+    //height: 3.86rem;
     .napes-border {
       border: 0.03rem solid $global-border;
       border-radius: 0.08rem;
@@ -105,7 +134,7 @@
       width: 20%;
       height: 1.5rem;
       line-height: 1.5rem;
-      margin:0.6rem 0.2rem;
+      margin: 0.6rem 0.2rem;
       text-align: center;
       .list-napes-img {
         width: 0.6rem;
@@ -122,10 +151,9 @@
       margin-bottom: 2.3rem;
     }
   }
-
   .is-water-switch {
     position: relative;
-    height: 6rem;
+    height: 5rem;
     .close {
       position: absolute;
       margin-top: 0.7rem;
@@ -151,9 +179,10 @@
       text-align: center;
     }
     .circle-choice {
+
       //width: 1.4rem;
-      //height: 1.4rem;
-      //border-radius: 100%;
+      // height: 1.4rem;
+      // border-radius: 100%;
       position: relative;
       .img-size {
         position: absolute;
@@ -162,5 +191,6 @@
       }
     }
   }
-
 }
+
+
