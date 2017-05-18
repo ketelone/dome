@@ -170,7 +170,8 @@
     "bathtub": "Bathtub",
     "nextgen": "Shower",
     "airfoilShower": "Airfoil",
-    "mc": "Mirror Cabinet"
+    "mc": "Mirror Cabinet",
+    "online": "Online"
   },
   "bigaunt": {
     "bigauntTitle": "Scenario Detail"
@@ -422,7 +423,7 @@
     "hotDrying": "Hot Dry",
     "breath": "Ventilation",
     "purify": "Air-Care",
-    "windDirection": "Flow",
+    "windDirection": "&nbsp;&nbsp;&nbsp;Flow",
     "light": "&nbsp;&nbsp;&nbsp;Light",
     "closeAll": "Stop all",
     "setting": "Setings",
@@ -444,7 +445,8 @@
     "fail": "fail",
     "openLightSuccess": "open light success",
     "openCoolSuccess": "open Cool success",
-    "timeout": "Count down"
+    "timeout": "Count down",
+    "save": "Save"
   },
   "spa": {
     "goHomeTitle": "Scenario Detail",

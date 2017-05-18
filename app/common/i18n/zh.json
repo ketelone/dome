@@ -171,7 +171,8 @@
     "bathtub": "浴缸",
     "nextgen": "花洒",
     "airfoilShower": "智感龙头",
-    "mc": "镜柜"
+    "mc": "镜柜",
+    "online": "设备在线"
   },
   "bigaunt": {
     "bigauntTitle": "场景详情"
@@ -446,7 +447,8 @@
     "fail": "fail",
     "openLightSuccess": "open light success",
     "openCoolSuccess": "open Cool success",
-    "timeout": "倒计时"
+    "timeout": "倒计时",
+    "save": "保存"
   },
   "spa": {
     "goHomeTitle": "场景详情",
