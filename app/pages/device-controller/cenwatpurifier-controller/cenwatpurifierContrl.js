@@ -125,7 +125,7 @@ angular.module('toiletControlModule')
         this.HideCircle = {x:this.canvsscreenHeight/2,y:this.canvsscreenWidth/2,r:this.canvsscreenHeight/2-0.4*this.rateInit,color:"black"};//档位圆
         //画档位圆
         this.drawDeliverCircle = function () {
-          drawRadian(this.cr1,this.deliverCircle,0,360);
+          drawRadian(this.cr1,this.deliverCircle,135,45);
           drawRadian(this.cr3,this.HideCircle,0,360);
         };
       };
@@ -159,7 +159,7 @@ angular.module('toiletControlModule')
           clearStatus:"cenwatpurifier.surplus",
           clearData:"",
           isShwoClearStatus:true
-        }
+        };
         /*
          moren-json
          init默认
