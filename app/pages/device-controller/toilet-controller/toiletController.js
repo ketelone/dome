@@ -199,9 +199,10 @@ angular.module('toiletControlModule')
               if(Math.abs(this.radSectionArr[this.i]-this.radSectionArr[this.i-1]) < Math.abs(this.radSectionArr[this.i]-this.radSectionArr[this.i+1])){
                 this.stoPosPoint = this.i-1;
                 if(this.i<=1){
-                  if(slideDataObj.parNodeid === "toilet-warmjCtl"){
-                    slideDataObj.gearInit = 2;
-                  }else
+                  // if(slideDataObj.parNodeid === "toilet-warmjCtl"){
+                  //   slideDataObj.gearInit = 2;
+                  // }else
+
                     if(slideDataObj.parNodeid === "toilet-lightCtl"){
                     if(this.i === 1){
                       slideDataObj.gearInit = "低";
@@ -210,9 +211,9 @@ angular.module('toiletControlModule')
                     slideDataObj.gearInit = 1;
                   }
                 }else{
-                    if(slideDataObj.parNodeid === "toilet-warmjCtl"){
-                      slideDataObj.gearInit = this.i+1;
-                    }else
+                    // if(slideDataObj.parNodeid === "toilet-warmjCtl"){
+                    //   slideDataObj.gearInit = this.i+1;
+                    // }else
                     if(slideDataObj.parNodeid === "toilet-lightCtl"){
                     if(this.i === 2){
                       slideDataObj.gearInit = '中';
@@ -233,9 +234,9 @@ angular.module('toiletControlModule')
                 };
               }else{
                 this.stoPosPoint = this.i;
-                if(slideDataObj.parNodeid === "toilet-warmjCtl"){
-                  slideDataObj.gearInit = this.i+2;
-                }else
+                // if(slideDataObj.parNodeid === "toilet-warmjCtl"){
+                //   slideDataObj.gearInit = this.i+2;
+                // }else
                 if(slideDataObj.parNodeid === "toilet-lightCtl"){
                   if(this.i+1 === 2){
                     slideDataObj.gearInit = "中";
@@ -629,8 +630,6 @@ angular.module('toiletControlModule')
           })
         }
       };
-
-
       //保存选择的数据项
       $scope.handleRadSelected;
       //档位滑动执行发指令操作

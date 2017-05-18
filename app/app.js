@@ -801,18 +801,18 @@ angular.module('myApp')
           //ny
           FRONT_SPRAY_PRESSURE:2,
           FRONT_SPRAY_POSITION:2,
-          FRONT_SPRAY_TMPT:1,
+          FRONT_SPRAY_TMPT:2,
           //tx
           REAR_PRESSURE:2,
           REAR_POSITION:2,
-          REAR_TMPT:1,
+          REAR_TMPT:2,
           //nf
           DRYER_PRESSURE:2,
-          DRYER_TMPT:1,
+          DRYER_TMPT:2,
           //nj
           DRYER_POWER:2,
           //qw
-          SEAT_TMPT:1,
+          SEAT_TMPT:2,
           //dg
           LIGHT_AMBIENT_BRIGHTNESS:1,
           LIGHT_BOWL_BRIGHTNESS:5,
