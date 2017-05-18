@@ -12,7 +12,6 @@ angular.module('mcControlModule')
               $compile,
               baseConfig,
               checkVersionService, SettingsService, $ionicHistory, $ionicSlideBoxDelegate, mcService, hmsHttp, cmdService, hmsPopup, $timeout, $ionicPopover, $translate) {
-      var sku = SettingsService.get('sku')
       $scope.fontSize = document.documentElement.clientWidth / 7.5;
       $scope.screenHeig = window.innerHeight;
       $scope.screenWidth = window.innerWidth;
@@ -27,17 +26,21 @@ angular.module('mcControlModule')
        *@return: device id
        *@disc: get device id
        */
-      var getDeviceId = function () {
-        if (localStorage.deviceInfo == undefined) {
-          return;
-        }
+      var getDeviceId = function(){
+        var skuList = SettingsService.get('sku');
+        var deviceId = "";
         var deviceList = localStorage.deviceInfo.split(";");
-        for (var i = 0; i < deviceList.length; i++) {
+        console.log(deviceList+"========");
+        for(var i = 0; i < deviceList.length; i ++){
           var deviceInfo = deviceList[i].split(",");
-          if (deviceInfo[0] == sku) {
-            return deviceInfo[1];
+          for(var j =0 ; j < skuList.length; j ++){
+            if(deviceInfo[0] == skuList[j]){
+              deviceId =  deviceInfo[1];
+              return deviceId;
+            }
           }
         }
+        return deviceId;
       };
       $scope.config =
         {

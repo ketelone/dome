@@ -12,24 +12,26 @@ angular.module('karessControlModule')
               $compile,
               baseConfig,
               checkVersionService, SettingsService, $ionicHistory, $ionicSlideBoxDelegate, karessService, hmsPopup, hmsHttp, cmdService, $timeout, $ionicPopover,$translate) {
-      var sku = SettingsService.get('sku');
       /**
        *@autor: caolei
        *@return: device id
        *@disc: get device id
        */
-      var getDeviceId = function () {
-        if (localStorage.deviceInfo == undefined) {
-          return;
-        }
+      var getDeviceId = function(){
+        var skuList = SettingsService.get('sku');
+        var deviceId = "";
         var deviceList = localStorage.deviceInfo.split(";");
-        console.log("----" + localStorage.deviceInfo);
-        for (var i = 0; i < deviceList.length; i++) {
+        console.log(deviceList+"========");
+        for(var i = 0; i < deviceList.length; i ++){
           var deviceInfo = deviceList[i].split(",");
-          if (deviceInfo[0] == sku) {
-            return deviceInfo[1];
+          for(var j =0 ; j < skuList.length; j ++){
+            if(deviceInfo[0] == skuList[j]){
+              deviceId =  deviceInfo[1];
+              return deviceId;
+            }
           }
         }
+        return deviceId;
       };
       var deviceId = getDeviceId();
 
