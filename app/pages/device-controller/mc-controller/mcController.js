@@ -41,8 +41,8 @@ angular.module('mcControlModule')
       };
       $scope.config =
         {
-          "liangDu": false,
-          "seWen": false
+          "light": false,
+          "wuOff": false
         }
       if (angular.isUndefined(localStorage.mcLiangdu)) {
         localStorage.mcLiangdu = '1';
@@ -51,8 +51,9 @@ angular.module('mcControlModule')
         localStorage.mcWendu = '1';
       }
       var deviceId = getDeviceId();
+      console.log(deviceId + "=========");
       var statusKaress = function () {
-        var value = cmdService.getCmd("8877", '01', '70', 'E3', '02');
+        var value = cmdService.getCmd("8877", '01', '70', 'E3', '0B');
         cmdService.sendCmd(deviceId, value, localStorage.boxIp);
       }
       var flagLoading = false;
@@ -115,7 +116,7 @@ angular.module('mcControlModule')
           imgSeledUrl: "build/img/mc-controller/icon_dengguang.png",
           imgUrlTemp: "build/img/mc-controller/icon_dengguangnor.png",
           handleDes: "mcController.zhushui",
-          selecFlag: $scope.config.liangDu,
+          selecFlag: $scope.config.light,
           handledata: $scope.slideTunBuData,
           isManyDirective: true
         },
@@ -124,7 +125,7 @@ angular.module('mcControlModule')
           imgSeledUrl: "build/img/mc-controller/icon_chuwu.png",
           imgUrlTemp: "build/img/mc-controller/icon_chuwunor.png",
           handleDes: "mcController.luoshui",
-          selecFlag: $scope.config.seWen,
+          selecFlag: $scope.config.wuOff,
           handledata: $scope.slideInitData
         },
         {
@@ -528,7 +529,7 @@ angular.module('mcControlModule')
         console.log(info.selecFlag);
         if (index == 0) {
           if (info.selecFlag == false) {
-            var value = mcService.getCmd("8877", 1, mcService.data.openLight, 0, 5);
+            var value = mcService.getCmd("8877", 1, mcService.data.openLight, 0, '0B');
             console.log(value);
             if (baseConfig.isCloudCtrl == true) {
               test(index, value, 'mcOpenLight');
@@ -537,14 +538,14 @@ angular.module('mcControlModule')
               cmdService.sendCmd(deviceId, value, localStorage.boxIp);
             }
           } else {
-            var value = mcService.getCmd("8877", '01', mcService.data.closeLight, 0, '05');
+            var value = mcService.getCmd("8877", '01', mcService.data.closeLight, 0, '0B');
             console.log(value);
             cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           }
         }
         if (index == 1) {
           if (info.selecFlag == false) {
-            var value = mcService.getCmd("8877", '01', mcService.data.openDemist, 0, '05');
+            var value = mcService.getCmd("8877", '01', mcService.data.openDemist, 0, '0B');
             if (baseConfig.isCloudCtrl == true) {
               test(index, value, 'mcDefogging');
             } else {
@@ -552,13 +553,13 @@ angular.module('mcControlModule')
               cmdService.sendCmd(deviceId, value, localStorage.boxIp);
             }
           } else {
-            var value = mcService.getCmd("8877", '01', mcService.data.closeDemist, 0, '05');
+            var value = mcService.getCmd("8877", '01', mcService.data.closeDemist, 0, '0B');
             console.log(value);
             cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           }
         }
         if (index == 2) {
-          var value = mcService.getCmd("8877", '01', mcService.data.closeAll, 0, '05');
+          var value = mcService.getCmd("8877", '01', mcService.data.closeAll, 0, '0B');
           console.log(value);
           cmdService.sendCmd(deviceId, value, localStorage.boxIp);
         }
@@ -567,20 +568,20 @@ angular.module('mcControlModule')
         }
 
 
-        for (var i = 0; i < handlenapeListNapeLen; i++) {
-          if (i !== index) {
-            $scope.handlenapeListNape[i].imgUrl = $scope.handlenapeListNape[i].imgUrlTemp;
-          }
-        }
-        ;
-        // 根据选择项来初始化选择项的
-        if ($scope.handlenapeListNape[index].handledata) {
-          $scope.currentSlideData = $scope.handlenapeListNape[index].handledata;
-          $scope.initHtmlTemplate($scope.currentSlideData);
-          setTimeout(function () {
-            $scope.getCurrentObj(0);
-          }, 20)
-        }
+        // for (var i = 0; i < handlenapeListNapeLen; i++) {
+        //   if (i !== index) {
+        //     $scope.handlenapeListNape[i].imgUrl = $scope.handlenapeListNape[i].imgUrlTemp;
+        //   }
+        // }
+        // ;
+        // // 根据选择项来初始化选择项的
+        // if ($scope.handlenapeListNape[index].handledata) {
+        //   $scope.currentSlideData = $scope.handlenapeListNape[index].handledata;
+        //   $scope.initHtmlTemplate($scope.currentSlideData);
+        //   setTimeout(function () {
+        //     $scope.getCurrentObj(0);
+        //   }, 20)
+        // }
       };
       //保存选择的数据项
       $scope.handleRadSelected;
@@ -611,7 +612,7 @@ angular.module('mcControlModule')
             var color = '41';
           }
           localStorage.mcWendu = $scope.slideTunBuData[1].gearInit;
-          var value2 = cmdService.getCmd("8877", '01', mcService.setLightParam(luminance, color), 'E3', '02');
+          var value2 = cmdService.getCmd("8877", '01', mcService.setLightParam(luminance, color), 'E3', '0B');
           console.log(value2);
           cmdService.sendCmd(deviceId, value2, localStorage.boxIp);
         }
@@ -624,25 +625,67 @@ angular.module('mcControlModule')
           var status = mcService.explainAck(result[0].data.cmd[0]);
           if (status.ack.indexOf('fa') >= 0) {
             karessButton(status);
-          } else if (status.ack.indexOf('1003') >= 0 || status.ack.indexOf('1002') >= 0 || status.ack.indexOf('1001') >= 0) {
+          } else if (status.ack.indexOf('1003') >= 0 || status.ack.indexOf('1002') >= 0) {
             $scope.Toast.show("操作失败！");
+            hmsPopup.hideLoading();
           } else {
-            var item = mcService.requestStatus(cmd);
-            if (item.type.indexOf('0A') >= 0) {
-              $scope.config.temp = item.value.temperature;
-              buttonChange();
-              hmsPopup.hideLoading();
-            } else if (item.type.indexOf('06') >= 0) {
-              $scope.config.level = item.value.waterLevel;
-              if ($scope.config.level == $scope.slideTunBuData[1].gearInit) {
-                $scope.config.fillerStatus = false;
-                $scope.handlenapeListNape[1].selecFlag = $scope.config.fillerStatus;
-                buttonChange();
-              } else {
-                buttonChange();
+            var item = mcService.explainAllStatus(cmd);
+            if (item.cmd == '86') {
+              if(item.status == 'lighting off'){
+                  $scope.config.light = false;
+              }else if (item.status == 'lighting on'){
+                $scope.config.light = true;
               }
+              $scope.handlenapeListNape[0].selecFlag = $scope.config.light;
+              buttonChange();
+              selectSlide();
+              hmsPopup.hideLoading();
+            } else if (item.cmd == '89') {
+              if(item.status == 'No human'){
+              }else if (item.status == 'Human Detected'){
+
+              }
+              buttonChange();
+              selectSlide();
+              hmsPopup.hideLoading();
+            } else if (item.cmd == '8a') {
+              if(item.status == 'off'){
+                $scope.config.wuOff = false;
+              }else if (item.status == 'on'){
+                $scope.config.wuOff = true;
+              }
+              $scope.handlenapeListNape[0].selecFlag = $scope.config.light;
+              buttonChange();
+              selectSlide();
               hmsPopup.hideLoading();
             }
+            function selectSlide(){
+              if ($scope.handlenapeListNape[0].selecFlag == true ) {
+                alert('dengguang');
+                alert(angular.toJson($scope.currentSlideData))
+                if($scope.currentSlideData.length == 2){
+                }else{
+                  $scope.currentSlideData = $scope.slideTunBuData;
+                  $scope.initHtmlTemplate($scope.currentSlideData);
+                  setTimeout(function () {
+                    $scope.getCurrentObj(0);
+                  }, 20)
+                }
+              } else if ($scope.handlenapeListNape[0].selecFlag == false) {
+                alert('一版');
+                alert(angular.toJson($scope.currentSlideData))
+                if($scope.currentSlideData.length == 1){}
+                else{
+                  $scope.currentSlideData = $scope.slideInitData;
+                  $scope.initHtmlTemplate($scope.currentSlideData);
+                  setTimeout(function () {
+                    $scope.getCurrentObj(0);
+                  }, 20)
+                }
+              }
+              $scope.$apply();
+            }
+
           }
         }
       }
@@ -685,11 +728,11 @@ angular.module('mcControlModule')
           if (status.ack.indexOf('fa') >= 0) {
             status.ack = status.ack.substring(2, 4);
             console.log(status)
-            if (status.ack == 28) {
+            if (status.ack == '28') {
               $scope.Toast.show("开灯成功！");
               changeColor();
             }
-            if (status.ack == 26) {
+            if (status.ack == '26') {
               $scope.Toast.show("除雾成功！");
               changeColor();
             }
@@ -705,7 +748,7 @@ angular.module('mcControlModule')
         }
         function changeColor() {
           $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
-          if (index == 5) {
+          if (index == 2) {
             for (var i = 0; i < $scope.handlenapeListNape.length; i++) {
               if (index == 1) {
               } else {

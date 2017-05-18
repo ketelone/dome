@@ -52,7 +52,8 @@ angular.module('karessControlModule')
           "luoshui": false,
           "touzhen": false,
           "chunjun": false,
-          "anmo": false
+          "anmo": false,
+          "anZhuang" : false
         }
       $scope.karessController = {
         modelType: localStorage.karessOutLet,
@@ -173,14 +174,14 @@ angular.module('karessControlModule')
           handledata: $scope.shuilianmoData,
           isManyDirective: true
         },
-        {
-          imgUrl: "build/img/karess-controller/icon_touzhennor.png",
-          imgSeledUrl: "build/img/karess-controller/icon_touzhen.png",
-          imgUrlTemp: "build/img/karess-controller/icon_touzhennor.png",
-          handleDes: "karessController.touzhen",
-          selecFlag: $scope.config.luoshui,
-          handledata: $scope.slideInitData
-        },
+        // {
+        //   imgUrl: "build/img/karess-controller/icon_touzhennor.png",
+        //   imgSeledUrl: "build/img/karess-controller/icon_touzhen.png",
+        //   imgUrlTemp: "build/img/karess-controller/icon_touzhennor.png",
+        //   handleDes: "karessController.touzhen",
+        //   selecFlag: $scope.config.luoshui,
+        //   handledata: $scope.slideInitData
+        // },
         {
           imgUrl: "build/img/karess-controller/icon_beibujiarenor.png",
           imgSeledUrl: "build/img/karess-controller/icon_beibujiare.png",
@@ -254,7 +255,7 @@ angular.module('karessControlModule')
           "<canvas id={{list.canves03}} class='canves-pos'></canvas>" +
           "<canvas id={{list.canves04}} class=''canves-pos'></canvas>" +
           "<div class='toilet-parameterctl-data' ng-if='!list.parameterctlFlag'>" +
-          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 1'>{{config.temp}}</span>" +
+          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 1'>{{config.temp}}℃</span>" +
           "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 2  && list.gearInit == 1'>25%</span>" +
           "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 2  && list.gearInit == 2'>50%</span>" +
           "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 2  && list.gearInit == 3'>75%</span>" +
@@ -583,6 +584,10 @@ angular.module('karessControlModule')
           $timeout(function () {
             hmsPopup.hideLoading();
           }, 500);
+          if($scope.config.anZhuang == false){
+            $scope.Toast.show($translate.instant("karessController.DTVflag"));
+            return;
+          }
           if (info.selecFlag == false) {
             //tingzhizhushui
             var value1 = cmdService.getCmd("8877", '01', karessService.data.closeDrain, 'E3', '02');
@@ -669,22 +674,22 @@ angular.module('karessControlModule')
             cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           }
         }
+        // if (index == 3) {
+        //   hmsPopup.showLoading();
+        //   $timeout(function () {
+        //     hmsPopup.hideLoading();
+        //   }, 500);
+        //   if (info.selecFlag == false) {
+        //     var value = cmdService.getCmd("8877", '01', karessService.data.openMassagePillow, 'E3', '02');
+        //     console.log(value);
+        //     cmdService.sendCmd(deviceId, value, localStorage.boxIp);
+        //   } else {
+        //     var value = cmdService.getCmd("8877", '01', karessService.data.closeMassagePillow, 'E3', '02');
+        //     console.log(value);
+        //     cmdService.sendCmd(deviceId, value, localStorage.boxIp);
+        //   }
+        // }
         if (index == 3) {
-          hmsPopup.showLoading();
-          $timeout(function () {
-            hmsPopup.hideLoading();
-          }, 500);
-          if (info.selecFlag == false) {
-            var value = cmdService.getCmd("8877", '01', karessService.data.openMassagePillow, 'E3', '02');
-            console.log(value);
-            cmdService.sendCmd(deviceId, value, localStorage.boxIp);
-          } else {
-            var value = cmdService.getCmd("8877", '01', karessService.data.closeMassagePillow, 'E3', '02');
-            console.log(value);
-            cmdService.sendCmd(deviceId, value, localStorage.boxIp);
-          }
-        }
-        if (index == 4) {
           hmsPopup.showLoading();
           $timeout(function () {
             hmsPopup.hideLoading();
@@ -701,7 +706,7 @@ angular.module('karessControlModule')
             cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           }
         }
-        if (index == 5) {
+        if (index == 4) {
           hmsPopup.showLoading();
           $timeout(function () {
             hmsPopup.hideLoading();
@@ -710,7 +715,7 @@ angular.module('karessControlModule')
           console.log(value);
           cmdService.sendCmd(deviceId, value, localStorage.boxIp);
         }
-        if (index == 6) {
+        if (index == 5) {
           hmsPopup.showLoading();
           $timeout(function () {
             hmsPopup.hideLoading();
@@ -738,7 +743,7 @@ angular.module('karessControlModule')
         //     cmdService.sendCmd(deviceId, value, localStorage.boxIp);
         //   }
         // }
-        if (index == 7) {
+        if (index == 6) {
           $state.go('karessSetting');
         }
 
@@ -766,7 +771,7 @@ angular.module('karessControlModule')
       $scope.openModal = function () {
         if ($scope.config.fillerStatus == true) {
         } else {
-          $scope.Toast.show($translate.instant("golabelvariable.directesuccess"));
+          $scope.Toast.show($translate.instant("karessController.tishichushuikou"));
           return;
         }
         if ($scope.value.length !== 0) {
@@ -948,6 +953,12 @@ angular.module('karessControlModule')
               }
               $scope.handlenapeListNape[6].selecFlag = $scope.config.chunjun;
               buttonChange();
+            }else if (item.type.indexOf('C0')){
+              if (item.value.status == '00') {
+                $scope.config.anZhuang = false;
+              } else {
+                $scope.config.anZhuang = true;
+              }
             }
             function selectSlide(){
               if ($scope.handlenapeListNape[0].selecFlag == true && $scope.handlenapeListNape[2].selecFlag == true) {
@@ -1107,7 +1118,7 @@ angular.module('karessControlModule')
         }
         function changeColor() {
           $scope.handlenapeListNape[index].selecFlag = !$scope.handlenapeListNape[index].selecFlag;
-          if (index == 5) {
+          if (index == 4) {
             for (var i = 0; i < $scope.handlenapeListNape.length; i++) {
               if (index == 1) {
               } else {

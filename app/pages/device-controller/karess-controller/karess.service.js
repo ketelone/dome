@@ -234,6 +234,10 @@ angular.module('karessControlModule')
                 var valStatus = {status:data.substring(2,4)}; // 返回
                 out.value = valStatus;
                 break;
+              case 'C0':
+                var valStatus = {status:data.substring(2,4)}; // 返回
+                out.value = valStatus;
+                break;
             }
           }
           return out;

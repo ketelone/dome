@@ -16,7 +16,8 @@
     "linkError": "超时，请重试",
     "mixt": "此功能与执行功能互斥",
     "directiveError": "指令执行失败,请重试",
-    "nowError" : "该功能暂不可用"
+    "nowError" : "该功能暂不可用",
+    "tcpError" : "连接已中断"
   },
   "my-info": {
     "myhome": "我家",
@@ -500,7 +501,8 @@
     "wenDu": "温度",
     "shuiWen": "水温",
     "shuiWei": "水位",
-    "loading": "网络连接异常！"
+    "loading": "网络连接异常！",
+    "DTVflag" : "此功能不可使用，请安装附件"
   },
   "mcController": {
     "setting": "设置",

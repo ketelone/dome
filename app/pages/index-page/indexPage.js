@@ -293,7 +293,7 @@ angular.module('indexPageModule')
             errorPictureUrl: "build/img/index/icon_home_device_warnning.png",
             isStatus: true,
             isError: false,
-            sku: ""
+            sku: "K-77115T-NA"
           }
         ];
       }
@@ -670,6 +670,16 @@ angular.module('indexPageModule')
 
       }, false);
 
+      //接受tcp状态
+      // localStorage.tcpStatus = false;
+      // document.addEventListener('SocketPlugin.receiveTcpStatus', function (result) {
+      //   if(result.code == 0 || result.code == -1){
+      //     localStorage.tcpStatus = false;
+      //   }else{
+      //     localStorage.tcpStatus = true;
+      //   }
+      // }, false);
+
       /**
        *@autor: caolei
        *@return: box ip
@@ -1035,6 +1045,7 @@ angular.module('indexPageModule')
             SettingsService.set("sku", item.sku);
           }
           if (item.deviceType == "index.mc") {
+            SettingsService.set("sku", item.sku);
             $state.go('mc');
           }
         }
