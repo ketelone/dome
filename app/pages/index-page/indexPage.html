@@ -35,14 +35,16 @@
     <ion-content class="mainApplication" style="bottom:48px;">
 
       <hms-tab-slide-box class="hms">
-        <div class="ion-chevron-up chevron-color" style="font-size: 0.3rem;" ng-click="linkBox();"></div>
+        <div class="chevron-color" ng-click="linkBox();">
+          <img class="img-size-chevro" ng-src="build/img/index/icon_home_arrowup.png"/>
+        </div>
         <!--<i class="icon ion-loop" style="color:white;margin-top: 3rem;margin-left: 5rem;"></i>-->
         <br ng-if="!isBigScreen">
         <br ng-if="!isBigScreen">
         <div class="tsb-icons" style="height: 0.6rem;">
           <div class="tsb-ic-wrp text-center">
             <ion-scroll direction="y" style="white-space: nowrap;width: 100%;text-align: center;" scrollbar-y="true">
-              <a href="javascript:;" ng-repeat="tab in tabs" on-finish-render ng-click="changeModel(tab)" style="width: 31%;border: none;font-size: 0.32rem; color: white;margin:0.05rem;margin-top: 0.1rem;" translate="{{tab.text}}"></a>
+              <a href="javascript:;" ng-repeat="tab in tabs" on-finish-render ng-click="changeModel(tab)" style="width: 31%;border: none;font-size: 0.32rem; color: white;margin:0.05rem;margin-top: 0.1rem;margin-left: 0.0rem;" translate="{{tab.text}}"></a>
               <span id="line" class="height-light" ng-show="isOneLine"></span>
               <br>
               <!--<br ng-if="!isBigScreen">-->
@@ -93,23 +95,26 @@
                   <div class="col-25 noPadding">
                     <img class="deviceImg" ng-src="{{item.pictureUrl}}"/>
                   </div>
-                  <div class="col-40 noPadding" style="color: white">
+                  <div class="col-30 noPadding" style="color: white">
                     <div class="row"><div class="deviceName"><span translate="{{item.deviceType}}"></span></div></div>
                     <div class="row noPadding">
-                      <!--<div class="deviceLine col-30 noPadding">{{item.deviceStatus}}</div>-->
-                      <!--<div class="deviceLine col-70 noPadding">-->
-                        <!--<img class="imgLine" ng-src="{{item.statusPictureUrl}}" ng-if="item.isStatus"/>-->
-                      <!--</div>-->
+                      <div class="deviceLine col-30 noPadding">{{item.deviceStatus}}</div>
+                      <div class="deviceLine col-53 noPadding">
+                        <img class="imgLine" ng-src="{{item.statusPictureUrl}}" ng-if="item.isStatus"/>
+                      </div>
                     </div>
                   </div>
-                  <div class="col-20  deviceStatus text-right">
+                  <div class="col-30  deviceStatus-text text-right">
                     <span>{{item.deviceDesc}}</span>
                   </div>
 
                   <div class="col-5 deviceStatus text-center">
                     <img class="error-img" ng-src="{{item.errorPictureUrl}}" ng-if="item.isError"/>
 
-                    <span style="color: #565A64"><i class="ion-ios-arrow-forward" ></i></span>
+                    <!--<span style="color: #565A64"><i class="ion-ios-arrow-forward" ></i></span>-->
+                    <span style="color: #565A64">
+                      <img class="img-size-right" ng-src="build/img/index/icon_home_device_arrow_right.png"/>
+                    </span>
                   </div>
                 </div>
 

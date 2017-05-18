@@ -19,7 +19,7 @@
         <!--<img ng-src="build/img/bathroom/icon_devicedetail_warning.png" class="signal-img"/>-->
         <!--<span class="signal-text" translate="bathroom.using"></span>-->
         <span class="timeout-font" translate="bathroom.timeout" ng-if="isShowTime"></span>
-        <span class="timeout" ng-if="isShowTime">{{countDown}}</span>
+        <span class="timeout" ng-if="isShowTime" style="text-align: center;">{{countDown}}</span>
         <img ng-src="build/img/bathroom/icon_devicedetail_warning.png" class="error-img"/>
         <span class="msg" translate="bathroom.using"></span>
         <p class="font-col" translate="{{temperate}}"></p>
@@ -39,10 +39,11 @@
   <div class="toilet-handlenape-selec">
   </div>
   <!--<div class="toilet-handlenape-selec" ng-click="openModal();" ng-if="isWind">-->
-  <div class="toilet-handlenape-selec" ng-click="openModal();" ng-if="true">
-    <span class="handlenape-selec-des" translate="bathroom.wind"></span>
-    <span class="handlenape-selec-use" translate="{{windType.type}}"></span>
-    <img class="handlenape-selec-img" src="build/img/karess-controller/icon_scenario_arrow.png"/>
+  <!--<div class="toilet-handlenape-selec" ng-click="openModal();" ng-if="true">-->
+  <div class="toilet-handlenape-selec">
+    <!--<span class="handlenape-selec-des" translate="bathroom.wind"></span>-->
+    <!--<span class="handlenape-selec-use" translate="{{windType.type}}"></span>-->
+    <!--<img class="handlenape-selec-img" src="build/img/karess-controller/icon_scenario_arrow.png"/>-->
   </div>
   <!--<div class="toilet-handlenape-selec timer-div text-center"  ng-if="isTime">-->
 

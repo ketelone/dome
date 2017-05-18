@@ -107,7 +107,7 @@ angular.module('bathroomModule')
           switchType: "Light",
           desc: "bathroom.light"
         },
-       /* {
+        {
           id: "8",
           switchPictureUrl: "build/img/bathroom/wind_nor.png",
           isOpen: false,
@@ -118,7 +118,7 @@ angular.module('bathroomModule')
           setTime: "",
           switchType: "Wind direction",
           desc: "bathroom.windDirection"
-        },*/
+        },
         {
           id: "9",
           switchPictureUrl: "build/img/bathroom/stop_nor.png",
@@ -181,6 +181,8 @@ angular.module('bathroomModule')
 
         if(resultOn.from.uid == getDeviceId()){
           if (resultOn.data.cmd.length > 0) {
+            $scope.isNetOk = true;
+            $timeout.cancel(timeOutCancel);
             isLinkOk = true;
             isOpenOk = true;
 
@@ -263,6 +265,8 @@ angular.module('bathroomModule')
             $scope.$apply();
           }
         }
+
+        hmsPopup.hideLoading();
       };
 
       /**
@@ -282,10 +286,14 @@ angular.module('bathroomModule')
         }
       };
 
+      var timeOutCancel = '';
       var pluginToCtrl = function(deviceId, value, successMsg, errorMsg){
         if(!$scope.isNetOk){
           $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"));
-          localStorage.deviceInfo = "";
+          //localStorage.deviceInfo = "";
+          if(getDeviceId() != ""){
+            cmdService.sendCmd(deviceId, getValue(bathroomCmdService.getDeviceAllStatus()), localStorage.boxIp);
+          }
           return;
         }else{
           if(isLightSwitch){
@@ -293,14 +301,18 @@ angular.module('bathroomModule')
           }
           hmsPopup.showLoading();
           $timeout(function(){
-            hmsPopup.hideLoading();
+            //hmsPopup.hideLoading();
+            $scope.isNetOk = false;
             cmdService.sendCmd(deviceId, value, localStorage.boxIp);
-          },500);
-          //$timeout(function(){
-          //  if(!isOpenOk){
-          //    $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"));
-          //  }
-          //}, 1500);
+          },400);
+          $timeout(function(){
+            timeOutCancel = $timeout(function(){
+              if(!$scope.isNetOk){
+                hmsPopup.hideLoading();
+                $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"));
+              }
+            }, 10000);
+          }, 100);
           isLightSwitch = false;
         }
       };
@@ -1119,6 +1131,7 @@ angular.module('bathroomModule')
       $scope.$watch('', function(){
 
         //test();
+
         var did = getDeviceId();
         if(did != ""){
           getCurrentSwitchStatus();
@@ -1225,6 +1238,7 @@ angular.module('bathroomModule')
        *@disc: get device id
        */
       var getDeviceId = function(){
+        var skuList = SettingsService.get('sku');
         var did = "";
         var deviceList
         if(localStorage.deviceInfo){
@@ -1235,8 +1249,11 @@ angular.module('bathroomModule')
         }
         for(var i = 0; i < deviceList.length; i ++){
           var deviceInfo = deviceList[i].split(",");
-          if(deviceInfo[0] == SettingsService.get('sku')){
-            did =  deviceInfo[1];
+          for(var j =0 ; j < skuList.length; j ++){
+            if(deviceInfo[0] == skuList[j]){
+              did =  deviceInfo[1];
+              return did;
+            }
           }
         }
 
@@ -1429,8 +1446,12 @@ angular.module('bathroomModule')
 
         //$scope.isTouchSwitch = true;
         //$scope.bathroomItem = item;
-
-        startCommand(item);
+        if(item.switchType == 'Wind direction'){
+          item.isOpen = false;
+          openModal();
+        }else {
+          startCommand(item);
+        }
 
       };
 
@@ -1771,7 +1792,7 @@ angular.module('bathroomModule')
         var c = "#6ACBB3";
         var cxt=canvas.getContext("2d");
         var xLength = $window.innerWidth * 0.5;
-        var yLength = $window.innerWidth * 0.77;
+        var yLength = $window.innerWidth * 0.78;
         //var yLength = $window.innerWidth * 0.95;
         var r = $window.innerWidth * 0.34;
         cxt.beginPath();
@@ -1810,7 +1831,7 @@ angular.module('bathroomModule')
         $scope.modal = modal;
       });
       $scope.value = [{id:2,des:'bathroom.fixed'}, {id:3,des:'bathroom.rock'}];
-      $scope.openModal = function () {
+      var openModal = function () {
         if($scope.value.length!==0) {
           $scope.modal.show();
           setTimeout(function () {
