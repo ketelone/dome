@@ -13,6 +13,7 @@ angular.module('toiletControlModule')
     '$compile',
     'baseConfig',
     'checkVersionService',
+    'SettingsService',
     function ($scope,
               $state,
               $translate,
@@ -25,15 +26,31 @@ angular.module('toiletControlModule')
               $ionicModal,
               $compile,
               baseConfig,
-              checkVersionService
+              checkVersionService,
+              SettingsService
     ) {
       $scope.goBack = function () {
         document.removeEventListener("SocketPlugin.receiveTcpData", centreceiveTcpDatahandle, false);
         publicMethod.goBack();
       };
+      var getDeviceIcentset = function(){
+        var skuList = SettingsService.get('sku');
+        var deviceId = "";
+        var deviceList = localStorage.deviceInfo.split(";");
+        for(var i = 0; i < deviceList.length; i ++){
+          var deviceInfo = deviceList[i].split(",");
+          for(var j =0 ; j < skuList.length; j ++){
+            if(deviceInfo[0] == skuList[j]){
+              deviceId =  deviceInfo[1];
+              return deviceId;
+            };
+          };
+        };
+        return deviceId;
+      };
       var cenwapurcmdObj = {
         boxid:localStorage.boxIp,
-        diviceid:'B62EF53F',
+        diviceid:getDeviceIcentset(),
         header:'8877',
         idx:1,
         ctrId:'E3',

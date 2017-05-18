@@ -14,6 +14,7 @@ angular.module('toiletControlModule')
     'baseConfig',
     'checkVersionService',
     '$ionicPopover',
+    'SettingsService',
     function ($scope,
               $state,
               $translate,
@@ -27,7 +28,8 @@ angular.module('toiletControlModule')
               cmdService,
               baseConfig,
               checkVersionService,
-              $ionicPopover
+              $ionicPopover,
+              SettingsService
     ) {
       $scope.screenHeig = window.innerHeight;
       $scope.screenWidth = window.innerWidth;
@@ -36,9 +38,24 @@ angular.module('toiletControlModule')
         document.removeEventListener("SocketPlugin.receiveTcpData", receiveTcpDatahandle, false);
         publicMethod.goBack();
       };
+      var getDeviceIdf = function(){
+        var skuList = SettingsService.get('sku');
+        var deviceId = "";
+        var deviceList = localStorage.deviceInfo.split(";");
+        for(var i = 0; i < deviceList.length; i ++){
+          var deviceInfo = deviceList[i].split(",");
+          for(var j =0 ; j < skuList.length; j ++){
+            if(deviceInfo[0] == skuList[j]){
+              deviceId =  deviceInfo[1];
+              return deviceId;
+            };
+          };
+        };
+        return deviceId;
+      };
       var tolitercmdObj = {
         boxid:localStorage.boxIp,
-        diviceid:'8BE850C2',
+        diviceid:getDeviceIdf(),
         header:'8877',
         idx:1,
         ctrId:'E3',
@@ -612,21 +629,8 @@ angular.module('toiletControlModule')
           })
         }
       };
-      /**
-       *@params:
-       *@disc:judge have many handles
-       */
-      $scope.judgeIsHaveHandlesFlag = true;
-      $scope.judgeIsHaveHandles = function () {
-        $scope.handlenapeListNape.forEach(function (item) {
-          if(item.isManyDirective){
-            if(item.selecFlag){
-              $scope.judgeIsHaveHandlesFlag = false;
-              return;
-            };
-          };
-        })
-      };
+
+
       //保存选择的数据项
       $scope.handleRadSelected;
       //档位滑动执行发指令操作
@@ -765,7 +769,6 @@ angular.module('toiletControlModule')
         }];
         // tolite favoite localstarge
         // window.localStorage.toilteFaviteSetting = JSON.stringify(a);
-
         $scope.toilteFaviteSetting = JSON.parse(window.localStorage.toilteFaviteSetting);
         /**
          moren-json
@@ -1115,7 +1118,7 @@ angular.module('toiletControlModule')
         $scope.currentSlideData = $scope.slideInitData;
         $scope.getStatusBackFalg = true;
         $scope.isSeatedStatusFlag = true;
-        $scope.handleOnceActionType;
+        $scope.handleOnceActionType="";
         $scope.handlenapeSelectedIndex = 12;
         $scope.selectChangeFlag = true;
         $scope.selectIsType = 0;
@@ -1148,6 +1151,21 @@ angular.module('toiletControlModule')
             hmsPopup.hideLoading();
             $scope.Toast.show($translate.instant("golabelvariable.directiveError"));
         },10000);
+      };
+      /**
+       *@params:
+       *@disc:judge have many handles
+       */
+      $scope.judgeIsHaveHandlesFlag = true;
+      $scope.judgeIsHaveHandles = function () {
+        $scope.handlenapeListNape.forEach(function (item) {
+          if(item.isManyDirective){
+            if(item.selecFlag){
+              $scope.judgeIsHaveHandlesFlag = false;
+              return;
+            };
+          };
+        })
       };
       /**
        *@params:index(selected index)
@@ -1351,8 +1369,8 @@ angular.module('toiletControlModule')
               $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgUrlTemp;
             },$scope.timelong)
           };
-          $scope.handleOnceActionType = $scope.handlenapeListNape[index].matchdataid;
         };
+        $scope.handleOnceActionType = $scope.handlenapeListNape[index].matchdataid;
         // if($scope.currentSlideData[0].des === "init"){
         //   $scope.currentSlideData = [];
         // };

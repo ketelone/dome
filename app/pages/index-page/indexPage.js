@@ -223,7 +223,7 @@ angular.module('indexPageModule')
             errorPictureUrl: "",
             isStatus: true,
             isError: false,
-            sku: "K-3900T"
+            sku: ["K-3900T","K-3900T-2"]
           }, {
             id: "2",
             pictureUrl: "build/img/index/img_home_device_heater.png",
@@ -234,7 +234,7 @@ angular.module('indexPageModule')
             errorPictureUrl: "",
             isStatus: true,
             isError: false,
-            sku: "K-78436T-PPX10-01R"
+            sku: ["K-78436T-PPX10-01R"]
           }, {
             id: "3",
             pictureUrl: "build/img/index/img_home_device_heater.png",
@@ -1018,9 +1018,11 @@ angular.module('indexPageModule')
           }
           if (item.deviceType == "index.toliet") {
             $state.go('toiletContrl');
+            SettingsService.set("sku", item.sku);
           }
           if (item.deviceType == "index.waterPurifier") {
             $state.go('cenwatpurifierContrl');
+            SettingsService.set("sku", item.sku);
           }
           if (item.deviceType == "index.bathtub") {
             $state.go('karess');

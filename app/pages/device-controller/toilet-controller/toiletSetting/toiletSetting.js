@@ -11,6 +11,7 @@ angular.module('toiletControlModule')
     'checkVersionService',
     'hmsPopup',
     'cmdService',
+    'SettingsService',
     function ($scope,
               $state,
               $translate,
@@ -21,7 +22,8 @@ angular.module('toiletControlModule')
               baseConfig,
               checkVersionService,
               hmsPopup,
-              cmdService
+              cmdService,
+              SettingsService
     ) {
       $scope.goBack = function () {
         document.removeEventListener("SocketPlugin.receiveTcpData", receiveTcpDatatoseting, false);
@@ -34,9 +36,24 @@ angular.module('toiletControlModule')
         jieDianSeting:"toiletSetting.never",
         jiedianDanwei:""
       };
+      var getDeviceItoset = function(){
+        var skuList = SettingsService.get('sku');
+        var deviceId = "";
+        var deviceList = localStorage.deviceInfo.split(";");
+        for(var i = 0; i < deviceList.length; i ++){
+          var deviceInfo = deviceList[i].split(",");
+          for(var j =0 ; j < skuList.length; j ++){
+            if(deviceInfo[0] == skuList[j]){
+              deviceId =  deviceInfo[1];
+              return deviceId;
+            };
+          };
+        };
+        return deviceId;
+      };
       var tolitersetcmdObj = {
         boxid:localStorage.boxIp,
-        diviceid:'8BE850C2',
+        diviceid:getDeviceItoset(),
         header:'8877',
         idx:1,
         ctrId:'E3',
