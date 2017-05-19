@@ -52,8 +52,8 @@ angular.module('karessControlModule')
         {
           "fillerStatus": false,
           "luoshui": false,
-          "touzhen": false,
-          "chunjun": false,
+          // "touzhen": false,
+          // "chunjun": false,
           "anmo": false,
           "anZhuang" : false
         }
@@ -939,23 +939,25 @@ angular.module('karessControlModule')
               buttonChange();
               selectSlide();
             }
-            else if (item.type.indexOf('83') >= 0) {//touzhen
-              if (item.value.status == '1') {
-                $scope.config.touzhen = false;
-              } else {
-                $scope.config.touzhen = true;
-              }
-              $scope.handlenapeListNape[3].selecFlag = $scope.config.touzhen;
-              buttonChange();
-            } else if (item.type.indexOf('87') >= 0) {//chujun
-              if (item.value.status == '01') {
-                $scope.config.chunjun = false;
-              } else {
-                $scope.config.chunjun = true;
-              }
-              $scope.handlenapeListNape[6].selecFlag = $scope.config.chunjun;
-              buttonChange();
-            }else if (item.type.indexOf('C0')){
+            // else if (item.type.indexOf('83') >= 0) {//touzhen
+            //   if (item.value.status == '1') {
+            //     $scope.config.touzhen = false;
+            //   } else {
+            //     $scope.config.touzhen = true;
+            //   }
+            //   $scope.handlenapeListNape[3].selecFlag = $scope.config.touzhen;
+            //   buttonChange();
+            // }
+            // else if (item.type.indexOf('87') >= 0) {//chujun
+            //   if (item.value.status == '01') {
+            //     $scope.config.chunjun = false;
+            //   } else {
+            //     $scope.config.chunjun = true;
+            //   }
+            //   $scope.handlenapeListNape[6].selecFlag = $scope.config.chunjun;
+            //   buttonChange();
+            // }
+            else if (item.type.indexOf('C0')){
               if (item.value.status == '00') {
                 $scope.config.anZhuang = false;
               } else {
@@ -1080,33 +1082,33 @@ angular.module('karessControlModule')
                 changeColor();
               }
             }
-            if (status.ack == '23') {
-              if ($scope.handlenapeListNape[index].selecFlag == false) {
-                $scope.Toast.show("头部按摩开启成功！");
-                changeColor();
-              } else {
-                $scope.Toast.show("头部按摩关闭成功！");
-                changeColor();
-              }
-            }
-            if (status.ack == '24') {
-              if ($scope.handlenapeListNape[index].selecFlag == false) {
-                $scope.Toast.show("管道除菌开启成功！");
-                changeColor();
-              } else {
-                $scope.Toast.show("管道除菌关闭成功！");
-                changeColor();
-              }
-            }
-            if (status.ack == '27') {
-              if ($scope.handlenapeListNape[index].selecFlag == false) {
-                $scope.Toast.show("背部加热开启成功！");
-                changeColor();
-              } else {
-                $scope.Toast.show("背部加热关闭成功！");
-                changeColor();
-              }
-            }
+            // if (status.ack == '23') {
+            //   if ($scope.handlenapeListNape[index].selecFlag == false) {
+            //     $scope.Toast.show("头部按摩开启成功！");
+            //     changeColor();
+            //   } else {
+            //     $scope.Toast.show("头部按摩关闭成功！");
+            //     changeColor();
+            //   }
+            // }
+            // if (status.ack == '24') {
+            //   if ($scope.handlenapeListNape[index].selecFlag == false) {
+            //     $scope.Toast.show("管道除菌开启成功！");
+            //     changeColor();
+            //   } else {
+            //     $scope.Toast.show("管道除菌关闭成功！");
+            //     changeColor();
+            //   }
+            // }
+            // if (status.ack == '27') {
+            //   if ($scope.handlenapeListNape[index].selecFlag == false) {
+            //     $scope.Toast.show("背部加热开启成功！");
+            //     changeColor();
+            //   } else {
+            //     $scope.Toast.show("背部加热关闭成功！");
+            //     changeColor();
+            //   }
+            // }
             if (status.ack == '00') {
               $scope.Toast.show("一键关闭成功！");
               changeColor();
@@ -1144,13 +1146,13 @@ angular.module('karessControlModule')
         $state.go("karessLearning");
       }
       $scope.operating = [{
-        text: '重命名'
+        text: 'mcController.rename'
       }, {
-        text: '移动'
+        text: 'mcController.move'
       }, {
-        text: '解除绑定'
+        text: 'mcController.delete'
       }, {
-        text: '机器学习设置'
+        text: 'mcController.machine'
       }];
 
       $scope.popover = $ionicPopover.fromTemplateUrl('build/pages/device-controller/karess-controller/modal/popover.html', {

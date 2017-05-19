@@ -787,13 +787,13 @@ angular.module('mcControlModule')
         $state.go("mcLearning");
       }
       $scope.operating = [{
-        text: '重命名'
+        text: 'mcController.rename'
       }, {
-        text: '移动'
+        text: 'mcController.move'
       }, {
-        text: '解除绑定'
+        text: 'mcController.delete'
       }, {
-        text: '机器学习设置'
+        text: 'mcController.machine'
       }];
 
       $scope.popover = $ionicPopover.fromTemplateUrl('build/pages/device-controller/mc-controller/modal/popover.html', {

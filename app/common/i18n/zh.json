@@ -517,7 +517,11 @@
     "shuiWen": "水温",
     "shuiWei": "水位",
     "loading": "网络连接异常！",
-    "DTVflag" : "此功能不可使用，请安装附件"
+    "DTVflag" : "此功能不可使用，请安装附件",
+    "rename": "重命名",
+    "move":"移动",
+    "delete":"删除",
+    "machine" : "机器学习"
   },
   "mcController": {
     "setting": "设置",
@@ -542,7 +546,12 @@
     "infoTaress5": "位置信息",
     "jieneng": "节能",
     "liangDu": "亮度",
-    "seWen": "色温"
+    "seWen": "色温",
+    "rename": "重命名",
+    "move":"移动",
+    "delete":"删除",
+    "machine" : "machine leanring"
+
   },
   "nextgen": {
     "title": "花洒",
