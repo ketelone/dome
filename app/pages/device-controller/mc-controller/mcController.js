@@ -623,6 +623,7 @@ angular.module('mcControlModule')
           flagLoading = true;
           var cmd = result[0].data.cmd[0];
           var status = mcService.explainAck(result[0].data.cmd[0]);
+
           if (status.ack.indexOf('fa') >= 0) {
             karessButton(status);
           } else if (status.ack.indexOf('1003') >= 0 || status.ack.indexOf('1002') >= 0) {
@@ -630,7 +631,7 @@ angular.module('mcControlModule')
             hmsPopup.hideLoading();
           } else {
             var item = mcService.explainAllStatus(cmd);
-            if (item.cmd == '86') {
+            if (item.cmd == '8a') {
               if(item.status == 'lighting off'){
                   $scope.config.light = false;
               }else if (item.status == 'lighting on'){
@@ -648,13 +649,13 @@ angular.module('mcControlModule')
               buttonChange();
               selectSlide();
               hmsPopup.hideLoading();
-            } else if (item.cmd == '8a') {
+            } else if (item.cmd == '86') {
               if(item.status == 'off'){
                 $scope.config.wuOff = false;
               }else if (item.status == 'on'){
                 $scope.config.wuOff = true;
               }
-              $scope.handlenapeListNape[0].selecFlag = $scope.config.light;
+              $scope.handlenapeListNape[1].selecFlag = $scope.config.wuOff;
               buttonChange();
               selectSlide();
               hmsPopup.hideLoading();
