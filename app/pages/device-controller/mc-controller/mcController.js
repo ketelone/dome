@@ -665,8 +665,8 @@ angular.module('mcControlModule')
             }
             function selectSlide(){
               if ($scope.handlenapeListNape[0].selecFlag == true ) {
-                alert('dengguang');
-                alert(angular.toJson($scope.currentSlideData))
+                // alert('dengguang');
+                // alert(angular.toJson($scope.currentSlideData))
                 if($scope.currentSlideData.length == 2){
                 }else{
                   $scope.currentSlideData = $scope.slideTunBuData;
@@ -676,8 +676,8 @@ angular.module('mcControlModule')
                   }, 20)
                 }
               } else if ($scope.handlenapeListNape[0].selecFlag == false) {
-                alert('一版');
-                alert(angular.toJson($scope.currentSlideData))
+                // alert('一版');
+                // alert(angular.toJson($scope.currentSlideData))
                 if($scope.currentSlideData.length == 1){}
                 else{
                   $scope.currentSlideData = $scope.slideInitData;
@@ -733,15 +733,15 @@ angular.module('mcControlModule')
             status.ack = status.ack.substring(2, 4);
             console.log(status)
             if (status.ack == '28') {
-              $scope.Toast.show("开灯成功！");
+              // $scope.Toast.show("开灯成功！");
               changeColor();
             }
             if (status.ack == '26') {
-              $scope.Toast.show("除雾成功！");
+              // $scope.Toast.show("除雾成功！");
               changeColor();
             }
             if (status.ack == '00') {
-              $scope.Toast.show("一键关闭成功！");
+              // $scope.Toast.show("一键关闭成功！");
               changeColor();
             }
             if (status.ack == '70') {
