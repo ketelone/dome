@@ -4,6 +4,7 @@ angular.module('toiletControlModule')
     '$state',
     '$translate',
     '$timeout',
+    '$ionicPlatform',
     'publicMethod',
     '$ionicModal',
     'baseConfig',
@@ -15,6 +16,7 @@ angular.module('toiletControlModule')
               $state,
               $translate,
               $timeout,
+              $ionicPlatform,
               publicMethod,
               $ionicModal,
               baseConfig,
@@ -27,6 +29,9 @@ angular.module('toiletControlModule')
         document.removeEventListener("SocketPlugin.receiveTcpData", receiveTcpDataclearset, false);
         publicMethod.goBack();
       };
+      $ionicPlatform.registerBackButtonAction(function (e) {
+        document.removeEventListener("SocketPlugin.receiveTcpData", receiveTcpDataclearset, false);
+      }, 0);
       var getDeviceIclearset = function(){
         var skuList = SettingsService.get('sku');
         var deviceId = "";
@@ -44,6 +49,7 @@ angular.module('toiletControlModule')
       };
       var cleartersetcmdObj = {
         boxid:localStorage.boxIp,
+        // diviceid:"8BE850C2",
         diviceid:getDeviceIclearset(),
         header:'8877',
         idx:1,
@@ -132,25 +138,6 @@ angular.module('toiletControlModule')
           hmsPopup.hideLoading();
           $scope.Toast.show("发生指令成功");
         },1000)
-        // hmsPopup.showLoading("<span translate='golabelvariable.loadingdata'></span>");
-        // var url = baseConfig.basePath + "/r/api/message/sendMessage";
-        // var paramter = cmdService.cloudCmd(cmdvalue,"");
-        // hmsHttp.post(url, paramter).success(
-        //   function(response){
-        //     hmsPopup.hideLoading();
-        //     //resolve
-        //     if(response.code == 200){
-        //       if(value.ack.toLowerCase() == "fa27"){
-        //         $scope.Toast.show(name+$translate.instant("golabelvariable.directesuccess"));
-        //       }
-        //     }else{
-        //       $scope.Toast.show(name+$translate.instant("golabelvariable.directerror"));
-        //     }
-        //   }).
-        // error(function () {
-        //   hmsPopup.hideLoading();
-        //   $scope.Toast.show(name + $translate.instant("golabelvariable.loadingdataerrror"));
-        // })
       };
       // mSwitchType, hour, minute, dateSwitch, MOM, TUE, WED, THU, FRI, SAT, SUM
       $scope.sendCmdData = function () {
@@ -159,7 +146,7 @@ angular.module('toiletControlModule')
           $scope.Toast.show($translate.instant("cleargearPlan.settingopen"));
         }else{
           var cmdvalue = cmdService.getCmd(cleartersetcmdObj.header,cleartersetcmdObj.idx,cleartersetting.cleanWand("OFF", $scope.clearGeardataTimeval.hour, $scope.clearGeardataTimeval.minute, "ON", $scope.trunChange($scope.listleftRepeat[0].reflag),$scope.trunChange($scope.listleftRepeat[1].reflag),
-            $scope.trunChange($scope.listleftRepeat[2].reflag),$scope.trunChange($scope.listleftRepeat[3].reflag),$scope.trunChange($scope.listleftRepeat[4].reflag),$scope.trunChange($scope.listleftRepeat[5].reflag)),cleartersetcmdObj.ctrId,cleartersetcmdObj.devId);        //send instructin
+            $scope.trunChange($scope.listleftRepeat[2].reflag),$scope.trunChange($scope.listleftRepeat[3].reflag),$scope.trunChange($scope.listleftRepeat[4].reflag),$scope.trunChange($scope.listleftRepeat[5].reflag),$scope.trunChange($scope.listleftRepeat[6].reflag)),cleartersetcmdObj.ctrId,cleartersetcmdObj.devId);        //send instructin
           console.log(cmdvalue)
           if(baseConfig.isCloudCtrl){
             $scope.clangerSetGetImpleteData(cmdvalue);

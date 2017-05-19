@@ -5,6 +5,7 @@ angular.module('toiletControlModule')
     '$translate',
     '$ionicSlideBoxDelegate',
     '$timeout',
+    '$ionicPlatform',
     'hmsHttp',
     'publicMethod',
     'hmsPopup',
@@ -20,6 +21,7 @@ angular.module('toiletControlModule')
               $translate,
               $ionicSlideBoxDelegate,
               $timeout,
+              $ionicPlatform,
               hmsHttp,
               publicMethod,
               hmsPopup,
@@ -38,6 +40,16 @@ angular.module('toiletControlModule')
         document.removeEventListener("SocketPlugin.receiveTcpData", receiveTcpDatahandle, false);
         publicMethod.goBack();
       };
+      $ionicPlatform.registerBackButtonAction(function (e) {
+        document.removeEventListener("SocketPlugin.receiveTcpData", receiveTcpDatahandle, false);
+      }, 0);
+      // try {
+      //   $scope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+      //     document.removeEventListener("SocketPlugin.receiveTcpData", receiveTcpDatahandle, false);
+      //   });
+      // }catch(e){
+      //   alert(e.message)
+      // };
       var getDeviceIdf = function(){
         var skuList = SettingsService.get('sku');
         var deviceId = "";
@@ -98,7 +110,6 @@ angular.module('toiletControlModule')
         if($('#ionSliderBox').children().length !== 0){
           $('#ionSliderBox').empty();
         };
-
         var checHtml =
           "<ion-slide-box ng-init='lockSlide()' show-pager='true' delegate-handle='boxSlider'>"+
           "<ion-slide ng-repeat='list in currentSlideData track by $index'>"+
@@ -212,13 +223,13 @@ angular.module('toiletControlModule')
                   }
                 }else{
                     if(slideDataObj.parNodeid === "toilet-warmjCtl"){
-                      slideDataObj.gearInit = this.i;
+                      slideDataObj.gearInit = this.i+1;
                     }else if(slideDataObj.parNodeid === "toilet-lightCtl"){
                     if(this.i === 2){
                       slideDataObj.gearInit = '中';
                     }else if(this.i === 3){
                       slideDataObj.gearInit = "高";
-                    }
+                    };
                   }else{
                     slideDataObj.gearInit = this.i;
                   };
@@ -234,7 +245,7 @@ angular.module('toiletControlModule')
               }else{
                 this.stoPosPoint = this.i;
                 if(slideDataObj.parNodeid === "toilet-warmjCtl"){
-                  slideDataObj.gearInit = this.i+1;
+                  slideDataObj.gearInit = this.i+2;
                 }else
                 if(slideDataObj.parNodeid === "toilet-lightCtl"){
                   if(this.i+1 === 2){
@@ -335,9 +346,9 @@ angular.module('toiletControlModule')
                 $scope.currentSlideData[index].gearInit = 3;
               };
             };
-            // if(slideDataObj.parNodeid === "toilet-warmjCtl"){
-            //   $scope.currentSlideData[index].gearInit =$scope.currentSlideData[index].gearInit-1;
-            // };
+            if($scope.currentSlideData[index].parNodeid === "toilet-warmjCtl"){
+              $scope.currentSlideData[index].gearInit =$scope.currentSlideData[index].gearInit-1;
+            };
             currentRadObj.drawc(currentRadObj.cr2,currentRadObj.starRad+ currentRadObj.radRange * ($scope.currentSlideData[index].gearInit-1),"type");
             currentRadObj.drawCircleFill(currentRadObj.cr3,currentRadObj.starRad+currentRadObj.radRange * ($scope.currentSlideData[index].gearInit-1));
             currentEventObj.addEventListener( 'touchstart', function( e ){
@@ -562,7 +573,6 @@ angular.module('toiletControlModule')
         var handleOriginData = selectedDataTemp.handledata;
         if(!lightCtl){
           var lightCtl = handleOriginData[0].gearInit;
-          // alert("lightCtl"+lightCtl)
           if(lightCtl=== 1){
             lightCtl = "低";
           }else if(lightCtl === 2){
@@ -668,62 +678,9 @@ angular.module('toiletControlModule')
               $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgUrlTemp;
             };
             if($scope.handlenapeListNape[index].isManyDirective){
-                // if($scope.currentSlideData[0].des === "init"){
-                //   $scope.currentSlideData = [];
-                //   $scope.handlenapeListNape[index].handledata.forEach(function (item) {
-                //     $scope.currentSlideData.push(item);
-                //   });
-                // }else{
-                //   $scope.currentSlideDataTemp = $scope.currentSlideData.concat($scope.handlenapeListNape[index].handledata);
-                //   $scope.currentSlideData = [];
-                //   $scope.currentSlideDataTemp.forEach(function (item) {
-                //     $scope.currentSlideData.push(item);
-                //   });
-                // };
-              // if(!$scope.handlenapeListNape[index].selecFlag){
-              //   $scope.judgeIsHaveHandlesFlag = true;
-              //   $scope.judgeIsHaveHandles();
-              //   if($scope.judgeIsHaveHandlesFlag){
-              //     $scope.currentSlideData = $scope.slideInitData;
-              //   }else{
-              //     // reduce
-              //     for(var j=0;j<$scope.currentSlideData.length;j++) {
-              //       for (var n = 0; n < $scope.handlenapeListNape[index].handledata.length; n++) {
-              //         if ($scope.currentSlideData[j].parNodeid === $scope.handlenapeListNape[index].handledata[n].parNodeid) {
-              //           $scope.currentSlideData.splice(j, 1);
-              //         };
-              //       };
-              //     };
-              //   };
-              // }else{
-              //   //open
-              //   //repeat scroll
-              //   if($scope.currentSlideData[0].des === "init"){
-              //     $scope.currentSlideData = [];
-              //     $scope.handlenapeListNape[index].handledata.forEach(function (item) {
-              //       $scope.currentSlideData.push(item);
-              //     });
-              //   }else{
-              //     $scope.currentSlideDataTemp = $scope.currentSlideData.concat($scope.handlenapeListNape[index].handledata);
-              //     $scope.currentSlideData = [];
-              //     $scope.currentSlideDataTemp.forEach(function (item) {
-              //       $scope.currentSlideData.push(item);
-              //     });
-              //   };
-              //   // $ionicSlideBoxDelegate.$getByHandle("boxSlider").slide(0);
-              // };
-              // // $scope.hanleInitTemple(index);
             };
-            // if(matchId === "bigFlush" || matchId === "smallFlush" || matchId === "guangai" || matchId === "fangai" || matchId === "fanquan" || matchId === "clear"){
-            // $scope.onceHandleTimeout;
+
             if(!$scope.handlenapeListNape[index].isManyDirective && $scope.handlenapeListNape[index].matchdataid !== "clear"){
-              // if($scope.onceHandleTimeout){
-              //   $timeout.cancel(onceHandleTimeout);
-              // };
-              // $scope.onceHandleTimeout = $timeout(function () {
-              //   $scope.handlenapeListNape[index].selecFlag = false;
-              //   $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgUrlTemp;
-              // },6000)
               $timeout(function () {
                 $scope.handlenapeListNape[index].selecFlag = false;
                 $scope.handlenapeListNape[index].imgUrl = $scope.handlenapeListNape[index].imgUrlTemp;
@@ -1003,8 +960,7 @@ angular.module('toiletControlModule')
             isManyDirective:true,
             handledata:$scope.slideNvYongData,
             cloudId:"NIMInvyong ",
-          },
-          {
+          },{
             imgUrl: "build/img/toilet-controller/tunxi.png",
             imgSeledUrl: "build/img/toilet-controller/tunxiseled.png",
             imgUrlTemp:"build/img/toilet-controller/tunxi.png",
@@ -1135,15 +1091,16 @@ angular.module('toiletControlModule')
         //get devic status
         var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx,nimi._data["synchronizeReq"],tolitercmdObj.ctrId,tolitercmdObj.devId);
         //send instructin
-        console.log(cmdvalue)
         // alert("cmdvalue"+cmdvalue)
-        if(baseConfig.isCloudCtrl){
-          // flag,cmdvalue, name,index,isType
-          $scope.toGetImpleteData("false",cmdvalue,$translate.instant('toiletController.devicePop'),12,"1");
-        }else{
-          hmsPopup.showLoading("<span translate='golabelvariable.loadingdata'></span>");
-          cmdService.sendCmd(tolitercmdObj.diviceid, cmdvalue, tolitercmdObj.boxid);
-        };
+        $timeout(function () {
+          if(baseConfig.isCloudCtrl){
+            // flag,cmdvalue, name,index,isType
+            $scope.toGetImpleteData("false",cmdvalue,$translate.instant('toiletController.devicePop'),12,"1");
+          }else{
+            hmsPopup.showLoading("<span translate='golabelvariable.loadingdata'></span>");
+            cmdService.sendCmd(tolitercmdObj.diviceid, cmdvalue, tolitercmdObj.boxid);
+          };
+        },20)
       })
       var cmdTimeout;
       $scope.sendCmdTimeout = function () {
@@ -1152,7 +1109,7 @@ angular.module('toiletControlModule')
         cmdTimeout = $timeout(function(){
             hmsPopup.hideLoading();
             $scope.Toast.show($translate.instant("golabelvariable.directiveError"));
-        },10000);
+        },15000);
       };
       /**
        *@params:
@@ -1187,7 +1144,7 @@ angular.module('toiletControlModule')
               $scope.toiletController.modelType = $scope.toiletController.modelTypeNv;
             }
           };
-        },20);
+        },40);
       };
       //hanle selected border
       // var handlenapeListNapeLen = $scope.handlenapeListNape.length;
@@ -1238,7 +1195,7 @@ angular.module('toiletControlModule')
                       $scope.sendCmdTimeout();
                       $scope.onceTimeIntionCreate("true","0",index);
                     }else{
-                      $scope.Toast.show($translate.instant("toiletController.seatstatus"));
+                      $scope.Toast.show($translate.instant("toiletController.unseatstatus"));
                     }
                   }else{
                     $scope.sendCmdTimeout();
@@ -1249,7 +1206,7 @@ angular.module('toiletControlModule')
                   if($scope.cmdBackValue.lidRingStatus === "000" || $scope.cmdBackValue.lidRingStatus === "101" || $scope.cmdBackValue.lidRingStatus === "110"){
                     $scope.Toast.show($translate.instant("golabelvariable.mixt"));
                     return false;
-                  }
+                  };
                   //close clear
                   // console.log($scope.toiletController.modelTypeClear)
                   // alert($scope.toiletController.modelTypeClear)
@@ -1411,7 +1368,7 @@ angular.module('toiletControlModule')
                   var name = "toiletController.chongxi";
                   if (backDataCmd.ack === "1000") {
                     // $scope.selectChange($scope.selectChangeFlag, $scope.handlenapeSelectedIndex, $scope.selectIsType);
-                    $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
+                    // $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
                   } else {
                     $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directerror"));
                   };
@@ -1427,7 +1384,7 @@ angular.module('toiletControlModule')
                     $scope.toilteFaviteTemp.FRONT_SPRAY_POSITION = handleOriginData[1].gearInit;
                     $scope.toilteFaviteTemp.FRONT_SPRAY_TMPT = handleOriginData[2].gearInit;
                     window.localStorage.toilteFaviteSetting = JSON.stringify($scope.toilteFaviteTemp);
-                    $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
+                    // $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
                   } else {
                     $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directerror"));
                   };
@@ -1443,7 +1400,7 @@ angular.module('toiletControlModule')
                     $scope.toilteFaviteTemp.REAR_POSITION = handleOriginData[1].gearInit;
                     $scope.toilteFaviteTemp.REAR_TMPT = handleOriginData[2].gearInit;
                     window.localStorage.toilteFaviteSetting = JSON.stringify($scope.toilteFaviteTemp);
-                    $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
+                    // $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
                   } else {
                     $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directerror"));
                   };
@@ -1456,7 +1413,7 @@ angular.module('toiletControlModule')
                     $scope.toilteFaviteTemp = JSON.parse(window.localStorage.toilteFaviteSetting);
                     $scope.toilteFaviteTemp.DRYER_POWER = handleOriginData[0].gearInit;
                     window.localStorage.toilteFaviteSetting = JSON.stringify($scope.toilteFaviteTemp);
-                    $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
+                    // $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
                   } else {
                     $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directerror"));
                   };
@@ -1710,41 +1667,21 @@ angular.module('toiletControlModule')
                     },0);
                     $scope.toiletController.modelTypeClear = "toiletController.gaunbi";
                   };
-                  // alert("$scope.currentSlideData"+angular.toJson($scope.currentSlideData))
                   var matchId = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].matchdataid;
                   if($scope.currentSlideData[0].des !== "init"){
-                    $scope.deviceReturnTime++;
-                    if(matchId !== "clear"){
+                    if(matchId === "nvyong" || matchId === "tunxi" || matchId === "quanwen" || matchId === "nuanfen" || matchId === "dengguang" || matchId === "nuanjiao" || matchId === "clear") {
                       $timeout(function () {
                         $scope.hanleInitTemple($scope.handlenapeSelectedIndex);
                         $scope.clickSlideFlag = true;
                         $scope.deviceReturnTime = 0;
                       },0);
-                      // if(!$scope.deviceInitFlag){
-                      //   $scope.hanleInitTemple($scope.handlenapeSelectedIndex);
-                      //   $scope.clickSlideFlag = true;
-                      //   $scope.deviceInitFlag = true;
-                      //   $scope.deviceReturnTime = 0;
-                      // }else{
-                      //   if($scope.deviceReturnTime >= 2){
-                      //     alert("$scope.deviceReturnTime"+$scope.deviceReturnTime);
-                      //     $timeout(function () {
-                      //       $scope.hanleInitTemple($scope.handlenapeSelectedIndex);
-                      //       $scope.clickSlideFlag = true;
-                      //       $scope.deviceReturnTime = 0;
-                      //     },0);
-                      //   };
-                      // };
-                    }else{
-                      $scope.deviceReturnTime = 0;
                     };
                   }else{
-                    $scope.deviceReturnTime = 0;
-                    if(matchId === "devicePop" || matchId === "bigFlush" || matchId === "smallFlush" || matchId === "guangai" || matchId === "fangai" || matchId === "fanquan"){
-                      // return false;
-                    }else{
+                    if(matchId === "nvyong" || matchId === "tunxi" || matchId === "quanwen" || matchId === "nuanfen" || matchId === "dengguang" || matchId === "nuanjiao") {
                       $scope.clickSlideFlag = false;
                       $scope.hanleInitTemple(12);
+                      // if(matchId === "devicePop" || matchId === "bigFlush" || matchId === "smallFlush" || matchId === "guangai" || matchId === "fangai" || matchId === "fanquan"){
+                      //return false;
                     };
                   };
                   if($scope.getStatusBackFalg){
@@ -1780,7 +1717,7 @@ angular.module('toiletControlModule')
           hmsPopup.hideLoading();
           $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"));
         };
-      },10000);
+      },15000);
       $scope.setSingalModalTop = "toiletSingalModalTop";
       $ionicModal.fromTemplateUrl('build/pages/model/hmsModal.html', {
         scope: $scope,
@@ -1903,7 +1840,6 @@ angular.module('toiletControlModule')
         $scope.value = [];
         $scope.modal.hide();
       };
-
       $scope.goLearn = function () {
         $state.go("toiletLearning");
       }
@@ -1916,29 +1852,23 @@ angular.module('toiletControlModule')
       },{
         text:'机器学习设置'
       }];
-
       $scope.popover = $ionicPopover.fromTemplateUrl('build/pages/device-controller/toilet-controller/modal/popover.html', {
         scope: $scope
       });
-
       // .fromTemplateUrl() 方法
       $ionicPopover.fromTemplateUrl('build/pages/device-controller/toilet-controller/modal/popover.html', {
         scope: $scope
       }).then(function(popover) {
         $scope.popover = popover;
       });
-
-
       $scope.openPopover = function($event) {
         $scope.popover.show($event);
       };
-
       $scope.closePopover = function(index) {
         console.log(index);
         $scope.popover.hide();
         if(index==3){
           $scope.goLearn();
         }
-      }
-
+      };
     }]);

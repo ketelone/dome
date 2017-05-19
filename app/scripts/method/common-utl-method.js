@@ -205,11 +205,11 @@ Date.prototype.format = function(format){
 function filterTimeMinute(data,type){
   if(type==="hour"){
     if(data.indexOf("时") > 0){
-      return data.substring(data.indexOf("时"),0)
+      return Number(data.substring(data.indexOf("时"),0))
     }
   }else if(type==="minute"){
     if(data.indexOf("分") > 0){
-      return data.substring(data.indexOf("分"),0)
+      return Number(data.substring(data.indexOf("分"),0))
     }
   }
 }

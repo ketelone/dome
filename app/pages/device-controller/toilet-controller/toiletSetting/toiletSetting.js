@@ -3,6 +3,7 @@ angular.module('toiletControlModule')
     '$scope',
     '$state',
     '$translate',
+    '$ionicPlatform',
     '$timeout',
     'publicMethod',
     '$ionicModal',
@@ -15,6 +16,7 @@ angular.module('toiletControlModule')
     function ($scope,
               $state,
               $translate,
+              $ionicPlatform,
               $timeout,
               publicMethod,
               $ionicModal,
@@ -29,6 +31,14 @@ angular.module('toiletControlModule')
         document.removeEventListener("SocketPlugin.receiveTcpData", receiveTcpDatatoseting, false);
         publicMethod.goBack();
       };
+
+      $ionicPlatform.registerBackButtonAction(function (e) {
+        document.removeEventListener("SocketPlugin.receiveTcpData", receiveTcpDatatoseting, false);
+      }, 0);
+
+      // $scope.$on('$stateChangeStart',function(event, toState, toParams, fromState, fromParams){
+      //   document.removeEventListener("SocketPlugin.receiveTcpData", receiveTcpDatatoseting, false);
+      // });
       $scope.chongshuisetval = false,
       $scope.chuchousetval = false,
       $scope.toilteSettingData={
@@ -54,6 +64,7 @@ angular.module('toiletControlModule')
       var tolitersetcmdObj = {
         boxid:localStorage.boxIp,
         diviceid:getDeviceItoset(),
+        // diviceid:"8BE850C2",
         header:'8877',
         idx:1,
         ctrId:'E3',
@@ -67,15 +78,11 @@ angular.module('toiletControlModule')
       try {
         $scope.tosetstatustiveOnceFlag = 0;
         $scope.selectedType = "";
-
         var receiveTcpDatatoseting =  function (result) {
-          // alert("resultOn" + angular.toJson(resultOn))
           var resultOn = result[0];
           if (resultOn.from.uid === tolitersetcmdObj.diviceid) {
-            // alert("resultOn" + angular.toJson(resultOn))
             if (resultOn.data.cmd) {
               var backDataCmd = nimisetting.analysisInstruction(resultOn.data.cmd[0]);
-              // alert("backDataCmdsett"+angular.toJson(backDataCmd))
               if (backDataCmd.flag === "ack") {
                 if ($scope.tosetstatustiveOnceFlag === 0) {
                   $scope.tosetstatustiveOnceFlag++;
@@ -198,8 +205,7 @@ angular.module('toiletControlModule')
       };
       var cmdvalue = cmdService.getCmd(tolitersetcmdObj.header,tolitersetcmdObj.idx,nimisetting.setDeviceTime(currentDateYear,currentDateMouth,currentDateDay,currentDateHour,currentDateMinute,currentDateWeek),tolitersetcmdObj.ctrId,tolitersetcmdObj.devId);
       //send instructin
-      console.log(cmdvalue);
-      alert(cmdvalue);
+      // alert(cmdvalue);
       if(baseConfig.isCloudCtrl){
         $scope.toilSetGetImpleteData(type,cmdvalue,$translate.instant(""));
       }else{
@@ -267,7 +273,7 @@ angular.module('toiletControlModule')
             var cmdvalue = cmdService.getCmd(tolitersetcmdObj.header, tolitersetcmdObj.idx, nimisetting.powerSaveDelay(delayTime), tolitersetcmdObj.ctrId, tolitersetcmdObj.devId);
             //send instructin
             console.log(cmdvalue)
-            alert(cmdvalue)
+            // alert(cmdvalue)
             if (baseConfig.isCloudCtrl) {
               $scope.toilSetGetImpleteData("jiedian", cmdvalue, $translate.instant("toiletSetting.jiedianset"));
             } else {
@@ -291,8 +297,7 @@ angular.module('toiletControlModule')
           try {
             var cmdvalue = cmdService.getCmd(tolitersetcmdObj.header, tolitersetcmdObj.idx, nimisetting._data[value], tolitersetcmdObj.ctrId, tolitersetcmdObj.devId);
             //send instructin
-            console.log(cmdvalue);
-            alert(cmdvalue)
+            // alert(cmdvalue)
             if (baseConfig.isCloudCtrl) {
               $scope.toilSetGetImpleteData("autofangai", cmdvalue, $translate.instant("toiletSetting.autofangai"));
             } else {

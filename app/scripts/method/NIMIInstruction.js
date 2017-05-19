@@ -87,7 +87,6 @@ NIMI.prototype._data = {
   //一键关闭
   "stopAll": "00"
 };
-
 /**
  * NIMI front rear
  * @param method{string} - 方法 {女用，臀洗，暖风}
@@ -181,7 +180,6 @@ NIMI.prototype.cleanWand = function (mSwitchType, hour, minute, dateSwitch, MOM,
     minute:minute,
     dateSwitch:dateSwitch,
     MOM:MOM,
-    TUE:TUE,
     WED:WED,
     TUE:TUE,
     THU:THU,
@@ -220,6 +218,7 @@ NIMI.prototype.cleanWand = function (mSwitchType, hour, minute, dateSwitch, MOM,
   var SUMS = "0";
   (SUM == config.ON) ? SUMS = "1" : SUMS = "0";
   cmd += getHex(dataS + MOMS + TUES + WEDS + THUS + FRIS + SATS + SUMS) + "00" + "00";
+  console.log(cmd)
   return cmd;
 };
 
@@ -239,7 +238,7 @@ NIMI.prototype.cleanWand = function (mSwitchType, hour, minute, dateSwitch, MOM,
  * @returns {string}
  */
 NIMI.prototype.ambientLight = function (lightMode, lightCtl, dynamicCtl, MOMC, TUEC, WEDC, THUC, FRIC, SATC, SUMC) {
-  console.log(angular.toJson({
+  alert(angular.toJson({
     "lightMode":lightMode,
     "lightCtl":lightCtl,
     "dynamicCtl":dynamicCtl,
@@ -690,7 +689,7 @@ function analysisFlushStatus(ackStr) {
   var flushStatus = param_one.substring(4, 8);
   mJson = {"flag": "status", "cmd": "88", "flushStatus": flushStatus};
   return mJson;
-}
+};
 /**
  * 获取设置时间指令
  * @param year 年份后两位 比如 2016 参数为16
@@ -701,6 +700,15 @@ function analysisFlushStatus(ackStr) {
  * @param week 周几 {1,2,3,4,5,6,7}
  */
 NIMI.prototype.setDeviceTime = function (year, month, date, hour, minute, week) {
+  alert(angular.toJson({
+    year:year,
+    month:month,
+    date:date,
+    hour:hour,
+    minute:minute,
+    week:week,
+    }
+  ))
   var cmd = "0f";
   var param_year = sevenBitToCheck(year.toString(2));
   var param_month_h = "";
@@ -715,7 +723,7 @@ NIMI.prototype.setDeviceTime = function (year, month, date, hour, minute, week) 
   } else {
     param_month_h = "0";
     param_month_d = threeBitToCheck(month.toString(2));
-  }
+  };
   if (mins.length > 1) {
     param_minute_h = threeBitToCheck(parseInt(mins.substring(0, 1)).toString(2));
     param_minute_d = threeBitToCheck(parseInt(mins.substring(mins.length - 1, mins.length)).toString(2));
@@ -732,10 +740,9 @@ NIMI.prototype.setDeviceTime = function (year, month, date, hour, minute, week) 
     + param_minute_d
     + threeBitToCheck((week - 1).toString(2))
     + "00");
+  alert(cmd)
   return cmd;
 };
-
-
 /**
  * 十进制转二进制 三位补零
  * @param {String} data

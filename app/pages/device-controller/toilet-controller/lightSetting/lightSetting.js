@@ -4,6 +4,7 @@ angular.module('toiletControlModule')
     '$state',
     '$translate',
     '$timeout',
+    '$ionicPlatform',
     'publicMethod',
     '$ionicModal',
     'baseConfig',
@@ -16,6 +17,7 @@ angular.module('toiletControlModule')
               $state,
               $translate,
               $timeout,
+              $ionicPlatform,
               publicMethod,
               $ionicModal,
               baseConfig,
@@ -129,37 +131,12 @@ angular.module('toiletControlModule')
       }
       //gobakc
       $scope.goBack = function () {
-        //localstorage setting value
-        var lightsetval = {
-          modal:"",
-          MOMC:"white",
-          TUEC:"white",
-          WEDC:"white",
-          THUC:"white",
-          FRIC:"white",
-          SATC:"white",
-          SUMC:"white"
-        };
-        if($scope.lightSetting.isShowCheckimg){
-          lightsetval.modal = "Default";
-          lightsetval.flag = true;
-        }else if($scope.lightSetting.isShowWeekset){
-          lightsetval.modal = "ByWeek";
-          lightsetval.MOMC = $scope.getColor($scope.colorWeek[0].color["background-color"]);
-          lightsetval.TUEC = $scope.getColor($scope.colorWeek[1].color["background-color"]);
-          lightsetval.WEDC = $scope.getColor($scope.colorWeek[2].color["background-color"]);
-          lightsetval.THUC = $scope.getColor($scope.colorWeek[3].color["background-color"]);
-          lightsetval.FRIC = $scope.getColor($scope.colorWeek[4].color["background-color"]);
-          lightsetval.SATC = $scope.getColor($scope.colorWeek[5].color["background-color"]);
-          lightsetval.SUMC = $scope.getColor($scope.colorWeek[6].color["background-color"]);
-        }else if($scope.lightSetting.isShowStatuset){
-          lightsetval.modal = "Default";
-          lightsetval.flag = false;
-        };
-        window.localStorage.lightModal = JSON.stringify(lightsetval);
         document.removeEventListener("SocketPlugin.receiveTcpData", receiveTcpDatalightset, false);
         publicMethod.goBack();
       };
+      $ionicPlatform.registerBackButtonAction(function (e) {
+        document.removeEventListener("SocketPlugin.receiveTcpData", receiveTcpDatalightset, false);
+      }, 0);
       /**
        *@params:
        *@disc:accept ack or status;
@@ -249,19 +226,54 @@ angular.module('toiletControlModule')
       /**
        *@disc:checkbox selected
        */
+
+      $scope.localBaocunVlaue = function () {
+        var lightsetval = {
+          modal:"",
+          MOMC:"white",
+          TUEC:"white",
+          WEDC:"white",
+          THUC:"white",
+          FRIC:"white",
+          SATC:"white",
+          SUMC:"white"
+        };
+        if($scope.lightSetting.isShowCheckimg){
+          lightsetval.modal = "Default";
+          lightsetval.flag = true;
+        }else if($scope.lightSetting.isShowWeekset){
+          lightsetval.modal = "ByWeek";
+          lightsetval.MOMC = $scope.getColor($scope.colorWeek[0].color["background-color"]);
+          lightsetval.TUEC = $scope.getColor($scope.colorWeek[1].color["background-color"]);
+          lightsetval.WEDC = $scope.getColor($scope.colorWeek[2].color["background-color"]);
+          lightsetval.THUC = $scope.getColor($scope.colorWeek[3].color["background-color"]);
+          lightsetval.FRIC = $scope.getColor($scope.colorWeek[4].color["background-color"]);
+          lightsetval.SATC = $scope.getColor($scope.colorWeek[5].color["background-color"]);
+          lightsetval.SUMC = $scope.getColor($scope.colorWeek[6].color["background-color"]);
+          lightsetval.flag = true;
+        }else if($scope.lightSetting.isShowStatuset){
+          lightsetval.modal = "Default";
+          lightsetval.flag = false;
+        };
+        window.localStorage.lightModal = null;
+        window.localStorage.lightModal = JSON.stringify(lightsetval);
+      };
       $scope.checkboxChange = function (type) {
         if(type === "color"){
           $scope.lightSetting.isShowCheckimg = !$scope.lightSetting.isShowCheckimg;
           $scope.lightSetting.isShowWeekset = false;
           $scope.lightSetting.isShowStatuset = false;
+          $scope.localBaocunVlaue();
         }else if(type==="week"){
           $scope.lightSetting.isShowWeekset = !$scope.lightSetting.isShowWeekset;
           $scope.lightSetting.isShowCheckimg = false;
           $scope.lightSetting.isShowStatuset = false;
+          $scope.localBaocunVlaue();
         }else if(type==="change"){
           $scope.lightSetting.isShowStatuset = !$scope.lightSetting.isShowStatuset;
           $scope.lightSetting.isShowCheckimg = false;
           $scope.lightSetting.isShowWeekset = false;
+          $scope.localBaocunVlaue();
         };
       };
       //get scren height
