@@ -153,6 +153,10 @@ angular.module('mcControlModule')
         document.removeEventListener("SocketPlugin.receiveTcpData", receiveMcTcpDatahandle, false);
         $ionicHistory.goBack();
       }
+      $scope.$on('$stateChangeStart',
+        function(event, toState, toParams, fromState, fromParams){
+          document.removeEventListener("SocketPlugin.receiveTcpData", receiveMcTcpDatahandle, false);
+        });
       /**
        init dang qian mo ban shu ju
        初始化当前模板数据

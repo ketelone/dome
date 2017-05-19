@@ -227,9 +227,12 @@ angular.module('karessControlModule')
       ];
 
       $scope.goBack = function () {
-        document.removeEventListener("SocketPlugin.receiveTcpData", receiveKaresssTcpDatahandle, false);
         $ionicHistory.goBack();
       }
+      $scope.$on('$stateChangeStart',
+        function(event, toState, toParams, fromState, fromParams){
+          document.removeEventListener("SocketPlugin.receiveTcpData", receiveKaresssTcpDatahandle, false);
+        });
       /**
        init dang qian mo ban shu ju
        初始化当前模板数据
@@ -1053,10 +1056,10 @@ angular.module('karessControlModule')
             console.log(status);
             if (status.ack == '22') {
               if ($scope.handlenapeListNape[index].selecFlag == false) {
-                $scope.Toast.show("注水开启成功！");
+                // $scope.Toast.show("注水开启成功！");
                 changeColor();
               } else {
-                $scope.Toast.show("注水关闭成功！");
+                // $scope.Toast.show("注水关闭成功！");
                 changeColor();
               }
             }
@@ -1066,19 +1069,19 @@ angular.module('karessControlModule')
               //   return;
               // }
               if ($scope.handlenapeListNape[index].selecFlag == false) {
-                $scope.Toast.show("落水开启成功！");
+                // $scope.Toast.show("落水开启成功！");
                 changeColor();
               } else {
-                $scope.Toast.show("落水关闭成功！");
+                // $scope.Toast.show("落水关闭成功！");
                 changeColor();
               }
             }
             if (status.ack == '21') {
               if ($scope.handlenapeListNape[index].selecFlag == false) {
-                $scope.Toast.show("水力按摩开启成功！");
+                // $scope.Toast.show("水力按摩开启成功！");
                 changeColor();
               } else {
-                $scope.Toast.show("水力按摩关闭成功！");
+                // $scope.Toast.show("水力按摩关闭成功！");
                 changeColor();
               }
             }
@@ -1110,7 +1113,7 @@ angular.module('karessControlModule')
             //   }
             // }
             if (status.ack == '00') {
-              $scope.Toast.show("一键关闭成功！");
+              // $scope.Toast.show("一键关闭成功！");
               changeColor();
             }
             if (status.ack == '70') {
