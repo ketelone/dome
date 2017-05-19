@@ -12,7 +12,6 @@ angular.module('mcControlModule')
               $compile,
               baseConfig,
               checkVersionService, SettingsService, $ionicHistory, $ionicSlideBoxDelegate, mcService, hmsHttp, cmdService, hmsPopup, $timeout, $ionicPopover, $translate) {
-      var sku = SettingsService.get('sku')
       $scope.fontSize = document.documentElement.clientWidth / 7.5;
       $scope.screenHeig = window.innerHeight;
       $scope.screenWidth = window.innerWidth;
@@ -27,17 +26,21 @@ angular.module('mcControlModule')
        *@return: device id
        *@disc: get device id
        */
-      var getDeviceId = function () {
-        if (localStorage.deviceInfo == undefined) {
-          return;
-        }
+      var getDeviceId = function(){
+        var skuList = SettingsService.get('sku');
+        var deviceId = "";
         var deviceList = localStorage.deviceInfo.split(";");
-        for (var i = 0; i < deviceList.length; i++) {
+        console.log(deviceList+"========");
+        for(var i = 0; i < deviceList.length; i ++){
           var deviceInfo = deviceList[i].split(",");
-          if (deviceInfo[0] == sku) {
-            return deviceInfo[1];
+          for(var j =0 ; j < skuList.length; j ++){
+            if(deviceInfo[0] == skuList[j]){
+              deviceId =  deviceInfo[1];
+              return deviceId;
+            }
           }
         }
+        return deviceId;
       };
       $scope.config =
         {
@@ -623,6 +626,7 @@ angular.module('mcControlModule')
           flagLoading = true;
           var cmd = result[0].data.cmd[0];
           var status = mcService.explainAck(result[0].data.cmd[0]);
+
           if (status.ack.indexOf('fa') >= 0) {
             karessButton(status);
           } else if (status.ack.indexOf('1003') >= 0 || status.ack.indexOf('1002') >= 0) {
@@ -630,7 +634,7 @@ angular.module('mcControlModule')
             hmsPopup.hideLoading();
           } else {
             var item = mcService.explainAllStatus(cmd);
-            if (item.cmd == '86') {
+            if (item.cmd == '8a') {
               if(item.status == 'lighting off'){
                   $scope.config.light = false;
               }else if (item.status == 'lighting on'){
@@ -648,21 +652,21 @@ angular.module('mcControlModule')
               buttonChange();
               selectSlide();
               hmsPopup.hideLoading();
-            } else if (item.cmd == '8a') {
+            } else if (item.cmd == '86') {
               if(item.status == 'off'){
                 $scope.config.wuOff = false;
               }else if (item.status == 'on'){
                 $scope.config.wuOff = true;
               }
-              $scope.handlenapeListNape[0].selecFlag = $scope.config.light;
+              $scope.handlenapeListNape[1].selecFlag = $scope.config.wuOff;
               buttonChange();
               selectSlide();
               hmsPopup.hideLoading();
             }
             function selectSlide(){
               if ($scope.handlenapeListNape[0].selecFlag == true ) {
-                alert('dengguang');
-                alert(angular.toJson($scope.currentSlideData))
+                // alert('dengguang');
+                // alert(angular.toJson($scope.currentSlideData))
                 if($scope.currentSlideData.length == 2){
                 }else{
                   $scope.currentSlideData = $scope.slideTunBuData;
@@ -672,8 +676,8 @@ angular.module('mcControlModule')
                   }, 20)
                 }
               } else if ($scope.handlenapeListNape[0].selecFlag == false) {
-                alert('一版');
-                alert(angular.toJson($scope.currentSlideData))
+                // alert('一版');
+                // alert(angular.toJson($scope.currentSlideData))
                 if($scope.currentSlideData.length == 1){}
                 else{
                   $scope.currentSlideData = $scope.slideInitData;
@@ -729,15 +733,15 @@ angular.module('mcControlModule')
             status.ack = status.ack.substring(2, 4);
             console.log(status)
             if (status.ack == '28') {
-              $scope.Toast.show("开灯成功！");
+              // $scope.Toast.show("开灯成功！");
               changeColor();
             }
             if (status.ack == '26') {
-              $scope.Toast.show("除雾成功！");
+              // $scope.Toast.show("除雾成功！");
               changeColor();
             }
             if (status.ack == '00') {
-              $scope.Toast.show("一键关闭成功！");
+              // $scope.Toast.show("一键关闭成功！");
               changeColor();
             }
             if (status.ack == '70') {

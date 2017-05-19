@@ -168,6 +168,7 @@ angular.module('bathroomModule')
       var isLight = false;
       var isBreathOk = false;
       $scope.isNetOk = true;
+      $scope.isBigScreenOk = $window.innerWidth > 1000 ? true : false;
 
       $scope.goBack = function(){
         document.removeEventListener("SocketPlugin.receiveTcpData", receiveBathroomTcpData, false);
@@ -201,7 +202,12 @@ angular.module('bathroomModule')
             var heater = bathroomCmdService.explainAck(resultOn.data.cmd[0]);
 
             try{
-              if(heater.status || heater.cmd == '85'){
+              if((heater.cmd == '84' && heater.status == 'heater') ||
+                (heater.cmd == '84' && heater.status == 'fan')||
+                (heater.cmd == '84' && heater.status == 'hot_dry')||
+                (heater.cmd == '84' && heater.status == 'vantilation')||
+                (heater.cmd == '84' && heater.status == 'cool dry')||
+                (heater.cmd == '85' && heater.acs == 'Air-care on')){
                 //alert(heater.hour + ":"+　heater.min);
                 $scope.countDown = "";
                 $scope.isShowTime = true;
@@ -1792,12 +1798,12 @@ angular.module('bathroomModule')
         var c = "#6ACBB3";
         var cxt=canvas.getContext("2d");
         var xLength = $window.innerWidth * 0.5;
-        var yLength = $window.innerWidth * 0.78;
+        var yLength = $window.innerWidth * 0.7;
         //var yLength = $window.innerWidth * 0.95;
-        var r = $window.innerWidth * 0.34;
+        var r = $window.innerWidth * 0.335;
         cxt.beginPath();
         cxt.arc(xLength,yLength,r,Math.PI*0.75,Math.PI*2.25,false);
-        cxt.lineWidth =  $window.innerWidth * 0.055;
+        cxt.lineWidth =  $window.innerWidth * 0.053;
         cxt.strokeStyle = c;
         cxt.fillStyle = c;
         cxt.stroke();

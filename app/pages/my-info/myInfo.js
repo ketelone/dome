@@ -12,14 +12,19 @@ angular.module('myInfoModule')
           controller: 'addMembersCtrl'
         })
         .state('greenLife', {
-          url: '/greenLife',
+          url: '/greenLife/:device',
           templateUrl: 'build/pages/my-info/green-life/greenLife.html',
           controller: 'greenLifeCtrl'
         })
         .state('chooseDevice', {
           url: '/chooseDevice',
-          templateUrl: 'build/pages/my-info/choose-device/chooseDevice.html',
+          templateUrl: 'build/pages/my-info/green-life/choose-device/chooseDevice.html',
           controller: 'chooseDeviceCtrl'
+        })
+        .state('consumptionDetail', {
+          url: '/consumptionDetail/:device/:index',
+          templateUrl: 'build/pages/my-info/green-life/consumption-detail/consumptionDetail.html',
+          controller: 'consumptionDetailCtrl'
         })
         .state('setting', {
           cache: false,

@@ -217,7 +217,7 @@ angular.module('indexPageModule')
             id: "1",
             pictureUrl: "build/img/index/img_home_device_toliet.png",
             deviceType: "index.toliet",
-            deviceStatus: "设备在线",
+            deviceStatus: "index.online",
             deviceDesc: "",
             statusPictureUrl: "build/img/index/icon_home_device_signal5.png",
             errorPictureUrl: "",
@@ -226,9 +226,9 @@ angular.module('indexPageModule')
             sku: ["K-3900T","K-3900T-2"]
           }, {
             id: "2",
-            pictureUrl: "build/img/index/img_home_device_heater.png",
+            pictureUrl: "build/img/index/water_purifier_compressed.png",
             deviceType: "index.waterPurifier",
-            deviceStatus: "设备在线",
+            deviceStatus: "index.online",
             deviceDesc: "",
             statusPictureUrl: "build/img/index/icon_home_device_signal4.png",
             errorPictureUrl: "",
@@ -239,7 +239,7 @@ angular.module('indexPageModule')
             id: "3",
             pictureUrl: "build/img/index/img_home_device_heater.png",
             deviceType: "index.bathroomHeader",
-            deviceStatus: "设备在线",
+            deviceStatus: "index.online",
             deviceDesc: "26℃，60%",
             statusPictureUrl: "build/img/index/icon_home_device_signal4.png",
             errorPictureUrl: "",
@@ -251,19 +251,19 @@ angular.module('indexPageModule')
             id: "6",
             pictureUrl: "build/img/index/karess.png",
             deviceType: "index.bathtub",
-            deviceStatus: "设备在线",
+            deviceStatus: "index.online",
             deviceDesc: "26℃",
             statusPictureUrl: "build/img/index/icon_home_device_signal5.png",
             errorPictureUrl: "build/img/index/icon_home_device_warnning.png",
             isStatus: true,
             isError: false,
-            sku: "K-76448T-XW-0"
+            sku: ["K-76448T-XW-0","K-23044T-XWGR-0"]
           },
           {
             id: "7",
             pictureUrl: "build/img/index/next.png",
             deviceType: "index.nextgen",
-            deviceStatus: "设备在线",
+            deviceStatus: "index.online",
             deviceDesc: "",
             statusPictureUrl: "build/img/index/icon_home_device_signal4.png",
             errorPictureUrl: "build/img/index/icon_home_device_warnning.png",
@@ -275,7 +275,7 @@ angular.module('indexPageModule')
             id: "8",
             pictureUrl: "build/img/index/air.png",
             deviceType: "index.airfoilShower",
-            deviceStatus: "设备在线",
+            deviceStatus: "index.online",
             deviceDesc: "30℃",
             statusPictureUrl: "build/img/index/icon_home_device_signal5.png",
             errorPictureUrl: "build/img/index/icon_home_device_warnning.png",
@@ -285,15 +285,15 @@ angular.module('indexPageModule')
           },
           {
             id: "9",
-            pictureUrl: "build/img/index/img_home_device_chushuifa.png",
+            pictureUrl: "build/img/index/Grooming.png",
             deviceType: "index.mc",
-            deviceStatus: "设备在线",
+            deviceStatus: "index.online",
             deviceDesc: "",
             statusPictureUrl: "build/img/index/icon_home_device_signal3.png",
             errorPictureUrl: "build/img/index/icon_home_device_warnning.png",
             isStatus: true,
             isError: false,
-            sku: "K-77115T-NA"
+            sku: ["K-77115T-NA"]
           }
         ];
       }

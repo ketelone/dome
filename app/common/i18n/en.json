@@ -69,7 +69,16 @@
       "todayUsewater": "Daily Water Consumption(L)",
       "todayUsecleanWater": "Daily Pure Water Consumption(L)",
       "todayUseElectricity": "Daily Power Consumption(kw/h)",
-      "fenDevice": "Water Consumption by Device"
+      "fenDevice": "Water Consumption by Device",
+      "device":{
+        "toilet": "Toilet",
+        "waterPurifier": "Central Purification",
+        "bathroomHeader": "Bathroom Heater",
+        "bathtub": "Bathtub",
+        "nextgen": "Shower",
+        "airfoilShower": "Airfoil",
+        "mc": "Mirror Cabinet"
+      }
     },
     "my-room":{
       "restroom":"Bathroom",
@@ -170,7 +179,11 @@
     "bathtub": "Bathtub",
     "nextgen": "Shower",
     "airfoilShower": "Airfoil",
-    "mc": "Mirror Cabinet"
+    "mc": "Mirror Cabinet",
+    "online": "Online"
+  },
+  "scene":{
+    "sceneSetting":"Scene Setting"
   },
   "bigaunt": {
     "bigauntTitle": "Scenario Detail"
@@ -422,7 +435,7 @@
     "hotDrying": "Hot Dry",
     "breath": "Ventilation",
     "purify": "Air-Care",
-    "windDirection": "Flow",
+    "windDirection": "&nbsp;&nbsp;&nbsp;Flow",
     "light": "&nbsp;&nbsp;&nbsp;Light",
     "closeAll": "Stop all",
     "setting": "Setings",
@@ -444,7 +457,8 @@
     "fail": "fail",
     "openLightSuccess": "open light success",
     "openCoolSuccess": "open Cool success",
-    "timeout": "Count down"
+    "timeout": "Count down",
+    "save": "Save"
   },
   "spa": {
     "goHomeTitle": "Scenario Detail",

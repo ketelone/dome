@@ -15,16 +15,16 @@ angular.module('myInfoModule')
 
       $scope.goBack = function(){
         $ionicHistory.goBack();
-      }
+      };
 
       $scope.deviceList=[
-        'index.toliet','index.waterPurifier','index.bathroomHeader',
-        'index.bathtub','index.nextgen','index.airfoilShower',
-        'index.mc',
+        'my-info.greenLife.device.toilet',
+        'my-info.greenLife.device.waterPurifier',
+        'my-info.greenLife.device.bathroomHeader',
+        'my-info.greenLife.device.bathtub',
+        'my-info.greenLife.device.nextgen',
+        'my-info.greenLife.device.airfoilShower',
+        'my-info.greenLife.device.mc',
       ];
-
-      $scope.getDeviceInfo=function (index) {
-        $state.go('greenLife', {device: $scope.deviceList[index]});
-      };
 
     }]);

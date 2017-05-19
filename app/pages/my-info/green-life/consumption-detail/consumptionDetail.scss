@@ -1,0 +1,61 @@
+.consumptionDetail{
+
+  .headColor{
+    background-color: $global-head-bg;
+    background-image: none;
+  }
+  .whiteColor {
+    color: $color-base;
+  }
+
+  .row {
+    padding-top:0.73rem;
+    text-align: center;
+  }
+
+  .consumptionPosition{
+    position: absolute;
+    top: 8rem;
+  }
+
+  .unselectedWord {
+    font-size: 0.3rem;
+    font-family: PingFangSC-Semibold;
+    color: #7999AA;
+  }
+
+  .selectedWord {
+    font-weight: bold;
+    padding-bottom:0.1rem;
+    border-bottom: 0.07rem solid white;
+    font-size: 0.3rem;
+    font-family: PingFangSC-Semibold;
+    color: #FFFFFF;
+  }
+
+  .data-echarts{
+    width:100%;
+    height:7rem;
+    background-image: linear-gradient(0deg, #3B868A 0%, #1D3A66 100%);
+    color:white;
+  }
+
+  .number {
+    font-family: DINCondensed-Bold;
+    font-size: 0.72rem;
+    color: #FFFFFF;
+  }
+  .useWater {
+    font-family: PingFangSC-Regular;
+    font-size: 0.22rem;
+    color: #FFFFFF;
+    margin-top: 0.3rem
+  }
+
+  .waterImg {
+    width: 1.851rem;
+    height: 0.843rem;
+    margin: 0.328rem auto 0;
+  }
+
+}
