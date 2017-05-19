@@ -468,7 +468,11 @@
     "openLightSuccess": "open light success",
     "openCoolSuccess": "open Cool success",
     "timeout": "倒计时",
-    "save": "保存"
+    "save": "保存",
+    "rename": "重命名",
+    "move": "移动",
+    "delete": "解除绑定",
+    "ml": "机器学习设置"
   },
   "spa": {
     "goHomeTitle": "场景详情",

@@ -466,7 +466,11 @@
     "openLightSuccess": "open light success",
     "openCoolSuccess": "open Cool success",
     "timeout": "Count down",
-    "save": "Save"
+    "save": "Save",
+    "rename":"Rename",
+    "move":"Move",
+    "delete":"Delete",
+    "ml":"Machine Learning"
   },
   "spa": {
     "goHomeTitle": "Scenario Detail",

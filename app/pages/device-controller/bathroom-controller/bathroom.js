@@ -2044,13 +2044,13 @@ angular.module('bathroomModule')
       }
 
       $scope.operating = [{
-        text:'重命名'
+        text:'bathroom.rename'
       },{
-        text:'移动'
+        text:'bathroom.move'
       },{
-        text:'解除绑定'
+        text:'bathroom.delete'
       },{
-        text:'机器学习设置'
+        text:'bathroom.ml'
       }];
 
       $scope.popover = $ionicPopover.fromTemplateUrl('build/pages/device-controller/bathroom-controller/model/popover.html', {
