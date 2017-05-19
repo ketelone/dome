@@ -127,6 +127,8 @@ angular.module('mcControlModule')
             } else if (ack == 'fb') {
               //invalid ack
               code = {'ack': '1001'};
+            }else{
+              code = {'ack': ''};
             }
           }
           return code;
@@ -136,7 +138,7 @@ angular.module('mcControlModule')
           if (arg.length>=16 && arg.length<=40) {
             var ackStr = arg.substring(12,arg.length-2).toLowerCase();
             var ack = ackStr.substring(0,2);
-            var dict = '';;
+            var dict = '';
             switch(ack){
               case '86':{
                 dict = explainDemistStatus(ackStr);
