@@ -317,5 +317,5 @@ angular.module('toiletControlModule')
       //进入各个设置的具体界面
       $scope.goSettingInfo = function (url) {
         $state.go(url);
-      }
+      };
     }]);
