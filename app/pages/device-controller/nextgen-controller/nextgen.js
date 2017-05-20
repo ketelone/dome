@@ -101,10 +101,18 @@ angular.module('nextgenModule')
       //返回
       $scope.goBack = function () {
         //receiveTcpDatahandle：你处理逻辑函数
-        document.removeEventListener("SocketPlugin.receiveTcpData",
-          listenrDeal, false);
+        // document.removeEventListener("SocketPlugin.receiveTcpData",
+        //   listenrDeal, false);
         $ionicHistory.goBack();
       }
+
+      $scope.$on('$stateChangeStart',
+        function(event, toState, toParams, fromState, fromParams){
+          //alert('进来了。');
+          //注销自己的监听
+          document.removeEventListener("SocketPlugin.receiveTcpData",
+            listenrDeal, false);
+        });
 
       //出水方式初始模式选择
       $scope.waterway =

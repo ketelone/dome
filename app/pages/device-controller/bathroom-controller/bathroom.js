@@ -1870,70 +1870,90 @@ angular.module('bathroomModule')
         gaiganyinDistance:""
       };
       $scope.listleft = [{
-        name:"0时",
+        name:"bathroom.zeroHour",
+        desc:"0时",
         flag:false,
         towdata:[{
-          name: "0分",
+          name: "bathroom.zeroMin",
+          desc: "0分",
           flag:false
         },{
-          name: "10分",
+          name: "bathroom.tenMin",
+          desc: "10分",
           flag:false
         },{
-          name: "20分",
+          name: "bathroom.twentyMin",
+          desc: "20分",
           flag:false
         },{
-          name: "30分",
+          name: "bathroom.thirtyMin",
+          desc: "30分",
           flag:false
         },{
-          name: "40分",
+          name: "bathroom.fourtyMin",
+          desc: "40分",
           flag:false
         },{
-          name: "50分",
+          name: "bathroom.fiftyMin",
+          desc: "50分",
           flag:false
         },{
-          name: "59分",
+          name: "bathroom.fiftyNineMin",
+          desc: "59分",
           flag:false
         }]
       },{
-        name:"1时",
+        name:"bathroom.oneHour",
+        desc:"1时",
         flag:false,
         towdata:[{
           name: "无",
+          desc: "无",
           flag:false
         }]
       },{
-        name:"2时",
+        name:"bathroom.twoHour",
+        desc:"2时",
         flag:false,
         towdata:[{
           name: "无",
+          desc: "无",
           flag:false
         }]
       },{
-        name:"3时",
+        name:"bathroom.threeHour",
+        desc:"3时",
         flag:false,
         towdata:[{
           name: "无",
+          desc: "无",
           flag:false
         }]
       },{
-        name:"4时",
+        name:"bathroom.fourHour",
+        desc:"4时",
         flag:false,
         towdata:[{
           name: "无",
+          desc: "无",
           flag:false
         }]
       },{
-        name:"5时",
+        name:"bathroom.fiveHour",
+        desc:"5时",
         flag:false,
         towdata:[{
           name: "无",
+          desc: "无",
           flag:false
         }]
       },{
-        name:"6时",
+        name:"bathroom.sixHour",
+        desc:"6时",
         flag:false,
         towdata:[{
           name: "无",
+          desc: "无",
           flag:false
         }]
       }];
@@ -1942,7 +1962,7 @@ angular.module('bathroomModule')
       $scope.listright=$scope.listleft[0].towdata;
       $scope.silderSeleced = function (index) {
         $scope.listleft[index].flag = true;
-        $scope.timeHour = $scope.listleft[index].name;
+        $scope.timeHour = $scope.listleft[index].desc;
         //$scope.listright = $scope.listleft[index].towdata;
         for(var i=0;i<$scope.listleft.length;i++){
           if(index !== i){
@@ -1952,7 +1972,7 @@ angular.module('bathroomModule')
       };
       $scope.silderRightSeleced = function (index) {
         $scope.listright[index].flag = true;
-        $scope.timeMinu = $scope.listright[index].name;
+        $scope.timeMinu = $scope.listright[index].desc;
         for(var i=0;i<$scope.listright.length;i++){
           if(index !== i){
             $scope.listright[i].flag = false;
@@ -2024,13 +2044,13 @@ angular.module('bathroomModule')
       }
 
       $scope.operating = [{
-        text:'重命名'
+        text:'bathroom.rename'
       },{
-        text:'移动'
+        text:'bathroom.move'
       },{
-        text:'解除绑定'
+        text:'bathroom.delete'
       },{
-        text:'机器学习设置'
+        text:'bathroom.ml'
       }];
 
       $scope.popover = $ionicPopover.fromTemplateUrl('build/pages/device-controller/bathroom-controller/model/popover.html', {

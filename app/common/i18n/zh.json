@@ -424,7 +424,7 @@
     "place": "位置信息",
     "saveAlert": "保存成功",
     "saveError": "保存失败",
-    "signalStatus": "信号很好",
+    "signalStatus": "信号好",
     "signalBadStatus": "信号不好",
     "boxLink": "box连接",
     "using": "使用中",
@@ -444,12 +444,20 @@
     "wind": "风向",
     "fixed": "固定",
     "rock": "摇摆",
-    "oneHour": "一时",
-    "twoHour": "二时",
-    "threeHour": "三时",
-    "fourHour": "四时",
-    "fiveHour": "五时",
-    "sixHour": "六时",
+    "zeroHour": "0时",
+    "oneHour": "1时",
+    "twoHour": "2时",
+    "threeHour": "3时",
+    "fourHour": "4时",
+    "fiveHour": "5时",
+    "sixHour": "6时",
+    "zeroMin": "0分",
+    "tenMin": "10分",
+    "twentyMin": "20分",
+    "thirtyMin": "30分",
+    "fourtyMin": "40分",
+    "fiftyMin": "50分",
+    "fiftyNineMin": "59分",
     "alertTimeout": "您选择的时间已超出范围，请重新选择",
     "twentyModel": "24小时<br>模式",
     "commonModel": "普通模式",
@@ -460,7 +468,11 @@
     "openLightSuccess": "open light success",
     "openCoolSuccess": "open Cool success",
     "timeout": "倒计时",
-    "save": "保存"
+    "save": "保存",
+    "rename": "重命名",
+    "move": "移动",
+    "delete": "解除绑定",
+    "ml": "机器学习设置"
   },
   "spa": {
     "goHomeTitle": "场景详情",
@@ -517,7 +529,11 @@
     "shuiWen": "水温",
     "shuiWei": "水位",
     "loading": "网络连接异常！",
-    "DTVflag" : "此功能不可使用，请安装附件"
+    "DTVflag" : "此功能不可使用，请安装附件",
+    "rename": "重命名",
+    "move":"移动",
+    "delete":"删除",
+    "machine" : "机器学习"
   },
   "mcController": {
     "setting": "设置",
@@ -542,7 +558,12 @@
     "infoTaress5": "位置信息",
     "jieneng": "节能",
     "liangDu": "亮度",
-    "seWen": "色温"
+    "seWen": "色温",
+    "rename": "重命名",
+    "move":"移动",
+    "delete":"删除",
+    "machine" : "machine leanring"
+
   },
   "nextgen": {
     "title": "花洒",
