@@ -290,11 +290,11 @@ angular.module('toiletControlModule')
       $scope.openModal = function (index) {
         $scope.indexSelected = index;
         $scope.modal.show();
-        setTimeout(function () {
-          var ele = document.getElementsByClassName("lightModal");
-          ele[0].style.top= 70 + '%';
-          ele[0].style.minHight= 30 + '%';
-        }, 10)
+        // $timeout(function () {
+        //   var ele = document.getElementsByClassName("lightModal");
+        //   ele[0].style.top= 70 + '%';
+        //   ele[0].style.minHight= 30 + '%';
+        // }, 0)
       };
       $scope.$on('$destroy', function() {
         $scope.modal.remove();

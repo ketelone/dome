@@ -99,7 +99,7 @@ NIMI.prototype._data = {
  * @constructor
  */
 NIMI.prototype.frontRearDry = function (method, temperature, volume, place, flushOptions, mSwitchType) {
-  alert(angular.toJson({
+  console.log(angular.toJson({
     method:method,
     temperature:temperature,
     volume:volume,
@@ -139,7 +139,7 @@ NIMI.prototype.frontRearDry = function (method, temperature, volume, place, flus
  * @returns {string} 指令中的 data串
  */
 NIMI.prototype.feetSeatHeater = function (temperature) {
-  alert(angular.toJson({
+  console.log(angular.toJson({
     temperature:temperature
   }))
   var cmd = "05";
@@ -174,7 +174,7 @@ NIMI.prototype.SeatHeater = function (temperature) {
  * @returns {string}
  */
 NIMI.prototype.cleanWand = function (mSwitchType, hour, minute, dateSwitch, MOM, TUE, WED, THU, FRI, SAT, SUM) {
-  alert(angular.toJson({
+  console.log(angular.toJson({
     mSwitchType:mSwitchType,
     hour:hour,
     minute:minute,
@@ -238,7 +238,7 @@ NIMI.prototype.cleanWand = function (mSwitchType, hour, minute, dateSwitch, MOM,
  * @returns {string}
  */
 NIMI.prototype.ambientLight = function (lightMode, lightCtl, dynamicCtl, MOMC, TUEC, WEDC, THUC, FRIC, SATC, SUMC) {
-  alert(angular.toJson({
+  console.log(angular.toJson({
     "lightMode":lightMode,
     "lightCtl":lightCtl,
     "dynamicCtl":dynamicCtl,
@@ -348,7 +348,7 @@ function getDataByColor(color) {
  * @returns {string}
  */
 NIMI.prototype.bowlLight = function (lightStalls) {
-  alert(angular.toJson({
+  console.log(angular.toJson({
     lightStalls:lightStalls
   }))
   var cmd = "18";
@@ -370,7 +370,7 @@ NIMI.prototype.bowlLight = function (lightStalls) {
  * @returns {string}
  */
 NIMI.prototype.setting = function (welcome, nightLight, bowlLight, autoFlush, PRWash, autoOpenClose, deodorizer, trap, sound) {
-  alert(angular.toJson({
+  console.log(angular.toJson({
     welcome:welcome,
     nightLight:nightLight,
     bowlLight:bowlLight,
@@ -412,7 +412,7 @@ NIMI.prototype.setting = function (welcome, nightLight, bowlLight, autoFlush, PR
  * @returns {string}
  */
 NIMI.prototype.powerSaveDelay = function (delayTime) {
-  alert(angular.toJson({
+  console.log(angular.toJson({
     delayTime:delayTime,
   }))
   var cmd = "0C";
@@ -700,7 +700,7 @@ function analysisFlushStatus(ackStr) {
  * @param week 周几 {1,2,3,4,5,6,7}
  */
 NIMI.prototype.setDeviceTime = function (year, month, date, hour, minute, week) {
-  alert(angular.toJson({
+  console.log(angular.toJson({
     year:year,
     month:month,
     date:date,
@@ -740,7 +740,7 @@ NIMI.prototype.setDeviceTime = function (year, month, date, hour, minute, week) 
     + param_minute_d
     + threeBitToCheck((week - 1).toString(2))
     + "00");
-  alert(cmd)
+  console.log(cmd)
   return cmd;
 };
 /**

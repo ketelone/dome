@@ -71,6 +71,7 @@ angular.module('toiletControlModule')
       /*
        tongyishujuji
        */
+      $scope.myObjstyle={};
       $scope.toiletController = {
         modelTypeNv:"toiletController.zhengchang",
         modelTypeClear:"toiletController.gaunbi",
@@ -1437,7 +1438,7 @@ angular.module('toiletControlModule')
                     $scope.toilteFaviteTemp = JSON.parse(window.localStorage.toilteFaviteSetting);
                     $scope.toilteFaviteTemp.SEAT_TMPT = handleOriginData[0].gearInit;
                     window.localStorage.toilteFaviteSetting = JSON.stringify($scope.toilteFaviteTemp);
-                    $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
+                    // $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
                   } else {
                     $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directerror"));
                   };
@@ -1456,7 +1457,7 @@ angular.module('toiletControlModule')
                     }catch(e){
                       alert(e.message)
                     };
-                    $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
+                    // $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
                   } else {
                     $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directerror"));
                   };
@@ -1470,7 +1471,7 @@ angular.module('toiletControlModule')
                     $scope.toilteFaviteTemp = JSON.parse(window.localStorage.toilteFaviteSetting);
                     $scope.toilteFaviteTemp.LIGHT_AMBIENT_BRIGHTNESS = handleOriginData[0].gearInit;
                     window.localStorage.toilteFaviteSetting = JSON.stringify($scope.toilteFaviteTemp);
-                    $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
+                    // $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
                   } else {
                     $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directerror"));
                   };
@@ -1484,7 +1485,7 @@ angular.module('toiletControlModule')
                     $scope.toilteFaviteTemp = JSON.parse(window.localStorage.toilteFaviteSetting);
                     $scope.toilteFaviteTemp.LIGHT_BOWL_BRIGHTNESS = handleOriginData[1].gearInit;
                     window.localStorage.toilteFaviteSetting = JSON.stringify($scope.toilteFaviteTemp);
-                    $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
+                    // $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
                   } else {
                     $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directerror"));
                   };
@@ -1492,7 +1493,7 @@ angular.module('toiletControlModule')
                   var name = "toiletController.toiltequan";
                   if (backDataCmd.ack === "1000") {
                     // $scope.selectChange($scope.selectChangeFlag, $scope.handlenapeSelectedIndex, $scope.selectIsType);
-                    $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
+                    // $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
                   } else {
                     $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directerror"));
                   };
@@ -1500,7 +1501,7 @@ angular.module('toiletControlModule')
                   var name = "toiletController.clearopen";
                   if (backDataCmd.ack === "1000") {
                     // $scope.selectChange($scope.selectChangeFlag, $scope.handlenapeSelectedIndex, $scope.selectIsType);
-                    $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
+                    // $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
                   } else {
                     $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directerror"));
                   };
@@ -1508,7 +1509,7 @@ angular.module('toiletControlModule')
                   var name = "toiletController.clearextend";
                   if (backDataCmd.ack === "1000") {
                     // $scope.selectChange($scope.selectChangeFlag, $scope.handlenapeSelectedIndex, $scope.selectIsType);
-                    $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
+                    // $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
                   } else {
                     $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directerror"));
                   };
@@ -1516,7 +1517,7 @@ angular.module('toiletControlModule')
                   var name = "toiletController.clearinstance";
                   if (backDataCmd.ack === "1000") {
                     // $scope.selectChange($scope.selectChangeFlag, $scope.handlenapeSelectedIndex, $scope.selectIsType);
-                    $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
+                    // $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directesuccess"));
                   } else {
                     $scope.Toast.show($translate.instant(name) + $translate.instant("golabelvariable.directerror"));
                   };
@@ -1724,20 +1725,25 @@ angular.module('toiletControlModule')
             $scope.toiletController.handleSelecDes = $scope.toiletController.selectMode;
             $scope.toiletController.modelType = $scope.toiletController.modelTypeNv;
           };
+          $scope.reduceHeight = $scope.fontSize*$scope.value.length;
+          $scope.myObjstyle = {
+            "top":$scope.screenHeig - $scope.reduceHeight + 'px',
+            "minHeight":$scope.reduceHeight + 'px'
+          };
           if(($scope.handlenapeListNape[2].selecFlag || $scope.handlenapeListNape[3].selecFlag) && type){
             $scope.modal.show();
-            $timeout(function () {
-              var ele = document.getElementsByClassName("toiletSingalModalTop");
-              ele[0].style.top = $scope.screenHeig - 1*$scope.fontSize*$scope.value.length + 'px';
-              ele[0].style.minHeight = 1*$scope.fontSize*$scope.value.length + 'px';
-            },10)
+            // $timeout(function () {
+            //   var ele = document.getElementsByClassName("toiletSingalModalTop");
+            //   ele[0].style.top = $scope.screenHeig - $scope.reduceHeight + 'px';
+            //   ele[0].style.minHeight = $scope.reduceHeight + 'px';
+            // },0)
           }else if($scope.handlenapeListNape[11].selecFlag===false && type === undefined){
             $scope.modal.show();
-            $timeout(function () {
-              var ele = document.getElementsByClassName("toiletSingalModalTop");
-              ele[0].style.top = $scope.screenHeig - 1*$scope.fontSize*$scope.value.length + 'px';
-              ele[0].style.minHeight = 1*$scope.fontSize*$scope.value.length + 'px';
-            },10)
+            // $timeout(function () {
+            //   var ele = document.getElementsByClassName("toiletSingalModalTop");
+            //   ele[0].style.top = $scope.screenHeig - $scope.reduceHeight + 'px';
+            //   ele[0].style.minHeight = $scope.reduceHeight + 'px';
+            // },0)
           }else{
             $scope.Toast.show($translate.instant("toiletController.dirpop"));
           };

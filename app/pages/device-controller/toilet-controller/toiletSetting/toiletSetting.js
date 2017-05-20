@@ -39,6 +39,7 @@ angular.module('toiletControlModule')
       // $scope.$on('$stateChangeStart',function(event, toState, toParams, fromState, fromParams){
       //   document.removeEventListener("SocketPlugin.receiveTcpData", receiveTcpDatatoseting, false);
       // });
+      $scope.myObjstyle={};
       $scope.chongshuisetval = false,
       $scope.chuchousetval = false,
       $scope.toilteSettingData={
@@ -240,13 +241,18 @@ angular.module('toiletControlModule')
         }else if(type === "jiedianset"){
           $scope.value = $scope.jiedianval;
         };
+        $scope.reduceHeight = $scope.fontSize*$scope.value.length;
+        $scope.myObjstyle = {
+          "top":$scope.screenHeig - $scope.reduceHeight + 'px',
+          "minHeight":$scope.reduceHeight + 'px'
+        };
         if($scope.value.length!==0) {
           $scope.modal.show();
-          setTimeout(function () {
-            var ele = document.getElementsByClassName("toiletSetSingalModalTop");
-            ele[0].style.top = $scope.screenHeig - 1*$scope.fontSize*$scope.value.length + 'px';
-            ele[0].style.minHeight = 1*$scope.fontSize*$scope.value.length + 'px';
-          }, 10)
+          // $timeout(function () {
+          //   var ele = document.getElementsByClassName("toiletSetSingalModalTop");
+          //   ele[0].style.top = $scope.screenHeig - 1*$scope.fontSize*$scope.value.length + 'px';
+          //   ele[0].style.minHeight = 1*$scope.fontSize*$scope.value.length + 'px';
+          // }, 0)
         };
       };
       $scope.$on('$destroy', function() {
@@ -278,8 +284,7 @@ angular.module('toiletControlModule')
               $scope.toilSetGetImpleteData("jiedian", cmdvalue, $translate.instant("toiletSetting.jiedianset"));
             } else {
               cmdService.sendCmd(tolitersetcmdObj.diviceid, cmdvalue, tolitersetcmdObj.boxid);
-            }
-            ;
+            };
           }catch(e){
             alert(e.message);
           }
