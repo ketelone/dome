@@ -313,9 +313,9 @@ angular.module('nextgenModule')
       //Function list
       $scope.handlenapeListNape = [
         {
-          imgUrl: "build/img/nextgen/water_nor.png",
-          imgSeledUrl: "build/img/nextgen/water.png",
-          imgUrlTemp: "build/img/nextgen/water_nor.png",
+          imgUrl: "build/img/nextgen/chixu.png",
+          imgSeledUrl: "build/img/nextgen/chixuseled.png",
+          imgUrlTemp: "build/img/nextgen/chixu.png",
           handleDes: "nextgen.water",
           selecFlag: false,
           handledata: $scope.slideLinYuData //cjc初始canves
