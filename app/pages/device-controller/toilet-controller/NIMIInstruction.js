@@ -370,17 +370,17 @@ NIMI.prototype.bowlLight = function (lightStalls) {
  * @returns {string}
  */
 NIMI.prototype.setting = function (welcome, nightLight, bowlLight, autoFlush, PRWash, autoOpenClose, deodorizer, trap, sound) {
-  console.log(angular.toJson({
-    welcome:welcome,
-    nightLight:nightLight,
-    bowlLight:bowlLight,
-    autoFlush:autoFlush,
-    PRWash:PRWash,
-    autoOpenClose:autoOpenClose,
-    deodorizer:deodorizer,
-    trap:trap,
-    sound:sound
-  }))
+  // console.log(angular.toJson({
+  //   welcome:welcome,
+  //   nightLight:nightLight,
+  //   bowlLight:bowlLight,
+  //   autoFlush:autoFlush,
+  //   PRWash:PRWash,
+  //   autoOpenClose:autoOpenClose,
+  //   deodorizer:deodorizer,
+  //   trap:trap,
+  //   sound:sound
+  // }))
   var cmd = "0A";
   var mWelcome = "0";
   (welcome == config.ON) ? mWelcome = "1" : mWelcome = "0";
@@ -700,15 +700,15 @@ function analysisFlushStatus(ackStr) {
  * @param week 周几 {1,2,3,4,5,6,7}
  */
 NIMI.prototype.setDeviceTime = function (year, month, date, hour, minute, week) {
-  console.log(angular.toJson({
-    year:year,
-    month:month,
-    date:date,
-    hour:hour,
-    minute:minute,
-    week:week,
-    }
-  ))
+  // console.log(angular.toJson({
+  //   year:year,
+  //   month:month,
+  //   date:date,
+  //   hour:hour,
+  //   minute:minute,
+  //   week:week,
+  //   }
+  // ))
   var cmd = "0f";
   var param_year = sevenBitToCheck(year.toString(2));
   var param_month_h = "";
@@ -766,6 +766,6 @@ function sevenBitToCheck(data) {
     for (var i = 0; i < l; i++) {
       data = "0" + data;
     }
-  }
+  };
   return data;
 };

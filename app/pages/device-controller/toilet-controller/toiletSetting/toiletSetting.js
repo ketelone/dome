@@ -4,6 +4,7 @@ angular.module('toiletControlModule')
     '$state',
     '$translate',
     '$ionicPlatform',
+    '$ionicHistory',
     '$timeout',
     'publicMethod',
     '$ionicModal',
@@ -17,6 +18,7 @@ angular.module('toiletControlModule')
               $state,
               $translate,
               $ionicPlatform,
+              $ionicHistory,
               $timeout,
               publicMethod,
               $ionicModal,
@@ -31,14 +33,12 @@ angular.module('toiletControlModule')
         document.removeEventListener("SocketPlugin.receiveTcpData", receiveTcpDatatoseting, false);
         publicMethod.goBack();
       };
-
       $ionicPlatform.registerBackButtonAction(function (e) {
         document.removeEventListener("SocketPlugin.receiveTcpData", receiveTcpDatatoseting, false);
-      }, 0);
-
-      // $scope.$on('$stateChangeStart',function(event, toState, toParams, fromState, fromParams){
-      //   document.removeEventListener("SocketPlugin.receiveTcpData", receiveTcpDatatoseting, false);
-      // });
+        $ionicHistory.goBack();
+        e.preventDefault();
+        return false;
+      }, 101);
       $scope.myObjstyle={};
       $scope.chongshuisetval = false,
       $scope.chuchousetval = false,
@@ -206,7 +206,7 @@ angular.module('toiletControlModule')
       };
       var cmdvalue = cmdService.getCmd(tolitersetcmdObj.header,tolitersetcmdObj.idx,nimisetting.setDeviceTime(currentDateYear,currentDateMouth,currentDateDay,currentDateHour,currentDateMinute,currentDateWeek),tolitersetcmdObj.ctrId,tolitersetcmdObj.devId);
       //send instructin
-      // alert(cmdvalue);
+      alert(cmdvalue);
       if(baseConfig.isCloudCtrl){
         $scope.toilSetGetImpleteData(type,cmdvalue,$translate.instant(""));
       }else{
@@ -275,19 +275,15 @@ angular.module('toiletControlModule')
           }else if(val.des === "toiletSetting.interngent"){
             var delayTime = 15;
           };
-          try {
-            var cmdvalue = cmdService.getCmd(tolitersetcmdObj.header, tolitersetcmdObj.idx, nimisetting.powerSaveDelay(delayTime), tolitersetcmdObj.ctrId, tolitersetcmdObj.devId);
-            //send instructin
-            console.log(cmdvalue)
-            // alert(cmdvalue)
-            if (baseConfig.isCloudCtrl) {
-              $scope.toilSetGetImpleteData("jiedian", cmdvalue, $translate.instant("toiletSetting.jiedianset"));
-            } else {
-              cmdService.sendCmd(tolitersetcmdObj.diviceid, cmdvalue, tolitersetcmdObj.boxid);
-            };
-          }catch(e){
-            alert(e.message);
-          }
+          var cmdvalue = cmdService.getCmd(tolitersetcmdObj.header, tolitersetcmdObj.idx, nimisetting.powerSaveDelay(delayTime), tolitersetcmdObj.ctrId, tolitersetcmdObj.devId);
+          //send instructin
+          console.log(cmdvalue)
+          // alert(cmdvalue)
+          if(baseConfig.isCloudCtrl) {
+            $scope.toilSetGetImpleteData("jiedian", cmdvalue, $translate.instant("toiletSetting.jiedianset"));
+          }else{
+            cmdService.sendCmd(tolitersetcmdObj.diviceid, cmdvalue, tolitersetcmdObj.boxid);
+          };
         }else{
           $scope.toilteSettingData.gaiganyinDistance=val.des;
           if(val.des === "toiletSetting.close"){
@@ -298,19 +294,15 @@ angular.module('toiletControlModule')
             var value = "distanceMedium";
           }else if(val.des === "toiletSetting.farinstance"){
             var value = "distanceFar";
-          }
-          try {
-            var cmdvalue = cmdService.getCmd(tolitersetcmdObj.header, tolitersetcmdObj.idx, nimisetting._data[value], tolitersetcmdObj.ctrId, tolitersetcmdObj.devId);
-            //send instructin
-            // alert(cmdvalue)
-            if (baseConfig.isCloudCtrl) {
-              $scope.toilSetGetImpleteData("autofangai", cmdvalue, $translate.instant("toiletSetting.autofangai"));
-            } else {
-              cmdService.sendCmd(tolitersetcmdObj.diviceid, cmdvalue, tolitersetcmdObj.boxid);
-            };
-          }catch(e){
-          alert(e.message);
-        }
+          };
+          var cmdvalue = cmdService.getCmd(tolitersetcmdObj.header, tolitersetcmdObj.idx, nimisetting._data[value], tolitersetcmdObj.ctrId, tolitersetcmdObj.devId);
+          //send instructin
+          // alert(cmdvalue)
+          if (baseConfig.isCloudCtrl) {
+            $scope.toilSetGetImpleteData("autofangai", cmdvalue, $translate.instant("toiletSetting.autofangai"));
+          } else {
+            cmdService.sendCmd(tolitersetcmdObj.diviceid, cmdvalue, tolitersetcmdObj.boxid);
+          };
         };
       };
       //确定是否清除设备设置
