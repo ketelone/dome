@@ -6,19 +6,19 @@
       <span translate="message.message">消息</span>
     </div>
     <div class="row allMess">
-      <!--<div ng-click="showStatus()" class="col col-33">-->
-      <!--<span translate="message.status" ng-class="statusword">状态及提醒</span>-->
-      <!--</div>-->
-      <!--<div ng-click="showException()" class="col col-33">-->
-      <!--<span translate="message.exception" ng-class="exceptionword">异常及保修</span>-->
-      <!--</div>-->
-      <!--<div ng-click="showOther()" class="col col-33">-->
-      <!--<span translate="message.other" ng-class="otherword">其它</span>-->
-      <!--</div>-->
-      <div ng-repeat="data in listStatus track by $index"
-           ng-click="listClick($index)" class="col col-33">
-        <span translate={{data.des}} ng-class="{statusword:data.isClick}"></span>
+      <div ng-click="listClick(0)" class="col col-35">
+        <span translate={{listStatus[0].des}} ng-class="{statusword:listStatus[0].isClick}"></span>
       </div>
+      <div ng-click="listClick(1)" class="col col-40">
+        <span translate={{listStatus[1].des}} ng-class="{statusword:listStatus[1].isClick}"></span>
+      </div>
+      <div ng-click="listClick(2)" class="col col-25">
+        <span translate={{listStatus[2].des}} ng-class="{statusword:listStatus[2].isClick}"></span>
+      </div>
+      <!--<div ng-repeat="data in listStatus track by $index"-->
+           <!--ng-click="listClick($index)" class="col col-33">-->
+        <!--<span translate={{data.des}} ng-class="{statusword:data.isClick}"></span>-->
+      <!--</div>-->
     </div>
   </div>
 

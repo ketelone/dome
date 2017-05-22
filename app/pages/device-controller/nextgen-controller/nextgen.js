@@ -28,6 +28,7 @@ angular.module('nextgenModule')
       //获取设备Id bug
       var getDeviceId = function () {
         var skuList = SettingsService.get('sku');
+        // alert("sku:"+skuList);
         var deviceId = "";
         var deviceList = localStorage.deviceInfo.split(";");
         for (var i = 0; i < deviceList.length; i++) {
@@ -44,7 +45,6 @@ angular.module('nextgenModule')
 
       var deviceId = getDeviceId();
       // var deviceId="87F5A217";
-      // alert(deviceId);
 
       //本地发送指令
       var pluginToCtrl = function (deviceId, value, successMsg, errorMsg) {
@@ -278,6 +278,7 @@ angular.module('nextgenModule')
 
       //一进入页面就查询出水状态
       $scope.$on('$ionicView.beforeEnter', function () {
+        // alert("deviceId"+deviceId);
         hmsPopup.showLoading();
         $timeout(function () {
           if (!isLink) {
