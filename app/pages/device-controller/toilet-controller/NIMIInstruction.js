@@ -238,18 +238,18 @@ NIMI.prototype.cleanWand = function (mSwitchType, hour, minute, dateSwitch, MOM,
  * @returns {string}
  */
 NIMI.prototype.ambientLight = function (lightMode, lightCtl, dynamicCtl, MOMC, TUEC, WEDC, THUC, FRIC, SATC, SUMC) {
-  console.log(angular.toJson({
-    "lightMode":lightMode,
-    "lightCtl":lightCtl,
-    "dynamicCtl":dynamicCtl,
-    "MOMC":MOMC,
-    "TUEC":TUEC,
-    "WEDC":WEDC,
-    "THUC":THUC,
-    "FRIC":FRIC,
-    "SATC":SATC,
-    "SUMC":SUMC
-  }))
+  // alert(angular.toJson({
+  //   "lightMode":lightMode,
+  //   "lightCtl":lightCtl,
+  //   "dynamicCtl":dynamicCtl,
+  //   "MOMC":MOMC,
+  //   "TUEC":TUEC,
+  //   "WEDC":WEDC,
+  //   "THUC":THUC,
+  //   "FRIC":FRIC,
+  //   "SATC":SATC,
+  //   "SUMC":SUMC
+  // }))
   var cmd = "11";
   var param_one = "";
   var mLightCtl = "";
@@ -295,9 +295,6 @@ NIMI.prototype.ambientLight = function (lightMode, lightCtl, dynamicCtl, MOMC, T
   mFRIC = getDataByColor(FRIC);
   mSATC = getDataByColor(SATC);
   param_one = mSUMC + mLightMode + mLightCtl;
-  console.log("mLightMode"+mLightMode);
-  console.log("mLightCtl"+mLightCtl);
-  console.log("param"+param_one);
   cmd += getHex(param_one)
     + getHex("0" + mTUEC + mDynamicCtl + mMOMC)
     + getHex("0" + mTHUC + "0" + mWEDC)
@@ -314,7 +311,7 @@ NIMI.prototype.ambientLight = function (lightMode, lightCtl, dynamicCtl, MOMC, T
 function getDataByColor(color) {
   var data = "";
   switch (color) {
-    case "white":
+    case "White":
       data = config.White;
       break;
     case "Pantone4985":
