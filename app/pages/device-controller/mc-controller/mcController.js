@@ -197,7 +197,7 @@ angular.module('mcControlModule')
 
           "</div>" +
           "<div class='toilet-parameterctl-dataimg' ng-if='list.parameterctlFlag'>" +
-          "<img class='conninfo-parameterctl-img' ng-src='build/img/toilet-controller/btn_devicedetail_scoll.png' alt=''>" +
+          "<img class='conninfo-parameterctl-img' ng-src='build/img/mc-controller/btn_devicedetail_scoll.png' alt=''>" +
           "</div>" +
           "</div>" +
           "</ion-slide>" +
