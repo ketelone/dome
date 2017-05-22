@@ -4,6 +4,7 @@ angular.module('toiletControlModule')
     '$state',
     '$translate',
     '$ionicPlatform',
+    '$ionicHistory',
     '$ionicSlideBoxDelegate',
     '$timeout',
     'cmdService',
@@ -19,6 +20,7 @@ angular.module('toiletControlModule')
               $state,
               $translate,
               $ionicPlatform,
+              $ionicHistory,
               $ionicSlideBoxDelegate,
               $timeout,
               cmdService,
@@ -37,7 +39,10 @@ angular.module('toiletControlModule')
       };
       $ionicPlatform.registerBackButtonAction(function (e) {
         document.removeEventListener("SocketPlugin.receiveTcpData", centreceiveTcpDatahandle, false);
-      }, 0);
+        $ionicHistory.goBack();
+        e.preventDefault();
+        return false;
+      }, 101);
       var getDeviceIcentset = function(){
         var skuList = SettingsService.get('sku');
         var deviceId = "";
