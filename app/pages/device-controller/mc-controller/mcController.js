@@ -27,6 +27,9 @@ angular.module('mcControlModule')
        *@disc: get device id
        */
       var getDeviceId = function(){
+        if (localStorage.deviceInfo == undefined) {
+          return;
+        }
         var skuList = SettingsService.get('sku');
         var deviceId = "";
         var deviceList = localStorage.deviceInfo.split(";");
@@ -100,9 +103,8 @@ angular.module('mcControlModule')
           des: "mcController.seWen",
           diedes: "sewen",
           gearNum: 2,
-          gearNum: localStorage.mcWendu,
           gearInit: localStorage.mcWendu,
-          gearInitTemp: 1,
+          gearInitTemp: localStorage.mcWendu,
           parameterctlFlag: false,
           parNodeid: 'toilet-TunBuPosCtl',
           canves01: "TunBuPosPoscanves01",

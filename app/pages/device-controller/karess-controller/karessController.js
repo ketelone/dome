@@ -84,6 +84,9 @@ angular.module('karessControlModule')
           }
         }, 10000);
         statusKaress();
+        $timeout(function () {
+          hmsPopup.hideLoading();
+        }, 60000);
       }
       $scope.init();
       //侧滑转档数量jsongulp
