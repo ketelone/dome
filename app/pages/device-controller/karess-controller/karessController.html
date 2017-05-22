@@ -26,7 +26,10 @@
     </div>
     <div class="toilet-handlenape-selec" ng-click="openModal()">
       <span class="handlenape-selec-des" translate='karessController.handleSelecDes'></span>
-      <span class="handlenape-selec-use" translate={{karessController.modelType}}></span>
+      <span class="handlenape-selec-use" ng-show="karessLevelWater.level ==1"> 25%</span>
+      <span class="handlenape-selec-use" ng-show="karessLevelWater.level ==2"> 50%</span>
+      <span class="handlenape-selec-use" ng-show="karessLevelWater.level ==3"> 75%</span>
+      <span class="handlenape-selec-use" ng-show="karessLevelWater.level ==4"> 95%</span>
       <img class="handlenape-selec-img" src="build/img/karess-controller/icon_scenario_arrow.png">
     </div>
     <ion-scroll class="toilet-handlenape" overflow-scroll="false">

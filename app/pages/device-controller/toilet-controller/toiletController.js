@@ -43,13 +43,6 @@ angular.module('toiletControlModule')
       $ionicPlatform.registerBackButtonAction(function (e) {
         document.removeEventListener("SocketPlugin.receiveTcpData", receiveTcpDatahandle, false);
       }, 0);
-      // try {
-      //   $scope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-      //     document.removeEventListener("SocketPlugin.receiveTcpData", receiveTcpDatahandle, false);
-      //   });
-      // }catch(e){
-      //   alert(e.message)
-      // };
       var getDeviceIdf = function(){
         var skuList = SettingsService.get('sku');
         var deviceId = "";
@@ -589,7 +582,7 @@ angular.module('toiletControlModule')
           $scope.toGetImpleteData(flag,cmdvalue,$scope.handlenapeListNape[selectedIndex].handleDes,selectedIndex,isType);
         }else{
           cmdService.sendCmd(tolitercmdObj.diviceid, cmdvalue, tolitercmdObj.boxid);
-        }
+        };
       };
       /**
        *@params:flushOptions(nvyong mode) mSwitchType(turn or off) flag(is toiltelight)
