@@ -206,7 +206,7 @@ angular.module('toiletControlModule')
       };
       var cmdvalue = cmdService.getCmd(tolitersetcmdObj.header,tolitersetcmdObj.idx,nimisetting.setDeviceTime(currentDateYear,currentDateMouth,currentDateDay,currentDateHour,currentDateMinute,currentDateWeek),tolitersetcmdObj.ctrId,tolitersetcmdObj.devId);
       //send instructin
-      alert(cmdvalue);
+      // alert(cmdvalue);
       if(baseConfig.isCloudCtrl){
         $scope.toilSetGetImpleteData(type,cmdvalue,$translate.instant(""));
       }else{
