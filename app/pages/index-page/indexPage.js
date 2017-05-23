@@ -257,7 +257,7 @@ angular.module('indexPageModule')
             errorPictureUrl: "build/img/index/icon_home_device_warnning.png",
             isStatus: true,
             isError: false,
-            sku: ["K-76448T-XW-0","K-23044T-XWGR-0","K-23044T-XWGR-0"]
+            sku: ["K-76448T-XW-0","K-23044T-XWGR-0"]
           },
           {
             id: "7",
@@ -1003,8 +1003,8 @@ angular.module('indexPageModule')
             SettingsService.set("sku", item.sku);
           }
           if (item.deviceType == "next gen shower") {
-            $state.go('nextgen', {deviceSku: item.sku});
-            // SettingsService.set("sku", item.sku);
+            $state.go('nextgen');//, {deviceSku: item.sku}
+            SettingsService.set("sku", item.sku);
           }
           if (item.deviceType == "airfoil-shower") {
             $state.go('airfoilShower');
@@ -1039,8 +1039,8 @@ angular.module('indexPageModule')
             SettingsService.set("sku", item.sku);
           }
           if (item.deviceType == "index.nextgen") {
-            $state.go('nextgen', {deviceSku: item.sku});
-            // SettingsService.set("sku",item.sku);
+            $state.go('nextgen');// , {deviceSku: item.sku}
+            SettingsService.set("sku",item.sku);
           }
           if (item.deviceType == "index.airfoilShower") {
             $state.go('airfoilShower');

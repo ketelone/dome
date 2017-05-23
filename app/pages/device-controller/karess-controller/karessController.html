@@ -2,7 +2,6 @@
   <ion-header-bar style="background-image: none" class="toilet-bg">
     <button class="button button-icon icon ion-ios-arrow-left header_buttonRig colorhead" ng-click="goBack()"></button>
     <div class="h1 title header_title colorhead" translate="karessController.title"></div>
-    <!--<button class="button button-icon icon ion-qr-scanner header_buttonRig colorhead" ng-click="openPopover($event)"></button>-->
     <img class="right-image" src="build/img/icon_dot@3x.png" ng-click="openPopover($event)"/>
   </ion-header-bar>
   <ion-content class="toilet-bg" overflow-scroll="true" style="overflow: hidden">
@@ -26,10 +25,13 @@
     </div>
     <div class="toilet-handlenape-selec" ng-click="openModal()">
       <span class="handlenape-selec-des" translate='karessController.handleSelecDes'></span>
-      <span class="handlenape-selec-use" translate={{karessController.modelType}}></span>
+      <span class="handlenape-selec-use" ng-show="karessLevelWater.level ==1"> 25%</span>
+      <span class="handlenape-selec-use" ng-show="karessLevelWater.level ==2"> 50%</span>
+      <span class="handlenape-selec-use" ng-show="karessLevelWater.level ==3"> 75%</span>
+      <span class="handlenape-selec-use" ng-show="karessLevelWater.level ==4"> 95%</span>
       <img class="handlenape-selec-img" src="build/img/karess-controller/icon_scenario_arrow.png">
     </div>
-    <ion-scroll class="toilet-handlenape" overflow-scroll="false">
+    <ion-scroll class="toilet-handlenape" overflow-scroll="false" >
       <div class="toilet-handlenape-list" ng-repeat="list in handlenapeListNape track by $index" ng-click="selectNapes($index,list)">
         <div class="handlenape-list-napes" ng-class="{true: 'napes-border', false: ''}[list.selecFlag]">
           <span style="display: inline-block;padding-top:0.2rem"><img class="list-napes-img" ng-src={{list.imgUrl}} alt="" /></span>

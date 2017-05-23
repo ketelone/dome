@@ -5,28 +5,31 @@ angular.module('karessControlModule')
     '$ionicModal',
     '$compile',
     'baseConfig',
-    'checkVersionService', 'SettingsService', '$ionicHistory', '$ionicSlideBoxDelegate', 'karessService', 'hmsPopup', 'hmsHttp', 'cmdService', '$timeout', '$ionicPopover','$translate',
+    'checkVersionService', 'SettingsService', '$ionicHistory', '$ionicSlideBoxDelegate', 'karessService', 'hmsPopup', 'hmsHttp', 'cmdService', '$timeout', '$ionicPopover', '$translate',
     function ($scope,
               $state,
               $ionicModal,
               $compile,
               baseConfig,
-              checkVersionService, SettingsService, $ionicHistory, $ionicSlideBoxDelegate, karessService, hmsPopup, hmsHttp, cmdService, $timeout, $ionicPopover,$translate) {
+              checkVersionService, SettingsService, $ionicHistory, $ionicSlideBoxDelegate, karessService, hmsPopup, hmsHttp, cmdService, $timeout, $ionicPopover, $translate) {
       /**
        *@autor: caolei
        *@return: device id
        *@disc: get device id
        */
-      var getDeviceId = function(){
+      var getDeviceId = function () {
+        if (localStorage.deviceInfo == undefined) {
+          return;
+        }
         var skuList = SettingsService.get('sku');
         var deviceId = "";
         var deviceList = localStorage.deviceInfo.split(";");
-        console.log(deviceList+"========");
-        for(var i = 0; i < deviceList.length; i ++){
+        console.log(deviceList + "========");
+        for (var i = 0; i < deviceList.length; i++) {
           var deviceInfo = deviceList[i].split(",");
-          for(var j =0 ; j < skuList.length; j ++){
-            if(deviceInfo[0] == skuList[j]){
-              deviceId =  deviceInfo[1];
+          for (var j = 0; j < skuList.length; j++) {
+            if (deviceInfo[0] == skuList[j]) {
+              deviceId = deviceInfo[1];
               return deviceId;
             }
           }
@@ -34,11 +37,10 @@ angular.module('karessControlModule')
         return deviceId;
       };
       var deviceId = getDeviceId();
-
-      if (angular.isUndefined(localStorage.karessTemp)) {
-        localStorage.karessTemp = '10';
-      }
       console.log(localStorage.karessTemp);
+      if (angular.isUndefined(localStorage.karessTemp)) {
+        localStorage.karessTemp = 9;
+      }
       if (angular.isUndefined(localStorage.karessLevel)) {
         localStorage.karessLevel = '4';
       }
@@ -55,12 +57,17 @@ angular.module('karessControlModule')
           // "touzhen": false,
           // "chunjun": false,
           "anmo": false,
-          "anZhuang" : false
+          "anZhuang": false
         }
       $scope.karessController = {
         modelType: localStorage.karessOutLet,
       };
+      $scope.karessLevelWater = {
+        level: localStorage.karessLevel
+      }
       $scope.fontSize = document.documentElement.clientWidth / 7.5;
+      $scope.tempList = [{id:1,temp:30},{id:2,temp:31},{id:3,temp:32},{id:4,temp:33},,{id:5,temp:34},{id:6,temp:35},{id:7,temp:36},{id:8,temp:37},{id:9,temp:38}
+        ,{id:10,temp:39},{id:11,temp:40},{id:12,temp:41},{id:13,temp:42},{id:14,temp:43},{id:15,temp:44},{id:16,temp:45},{id:17,temp:46},{id:18,temp:47},{id:19,temp:48}]
       $scope.screenHeig = window.innerHeight;
       $scope.screenWidth = window.innerWidth;
       var statusKaress = function () {
@@ -68,21 +75,24 @@ angular.module('karessControlModule')
         cmdService.sendCmd(deviceId, value, localStorage.boxIp);
       }
       $scope.flagLoading = false;
-      $scope.init = function(){
+      $scope.init = function () {
         hmsPopup.showLoading($translate.instant("golabelvariable.loadingdata"));
         $timeout(function () {
-          if($scope.flagLoading == false){
+          if ($scope.flagLoading == false) {
             hmsPopup.hideLoading();
             $scope.Toast.show($translate.instant("karessController.loading"));
           }
         }, 10000);
         statusKaress();
+        $timeout(function () {
+          hmsPopup.hideLoading();
+        }, 60000);
       }
       $scope.init();
       //侧滑转档数量jsongulp
       $scope.slideInitData = [{
         des: "init",
-        desId : "init",
+        desId: "init",
         gearNum: 1,
         gearInit: 1,
         gearInitTemp: 1,
@@ -123,7 +133,7 @@ angular.module('karessControlModule')
       $scope.slideTunBuData = [{
         des: "karessController.shuiWen",
         desId: "zhuishuishuiwen",
-        gearNum: 19,
+        gearNum: 18,
         gearInit: localStorage.karessTemp,
         gearInitTemp: localStorage.karessTemp,
         parameterctlFlag: false,
@@ -132,20 +142,20 @@ angular.module('karessControlModule')
         canves02: "TunBuSycanves02",
         canves03: "TunBuSycanves03",
         flag: "1"
-      },
-        {
-          des: "karessController.shuiWei",
-          desId: "zhuishuishuiwei",
-          gearNum: 3,
-          gearInit: localStorage.karessLevel,
-          gearInitTemp: localStorage.karessLevel,
-          parameterctlFlag: false,
-          parNodeid: 'toilet-TunBuPosCtl',
-          canves01: "TunBuPosPoscanves01",
-          canves02: "TunBuPosPoscanves02",
-          canves03: "TunBuPosPoscanves03",
-          flag: "2"
-        }
+      }
+        // ,{
+        //   des: "karessController.shuiWei",
+        //   desId: "zhuishuishuiwei",
+        //   gearNum: 3,
+        //   gearInit: localStorage.karessLevel,
+        //   gearInitTemp: localStorage.karessLevel,
+        //   parameterctlFlag: false,
+        //   parNodeid: 'toilet-TunBuPosCtl',
+        //   canves01: "TunBuPosPoscanves01",
+        //   canves02: "TunBuPosPoscanves02",
+        //   canves03: "TunBuPosPoscanves03",
+        //   flag: "2"
+        // }
       ];
 
 
@@ -223,6 +233,13 @@ angular.module('karessControlModule')
           imgUrlTemp: "build/img/karess-controller/icon_shezhinor.png",
           handleDes: "karessController.shezhi",
           selecFlag: false,
+        },
+        {
+          imgUrl: "build/img/karess-controller/icon_shezhinor.png",
+          imgSeledUrl: "build/img/karess-controller/icon_shezhi.png",
+          imgUrlTemp: "build/img/karess-controller/icon_shezhinor.png",
+          handleDes: $scope.karessController.modelType,
+          selecFlag: false,
         }
       ];
 
@@ -230,7 +247,7 @@ angular.module('karessControlModule')
         $ionicHistory.goBack();
       }
       $scope.$on('$stateChangeStart',
-        function(event, toState, toParams, fromState, fromParams){
+        function (event, toState, toParams, fromState, fromParams) {
           document.removeEventListener("SocketPlugin.receiveTcpData", receiveKaresssTcpDatahandle, false);
         });
       /**
@@ -243,6 +260,7 @@ angular.module('karessControlModule')
       $scope.currentSlideData = $scope.slideInitData;
       //初始化当前模板数据
       $scope.initHtmlTemplate = function (currentSlideData) {
+        console.log(currentSlideData+"----");
         /**
          init silde-box data
          初始化slide-box数据
@@ -261,21 +279,17 @@ angular.module('karessControlModule')
           "<canvas id={{list.canves04}} class=''canves-pos'></canvas>" +
           "<div class='toilet-parameterctl-data' ng-if='!list.parameterctlFlag'>" +
           "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 1'>{{config.temp}}℃</span>" +
-          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 2  && list.gearInit == 1'>25%</span>" +
-          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 2  && list.gearInit == 2'>50%</span>" +
-          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 2  && list.gearInit == 3'>75%</span>" +
-          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 2  && list.gearInit == 4'>95%</span>" +
           "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 4  && list.gearInit == 1'>L1</span>" +
           "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 4  && list.gearInit == 2'>L2</span>" +
           "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 5  && list.gearInit == 1'>低档</span>" +
           "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 5  && list.gearInit == 2'>高档</span>" +
           "<span class='toilet-parameterctl-des' ng-bind={{list.des}}℃></span>" +
-          "<span class='toilet-parameterctl-des' ng-if='list.flag == 1'>设置温度：{{list.gearInit+29}}℃</span>" +
+          "<span class='toilet-parameterctl-des' ng-if='list.flag == 1' ng-repeat='i in tempList' ng-show='list.gearInit == i.id'>设置温度：{{i.temp}}℃</span>" +
           "</div>" +
           "<div class='toilet-parameterctl-data' ng-if='list.parameterctlFlag'>" +
           "<img class='conninfo-parameterctl-img' ng-src='build/img/toilet-controller/btn_devicedetail_scoll.png' alt='' ng-if='parameterctlImg'>" +
           "<span class='toilet-parameterctl-raddata' ng-if='!parameterctlImg'>{{config.temp}}℃</span>" +
-          "<span class='toilet-parameterctl-des' ng-if='!parameterctlImg'>{{config.level}}%</span>" +
+          "<span class='toilet-parameterctl-des' ng-if='!parameterctlImg'>当前水位：{{config.level}}%</span>" +
           "</div>" +
           "</div>" +
           "</ion-slide>" +
@@ -499,8 +513,14 @@ angular.module('karessControlModule')
             //初始化数据
             $('.slider-pager').empty();
           } else {
-            currentRadObj.drawc(currentRadObj.cr2, currentRadObj.starRad + currentRadObj.radRange * ($scope.currentSlideData[index].gearInit - 1), "type");
-            currentRadObj.drawCircleFill(currentRadObj.cr3, currentRadObj.starRad + currentRadObj.radRange * ($scope.currentSlideData[index].gearInit - 1));
+            if($scope.currentSlideData[index].gearInit >= 9){
+              currentRadObj.drawc(currentRadObj.cr2, currentRadObj.starRad + currentRadObj.radRange * ($scope.currentSlideData[index].gearInit ), "type");
+              currentRadObj.drawCircleFill(currentRadObj.cr3, currentRadObj.starRad + currentRadObj.radRange * ($scope.currentSlideData[index].gearInit ));
+            }else{
+              currentRadObj.drawc(currentRadObj.cr2, currentRadObj.starRad + currentRadObj.radRange * ($scope.currentSlideData[index].gearInit - 1), "type");
+              currentRadObj.drawCircleFill(currentRadObj.cr3, currentRadObj.starRad + currentRadObj.radRange * ($scope.currentSlideData[index].gearInit - 1));
+            }
+
             currentEventObj.addEventListener('touchstart', function (e) {
               e.preventDefault();
             }, false);
@@ -579,7 +599,7 @@ angular.module('karessControlModule')
 
       //slelect button
       $scope.selectNapes = function (index, info) {
-        if($scope.flagLoading == false){
+        if ($scope.flagLoading == false) {
           $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"));
           return;
         }
@@ -589,7 +609,7 @@ angular.module('karessControlModule')
           $timeout(function () {
             hmsPopup.hideLoading();
           }, 500);
-          if($scope.config.anZhuang == false){
+          if ($scope.config.anZhuang == false) {
             $scope.Toast.show($translate.instant("karessController.DTVflag"));
             return;
           }
@@ -603,16 +623,16 @@ angular.module('karessControlModule')
             } else {
               var outlet = '23';
             }
-            var temp = $scope.slideTunBuData[0].gearInit + 29;
-            if ($scope.slideTunBuData[1].gearInit == 1) {
+            var temp = parseInt($scope.slideTunBuData[0].gearInit) + 29;
+            if ($scope.karessLevelWater.level == 1) {
               var level = 25;
-            } else if ($scope.slideTunBuData[1].gearInit == 2) {
+            } else if ($scope.karessLevelWater.level == 2) {
               var level = 50;
             }
-            else if ($scope.slideTunBuData[1].gearInit == 3) {
+            else if ($scope.karessLevelWater.level == 3) {
               var level = 75;
             }
-            else if ($scope.slideTunBuData[1].gearInit == 4) {
+            else if ($scope.karessLevelWater.level == 4) {
               var level = 95;
             }
             var value2 = cmdService.getCmd("8877", '01', karessService.setFillerParams(temp, level, outlet), 'E3', '02');
@@ -751,7 +771,36 @@ angular.module('karessControlModule')
         if (index == 6) {
           $state.go('karessSetting');
         }
-
+        if (index == 7) {
+          if ($scope.karessController.modelType == 'karessController.bath') {
+            $scope.karessController.modelType = "karessController.handshower";
+          } else {
+            $scope.karessController.modelType = "karessController.bath";
+          }
+          $scope.handlenapeListNape[7].handleDes = $scope.karessController.modelType;
+          localStorage.karessOutLet = $scope.karessController.modelType;
+          if ($scope.karessController.modelType == 'karessController.bath') {
+            var outlet = '13';
+          } else {
+            var outlet = '23';
+          }
+          var temp = parseInt($scope.slideTunBuData[0].gearInit) + 29;
+          if ($scope.karessLevelWater.level == 1) {
+            var level = 25;
+          } else if ($scope.karessLevelWater.level == 2) {
+            var level = 50;
+          }
+          else if ($scope.karessLevelWater.level == 3) {
+            var level = 75;
+          }
+          else if ($scope.karessLevelWater.level == 4) {
+            var level = 95;
+          }
+          //tingzhizhushui
+          var value2 = cmdService.getCmd("8877", '01', karessService.setFillerParams(temp, level, outlet), 'E3', '02');
+          cmdService.sendCmd(deviceId, value2, localStorage.boxIp);
+          $scope.$apply();
+        }
         // 根据选择项来初始化选择项的
         // if ($scope.handlenapeListNape[index].handledata) {
         //   $scope.currentSlideData = $scope.handlenapeListNape[index].handledata;
@@ -770,20 +819,17 @@ angular.module('karessControlModule')
       }).then(function (modal) {
         $scope.modal = modal;
       });
-      $scope.value = [{id: 1, des: 'karessController.bath'},
-        {id: 2, des: 'karessController.handshower'}
+      $scope.value = [{id: 1, des: '25%'},
+        {id: 2, des: '50%'},
+        {id: 3, des: '75%'},
+        {id: 4, des: '95%'}
       ];
       $scope.openModal = function () {
-        if ($scope.config.fillerStatus == true) {
-        } else {
-          $scope.Toast.show($translate.instant("karessController.tishichushuikou"));
-          return;
-        }
         if ($scope.value.length !== 0) {
           $scope.modal.show();
           setTimeout(function () {
             var ele = document.getElementsByClassName("hmsModal");
-            ele[0].style.top = 85 + '%';
+            ele[0].style.top = 70 + '%';
             ele[0].style.minHeight = 61 + '%';
           }, 10)
         }
@@ -795,25 +841,25 @@ angular.module('karessControlModule')
         $scope.modal.hide();
         for (var i = 0; i < $scope.value.length; i++) {
           if ($scope.value[i].id === val.id) {
-            $scope.karessController.modelType = $scope.value[i].des;
+            $scope.karessLevelWater.level = $scope.value[i].id;
           }
         }
-        localStorage.karessOutLet = $scope.karessController.modelType;
+        localStorage.karessLevel = $scope.karessLevelWater.level;
         if ($scope.karessController.modelType == 'karessController.bath') {
           var outlet = '13';
         } else {
           var outlet = '23';
         }
-        var temp = $scope.slideTunBuData[0].gearInit + 29;
-        if ($scope.slideTunBuData[1].gearInit == 1) {
+        var temp = parseInt($scope.slideTunBuData[0].gearInit) + 29;
+        if ($scope.karessLevelWater.level == 1) {
           var level = 25;
-        } else if ($scope.slideTunBuData[1].gearInit == 2) {
+        } else if ($scope.karessLevelWater.level == 2) {
           var level = 50;
         }
-        else if ($scope.slideTunBuData[1].gearInit == 3) {
+        else if ($scope.karessLevelWater.level == 3) {
           var level = 75;
         }
-        else if ($scope.slideTunBuData[1].gearInit == 4) {
+        else if ($scope.karessLevelWater.level == 4) {
           var level = 95;
         }
         //tingzhizhushui
@@ -835,21 +881,19 @@ angular.module('karessControlModule')
         }
         console.log($scope.handlenapeListNape[$scope.handlenapeSelectedIndex]);
         if (diedes == 'zhuishuishuiwen' || diedes == 'zhuishuishuiwei') {
-          var temp = $scope.slideTunBuData[0].gearInit + 29;
-          localStorage.karessTemp = $scope.slideTunBuData[0].gearInit + 1;
-          console.log(localStorage.karessTemp+"==================================");
-          if ($scope.slideTunBuData[1].gearInit == 1) {
+          var temp = parseInt($scope.slideTunBuData[0].gearInit) + 29;
+          localStorage.karessTemp = parseInt($scope.slideTunBuData[0].gearInit);
+          if ($scope.karessLevelWater.level == 1) {
             var level = 25;
-          } else if ($scope.slideTunBuData[1].gearInit == 2) {
+          } else if ($scope.karessLevelWater.level == 2) {
             var level = 50;
           }
-          else if ($scope.slideTunBuData[1].gearInit == 3) {
+          else if ($scope.karessLevelWater.level == 3) {
             var level = 75;
           }
-          else if ($scope.slideTunBuData[1].gearInit == 4) {
+          else if ($scope.karessLevelWater.level == 4) {
             var level = 95;
           }
-          localStorage.karessLevel = $scope.slideTunBuData[1].gearInit;
           if ($scope.karessController.modelType == 'karessController.bath') {
             var outlet = '13';
           } else {
@@ -906,13 +950,7 @@ angular.module('karessControlModule')
             } else if (item.type.indexOf('A7') >= 0) {
               $scope.config.level = item.value.waterLevel;
               $scope.flagLoading = true;
-              if ($scope.config.level == $scope.slideTunBuData[1].gearInit) {
-                $scope.config.fillerStatus = false;
-                $scope.handlenapeListNape[1].selecFlag = $scope.config.fillerStatus;
-                buttonChange();
-              } else {
-                buttonChange();
-              }
+              buttonChange();
               hmsPopup.hideLoading();
             } else if (item.type.indexOf('8A') >= 0) {//zhushui
               if (item.value.status == '00') {
@@ -960,30 +998,31 @@ angular.module('karessControlModule')
             //   $scope.handlenapeListNape[6].selecFlag = $scope.config.chunjun;
             //   buttonChange();
             // }
-            else if (item.type.indexOf('C0')){
+            else if (item.type.indexOf('C0')) {
               if (item.value.status == '00') {
                 $scope.config.anZhuang = false;
               } else {
                 $scope.config.anZhuang = true;
               }
             }
-            function selectSlide(){
+            function selectSlide() {
               if ($scope.handlenapeListNape[0].selecFlag == true && $scope.handlenapeListNape[2].selecFlag == true) {
                 // alert('anmo+zhushui');
                 // alert(angular.toJson($scope.currentSlideData))
-                if($scope.currentSlideData.length == 3){
-                }else{
+                if ($scope.currentSlideData.length == 2) {
+                } else {
                   $scope.currentSlideData = $scope.slideTunBuData.concat($scope.shuilianmoData);
                   $scope.initHtmlTemplate($scope.currentSlideData);
                   setTimeout(function () {
                     $scope.getCurrentObj(0);
                   }, 20)
                 }
-              } else if ($scope.handlenapeListNape[0].selecFlag == true  && $scope.handlenapeListNape[2].selecFlag == false) {
+              } else if ($scope.handlenapeListNape[0].selecFlag == true && $scope.handlenapeListNape[2].selecFlag == false) {
                 // alert('zhusuhi');
-                // alert(angular.toJson($scope.currentSlideData))
-                if($scope.currentSlideData.length == 2){}
-                else{
+                // alert(angular.toJson($scope.currentSlideData)?...
+                if ($scope.currentSlideData.length == 2 && $scope.currentSlideData[0].desId == 'zhuishuishuiwen ') {
+                }
+                else {
                   $scope.currentSlideData = $scope.slideTunBuData;
                   $scope.initHtmlTemplate($scope.currentSlideData);
                   setTimeout(function () {
@@ -993,8 +1032,9 @@ angular.module('karessControlModule')
               } else if ($scope.handlenapeListNape[0].selecFlag == false && $scope.handlenapeListNape[2].selecFlag == true) {
                 // alert('anmo');
                 // alert(angular.toJson($scope.currentSlideData))
-                if($scope.currentSlideData.length == 1 && $scope.currentSlideData[0].desId == 'shuilianmodangwei'){}
-                else{
+                if ($scope.currentSlideData.length == 1 && $scope.currentSlideData[0].desId == 'shuilianmodangwei') {
+                }
+                else {
                   $scope.currentSlideData = $scope.shuilianmoData;
                   $scope.initHtmlTemplate($scope.currentSlideData);
                   setTimeout(function () {
@@ -1002,8 +1042,9 @@ angular.module('karessControlModule')
                   }, 20)
                 }
               } else {
-                if($scope.currentSlideData.length == 1 && $scope.currentSlideData[0].desId == 'init'){}
-                else{
+                if ($scope.currentSlideData.length == 1 && $scope.currentSlideData[0].desId == 'init') {
+                }
+                else {
                   $scope.currentSlideData = $scope.slideInitData;
                   $scope.initHtmlTemplate($scope.currentSlideData);
                   setTimeout(function () {
