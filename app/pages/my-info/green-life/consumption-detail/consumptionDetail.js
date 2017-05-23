@@ -32,15 +32,16 @@ angular.module('myInfoModule')
         title: {
         },
         tooltip: {
+          trigger:'axis',
         },
         legend: {
         },
         grid:{
-          show:true,
+          show:false,
           left:0,
           top:0,
           right:0,
-          // bottom:0,
+          // bottom:0
         },
         color:['#A5FFF6'],
         xAxis: {
@@ -53,30 +54,36 @@ angular.module('myInfoModule')
             show:false,
           },
           axisLabel:{
+            margin:30,
             textStyle:{
               fontSize:24,
               color:'white',
-            }
+            },
           },
           axisPointer:{
             show:true,
             label:{
               show:false,
+              formatter:"{value}号"
             },
-            lineStyle:{
+            lineStyle:{//标线宽度
               width:3,
               color:'white',
             }
           },
-          // triggerEvent:true,
         },
         yAxis: {
+          type:'value',
           show:false,
+        },
+        brush:{
+          xAxisIndex:'all'
         },
         series: [{
           type: 'line',
+          name:'用水量',
           data: [5, 20, 36, 10, 10, 20,0],
-          lineStyle:{
+          lineStyle:{//折线宽度
             normal:{
               width:4,
             }
@@ -86,6 +93,12 @@ angular.module('myInfoModule')
 
       // 使用刚指定的配置项和数据显示图表。
       myChart.setOption(option);
+
+      myChart.on('click', function (params) {
+        // 控制台打印数据的名称
+        console.log(params);
+        $scope.data.waterConsumption=params.value;
+      });
 
       //绿色房间数据
       $scope.data={
@@ -104,6 +117,8 @@ angular.module('myInfoModule')
         // hmsPopup.showLoading();
         if(index==1){
           $scope.index=1;
+          //获取数据
+          //修改图表数据
           $scope.data.index=1;
           $scope.data.waterConsumption=10;
           $scope.data.pureWaterConsumption=5;

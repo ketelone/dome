@@ -45,7 +45,7 @@
   .oneModel {
     color: #FFFFFF;
     background: #212121;
-    border-bottom: 0.01rem solid #2D3234;
+    border-bottom: 0.03rem solid #2D3234;
     .col {
       padding: 0.15rem
     }
@@ -58,6 +58,7 @@
       font-size: 0.32rem;
       color: #FFFFFF;
       letter-spacing: 1px;
+      padding-top:0.03rem;
       line-height: 0.32rem;
       display:block;
       overflow:hidden;
