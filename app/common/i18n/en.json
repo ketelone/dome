@@ -539,7 +539,11 @@
     "shuiWen": "Water temp",
     "shuiWei": "Water level",
     "loading": "Network connection failure",
-    "DTVflag" : "Function not available，pls install DTV prompt"
+    "DTVflag" : "Function not available，pls install DTV prompt",
+    "rename":"Rename",
+    "move":"Move",
+    "delete":"Delete",
+    "machine":"Machine Learning"
   },
   "mcController": {
     "setting": "Settings",
@@ -564,7 +568,11 @@
     "infoTaress5": "Location",
     "jieneng": "Power save",
     "liangDu": "Brightness",
-    "seWen": "Color temp"
+    "seWen": "Color temp",
+    "rename":"Rename",
+    "move":"Move",
+    "delete":"Delete",
+    "machine":"Machine Learning"
   },
   "nextgen": {
     "title": "Shower",
