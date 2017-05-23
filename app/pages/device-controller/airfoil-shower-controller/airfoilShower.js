@@ -50,7 +50,7 @@ angular.module('airfoilShowerModule')
           }
         }, 10000);
 
-        changeRingCol('#6ACBB3');
+        //changeRingCol('#6ACBB3');
       },true);
 
       /**
@@ -225,21 +225,20 @@ angular.module('airfoilShowerModule')
        *@params: color
        *@disc: change the color of the ring
        */
-      var changeRingCol = function(color){
-        var c = '#6ACBB3';
-        var cxt=canvas.getContext("2d");
-        var xLength = $window.innerWidth * 0.5;
-        var yLength = $window.innerWidth > 1000 ? $window.innerWidth * 0.73 : $window.innerWidth * 0.65;
-        var r = $window.innerWidth * 0.34;
-        cxt.beginPath();
-        cxt.arc(xLength,yLength,r,Math.PI*0.75,Math.PI*2.25,false);
-        cxt.lineWidth =  $window.innerWidth * 0.055;
-        cxt.strokeStyle = c;
-        cxt.fillStyle = c;
-        cxt.stroke();
-        //cxt.fill();
-        cxt.closePath();
-        cxt.scale(2, 2);
-      };
+     
+      var c = '#6ACBB3';
+      var cxt=canvas.getContext("2d");
+      var xLength = $window.innerWidth * 0.5;
+      var yLength = $window.innerWidth > 1000 ? $window.innerWidth * 0.73 : $window.innerWidth * 0.65;
+      var r = $window.innerWidth * 0.34;
+      cxt.beginPath();
+      cxt.arc(xLength,yLength,r,Math.PI*0.75,Math.PI*2.25,false);
+      cxt.lineWidth =  $window.innerWidth * 0.055;
+      cxt.strokeStyle = c;
+      cxt.fillStyle = c;
+      cxt.stroke();
+      //cxt.fill();
+      cxt.closePath();
+      cxt.scale(2, 2);
 
     }]);
