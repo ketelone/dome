@@ -1656,6 +1656,15 @@ angular.module('toiletControlModule')
                     $scope.handlenapeListNape[11].selecFlag = true;
                     $scope.handlenapeListNape[11].imgUrl = $scope.handlenapeListNape[11].imgSeledUrl;
                     if(backDataCmd.UVProgressStatus != 0){
+                      // if($scope.toiletController.modelTypeClear === "toiletController.clearopen" || $scope.toiletController.modelTypeClear === "toiletController.clearextend"){
+                      //   $timeout(function () {
+                      //     $scope.handlenapeListNape[11].selecFlag = false;
+                      //     $scope.handlenapeListNape[11].imgUrl = $scope.handlenapeListNape[11].imgUrlTemp;
+                      //     $scope.toiletController.modelTypeClear = "toiletController.gaunbi";
+                      //   },0);
+                      // }else{
+                      //   $scope.toiletController.modelTypeClear = "toiletController.clearinstance";
+                      // }
                       $scope.toiletController.modelTypeClear = "toiletController.clearinstance";
                     };
                     if(backDataCmd.wandStatus === "1"){
@@ -1838,6 +1847,12 @@ angular.module('toiletControlModule')
                 };
               };
             }else{
+              if(desTemp === "openExtendWand"){
+                if($scope.cmdBackValue.lidRingStatus !== "001"){
+                  $scope.Toast.show($translate.instant("toiletController.openopExtendWand"));
+                  return false;
+                };
+              };
               $scope.sendCmdTimeout();
               if(baseConfig.isCloudCtrl){
                 var isType = "1";
@@ -1854,15 +1869,15 @@ angular.module('toiletControlModule')
       };
       $scope.goLearn = function () {
         $state.go("toiletLearning");
-      }
+      };
       $scope.operating = [{
-        text:'重命名'
-      },{
-        text:'移动'
-      },{
-        text:'解除绑定'
-      },{
-        text:'机器学习设置'
+        text: 'toiletController.rename'
+      }, {
+        text: 'toiletController.move'
+      }, {
+        text: 'toiletController.delete'
+      }, {
+        text: 'toiletController.ml'
       }];
       $scope.popover = $ionicPopover.fromTemplateUrl('build/pages/device-controller/toilet-controller/modal/popover.html', {
         scope: $scope
