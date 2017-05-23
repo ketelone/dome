@@ -27,7 +27,7 @@ angular.module('myInfoModule')
         "index":1,//判断查询的是日、周、月的哪个
         "waterConsumption":5, //用水量
         "pureWaterConsumption":2.5, //纯净水用水量=用水量/2
-        "electricityConsumption":100,//用电量
+        "electricityConsumption":100//用电量
       };
 
       //控制日、周、月高亮
@@ -62,10 +62,11 @@ angular.module('myInfoModule')
         // },1000);
       };
 
-      $scope.getDetail=function () {
+      $scope.getDetail=function (type) {
         $state.go('consumptionDetail',{
           "device":$scope.device,
-          "index":$scope.index
+          "index":$scope.index,
+          "type":type
         });
       };
 

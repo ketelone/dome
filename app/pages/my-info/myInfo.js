@@ -22,7 +22,7 @@ angular.module('myInfoModule')
           controller: 'chooseDeviceCtrl'
         })
         .state('consumptionDetail', {
-          url: '/consumptionDetail/:device/:index',
+          url: '/consumptionDetail/:device/:index/:type',
           templateUrl: 'build/pages/my-info/green-life/consumption-detail/consumptionDetail.html',
           controller: 'consumptionDetailCtrl'
         })

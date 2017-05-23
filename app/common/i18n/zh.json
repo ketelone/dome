@@ -501,7 +501,7 @@
   },
   "karessController": {
     "setting": "设置",
-    "title": "karess",
+    "title": "浴缸",
     "deviceWifiInfo": "信号好",
     "deviceUseInfo": "使用中",
     "parameterrad": "0",
@@ -547,7 +547,7 @@
   },
   "mcController": {
     "setting": "设置",
-    "title": "mc镜柜",
+    "title": "镜柜",
     "deviceWifiInfo": "信号好",
     "deviceUseInfo": "使用中",
     "parameterrad": "0",
@@ -572,7 +572,7 @@
     "rename": "重命名",
     "move":"移动",
     "delete":"删除",
-    "machine" : "machine leanring"
+    "machine" : "机器学习"
 
   },
   "nextgen": {
@@ -647,8 +647,8 @@
     "getWater": "&nbsp;&nbsp;&nbsp;出水",
     "allStop": "一键停止",
     "setting": "&nbsp;&nbsp;&nbsp;设置",
-    "waterSuccess": "water success",
-    "stopSuccess": "stop success",
+    "waterSuccess": "出水成功",
+    "stopSuccess": "停止成功",
     "water": "出水",
     "setTem": "设置水温",
     "watering": "出水中",

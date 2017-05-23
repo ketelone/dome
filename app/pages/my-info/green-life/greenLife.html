@@ -23,17 +23,17 @@
               ng-class="{redWord:index==3,whiteWord:index!=3}">月</span>
       </div>
     </div>
-    <div class="title" ng-click="getDetail()">
+    <div class="title" ng-click="getDetail(0)">
       <div class="number">{{data.waterConsumption}}</div>
       <div class="useWater" translate="my-info.greenLife.todayUsewater">当日用水量(L)</div>
       <div class="toCenter"><img class="waterImg" ng-src="build/img/my-info/Group 2.png"/></div>
     </div>
-    <div class="title" ng-click="getDetail()">
+    <div class="title" ng-click="getDetail(0)">
       <div class="number">{{data.pureWaterConsumption}}</div>
       <div class="useWater" translate="my-info.greenLife.todayUsecleanWater">当日纯净水用量(L)</div>
       <div class="toCenter"><img class="waterImg" ng-src="build/img/my-info/Group 2.png"/></div>
     </div>
-    <div class="title" ng-click="getDetail()">
+    <div class="title" ng-click="getDetail(1)">
       <div class="number">{{data.electricityConsumption}}</div>
       <div class="useWater" translate="my-info.greenLife.todayUseElectricity">当日用电量(度)</div>
       <div class="toCenter"><img class="waterImg" ng-src="build/img/my-info/Group 4.png"/></div>

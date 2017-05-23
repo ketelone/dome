@@ -732,7 +732,7 @@ angular.module('myApp')
           controller: 'nextgenSetCtrl'
         })
         .state('nextgen', {
-          url: '/nextgen/:deviceSku',
+          url: '/nextgen',
           templateUrl: 'build/pages/device-controller/nextgen-controller/nextgen.html',
           controller: 'nextgenCtrl'
         })
