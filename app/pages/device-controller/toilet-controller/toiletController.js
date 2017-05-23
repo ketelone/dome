@@ -48,25 +48,24 @@ angular.module('toiletControlModule')
         e.preventDefault();
         return false;
       }, 101);
-      // var getDeviceIdf = function(){
-      //   var skuList = SettingsService.get('sku');
-      //   var deviceId = "";
-      //   var deviceList = localStorage.deviceInfo.split(";");
-      //   for(var i = 0; i < deviceList.length; i ++){
-      //     var deviceInfo = deviceList[i].split(",");
-      //     for(var j =0 ; j < skuList.length; j ++){
-      //       if(deviceInfo[0] == skuList[j]){
-      //         deviceId =  deviceInfo[1];
-      //         return deviceId;
-      //       };
-      //     };
-      //   };
-      //   return deviceId;
-      // };
+      var getDeviceIdf = function(){
+        var skuList = SettingsService.get('sku');
+        var deviceId = "";
+        var deviceList = localStorage.deviceInfo.split(";");
+        for(var i = 0; i < deviceList.length; i ++){
+          var deviceInfo = deviceList[i].split(",");
+          for(var j =0 ; j < skuList.length; j ++){
+            if(deviceInfo[0] == skuList[j]){
+              deviceId =  deviceInfo[1];
+              return deviceId;
+            };
+          };
+        };
+        return deviceId;
+      };
       var tolitercmdObj = {
         boxid:localStorage.boxIp,
-        // diviceid:getDeviceIdf(),
-        diviceid:"",
+        diviceid:getDeviceIdf(),
         header:'8877',
         idx:1,
         ctrId:'E3',
@@ -1214,9 +1213,10 @@ angular.module('toiletControlModule')
                         var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx, nimi._data["closeTrap"],tolitercmdObj.ctrId,tolitercmdObj.devId);
                       } else if ($scope.toiletController.modelTypeClear === "toiletController.clearextend") {
                         var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx, nimi._data["closeExtendWand"],tolitercmdObj.ctrId,tolitercmdObj.devId);
-                      } else if ($scope.toiletController.modelTypeClear === "toiletController.clearinstance") {
-                        var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx, nimi._data["closeIntelligentSterilization"],tolitercmdObj.ctrId,tolitercmdObj.devId);
                       };
+                      // else if ($scope.toiletController.modelTypeClear === "toiletController.clearinstance") {
+                      //   var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx, nimi._data["closeIntelligentSterilization"],tolitercmdObj.ctrId,tolitercmdObj.devId);
+                      // };
                       if($scope.toiletController.modelTypeClear === "toiletController.clearinstance"){
                         $timeout(function () {
                           $scope.handlenapeListNape[11].selecFlag = false;
@@ -1655,11 +1655,13 @@ angular.module('toiletControlModule')
                   if(backDataCmd.wandStatus === "1" || backDataCmd.UVProgressStatus != 0 || backDataCmd.ballValve === "1"){
                     $scope.handlenapeListNape[11].selecFlag = true;
                     $scope.handlenapeListNape[11].imgUrl = $scope.handlenapeListNape[11].imgSeledUrl;
+                    if(backDataCmd.UVProgressStatus != 0){
+                      $scope.toiletController.modelTypeClear = "toiletController.clearinstance";
+                    };
                     if(backDataCmd.wandStatus === "1"){
                       $scope.toiletController.modelTypeClear = "toiletController.clearextend";
-                    }else if(backDataCmd.UVProgressStatus != 0){
-                      $scope.toiletController.modelTypeClear = "toiletController.clearinstance";
-                    }else if(backDataCmd.ballValve === "1"){
+                    };
+                    if(backDataCmd.ballValve === "1"){
                       $scope.toiletController.modelTypeClear = "toiletController.clearopen";
                     };
                   }else{
@@ -1813,14 +1815,14 @@ angular.module('toiletControlModule')
             };
             var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx,nimi._data[desTemp],tolitercmdObj.ctrId,tolitercmdObj.devId);
             //send instructin
-            $scope.sendCmdTimeout();
+            // $scope.sendCmdTimeout();
             // alert("cmdvalue"+cmdvalue)
             $scope.selectChangeFlag = true;
             $scope.selectIsType = "1";
             if(desTemp === "openIntelligentSterilization"){
-              alert($scope.cmdBackValue.UVProgressStatus);
               if($scope.cmdBackValue.UVProgressStatus == 0){
                 hmsPopup.confirmNoTitle($translate.instant('toiletController.popmessage'),$translate.instant('golabelvariable.PopupConfire'),$translate.instant('golabelvariable.PopupCancle'),function () {
+                  $scope.sendCmdTimeout();
                   if(baseConfig.isCloudCtrl){
                     var isType = "1";
                     $scope.toGetImpleteData(true,cmdvalue,$scope.handlenapeListNape[11].handleDes,11,isType);
@@ -1829,9 +1831,14 @@ angular.module('toiletControlModule')
                   };
                 });
               }else{
-                $scope.Toast.show($translate.instant("toiletController.clearJun"));
+                if($scope.cmdBackValue.lidRingStatus === "001"){
+                  $scope.Toast.show($translate.instant("toiletController.clearJundong"));
+                }else{
+                  $scope.Toast.show($translate.instant("toiletController.clearJun"));
+                };
               };
             }else{
+              $scope.sendCmdTimeout();
               if(baseConfig.isCloudCtrl){
                 var isType = "1";
                 $scope.toGetImpleteData(true,cmdvalue,$scope.handlenapeListNape[11].handleDes,11,isType);

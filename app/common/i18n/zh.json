@@ -313,7 +313,8 @@
     "unseatstatus":"此功能只能在未落座状态下使用",
     "doinghanle":"正在执行当前功能",
     "popmessage": "开启智能除菌45分钟后自动关闭\n你确定要开启？",
-    "clearJun":"设备正在执行质感除菌....",
+    "clearJun":"设备正在进行智感除菌....",
+    "clearJundong":"设备智感除菌已开启,关圈后自动进行",
     "lightlow":"低",
     "lightcenter":"中",
     "lighthigh":"高"
