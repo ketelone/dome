@@ -307,9 +307,9 @@ angular.module('toiletControlModule')
       };
       //确定是否清除设备设置
       $scope.isCheckDeviceInfoSet = function () {
-        // hmsPopup.confirmNoTitle($translate.instant('toiletSetting.popmessage'),$translate.instant('golabelvariable.PopupConfire'),$translate.instant('golabelvariable.PopupCancle'),function () {
-        //   console.log("你点击了确定")
-        // });
+        hmsPopup.confirmNoTitle($translate.instant('toiletSetting.popmessage'),$translate.instant('golabelvariable.PopupConfire'),$translate.instant('golabelvariable.PopupCancle'),function () {
+          console.log("你点击了确定")
+        });
       };
       //进入各个设置的具体界面
       $scope.goSettingInfo = function (url) {
