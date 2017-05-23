@@ -247,9 +247,9 @@ angular.module('toiletControlModule')
                 }else
                 if(slideDataObj.parNodeid === "toilet-lightCtl"){
                   if(this.i+1 === 2){
-                    slideDataObj.gearInit = "中";
+                    slideDataObj.gearInit = $translate.instant('toiletController.lightcenter');
                   }else if(this.i+1 === 3){
-                    slideDataObj.gearInit = "高";
+                    slideDataObj.gearInit = $translate.instant('toiletController.lighthigh');
                   }
                 }else{
                   slideDataObj.gearInit = this.i+1;
