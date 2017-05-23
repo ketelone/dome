@@ -18,10 +18,10 @@
     <div id="ionSliderBox" style="background-color:#0D0F11">
     </div>
     <div class="slidehandle-left" ng-click='slideHasChangedleft()'>
-      <img class="slidehandle-left-img" src="build/img/karess-controller/icon_right_arrow.png" alt="">
+      <img class="slidehandle-left-img" src="build/img/karess-controller/icon_right_arrow.png" alt="" ng-show="config.fillerStatus || config.anmo">
     </div>
     <div class="slidehandle-right" ng-click='slideHasChangedright()'>
-      <img class="slidehandle-right-img" src="build/img/karess-controller/icon_left_arrow.png" alt="">
+      <img class="slidehandle-right-img" src="build/img/karess-controller/icon_left_arrow.png" alt="" ng-show="config.fillerStatus || config.anmo">
     </div>
     <div class="toilet-handlenape-selec" ng-click="openModal()">
       <span class="handlenape-selec-des" translate='karessController.handleSelecDes'></span>

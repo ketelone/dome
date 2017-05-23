@@ -105,24 +105,24 @@
       }
     }
   }
-  .toilet-handlenape-selec {
+  .toilet-handlenape-selec{
     position: absolute;
     top: 6.86rem;
     z-index: 10;
     width: 100%;
     height: 1.08rem;
     line-height: 1.08rem;
-    background-color: #1C202C;
+    background-color:#1C202C;
     font-size: $font-size-liter;
-    .handlenape-selec-des {
+    .handlenape-selec-des{
       margin-left: 0.9rem;
       color: $color-base;
     }
-    .handlenape-selec-use {
-      margin-left: 4.5rem;
+    .handlenape-selec-use{
+      margin-left: 4.34rem;
       color: $global-border;
     }
-    .handlenape-selec-img {
+    .handlenape-selec-img{
       display: inline-block;
       width: 0.193rem;
       height: 0.308rem;
@@ -165,7 +165,7 @@
     .toilet-handlenape-list{
       float: left;
       width: 23%;
-      height: 1.5rem;
+      height: 2rem;
       padding-top: 0.6rem;
       margin-bottom: 0.3rem;
       margin-right: 2%;
@@ -184,7 +184,7 @@
     }
     .toilet-handlenape-list:last-child .handlenape-list-napes{
       //margin-bottom: 5.5rem;
-      margin-bottom:2rem;
+      margin-bottom:3rem;
     }
   }
 }
