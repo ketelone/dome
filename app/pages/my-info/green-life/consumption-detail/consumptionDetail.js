@@ -101,7 +101,10 @@ angular.module('myInfoModule')
       myChart.on('click', function (params) {
         // 控制台打印数据的名称
         console.log(params);
-        $scope.data.waterConsumption=params.value;
+        $scope.$apply(function () {
+          $scope.data.waterConsumption=params.value;
+          $scope.data.pureWaterConsumption=$scope.data.waterConsumption/2;
+        });
       });
 
       //绿色房间数据

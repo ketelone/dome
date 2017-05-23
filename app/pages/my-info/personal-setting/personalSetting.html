@@ -1,39 +1,42 @@
 <ion-view view-title="个人资料设置" class="personalSetting">
-  <ion-header-bar align-title="center" class="cusheader">
-    <div class="item-icon-left set">
-      <div class="title">个&nbsp;人&nbsp;资&nbsp;料&nbsp;设&nbsp;置</div>
-      <i class="icon ion-ios-arrow-back" ui-sref="tab.myInfo"></i>
-    </div>
+  <ion-header-bar class="headColor">
+    <button class="button button-icon icon ion-ios-arrow-left whiteColor" ng-click="goBack()"></button>
+    <div class="h1 title whiteColor" translate={{'my-info.personalSetting'}}></div>
   </ion-header-bar>
-  <ion-content class="cuscontent">
+  <ion-content style="background-color:#212121">
     <ion-list>
-
-      <li class="item item-icon-right item-divider cutline">
-        <span class="leftword">头像</span> <i class="icon ion-ios-arrow-right iconSize"></i>
-
-
-      <li class="item item-icon-right item-divider">
-        <span class="leftword">昵称</span> <i class="icon ion-ios-arrow-right iconSize"></i>
+      <li class="item item-icon-right itemStyle">
+        <span class="leftword">头像</span>
+        <i class="icon ion-ios-arrow-right item-icon"></i>
       </li>
-      <li class="item item-icon-right item-divider">
-        <span class="leftword">性别</span> <i class="icon ion-ios-arrow-right iconSize"></i>
+      <li class="item item-icon-right itemStyle">
+        <span class="leftword">昵称</span>
+        <span class="rightword">老爸</span>
+        <i class="icon ion-ios-arrow-right item-icon"></i>
       </li>
-
-      <li class="item item-icon-right item-divider">
-        <span class="leftword">手机号码</span><i class="icon ion-ios-arrow-right iconSize"></i>
+      <li class="item item-icon-right itemStyle">
+        <span class="leftword">性别</span>
+        <i class="icon ion-ios-arrow-right item-icon"></i>
       </li>
-
-      <li class="item item-icon-right item-divider">
-        <span class="leftword">地区</span><i class="icon ion-ios-arrow-right iconSize"></i>
+      <li class="item item-icon-right itemStyle">
+        <span class="leftword">手机号码</span>
+        <span class="rightword">188 2832 1238</span>
+        <i class="icon ion-ios-arrow-right item-icon"></i>
       </li>
-      <li class="item item-icon-right item-divider">
-        <span class="leftword">修改密码</span><i class="icon ion-ios-arrow-right iconSize"></i>
+      <li class="item item-icon-right itemStyle">
+        <span class="leftword">邮箱</span>
+        <span class="rightword" style="color:#FF687A;">未绑定</span>
+        <i class="icon ion-ios-arrow-right item-icon"></i>
       </li>
-      <li class="item item-icon-right item-divider">
-        <span class="leftword">跟换手机号</span><i class="icon ion-ios-arrow-right iconSize"></i>
+      <li class="item item-icon-right itemStyle">
+        <span class="leftword">地区</span>
+        <span class="rightword">上海</span>
+        <i class="icon ion-ios-arrow-right item-icon"></i>
+      </li>
+      <li class="item item-icon-right itemStyle">
+        <span class="leftword">修改密码</span>
+        <i class="icon ion-ios-arrow-right item-icon"></i>
       </li>
     </ion-list>
   </ion-content>
-
-
 </ion-view>
