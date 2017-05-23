@@ -875,11 +875,8 @@ angular.module('karessControlModule')
         if ($scope.handlenapeListNape[$scope.handlenapeSelectedIndex].isManyDirective) {
           var selectRad = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].gearInit;
           $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].gearInitTemp = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].gearInit;
-          console.log(selectRad);
           var diedes = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].desId;
-          console.log(diedes);
         }
-        console.log($scope.handlenapeListNape[$scope.handlenapeSelectedIndex]);
         if (diedes == 'zhuishuishuiwen' || diedes == 'zhuishuishuiwei') {
           var temp = parseInt($scope.slideTunBuData[0].gearInit) + 29;
           localStorage.karessTemp = parseInt($scope.slideTunBuData[0].gearInit);
