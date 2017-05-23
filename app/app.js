@@ -658,8 +658,6 @@ angular.module('myApp')
           templateUrl: 'build/pages/device-controller/toilet-controller/toilet-learning/toilet.learning.html',
           controller: 'toiletLearningCtrl'
         })
-
-
         //灯光设置
         .state('lightSetting', {
           url: '/lightSetting',

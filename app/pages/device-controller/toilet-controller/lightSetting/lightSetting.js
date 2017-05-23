@@ -5,6 +5,7 @@ angular.module('toiletControlModule')
     '$translate',
     '$timeout',
     '$ionicPlatform',
+    '$ionicHistory',
     'publicMethod',
     '$ionicModal',
     'baseConfig',
@@ -18,6 +19,7 @@ angular.module('toiletControlModule')
               $translate,
               $timeout,
               $ionicPlatform,
+              $ionicHistory,
               publicMethod,
               $ionicModal,
               baseConfig,
@@ -53,8 +55,6 @@ angular.module('toiletControlModule')
       var lightsetting = new NIMI();
       //init valiable
       $scope.lightSetting={
-        // gaiganyin:"",
-        // gaiganyinDistance:"",
         isShowCheckimg:true,
         isShowWeekset:false,
         isShowStatuset:false
@@ -127,16 +127,10 @@ angular.module('toiletControlModule')
           return "Pantone618";
         }else if(value === "#70A18E"){
           return "Pantone556";
+        }else if(value === "#FEFCFD"){
+          return "White";
         }
       }
-      //gobakc
-      $scope.goBack = function () {
-        document.removeEventListener("SocketPlugin.receiveTcpData", receiveTcpDatalightset, false);
-        publicMethod.goBack();
-      };
-      $ionicPlatform.registerBackButtonAction(function (e) {
-        document.removeEventListener("SocketPlugin.receiveTcpData", receiveTcpDatalightset, false);
-      }, 0);
       /**
        *@params:
        *@disc:accept ack or status;
@@ -174,37 +168,15 @@ angular.module('toiletControlModule')
           hmsPopup.hideLoading();
           $scope.Toast.show("发生指令成功");
           $scope.lightnightmode = !$scope.lightnightmode;
-        },1000)
-        // hmsPopup.showLoading("<span translate='cleargearPlan.loadingdata'></span>");
-        // var url = baseConfig.basePath + "/r/api/message/sendMessage";
-        // var paramter = cmdService.cloudCmd(cmdvalue,$scope.handlenapeListNape[index].cloudId);
-        // hmsHttp.post(url, paramter).success(
-        //   function(response){
-        //     hmsPopup.hideLoading();
-        //     //resolve
-        //     if(response.code == 200){
-        //       if(value.ack.toLowerCase() == "fa27"){
-        //         $scope.Toast.show(name+$translate.instant("cleargearPlan.directesuccess"));
-        //         $scope.lightnightmode = !$scope.lightnightmode;
-        //       }
-        //     }else{
-        //       $scope.Toast.show(name+$translate.instant("cleargearPlan.directerror"));
-        //     }
-        //   }).
-        // error(function () {
-        //   hmsPopup.hideLoading();
-        //   $scope.Toast.show(name + $translate.instant("cleargearPlan.loadingdataerrror"));
-        // })
+        },1000);
       };
       /**
        *@disc:night light set
        */
       $scope.lightchangeSet = function () {
-        console.log($scope.lightnightmode)
         if(!$scope.lightnightmode){
           var cmdvalue = cmdService.getCmd(lighttersetcmdObj.header,lighttersetcmdObj.idx,lightsetting.setting("OFF", "ON", "OFF", "OFF", "OFF", "OFF", "OFF", "OFF", "OFF"),lighttersetcmdObj.ctrId,lighttersetcmdObj.devId);
           //send instructin
-          console.log(cmdvalue)
           if(baseConfig.isCloudCtrl){
             $scope.toilSetGetImpleteData(cmdvalue,$translate.instant("lightSetting.lightmode"));
           }else{
@@ -214,7 +186,6 @@ angular.module('toiletControlModule')
         }else{
           var cmdvalue = cmdService.getCmd(lighttersetcmdObj.header,lighttersetcmdObj.idx,lightsetting.setting("OFF", "OFF", "OFF", "OFF", "OFF", "OFF", "OFF", "OFF", "OFF"),lighttersetcmdObj.ctrId,lighttersetcmdObj.devId);
           //send instructin
-          console.log(cmdvalue)
           if(baseConfig.isCloudCtrl){
             $scope.toilSetGetImpleteData(cmdvalue,$translate.instant("lightSetting.lightmode"));
           }else{
@@ -230,26 +201,26 @@ angular.module('toiletControlModule')
       $scope.localBaocunVlaue = function () {
         var lightsetval = {
           modal:"",
-          MOMC:"white",
-          TUEC:"white",
-          WEDC:"white",
-          THUC:"white",
-          FRIC:"white",
-          SATC:"white",
-          SUMC:"white"
+          MOMC:"White",
+          TUEC:"White",
+          WEDC:"White",
+          THUC:"White",
+          FRIC:"White",
+          SATC:"White",
+          SUMC:"White"
         };
         if($scope.lightSetting.isShowCheckimg){
           lightsetval.modal = "Default";
           lightsetval.flag = true;
         }else if($scope.lightSetting.isShowWeekset){
           lightsetval.modal = "ByWeek";
-          lightsetval.MOMC = $scope.getColor($scope.colorWeek[0].color["background-color"]);
-          lightsetval.TUEC = $scope.getColor($scope.colorWeek[1].color["background-color"]);
-          lightsetval.WEDC = $scope.getColor($scope.colorWeek[2].color["background-color"]);
-          lightsetval.THUC = $scope.getColor($scope.colorWeek[3].color["background-color"]);
-          lightsetval.FRIC = $scope.getColor($scope.colorWeek[4].color["background-color"]);
-          lightsetval.SATC = $scope.getColor($scope.colorWeek[5].color["background-color"]);
-          lightsetval.SUMC = $scope.getColor($scope.colorWeek[6].color["background-color"]);
+          lightsetval.MOMC = $scope.getColor($scope.colorWeek[1].color["background-color"]);
+          lightsetval.TUEC = $scope.getColor($scope.colorWeek[2].color["background-color"]);
+          lightsetval.WEDC = $scope.getColor($scope.colorWeek[3].color["background-color"]);
+          lightsetval.THUC = $scope.getColor($scope.colorWeek[4].color["background-color"]);
+          lightsetval.FRIC = $scope.getColor($scope.colorWeek[5].color["background-color"]);
+          lightsetval.SATC = $scope.getColor($scope.colorWeek[6].color["background-color"]);
+          lightsetval.SUMC = $scope.getColor($scope.colorWeek[0].color["background-color"]);
           lightsetval.flag = true;
         }else if($scope.lightSetting.isShowStatuset){
           lightsetval.modal = "Default";
@@ -263,19 +234,30 @@ angular.module('toiletControlModule')
           $scope.lightSetting.isShowCheckimg = !$scope.lightSetting.isShowCheckimg;
           $scope.lightSetting.isShowWeekset = false;
           $scope.lightSetting.isShowStatuset = false;
-          $scope.localBaocunVlaue();
         }else if(type==="week"){
           $scope.lightSetting.isShowWeekset = !$scope.lightSetting.isShowWeekset;
           $scope.lightSetting.isShowCheckimg = false;
           $scope.lightSetting.isShowStatuset = false;
-          $scope.localBaocunVlaue();
         }else if(type==="change"){
           $scope.lightSetting.isShowStatuset = !$scope.lightSetting.isShowStatuset;
           $scope.lightSetting.isShowCheckimg = false;
           $scope.lightSetting.isShowWeekset = false;
-          $scope.localBaocunVlaue();
         };
       };
+      //gobakc
+      $scope.goBack = function () {
+        $scope.localBaocunVlaue();
+        // console.log(JSON.parse(window.localStorage.lightModal).MOMC)
+        document.removeEventListener("SocketPlugin.receiveTcpData", receiveTcpDatalightset, false);
+        publicMethod.goBack();
+      };
+      $ionicPlatform.registerBackButtonAction(function (e) {
+        $scope.localBaocunVlaue();
+        document.removeEventListener("SocketPlugin.receiveTcpData", receiveTcpDatalightset, false);
+        $ionicHistory.goBack();
+        e.preventDefault();
+        return false;
+      }, 101);
       //get scren height
       $scope.screenHeig = window.innerHeight;
       $ionicModal.fromTemplateUrl('build/pages/model/lightModal.html', {
@@ -284,17 +266,20 @@ angular.module('toiletControlModule')
       }).then(function (modal) {
         $scope.modal = modal;
       });
-      $scope.value = [{"background-color":'#563233'},{"background-color":'#6378B4'},{"background-color":'#F0D19F'},{"background-color":'#C39170'},{"background-color":'#EA695B'},
-        {"background-color":'#C1AE49'},{"background-color":'#70A18E'},{"background-color":'#FEFCFD'}];
+      $scope.value = [
+        {"background-color":'#563233'},
+        {"background-color":'#6378B4'},
+        {"background-color":'#F0D19F'},
+        {"background-color":'#C39170'},
+        {"background-color":'#EA695B'},
+        {"background-color":'#C1AE49'},
+        {"background-color":'#70A18E'},
+        {"background-color":'#FEFCFD'}
+      ];
       $scope.indexSelected;
       $scope.openModal = function (index) {
         $scope.indexSelected = index;
         $scope.modal.show();
-        setTimeout(function () {
-          var ele = document.getElementsByClassName("lightModal");
-          ele[0].style.top= 70 + '%';
-          ele[0].style.minHight= 30 + '%';
-        }, 10)
       };
       $scope.$on('$destroy', function() {
         $scope.modal.remove();

@@ -62,10 +62,11 @@ angular.module('myInfoModule')
         // },1000);
       };
 
-      $scope.getDetail=function () {
+      $scope.getDetail=function (type) {
         $state.go('consumptionDetail',{
           "device":$scope.device,
-          "index":$scope.index
+          "index":$scope.index,
+          "type":type
         });
       };
 

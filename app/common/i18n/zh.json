@@ -311,7 +311,13 @@
     "devicenouse": "无人使用",
     "seatstatus": "此功能只能在落座状态下使用",
     "unseatstatus":"此功能只能在未落座状态下使用",
-    "doinghanle":"正在执行当前功能"
+    "doinghanle":"正在执行当前功能",
+    "popmessage": "开启智能除菌45分钟后自动关闭\n你确定要开启？",
+    "clearJun":"设备正在进行智感除菌....",
+    "clearJundong":"设备智感除菌已开启,关圈后自动进行",
+    "lightlow":"低",
+    "lightcenter":"中",
+    "lighthigh":"高"
   },
   "toiletSetting": {
     "title": "马桶设置",
@@ -334,8 +340,7 @@
     "danwei": "小时",
     "interngent": "智能学习",
     "settingsucc": "设置",
-    "timetongbu": "同步时间",
-    "popmessage": "确定要恢复默认设置吗?\n恢复默认设置后当前设置会被清空"
+    "timetongbu": "同步时间"
   },
   "lightSetting": {
     "title": "灯光设置",

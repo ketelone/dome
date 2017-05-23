@@ -29,6 +29,7 @@ angular.module('airfoilShowerModule')
 
       $scope.goBack = function(){
         //closebox();
+        document.removeEventListener("SocketPlugin.receiveTcpData", receiveAirfoilTcpData, false);
         $ionicHistory.goBack();
       };
 
@@ -49,7 +50,7 @@ angular.module('airfoilShowerModule')
           }
         }, 10000);
 
-        changeRingCol('#6ACBB3');
+        //changeRingCol('#6ACBB3');
       },true);
 
       /**
@@ -87,7 +88,46 @@ angular.module('airfoilShowerModule')
         return deviceId;
       };
 
-      document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
+      var receiveAirfoilTcpData = function(result){
+        var resultOn = result[0];
+        if(resultOn.from.uid != getDeviceId()){
+          return;
+        }
+        if (resultOn.data.cmd.length > 0) {
+          isLinkOk = true;
+          var data = airfoilShowerService.explainAck(resultOn.data.cmd[0]);
+
+          try{
+            if(data.cmd == 'a6'){
+              $scope.ctemperature = parseInt(data.ctemperature, 16) + "℃";
+              $scope.stemerature = parseInt(data.stemerature, 16) + "℃";
+            }
+          }catch(e){
+          }
+
+          try{
+            if(data.cmd == '83'){
+              if(data.status == 'shower off'){
+                $scope.isUsing = false;
+                $scope.stemerature = $scope.ctemperature;
+                $scope.waterUrl = "build/img/airfoil-shower/no_water.png";
+              }else if(data.status == 'shower on'){
+                $scope.isUsing = true;
+                $scope.status = "airfoidShower.water";
+                $scope.waterUrl = "build/img/airfoil-shower/airfor_water.png"
+              }
+            }
+            $scope.$apply();
+          }catch(e){
+          }
+        }
+
+        hmsPopup.hideLoading();
+      };
+
+      document.addEventListener('SocketPlugin.receiveTcpData', receiveAirfoilTcpData, false);
+
+      /*document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
         var resultOn = result[0];
         if(resultOn.from.uid != getDeviceId()){
           return;
@@ -123,7 +163,7 @@ angular.module('airfoilShowerModule')
 
         hmsPopup.hideLoading();
 
-      }, false);
+      }, false);*/
 
       var sendCmd = function(deviceId, value, successMsg, errorMsg){
         if(baseConfig.isCloudCtrl){
@@ -185,21 +225,20 @@ angular.module('airfoilShowerModule')
        *@params: color
        *@disc: change the color of the ring
        */
-      var changeRingCol = function(color){
-        var c = '#6ACBB3';
-        var cxt=canvas.getContext("2d");
-        var xLength = $window.innerWidth * 0.5;
-        var yLength = $window.innerWidth > 1000 ? $window.innerWidth * 0.73 : $window.innerWidth * 0.65;
-        var r = $window.innerWidth * 0.34;
-        cxt.beginPath();
-        cxt.arc(xLength,yLength,r,Math.PI*0.75,Math.PI*2.25,false);
-        cxt.lineWidth =  $window.innerWidth * 0.055;
-        cxt.strokeStyle = c;
-        cxt.fillStyle = c;
-        cxt.stroke();
-        //cxt.fill();
-        cxt.closePath();
-        cxt.scale(2, 2);
-      };
+     
+      var c = '#6ACBB3';
+      var cxt=canvas.getContext("2d");
+      var xLength = $window.innerWidth * 0.5;
+      var yLength = $window.innerWidth > 1000 ? $window.innerWidth * 0.73 : $window.innerWidth * 0.65;
+      var r = $window.innerWidth * 0.34;
+      cxt.beginPath();
+      cxt.arc(xLength,yLength,r,Math.PI*0.75,Math.PI*2.25,false);
+      cxt.lineWidth =  $window.innerWidth * 0.055;
+      cxt.strokeStyle = c;
+      cxt.fillStyle = c;
+      cxt.stroke();
+      //cxt.fill();
+      cxt.closePath();
+      cxt.scale(2, 2);
 
     }]);

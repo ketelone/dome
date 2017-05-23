@@ -121,7 +121,10 @@ public class SocketPlugin extends CordovaPlugin {
                 @Override
                 public void UDPResponse(String response) {
                     try {
-                        arr.put(new JSONArray(response.replace("\\/n", "")));
+                      String boxReturn = response.replace("\\/n", "");
+                      if(boxReturn !=null && !boxReturn.isEmpty() && boxReturn.contains("SCAN_BOX_RETURN")){
+                        arr.put(new JSONArray(boxReturn));
+                      }
                     } catch (JSONException ignored) {
                         Log.i("ERROR", ignored.toString());
                     }

@@ -27,6 +27,9 @@ angular.module('mcControlModule')
        *@disc: get device id
        */
       var getDeviceId = function(){
+        if (localStorage.deviceInfo == undefined) {
+          return;
+        }
         var skuList = SettingsService.get('sku');
         var deviceId = "";
         var deviceList = localStorage.deviceInfo.split(";");
@@ -100,9 +103,8 @@ angular.module('mcControlModule')
           des: "mcController.seWen",
           diedes: "sewen",
           gearNum: 2,
-          gearNum: localStorage.mcWendu,
           gearInit: localStorage.mcWendu,
-          gearInitTemp: 1,
+          gearInitTemp: localStorage.mcWendu,
           parameterctlFlag: false,
           parNodeid: 'toilet-TunBuPosCtl',
           canves01: "TunBuPosPoscanves01",
@@ -195,7 +197,7 @@ angular.module('mcControlModule')
 
           "</div>" +
           "<div class='toilet-parameterctl-dataimg' ng-if='list.parameterctlFlag'>" +
-          "<img class='conninfo-parameterctl-img' ng-src='build/img/toilet-controller/btn_devicedetail_scoll.png' alt=''>" +
+          "<img class='conninfo-parameterctl-img' ng-src='build/img/mc-controller/btn_devicedetail_scoll.png' alt=''>" +
           "</div>" +
           "</div>" +
           "</ion-slide>" +
@@ -535,6 +537,10 @@ angular.module('mcControlModule')
         $scope.handlenapeSelectedIndex = index;
         console.log(info.selecFlag);
         if (index == 0) {
+          hmsPopup.showLoading();
+          $timeout(function () {
+            hmsPopup.hideLoading();
+          }, 500);
           if (info.selecFlag == false) {
             var value = mcService.getCmd("8877", 1, mcService.data.openLight, 0, '0B');
             console.log(value);
@@ -551,6 +557,10 @@ angular.module('mcControlModule')
           }
         }
         if (index == 1) {
+          hmsPopup.showLoading();
+          $timeout(function () {
+            hmsPopup.hideLoading();
+          }, 500);
           if (info.selecFlag == false) {
             var value = mcService.getCmd("8877", '01', mcService.data.openDemist, 0, '0B');
             if (baseConfig.isCloudCtrl == true) {
@@ -566,6 +576,10 @@ angular.module('mcControlModule')
           }
         }
         if (index == 2) {
+          hmsPopup.showLoading();
+          $timeout(function () {
+            hmsPopup.hideLoading();
+          }, 500);
           var value = mcService.getCmd("8877", '01', mcService.data.closeAll, 0, '0B');
           console.log(value);
           cmdService.sendCmd(deviceId, value, localStorage.boxIp);

@@ -99,7 +99,7 @@ NIMI.prototype._data = {
  * @constructor
  */
 NIMI.prototype.frontRearDry = function (method, temperature, volume, place, flushOptions, mSwitchType) {
-  alert(angular.toJson({
+  console.log(angular.toJson({
     method:method,
     temperature:temperature,
     volume:volume,
@@ -139,7 +139,7 @@ NIMI.prototype.frontRearDry = function (method, temperature, volume, place, flus
  * @returns {string} 指令中的 data串
  */
 NIMI.prototype.feetSeatHeater = function (temperature) {
-  alert(angular.toJson({
+  console.log(angular.toJson({
     temperature:temperature
   }))
   var cmd = "05";
@@ -174,7 +174,7 @@ NIMI.prototype.SeatHeater = function (temperature) {
  * @returns {string}
  */
 NIMI.prototype.cleanWand = function (mSwitchType, hour, minute, dateSwitch, MOM, TUE, WED, THU, FRI, SAT, SUM) {
-  alert(angular.toJson({
+  console.log(angular.toJson({
     mSwitchType:mSwitchType,
     hour:hour,
     minute:minute,
@@ -238,18 +238,18 @@ NIMI.prototype.cleanWand = function (mSwitchType, hour, minute, dateSwitch, MOM,
  * @returns {string}
  */
 NIMI.prototype.ambientLight = function (lightMode, lightCtl, dynamicCtl, MOMC, TUEC, WEDC, THUC, FRIC, SATC, SUMC) {
-  alert(angular.toJson({
-    "lightMode":lightMode,
-    "lightCtl":lightCtl,
-    "dynamicCtl":dynamicCtl,
-    "MOMC":MOMC,
-    "TUEC":TUEC,
-    "WEDC":WEDC,
-    "THUC":THUC,
-    "FRIC":FRIC,
-    "SATC":SATC,
-    "SUMC":SUMC
-  }))
+  // alert(angular.toJson({
+  //   "lightMode":lightMode,
+  //   "lightCtl":lightCtl,
+  //   "dynamicCtl":dynamicCtl,
+  //   "MOMC":MOMC,
+  //   "TUEC":TUEC,
+  //   "WEDC":WEDC,
+  //   "THUC":THUC,
+  //   "FRIC":FRIC,
+  //   "SATC":SATC,
+  //   "SUMC":SUMC
+  // }))
   var cmd = "11";
   var param_one = "";
   var mLightCtl = "";
@@ -295,9 +295,6 @@ NIMI.prototype.ambientLight = function (lightMode, lightCtl, dynamicCtl, MOMC, T
   mFRIC = getDataByColor(FRIC);
   mSATC = getDataByColor(SATC);
   param_one = mSUMC + mLightMode + mLightCtl;
-  console.log("mLightMode"+mLightMode);
-  console.log("mLightCtl"+mLightCtl);
-  console.log("param"+param_one);
   cmd += getHex(param_one)
     + getHex("0" + mTUEC + mDynamicCtl + mMOMC)
     + getHex("0" + mTHUC + "0" + mWEDC)
@@ -314,7 +311,7 @@ NIMI.prototype.ambientLight = function (lightMode, lightCtl, dynamicCtl, MOMC, T
 function getDataByColor(color) {
   var data = "";
   switch (color) {
-    case "white":
+    case "White":
       data = config.White;
       break;
     case "Pantone4985":
@@ -348,7 +345,7 @@ function getDataByColor(color) {
  * @returns {string}
  */
 NIMI.prototype.bowlLight = function (lightStalls) {
-  alert(angular.toJson({
+  console.log(angular.toJson({
     lightStalls:lightStalls
   }))
   var cmd = "18";
@@ -370,17 +367,17 @@ NIMI.prototype.bowlLight = function (lightStalls) {
  * @returns {string}
  */
 NIMI.prototype.setting = function (welcome, nightLight, bowlLight, autoFlush, PRWash, autoOpenClose, deodorizer, trap, sound) {
-  alert(angular.toJson({
-    welcome:welcome,
-    nightLight:nightLight,
-    bowlLight:bowlLight,
-    autoFlush:autoFlush,
-    PRWash:PRWash,
-    autoOpenClose:autoOpenClose,
-    deodorizer:deodorizer,
-    trap:trap,
-    sound:sound
-  }))
+  // console.log(angular.toJson({
+  //   welcome:welcome,
+  //   nightLight:nightLight,
+  //   bowlLight:bowlLight,
+  //   autoFlush:autoFlush,
+  //   PRWash:PRWash,
+  //   autoOpenClose:autoOpenClose,
+  //   deodorizer:deodorizer,
+  //   trap:trap,
+  //   sound:sound
+  // }))
   var cmd = "0A";
   var mWelcome = "0";
   (welcome == config.ON) ? mWelcome = "1" : mWelcome = "0";
@@ -412,7 +409,7 @@ NIMI.prototype.setting = function (welcome, nightLight, bowlLight, autoFlush, PR
  * @returns {string}
  */
 NIMI.prototype.powerSaveDelay = function (delayTime) {
-  alert(angular.toJson({
+  console.log(angular.toJson({
     delayTime:delayTime,
   }))
   var cmd = "0C";
@@ -700,15 +697,15 @@ function analysisFlushStatus(ackStr) {
  * @param week 周几 {1,2,3,4,5,6,7}
  */
 NIMI.prototype.setDeviceTime = function (year, month, date, hour, minute, week) {
-  alert(angular.toJson({
-    year:year,
-    month:month,
-    date:date,
-    hour:hour,
-    minute:minute,
-    week:week,
-    }
-  ))
+  // console.log(angular.toJson({
+  //   year:year,
+  //   month:month,
+  //   date:date,
+  //   hour:hour,
+  //   minute:minute,
+  //   week:week,
+  //   }
+  // ))
   var cmd = "0f";
   var param_year = sevenBitToCheck(year.toString(2));
   var param_month_h = "";
@@ -740,7 +737,7 @@ NIMI.prototype.setDeviceTime = function (year, month, date, hour, minute, week) 
     + param_minute_d
     + threeBitToCheck((week - 1).toString(2))
     + "00");
-  alert(cmd)
+  console.log(cmd)
   return cmd;
 };
 /**
@@ -766,6 +763,6 @@ function sevenBitToCheck(data) {
     for (var i = 0; i < l; i++) {
       data = "0" + data;
     }
-  }
+  };
   return data;
 };
