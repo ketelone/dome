@@ -19,6 +19,10 @@ angular.module('myInfoModule')
 
       //查看的设备
       $scope.device=$stateParams.device?$stateParams.device:'my-info.greenLife.greenLife';
+      //控制日、周、月高亮
+      $scope.index=$stateParams.index?Number($stateParams.index):1;
+      //消耗类型
+      $scope.type=$stateParams.type?$stateParams.type:0;
 
       //用水量和用电量的单位
       $scope.waterUnit=localStorage.waterUnit?localStorage.waterUnit:'greenLife.waterUnit';
@@ -108,9 +112,6 @@ angular.module('myInfoModule')
         "pureWaterConsumption":2.5, //纯净水用水量=用水量/2
         "electricityConsumption":100,//用电量
       };
-
-      //控制日、周、月高亮
-      $scope.index=1;
 
       //获取数据
       $scope.getData=function (index) {

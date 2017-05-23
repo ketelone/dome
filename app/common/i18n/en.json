@@ -111,7 +111,7 @@
       "phoneRegister": "Phone number register",
       "mailRegister": "Email register",
       "securityCode": "4 digitals",
-      "phonePwd": "6-20 digitals"
+      "phonePwd": "6-18 digitals"
     }
   },
   "alertMsg": {
@@ -165,7 +165,7 @@
     "myDevice": "My Devices",
     "addDevice": "Add",
     "searchBox": "Search Box",
-    "startLinkBox": "start Box link",
+    "startLinkBox": "Start Box link",
     "linkSuccess": "Box link sucess",
     "linkFail": "Conneting failed",
     "startSelectDevice": "start device link",
@@ -274,9 +274,9 @@
     "arounlight": "Ambient light",
     "tlitelight": "Bowl light",
     "nuanjiao": "Feet",
-    "guangai": "Close cover",
-    "fangai": "Open cover",
-    "fanquan": "Open seat",
+    "guangai": "Close Cover",
+    "fangai": "Open Cover",
+    "fanquan": "Open Seat",
     "toiltequan": "Toilet ring",
     "qingjie": "Clean",
     "shezhi": "Settings",
@@ -297,7 +297,7 @@
     "njfl": "Feet pressure",
     "nvsy": "Font pressure",
     "nvpos": "Font position",
-    "nvtemper": "Rear temp",
+    "nvtemper": "Font temp",
     "txsy": "Rear pressure",
     "txpos": "Rear position",
     "txtemper": "Rear temp",
@@ -311,7 +311,13 @@
     "devicenouse": "Vacant",
     "seatstatus": "Only available when tiolet is vacant",
     "unseatstatus":"Only available when tiolet is occupied",
-    "doinghanle":"Function is executing"
+    "doinghanle":"Function is executing",
+    "popmessage": "Sterilization will last about 45min\nAre you sure to turn it on？",
+    "clearJun":"Sterilization is ecmpafpxecuting now",
+    "clearJundong":"Sterilization is on,cover seat and it will resume",
+    "lightlow":"Low",
+    "lightcenter":"Mid",
+    "lighthigh":"High"
   },
   "toiletSetting": {
     "title": "Settings",
@@ -334,7 +340,7 @@
     "danwei": "Hour",
     "interngent": "Smart Learning",
     "settingsucc": "Settings",
-    "timetongbu": "Time ",
+    "timetongbu": "Time synchronization",
     "popmessage": "Are you sure to reset all?\nAfter reset,current setting will be cleaned"
   },
   "lightSetting": {
