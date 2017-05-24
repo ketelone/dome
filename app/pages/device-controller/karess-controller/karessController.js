@@ -1187,13 +1187,13 @@ angular.module('karessControlModule')
         $state.go("karessLearning");
       }
       $scope.operating = [{
-        text: 'mcController.rename'
+        text: 'karessController.rename'
       }, {
-        text: 'mcController.move'
+        text: 'karessController.move'
       }, {
-        text: 'mcController.delete'
+        text: 'karessController.delete'
       }, {
-        text: 'mcController.machine'
+        text: 'karessController.machine'
       }];
 
       $scope.popover = $ionicPopover.fromTemplateUrl('build/pages/device-controller/karess-controller/modal/popover.html', {
