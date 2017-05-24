@@ -39,16 +39,14 @@ angular.module('airfoilShowerModule')
         if(did != ""){
           getCurrentDeviceStatus();
         }else{
-          //alert("该设备没有绑定！");
+          hmsPopup.showLoading('<span translate="golabelvariable.loadingdata"></span>');
+          $timeout(function(){
+            if(!isLinkOk){
+              hmsPopup.hideLoading();
+              $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"));
+            }
+          }, 10000);
         }
-
-        hmsPopup.showLoading('<span translate="golabelvariable.loadingdata"></span>');
-        $timeout(function(){
-          if(!isLinkOk){
-            hmsPopup.hideLoading();
-            $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"));
-          }
-        }, 10000);
 
         //changeRingCol('#6ACBB3');
       },true);
@@ -74,18 +72,24 @@ angular.module('airfoilShowerModule')
        */
       var getDeviceId = function(){
         var skuList = SettingsService.get('sku');
-        var deviceId = "";
-        var deviceList = localStorage.deviceInfo.split(";");
+        var did = "";
+        var deviceList
+        if(localStorage.deviceInfo){
+          deviceList = localStorage.deviceInfo.split(";");
+        }else{
+          localStorage.deviceInfo = ";123456";
+          deviceList = localStorage.deviceInfo.split(";");
+        }
         for(var i = 0; i < deviceList.length; i ++){
           var deviceInfo = deviceList[i].split(",");
           for(var j =0 ; j < skuList.length; j ++){
             if(deviceInfo[0] == skuList[j]){
-              deviceId =  deviceInfo[1];
-              return deviceId;
+              did =  deviceInfo[1];
+              return did;
             }
           }
         }
-        return deviceId;
+        return did;
       };
 
       var receiveAirfoilTcpData = function(result){
@@ -225,7 +229,7 @@ angular.module('airfoilShowerModule')
        *@params: color
        *@disc: change the color of the ring
        */
-     
+
       var c = '#6ACBB3';
       var cxt=canvas.getContext("2d");
       var xLength = $window.innerWidth * 0.5;
