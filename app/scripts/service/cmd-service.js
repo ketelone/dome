@@ -70,7 +70,7 @@ angular.module('utilModule')
             "ip": ip
           }, success, error);
           function success(response) {
-            alert('发送成功');
+             //alert('发送成功');
           }
 
           function error() {

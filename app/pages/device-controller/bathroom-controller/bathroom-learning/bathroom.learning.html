@@ -1,11 +1,28 @@
-<ion-view class="period-Setting">
+<ion-view class="bathroom-learn">
   <div class="bar bar-header header" style="background-image: none">
     <button class="button button-icon icon ion-ios-arrow-left header_buttonRig" ng-click="goBack()"></button>
-    <div class="h1 title header_title">浴霸机器学习设置</div>
+    <div class="h1 title header_title" translate="bathroom.bathroomLearn.title">浴霸机器学习设置</div>
   </div>
   <ion-content class="toilet-bg">
+    <div class="row">
+      <div class="col col-70 col-center font-sizekey">
+        <span style="font-family: PingFangSC-Light;" translate="bathroom.bathroomLearn.switchTitle" ></span>
+      </div>
+      <div class="col col-30 col-center textright auto-fangai-col70">
+        <img style="height: 0.5rem;"  ng-src="{{img}}" ng-click="change()">
+      </div>
+    </div>
+    <div style="padding: 0.1rem;margin-bottom: 0.2rem;font-family: PingFangSC-Light;" translate="bathroom.bathroomLearn.description" ></div>
+    <div style="width: 100%;text-align: center;">
+      <span href="javascript:;"  on-finish-render ng-click="changeModel('day')"
+            ng-class="{true:'day-click',false:'day'}[isDay]"  translate="bathroom.bathroomLearn.day">日</span>
+      <span href="javascript:;"  on-finish-render ng-click="changeModel('week')"
+            ng-class="{true:'week',false:'week-click'}[isDay]"  translate="bathroom.bathroomLearn.week">周</span>
+    </div>
+    <br>
+
     <div style="width: 100vh;background: black">
-      <img ng-src="{{image}}" ng-click="next()" style="width: 100vw;">
+      <img  ng-src="{{image}}"  style="width: 100vw;">
     </div>
 
 
