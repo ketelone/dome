@@ -60,7 +60,6 @@ angular.module('bathroomModule')
           }
         ).error(
           function (response, status, header, config){
-            alert("-----");
             hmsPopup.showPopup("<span translate='bathroom.saveError'></span>");
           }
         );
