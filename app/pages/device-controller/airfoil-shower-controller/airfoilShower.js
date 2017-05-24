@@ -39,14 +39,15 @@ angular.module('airfoilShowerModule')
         if(did != ""){
           getCurrentDeviceStatus();
         }else{
-          hmsPopup.showLoading('<span translate="golabelvariable.loadingdata"></span>');
-          $timeout(function(){
-            if(!isLinkOk){
-              hmsPopup.hideLoading();
-              $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"));
-            }
-          }, 10000);
+
         }
+        hmsPopup.showLoading('<span translate="golabelvariable.loadingdata"></span>');
+        $timeout(function(){
+          if(!isLinkOk){
+            hmsPopup.hideLoading();
+            $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"));
+          }
+        }, 10000);
 
         //changeRingCol('#6ACBB3');
       },true);
