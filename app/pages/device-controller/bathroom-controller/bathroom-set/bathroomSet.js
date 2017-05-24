@@ -20,7 +20,7 @@ angular.module('bathroomModule')
        */
       $scope.resetDeviceInfo = function(){
 
-        hmsPopup.confirmNoTitle($translate.instant('toiletSetting.popmessage'),$translate.instant('golabelvariable.PopupConfire'),$translate.instant('golabelvariable.PopupCancle'),function () {
+        hmsPopup.confirmNoTitle($translate.instant('bathroom.reset'),$translate.instant('golabelvariable.PopupConfire'),$translate.instant('golabelvariable.PopupCancle'),function () {
           localStorage.windType = "bathroom.rock";
           localStorage.hotTimer = "default";
           localStorage.hotDryingTimer = "default";

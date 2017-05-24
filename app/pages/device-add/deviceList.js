@@ -165,37 +165,37 @@ angular.module('deviceAddModule')
         }
       }
 //接受tcp状态
-      document.addEventListener('SocketPlugin.receiveTcpStatus', function (result) {
-
-        hmsPopup.showShortCenterToast("tcp状态" + angular.toJson(result.code));
-      }, false);
+//       document.addEventListener('SocketPlugin.receiveTcpStatus', function (result) {
+//
+//         hmsPopup.showShortCenterToast("tcp状态" + angular.toJson(result.code));
+//       }, false);
 //接受tcp返回数据
       //已连接的设备
-      document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
-        hmsPopup.showShortCenterToast("开始返回数据！");
-        var resultOn = result;
-        if (resultOn[0].data.act == "LIST_BONDED_DEVICE_RETURN") {
-          $scope.deviceOn = resultOn[0].data.act_params.device_list;
-          if ($scope.deviceOn.length == 0) {
-            hmsPopup.showShortCenterToast("没有已连接设备，请搜索未连接设备");//让他去选择连接未设备
-          }
-          $scope.$apply();
-        }
-//未连接的设备
-        if (resultOn[0].data.act == "SCAN_RETURN") {
-          console.log(resultOn[0]);
-          $scope.deviceOff = resultOn[0].data.act_params.device_list;
-          if ($scope.deviceOff.length == 0) {
-            hmsPopup.showShortCenterToast("没有设备");//让他去选择连接未设备
-          }
-          $scope.$apply();
-        }
-
-        if (resultOn[0].data.act == "QUIT_RETURN") {
-          hmsPopup.showShortCenterToast("解绑成功！");
-        }
-
-      }, false);
+//       document.addEventListener('SocketPlugin.receiveTcpData', function (result) {
+//         hmsPopup.showShortCenterToast("开始返回数据！");
+//         var resultOn = result;
+//         if (resultOn[0].data.act == "LIST_BONDED_DEVICE_RETURN") {
+//           $scope.deviceOn = resultOn[0].data.act_params.device_list;
+//           if ($scope.deviceOn.length == 0) {
+//             hmsPopup.showShortCenterToast("没有已连接设备，请搜索未连接设备");//让他去选择连接未设备
+//           }
+//           $scope.$apply();
+//         }
+// //未连接的设备
+//         if (resultOn[0].data.act == "SCAN_RETURN") {
+//           console.log(resultOn[0]);
+//           $scope.deviceOff = resultOn[0].data.act_params.device_list;
+//           if ($scope.deviceOff.length == 0) {
+//             hmsPopup.showShortCenterToast("没有设备");//让他去选择连接未设备
+//           }
+//           $scope.$apply();
+//         }
+//
+//         if (resultOn[0].data.act == "QUIT_RETURN") {
+//           hmsPopup.showShortCenterToast("解绑成功！");
+//         }
+//
+//       }, false);
 
 
       //绑定设备

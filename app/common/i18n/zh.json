@@ -17,7 +17,8 @@
     "mixt": "此功能与执行功能互斥",
     "directiveError": "指令执行失败,请重试",
     "nowError" : "该功能暂不可用",
-    "tcpError" : "连接已中断"
+    "tcpError" : "连接已中断",
+    "directiveOff" : "Command refused"
   },
   "my-info": {
     "myhome": "我家",
@@ -322,7 +323,14 @@
     "rename": "重命名",
     "move": "移动",
     "delete": "解除绑定",
-    "ml": "机器学习设置"
+    "ml": "机器学习设置",
+    "toiletLearn" : {
+      "title": "坐便器学习设置",
+      "switchTitle" :"允许坐便器执行学习的结果",
+      "description" :"开启后，坐便器将根据您的使用轨迹，在最佳时间加热座圈到最适温度，并在不使用的时间中自动清洁坐便器。",
+      "day":"日",
+      "week":"周"
+    }
   },
   "toiletSetting": {
     "title": "马桶设置",
@@ -482,7 +490,14 @@
     "rename": "重命名",
     "move": "移动",
     "delete": "解除绑定",
-    "ml": "机器学习设置"
+    "ml": "机器学习设置",
+    "bathroomLearn" : {
+      "title": "浴霸机器学习设置",
+      "switchTitle" :"允许浴霸执行学习的结果",
+      "description" :"开启后，浴霸将根据您的使用轨迹，在最佳时间加热您的卫生间。",
+      "day":"日",
+      "week":"周"
+    }
   },
   "spa": {
     "goHomeTitle": "场景详情",
@@ -543,7 +558,14 @@
     "rename": "重命名",
     "move":"移动",
     "delete":"删除",
-    "machine" : "机器学习"
+    "machine" : "机器学习",
+    "karessLearn" : {
+      "title": "浴缸学习设置",
+      "switchTitle" :"允许浴缸执行学习的结果",
+      "description" :"开启后，浴缸将根据您的使用轨迹，在最佳时间为您调节到最适水温。",
+      "day":"日",
+      "week":"周"
+    }
   },
   "mcController": {
     "setting": "设置",
@@ -572,8 +594,14 @@
     "rename": "重命名",
     "move":"移动",
     "delete":"删除",
-    "machine" : "机器学习"
-
+    "machine" : "机器学习",
+    "mcLearn" : {
+      "title": "镜柜学习设置",
+      "switchTitle" :"允许镜柜执行学习的结果",
+      "description" :"开启后，镜柜将根据您的使用轨迹，在最佳时间为您准备最适色温与亮度。",
+      "day":"日",
+      "week":"周"
+    }
   },
   "nextgen": {
     "title": "花洒",
