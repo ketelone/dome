@@ -235,9 +235,9 @@ angular.module('karessControlModule')
           selecFlag: false,
         },
         {
-          imgUrl: "build/img/karess-controller/icon_shezhinor.png",
-          imgSeledUrl: "build/img/karess-controller/icon_shezhi.png",
-          imgUrlTemp: "build/img/karess-controller/icon_shezhinor.png",
+          imgUrl: "build/img/karess-controller/water_nor.png",
+          imgSeledUrl: "build/img/karess-controller/water_nor.png",
+          imgUrlTemp: "build/img/karess-controller/water_nor.png",
           handleDes: $scope.karessController.modelType,
           selecFlag: false,
         }
