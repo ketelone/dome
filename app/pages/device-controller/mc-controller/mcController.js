@@ -637,6 +637,10 @@ angular.module('mcControlModule')
           console.log(value2);
           cmdService.sendCmd(deviceId, value2, localStorage.boxIp);
         }
+        hmsPopup.showLoading();
+        $timeout(function () {
+          hmsPopup.hideLoading();
+        }, 500);
       };
 
       var receiveMcTcpDatahandle = function (result) {
@@ -649,6 +653,9 @@ angular.module('mcControlModule')
             karessButton(status);
           } else if (status.ack.indexOf('1003') >= 0 || status.ack.indexOf('1002') >= 0) {
             $scope.Toast.show($translate.instant("golabelvariable.directiveError"));
+            hmsPopup.hideLoading();
+          }else if(status.ack.indexOf('1003') >= 0){
+            $scope.Toast.show($translate.instant("golabelvariable.directiveOff"));
             hmsPopup.hideLoading();
           } else {
             var item = mcService.explainAllStatus(cmd);
@@ -663,7 +670,7 @@ angular.module('mcControlModule')
               selectSlide();
               hmsPopup.hideLoading();
             } else if (item.cmd == '89') {
-              if(item.status == 'No human'){
+              if(item.status == 'No  '){
               }else if (item.status == 'Human Detected'){
 
               }

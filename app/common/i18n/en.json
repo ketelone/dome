@@ -17,7 +17,9 @@
     "mixt": "Exclusive funciton is on",
     "directiveError": "Command execution failed,try again",
     "nowError" : "Function is not available now",
-    "tcpError" : "Connection failed"
+    "tcpError" : "Connection failed",
+    "directiveOff" : "Command refused"
+
   },
   "my-info": {
     "myhome": "Home",

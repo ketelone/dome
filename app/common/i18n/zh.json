@@ -17,7 +17,8 @@
     "mixt": "此功能与执行功能互斥",
     "directiveError": "指令执行失败,请重试",
     "nowError" : "该功能暂不可用",
-    "tcpError" : "连接已中断"
+    "tcpError" : "连接已中断",
+    "directiveOff" : "Command refused"
   },
   "my-info": {
     "myhome": "我家",
