@@ -829,8 +829,10 @@ angular.module('karessControlModule')
           $scope.modal.show();
           setTimeout(function () {
             var ele = document.getElementsByClassName("hmsModal");
-            ele[0].style.top = 70 + '%';
-            ele[0].style.minHeight = 61 + '%';
+            ele[0].style.top = $scope.screenHeig - 1 * $scope.fontSize * $scope.value.length + 'px';
+            ele[0].style.minHeight = 1 * $scope.fontSize * $scope.value.length + 'px';
+            // ele[0].style.top = 70 + '%';
+            // ele[0].style.minHeight = 61 + '%';
           }, 10)
         }
       };
