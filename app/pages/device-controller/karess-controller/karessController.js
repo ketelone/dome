@@ -872,11 +872,12 @@ angular.module('karessControlModule')
       $scope.handlenapeSelectedIndex = '';
       //档位滑动执行发指令操作
       $scope.radScrollSendDir = function (item) {
-        if ($scope.handlenapeListNape[$scope.handlenapeSelectedIndex].isManyDirective) {
-          var selectRad = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].gearInit;
-          $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].gearInitTemp = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].gearInit;
-          var diedes = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].desId;
-        }
+        // if ($scope.handlenapeListNape[$scope.handlenapeSelectedIndex].isManyDirective) {
+        //   var selectRad = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].gearInit;
+        //   $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].gearInitTemp = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].gearInit;
+        //   var diedes = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].desId;
+        // }
+        var diedes = $scope.currentSlideData[$scope.handleRadSelected].desId;
         if (diedes == 'zhuishuishuiwen' || diedes == 'zhuishuishuiwei') {
           var temp = parseInt($scope.slideTunBuData[0].gearInit) + 29;
           localStorage.karessTemp = parseInt($scope.slideTunBuData[0].gearInit);

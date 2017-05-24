@@ -557,7 +557,7 @@
     "DTVflag" : "此功能不可使用，请安装附件",
     "rename": "重命名",
     "move":"移动",
-    "delete":"删除",
+    "delete":"解除绑定",
     "machine" : "机器学习",
     "karessLearn" : {
       "title": "浴缸学习设置",
@@ -593,7 +593,7 @@
     "seWen": "色温",
     "rename": "重命名",
     "move":"移动",
-    "delete":"删除",
+    "delete":"解除绑定",
     "machine" : "机器学习",
     "mcLearn" : {
       "title": "镜柜学习设置",
