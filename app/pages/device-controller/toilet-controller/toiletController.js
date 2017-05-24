@@ -86,7 +86,10 @@ angular.module('toiletControlModule')
         useing:"toiletController.deviceUseInfo",
         nouse:"toiletController.devicenouse",
         deviceUseInfo:"",
-        deviceinfoflag:false
+        deviceinfoflag:false,
+        lightlowval:$translate.instant("toiletController.lightlow"),
+        lightcentval:$translate.instant("toiletController.lightcenter"),
+        lighthigtval:$translate.instant("toiletController.lighthigh"),
       };
       /**
        *
@@ -214,19 +217,19 @@ angular.module('toiletControlModule')
                     };
                   }else if(slideDataObj.parNodeid === "toilet-lightCtl"){
                     if(this.i === 1){
-                      slideDataObj.gearInit = $translate.instant('toiletController.lightlow');
+                      slideDataObj.gearInit = $scope.toiletController.lightlowval;
                     };
                   }else{
                     slideDataObj.gearInit = 1;
-                  }
+                  };
                 }else{
                     if(slideDataObj.parNodeid === "toilet-warmjCtl"){
                       slideDataObj.gearInit = this.i+1;
                     }else if(slideDataObj.parNodeid === "toilet-lightCtl"){
                     if(this.i === 2){
-                      slideDataObj.gearInit = $translate.instant('toiletController.lightcenter');
+                      slideDataObj.gearInit = $scope.toiletController.lightcentval;
                     }else if(this.i === 3){
-                      slideDataObj.gearInit = $translate.instant('toiletController.lighthigh');
+                      slideDataObj.gearInit = $scope.toiletController.lighthigtval;
                     };
                   }else{
                     slideDataObj.gearInit = this.i;
@@ -247,9 +250,9 @@ angular.module('toiletControlModule')
                 }else
                 if(slideDataObj.parNodeid === "toilet-lightCtl"){
                   if(this.i+1 === 2){
-                    slideDataObj.gearInit = $translate.instant('toiletController.lightcenter');
+                    slideDataObj.gearInit = $scope.toiletController.lightcentval;
                   }else if(this.i+1 === 3){
-                    slideDataObj.gearInit = $translate.instant('toiletController.lighthigh');
+                    slideDataObj.gearInit = $scope.toiletController.lighthigtval;
                   }
                 }else{
                   slideDataObj.gearInit = this.i+1;
@@ -336,11 +339,11 @@ angular.module('toiletControlModule')
             $('.slider-pager').empty();
           }else{
             if($scope.currentSlideData[index].parNodeid === "toilet-lightCtl"){
-              if($scope.currentSlideData[index].gearInit=== $translate.instant('toiletController.lightlow')){
+              if($scope.currentSlideData[index].gearInit=== $scope.toiletController.lightlowval){
                 $scope.currentSlideData[index].gearInit = 1;
-              }else if($scope.currentSlideData[index].gearInit=== $translate.instant('toiletController.lightcenter')){
+              }else if($scope.currentSlideData[index].gearInit=== $scope.toiletController.lightcentval){
                 $scope.currentSlideData[index].gearInit = 2;
-              }else if($scope.currentSlideData[index].gearInit=== $translate.instant('toiletController.lighthigh')){
+              }else if($scope.currentSlideData[index].gearInit=== $scope.toiletController.lighthigtval){
                 $scope.currentSlideData[index].gearInit = 3;
               };
             };
@@ -572,11 +575,11 @@ angular.module('toiletControlModule')
         if(!lightCtl){
           var lightCtl = handleOriginData[0].gearInit;
           if(lightCtl=== 1){
-            lightCtl = $translate.instant('toiletController.lightlow');
+            lightCtl = $scope.toiletController.lightlowval;
           }else if(lightCtl === 2){
-            lightCtl = $translate.instant('toiletController.lightcenter');
+            lightCtl = $scope.toiletController.lightcentval;
           }else if(lightCtl === 3){
-            lightCtl = $translate.instant('toiletController.lighthigh');
+            lightCtl = $scope.toiletController.lighthigtval;
           };
         };
         var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx,nimi.ambientLight(lightMode, lightCtl, dynamicCtl, MOMC, TUEC, WEDC, THUC, FRIC, SATC, SUMC),tolitercmdObj.ctrId,tolitercmdObj.devId);
@@ -602,7 +605,6 @@ angular.module('toiletControlModule')
         };
         var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx,nimi.bowlLight(lightStalls),tolitercmdObj.ctrId,tolitercmdObj.devId);
         //send instructin
-        console.log(cmdvalue);
         // alert("cmdvalue"+cmdvalue)
         if(baseConfig.isCloudCtrl){
           $scope.toGetImpleteData(flag,cmdvalue,$scope.handlenapeListNape[selectedIndex].handleDes,selectedIndex,isType);
@@ -1097,7 +1099,14 @@ angular.module('toiletControlModule')
             hmsPopup.showLoading("<span translate='golabelvariable.loadingdata'></span>");
             cmdService.sendCmd(tolitercmdObj.diviceid, cmdvalue, tolitercmdObj.boxid);
           };
-        },20)
+          $timeout(function(){
+            if($scope.overTiemFlag){
+              hmsPopup.hideLoading();
+              $scope.hanleInitTemple(12);
+              $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"));
+            };
+          },15000);
+        },20);
       });
       var cmdTimeout;
       $scope.sendCmdTimeout = function () {
@@ -1725,12 +1734,12 @@ angular.module('toiletControlModule')
         };
       };
       document.addEventListener('SocketPlugin.receiveTcpData',receiveTcpDatahandle,false);
-      $timeout(function(){
-        if($scope.overTiemFlag){
-          hmsPopup.hideLoading();
-          $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"));
-        };
-      },15000);
+      // $timeout(function(){
+      //   if($scope.overTiemFlag){
+      //     hmsPopup.hideLoading();
+      //     $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"));
+      //   };
+      // },15000);
       $scope.setSingalModalTop = "toiletSingalModalTop";
       $ionicModal.fromTemplateUrl('build/pages/model/hmsModal.html', {
         scope: $scope,
