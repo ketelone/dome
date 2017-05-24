@@ -20,7 +20,10 @@ angular.module('myInfoModule')
       $scope.userData={
         "head_img":"",
         "nickname":"老爸",
-        "sex":"",
+        "sex":0,
+        "telephone":"18828321238",
+        "email":"",
+        "state":"上海",
       };
 
     }]);

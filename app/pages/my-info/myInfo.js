@@ -42,6 +42,11 @@ angular.module('myInfoModule')
           templateUrl: 'build/pages/my-info/setting-temperature/settingTemperature.html',
           controller: 'settingTemperatureCtrl'
         })
+        .state('about', {
+          url: '/setting/about',
+          templateUrl: 'build/pages/my-info/setting/about/about.html',
+          controller: 'settingCtrl'
+        })
         .state('personalSetting', {
           url: '/personalSetting',
           templateUrl: 'build/pages/my-info/personal-setting/personalSetting.html',

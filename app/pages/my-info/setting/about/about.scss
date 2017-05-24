@@ -1,0 +1,17 @@
+.about{
+  .headColor {
+    background-color: $global-head-bg;
+  }
+  .iconColor {
+    color: $color-base
+  }
+
+  .content {
+    color: rgba(255, 255, 255, 1);
+    background: $global-background;
+    .logo{
+      background-color: #000122;
+      height: 4.36rem;
+    }
+  }
+}
