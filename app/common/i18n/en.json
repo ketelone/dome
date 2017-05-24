@@ -17,7 +17,9 @@
     "mixt": "Exclusive funciton is on",
     "directiveError": "Command execution failed,try again",
     "nowError" : "Function is not available now",
-    "tcpError" : "Connection failed"
+    "tcpError" : "Connection failed",
+    "directiveOff" : "Command refused"
+
   },
   "my-info": {
     "myhome": "Home",
@@ -317,7 +319,18 @@
     "clearJundong":"Sterilization is on,cover seat and it will resume",
     "lightlow":"Low",
     "lightcenter":"Mid",
-    "lighthigh":"High"
+    "lighthigh":"High",
+    "rename":"Rename",
+    "move":"Move",
+    "delete":"Delete",
+    "ml":"Machine Learning",
+    "toiletLearn" : {
+      "title": "Toilet learning settings",
+      "switchTitle" :"Allow Kohler Toilet auto-scheduling",
+      "description" :"Allow Kohler Toilet to warm up your toilet seat to your daily use pattern and preference for seat temperature.Kohler Toilet will also sanitize your toilet when you are not using it",
+      "day":"Day",
+      "week":"Week"
+    }
   },
   "toiletSetting": {
     "title": "Settings",
@@ -387,7 +400,7 @@
     "unConnected": "Not connected",
     "surplus": "left",
     "complete": "Complete",
-    "autoclear": "Auto clean",
+    "autoclear": "Clean",
     "clearover": "Clean complete,two munites delay",
     "devicestats": "Device status",
     "setting": "Settings",
@@ -478,7 +491,14 @@
     "rename":"Rename",
     "move":"Move",
     "delete":"Delete",
-    "ml":"Machine Learning"
+    "ml":"Machine Learning",
+    "bathroomLearn" : {
+      "title": "Bathroom Heater Learning Settings",
+      "switchTitle" :"Allow Kohler Bathroom Heater auto-scheduling",
+      "description" :"Allow Kohler Bathroom Heater to warm up your shower room according to your daily use pattern and preference for water temperature",
+      "day":"Day",
+      "week":"Week"
+    }
   },
   "spa": {
     "goHomeTitle": "Scenario Detail",
@@ -502,7 +522,7 @@
     "deviceUseInfo": "Occupied",
     "parameterrad": "0",
     "parameterdes": "Water temp",
-    "handleSelecDes": "Outlet mode",
+    "handleSelecDes": "Level",
     "zhushui": "Filling",
     "luoshui": "E-Drain",
     "touzhen": "Pillow",
@@ -535,7 +555,18 @@
     "shuiWen": "Water temp",
     "shuiWei": "Water level",
     "loading": "Network connection failure",
-    "DTVflag" : "Function not available，pls install DTV prompt"
+    "DTVflag" : "Function not available，pls install DTV prompt",
+    "rename":"Rename",
+    "move":"Move",
+    "delete":"Delete",
+    "machine":"Machine Learning",
+    "karessLearn" : {
+      "title": "Bathtub learning settings",
+      "switchTitle" :"Allow Kohler Bathtub water auto-scheduling",
+      "description" :"Allow Kohler Bathtub to prepare your bath according to preference in water temperature",
+      "day":"Day",
+      "week":"Week"
+    }
   },
   "mcController": {
     "setting": "Settings",
@@ -560,7 +591,18 @@
     "infoTaress5": "Location",
     "jieneng": "Power save",
     "liangDu": "Brightness",
-    "seWen": "Color temp"
+    "seWen": "Color temp",
+    "rename":"Rename",
+    "move":"Move",
+    "delete":"Delete",
+    "machine":"Machine Learning",
+    "mcLearn" : {
+      "title": "Mirror Cabinet learning settings",
+      "switchTitle" :"Allow Mirror Cabinet auto-scheduling",
+      "description" :"Allow Kohler Mirror Cabinet to light on your bathroom according to your daily use pattern and preference for light color and brightness",
+      "day":"Day",
+      "week":"Week"
+    }
   },
   "nextgen": {
     "title": "Shower",

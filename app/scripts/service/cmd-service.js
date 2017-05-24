@@ -4,8 +4,8 @@
 
 angular.module('utilModule')
   .service('cmdService',
-    ['baseConfig','hmsPopup',
-      function (baseConfig,hmsPopup) {
+    ['baseConfig', 'hmsPopup',
+      function (baseConfig, hmsPopup) {
 
         this.cloudCmd = function (deviceId, value) {
           var paramter = {
@@ -33,8 +33,8 @@ angular.module('utilModule')
             {
               "ver": 1,
               "from": {
-                "ctype":  0xE3,
-                "uid"  : window.localStorage.empno
+                "ctype": 0xE3,
+                "uid": window.localStorage.empno
               },
               "to": {
                 "ctype": 0xE5,
@@ -42,9 +42,9 @@ angular.module('utilModule')
               },
               "ts": new Date().getTime(),
               "idx": 12,
-              "mtype":  "ctl",
+              "mtype": "ctl",
               "data": {
-                "cmd":[value]
+                "cmd": [value]
               }
             }
           ]
@@ -56,12 +56,12 @@ angular.module('utilModule')
           function success(response) {
             // alert('发送成功');
           }
+
           function error() {
             $scope.Toast.show($translate.instant("golabelvariable.loadingdataerrror"))
-            alert("进入指令发生error")
           }
         };
-        this.sendScanCmd = function (value,ip) {
+        this.sendScanCmd = function (value, ip) {
           var cmd = value;
           cordova.plugins.SocketPlugin.tcpSendCmd({
             "timeout": "5000",
@@ -69,7 +69,7 @@ angular.module('utilModule')
             "ip": ip
           }, success, error);
           function success(response) {
-             alert('发送成功');
+             //alert('发送成功');
           }
 
           function error() {
@@ -105,7 +105,7 @@ angular.module('utilModule')
          * @param {*} ctrId 控制段 16进制
          * @param {*} devId 设备段 16进制
          */
-        this.getCmd = function(header, idx, data, ctrId, devId) {
+        this.getCmd = function (header, idx, data, ctrId, devId) {
           if (data.length % 2 != 0) {
             data = "0" + data;
           }
@@ -115,13 +115,19 @@ angular.module('utilModule')
             checksum ^= parseInt(hex, 16);
           }
           var length = data.length / 2 + 4;
-          return header + doStr(length) + doStr(idx) + doStr(ctrId) + doStr(devId) + data + doStr(checksum.toString(16));
+          console.log("length" + length);
+          return header + doStr(length.toString(16))
+            + doStr(idx.toString(16))
+            + doStr(ctrId)
+            + doStr(devId)
+            + data
+            + doStr(checksum.toString(16));
         }
         /**
          * 十六进制补0
          * @param {*字符} d
          */
-        this.doStr = function(d) {
+        this.doStr = function (d) {
           if (d.length % 2 != 0) {
             d = "0" + d;
           }

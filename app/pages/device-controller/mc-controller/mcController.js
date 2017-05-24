@@ -197,7 +197,7 @@ angular.module('mcControlModule')
 
           "</div>" +
           "<div class='toilet-parameterctl-dataimg' ng-if='list.parameterctlFlag'>" +
-          "<img class='conninfo-parameterctl-img' ng-src='build/img/mc-controller/btn_devicedetail_scoll.png' alt=''>" +
+          "<img class='conninfo-parameterctl-img' ng-src='build/img/mc-controller/icon_mc.png' alt=''>" +
           "</div>" +
           "</div>" +
           "</ion-slide>" +
@@ -542,7 +542,7 @@ angular.module('mcControlModule')
             hmsPopup.hideLoading();
           }, 500);
           if (info.selecFlag == false) {
-            var value = mcService.getCmd("8877", 1, mcService.data.openLight, 0, '0B');
+            var value = mcService.getCmd("8877", 1, mcService.data.openLight, 'E3', '0B');
             console.log(value);
             if (baseConfig.isCloudCtrl == true) {
               test(index, value, 'mcOpenLight');
@@ -551,7 +551,7 @@ angular.module('mcControlModule')
               cmdService.sendCmd(deviceId, value, localStorage.boxIp);
             }
           } else {
-            var value = mcService.getCmd("8877", '01', mcService.data.closeLight, 0, '0B');
+            var value = mcService.getCmd("8877", '01', mcService.data.closeLight, 'E3', '0B');
             console.log(value);
             cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           }
@@ -562,7 +562,7 @@ angular.module('mcControlModule')
             hmsPopup.hideLoading();
           }, 500);
           if (info.selecFlag == false) {
-            var value = mcService.getCmd("8877", '01', mcService.data.openDemist, 0, '0B');
+            var value = mcService.getCmd("8877", '01', mcService.data.openDemist, 'E3', '0B');
             if (baseConfig.isCloudCtrl == true) {
               test(index, value, 'mcDefogging');
             } else {
@@ -570,7 +570,7 @@ angular.module('mcControlModule')
               cmdService.sendCmd(deviceId, value, localStorage.boxIp);
             }
           } else {
-            var value = mcService.getCmd("8877", '01', mcService.data.closeDemist, 0, '0B');
+            var value = mcService.getCmd("8877", '01', mcService.data.closeDemist, 'E3', '0B');
             console.log(value);
             cmdService.sendCmd(deviceId, value, localStorage.boxIp);
           }
@@ -580,7 +580,7 @@ angular.module('mcControlModule')
           $timeout(function () {
             hmsPopup.hideLoading();
           }, 500);
-          var value = mcService.getCmd("8877", '01', mcService.data.closeAll, 0, '0B');
+          var value = mcService.getCmd("8877", '01', mcService.data.closeAll, 'E3', '0B');
           console.log(value);
           cmdService.sendCmd(deviceId, value, localStorage.boxIp);
         }
@@ -609,16 +609,17 @@ angular.module('mcControlModule')
       $scope.handlenapeSelectedIndex;
       //档位滑动执行发指令操作
       $scope.radScrollSendDir = function () {
-        if ($scope.handlenapeListNape[$scope.handlenapeSelectedIndex].isManyDirective) {
-          var selectRad = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].gearInit;
-          $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].gearInitTemp = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].gearInit;
-          console.log(selectRad);
-          var diedes = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].desId;
-          console.log(diedes);
-        }
+        // if ($scope.handlenapeListNape[$scope.handlenapeSelectedIndex].isManyDirective) {
+        //   var selectRad = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].gearInit;
+        //   $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].gearInitTemp = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].gearInit;
+        //   console.log(selectRad);
+        //   var diedes = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].diedes;
+        //   console.log(diedes);
+        // }
+        var diedes = $scope.currentSlideData[$scope.handleRadSelected].desId;
         if (diedes == 'sewen' || diedes == 'liangdu') {
           if ($scope.slideTunBuData[0].gearInit == 1) {
-            var luminance = '1E';
+            var luminance = '14';
           } else if ($scope.slideTunBuData[0].gearInit == 2) {
             var luminance = '32';
           } else if ($scope.slideTunBuData[0].gearInit == 3) {
@@ -626,7 +627,7 @@ angular.module('mcControlModule')
           }
           localStorage.mcLiangdu = $scope.slideTunBuData[0].gearInit;
           if ($scope.slideTunBuData[1].gearInit == 1) {
-            var color = '1B';
+            var color = '1b';
           } else if ($scope.slideTunBuData[1].gearInit == 2) {
             var color = '28';
           } else if ($scope.slideTunBuData[1].gearInit == 3) {
@@ -637,6 +638,10 @@ angular.module('mcControlModule')
           console.log(value2);
           cmdService.sendCmd(deviceId, value2, localStorage.boxIp);
         }
+        hmsPopup.showLoading();
+        $timeout(function () {
+          hmsPopup.hideLoading();
+        }, 500);
       };
 
       var receiveMcTcpDatahandle = function (result) {
@@ -648,7 +653,10 @@ angular.module('mcControlModule')
           if (status.ack.indexOf('fa') >= 0) {
             karessButton(status);
           } else if (status.ack.indexOf('1003') >= 0 || status.ack.indexOf('1002') >= 0) {
-            $scope.Toast.show("操作失败！");
+            $scope.Toast.show($translate.instant("golabelvariable.directiveError"));
+            hmsPopup.hideLoading();
+          }else if(status.ack.indexOf('1003') >= 0){
+            $scope.Toast.show($translate.instant("golabelvariable.directiveOff"));
             hmsPopup.hideLoading();
           } else {
             var item = mcService.explainAllStatus(cmd);
@@ -663,7 +671,7 @@ angular.module('mcControlModule')
               selectSlide();
               hmsPopup.hideLoading();
             } else if (item.cmd == '89') {
-              if(item.status == 'No human'){
+              if(item.status == 'No  '){
               }else if (item.status == 'Human Detected'){
 
               }

@@ -868,18 +868,16 @@ angular.module('karessControlModule')
       };
 
       //保存选择的数据项
-      $scope.handleRadSelected;
-      $scope.handlenapeSelectedIndex;
+      $scope.handleRadSelected = '';
+      $scope.handlenapeSelectedIndex = '';
       //档位滑动执行发指令操作
-      $scope.radScrollSendDir = function () {
-        if ($scope.handlenapeListNape[$scope.handlenapeSelectedIndex].isManyDirective) {
-          var selectRad = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].gearInit;
-          $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].gearInitTemp = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].gearInit;
-          console.log(selectRad);
-          var diedes = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].desId;
-          console.log(diedes);
-        }
-        console.log($scope.handlenapeListNape[$scope.handlenapeSelectedIndex]);
+      $scope.radScrollSendDir = function (item) {
+        // if ($scope.handlenapeListNape[$scope.handlenapeSelectedIndex].isManyDirective) {
+        //   var selectRad = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].gearInit;
+        //   $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].gearInitTemp = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].gearInit;
+        //   var diedes = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].desId;
+        // }
+        var diedes = $scope.currentSlideData[$scope.handleRadSelected].desId;
         if (diedes == 'zhuishuishuiwen' || diedes == 'zhuishuishuiwei') {
           var temp = parseInt($scope.slideTunBuData[0].gearInit) + 29;
           localStorage.karessTemp = parseInt($scope.slideTunBuData[0].gearInit);
@@ -923,6 +921,10 @@ angular.module('karessControlModule')
           console.log(value2);
           cmdService.sendCmd(deviceId, value, localStorage.boxIp);
         }
+        hmsPopup.showLoading();
+        $timeout(function () {
+          hmsPopup.hideLoading();
+        }, 500);
       };
 
 //接受tcp状态
@@ -1190,13 +1192,13 @@ angular.module('karessControlModule')
         $state.go("karessLearning");
       }
       $scope.operating = [{
-        text: 'mcController.rename'
+        text: 'karessController.rename'
       }, {
-        text: 'mcController.move'
+        text: 'karessController.move'
       }, {
-        text: 'mcController.delete'
+        text: 'karessController.delete'
       }, {
-        text: 'mcController.machine'
+        text: 'karessController.machine'
       }];
 
       $scope.popover = $ionicPopover.fromTemplateUrl('build/pages/device-controller/karess-controller/modal/popover.html', {
