@@ -1,6 +1,9 @@
-.personalSetting{
+.personalSetting {
+
   background-image: none;
-  .headColor{
+  font-family: PingFangSC-Regular;
+
+  .headColor {
     background-color: $global-head-bg;
     background-image: none;
   }
@@ -8,24 +11,102 @@
     color: $color-base;
   }
 
-  .itemStyle{
+  .itemStyle {
     background-color: #0D0F11;
     color: $color-base;
-    border-top:0 ;
+    border-top: 0;
     border-bottom: 0.01rem solid #2D3234;
-    margin:0;
+    margin: 0;
+    .item-icon {
+      color: #565A64;
+      font-size: 0.5rem;
+    }
   }
 
-  .item-icon{
-    color:#565A64;
-    font-size:0.5rem;
+  .camera {
+    background-color: #0D0F11;
+    color: $color-base;
+    border-top: 0;
+    border-bottom: 0.01rem solid #2D3234;
+    margin: 0;
+    height: 2rem;
+    padding-top: 0.8rem;
+    .cameraIcon {
+      background-color: #383838;
+      width: 1.4rem;
+      height: 1.4rem;
+      border-radius: 100%;
+      padding-left: 0.35rem;
+      margin-top: 0.3rem;
+    }
+  }
+
+  .maleIcon {
+    color: black;
+    background-color: #78CEF8;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 100%;
+    padding: 0.08rem 0 0 0.08rem;
+    float: right;
+    margin: 0 0.5rem;
+    font-size: 0.4rem;
+  }
+
+  .femaleIcon {
+    color: black;
+    background-color: #383838;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 100%;
+    padding: 0.05rem 0 0 0.14rem;
+    float: right;
+    font-size: 0.45rem;
   }
 
   .rightword {
     font-size: 0.24rem;
     color: #565A64;
-    float:right;
+    float: right;
     padding-top: 0.03rem;
+  }
+
+  .tips {
+    text-align: center;
+    font-size: $font-size;
+    color: white;
+    line-height: 0.32rem;
+  }
+
+  .inputStyle {
+    background-color: #0D0F11;
+    color: #565A64;
+    font-size: 0.28rem;
+    line-height: 1rem;
+    border-top: 0;
+    border-bottom: 0.04rem solid #979797;
+    .inputText {
+      color: white;
+      height: 1rem;
+    }
+    .verifyBtn {
+      opacity: 0.91;
+      background: #546281;
+      color: white;
+      margin-right: 0.5rem;
+    }
+  }
+
+  .submitBtn {
+    background-color: #546281;
+    padding: 0;
+    border-radius: 0.06rem;
+    border: 1px solid #3A4050;
+    opacity: 0.91;
+    .title {
+      color: white;
+      font-size: 0.36rem;
+    }
   }
 
 }

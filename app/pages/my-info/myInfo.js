@@ -52,6 +52,16 @@ angular.module('myInfoModule')
           templateUrl: 'build/pages/my-info/personal-setting/personalSetting.html',
           controller: 'personalSettingCtrl'
         })
+        .state('binding', {
+          url: '/personalSetting/binding/:type',
+          templateUrl: 'build/pages/my-info/personal-setting/binding/binding.html',
+          controller: 'bindingCtrl'
+        })
+        .state('changePwd', {
+          url: '/personalSetting/changePwd/:type',
+          templateUrl: 'build/pages/my-info/personal-setting/change-pwd/changePwd.html',
+          controller: 'changePwdCtrl'
+        })
         .state('myRoom', {
           url: '/myRoom',
           templateUrl: 'build/pages/my-info/my-room/myRoom.html',

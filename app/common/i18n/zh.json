@@ -87,6 +87,27 @@
       "rename": "重命名",
       "disband": "解散",
       "manage": "管理"
+    },
+    "personal-setting":{
+      "title":"个人资料设置",
+      "head_img":"头像",
+      "nickname":"昵称",
+      "sex":"性别",
+      "telephone":"手机号码",
+      "email":"邮箱",
+      "state":"地区",
+      "changePwd":"修改密码",
+      "changeTel":"更换手机号",
+      "unbinding":"未绑定",
+      "submit":"确定",
+      "verify_placeholder":"请输入验证码",
+      "get_verify":"获取验证码",
+      "email_binding":"邮箱绑定",
+      "email_placeholder":"请输入邮箱账号",
+      "email_tips1":"验证成功后可使用邮箱账号直接登录",
+      "tel_binding":"手机绑定",
+      "tel_placeholder":"请输入手机号码",
+      "tel_tips1":"验证成功后可使用手机号直接登录"
     }
   },
   "login": {
