@@ -52,13 +52,13 @@ angular.module('toiletControlModule')
         if($scope.isOn==true){
           $scope.img = 'build/img/toilet-controller/toilet-learning/btn_on.png';
           if($scope.isDay==true){
-            if (window.localStorage.language == '中文简体') {
+            if (window.localStorage.language == "default"||window.localStorage.language == '中文简体') {
               $scope.image = 'build/img/toilet-controller/toilet-learning/mt1.png';
             }else if(window.localStorage.language == 'English'){
               $scope.image = 'build/img/toilet-controller/toilet-learning/mte1.png';
             }
           }else{
-            if (window.localStorage.language == '中文简体') {
+            if (window.localStorage.language == "default"||window.localStorage.language == '中文简体') {
               $scope.image = 'build/img/toilet-controller/toilet-learning/mt3.png';
             }else if(window.localStorage.language == 'English'){
               $scope.image = 'build/img/toilet-controller/toilet-learning/mte3.png';
@@ -67,13 +67,13 @@ angular.module('toiletControlModule')
         }else {
           $scope.img ='build/img/toilet-controller/toilet-learning/btn_off.png';
           if($scope.isDay==true){
-            if (window.localStorage.language == '中文简体') {
+            if (window.localStorage.language == "default"||window.localStorage.language == '中文简体') {
               $scope.image = 'build/img/toilet-controller/toilet-learning/mt2.png';
             }else if(window.localStorage.language == 'English'){
               $scope.image = 'build/img/toilet-controller/toilet-learning/mte2.png';
             }
           }else{
-            if (window.localStorage.language == '中文简体') {
+            if (window.localStorage.language == "default"||window.localStorage.language == '中文简体') {
               $scope.image = 'build/img/toilet-controller/toilet-learning/mt4.png';
             }else if(window.localStorage.language == 'English'){
               $scope.image = 'build/img/toilet-controller/toilet-learning/mte4.png';
@@ -86,13 +86,13 @@ angular.module('toiletControlModule')
         if(item=='day'){
           $scope.isDay = true;
           if($scope.isOn==true){
-            if (window.localStorage.language == '中文简体') {
+            if (window.localStorage.language == "default"||window.localStorage.language == '中文简体') {
               $scope.image = 'build/img/toilet-controller/toilet-learning/mt1.png';
             }else if(window.localStorage.language == 'English'){
               $scope.image = 'build/img/toilet-controller/toilet-learning/mte1.png';
             }
           }else{
-            if (window.localStorage.language == '中文简体') {
+            if (window.localStorage.language == "default"||window.localStorage.language == '中文简体') {
               $scope.image = 'build/img/toilet-controller/toilet-learning/mt2.png';
             }else if(window.localStorage.language == 'English'){
               $scope.image = 'build/img/toilet-controller/toilet-learning/mte2.png';
@@ -101,13 +101,13 @@ angular.module('toiletControlModule')
         }else{
           $scope.isDay = false;
           if($scope.isOn==true){
-            if (window.localStorage.language == '中文简体') {
+            if (window.localStorage.language == "default"||window.localStorage.language == '中文简体') {
               $scope.image = 'build/img/toilet-controller/toilet-learning/mt3.png';
             }else if(window.localStorage.language == 'English'){
               $scope.image = 'build/img/toilet-controller/toilet-learning/mte3.png';
             }
           }else{
-            if (window.localStorage.language == '中文简体') {
+            if (window.localStorage.language == "default"||window.localStorage.language == '中文简体') {
               $scope.image = 'build/img/toilet-controller/toilet-learning/mt4.png';
             }else if(window.localStorage.language == 'English'){
               $scope.image = 'build/img/toilet-controller/toilet-learning/mte4.png';

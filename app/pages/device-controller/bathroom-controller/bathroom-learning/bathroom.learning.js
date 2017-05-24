@@ -43,13 +43,13 @@ angular.module('bathroomModule')
         if($scope.isOn==true){
           $scope.img = 'build/img/toilet-controller/toilet-learning/btn_on.png';
           if($scope.isDay==true){
-            if ( window.localStorage.language == '中文简体') {
+            if (window.localStorage.language == "default"|| window.localStorage.language == '中文简体') {
               $scope.image = 'build/img/bathroom/bathroom-learning/yb2.png';
             }else if(window.localStorage.language == 'English'){
               $scope.image = 'build/img/bathroom/bathroom-learning/ybe2.png';
             }
           }else{
-            if ( window.localStorage.language == '中文简体') {
+            if (window.localStorage.language == "default"|| window.localStorage.language == '中文简体') {
               $scope.image = 'build/img/bathroom/bathroom-learning/yb4.png';
             }else if(window.localStorage.language == 'English'){
               $scope.image = 'build/img/bathroom/bathroom-learning/ybe4.png';
@@ -58,13 +58,13 @@ angular.module('bathroomModule')
         }else {
           $scope.img ='build/img/toilet-controller/toilet-learning/btn_off.png';
           if($scope.isDay==true){
-            if ( window.localStorage.language == '中文简体') {
+            if (window.localStorage.language == "default"|| window.localStorage.language == '中文简体') {
               $scope.image = 'build/img/bathroom/bathroom-learning/yb1.png';
             }else if(window.localStorage.language == 'English'){
               $scope.image = 'build/img/bathroom/bathroom-learning/ybe1.png';
             }
           }else{
-            if ( window.localStorage.language == '中文简体') {
+            if (window.localStorage.language == "default"|| window.localStorage.language == '中文简体') {
               $scope.image = 'build/img/bathroom/bathroom-learning/yb3.png';
             }else if(window.localStorage.language == 'English'){
               $scope.image = 'build/img/bathroom/bathroom-learning/ybe3.png';
@@ -77,13 +77,13 @@ angular.module('bathroomModule')
         if(item=='day'){
           $scope.isDay = true;
           if($scope.isOn==true){
-            if ( window.localStorage.language == '中文简体') {
+            if (window.localStorage.language == "default"|| window.localStorage.language == '中文简体') {
               $scope.image = 'build/img/bathroom/bathroom-learning/yb2.png';
             }else if(window.localStorage.language == 'English'){
               $scope.image = 'build/img/bathroom/bathroom-learning/ybe2.png';
             }
           }else{
-            if ( window.localStorage.language == '中文简体') {
+            if (window.localStorage.language == "default"|| window.localStorage.language == '中文简体') {
               $scope.image = 'build/img/bathroom/bathroom-learning/yb1.png';
             }else if(window.localStorage.language == 'English'){
               $scope.image = 'build/img/bathroom/bathroom-learning/ybe1.png';
@@ -92,13 +92,13 @@ angular.module('bathroomModule')
         }else{
           $scope.isDay = false;
           if($scope.isOn==true){
-            if ( window.localStorage.language == '中文简体') {
+            if (window.localStorage.language == "default"|| window.localStorage.language == '中文简体') {
               $scope.image = 'build/img/bathroom/bathroom-learning/yb4.png';
             }else if(window.localStorage.language == 'English'){
               $scope.image = 'build/img/bathroom/bathroom-learning/ybe4.png';
             }
           }else{
-            if ( window.localStorage.language == '中文简体') {
+            if (window.localStorage.language == "default"|| window.localStorage.language == '中文简体') {
               $scope.image = 'build/img/bathroom/bathroom-learning/yb3.png';
             }else if(window.localStorage.language == 'English'){
               $scope.image = 'build/img/bathroom/bathroom-learning/ybe3.png';
