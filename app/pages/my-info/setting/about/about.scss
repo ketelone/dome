@@ -1,9 +1,10 @@
 .about{
-  .headColor {
+  .headColor{
     background-color: $global-head-bg;
+    background-image: none;
   }
-  .iconColor {
-    color: $color-base
+  .whiteColor {
+    color: $color-base;
   }
 
   .content {
@@ -12,6 +13,20 @@
     .logo{
       background-color: #000122;
       height: 4.36rem;
+      .img-position{
+        width:4.83rem;
+        height: 3rem;
+        margin:0.68rem auto;
+      }
+    }
+    .description{
+      padding:0.3rem;
+      font-family: PingFangSC-Regular;
+      font-size: $font-size;
+      line-height: 0.48rem;
+      .title{
+        text-align: center;
+      }
     }
   }
 }
