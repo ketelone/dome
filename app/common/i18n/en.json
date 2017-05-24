@@ -260,6 +260,9 @@
     "deviceLineOff": "Offline"
   },
   "toiletController": {
+    "lightlow":"Low",
+    "lightcenter":"Mid",
+    "lighthigh":"High",
     "title": "Toilet",
     "deviceWifiInfo": "Good",
     "deviceUseInfo": "Occupied",
@@ -317,9 +320,6 @@
     "popmessage": "Sterilization will last about 45min\nAre you sure to turn it on？",
     "clearJun":"Sterilization is ecmpafpxecuting now",
     "clearJundong":"Sterilization is on,cover seat and it will resume",
-    "lightlow":"Low",
-    "lightcenter":"Mid",
-    "lighthigh":"High",
     "rename":"Rename",
     "move":"Move",
     "delete":"Delete",
