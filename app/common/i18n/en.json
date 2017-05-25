@@ -643,6 +643,7 @@
     "delete":"Delete",
     "ml":"Machine Learning",
     "deviceNoSignal":"Bad",
+    "deviceSetting":"Shower Setting",
     "deiveceMess": {
       "deiveceMess": "Device info",
       "productName": "Name",
