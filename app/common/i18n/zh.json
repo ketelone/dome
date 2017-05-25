@@ -638,6 +638,7 @@
     "delete": "解除绑定",
     "ml": "机器学习设置",
     "deviceNoSignal":"信号差",
+    "deviceSetting":"花洒设置",
     "deiveceMess": {
       "deiveceMess": "设备信息",
       "productName": "产品名称",
