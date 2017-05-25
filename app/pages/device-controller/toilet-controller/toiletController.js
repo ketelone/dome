@@ -1177,13 +1177,13 @@ angular.module('toiletControlModule')
                 if(!$scope.handlenapeListNape[index].selecFlag && $scope.handlenapeListNape[index].matchdataid !== "clear"){
                   if($scope.handlenapeListNape[index].matchdataid === "fangai" || $scope.handlenapeListNape[index].matchdataid === "guangai" || $scope.handlenapeListNape[index].matchdataid === "fanquan"){
                     if(!$scope.isSeatedStatusFlag){
-                      if($scope.handlenapeListNape[index].matchdataid === "fangai" || $scope.handlenapeListNape[index].matchdataid === "guangai"){
+                      if($scope.handlenapeListNape[index].matchdataid === "guangai"){
                         if($scope.cmdBackValue.lidRingStatus === "011" || $scope.cmdBackValue.lidRingStatus === "100"){
                           $scope.Toast.show($translate.instant("golabelvariable.mixt"));
                           return false;
-                        }
+                        };
                       };
-                      if($scope.handlenapeListNape[index].matchdataid === "fangai" || $scope.handlenapeListNape[index].matchdataid === "fanquan"){
+                      if($scope.handlenapeListNape[index].matchdataid === "fanquan"){
                         if($scope.cmdBackValue.lidRingStatus === "001"){
                           $scope.Toast.show($translate.instant("golabelvariable.mixt"));
                           return false;
