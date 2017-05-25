@@ -17,5 +17,6 @@ angular.module('nextgenModule')
        */
       $scope.resetDeviceInfo = function(){
         hmsPopup.showPopup('是否恢复默认设置');
+        //恢复设置操作
       };
     }]);

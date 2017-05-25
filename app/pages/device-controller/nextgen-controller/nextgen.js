@@ -429,8 +429,11 @@ angular.module('nextgenModule')
       }).then(function (modal) {
         $scope.modal = modal;
       });
-      $scope.value = [{id: 2, des: 'nextgen.maichong'},
-        {id: 3, des: 'nextgen.bodong'}, {id: 4, des: 'nextgen.yidong'}, {id: 5, des: 'nextgen.Spout'}
+      $scope.value = [
+        {id: 2, des: 'nextgen.maichong'},
+        {id: 3, des: 'nextgen.bodong'},
+        {id: 4, des: 'nextgen.yidong'},
+        {id: 5, des: 'nextgen.Spout'}
       ];
       $scope.openModal = function () {
         $scope.modal.show();

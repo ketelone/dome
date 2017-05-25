@@ -725,16 +725,16 @@ angular.module('myApp')
           templateUrl: 'build/pages/device-controller/mc-controller/mc-learning/mc.learning.html',
           controller: 'mcLearningCtrl'
         })
-
-        .state('nextgenSet', {
-          url: '/nextgenSet',
-          templateUrl: 'build/pages/device-controller/nextgen-controller/nextgen-set/nextgenSet.html',
-          controller: 'nextgenSetCtrl'
-        })
+        //nextgen shower router setting
         .state('nextgen', {
           url: '/nextgen',
           templateUrl: 'build/pages/device-controller/nextgen-controller/nextgen.html',
           controller: 'nextgenCtrl'
+        })
+        .state('nextgenSet', {
+          url: '/nextgenSet',
+          templateUrl: 'build/pages/device-controller/nextgen-controller/nextgen-set/nextgenSet.html',
+          controller: 'nextgenSetCtrl'
         })
         .state('nextgenInfo', {
           url: '/nextgenInfo',
