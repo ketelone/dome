@@ -559,6 +559,10 @@
     "move":"移动",
     "delete":"解除绑定",
     "machine" : "机器学习",
+    "nowLevel" : "当前水位",
+    "high" : "低档",
+    "low" : "高档",
+    "temperature" : "设置温度",
     "karessLearn" : {
       "title": "浴缸学习设置",
       "switchTitle" :"允许浴缸执行学习的结果",

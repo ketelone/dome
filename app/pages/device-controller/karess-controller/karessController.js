@@ -239,7 +239,6 @@ angular.module('karessControlModule')
           imgSeledUrl: "build/img/karess-controller/water_nor.png",
           imgUrlTemp: "build/img/karess-controller/water_nor.png",
           handleDes: $scope.karessController.modelType,
-          selecFlag: false,
         }
       ];
 
@@ -281,15 +280,15 @@ angular.module('karessControlModule')
           "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 1'>{{config.temp}}℃</span>" +
           "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 4  && list.gearInit == 1'>L1</span>" +
           "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 4  && list.gearInit == 2'>L2</span>" +
-          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 5  && list.gearInit == 1'>低档</span>" +
-          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 5  && list.gearInit == 2'>高档</span>" +
+          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 5  && list.gearInit == 1'><span translate='karessController.high'></span></span>" +
+          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 5  && list.gearInit == 2'><span translate='karessController.low'></span></span>" +
           "<span class='toilet-parameterctl-des' ng-bind={{list.des}}℃></span>" +
-          "<span class='toilet-parameterctl-des' ng-if='list.flag == 1' ng-repeat='i in tempList' ng-show='list.gearInit == i.id'>设置温度：{{i.temp}}℃</span>" +
+          "<span class='toilet-parameterctl-des' ng-if='list.flag == 1' ng-repeat='i in tempList' ng-show='list.gearInit == i.id'><span translate='karessController.temperature'></span>：{{i.temp}}℃</span>" +
           "</div>" +
           "<div class='toilet-parameterctl-data' ng-if='list.parameterctlFlag'>" +
           "<img class='conninfo-parameterctl-img' ng-src='build/img/toilet-controller/btn_devicedetail_scoll.png' alt='' ng-if='parameterctlImg'>" +
           "<span class='toilet-parameterctl-raddata' ng-if='!parameterctlImg'>{{config.temp}}℃</span>" +
-          "<span class='toilet-parameterctl-des' ng-if='!parameterctlImg'>当前水位：{{config.level}}%</span>" +
+          "<span class='toilet-parameterctl-des' ng-if='!parameterctlImg'><span translate='karessController.nowLevel'></span>：{{config.level}}%</span>" +
           "</div>" +
           "</div>" +
           "</ion-slide>" +
