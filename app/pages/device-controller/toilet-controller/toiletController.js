@@ -512,7 +512,7 @@ angular.module('toiletControlModule')
           };
         }catch(e){
           alert(e.message);
-        }
+        };
       };
       //quanwen
       $scope.SeatHeaterIntionCreate = function (flag,temperature,isType,selectedIndex) {
@@ -1080,6 +1080,8 @@ angular.module('toiletControlModule')
         $scope.selectChangeFlag = true;
         $scope.selectIsType = 0;
         $scope.todeviceFlag = 0;
+        //oncetime directive falg
+        $scope.onceTimeDirFlag = true;
         //init click slide
         $scope.clickSlideFlag = false;
         //error over time
@@ -1171,6 +1173,7 @@ angular.module('toiletControlModule')
             };
             if($scope.hanleMutexFlag){
               if(!$scope.handlenapeListNape[index].isManyDirective){
+                $scope.onceTimeDirFlag = false;
                 if(!$scope.handlenapeListNape[index].selecFlag && $scope.handlenapeListNape[index].matchdataid !== "clear"){
                   if($scope.handlenapeListNape[index].matchdataid === "fangai" || $scope.handlenapeListNape[index].matchdataid === "guangai" || $scope.handlenapeListNape[index].matchdataid === "fanquan"){
                     if(!$scope.isSeatedStatusFlag){
@@ -1206,7 +1209,7 @@ angular.module('toiletControlModule')
                   }else{
                     $scope.sendCmdTimeout();
                     $scope.onceTimeIntionCreate("true","0",index);
-                  }
+                  };
                 };
                 if($scope.handlenapeListNape[index].matchdataid === "clear") {
                   if($scope.cmdBackValue.lidRingStatus === "000" || $scope.cmdBackValue.lidRingStatus === "101" || $scope.cmdBackValue.lidRingStatus === "110"){
@@ -1253,6 +1256,7 @@ angular.module('toiletControlModule')
                   }
                 };
               }else{
+                $scope.onceTimeDirFlag = true;
                 //use instruction create
                 if($scope.handlenapeListNape[index].matchdataid === "nvyong"){
                   if($scope.isSeatedStatusFlag){
@@ -1665,15 +1669,6 @@ angular.module('toiletControlModule')
                     $scope.handlenapeListNape[11].selecFlag = true;
                     $scope.handlenapeListNape[11].imgUrl = $scope.handlenapeListNape[11].imgSeledUrl;
                     if(backDataCmd.UVProgressStatus != 0){
-                      // if($scope.toiletController.modelTypeClear === "toiletController.clearopen" || $scope.toiletController.modelTypeClear === "toiletController.clearextend"){
-                      //   $timeout(function () {
-                      //     $scope.handlenapeListNape[11].selecFlag = false;
-                      //     $scope.handlenapeListNape[11].imgUrl = $scope.handlenapeListNape[11].imgUrlTemp;
-                      //     $scope.toiletController.modelTypeClear = "toiletController.gaunbi";
-                      //   },0);
-                      // }else{
-                      //   $scope.toiletController.modelTypeClear = "toiletController.clearinstance";
-                      // }
                       $scope.toiletController.modelTypeClear = "toiletController.clearinstance";
                     };
                     if(backDataCmd.wandStatus === "1"){
@@ -1692,11 +1687,13 @@ angular.module('toiletControlModule')
                   var matchId = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].matchdataid;
                   if($scope.currentSlideData[0].des !== "init"){
                     if(matchId === "nvyong" || matchId === "tunxi" || matchId === "quanwen" || matchId === "nuanfen" || matchId === "dengguang" || matchId === "nuanjiao" || matchId === "clear") {
-                      $timeout(function () {
-                        $scope.hanleInitTemple($scope.handlenapeSelectedIndex);
-                        $scope.clickSlideFlag = true;
-                        $scope.deviceReturnTime = 0;
-                      },0);
+                      if($scope.onceTimeDirFlag){
+                        $timeout(function () {
+                          $scope.hanleInitTemple($scope.handlenapeSelectedIndex);
+                          $scope.clickSlideFlag = true;
+                          $scope.deviceReturnTime = 0;
+                        },0);
+                      };
                     };
                   }else{
                     if(matchId === "nvyong" || matchId === "tunxi" || matchId === "quanwen" || matchId === "nuanfen" || matchId === "dengguang" || matchId === "nuanjiao") {
