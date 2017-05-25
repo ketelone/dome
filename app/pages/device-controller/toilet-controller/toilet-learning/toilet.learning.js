@@ -35,8 +35,12 @@ angular.module('toiletControlModule')
       $scope.chuchousetval = false;
       // $scope.anjianvoicesetval = true,
       // $scope.welcomemsetval = false
+      if (window.localStorage.language == "default"||window.localStorage.language == '中文简体') {
+        $scope.image = 'build/img/toilet-controller/toilet-learning/mt2.png';
+      }else if(window.localStorage.language == 'English'){
+        $scope.image = 'build/img/toilet-controller/toilet-learning/mte2.png';
+      }
 
-      $scope.image = 'build/img/toilet-controller/toilet-learning/mt2.png';
 
       //$scope.next = function () {
       //  $scope.index += 1;

@@ -36,8 +36,12 @@ angular.module('karessControlModule')
       // $scope.welcomemsetval = false
 
       $scope.index = 0;
+      if (window.localStorage.language == "default"|| window.localStorage.language == '中文简体') {
+        $scope.image = 'build/img/karess-controller/karess-learning/yg1.png';
+      }else if(window.localStorage.language == 'English'){
+        $scope.image = 'build/img/karess-controller/karess-learning/yge1.png';
+      }
 
-      $scope.image = 'build/img/karess-controller/karess-learning/yg1.png';
 
 
       $scope.change = function () {

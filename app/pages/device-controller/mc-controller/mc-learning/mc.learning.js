@@ -18,8 +18,12 @@ angular.module('mcControlModule')
       $scope.isOn = false;
       $scope.img ='build/img/toilet-controller/toilet-learning/btn_off.png';
       $scope.isDay =  true;
+      if (window.localStorage.language == "default"|| window.localStorage.language == '中文简体') {
+        $scope.image = 'build/img/mc-controller/mc-learning/jg1.png';
+      }else if(window.localStorage.language == 'English'){
+        $scope.image = 'build/img/mc-controller/mc-learning/jge1.png';
+      }
 
-      $scope.image = 'build/img/mc-controller/mc-learning/jg1.png';
 
 
       $scope.goBack = function () {
