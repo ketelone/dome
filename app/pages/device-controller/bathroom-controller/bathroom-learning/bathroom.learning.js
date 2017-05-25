@@ -36,7 +36,12 @@ angular.module('bathroomModule')
       // $scope.welcomemsetval = false
 
       $scope.index = 0;
-      $scope.image = 'build/img/bathroom/bathroom-learning/yb1.png';
+      if (window.localStorage.language == "default"|| window.localStorage.language == '中文简体') {
+        $scope.image = 'build/img/bathroom/bathroom-learning/yb1.png';
+      }else if(window.localStorage.language == 'English'){
+        $scope.image = 'build/img/bathroom/bathroom-learning/ybe1.png';
+      }
+
 
       $scope.change = function () {
         $scope.isOn =  !$scope.isOn;
