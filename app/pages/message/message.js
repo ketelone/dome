@@ -39,8 +39,17 @@ angular.module('messageModule')
             time: "message.time",
             circleUrl1: "build/img/common/radio_q.png",
             ischecked: false,
-            name: "status",
             hasRead: true,
+          });
+          $scope.messages.push({
+            id: "200",
+            message: "message.statusMessage1",
+            device: "message.device1",
+            messageDel: "message.messageDel1",
+            time: "message.time",
+            circleUrl1: "build/img/common/radio_q.png",
+            ischecked: false,
+            hasRead: false,
           });
         }
         else if(type==1){
@@ -51,7 +60,15 @@ angular.module('messageModule')
             time: "message.time",
             circleUrl1: "build/img/common/radio_q.png",
             ischecked: false,
-            name: "exception",
+            hasRead: false,
+          });
+          $scope.messages.push({
+            id: "300",
+            message: "message.exceptionMessage",
+            device: "message.device2",
+            time: "message.time",
+            circleUrl1: "build/img/common/radio_q.png",
+            ischecked: false,
             hasRead: true,
           });
         }
@@ -69,15 +86,12 @@ angular.module('messageModule')
         //           //状态及提醒
         //           $scope.statusitems.push({
         //             id: response.rows[i].exceptionId,
-        //             statusMessage: response.rows[i].description,
+        //             message: response.rows[i].description,
         //             device: response.rows[i].deviceName,
         //             time: response.rows[i].creationDate,
-        //             exceptionId : response.rows[i].exceptionId,
         //             circleUrl1: "build/img/common/radio_q.png",
         //             ischecked: false,
-        //             name: "status",
         //             hasRead: false,
-        //             readStyle: ""
         //           });
         //         }
         //       }
@@ -133,190 +147,110 @@ angular.module('messageModule')
        */
       $scope.goDeteleitem = function (item) {
         console.log(item);
-        var toDetele = function () {
-
-          if (item.name == 'status') {
-            $scope.statusitems.splice($scope.statusitems.indexOf(item), 1);
+        var toDetele = function (res) {
+          if(res==true){
+            $scope.messages.splice($scope.messages.indexOf(item), 1);
           }
-          else {
-            $scope.exceptionitems.splice($scope.exceptionitems.indexOf(item), 1);
-          }
-          var paramter = [{"exceptionId": item.exceptionId}];
-          console.log(paramter);
-          var url = baseConfig.basePath + "/r/api/cmm/deviceException/delete";
-          hmsHttp.post(url, paramter).success(function (response) {
-            console.log(response);
-          }).error(
-          );
-        }
-        hmsPopup.confirmNoTitle("<div ><div>删除后将无法在消息记录中找回,</div><br><div style='text-align:center'>是否要删除此消息?</div></div><br><br>", toDetele);
+          // var paramter = [{"exceptionId": item.id}];
+          // console.log(paramter);
+          // var url = baseConfig.basePath + "/r/api/cmm/deviceException/delete";
+          // hmsHttp.post(url, paramter).success(function (response) {
+          //   console.log(response);
+          // }).error(
+          // );
+        };
+        hmsPopup.confirmNoTitle("<div style='text-align:center'>删除后将无法在消息记录中找回,<br/>是否要删除此消息?</div>",
+        "删除","取消",toDetele);
       };
 
-      // /**
-      //  *@author:chenjiacheng
-      //  *@name:manyChoose
-      //  *@params:
-      //  *@return:
-      //  *@disc:ClickmanyChoose
-      //  */
-      // $scope.manyChoose = function () {
-      //   $scope.threeBottom = true;
-      //   $scope.data.showDelete = true;
-      // }
-      //
-      // /**
-      //  *@author:chenjiacheng
-      //  *@name:onChoose
-      //  *@params:
-      //  *@return:
-      //  *@disc:choose you click
-      //  */
-      // $scope.onChoose = function (item) {
-      //   //alert("statustrue");
-      //   //  alert($scope.data.showDelete);
-      //   //  if($scope.data.showDelete==false){
-      //   //    return;
-      //   //  }
-      //   if (item.ischecked == true && item.name == "status") {
-      //     //alert("statustrue");
-      //     for (var i = 0; i < $scope.statusitems.length; i++) {
-      //       if ($scope.statusitems[i].id == item.id) {
-      //         $scope.statusitems[i].ischecked = false;
-      //         $scope.statusitems[i].circleUrl1 = circleUrltemp;
-      //       }
-      //     }
-      //   }
-      //
-      //   else if (item.ischecked == false && item.name == "status") {
-      //
-      //     for (var i = 0; i < $scope.statusitems.length; i++) {
-      //       if ($scope.statusitems[i].id == item.id) {
-      //         $scope.statusitems[i].ischecked = true;
-      //         $scope.statusitems[i].circleUrl1 = circleUrl2;
-      //       }
-      //     }
-      //   }
-      //
-      //   else if (item.ischecked == true && item.name == "exception") {
-      //
-      //     for (var i = 0; i < $scope.exceptionitems.length; i++) {
-      //       if ($scope.exceptionitems[i].id == item.id) {
-      //         $scope.exceptionitems[i].ischecked = false;
-      //         $scope.exceptionitems[i].circleUrl1 = circleUrltemp;
-      //         //alert(  $scope.exceptionitems[i].circleUrltemp +"2");
-      //         //alert( $scope.exceptionitems[i].circleUrl1 +"1");
-      //       }
-      //     }
-      //
-      //   }
-      //   else if (item.ischecked == false && item.name == "exception") {
-      //     //alert("exceptionfalse");
-      //
-      //     for (var i = 0; i < $scope.exceptionitems.length; i++) {
-      //       if ($scope.exceptionitems[i].id == item.id) {
-      //         $scope.exceptionitems[i].ischecked = true;
-      //         $scope.exceptionitems[i].circleUrl1 = circleUrl2;
-      //       }
-      //     }
-      //     ;
-      //   }
-      // }
-      //
-      // /**
-      //  *@author:chenjiacheng
-      //  *@name:bottomGocancel
-      //  *@params:
-      //  *@return:
-      //  *@disc:clickbottomGocancel
-      //  */
-      // $scope.bottomGocancel = function () {
-      //   for (var i = 0; i < $scope.statusitems.length; i++) {
-      //     $scope.statusitems[i].ischecked = false;
-      //     $scope.statusitems[i].circleUrl1 = circleUrltemp;
-      //   }
-      //   for (var i = 0; i < $scope.exceptionitems.length; i++) {
-      //     $scope.exceptionitems[i].ischecked = false;
-      //     $scope.exceptionitems[i].circleUrl1 = circleUrltemp;
-      //   }
-      //   $scope.threeBottom = false;
-      //   $scope.data.showDelete = false;
-      // }
-      //
-      // /**
-      //  *@author:chenjiacheng
-      //  *@name:bottomManychoose
-      //  *@params:
-      //  *@return:
-      //  *@disc:clickbottomManychoose
-      //  */
-      // $scope.hasChooseAllstatus = false;
-      // $scope.hasChooseAllexception = false;
-      // $scope.bottomManychoose = function () {
-      //   if ($scope.hasStaus == true) {
-      //     $scope.hasChooseAllstatus = !$scope.hasChooseAllstatus;
-      //     if ($scope.hasChooseAllstatus == true) {
-      //       for (var i = 0; i < $scope.statusitems.length; i++) {
-      //         $scope.statusitems[i].ischecked = true;
-      //         $scope.statusitems[i].circleUrl1 = circleUrl2;
-      //       }
-      //     } else {
-      //       for (var i = 0; i < $scope.statusitems.length; i++) {
-      //
-      //         $scope.statusitems[i].ischecked = false;
-      //         $scope.statusitems[i].circleUrl1 = circleUrltemp;
-      //       }
-      //     }
-      //   } else {
-      //     $scope.hasChooseAllexception = !$scope.hasChooseAllexception;
-      //     if ($scope.hasChooseAllexception == true) {
-      //       for (var i = 0; i < $scope.exceptionitems.length; i++) {
-      //         $scope.exceptionitems[i].ischecked = true;
-      //         $scope.exceptionitems[i].circleUrl1 = circleUrl2;
-      //       }
-      //
-      //     } else {
-      //       for (var i = 0; i < $scope.exceptionitems.length; i++) {
-      //
-      //         $scope.exceptionitems[i].ischecked = false;
-      //         $scope.exceptionitems[i].circleUrl1 = circleUrltemp;
-      //       }
-      //     }
-      //   }
-      // }
-      //
-      // /**
-      //  *@author:chenjiacheng
-      //  *@name:bottomGodetele
-      //  *@params:
-      //  *@return:
-      //  *@disc:clickbottomGodetele
-      //  */
-      // $scope.bottomGodetele = function () {
-      //   if ($scope.hasStaus == true) {
-      //     var tempArry = [];
-      //     for (var i = 0; i < $scope.statusitems.length; i++) {
-      //       if ($scope.statusitems[i].ischecked == false) {
-      //         tempArry.push($scope.statusitems[i]);
-      //       }
-      //     }
-      //     $scope.statusitems = tempArry;
-      //
-      //     if ($scope.statusitems.length == 0) {
-      //       $scope.threeBottom = false;
-      //     }
-      //   }
-      //   else {
-      //     var tempArry = [];
-      //     for (var i = 0; i < $scope.exceptionitems.length; i++) {
-      //       if ($scope.exceptionitems[i].ischecked == false) {
-      //
-      //         tempArry.push($scope.exceptionitems[i]);
-      //       }
-      //     }
-      //     $scope.exceptionitems = tempArry;
-      //   }
-      //   $scope.threeBottom = false;
-      //   $scope.data.showDelete = false;
-      // }
+      /**
+       *@author:chenjiacheng
+       *@name:manyChoose
+       *@params:
+       *@return:
+       *@disc:ClickmanyChoose
+       */
+      $scope.manyChoose = function () {
+        $scope.threeBottom = true;
+        $scope.data.showDelete = true;
+      }
+
+      /**
+       *@author:chenjiacheng
+       *@name:onChoose
+       *@params:
+       *@return:
+       *@disc:choose you click
+       */
+      $scope.onChoose = function (item) {
+        if (item.ischecked) {//被选中
+          item.circleUrl1 = circleUrltemp;
+        }else{
+          item.circleUrl1 = circleUrl2;
+        }
+        item.ischecked=!item.ischecked;
+      }
+
+      /**
+       *@author:chenjiacheng
+       *@name:bottomGocancel
+       *@params:
+       *@return:
+       *@disc:clickbottomGocancel
+       */
+      $scope.bottomGocancel = function () {
+        $scope.messages.forEach(function (message) {
+          message.ischecked = false;
+          message.circleUrl1 = circleUrltemp;
+        });
+        $scope.threeBottom = false;
+        $scope.data.showDelete = false;
+      }
+
+      /**
+       *@author:chenjiacheng
+       *@name:bottomManychoose
+       *@params:
+       *@return:
+       *@disc:clickbottomManychoose
+       */
+      $scope.bottomManychoose = function () {
+        $scope.messages.forEach(function (message) {
+          message.ischecked = true;
+          message.circleUrl1 = circleUrl2;
+        });
+      }
+
+      /**
+       *@author:chenjiacheng
+       *@name:bottomGodetele
+       *@params:
+       *@return:
+       *@disc:clickbottomGodetele
+       */
+      $scope.bottomGodetele = function () {
+        var deleteArray=$scope.messages.filter(function(message){
+          return message.ischecked;
+        });
+        var tempArray=$scope.messages.filter(function(message){
+          return !message.ischecked;
+        });
+        var toDetele = function (res) {
+          if(res==true){
+            $scope.messages=tempArray;
+          }
+          // var paramter = [{"exceptionId": item.id}];
+          // console.log(paramter);
+          // var url = baseConfig.basePath + "/r/api/cmm/deviceException/delete";
+          // hmsHttp.post(url, paramter).success(function (response) {
+          //   console.log(response);
+          // }).error(
+          // );
+        };
+        hmsPopup.confirmNoTitle("<div style='text-align:center'>删除后将无法在消息记录中找回,<br/>是否要删除这些消息?</div>",
+          "删除","取消",toDetele);
+        $scope.threeBottom = false;
+        $scope.data.showDelete = false;
+      }
 
     }]);
