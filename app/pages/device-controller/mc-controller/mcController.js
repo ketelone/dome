@@ -616,7 +616,7 @@ angular.module('mcControlModule')
         //   var diedes = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].diedes;
         //   console.log(diedes);
         // }
-        var diedes = $scope.currentSlideData[$scope.handleRadSelected].desId;
+        var diedes = $scope.currentSlideData[$scope.handleRadSelected].diedes;
         if (diedes == 'sewen' || diedes == 'liangdu') {
           if ($scope.slideTunBuData[0].gearInit == 1) {
             var luminance = '14';

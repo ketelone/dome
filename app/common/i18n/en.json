@@ -493,7 +493,7 @@
     "delete":"Delete",
     "ml":"Machine Learning",
     "bathroomLearn" : {
-      "title": "Bathroom Heater Learning Settings",
+      "title": "Bathroom Heater learning settings",
       "switchTitle" :"Allow Kohler Bathroom Heater auto-scheduling",
       "description" :"Allow Kohler Bathroom Heater to warm up your shower room according to your daily use pattern and preference for water temperature",
       "day":"Day",
@@ -515,7 +515,7 @@
     "deviceWen": "",
     "deviceShi": ""
   },
-  "karessController": {
+  "karessfController": {
     "setting": "Settings",
     "title": "Bathtub",
     "deviceWifiInfo": "Good",
