@@ -260,6 +260,9 @@
     "deviceLineOff": "Offline"
   },
   "toiletController": {
+    "lightlow":"Low",
+    "lightcenter":"Mid",
+    "lighthigh":"High",
     "title": "Toilet",
     "deviceWifiInfo": "Good",
     "deviceUseInfo": "Occupied",
@@ -317,9 +320,6 @@
     "popmessage": "Sterilization will last about 45min\nAre you sure to turn it on？",
     "clearJun":"Sterilization is ecmpafpxecuting now",
     "clearJundong":"Sterilization is on,cover seat and it will resume",
-    "lightlow":"Low",
-    "lightcenter":"Mid",
-    "lighthigh":"High",
     "rename":"Rename",
     "move":"Move",
     "delete":"Delete",
@@ -493,7 +493,7 @@
     "delete":"Delete",
     "ml":"Machine Learning",
     "bathroomLearn" : {
-      "title": "Bathroom Heater Learning Settings",
+      "title": "Bathroom Heater learning settings",
       "switchTitle" :"Allow Kohler Bathroom Heater auto-scheduling",
       "description" :"Allow Kohler Bathroom Heater to warm up your shower room according to your daily use pattern and preference for water temperature",
       "day":"Day",
@@ -560,6 +560,10 @@
     "move":"Move",
     "delete":"Delete",
     "machine":"Machine Learning",
+    "nowLevel" : "level",
+    "high" : "high",
+    "low" : "low",
+    "temperature" : "temperature",
     "karessLearn" : {
       "title": "Bathtub learning settings",
       "switchTitle" :"Allow Kohler Bathtub water auto-scheduling",
@@ -639,6 +643,7 @@
     "delete":"Delete",
     "ml":"Machine Learning",
     "deviceNoSignal":"Bad",
+    "deviceSetting":"Shower Setting",
     "deiveceMess": {
       "deiveceMess": "Device info",
       "productName": "Name",
