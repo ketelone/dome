@@ -668,14 +668,15 @@
     "messageDel2": "Actual water temp is 37°C",
     "device2": "Toilet",
     "exceptionMessage": "Bidet cover malfunction",
-    "noMessageWord1": "No messages",
-    "noMessageWord2": "No exception",
-    "noMessageWord3": "No messages",
+    "noMessageWord0": "No messages",
+    "noMessageWord1": "No exception",
+    "noMessageWord2": "No messages",
     "manyChoose": "Multi-options",
     "all": "All",
     "delete": "Delete",
     "cancel": "Cancel",
-    "allOff": "None"
+    "allOff": "None",
+    "messageDetail":"Message Detail"
   },
   "airfoidShower": {
     "getWater": "&nbsp;&nbsp;&nbsp;Water",

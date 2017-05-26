@@ -339,11 +339,11 @@ angular.module('toiletControlModule')
             $('.slider-pager').empty();
           }else{
             if($scope.currentSlideData[index].parNodeid === "toilet-lightCtl"){
-              if($scope.currentSlideData[index].gearInit=== $scope.toiletController.lightlowval){
+              if($scope.currentSlideData[index].gearInit=== "低" || $scope.currentSlideData[index].gearInit=== "Low"){
                 $scope.currentSlideData[index].gearInit = 1;
-              }else if($scope.currentSlideData[index].gearInit=== $scope.toiletController.lightcentval){
+              }else if($scope.currentSlideData[index].gearInit=== "中" || $scope.currentSlideData[index].gearInit=== "Mid"){
                 $scope.currentSlideData[index].gearInit = 2;
-              }else if($scope.currentSlideData[index].gearInit=== $scope.toiletController.lighthigtval){
+              }else if($scope.currentSlideData[index].gearInit=== "高" || $scope.currentSlideData[index].gearInit=== "High"){
                 $scope.currentSlideData[index].gearInit = 3;
               };
             };
@@ -575,14 +575,29 @@ angular.module('toiletControlModule')
         if(!lightCtl){
           var lightCtl = handleOriginData[0].gearInit;
           if(lightCtl=== 1){
-            // lightCtl = $scope.toiletController.lightlowval;
-            lightCtl = '低';
+            lightCtl = $scope.toiletController.lightlowval;
+            $scope.currentSlideData.forEach(function (item,index) {
+              if(item.parNodeid === "toilet-lightCtl"){
+                $scope.currentSlideData[index].gearInit = $scope.toiletController.lightlowval;
+              };
+            });
+            // lightCtl = '低';
           }else if(lightCtl === 2){
-            // lightCtl = $scope.toiletController.lightcentval;
-            lightCtl = '中';
+            lightCtl = $scope.toiletController.lightcentval;
+            $scope.currentSlideData.forEach(function (item,index) {
+              if(item.parNodeid === "toilet-lightCtl"){
+                $scope.currentSlideData[index].gearInit = $scope.toiletController.lightcentval;
+              }
+            });
+            // lightCtl = '中';
           }else if(lightCtl === 3){
-            // lightCtl = $scope.toiletController.lighthigtval;
-            lightCtl = '高';
+            lightCtl = $scope.toiletController.lighthigtval;
+            $scope.currentSlideData.forEach(function (item,index) {
+              if(item.parNodeid === "toilet-lightCtl"){
+                $scope.currentSlideData[index].gearInit = $scope.toiletController.lighthigtval;
+              }
+            });
+            // lightCtl = '高';
           };
         };
         var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx,nimi.ambientLight(lightMode, lightCtl, dynamicCtl, MOMC, TUEC, WEDC, THUC, FRIC, SATC, SUMC),tolitercmdObj.ctrId,tolitercmdObj.devId);
