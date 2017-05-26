@@ -31,12 +31,12 @@ angular.module('productModule')
       // $scope.anjianvoicesetval = true,
       // $scope.welcomemsetval = false
       if (window.localStorage.language == "default"||window.localStorage.language == '中文简体') {
-        $scope.images = ['build/img/keyscene-period/period-setting/1.png',
+        $scope.images = [
           'build/img/keyscene-period/period-setting/2.png',
           'build/img/keyscene-period/period-setting/3.png',
           'build/img/keyscene-period/period-setting/4.png'];
       }else if(window.localStorage.language == 'English'){
-        $scope.images = ['build/img/keyscene-period/period-setting/perioden1.png',
+        $scope.images = [
           'build/img/keyscene-period/period-setting/perioden2.png',
           'build/img/keyscene-period/period-setting/perioden3.png',
           'build/img/keyscene-period/period-setting/perioden4.png'];
