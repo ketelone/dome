@@ -294,7 +294,6 @@ NIMI.prototype.ambientLight = function (lightMode, lightCtl, dynamicCtl, MOMC, T
       mLightCtl = "1010";
       break;
   };
-  alert("mLightCtl"+mLightCtl);
   mSUMC = getDataByColor(SUMC);
   console.log(mSUMC);
   mMOMC = getDataByColor(MOMC);
