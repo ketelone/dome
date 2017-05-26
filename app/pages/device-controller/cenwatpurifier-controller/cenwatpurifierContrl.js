@@ -44,6 +44,9 @@ angular.module('toiletControlModule')
         return false;
       }, 101);
       var getDeviceIcentset = function(){
+        if(localStorage.deviceInfo == undefined){
+          return;
+        };
         var skuList = SettingsService.get('sku');
         var deviceId = "";
         var deviceList = localStorage.deviceInfo.split(";");
