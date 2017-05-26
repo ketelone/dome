@@ -259,6 +259,9 @@
     "deviceLineOff": "设备离线"
   },
   "toiletController": {
+    "lightlow":"低",
+    "lightcenter":"中",
+    "lighthigh":"高",
     "title": "马桶",
     "deviceWifiInfo": "信号好",
     "deviceUseInfo": "使用中",
@@ -317,9 +320,6 @@
     "clearJun":"设备正在进行智感除菌....",
     "clearJundong":"设备智感除菌已开启,关圈后自动进行",
     "openopExtendWand":"此功能需要翻圈翻盖",
-    "lightlow":"低",
-    "lightcenter":"中",
-    "lighthigh":"高",
     "rename": "重命名",
     "move": "移动",
     "delete": "解除绑定",

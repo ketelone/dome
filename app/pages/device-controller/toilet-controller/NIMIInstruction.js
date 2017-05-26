@@ -284,7 +284,17 @@ NIMI.prototype.ambientLight = function (lightMode, lightCtl, dynamicCtl, MOMC, T
     case '高':
       mLightCtl = "1010";
       break;
-  }
+    case 'Low':
+      mLightCtl = "0100";
+      break;
+    case 'Mid':
+      mLightCtl = "0111";
+      break;
+    case 'High':
+      mLightCtl = "1010";
+      break;
+  };
+  alert("mLightCtl"+mLightCtl);
   mSUMC = getDataByColor(SUMC);
   console.log(mSUMC);
   mMOMC = getDataByColor(MOMC);
