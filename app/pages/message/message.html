@@ -19,11 +19,12 @@
   <ion-content class="hasHeader" style="overflow-y:scroll; margin-bottom: 44px;">
     <ion-scroll zooming="true" direction="y" class="scroll-view ionic-scroll scroll-y"
     style="border: none">
-      <!--status-->
-      <ion-list show-delete="data.showDelete">
+      <!--message list-->
+      <ion-list show-delete="showDelete">
         <ion-item style="background: #212121;border-style:none;"
                   ng-repeat="message in messages" item="message"
-                  class="item item-icon-right">
+                  class="item item-icon-right"
+                  ui-sref="messageDetail({messageId:message.id})">
           <!-- item-remove-animate-->
           <div ng-class="{hasread:message.hasRead}" class="row oneModel">
             <!-- <img  ng-show="show-delete" style="width: 0.44rem;height: 0.45rem" ng-src="build/img/message/radio_bg.png"/>-->

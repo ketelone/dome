@@ -79,6 +79,11 @@
       color: #565A64;
       letter-spacing: 0.01rem;
       line-height: 0.28rem;
+      display:block;
+      overflow:hidden;
+      word-break:keep-all;
+      white-space:nowrap;
+      text-overflow:ellipsis;
     }
     .time {
       font-family: SFNSText;
@@ -91,7 +96,6 @@
     .iconSize {
       font-size: 0.5rem;
       right: 0.3rem;
-
     }
   }
 
