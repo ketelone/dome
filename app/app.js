@@ -792,7 +792,7 @@ angular.module('myApp')
         if (baseConfig.debug) {
           console.log('app.js into guide');
         };
-        $urlRouterProvider.otherwise('/guide');
+        $urlRouterProvider.otherwise('/tabs');
         window.localStorage.appCacheVersion = baseConfig.version.currentVersion;
         //toilte favite set
         var toilteFaviote = {
