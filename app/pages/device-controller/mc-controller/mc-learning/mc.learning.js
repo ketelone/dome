@@ -18,8 +18,12 @@ angular.module('mcControlModule')
       $scope.isOn = false;
       $scope.img ='build/img/toilet-controller/toilet-learning/btn_off.png';
       $scope.isDay =  true;
+      if (window.localStorage.language == "default"|| window.localStorage.language == '中文简体') {
+        $scope.image = 'build/img/mc-controller/mc-learning/jg1.png';
+      }else if(window.localStorage.language == 'English'){
+        $scope.image = 'build/img/mc-controller/mc-learning/jge1.png';
+      }
 
-      $scope.image = 'build/img/mc-controller/mc-learning/jg1.png';
 
 
       $scope.goBack = function () {
@@ -31,13 +35,13 @@ angular.module('mcControlModule')
         if($scope.isOn==true){
           $scope.img = 'build/img/toilet-controller/toilet-learning/btn_on.png';
           if($scope.isDay==true){
-            if ( window.localStorage.language == '中文简体') {
+            if (window.localStorage.language == "default"|| window.localStorage.language == '中文简体') {
               $scope.image = 'build/img/mc-controller/mc-learning/jg2.png';
             }else if(window.localStorage.language == 'English'){
               $scope.image = 'build/img/mc-controller/mc-learning/jge2.png';
             }
           }else{
-            if ( window.localStorage.language == '中文简体') {
+            if (window.localStorage.language == "default"|| window.localStorage.language == '中文简体') {
               $scope.image = 'build/img/mc-controller/mc-learning/jg4.png';
             }else if(window.localStorage.language == 'English'){
               $scope.image = 'build/img/mc-controller/mc-learning/jge4.png';
@@ -46,13 +50,13 @@ angular.module('mcControlModule')
         }else {
           $scope.img ='build/img/toilet-controller/toilet-learning/btn_off.png';
           if($scope.isDay==true){
-            if ( window.localStorage.language == '中文简体') {
+            if (window.localStorage.language == "default"|| window.localStorage.language == '中文简体') {
               $scope.image = 'build/img/mc-controller/mc-learning/jg1.png';
             }else if(window.localStorage.language == 'English'){
               $scope.image = 'build/img/mc-controller/mc-learning/jge1.png';
             }
           }else{
-            if ( window.localStorage.language == '中文简体') {
+            if (window.localStorage.language == "default"|| window.localStorage.language == '中文简体') {
               $scope.image = 'build/img/mc-controller/mc-learning/jg3.png';
             }else if(window.localStorage.language == 'English'){
               $scope.image = 'build/img/mc-controller/mc-learning/jge3.png';
@@ -65,13 +69,13 @@ angular.module('mcControlModule')
         if(item=='day'){
           $scope.isDay = true;
           if($scope.isOn==true){
-            if ( window.localStorage.language == '中文简体') {
+            if (window.localStorage.language == "default"|| window.localStorage.language == '中文简体') {
               $scope.image = 'build/img/mc-controller/mc-learning/jg2.png';
             }else if(window.localStorage.language == 'English'){
               $scope.image = 'build/img/mc-controller/mc-learning/jge2.png';
             }
           }else{
-            if ( window.localStorage.language == '中文简体') {
+            if (window.localStorage.language == "default"|| window.localStorage.language == '中文简体') {
               $scope.image = 'build/img/mc-controller/mc-learning/jg1.png';
             }else if(window.localStorage.language == 'English'){
               $scope.image = 'build/img/mc-controller/mc-learning/jge1.png';
@@ -80,13 +84,13 @@ angular.module('mcControlModule')
         }else{
           $scope.isDay = false;
           if($scope.isOn==true){
-            if ( window.localStorage.language == '中文简体') {
+            if (window.localStorage.language == "default"|| window.localStorage.language == '中文简体') {
               $scope.image = 'build/img/mc-controller/mc-learning/jg4.png';
             }else if(window.localStorage.language == 'English'){
               $scope.image = 'build/img/mc-controller/mc-learning/jge4.png';
             }
           }else{
-            if ( window.localStorage.language == '中文简体') {
+            if (window.localStorage.language == "default"|| window.localStorage.language == '中文简体') {
               $scope.image = 'build/img/mc-controller/mc-learning/jg3.png';
             }else if(window.localStorage.language == 'English'){
               $scope.image = 'build/img/mc-controller/mc-learning/jge3.png';

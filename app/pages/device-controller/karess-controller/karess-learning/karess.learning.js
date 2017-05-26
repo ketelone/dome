@@ -36,8 +36,12 @@ angular.module('karessControlModule')
       // $scope.welcomemsetval = false
 
       $scope.index = 0;
+      if (window.localStorage.language == "default"|| window.localStorage.language == '中文简体') {
+        $scope.image = 'build/img/karess-controller/karess-learning/yg1.png';
+      }else if(window.localStorage.language == 'English'){
+        $scope.image = 'build/img/karess-controller/karess-learning/yge1.png';
+      }
 
-      $scope.image = 'build/img/karess-controller/karess-learning/yg1.png';
 
 
       $scope.change = function () {
@@ -45,13 +49,13 @@ angular.module('karessControlModule')
         if($scope.isOn==true){
           $scope.img = 'build/img/toilet-controller/toilet-learning/btn_on.png';
           if($scope.isDay==true){
-            if ( window.localStorage.language == '中文简体') {
+            if (window.localStorage.language == "default"|| window.localStorage.language == '中文简体') {
               $scope.image = 'build/img/karess-controller/karess-learning/yg2.png';
             }else if(window.localStorage.language == 'English'){
               $scope.image = 'build/img/karess-controller/karess-learning/yge2.png';
             }
           }else{
-            if ( window.localStorage.language == '中文简体') {
+            if (window.localStorage.language == "default"|| window.localStorage.language == '中文简体') {
               $scope.image = 'build/img/karess-controller/karess-learning/yg4.png';
             }else if(window.localStorage.language == 'English'){
               $scope.image = 'build/img/karess-controller/karess-learning/yge4.png';
@@ -60,13 +64,13 @@ angular.module('karessControlModule')
         }else {
           $scope.img ='build/img/toilet-controller/toilet-learning/btn_off.png';
           if($scope.isDay==true){
-            if ( window.localStorage.language == '中文简体') {
+            if (window.localStorage.language == "default"|| window.localStorage.language == '中文简体') {
               $scope.image = 'build/img/karess-controller/karess-learning/yg1.png';
             }else if(window.localStorage.language == 'English'){
               $scope.image = 'build/img/karess-controller/karess-learning/yge1.png';
             }
           }else{
-            if ( window.localStorage.language == '中文简体') {
+            if (window.localStorage.language == "default"|| window.localStorage.language == '中文简体') {
               $scope.image = 'build/img/karess-controller/karess-learning/yg3.png';
             }else if(window.localStorage.language == 'English'){
               $scope.image = 'build/img/karess-controller/karess-learning/yge3.png';
@@ -79,13 +83,13 @@ angular.module('karessControlModule')
         if(item=='day'){
           $scope.isDay = true;
           if($scope.isOn==true){
-            if ( window.localStorage.language == '中文简体') {
+            if (window.localStorage.language == "default"|| window.localStorage.language == '中文简体') {
               $scope.image = 'build/img/karess-controller/karess-learning/yg2.png';
             }else if(window.localStorage.language == 'English'){
               $scope.image = 'build/img/karess-controller/karess-learning/yge2.png';
             }
           }else{
-            if ( window.localStorage.language == '中文简体') {
+            if (window.localStorage.language == "default"|| window.localStorage.language == '中文简体') {
               $scope.image = 'build/img/karess-controller/karess-learning/yg1.png';
             }else if(window.localStorage.language == 'English'){
               $scope.image = 'build/img/karess-controller/karess-learning/yge1.png';
@@ -94,13 +98,13 @@ angular.module('karessControlModule')
         }else{
           $scope.isDay = false;
           if($scope.isOn==true){
-            if ( window.localStorage.language == '中文简体') {
+            if (window.localStorage.language == "default"|| window.localStorage.language == '中文简体') {
               $scope.image = 'build/img/karess-controller/karess-learning/yg4.png';
             }else if(window.localStorage.language == 'English'){
               $scope.image = 'build/img/karess-controller/karess-learning/yge4.png';
             }
           }else{
-            if ( window.localStorage.language == '中文简体') {
+            if (window.localStorage.language == "default"|| window.localStorage.language == '中文简体') {
               $scope.image = 'build/img/karess-controller/karess-learning/yg3.png';
             }else if(window.localStorage.language == 'English'){
               $scope.image = 'build/img/karess-controller/karess-learning/yge3.png';

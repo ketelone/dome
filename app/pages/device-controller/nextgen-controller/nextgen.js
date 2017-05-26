@@ -27,6 +27,9 @@ angular.module('nextgenModule')
       // var deviceId = "E0DC20F1";
       //获取设备Id bug
       var getDeviceId = function () {
+        if (localStorage.deviceInfo == undefined) {
+          return;
+        }
         var skuList = SettingsService.get('sku');
         // alert("sku:"+skuList);
         var deviceId = "";

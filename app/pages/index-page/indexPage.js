@@ -245,7 +245,7 @@ angular.module('indexPageModule')
             errorPictureUrl: "",
             isStatus: true,
             isError: false,
-            sku: ['K-77316T-X-MZ','EB:4E:28:49:09:9D']
+            sku: ['K-77316T-X-MZ','K-77315T-X-MZ']
           },
           {
             id: "6",

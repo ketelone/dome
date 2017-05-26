@@ -27,9 +27,9 @@
     "shengli": "Unity is Power",
     "addMember": "Add ",
     "myBox": "My Kohler box",
-    "addNumber": "7 devices",
+    "addNumber": "1 devices",
     "myRoom": "My room",
-    "roomNumber": "2 rooms",
+    "roomNumber": "1 rooms",
     "familyManager": "Family share",
     "personalSetting": "Personal info",
     "greenLife": "Eco-life",
@@ -325,11 +325,11 @@
     "delete":"Delete",
     "ml":"Machine Learning",
     "toiletLearn" : {
-      "title": "镜柜学习设置",
-      "switchTitle" :"允许镜柜执行学习的结果",
-      "description" :"开启后，镜柜将根据您的使用轨迹，在最佳时间为您准备最适色温与亮度。",
-      "day":"日",
-      "week":"周"
+      "title": "Toilet learning settings",
+      "switchTitle" :"Allow Kohler Toilet auto-scheduling",
+      "description" :"Allow Kohler Toilet to warm up your toilet seat to your daily use pattern and preference for seat temperature.Kohler Toilet will also sanitize your toilet when you are not using it",
+      "day":"Day",
+      "week":"Week"
     }
   },
   "toiletSetting": {
@@ -400,7 +400,7 @@
     "unConnected": "Not connected",
     "surplus": "left",
     "complete": "Complete",
-    "autoclear": "clean",
+    "autoclear": "Clean",
     "clearover": "Clean complete,two munites delay",
     "devicestats": "Device status",
     "setting": "Settings",
@@ -493,11 +493,11 @@
     "delete":"Delete",
     "ml":"Machine Learning",
     "bathroomLearn" : {
-      "title": "镜柜学习设置",
-      "switchTitle" :"允许镜柜执行学习的结果",
-      "description" :"开启后，镜柜将根据您的使用轨迹，在最佳时间为您准备最适色温与亮度。",
-      "day":"日",
-      "week":"周"
+      "title": "Bathroom Heater learning settings",
+      "switchTitle" :"Allow Kohler Bathroom Heater auto-scheduling",
+      "description" :"Allow Kohler Bathroom Heater to warm up your shower room according to your daily use pattern and preference for water temperature",
+      "day":"Day",
+      "week":"Week"
     }
   },
   "spa": {
@@ -560,12 +560,16 @@
     "move":"Move",
     "delete":"Delete",
     "machine":"Machine Learning",
+    "nowLevel" : "level",
+    "high" : "high",
+    "low" : "low",
+    "temperature" : "temperature",
     "karessLearn" : {
-      "title": "镜柜学习设置",
-      "switchTitle" :"允许镜柜执行学习的结果",
-      "description" :"开启后，镜柜将根据您的使用轨迹，在最佳时间为您准备最适色温与亮度。",
-      "day":"日",
-      "week":"周"
+      "title": "Bathtub learning settings",
+      "switchTitle" :"Allow Kohler Bathtub water auto-scheduling",
+      "description" :"Allow Kohler Bathtub to prepare your bath according to preference in water temperature",
+      "day":"Day",
+      "week":"Week"
     }
   },
   "mcController": {
@@ -597,11 +601,11 @@
     "delete":"Delete",
     "machine":"Machine Learning",
     "mcLearn" : {
-      "title": "镜柜学习设置",
-      "switchTitle" :"允许镜柜执行学习的结果",
-      "description" :"开启后，镜柜将根据您的使用轨迹，在最佳时间为您准备最适色温与亮度。",
-      "day":"日",
-      "week":"周"
+      "title": "Mirror Cabinet learning settings",
+      "switchTitle" :"Allow Mirror Cabinet auto-scheduling",
+      "description" :"Allow Kohler Mirror Cabinet to light on your bathroom according to your daily use pattern and preference for light color and brightness",
+      "day":"Day",
+      "week":"Week"
     }
   },
   "nextgen": {
@@ -639,6 +643,7 @@
     "delete":"Delete",
     "ml":"Machine Learning",
     "deviceNoSignal":"Bad",
+    "deviceSetting":"Shower Setting",
     "deiveceMess": {
       "deiveceMess": "Device info",
       "productName": "Name",

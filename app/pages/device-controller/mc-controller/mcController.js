@@ -609,13 +609,14 @@ angular.module('mcControlModule')
       $scope.handlenapeSelectedIndex;
       //档位滑动执行发指令操作
       $scope.radScrollSendDir = function () {
-        if ($scope.handlenapeListNape[$scope.handlenapeSelectedIndex].isManyDirective) {
-          var selectRad = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].gearInit;
-          $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].gearInitTemp = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].gearInit;
-          console.log(selectRad);
-          var diedes = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].diedes;
-          console.log(diedes);
-        }
+        // if ($scope.handlenapeListNape[$scope.handlenapeSelectedIndex].isManyDirective) {
+        //   var selectRad = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].gearInit;
+        //   $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].gearInitTemp = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].gearInit;
+        //   console.log(selectRad);
+        //   var diedes = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].handledata[$scope.handleRadSelected].diedes;
+        //   console.log(diedes);
+        // }
+        var diedes = $scope.currentSlideData[$scope.handleRadSelected].diedes;
         if (diedes == 'sewen' || diedes == 'liangdu') {
           if ($scope.slideTunBuData[0].gearInit == 1) {
             var luminance = '14';
