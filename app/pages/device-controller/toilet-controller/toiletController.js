@@ -575,11 +575,14 @@ angular.module('toiletControlModule')
         if(!lightCtl){
           var lightCtl = handleOriginData[0].gearInit;
           if(lightCtl=== 1){
-            lightCtl = $scope.toiletController.lightlowval;
+            // lightCtl = $scope.toiletController.lightlowval;
+            lightCtl = '低';
           }else if(lightCtl === 2){
-            lightCtl = $scope.toiletController.lightcentval;
+            // lightCtl = $scope.toiletController.lightcentval;
+            lightCtl = '中';
           }else if(lightCtl === 3){
-            lightCtl = $scope.toiletController.lighthigtval;
+            // lightCtl = $scope.toiletController.lighthigtval;
+            lightCtl = '高';
           };
         };
         var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx,nimi.ambientLight(lightMode, lightCtl, dynamicCtl, MOMC, TUEC, WEDC, THUC, FRIC, SATC, SUMC),tolitercmdObj.ctrId,tolitercmdObj.devId);
