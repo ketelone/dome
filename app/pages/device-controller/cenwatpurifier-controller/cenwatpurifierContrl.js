@@ -275,7 +275,7 @@ angular.module('toiletControlModule')
                     if(backDataCmd.FiltrationRemain>100){
                       backDataCmd.FiltrationRemain = 0+"%";
                     }else{
-                      backDataCmd.FiltrationRemain = backDataCmd.FiltrationRemain+"%";
+                      backDataCmd.FiltrationRemain = (100-backDataCmd.FiltrationRemain)+"%";
                     };
                     $scope.cenwatpurifierCtrl.connectStatus = backDataCmd.FiltrationRemain;
                     if($scope.handlenapeListNape[0].selecFlag){
