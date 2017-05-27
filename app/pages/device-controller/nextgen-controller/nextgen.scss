@@ -1,123 +1,121 @@
 .nextgen {
-  .right-image {
-    right: 0.2rem;
-    width: 23px;
-    height: 23px;
-    position: absolute;
-    top: 0;
-    border: 10px solid transparent;
-    box-sizing: content-box;
-    z-index: 5;
-  }
-  .toilet-bg {
+
+  font-family: PingFangSC-Regular;
+
+  .content{
+    overflow: auto;
     background-color: $global-head-bg;
-  }
-  .colorhead {
-    color: white;
-  }
-  .toilet-conninfo {
-    padding-top: 0.86rem;
-    width: 100%;
-    height: auto;
-    .toilet-conninfo-signal {
-      margin-left: 0.9rem;
-      height: 0.28rem;
-      line-height: 0.28rem;
-      .conninfo-signal-img {
-        vertical-align: middle;
-        height: 0.25rem;
-        width: 0.354rem;
-        margin-right: 0.106rem;
+
+    .conninfo {
+      width: 100%;
+      height: auto;
+      padding-top: 0.86rem;
+      background-color:#0D0F11;
+
+      .signal {
+        margin-left: 0.9rem;
+        height: 0.28rem;
+        line-height: 0.28rem;
+
+        .signal-img {
+          height: 0.25rem;
+          width: 0.354rem;
+          margin-right: 0.046rem;
+          vertical-align: middle;
+        }
+
+        .signal-info {
+          font-size: $font-size-small;
+          color: $color-text-value;
+        }
       }
-      .conninfo-signal-info {
-        width: 1.21rem;
-        font-size: $font-size-small;
-        color: $color-text-value;
+      //.toilet-conninfo-isues {
+      //  display: inline-block;
+      //  margin-left: 0.49rem;
+      //  height: 0.28rem;
+      //  line-height: 0.28rem;
+      //  .conninfo-isues-img {
+      //    width: 0.235rem;
+      //    margin-right: 0.075rem;
+      //  }
+      //  .conninfo-isues-info {
+      //    display: inline-block;
+      //    width: 1.21rem;
+      //    font-size: $font-size-small;
+      //    color: $color-text-deviceinfo;
+      //  }
+      //}
+    }
+
+    .nextgenSliderBox{
+      padding-top:0.76rem;
+      background-color:#0D0F11;
+
+      .parameterctl {
+        width: 5.64rem;
+        height: 5.64rem;
+        position: relative;
+        margin-left: 0.93rem;
+
+        .canves-pos {
+          position: absolute;
+          left: 0;
+          top: 0;
+        }
+
+        .parameterctl-data {
+          z-index: 4;
+          position: absolute;
+          left: 0;
+          top: 2.6rem;
+          width: 5.64rem;
+          height: 5.64rem;
+          text-align: center;
+
+          .parameterctl-des {
+            color: white;
+            font-size: 0.65rem;
+            white-space: nowrap;
+          }
+        }
       }
     }
-    .toilet-conninfo-isues {
-      display: inline-block;
-      margin-left: 0.49rem;
-      height: 0.28rem;
-      line-height: 0.28rem;
-      .conninfo-isues-img {
-        width: 0.235rem;
-        margin-right: 0.075rem;
-      }
-      .conninfo-isues-info {
-        display: inline-block;
-        width: 1.21rem;
-        font-size: $font-size-small;
-        color: $color-text-deviceinfo;
-      }
-    }
-  }
-  .toilet-parameterctl {
-    position: relative;
-    margin-top: 0.76rem;
-    margin-left: 0.93rem;
-    width: 5.6rem;
-    height: 5.6rem;
-    .canves-pos {
+
+    .handlenape-selec {
       position: absolute;
-      left: 0;
-      top: 0;
-    }
-    .toilet-parameterctl-dataimg {
-      position: absolute;
-      top: 1.35rem;
-      left: 1.70rem;
-      height: 2.6rem;
-      width: 2.6rem;
-      text-align: center;
+      top: 6.86rem;
+      width: 100%;
+      height: 1.08rem;
       z-index: 10;
-      .conninfo-parameterctl-img {
-        width: 100%;
-        height: 100%;
+      line-height: 1.08rem;
+      background-color: #1C202C;
+      font-size: $font-size-liter;
+      letter-spacing: 0.0125rem;
+
+      .selec-des {
+        margin-left: 0.9rem;
+        color: $color-base;
       }
-    }
-    .toilet-parameterctl-data {
-      z-index: 4;
-      position: absolute;
-      left: 0;
-      top: 2.6rem;
-      width: 5.6rem;
-      height: 5.6rem;
-      text-align: center;
-      .toilet-parameterctl-des {
-        color: white;
-        font-size: 0.7rem;
+
+      .selec-use {
+        color: $global-border;
         white-space: nowrap;
+        float: right;
+        margin-right: 0.3rem;
+      }
+      .selec-img {
+        width: 0.193rem;
+        height: 0.308rem;
+        float: right;
+        margin-right: 0.9rem;
+        margin-top: 0.4rem;
       }
     }
+
+
   }
-  .toilet-handlenape-selec {
-    position: absolute;
-    top: 6.86rem;
-    z-index: 10;
-    width: 100%;
-    height: 1.08rem;
-    line-height: 1.08rem;
-    background-color: #1C202C;
-    font-size: $font-size-liter;
-    .handlenape-selec-des {
-      margin-left: 0.9rem;
-      color: $color-base;
-    }
-    .handlenape-selec-use {
-      color: $global-border;
-      white-space: nowrap;
-      float: right;
-      margin-right: 0.3rem;
-    }
-    .handlenape-selec-img {
-      width: 0.193rem;
-      height: 0.308rem;
-      float: right;
-      margin-right: 0.9rem;
-      margin-top: 0.4rem;
-    }
-  }
+
+
   .toilet-handlenape {
     position: absolute;
     top: 7.55rem;

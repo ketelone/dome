@@ -3,20 +3,92 @@ angular.module('nextgenModule')
     '$scope', '$state', '$ionicModal', 'baseConfig', 'checkVersionService',
     '$ionicHistory', 'hmsPopup', 'nextgenService', '$timeout', 'SettingsService',
     '$ionicSlideBoxDelegate', 'hmsHttp', 'cmdService', '$translate', '$stateParams',
-    '$ionicPopover', '$window',
+    '$ionicPopover',
     function ($scope, $state, $ionicModal, baseConfig,
               checkVersionService, $ionicHistory, hmsPopup,
               nextgenService, $timeout, SettingsService,
               $ionicSlideBoxDelegate, hmsHttp, cmdService,
-              $translate, $stateParams, $ionicPopover, $window) {
+              $translate, $stateParams, $ionicPopover) {
       var ctrId = "00";
       var header = "8877";
       var idx = "00";
       var devId = "03";//E8:91:E0:DC:20:F1//F0:F0:87:F5:A2:17
+      /**whether link with box**/
       var isLink = false;//是否连接到了box
+
       var isLight = false;//是否高亮
       $scope.isLinkOK = false;
       var currentTime;
+
+
+      $scope.slideInitData = [{
+        des: "nextgen.unworking",
+        parameterctlFlag: false,
+        parNodeid: 'toilet-initCtl',
+        canves01: "initcanves01",
+        canves02: "initcanves02",
+        canves03: "initcanves03",
+      }];
+
+
+      /** set dang qian ce hau shu ju zhi
+       * 设置当前侧滑数据为侧滑初始化数据
+       * */
+      $scope.currentSlideData = $scope.slideInitData;
+      /**        init dang qian mo ban shu ju
+       * 初始化当前模板数据
+       * */
+      $scope.lockSlide = function () {
+        $ionicSlideBoxDelegate.enableSlide(false);
+      };
+      var initCircle = function (slideDataObj) {
+        //获取父元素高度
+        this.canvsscreenHeight = document.getElementById(slideDataObj.parNodeid).offsetHeight;
+        this.canvsscreenWidth = document.getElementById(slideDataObj.parNodeid).offsetWidth;
+        this.rateInit = document.documentElement.clientWidth / 7.5;
+        // 设置每个canves的宽高
+        document.getElementById(slideDataObj.canves01).height = this.canvsscreenHeight;
+        document.getElementById(slideDataObj.canves01).width = this.canvsscreenWidth;
+        document.getElementById(slideDataObj.canves01).style.zIndex = 1;
+        document.getElementById(slideDataObj.canves03).height = this.canvsscreenHeight;
+        document.getElementById(slideDataObj.canves03).width = this.canvsscreenWidth;
+        document.getElementById(slideDataObj.canves03).style.zIndex = 2;
+        // 获取canvesobj
+        this.cr1 = getCanvesObj(slideDataObj.canves01);
+        //档位canves
+        this.cr3 = getCanvesObj(slideDataObj.canves03);
+        //颜色填充档位canves
+        // 四种圆
+        this.deliverCircle = {
+          x: this.canvsscreenHeight / 2,
+          y: this.canvsscreenWidth / 2,
+          r: this.canvsscreenHeight / 2,
+          color: "#6ACBB3"
+        };
+        //档位圆
+        this.HideCircle = {
+          x: this.canvsscreenHeight / 2,
+          y: this.canvsscreenWidth / 2, r: this.canvsscreenHeight / 2 - 0.4 * this.rateInit, color: "black"
+        };//档位圆
+        // 画档位圆
+        this.drawDeliverCircle = function () {
+          drawRadian(this.cr1, this.deliverCircle, 135, 45);
+          drawRadian(this.cr3, this.HideCircle, 0, 360);
+        };
+      };
+      var currentRadObj;
+      setTimeout(function () {
+        //实现画布
+        $scope.getCurrentObj = function (index) {
+          //当前new实例
+          currentRadObj = new initCircle($scope.currentSlideData[index]);
+          //当前绑定事件对象
+          var currentEventObj = getIdObj($scope.currentSlideData[index].canves02);
+          currentRadObj.drawDeliverCircle();
+        };
+        $scope.getCurrentObj(0);
+      }, 20);
+
 
       //获取相应格式的cmd指令
       function getValue(data) {
@@ -282,7 +354,7 @@ angular.module('nextgenModule')
       //一进入页面就查询出水状态
       $scope.$on('$ionicView.beforeEnter', function () {
         // alert("deviceId"+deviceId);
-        hmsPopup.showLoading();
+        // hmsPopup.showLoading();
         $timeout(function () {
           if (!isLink) {
             hmsPopup.hideLoading();
@@ -339,71 +411,7 @@ angular.module('nextgenModule')
         // },
       ];
 
-      $scope.slideInitData = [{
-        des: "nextgen.unworking",
-        parameterctlFlag: false,
-        parNodeid: 'toilet-initCtl',
-        canves01: "initcanves01",
-        canves02: "initcanves02",
-        canves03: "initcanves03",
-      }];
 
-      /** set dang qian ce hau shu ju zhi
-       * 设置当前侧滑数据为侧滑初始化数据
-       * */
-      $scope.currentSlideData = $scope.slideInitData;
-      /**        init dang qian mo ban shu ju
-       * 初始化当前模板数据
-       * */       $scope.lockSlide = function () {
-        $ionicSlideBoxDelegate.enableSlide(false);
-      };
-      var initCircle = function (slideDataObj) {
-        //获取父元素高度
-        this.canvsscreenHeight = document.getElementById(slideDataObj.parNodeid).offsetHeight;
-        this.canvsscreenWidth = document.getElementById(slideDataObj.parNodeid).offsetWidth;
-        this.rateInit = document.documentElement.clientWidth / 7.5;
-        // 设置每个canves的宽高
-        document.getElementById(slideDataObj.canves01).height = this.canvsscreenHeight;
-        document.getElementById(slideDataObj.canves01).width = this.canvsscreenWidth;
-        document.getElementById(slideDataObj.canves01).style.zIndex = 1;
-        document.getElementById(slideDataObj.canves03).height = this.canvsscreenHeight;
-        document.getElementById(slideDataObj.canves03).width = this.canvsscreenWidth;
-        document.getElementById(slideDataObj.canves03).style.zIndex = 2;
-        // 获取canvesobj
-        this.cr1 = getCanvesObj(slideDataObj.canves01);
-        //档位canves
-        this.cr3 = getCanvesObj(slideDataObj.canves03);
-        //颜色填充档位canves
-        // 四种圆
-        this.deliverCircle = {
-          x: this.canvsscreenHeight / 2,
-          y: this.canvsscreenWidth / 2,
-          r: this.canvsscreenHeight / 2,
-          color: "#6ACBB3"
-        };
-        //档位圆
-        this.HideCircle = {
-          x: this.canvsscreenHeight / 2,
-          y: this.canvsscreenWidth / 2, r: this.canvsscreenHeight / 2 - 0.4 * this.rateInit, color: "black"
-        };//档位圆
-        // 画档位圆
-        this.drawDeliverCircle = function () {
-          drawRadian(this.cr1, this.deliverCircle, 135, 45);
-          drawRadian(this.cr3, this.HideCircle, 0, 360);
-        };
-      };
-      var currentRadObj;
-      setTimeout(function () {
-        //实现画布
-        $scope.getCurrentObj = function (index) {
-          //当前new实例
-          currentRadObj = new initCircle($scope.currentSlideData[index]);
-          //当前绑定事件对象
-          var currentEventObj = getIdObj($scope.currentSlideData[index].canves02);
-          currentRadObj.drawDeliverCircle();
-        };
-        $scope.getCurrentObj(0);
-      }, 20);
 
       //功能选择
       $scope.selectNapes = function (index) {
