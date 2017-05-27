@@ -5,8 +5,8 @@ angular.module('productModule')
   .controller('leaveHomeCtrl',     [
   '$scope',
   '$state',
-  'publicMethod','$ionicModal','$ionicPopover','$timeout','$ionicHistory','hmsHttp','cmdService',
-  function ($scope, $state,publicMethod,$ionicModal,$ionicPopover,$timeout,$ionicHistory,hmsHttp,cmdService) {
+  'publicMethod','$ionicModal','$ionicPopover','$timeout','$ionicHistory','hmsHttp','cmdService','$ionicPlatform','indexPageService',
+  function ($scope, $state,publicMethod,$ionicModal,$ionicPopover,$timeout,$ionicHistory,hmsHttp,cmdService,$ionicPlatform,indexPageService) {
 
     $scope.config = {
       openFlag: true,
@@ -38,8 +38,21 @@ angular.module('productModule')
      *@disc:goback
      */
     $scope.goBack = function () {
+      $scope.scane.isOff = false;
+      indexPageService.edits($scope.scane);
       $ionicHistory.goBack();
     }
+
+    $ionicPlatform.registerBackButtonAction(function (e) {
+      // Is there a page to go back to
+      //alert('进入物理返回键2!')
+      $scope.scane.isOff = false;
+      indexPageService.edits($scope.scane);
+      $ionicHistory.goBack();
+
+      e.preventDefault();
+      return false;
+    }, 101);
 
     /**
      *@autor:daidongdong
