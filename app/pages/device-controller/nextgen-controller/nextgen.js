@@ -38,6 +38,7 @@ angular.module('nextgenModule')
       /**        init dang qian mo ban shu ju
        * 初始化当前模板数据
        * */
+
       $scope.lockSlide = function () {
         $ionicSlideBoxDelegate.enableSlide(false);
       };

@@ -40,27 +40,32 @@
       <img class="selec-img" src="build/img/nextgen/icon_scenario_arrow.png">
       <span class="selec-use" translate={{waterway}}></span>
     </div>
-    <ion-scroll class="toilet-handlenape" direction="y">
-      <div class="toilet-handlenape-list" ng-repeat="list in handlenapeListNape track by $index"
+    <!--function list-->
+    <ion-scroll direction="y">
+      <div class="handlenape-list" ng-repeat="list in handlenapeListNape track by $index"
            ng-click="selectNapes($index)">
-        <div class="handlenape-list-napes" ng-class="{true: 'napes-border', false: ''}[list.selecFlag]"><span>             <img
-          class="list-napes-img" ng-src={{list.imgUrl}} alt=""/>           </span>
-          <p class="list-napes-dec" translate={{list.handleDes}}></p></div>
+        <div class="list-napes" ng-class="{'napes-border':list.selecFlag}">
+          <span><img class="napes-img" ng-src={{list.imgUrl}} alt=""/></span>
+          <p class="napes-dec" translate={{list.handleDes}}></p>
+        </div>
       </div>
+      <!--watering choice-->
       <div class="is-water-switch" ng-if="showWater">
         <div class="close">
-          <div class="circle-choice" ng-click="closeShowWater()"><span><img ng-src="build/img/nextgen/close.png"
-                                                                            class="img-size"/></span></div>
+          <div class="circle-choice" ng-click="closeShowWater()">
+            <span><img ng-src="build/img/nextgen/close.png" class="img-size"/></span>
+          </div>
         </div>
         <div class="chixu">
-          <div class="circle-choice" ng-click="chixuWater()"><span><img ng-src="build/img/nextgen/choice.png"
-                                                                        class="img-size"/></span> <span
-            class="des-position" translate="nextgen.chixu"></span></div>
+          <div class="circle-choice" ng-click="chixuWater()">
+            <span><img ng-src="build/img/nextgen/choice.png" class="img-size"/></span>
+            <span class="des-position" translate="nextgen.chixu"></span>
+          </div>
         </div>
         <div class="paikong">
-          <div class="circle-choice" ng-click="paikongWater()"><span><img ng-src="build/img/nextgen/choice.png"
-                                                                          class="img-size"/></span> <span
-            class="des-position" translate="nextgen.paikong"></span></div>
+          <div class="circle-choice" ng-click="paikongWater()"><span>
+            <img ng-src="build/img/nextgen/choice.png" class="img-size"/></span>
+            <span class="des-position" translate="nextgen.paikong"></span></div>
         </div>
       </div>
     </ion-scroll>
