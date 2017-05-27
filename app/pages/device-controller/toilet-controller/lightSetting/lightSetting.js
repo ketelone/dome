@@ -30,6 +30,9 @@ angular.module('toiletControlModule')
               hmsHttp
     ) {
       var getDeviceIlightset = function(){
+        if(localStorage.deviceInfo == undefined){
+          return;
+        };
         var skuList = SettingsService.get('sku');
         var deviceId = "";
         var deviceList = localStorage.deviceInfo.split(";");
