@@ -186,9 +186,9 @@ angular.module('mcControlModule')
           "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 2  && list.gearInit == 2'>4000K</span>" +
           "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 2  && list.gearInit == 3'>6500K</span>" +
 
-          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 1  && list.gearInit == 1'>20</span>" +
-          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 1  && list.gearInit == 2'>50</span>" +
-          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 1  && list.gearInit == 3'>100</span>" +
+          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 1  && list.gearInit == 1'>20%</span>" +
+          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 1  && list.gearInit == 2'>50%</span>" +
+          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 1  && list.gearInit == 3'>100%</span>" +
           "<span class='toilet-parameterctl-des' translate={{list.des}}></span>" +
 
           "</div>" +
