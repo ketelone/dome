@@ -17,10 +17,6 @@ angular.module('mcControlModule')
       $scope.screenWidth = window.innerWidth;
 
 
-      $scope.init = function () {
-
-      }
-      // init();
       /**
        *@autor: caolei
        *@return: device id
@@ -186,13 +182,13 @@ angular.module('mcControlModule')
           "<canvas id={{list.canves03}} class='canves-pos'></canvas>" +
           "<canvas id={{list.canves04}} class=''canves-pos'></canvas>" +
           "<div class='toilet-parameterctl-data' ng-if='!list.parameterctlFlag'>" +
-          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 1  && list.gearInit == 1'>2700K</span>" +
-          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 1  && list.gearInit == 2'>4000K</span>" +
-          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 1  && list.gearInit == 3'>6500K</span>" +
+          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 2  && list.gearInit == 1'>2700K</span>" +
+          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 2  && list.gearInit == 2'>4000K</span>" +
+          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 2  && list.gearInit == 3'>6500K</span>" +
 
-          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 2  && list.gearInit == 1'>30</span>" +
-          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 2  && list.gearInit == 2'>50</span>" +
-          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 2  && list.gearInit == 3'>100</span>" +
+          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 1  && list.gearInit == 1'>20%</span>" +
+          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 1  && list.gearInit == 2'>50%</span>" +
+          "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 1  && list.gearInit == 3'>100%</span>" +
           "<span class='toilet-parameterctl-des' translate={{list.des}}></span>" +
 
           "</div>" +
@@ -626,6 +622,7 @@ angular.module('mcControlModule')
             var luminance = '64';
           }
           localStorage.mcLiangdu = $scope.slideTunBuData[0].gearInit;
+          $scope.slideTunBuData[0].gearInitTemp = $scope.slideTunBuData[0].gearInit;
           if ($scope.slideTunBuData[1].gearInit == 1) {
             var color = '1b';
           } else if ($scope.slideTunBuData[1].gearInit == 2) {
@@ -634,6 +631,7 @@ angular.module('mcControlModule')
             var color = '41';
           }
           localStorage.mcWendu = $scope.slideTunBuData[1].gearInit;
+          $scope.slideTunBuData[1].gearInitTemp = $scope.slideTunBuData[1].gearInit;
           var value2 = cmdService.getCmd("8877", '01', mcService.setLightParam(luminance, color), 'E3', '0B');
           console.log(value2);
           cmdService.sendCmd(deviceId, value2, localStorage.boxIp);

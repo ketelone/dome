@@ -61,24 +61,24 @@ angular.module('myApp')
             if (language.value == 'zh-CN' || language.value == 'zh-Hans-CN') {
               //alert(language.value + '1');
               $translate.use('zh');
-
+              window.localStorage.language="中文简体";
             }
             else if (language.value == 'zh-TW' || language.value == 'zh-Hans-TW') {
-              $translate.use('tw');
-
+              $translate.use('en');
+              window.localStorage.language="English";
             }
             else if (language.value == 'en-US' || language.value == 'en-CN') {
               //alert(language.value + '2');
               $translate.use('en');
+              window.localStorage.language="English";
             }
             else if (language.value == 'en-TH' || language.value == 'th-CN') {
-              $translate.use('th');
-
+              $translate.use('en');
+              window.localStorage.language="English";
             }
             else {
               $translate.use('en');
               //alert(language.value + "a");
-
             }
             window.localStorage.languageFlag = true;
             window.localStorage.language = "default";
@@ -88,19 +88,17 @@ angular.module('myApp')
           });
       }
       else {
-
         if (window.localStorage.language == '中文简体') {
           $translate.use('zh');
-
         }
         else if (window.localStorage.language == '中文繁体') {
-          $translate.use('tw');
+          $translate.use('en');
         }
         else if (window.localStorage.language == 'English') {
           $translate.use('en');
         }
         else if (window.localStorage.language == 'ภาษาไทย') {
-          $translate.use('th');
+          $translate.use('en');
         }
         else {
           $translate.use('en');
@@ -792,7 +790,7 @@ angular.module('myApp')
         if (baseConfig.debug) {
           console.log('app.js into guide');
         };
-        $urlRouterProvider.otherwise('/guide');
+        $urlRouterProvider.otherwise('/tabs');
         window.localStorage.appCacheVersion = baseConfig.version.currentVersion;
         //toilte favite set
         var toilteFaviote = {

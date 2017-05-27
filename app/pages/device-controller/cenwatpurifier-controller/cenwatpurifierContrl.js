@@ -44,6 +44,9 @@ angular.module('toiletControlModule')
         return false;
       }, 101);
       var getDeviceIcentset = function(){
+        if(localStorage.deviceInfo == undefined){
+          return;
+        };
         var skuList = SettingsService.get('sku');
         var deviceId = "";
         var deviceList = localStorage.deviceInfo.split(";");
@@ -272,7 +275,7 @@ angular.module('toiletControlModule')
                     if(backDataCmd.FiltrationRemain>100){
                       backDataCmd.FiltrationRemain = 0+"%";
                     }else{
-                      backDataCmd.FiltrationRemain = backDataCmd.FiltrationRemain+"%";
+                      backDataCmd.FiltrationRemain = (100-backDataCmd.FiltrationRemain)+"%";
                     };
                     $scope.cenwatpurifierCtrl.connectStatus = backDataCmd.FiltrationRemain;
                     if($scope.handlenapeListNape[0].selecFlag){

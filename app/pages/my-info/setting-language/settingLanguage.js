@@ -1,55 +1,31 @@
-/**
- * Created by chenjiacheng on 2017/3/28.
- */
-//myInfoModule$translateProvider', '$translateStaticFilesLoaderProvider'
-//.config([
-//'$translateProvider', '$translateStaticFilesLoaderProvider',
-//  function (  $translateProvider, $translateStaticFilesLoaderProvider) {
-
-
-  // }])
-
 angular.module('myInfoModule')
   .controller('settingLanguageCtrl', [
-    '$scope',
-    '$state',
-    'baseConfig',
-    '$ionicLoading',
-    '$http',
-    '$timeout',
-    '$ionicHistory',
-    '$ionicPlatform',
-    '$ionicScrollDelegate',
-    'hmsPopup',
-    '$rootScope',
-    'publicMethod',
-    '$stateParams', 'SettingsService', '$translate',
-    function ($scope,
-              $state,
-              baseConfig,
-              $ionicLoading,
-              $http,
-              $timeout,
-              $ionicHistory,
-              $ionicPlatform,
-              $ionicScrollDelegate,
-              hmsPopup,
-              $rootScope, publicMethod, $stateParams, SettingsService, $translate) {
+    '$scope','$state','baseConfig','$ionicLoading','$http',
+    '$timeout','$ionicHistory','$ionicPlatform',
+    '$ionicScrollDelegate','hmsPopup','$rootScope',
+    'publicMethod','$stateParams', 'SettingsService', '$translate',
+    function ($scope,$state,baseConfig,$ionicLoading,
+              $http,$timeout,$ionicHistory,
+              $ionicPlatform,$ionicScrollDelegate,
+              hmsPopup,$rootScope, publicMethod, $stateParams,
+              SettingsService, $translate) {
 
+      $scope.languageItems = [
+        {
+          ischecked: true,
+          language: "my-info.setting-language.followLanguage",
+          radioImg1: "build/img/common/radio_q.png",
+          radioImg2: "build/img/common/radio_h.png",
+          radioTemp: "build/img/common/radio_q.png"
+        },
+        {
+          ischecked: false,
+          language: "中文简体",
+          radioImg1: "build/img/common/radio_q.png",
+          radioImg2: "build/img/common/radio_h.png",
+          radioTemp: "build/img/common/radio_q.png"
+        },
 
-      $scope.languageItems = [{
-        ischecked: true,
-        language: "my-info.setting-language.followLanguage",
-        radioImg1: "build/img/common/radio_q.png",
-        radioImg2: "build/img/common/radio_h.png",
-        radioTemp: "build/img/common/radio_q.png"
-      }, {
-        ischecked: false,
-        language: "中文简体",
-        radioImg1: "build/img/common/radio_q.png",
-        radioImg2: "build/img/common/radio_h.png",
-        radioTemp: "build/img/common/radio_q.png"
-      },
         {
           ischecked: false,
           language: "中文繁体",
@@ -64,13 +40,6 @@ angular.module('myInfoModule')
           radioImg2: "build/img/common/radio_h.png",
           radioTemp: "build/img/common/radio_q.png"
         },
-        // {
-        //   ischecked: false,
-        //   language: "한국어",
-        //   radioImg1: "build/img/common/radio_q.png",
-        //   radioImg2: "build/img/common/radio_h.png",
-        //   radioTemp: "build/img/common/radio_q.png"
-        // },
         {
           ischecked: false,
           language: "ภาษาไทย",
@@ -91,7 +60,6 @@ angular.module('myInfoModule')
         if (window.localStorage.language == "default") {
           $scope.languageItems[0].ischecked = true;
           $scope.languageItems[0].radioImg1 = "build/img/common/radio_h.png";
-
         }
         if (window.localStorage.language == '中文简体') {
           $scope.languageItems[1].ischecked = true;
@@ -137,67 +105,58 @@ angular.module('myInfoModule')
         item.ischecked = true;
         item.radioImg1 = "build/img/common/radio_h.png";
         window.localStorage.language = item.language;
-
-
         for (var i = 0; i < $scope.languageItems.length; i++) {
           if ($scope.languageItems[i].language != item.language) {
             $scope.languageItems[i].ischecked = false;
             $scope.languageItems[i].radioImg1 = "build/img/common/radio_q.png";
           }
         }
-
         if (item.language == 'my-info.setting-language.followLanguage') {
-
           window.localStorage.language = "default";
           navigator.globalization.getPreferredLanguage(
             function (language) {
-
               if (language.value == 'zh-CN' || language.value == 'zh-Hans-CN') {
                 $translate.use('zh');
-
+                window.localStorage.language="中文简体";
               }
               else if (language.value == 'zh-TW' || language.value == 'zh-Hans-TW') {
-                $translate.use('tw');
-
+                $translate.use('en');
+                window.localStorage.language="English";
               }
               else if (language.value == 'en-US' || language.value == 'en-CN') {
                 $translate.use('en');
+                window.localStorage.language="English";
               }
               else if (language.value == 'en-TH' || language.value == 'th-CN') {
-                $translate.use('th');
-
+                $translate.use('en');
+                window.localStorage.language="English";
+              }else {
+                $translate.use('en');
+                //alert(language.value + "a");
               }
-
 
             },
             function () {
 
             });
-          publicMethod.goBack();
         }
-        if (item.language == '中文简体') {
-
+        else if (item.language == '中文简体') {
           $translate.use('zh');
-
-          $ionicHistory.goBack();
+          window.localStorage.language="中文简体";
         }
         else if (item.language == '中文繁体') {
-
           $translate.use('tw');
-          $ionicHistory.goBack();
+          window.localStorage.language="English";
         }
         else if (item.language == 'English') {
-
           $translate.use('en');
-          $ionicHistory.goBack();
-
+          window.localStorage.language="English";
         }
-        else {
+        else if (window.localStorage.language == 'ภาษาไทย') {
           $translate.use('en');
-          $ionicHistory.goBack();
-          // publicMethod.goBack();
+          window.localStorage.language="English";
         }
-
+        $ionicHistory.goBack();
 
         //if($(e.target).text().trim()=="中文简体"){
         //
