@@ -155,7 +155,12 @@
     "period": "Personalized menstrual care",
     "periodDesc": "Customerized menstruation care",
     "bathroom": "Shower",
-    "enjoyBath": "Enjoy your shower"
+    "enjoyBath": "Enjoy your shower",
+    "addScene":"Add a scene",
+    "sceneStore":"Scenario Store",
+    "keleScene":"Kohler Scenario",
+    "SeasonalScenario":"Seasonal Scenario",
+    "EcholifeScenario":"Echo-life Scenario"
   },
   "index": {
     "myHome": "Home",
