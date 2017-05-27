@@ -154,7 +154,12 @@
     "period": "大姨了吗",
     "periodDesc": "女性特殊期洗浴关怀方案",
     "bathroom": "沐浴",
-    "enjoyBath": "享受沐浴"
+    "enjoyBath": "享受沐浴",
+    "addScene":"添加场景",
+    "sceneStore":"场景超市",
+    "keleScene":"科勒套件场景",
+    "SeasonalScenario":"季节性场景",
+    "EcholifeScenario":"健康生活场景"
   },
   "index": {
     "myHome": "我家",
