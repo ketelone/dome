@@ -13,8 +13,6 @@ angular.module('myInfoModule')
       $scope.languageItems = [
         {
           ischecked: true,
-          languageId:undefined,
-          json_file: null,
           language: "my-info.setting-language.followLanguage",
           radioImg1: "build/img/common/radio_q.png",
           radioImg2: "build/img/common/radio_h.png",
@@ -22,17 +20,14 @@ angular.module('myInfoModule')
         },
         {
           ischecked: false,
-          languageId:"1",
-          json_file: "zh",
           language: "中文简体",
           radioImg1: "build/img/common/radio_q.png",
           radioImg2: "build/img/common/radio_h.png",
           radioTemp: "build/img/common/radio_q.png"
         },
+
         {
           ischecked: false,
-          languageId:"2",
-          json_file: "tw",
           language: "中文繁体",
           radioImg1: "build/img/common/radio_q.png",
           radioImg2: "build/img/common/radio_h.png",
@@ -40,8 +35,6 @@ angular.module('myInfoModule')
         },
         {
           ischecked: false,
-          languageId:"0",
-          json_file: "en",
           language: "English",
           radioImg1: "build/img/common/radio_q.png",
           radioImg2: "build/img/common/radio_h.png",
@@ -49,8 +42,6 @@ angular.module('myInfoModule')
         },
         {
           ischecked: false,
-          languageId:"3",
-          json_file: "th",
           language: "ภาษาไทย",
           radioImg1: "build/img/common/radio_q.png",
           radioImg2: "build/img/common/radio_h.png",
@@ -66,27 +57,29 @@ angular.module('myInfoModule')
 
        */
       $scope.initLanguage = function () {
-        if (window.localStorage.languageId == undefined) {
+        if (window.localStorage.language == "default") {
           $scope.languageItems[0].ischecked = true;
           $scope.languageItems[0].radioImg1 = "build/img/common/radio_h.png";
         }
-        if (window.localStorage.languageId == "1") {
+        if (window.localStorage.language == '中文简体') {
           $scope.languageItems[1].ischecked = true;
           $scope.languageItems[1].radioImg1 = "build/img/common/radio_h.png";
 
         }
-        if (window.localStorage.languageId == '2') {
+        if (window.localStorage.language == '中文繁体') {
           $scope.languageItems[2].ischecked = true;
           $scope.languageItems[2].radioImg1 = "build/img/common/radio_h.png";
         }
-        if (window.localStorage.languageId == '0') {
+        if (window.localStorage.language == 'English') {
           $scope.languageItems[3].ischecked = true;
           $scope.languageItems[3].radioImg1 = "build/img/common/radio_h.png";
         }
-        if (window.localStorage.languageId == '3') {
+        if (window.localStorage.language == 'ภาษาไทย') {
           $scope.languageItems[4].ischecked = true;
           $scope.languageItems[4].radioImg1 = "build/img/common/radio_h.png";
         }
+
+
       }
       $scope.initLanguage();
 
@@ -111,43 +104,57 @@ angular.module('myInfoModule')
       $scope.chooseLanguage = function (item) {
         item.ischecked = true;
         item.radioImg1 = "build/img/common/radio_h.png";
+        window.localStorage.language = item.language;
         for (var i = 0; i < $scope.languageItems.length; i++) {
           if ($scope.languageItems[i].language != item.language) {
             $scope.languageItems[i].ischecked = false;
             $scope.languageItems[i].radioImg1 = "build/img/common/radio_q.png";
           }
         }
-        if (item.languageId == undefined) {
+        if (item.language == 'my-info.setting-language.followLanguage') {
+          window.localStorage.language = "default";
           navigator.globalization.getPreferredLanguage(
             function (language) {
               if (language.value == 'zh-CN' || language.value == 'zh-Hans-CN') {
                 $translate.use('zh');
-                window.localStorage.languageId = 1;
+                window.localStorage.language="中文简体";
               }
               else if (language.value == 'zh-TW' || language.value == 'zh-Hans-TW') {
-                $translate.use('tw');
-                window.localStorage.languageId = 2;
+                $translate.use('en');
+                window.localStorage.language="English";
               }
               else if (language.value == 'en-US' || language.value == 'en-CN') {
                 $translate.use('en');
-                window.localStorage.languageId = 0;
+                window.localStorage.language="English";
               }
               else if (language.value == 'en-TH' || language.value == 'th-CN') {
-                $translate.use('th');
-                window.localStorage.languageId = 3;
-              }
-              else {
                 $translate.use('en');
-                window.localStorage.removeItem("languageId");
+                window.localStorage.language="English";
+              }else {
+                $translate.use('en');
+                //alert(language.value + "a");
               }
+
             },
             function () {
-              // alert('Error getting locale\n');
+
             });
         }
-        else {
-          $translate.use(item.json_file);
-          window.localStorage.languageId = item.languageId;
+        else if (item.language == '中文简体') {
+          $translate.use('zh');
+          window.localStorage.language="中文简体";
+        }
+        else if (item.language == '中文繁体') {
+          $translate.use('tw');
+          window.localStorage.language="English";
+        }
+        else if (item.language == 'English') {
+          $translate.use('en');
+          window.localStorage.language="English";
+        }
+        else if (window.localStorage.language == 'ภาษาไทย') {
+          $translate.use('en');
+          window.localStorage.language="English";
         }
         $ionicHistory.goBack();
 

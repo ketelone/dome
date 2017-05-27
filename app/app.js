@@ -53,43 +53,56 @@ angular.module('myApp')
       window.localStorage.useWater="S";
       window.localStorage.useElectricity="h";
 
-      var language_list=[
-        {json_file:"en",language:"English"},
-        {json_file:"zh",language:"中文简体"},
-        {json_file:"tw",language:"中文繁体"},
-        {json_file:"th",language:"ภาษาไทย"},
-      ];
-
-      if (window.localStorage.languageId == undefined) {
+      if (window.localStorage.languageFlag == undefined || window.localStorage.language == "default") {
         navigator.globalization.getPreferredLanguage(
           function (language) {
+            //alert(language.value == 'zh-Hans-CN');
+            //alert(language.value == 'zh-CN' || language.value == 'zh-Hans-CN');
             if (language.value == 'zh-CN' || language.value == 'zh-Hans-CN') {
+              //alert(language.value + '1');
               $translate.use('zh');
-              window.localStorage.languageId = 1;
+              window.localStorage.language="中文简体";
             }
             else if (language.value == 'zh-TW' || language.value == 'zh-Hans-TW') {
-              $translate.use('tw');
-              window.localStorage.languageId = 2;
+              $translate.use('en');
+              window.localStorage.language="English";
             }
             else if (language.value == 'en-US' || language.value == 'en-CN') {
+              //alert(language.value + '2');
               $translate.use('en');
-              window.localStorage.languageId = 0;
+              window.localStorage.language="English";
             }
             else if (language.value == 'en-TH' || language.value == 'th-CN') {
-              $translate.use('th');
-              window.localStorage.languageId = 3;
+              $translate.use('en');
+              window.localStorage.language="English";
             }
             else {
               $translate.use('en');
+              //alert(language.value + "a");
             }
+            window.localStorage.languageFlag = true;
+            window.localStorage.language = "default";
           },
           function () {
             // alert('Error getting locale\n');
           });
       }
       else {
-        languageId=Number(window.localStorage.languageId);
-        $translate.use(language_list[languageId].json_file);
+        if (window.localStorage.language == '中文简体') {
+          $translate.use('zh');
+        }
+        else if (window.localStorage.language == '中文繁体') {
+          $translate.use('en');
+        }
+        else if (window.localStorage.language == 'English') {
+          $translate.use('en');
+        }
+        else if (window.localStorage.language == 'ภาษาไทย') {
+          $translate.use('en');
+        }
+        else {
+          $translate.use('en');
+        }
       }
     });
 
