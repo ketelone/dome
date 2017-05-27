@@ -1,17 +1,37 @@
 .messageDetail{
+
   .headColor {
     background-color: $global-head-bg;
   }
   .iconColor {
-    color: $color-base
+    color: $color-base;
   }
 
   .content {
     color: rgba(255, 255, 255, 1);
     background: rgba(15, 17, 18, 1);
+
+    .belong-list{
+      margin:0.4rem auto;
+
+      .belong-item{
+        display: inline-block;
+        border: 0.04rem solid #979797;
+        font-size: $font-size;
+        margin:0 0.1rem;
+      }
+    }
+
+    .message{
+      text-align: center;
+      margin-top:1rem;
+      font-family:PingFangSC-Regular;
+      font-size: 0.32rem;
+      color: #FFFFFF;
+      letter-spacing: 0.02rem;
+      line-height: 0.5rem;
+    }
+
   }
-
-
-
 
 }

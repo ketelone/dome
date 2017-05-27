@@ -28,7 +28,7 @@ angular.module('messageModule')
         "box":"BOX1",
         "room":"卫生间",
         "device":"马桶",
-        "description":"进水滤芯<br/>快到使用期限，请及时更换",
+        "description":"进水滤芯快到使用期限，请及时更换",
         "hasRead":false,
         "advice":"滤芯需更换？快去商城购买吧！",
         "link":""
