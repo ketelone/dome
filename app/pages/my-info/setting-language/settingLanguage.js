@@ -111,7 +111,6 @@ angular.module('myInfoModule')
       $scope.chooseLanguage = function (item) {
         item.ischecked = true;
         item.radioImg1 = "build/img/common/radio_h.png";
-        window.localStorage.languageId = item.languageId;
         for (var i = 0; i < $scope.languageItems.length; i++) {
           if ($scope.languageItems[i].language != item.language) {
             $scope.languageItems[i].ischecked = false;
@@ -123,18 +122,23 @@ angular.module('myInfoModule')
             function (language) {
               if (language.value == 'zh-CN' || language.value == 'zh-Hans-CN') {
                 $translate.use('zh');
+                window.localStorage.languageId = 1;
               }
               else if (language.value == 'zh-TW' || language.value == 'zh-Hans-TW') {
                 $translate.use('tw');
+                window.localStorage.languageId = 2;
               }
               else if (language.value == 'en-US' || language.value == 'en-CN') {
                 $translate.use('en');
+                window.localStorage.languageId = 0;
               }
               else if (language.value == 'en-TH' || language.value == 'th-CN') {
                 $translate.use('th');
+                window.localStorage.languageId = 3;
               }
               else {
                 $translate.use('en');
+                window.localStorage.removeItem("languageId");
               }
             },
             function () {
@@ -143,6 +147,7 @@ angular.module('myInfoModule')
         }
         else {
           $translate.use(item.json_file);
+          window.localStorage.languageId = item.languageId;
         }
         $ionicHistory.goBack();
 
