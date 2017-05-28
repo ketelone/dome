@@ -604,7 +604,7 @@
     "rename": "重命名",
     "move":"移动",
     "delete":"解除绑定",
-    "machine" : "机器学习",
+    "machine" : "机器学习设置",
     "mcLearn" : {
       "title": "镜柜学习设置",
       "switchTitle" :"允许镜柜执行学习的结果",
