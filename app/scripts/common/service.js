@@ -2,8 +2,15 @@
  * Created by admin on 2016/7/30.
  */
 
-angular.module('serviceModule', []).
-  service('publicMethod', ['$filter', '$ionicLoading', '$ionicPopup', '$ionicHistory','$cordovaDialogs',
+angular.module('serviceModule', [])
+  .directive('repeatDone', function () {
+    return function (scope, element, attrs) {
+      if (scope.$last) { // all are rendered
+        scope.$eval(attrs.repeatDone);
+      }
+    }
+  }).
+    service('publicMethod', ['$filter', '$ionicLoading', '$ionicPopup', '$ionicHistory','$cordovaDialogs',
     function ($filter, $ionicLoading, $ionicPopup, $ionicHistory,$cordovaDialogs) {
       return {
         //调用电话
