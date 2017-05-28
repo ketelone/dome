@@ -396,7 +396,8 @@
     "zhoutian": "Sun",
     "weekValDanwei": "Every",
     "selectPoup": "Pls select",
-    "settingsucc": "Confirm"
+    "settingsucc": "Confirm",
+    "clickconfire":"Confirm"
   },
   "cenwatpurifier": {
     "title": "Central Purification",
