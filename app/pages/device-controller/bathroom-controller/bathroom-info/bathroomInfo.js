@@ -13,7 +13,7 @@ angular.module('bathroomModule')
       $scope.location = "";
 
       $scope.$watch('', function(){
-        var url = baseConfig.basePath + "/dvm/location/query";
+       /* var url = baseConfig.basePath + "/dvm/location/query";
         var paramter = {
           "lat": "39",
           "lng": "116"
@@ -28,7 +28,7 @@ angular.module('bathroomModule')
           function (response, status, header, config){
             //hmsPopup.showPopup("<span translate='bathroom.saveError'></span>");
           }
-        );
+        );*/
       },false);
 
       $scope.deciveInfo = {
