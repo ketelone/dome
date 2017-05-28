@@ -131,6 +131,7 @@ angular.module('toiletControlModule')
                 item.innerHTML="";
               };
             });
+            $('#ionSliderBox .slider-pager').empty();
           };
           var checHtml =
             "<ion-slide-box ng-init='lockSlide()' show-pager='true' delegate-handle='boxSlider'>"+
