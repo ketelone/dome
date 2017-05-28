@@ -568,7 +568,7 @@
     "nowLevel" : "level",
     "high" : "high",
     "low" : "low",
-    "temperature" : "temperature",
+    "temperature" : "temp",
     "karessLearn" : {
       "title": "Bathtub learning settings",
       "switchTitle" :"Allow Kohler Bathtub water auto-scheduling",
