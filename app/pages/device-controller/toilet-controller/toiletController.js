@@ -94,6 +94,16 @@ angular.module('toiletControlModule')
         lightcentval:$translate.instant("toiletController.lightcenter"),
         lighthigtval:$translate.instant("toiletController.lighthigh"),
       };
+      $scope.safeApply = function(fn) {
+        var phase = this.$root.$$phase;
+        if (phase == '$apply' || phase == '$digest') {
+          if (fn && (typeof(fn) === 'function')) {
+            fn();
+          };
+        } else {
+          this.$apply(fn);
+        };
+      };
       /**
        *
        set dang qian ce hau shu ju zhi
@@ -106,22 +116,25 @@ angular.module('toiletControlModule')
       $scope.lockSlide = function () {
         $ionicSlideBoxDelegate.enableSlide( false );
       };
-      $scope.repeatDone = function() {
-
-      };
+      // $scope.repeatDone = function() {
+      //
+      // };
       $scope.initHtmlTemplate = function (currentSlideData) {
         /**
          init silde-box data
          初始化slide-box数据
          */
+        try{
         if($('#ionSliderBox').children().length !== 0){
-          // $timeout(function () {
-            $('#ionSliderBox').empty();
-          // },0);
+          $('.toilet-parameterctl-raddata').each(function(index,item){
+            if(index>0){
+              item.innerHTML="";
+            };
+          });
         };
         var checHtml =
           "<ion-slide-box ng-init='lockSlide()' show-pager='true' delegate-handle='boxSlider'>"+
-          "<ion-slide ng-repeat='list in currentSlideData track by $index' repeat-done='repeatDone()'>"+
+          "<ion-slide ng-repeat='list in currentSlideData track by $index'>"+
           "<div id={{list.parNodeid}} style='float:left;' class='toilet-parameterctl'>"+
           "<canvas id={{list.canves01}} class='canves-pos'></canvas>"+
           "<canvas id={{list.canves02}} class='canves-pos'></canvas>"+
@@ -138,14 +151,14 @@ angular.module('toiletControlModule')
           "</ion-slide>"+
           "</ion-slide-box>"
         /**
-         bian yi html 数据
+         bian yi html 数据;
          编译html数据
          */
         var $checkhtml = $compile(checHtml)($scope); // 编译
-        // console.log($checkhtml)
-        // $timeout(function () {
-          $('#ionSliderBox').append($checkhtml[0]);
-        // },0)
+        $('#ionSliderBox').empty().append($checkhtml[0]);
+        }catch(e){
+          alert(e.message)
+        }
       };
       // $scope.initHtmlTemplate($scope.currentSlideData);
       var onceFlag=true;
@@ -245,9 +258,9 @@ angular.module('toiletControlModule')
                     slideDataObj.gearInit = this.i;
                   };
                 };
-                if(onceFlag){
-                  $scope.$apply();
-                };
+                // if(onceFlag){
+                //   $scope.$apply();
+                // };
                 //画档位线
                 this.j=1;
                 for(this.j;this.j<this.i;this.j++){
@@ -267,9 +280,9 @@ angular.module('toiletControlModule')
                 }else{
                   slideDataObj.gearInit = this.i+1;
                 }
-                if(onceFlag){
-                  $scope.$apply();
-                };
+                // if(onceFlag){
+                //   $scope.$apply();
+                // };
                 //画档位线
                 this.j=1;
                 for(this.j;this.j<this.i+1;this.j++){
@@ -281,6 +294,9 @@ angular.module('toiletControlModule')
           };
           //画白色遮挡
           drawRadian(canvesobj,this.HideCircle,0,360);
+          if(onceFlag){
+            $scope.$apply();
+          };
         };
         //画圆球和指示
         this.drawc = function (canvesobj,ancr,type) {
@@ -1130,14 +1146,16 @@ angular.module('toiletControlModule')
         $scope.deviceReturnTime = 0;
         $scope.deviceInitFlag = false;
         $scope.currentSlideData = $scope.slideInitData;
+        //is currentSlideData lenght change
+        $scope.currentSlideDatalenth = 0;
         $scope.getStatusBackFalg = true;
         $scope.isSeatedStatusFlag = true;
         $scope.handlenapeSelectedIndex = 12;
         $scope.selectChangeFlag = true;
         $scope.selectIsType = 0;
         $scope.todeviceFlag = 0;
-        //oncetime directive falg
-        $scope.onceTimeDirFlag = true;
+        // //oncetime directive falg
+        // $scope.onceTimeDirFlag = true;
         //init click slide
         $scope.clickSlideFlag = false;
         //error over time
@@ -1228,7 +1246,7 @@ angular.module('toiletControlModule')
             };
             if($scope.hanleMutexFlag){
               if(!$scope.handlenapeListNape[index].isManyDirective){
-                $scope.onceTimeDirFlag = false;
+                // $scope.onceTimeDirFlag = false;
                 if(!$scope.handlenapeListNape[index].selecFlag && $scope.handlenapeListNape[index].matchdataid !== "clear"){
                   if($scope.handlenapeListNape[index].matchdataid === "fangai" || $scope.handlenapeListNape[index].matchdataid === "guangai" || $scope.handlenapeListNape[index].matchdataid === "fanquan"){
                     if(!$scope.isSeatedStatusFlag){
@@ -1311,7 +1329,7 @@ angular.module('toiletControlModule')
                   }
                 };
               }else{
-                $scope.onceTimeDirFlag = true;
+                // $scope.onceTimeDirFlag = true;
                 //use instruction create
                 if($scope.handlenapeListNape[index].matchdataid === "nvyong"){
                   if($scope.isSeatedStatusFlag){
@@ -1761,44 +1779,45 @@ angular.module('toiletControlModule')
                       var matchId = $scope.handlenapeListNape[$scope.handlenapeSelectedIndex].matchdataid;
                       if ($scope.currentSlideData[0].des !== "init") {
                         if (matchId === "nvyong" || matchId === "tunxi" || matchId === "quanwen" || matchId === "nuanfen" || matchId === "dengguang" || matchId === "nuanjiao" || matchId === "clear") {
-                          // if($scope.onceTimeDirFlag){
-                          $timeout(function () {
+                          if($scope.currentSlideDatalenth !== $scope.currentSlideData.length){
+                            // $timeout(function () {
+                              $scope.currentSlideData.forEach(function (item,index) {
+                                item.dataflag = false;
+                              });
+                              $scope.alldataVlaueShowFlag = false;
+                              $scope.hanleInitTemple($scope.handlenapeSelectedIndex);
+                              $scope.clickSlideFlag = true;
+                              $scope.deviceReturnTime = 0;
+                              $scope.currentSlideDatalenth=$scope.currentSlideData.length;
+                            // },0);
+                          }else{
                             $scope.currentSlideData.forEach(function (item,index) {
-                              item.dataflag = false;
+                              item.dataflag = true;
                             });
-                            $scope.alldataVlaueShowFlag = false;
-                            $scope.hanleInitTemple($scope.handlenapeSelectedIndex);
-                            $scope.clickSlideFlag = true;
-                            $scope.deviceReturnTime = 0;
-                          }, 0);
-                          // };
+                          };
                         };
                       } else {
+                        $scope.currentSlideDatalenth = 0;
                         if (matchId === "nvyong" || matchId === "tunxi" || matchId === "quanwen" || matchId === "nuanfen" || matchId === "dengguang" || matchId === "nuanjiao") {
                           $scope.currentSlideData.forEach(function (item,index) {
                             item.dataflag = false;
                           });
                           $scope.clickSlideFlag = false;
                           $scope.hanleInitTemple(12);
-                          // if(matchId === "devicePop" || matchId === "bigFlush" || matchId === "smallFlush" || matchId === "guangai" || matchId === "fangai" || matchId === "fanquan"){
                           //return false;
                         };
                       };
-                      if ($scope.getStatusBackFalg) {
+                      if($scope.getStatusBackFalg) {
                         hmsPopup.hideLoading();
                       };
                       if (backDataCmd.seatedStatus === "1") {
                         $scope.isSeatedStatusFlag = true;
                         $scope.toiletController.deviceUseInfo = $scope.toiletController.useing;
                         $scope.toiletController.deviceinfoflag = true;
-                        // $scope.Toast.show($translate.instant("toiletController.devicePop") + $translate.instant("golabelvariable.directesuccess"));
                       } else if (backDataCmd.seatedStatus === "0") {
                         $scope.isSeatedStatusFlag = false;
                         $scope.toiletController.deviceinfoflag = false;
                         $scope.toiletController.deviceUseInfo = $scope.toiletController.nouse;
-                        // $scope.Toast.show($translate.instant("toiletController.devicePop") + $translate.instant("golabelvariable.directesuccess"));
-                      } else {
-                        // $scope.Toast.show($translate.instant("toiletController.devicePop") + $translate.instant("golabelvariable.directerror"));
                       };
                     } catch (e) {
                       alert(e.message)
@@ -1807,7 +1826,7 @@ angular.module('toiletControlModule')
                   // };
                 };
               };
-              $scope.$apply();
+              $scope.safeApply();
             };
           };
         },0)
