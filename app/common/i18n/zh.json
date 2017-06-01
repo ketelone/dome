@@ -684,6 +684,7 @@
     "messageDetail":"消息详情"
   },
   "airfoidShower": {
+    "Airfoil" : "智感龙头",
     "getWater": "&nbsp;&nbsp;&nbsp;出水",
     "allStop": "一键停止",
     "setting": "&nbsp;&nbsp;&nbsp;设置",

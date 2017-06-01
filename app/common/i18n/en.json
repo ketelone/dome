@@ -529,10 +529,10 @@
     "parameterrad": "0",
     "parameterdes": "Water temp",
     "handleSelecDes": "Level",
-    "zhushui": "Set temp",
+    "zhushui": "Filler",
     "luoshui": "E-Drain",
     "touzhen": "Pillow",
-    "shuilianmo": "Water massage",
+    "shuilianmo": "Massage",
     "toubuanmo": "Pillow massage",
     "beibujiare": "Back heater",
     "yijiantingzhi": "Stop all",
@@ -685,6 +685,7 @@
     "messageDetail":"Message Detail"
   },
   "airfoidShower": {
+    "Airfoil" : "Airfoil",
     "getWater": "&nbsp;&nbsp;&nbsp;Water",
     "allStop": "Stop all",
     "setting": "&nbsp;&nbsp;&nbsp;Settings",
