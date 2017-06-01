@@ -18,7 +18,7 @@
     "directiveError": "指令执行失败,请重试",
     "nowError" : "该功能暂不可用",
     "tcpError" : "连接已中断",
-    "directiveOff" : "Command refused"
+    "directiveOff" : "指令拒绝"
   },
   "my-info": {
     "myhome": "我家",
@@ -175,7 +175,12 @@
     "period": "大姨了吗",
     "periodDesc": "女性特殊期洗浴关怀方案",
     "bathroom": "沐浴",
-    "enjoyBath": "享受沐浴"
+    "enjoyBath": "享受沐浴",
+    "addScene":"添加场景",
+    "sceneStore":"场景超市",
+    "keleScene":"科勒套件场景",
+    "SeasonalScenario":"季节性场景",
+    "EcholifeScenario":"健康生活场景"
   },
   "index": {
     "myHome": "我家",
@@ -411,7 +416,8 @@
     "zhoutian": "周天",
     "weekValDanwei": "每",
     "selectPoup": "请选择数据项",
-    "settingsucc": "设置"
+    "settingsucc": "设置",
+    "clickconfire":"确定"
   },
   "cenwatpurifier": {
     "title": "中央净水器",
@@ -579,7 +585,7 @@
     "rename": "重命名",
     "move":"移动",
     "delete":"解除绑定",
-    "machine" : "机器学习",
+    "machine" : "机器学习设置",
     "nowLevel" : "当前水位",
     "high" : "低档",
     "low" : "高档",
@@ -619,7 +625,7 @@
     "rename": "重命名",
     "move":"移动",
     "delete":"解除绑定",
-    "machine" : "机器学习",
+    "machine" : "机器学习设置",
     "mcLearn" : {
       "title": "镜柜学习设置",
       "switchTitle" :"允许镜柜执行学习的结果",
@@ -648,10 +654,10 @@
     "sleep": "睡眠",
     "powerFailure": "断电",
     "lowPower": "低用电",
-    "maichong": "头顶花洒",
+    "maichong": "雨淋式",
     "bodong": "劲流按摩",
     "yidong": "手持花洒",
-    "Spout": "下出水口",
+    "Spout": "瀑布水流",
     "exceptSta": "异常情况统计",
     "restoreDefaults": "恢复默认设置",
     "lookupMess": "查看设备信息",
@@ -699,6 +705,7 @@
     "messageDetail":"消息详情"
   },
   "airfoidShower": {
+    "Airfoil" : "智感龙头",
     "getWater": "&nbsp;&nbsp;&nbsp;出水",
     "allStop": "一键停止",
     "setting": "&nbsp;&nbsp;&nbsp;设置",

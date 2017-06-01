@@ -175,6 +175,12 @@ angular.module('bathroomModule')
         $ionicHistory.goBack();
       };
 
+      $scope.$on('$stateChangeStart',
+        function(event, toState, toParams, fromState, fromParams){
+          document.removeEventListener("SocketPlugin.receiveTcpData",
+            receiveBathroomTcpData, false);
+        });
+
       var isLinkOk = false;
       var receiveBathroomTcpData = function (result) {
 

@@ -5,8 +5,8 @@ angular.module('productModule')
   .controller('morningCtrl', [
     '$scope',
     '$state',
-    'publicMethod', '$ionicModal', '$ionicPopover', '$timeout', '$ionicHistory', 'hmsHttp', 'hmsPopup','cmdService','bathroomCmdService',
-    function ($scope, $state, publicMethod, $ionicModal, $ionicPopover, $timeout, $ionicHistory, hmsHttp, hmsPopup,cmdService,bathroomCmdService) {
+    'publicMethod', '$ionicModal', '$ionicPopover', '$timeout', '$ionicHistory', 'hmsHttp', 'hmsPopup','cmdService','bathroomCmdService','$ionicPlatform','indexPageService',
+    function ($scope, $state, publicMethod, $ionicModal, $ionicPopover, $timeout, $ionicHistory, hmsHttp, hmsPopup,cmdService,bathroomCmdService,$ionicPlatform,indexPageService) {
 
 
       $scope.config = {
@@ -41,9 +41,22 @@ angular.module('productModule')
        *@disc:goback
        */
       $scope.goBack = function () {
+        $scope.scane.isOff = false;
+        indexPageService.edits($scope.scane);
         document.removeEventListener("SocketPlugin.receiveTcpData",  morning, false);
         $ionicHistory.goBack();
       }
+
+      $ionicPlatform.registerBackButtonAction(function (e) {
+        // Is there a page to go back to
+        //alert('进入物理返回键2!')
+        $scope.scane.isOff = false;
+        indexPageService.edits($scope.scane);
+        $ionicHistory.goBack();
+
+        e.preventDefault();
+        return false;
+      }, 101);
 
       /**
        *@autor:daidongdong

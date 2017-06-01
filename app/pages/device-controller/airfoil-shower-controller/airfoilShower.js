@@ -33,6 +33,13 @@ angular.module('airfoilShowerModule')
         $ionicHistory.goBack();
       };
 
+      $scope.$on('$stateChangeStart',
+        function(event, toState, toParams, fromState, fromParams){
+          document.removeEventListener("SocketPlugin.receiveTcpData",
+            receiveAirfoilTcpData, false);
+        });
+
+
       var isLinkOk = false;
       $scope.$watch('',function(){
         var did = getDeviceId();

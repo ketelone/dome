@@ -782,15 +782,7 @@ angular.module('myApp')
 
       //$templateRequest('build/pages/application/application.html',true);
       //$urlRouterProvider.otherwise('/guide'); return;
-
-
-      if (!window.localStorage.needGuid || window.localStorage.needGuid == "true"
-        || !window.localStorage.appCacheVersion || window.localStorage.appCacheVersion != baseConfig.version.currentVersion
-      ) {
-        if (baseConfig.debug) {
-          console.log('app.js into guide');
-        };
-        $urlRouterProvider.otherwise('/tabs');
+      if(!window.localStorage.toilteLocalstro){
         window.localStorage.appCacheVersion = baseConfig.version.currentVersion;
         //toilte favite set
         var toilteFaviote = {
@@ -814,7 +806,16 @@ angular.module('myApp')
           LIGHT_BOWL_BRIGHTNESS:5,
         }
         window.localStorage.toilteFaviteSetting= JSON.stringify(toilteFaviote);
+        window.localStorage.toilteLocalstro = true;
+      };
 
+      if (!window.localStorage.needGuid || window.localStorage.needGuid == "true"
+        || !window.localStorage.appCacheVersion || window.localStorage.appCacheVersion != baseConfig.version.currentVersion
+      ) {
+        if (baseConfig.debug) {
+          console.log('app.js into guide');
+        };
+        $urlRouterProvider.otherwise('/tabs');
       } else {
         if (window.localStorage.token && window.localStorage.token != "" && window.localStorage.isHrms2108) {
 
