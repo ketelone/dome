@@ -96,7 +96,7 @@ angular.module('nextgenModule')
       /**get the correct format cmd directive**/
       function getValue(data) {
         //The following is the operating equipment parameters
-        return nextgenService.getCmdvalue(header, idx, data, ctrId, devId);
+        return cmdService.getCmd(header, idx, data, ctrId, devId);
       }
 
       /**get device id**/

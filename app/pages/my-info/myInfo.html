@@ -21,88 +21,81 @@
 
   <!--content-->
   <ion-content class="content">
-    <!--  <ion-scroll zooming="true" direction="y"  class="scroll-view ionic-scroll scroll-y" <ion-list  class="setBak">
-  -->
-    <li class="item item-icon-right onerow">
-      <div class="row">
-        <div style="text-align: left" class="col col-66 ">
-          <span translate="my-info.personalSetting" class="leftWord">个人资料设置</span>
+    <ion-list>
+      <!--personal-->
+      <li class="item item-icon-right onerow">
+        <div class="row">
+          <div class="col-66">
+            <span translate="my-info.personalSetting" class="key"></span>
+          </div>
+        </div>
+        <i class="icon ion-ios-arrow-right"></i>
+      </li>
+      <!--box-->
+      <li class="item item-icon-right onerow">
+        <div class="row">
+          <div class="col-66">
+            <span translate="my-info.myBox" class="key"></span>
+          </div>
+          <div class="col">
+            <span class="value" translate="my-info.addNumber"></span>
+          </div>
+        </div>
+        <i class="icon ion-ios-arrow-right iconSize"></i>
+      </li>
+      <!--room-->
+      <li class="item item-icon-right onerow" ui-sref="myRoom">
+        <div class="row">
+          <div class="col-66 ">
+            <span translate="my-info.myRoom" class="key"></span>
+          </div>
+          <div class="col">
+            <span class="value" translate="my-info.roomNumber"></span>
+          </div>
+        </div>
+        <i class="icon ion-ios-arrow-right iconSize"></i>
+      </li>
+      <!--privilege-->
+      <li class="item item-icon-right onerow">
+        <div class="row">
+          <div class="col col-66">
+            <span translate="my-info.familyManager" class="key"></span>
+          </div>
         </div>
         <div class="col"><i class="icon ion-ios-arrow-right iconSize"></i></div>
-      </div>
-    </li>
+      </li>
 
+      <li class="item item-icon-right onerow" ui-sref="greenLife">
+        <div class="row">
+          <div style="text-align: left" class="col col-66 ">
+            <span translate="my-info.greenLife" class="leftWord">绿色生活</span></div>
+          <div class="col"><i class="icon ion-ios-arrow-right iconSize"></i></div>
+        </div>
+      </li>
+      <div class="cusdivide"><!--item item-divider-->
 
-    <li class="item item-icon-right onerow">
-      <div class="row">
-        <div style="text-align: left" class="col col-66 ">
-          <span translate="my-info.myBox" class="leftWord">我的box</span>
-        </div>
-        <div class="col col-20 ">
-          <span class="rightword" translate="my-info.addNumber">已添加7个</span>
-        </div>
-        <div class="col">
-          <i class="icon ion-ios-arrow-right iconSize"></i>
-        </div>
       </div>
-    </li>
+      <li class="item item-icon-right onerow">
+        <div class="row">
+          <div style="text-align: left" class="col col-66 ">
+            <span translate="my-info.intelligentLinkage" class="leftWord">智能联动</span>
+          </div>
+          <div class="col col-20 ">
+            <span class="rightword" translate="my-info.openNumber">已开启2个</span>
+          </div>
+          <div class="col"><i class="icon ion-ios-arrow-right iconSize"></i></div>
+        </div>
+      </li>
 
-    <li class="item item-icon-right onerow" ui-sref="myRoom">
-      <div class="row">
-        <div style="text-align: left" class="col col-66 ">
-          <span translate="my-info.myRoom" class="leftWord">我的房间</span>
+      <li class="item item-icon-right onerow" ui-sref="setting">
+        <div class="row">
+          <div style="text-align: left" class="col col-66 ">
+            <span translate="my-info.settingWord" class="leftWord"> 设置</span>
+          </div>
+          <div class="col"><i class="icon ion-ios-arrow-right iconSize"></i></div>
         </div>
-        <div class="col col-20 ">
-          <span class="rightword" translate="my-info.roomNumber">2个房间</span>
-        </div>
-        <div class="col">
-          <i class="icon ion-ios-arrow-right iconSize"></i>
-        </div>
-      </div>
-    </li>
-    <li class="item item-icon-right onerow">
-      <div class="row">
-        <div style="text-align: left" class="col col-66 ">
-          <span translate="my-info.familyManager" class="leftWord">亲友授权管理</span>
-        </div>
-        <div class="col"><i class="icon ion-ios-arrow-right iconSize"></i></div>
-      </div>
-    </li>
-
-    <li class="item item-icon-right onerow" ui-sref="greenLife">
-      <div class="row">
-        <div style="text-align: left" class="col col-66 ">
-          <span translate="my-info.greenLife" class="leftWord">绿色生活</span></div>
-        <div class="col"><i class="icon ion-ios-arrow-right iconSize"></i></div>
-      </div>
-    </li>
-    <div class="cusdivide"><!--item item-divider-->
-
-    </div>
-    <li class="item item-icon-right onerow">
-      <div class="row">
-        <div style="text-align: left" class="col col-66 ">
-          <span translate="my-info.intelligentLinkage" class="leftWord">智能联动</span>
-        </div>
-        <div class="col col-20 ">
-          <span class="rightword" translate="my-info.openNumber">已开启2个</span>
-        </div>
-        <div class="col"><i class="icon ion-ios-arrow-right iconSize"></i></div>
-      </div>
-    </li>
-
-    <li class="item item-icon-right onerow" ui-sref="setting">
-      <div class="row">
-        <div style="text-align: left" class="col col-66 ">
-          <span translate="my-info.settingWord" class="leftWord"> 设置</span>
-        </div>
-        <div class="col"><i class="icon ion-ios-arrow-right iconSize"></i></div>
-      </div>
-    </li>
-
+      </li>
 
     </ion-list>
-    <!-- </ion-scroll>-->
   </ion-content>
-
 </ion-view>

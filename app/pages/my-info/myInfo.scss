@@ -57,41 +57,43 @@
     top: 3.89rem;
     overflow-y:scroll;
     background: #212121;
-  }
-  //one row
 
-  .onerow {
-    background: #0D0F11;
-    padding: 0.14rem 0rem 0.14rem 0.4rem;
-    border-bottom: 0.05rem solid #2D3234;
-  }
-  .item {
-    border-top: none;
-    border-color: #2D3234;
+    .onerow {
+      background: #0D0F11;
+      border-top:none;
+      border-bottom: 0.03rem solid #979797;
+
+      .key {
+        font-family: PingFangSC-Medium;
+        font-size: $font-size;
+        color: $color-text-key;
+        line-height: $font-size;
+      }
+
+      .value {
+        float: right;
+        font-size: $font-size-small;
+        color: $color-text-value;
+        line-height: 0.28rem;
+      }
+
+    }
+
+
+
+    .cusdivide {
+      background-color: #212121;
+      padding: 0rem;
+      height: 0.34rem;
+      border-bottom: 0.05rem solid #2D3234;
+    }
+    .iconSize {
+      font-size: 0.5rem;
+      right: 0.3rem;
+    }
+
   }
 
-  .leftWord {
-    font-family: PingFangSC-Medium;
-    font-size: 0.32rem;
-    color: #FFFFFF;
-    line-height: 0.32rem;
-  }
-  .rightword {
-    font-size: 0.24rem;
-    color: #565A64;
-    line-height: 0.28rem;
-    float: right;
-  }
-  .cusdivide {
-    background-color: #212121;
-    padding: 0rem;
-    height: 0.34rem;
-    border-bottom: 0.05rem solid #2D3234;
-  }
-  .iconSize {
-    font-size: 0.5rem;
-    right: 0.3rem;
-  }
 
   /*
 .iconSize{
