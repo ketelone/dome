@@ -1,28 +1,26 @@
-<ion-view view-title="我的" class="myInfo">
-  <!--<ion-header-bar align-title="center" class="bar-stable">-->
-
-  <!--</ion-header-bar>-->
+<ion-view view-title="my info" class="myInfo">
+  <!--header-->
   <div class="cusHeader">
-    <div class="row setP">
+    <div class="row">
       <div class="col col-40">
-        <span translate="my-info.myhome" class="myHome">我家</span>
+        <span translate="my-info.myhome" class="myHome"></span>
       </div>
       <div class="col">
-        <img class="img1" ng-src="build/img/my-info/icon_home_avatar1.png"/>
-        <img class="img1" ng-src="build/img/my-info/icon_home_avatar2.png"/>
-        <img class="img1" ng-src="build/img/my-info/icon_home_avatar3.png"/>
+        <img class="family-img" ng-src="build/img/my-info/icon_home_avatar1.png"/>
+        <img class="family-img" ng-src="build/img/my-info/icon_home_avatar2.png"/>
+        <img class="family-img" ng-src="build/img/my-info/icon_home_avatar3.png"/>
       </div>
     </div>
     <div class="row">
-      <span class="personal" translate="my-info.gexing">个性签名</span>
+      <p class="signature" translate="my-info.gexing"></p>
     </div>
     <div class="row">
-      <span translate="my-info.shengli" class="personalValue">团结就是胜利</span>
+      <p translate="my-info.shengli" class="signature-value"></p>
     </div>
   </div>
 
-
-  <ion-content class="hasHeader has-footer" style="overflow-y:scroll;">
+  <!--content-->
+  <ion-content class="content">
     <!--  <ion-scroll zooming="true" direction="y"  class="scroll-view ionic-scroll scroll-y" <ion-list  class="setBak">
   -->
     <li class="item item-icon-right onerow">

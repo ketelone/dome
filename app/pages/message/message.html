@@ -1,63 +1,58 @@
-<ion-view view-title="消息" class="message">
-  <div class="cusHeader">
-    <div class="mesHeader">
-      <span translate="message.message">消息</span>
+<ion-view view-title="{{'message.message' | translate }}" class="message">
+
+  <div class="header">
+    <!--header-->
+    <div class="title">
+      <span translate="message.message"></span>
     </div>
-    <div class="row allMess">
+    <!--tabs-->
+    <div class="row mess-tabs">
       <div ng-click="listClick(0)" class="col col-35">
-        <span translate='message.status' ng-class="{statusword:index==0}"></span>
+        <span translate='message.status' ng-class="{selected:index==0}"></span>
       </div>
       <div ng-click="listClick(1)" class="col col-40">
-        <span translate='message.exception' ng-class="{statusword:index==1}"></span>
+        <span translate='message.exception' ng-class="{selected:index==1}"></span>
       </div>
       <div ng-click="listClick(2)" class="col col-25">
-        <span translate='message.other' ng-class="{statusword:index==2}"></span>
+        <span translate='message.other' ng-class="{selected:index==2}"></span>
       </div>
     </div>
   </div>
 
-  <ion-content class="hasHeader" style="overflow-y:scroll; margin-bottom: 44px;">
-    <ion-scroll zooming="true" direction="y" class="scroll-view ionic-scroll scroll-y"
-    style="border: none">
+  <!--content-->
+  <ion-content class="content">
+    <ion-scroll zooming="true" direction="y" class="scroll-view ionic-scroll scroll-y">
       <!--message list-->
       <ion-list show-delete="showDelete">
-        <ion-item style="background: #212121;border-style:none;"
-                  ng-repeat="message in messages" item="message"
-                  class="item item-icon-right"
+        <ion-item ng-repeat="message in messages" item="message"
+                  class="item item-icon-right item-style"
                   ui-sref="messageDetail({messageId:message.id})">
           <!-- item-remove-animate-->
-          <div ng-class="{hasread:message.hasRead}" class="row oneModel">
-            <!-- <img  ng-show="show-delete" style="width: 0.44rem;height: 0.45rem" ng-src="build/img/message/radio_bg.png"/>-->
-            <div class="col col-75">
+          <div ng-class="{read:message.hasRead}" class="message-item">
+            <div class="col-75">
               <div class="row">
-                <div class="col col-60" style="padding-left: 0rem">
-                  <span class="leftWord1" translate={{message.message}}></span>
+                <div class="col-60">
+                  <span class="message-title" translate={{message.message}}></span>
                 </div>
                 <div class="col">
-                  <span class="leftWord2" translate={{message.device}}></span>
+                  <span class="message-device" translate={{message.device}}></span>
                 </div>
               </div>
-              <div class="row">
-                <span class="leftWord3" translate={{message.messageDel}}></span>
-              </div>
-              <div class="row addpadding">
-                <span class="time" translate="{{message.time}}"></span>
-              </div>
+              <p class="message-detail" translate={{message.messageDel}}></p>
+              <p class="message-time" translate="{{message.time}}"></p>
             </div>
-            <div class="col ">
-              <i class="icon ion-ios-arrow-right iconSize"></i>
-            </div>
+            <i class="icon ion-ios-arrow-right"></i>
           </div>
-          <ion-option-button class="manyChoose"
+          <ion-option-button class="multi-choice"
                              ng-click="manyChoose()" translate="message.manyChoose">
             多选
           </ion-option-button>
-          <ion-option-button class="goDelete"
+          <ion-option-button class="delete-btn"
                              ng-click="goDeteleitem(message)" translate="message.delete">
             删除
           </ion-option-button>
           <ion-delete-button ng-click="onChoose(message)">
-            <img style=" width: 0.5rem;height:0.5rem" ng-src={{message.circleUrl1}}>
+            <img class="img-size" ng-src={{message.circleUrl1}}>
           </ion-delete-button>
         </ion-item>
       </ion-list>
@@ -72,10 +67,17 @@
     </ion-scroll>
   </ion-content>
 
+  <!--three button on the bottom-->
   <div ng-show="threeBottom" class="row bottomWord">
-    <div ng-click="bottomManychoose()" class="col col-33 allChoose"><span translate="message.all"></span></div>
-    <div ng-click="bottomGocancel()" class="col col-33 cancal"><span translate="message.cancel"></span></div>
-    <div ng-click="bottomGodetele()" class="col delete"><span translate="message.delete"></span></div>
+    <div ng-click="bottomManychoose()" class="col col-33 allChoose">
+      <span translate="message.all"></span>
+    </div>
+    <div ng-click="bottomGocancel()" class="col col-33 cancal">
+      <span translate="message.cancel"></span>
+    </div>
+    <div ng-click="bottomGodetele()" class="col delete">
+      <span translate="message.delete"></span>
+    </div>
   </div>
 
 

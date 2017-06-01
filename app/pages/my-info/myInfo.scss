@@ -1,52 +1,61 @@
 .myInfo {
 
+  font-family: PingFangSC-Regular;
+
   .cusHeader {
-    background-image: linear-gradient(-180deg, #42444A 1%, #191C23 86%);
     height: 3.89rem;
     position: relative;
+    padding-top: 0.85rem;
+    background-image: linear-gradient(-180deg, #42444A 1%, #191C23 86%);
     background: no-repeat url("../img/my-info/img_home_topbackground.png");
     background-size: cover;
+
+    .myHome {
+      font-size: 0.6rem;
+      color: $color-text-key;
+      line-height: 0.6rem;
+      float: right;
+      letter-spacing: 0.045rem;
+    }
+
+    .family-img {
+      width: 0.6rem;
+      height: 0.6rem;
+      margin-left: 0.1rem;
+    }
+
+    .signature {
+      width:100%;
+      padding-top: 0.2rem;
+      font-size: $font-size-small;
+      color: $color-text-value;
+      line-height: 0.28rem;
+      text-align: center;
+      letter-spacing: 0.01rem;
+    }
+
+    .signature-value {
+      width:90%;
+      margin:0 auto;
+      padding-top: 0.1rem;
+      font-family: PingFangSC-Medium;
+      font-size: $font-size;
+      line-height: $font-size;
+      color: $color-text-key;
+      text-align: center;
+      display:block;
+      overflow:hidden;
+      word-break:keep-all;
+      white-space:nowrap;
+      text-overflow:ellipsis;
+    }
+
   }
 
-  .myHome {
-    font-size: 0.6rem;
-    color: #FFFFFF;
-    line-height: 0.6rem;
-    float: right;
-  }
-  .setP {
-    padding-top: 0.85rem;
-  }
-  .img1 {
-    width: 0.6rem;
-    height: 0.6rem;
-    margin-left: 0.1rem;
-  }
-  .goMiddle {
-    text-align: center;
-  }
-  .personal {
-    font-family: PingFangSC-Regular;
-    font-size: 0.24rem;
-    color: #565A64;
-    line-height: 0.28rem;
-    padding-top: 0.1rem;
-    width:100%;
-    text-align: center;
-  }
-  .personalValue {
-    font-family: PingFangSC-Medium;
-    font-size: 0.32rem;
-    color: #FFFFFF;
-    padding-top: 0.2rem;
-    line-height: 0.32rem;
-    width:100%;
-    text-align: center;
-  }
-
-  .hasHeader {
+  .content {
     position: absolute;
     top: 3.89rem;
+    overflow-y:scroll;
     background: #212121;
   }
   //one row
