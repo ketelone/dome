@@ -37,10 +37,6 @@ angular.module('indexPageModule')
               $window,
               indexPageService,
               $rootScope) {
-      window.localStorage.token = '4f75ed43-aee2-4f35-895e-7d3f086ddf86';
-      window.localStorage.empno = '18620025571';
-      window.localStorage.checkboxSavePwd = 'admin';
-      console.log(window.localStorage.token);
 
       $scope.isSceneModel = true;
       $scope.isDeviceModel = false;

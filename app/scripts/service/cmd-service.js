@@ -127,7 +127,7 @@ angular.module('utilModule')
          * 十六进制补0
          * @param {*字符} d
          */
-        this.doStr = function (d) {
+        var oStr = function (d) {
           if (d.length % 2 != 0) {
             d = "0" + d;
           }

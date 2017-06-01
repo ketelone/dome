@@ -815,7 +815,7 @@ angular.module('myApp')
         if (baseConfig.debug) {
           console.log('app.js into guide');
         };
-        $urlRouterProvider.otherwise('/tabs');
+        $urlRouterProvider.otherwise('/guide');
       } else {
         if (window.localStorage.token && window.localStorage.token != "" && window.localStorage.isHrms2108) {
 
@@ -823,13 +823,13 @@ angular.module('myApp')
 
           if (window.localStorage.getItem('gesturePassword') && window.localStorage.getItem('gesturePassword') != '') {
           } else {
-            $urlRouterProvider.otherwise('/tabs');
+            $urlRouterProvider.otherwise('/login');
           }
         } else {
 
           window.localStorage.isHrms2108 = "true";
 
-          $urlRouterProvider.otherwise('/tabs');
+          $urlRouterProvider.otherwise('/login');
         }
       }
     }]);
