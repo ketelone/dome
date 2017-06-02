@@ -1,0 +1,25 @@
+<ion-view view-title="{{'my-info.setting.language' | translate}}" class="setting">
+  <!--header-->
+  <ion-header-bar class="header">
+    <button class="button button-icon icon ion-ios-arrow-left header_button" ng-click="goBack()"></button>
+    <div class="h1 title header_title" translate="my-info.setting.language"></div>
+  </ion-header-bar>
+  <!--content-->
+  <ion-content class="content">
+    <ion-list>
+      <li ng-click="chooseLanguage(item)"
+          class="item onerow"
+          ng-repeat="item in languageItems"
+          item="item">
+        <div class="row">
+          <div class="col-66">
+            <span class="key">{{item.language}}</span>
+          </div>
+          <div class="col">
+            <img class="circle-choice" ng-src={{item.radioImg}}>
+          </div>
+        </div>
+      </li>
+    </ion-list>
+  </ion-content>
+</ion-view>

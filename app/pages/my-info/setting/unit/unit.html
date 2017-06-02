@@ -1,0 +1,37 @@
+<ion-view view-title="{{'my-info.setting.unitSetting' | translate}}" class="setting">
+  <!--header-->
+  <ion-header-bar class="header">
+    <button class="button button-icon icon ion-ios-arrow-left header_button" ng-click="goBack()"></button>
+    <div class="h1 title header_title" translate="my-info.setting.unitSetting"></div>
+  </ion-header-bar>
+  <!--content-->
+  <ion-content class="content">
+    <ion-list>
+      <div ng-repeat="item in unitItems" item="item">
+        <li class="item row-title">
+          <div class="row">
+            <div class="col-66">
+              <span class="key">{{item.unitName}}</span>
+            </div>
+          </div>
+        </li>
+        <li class="item onerow" ng-click="chooseUnit(item,0)">
+          <div class="row">
+            <div class="col-66">
+              <span class="key">{{item.unitValue1}}</span>
+            </div>
+            <div class="col"><img class="circle-choice" ng-src={{item.radioImg1}}></div>
+          </div>
+        </li>
+        <li class="item onerow" ng-click="chooseUnit(item,1)">
+          <div class="row">
+            <div class="col-66">
+              <span class="key">{{item.unitValue2}}</span>
+            </div>
+            <div class="col"><img class="circle-choice" ng-src={{item.radioImg2}}></div>
+          </div>
+        </li>
+      </div>
+    </ion-list>
+  </ion-content>
+</ion-view>

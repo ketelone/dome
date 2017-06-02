@@ -283,7 +283,7 @@ angular.module('karessControlModule')
           "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 5  && list.gearInit == 1'><span translate='karessController.high'></span></span>" +
           "<span class='toilet-parameterctl-raddata'  ng-if='list.flag == 5  && list.gearInit == 2'><span translate='karessController.low'></span></span>" +
           "<span class='toilet-parameterctl-des' ng-bind={{list.des}}℃></span>" +
-          "<span class='toilet-parameterctl-des' ng-if='list.flag == 1' ng-repeat='i in tempList' ng-show='list.gearInit == i.id'><span translate='karessController.temperature'></span>：{{i.temp}}℃</span>" +
+          "<span class='toilet-parameterctl-des' ng-if='list.flag == 1' ng-repeat='i in tempList' ng-show='list.gearInit == i.id'><span translate='karessController.unit'></span>：{{i.temp}}℃</span>" +
           "</div>" +
           "<div class='toilet-parameterctl-data' ng-if='list.parameterctlFlag'>" +
           "<img class='conninfo-parameterctl-img' ng-src='build/img/toilet-controller/btn_devicedetail_scoll.png' alt='' ng-if='parameterctlImg'>" +

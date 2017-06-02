@@ -62,6 +62,7 @@
       background: #0D0F11;
       border-top:none;
       border-bottom: 0.03rem solid #979797;
+      padding:0.2rem 0.4rem;
 
       .key {
         font-family: PingFangSC-Medium;
@@ -75,81 +76,14 @@
         font-size: $font-size-small;
         color: $color-text-value;
         line-height: 0.28rem;
+        padding-right:0.24rem;
       }
-
     }
-
-
 
     .cusdivide {
-      background-color: #212121;
-      padding: 0rem;
-      height: 0.34rem;
-      border-bottom: 0.05rem solid #2D3234;
-    }
-    .iconSize {
-      font-size: 0.5rem;
-      right: 0.3rem;
+      height: 0.3rem;
     }
 
   }
 
-
-  /*
-.iconSize{
-  font-size: 20px ;
-}
-
-
-.item{
-  padding-bottom: 0.2rem;
-  padding-top: 0.2rem;
-  border-width:0.01rem;
-}
-  .myhome{font-size:$font-size-big;
-    padding-bottom: 0.2rem}
-
-  .leftWord{font-size:0.3rem;}
- .rightword{font-size:0.1rem;float:right;color:#d8d8d8}
-
-  .circle1 {
-    border-radius:100px;
-    background: #d8d8d8;
-    width: 40px;
-    height: 40px;
-    display: inline-block;
-  }
-  .circle2 {
-    border-radius:100px;
-    background: #d8d8d8;
-    width: 40px;
-    height: 40px;
-    display: inline-block;
-  }
-
-
-
-*/
-
-  /* .addbutton{border-radius:50px;
-     background: #11a7df;
-
-     height: 0.4rem;
-     display: inline-block;
-     cursor: pointer;
-     color:white;
-     line-height: 0.3rem;
-   text-align: center;
-
-   margin-top:0.25rem;
-   }*/
-  //.personality{
-  //  color:#d8d8d8;
-  //
-  //}
-
-  //.bottom{
-  //  background: #f5f5f5;
-  //  height:100px
-  //}
 }

@@ -1,29 +1,21 @@
 .about{
-  .headColor{
-    background-color: $global-head-bg;
-    background-image: none;
-  }
-  .whiteColor {
-    color: $color-base;
-  }
 
   .content {
     color: rgba(255, 255, 255, 1);
     background: $global-background;
-    .logo{
+
+    .img-size{
       background-color: #000122;
       height: 4.36rem;
-      .img-position{
-        width:4.83rem;
-        height: 3rem;
-        margin:0.68rem auto;
-      }
     }
+
     .description{
-      padding:0.3rem;
+      padding:0.2rem 0.4rem;
       font-family: PingFangSC-Regular;
       font-size: $font-size;
       line-height: 0.48rem;
+      letter-spacing: 0.02rem;
+
       .title{
         text-align: center;
       }

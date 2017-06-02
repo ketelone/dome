@@ -1,6 +1,13 @@
-
 angular.module('myInfoModule')
-
+  .config(['$stateProvider',
+    function ($stateProvider) {
+      // $stateProvider
+      //   .state('personalSetting', {
+      //     url: '/personalSetting',
+      //     templateUrl: 'build/pages/my-info/personal-setting/personalSetting.html',
+      //     controller: 'personalSettingCtrl'
+      //   })
+    }])
   .controller('personalSettingCtrl', [
     '$scope','$state','baseConfig','$ionicLoading','$http',
     '$timeout','$ionicHistory','$ionicPlatform',

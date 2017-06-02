@@ -1,4 +1,5 @@
-<ion-view view-title="my info" class="myInfo">
+<ion-view view-title="{{'my-info.title' | translate}}" class="myInfo">
+
   <!--header-->
   <div class="cusHeader">
     <div class="row">
@@ -23,9 +24,9 @@
   <ion-content class="content">
     <ion-list>
       <!--personal-->
-      <li class="item item-icon-right onerow">
+      <li class="item item-icon-right onerow" ui-sref="personalSetting">
         <div class="row">
-          <div class="col-66">
+          <div class="col-50">
             <span translate="my-info.personalSetting" class="key"></span>
           </div>
         </div>
@@ -34,68 +35,67 @@
       <!--box-->
       <li class="item item-icon-right onerow">
         <div class="row">
-          <div class="col-66">
+          <div class="col-50">
             <span translate="my-info.myBox" class="key"></span>
           </div>
           <div class="col">
             <span class="value" translate="my-info.addNumber"></span>
           </div>
         </div>
-        <i class="icon ion-ios-arrow-right iconSize"></i>
+        <i class="icon ion-ios-arrow-right"></i>
       </li>
       <!--room-->
       <li class="item item-icon-right onerow" ui-sref="myRoom">
         <div class="row">
-          <div class="col-66 ">
+          <div class="col-50">
             <span translate="my-info.myRoom" class="key"></span>
           </div>
           <div class="col">
             <span class="value" translate="my-info.roomNumber"></span>
           </div>
         </div>
-        <i class="icon ion-ios-arrow-right iconSize"></i>
+        <i class="icon ion-ios-arrow-right"></i>
       </li>
       <!--privilege-->
       <li class="item item-icon-right onerow">
         <div class="row">
-          <div class="col col-66">
+          <div class="col-50">
             <span translate="my-info.familyManager" class="key"></span>
           </div>
         </div>
-        <div class="col"><i class="icon ion-ios-arrow-right iconSize"></i></div>
+        <i class="icon ion-ios-arrow-right"></i>
       </li>
-
+      <div class="cusdivide"></div>
+      <!--greenLife-->
       <li class="item item-icon-right onerow" ui-sref="greenLife">
         <div class="row">
-          <div style="text-align: left" class="col col-66 ">
-            <span translate="my-info.greenLife" class="leftWord">绿色生活</span></div>
-          <div class="col"><i class="icon ion-ios-arrow-right iconSize"></i></div>
+          <div class="col-50">
+            <span translate="my-info.greenlife" class="key"></span></div>
         </div>
+        <i class="icon ion-ios-arrow-right"></i>
       </li>
-      <div class="cusdivide"><!--item item-divider-->
-
-      </div>
+      <!--intelligent-->
       <li class="item item-icon-right onerow">
         <div class="row">
-          <div style="text-align: left" class="col col-66 ">
-            <span translate="my-info.intelligentLinkage" class="leftWord">智能联动</span>
+          <div class="col-50">
+            <span translate="my-info.intelligentLinkage" class="key"></span>
           </div>
-          <div class="col col-20 ">
-            <span class="rightword" translate="my-info.openNumber">已开启2个</span>
+          <div class="col">
+            <span class="value" translate="my-info.openNumber"></span>
           </div>
-          <div class="col"><i class="icon ion-ios-arrow-right iconSize"></i></div>
         </div>
+        <i class="icon ion-ios-arrow-right"></i>
       </li>
-
+      <!--setting-->
       <li class="item item-icon-right onerow" ui-sref="setting">
         <div class="row">
-          <div style="text-align: left" class="col col-66 ">
-            <span translate="my-info.settingWord" class="leftWord"> 设置</span>
+          <div class="col-50">
+            <span translate="my-info.setting.title" class="key"></span>
           </div>
-          <div class="col"><i class="icon ion-ios-arrow-right iconSize"></i></div>
         </div>
+        <i class="icon ion-ios-arrow-right"></i>
       </li>
-
     </ion-list>
   </ion-content>
+
 </ion-view>

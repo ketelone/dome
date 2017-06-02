@@ -13,8 +13,10 @@
 @import "../pages/login/login";
 @import "../pages/login/registered/registered.scss";
 @import "../pages/login/forget-password/forgetPassword.scss";
+//message
 @import "../pages/message/message";
 @import "../pages/message/message-detail/messageDetail";
+//myInfo
 @import "../pages/my-info/myInfo";
 @import "../pages/my-info/add-members/addMembers";
 @import "../pages/my-info/green-life/greenLife";
@@ -22,8 +24,6 @@
 @import "../pages/my-info/green-life/consumption-detail/consumptionDetail";
 @import "../pages/my-info/setting/setting";
 @import "../pages/my-info/personal-setting/personalSetting";
-@import "../pages/my-info/setting-language/settingLanguage";
-@import "../pages/my-info/setting-temperature/settingTemperature";
 @import "../pages/my-info/setting/about/about";
 @import "../pages/my-info/my-room/myRoom";
 
@@ -77,7 +77,7 @@
 @import "../pages/device-controller/mc-controller/setting-mc/mcSet";
 @import "../pages/device-controller/mc-controller/mc-learning/mc.learning";
 @import "../pages/device-controller/mc-controller/modal/popovers.mc";
-
+//nextgen
 @import "../pages/device-controller/nextgen-controller/nextgen";
 @import "../pages/device-controller/nextgen-controller/nextgen-set/nextgenSet";
 @import "../pages/device-controller/nextgen-controller/nextgen-info/nextgenInfo";

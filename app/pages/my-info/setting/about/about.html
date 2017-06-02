@@ -1,15 +1,17 @@
-<ion-view view-title="关于" class="about">
-  <ion-header-bar class="headColor">
-    <button class="button button-icon icon ion-ios-arrow-left whiteColor" ng-click="goBack()"></button>
-    <div class="h1 title whiteColor" translate={{'my-info.about'}}></div>
+<ion-view view-title="{{'my-info.setting.about' | translate}}" class="about">
+  <!--header-->
+  <ion-header-bar class="header">
+    <button class="button button-icon icon ion-ios-arrow-left header_button" ng-click="goBack()"></button>
+    <div class="h1 title header_title" translate="my-info.setting.about"></div>
   </ion-header-bar>
+  <!--content-->
   <ion-content class="content">
-    <div class="logo">
-      <center><img src="" alt="kohler logo" class="img-position"/></center>
-    </div>
+    <span>
+      <img ng-src="build/img/my-info/img_kohler_about.png" alt="kohler logo" class="img-size"/>
+    </span>
     <div class="description">
-      <p class="title">科勒简介</p>
-      <span>创立于1873年的美国科勒(Kohler)公司是迄今美国最庞大的家族企业之一, 2002年，在上海成立了科勒（中国）投资有限公司，作为科勒亚太区总部。一百四十余年来，科勒秉承着恒久不变的企业精神，致力于使"每一件科勒产品都展现那个时代的最高水准"</span>
+      <p class="title" translate="my-info.setting.kohler_title"></p>
+      <span translate="my-info.setting.kohler_description"></span>
     </div>
   </ion-content>
 </ion-view>

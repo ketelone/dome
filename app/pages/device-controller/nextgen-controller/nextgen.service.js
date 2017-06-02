@@ -26,7 +26,7 @@ angular.module('nextgenModule')
 
         /*设置出水参数 cmd + arg1 + arg2 + arg3
          var argment =  {
-         'temperature':'0-100',    //这个最好传16进制的字符串 比如0 ->00 100->64
+         'unit':'0-100',    //这个最好传16进制的字符串 比如0 ->00 100->64
          'out':'HRS',			  //这个参数是个枚举字符串 HRS，HS，SP，HDS 分别表示 头顶花洒，头顶摇摆，spout，手持花洒，
 
          }*/
