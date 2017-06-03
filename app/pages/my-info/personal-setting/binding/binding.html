@@ -1,13 +1,15 @@
-<ion-view view-title="个人资料设置" class="personalSetting">
-  <ion-header-bar class="headColor">
-    <button class="button button-icon icon ion-ios-arrow-left whiteColor" ng-click="goBack()"></button>
-    <div class="h1 title whiteColor" translate={{title}}></div>
+<ion-view view-title="{{title}}" class="personalSetting">
+  <!--header-->
+  <ion-header-bar class="header">
+    <button class="button button-icon icon ion-ios-arrow-left header_button" ng-click="goBack()"></button>
+    <div class="h1 title header_title">{{title}}</div>
   </ion-header-bar>
-  <ion-content style="background-color:#212121">
-    <div class="tips">{{tips | translate}}</div>
+  <!--content-->
+  <ion-content class="content">
+    <div class="tips">{{tips}}</div>
     <div class="list">
       <label class="item item-input inputStyle">
-        <input type="{{inputType}}" class="inputText" placeholder="{{inputDes | translate}}">
+        <input type="{{inputType}}" class="inputText" placeholder="{{inputDes}}">
       </label>
       <label class="item item-input inputStyle" style="border: 0;">
         <input type="text" class="inputText"

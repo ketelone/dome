@@ -80,7 +80,8 @@
       "device": "4个设备",
       "rename": "重命名",
       "disband": "解散",
-      "manage": "管理"
+      "manage": "管理",
+      "create":"新建房间"
     },
     "personal-setting":{
       "title":"个人资料设置",

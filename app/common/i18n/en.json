@@ -81,7 +81,8 @@
       "device":"4 devices",
       "rename":"Rename",
       "disband":"Delete",
-      "manage":"Manage"
+      "manage":"Manage",
+      "create":"新建房间"
     },
     "personal-setting":{
       "title":"个人资料设置",

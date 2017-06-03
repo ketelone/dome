@@ -22,7 +22,6 @@ angular.module('myInfoModule')
           templateUrl: 'build/pages/my-info/green-life/greenLife.html',
           controller: 'greenLifeCtrl'
         })
-
         .state('chooseDevice', {
           url: '/chooseDevice',
           templateUrl: 'build/pages/my-info/green-life/choose-device/chooseDevice.html',
@@ -38,18 +37,7 @@ angular.module('myInfoModule')
           url: '/setting',
           templateUrl: 'build/pages/my-info/setting/setting.html',
           controller: 'settingCtrl'
-        })
-        .state('binding', {
-          url: '/personalSetting/binding/:type',
-          templateUrl: 'build/pages/my-info/personal-setting/binding/binding.html',
-          controller: 'bindingCtrl'
-        })
-        .state('changePwd', {
-          url: '/personalSetting/changePwd/:type',
-          templateUrl: 'build/pages/my-info/personal-setting/change-pwd/changePwd.html',
-          controller: 'changePwdCtrl'
-        })
-
+        });
     }
   ]).controller('myInfoCtrl', [
   '$scope',
