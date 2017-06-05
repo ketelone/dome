@@ -1,144 +1,89 @@
 .myInfo {
 
+  font-family: PingFangSC-Regular;
+
   .cusHeader {
-    background-image: linear-gradient(-180deg, #42444A 1%, #191C23 86%);
     height: 3.89rem;
     position: relative;
+    padding-top: 0.85rem;
+    background-image: linear-gradient(-180deg, #42444A 1%, #191C23 86%);
     background: no-repeat url("../img/my-info/img_home_topbackground.png");
     background-size: cover;
+
+    .myHome {
+      font-size: 0.6rem;
+      color: $color-text-key;
+      line-height: 0.6rem;
+      float: right;
+      letter-spacing: 0.045rem;
+    }
+
+    .family-img {
+      width: 0.6rem;
+      height: 0.6rem;
+      margin-left: 0.1rem;
+    }
+
+    .signature {
+      width:100%;
+      padding-top: 0.2rem;
+      font-size: $font-size-small;
+      color: $color-text-value;
+      line-height: 0.28rem;
+      text-align: center;
+      letter-spacing: 0.01rem;
+    }
+
+    .signature-value {
+      width:90%;
+      margin:0 auto;
+      padding-top: 0.1rem;
+      font-family: PingFangSC-Medium;
+      font-size: $font-size;
+      line-height: $font-size;
+      color: $color-text-key;
+      text-align: center;
+      display:block;
+      overflow:hidden;
+      word-break:keep-all;
+      white-space:nowrap;
+      text-overflow:ellipsis;
+    }
+
   }
 
-  .myHome {
-    font-size: 0.6rem;
-    color: #FFFFFF;
-    line-height: 0.6rem;
-    float: right;
-  }
-  .setP {
-    padding-top: 0.85rem;
-  }
-  .img1 {
-    width: 0.6rem;
-    height: 0.6rem;
-    margin-left: 0.1rem;
-  }
-  .goMiddle {
-    text-align: center;
-  }
-  .personal {
-    font-family: PingFangSC-Regular;
-    font-size: 0.24rem;
-    color: #565A64;
-    line-height: 0.28rem;
-    padding-top: 0.1rem;
-    width:100%;
-    text-align: center;
-  }
-  .personalValue {
-    font-family: PingFangSC-Medium;
-    font-size: 0.32rem;
-    color: #FFFFFF;
-    padding-top: 0.2rem;
-    line-height: 0.32rem;
-    width:100%;
-    text-align: center;
-  }
-
-  .hasHeader {
+  .content {
     position: absolute;
     top: 3.89rem;
+    overflow-y:scroll;
     background: #212121;
-  }
-  //one row
 
-  .onerow {
-    background: #0D0F11;
-    padding: 0.14rem 0rem 0.14rem 0.4rem;
-    border-bottom: 0.05rem solid #2D3234;
-  }
-  .item {
-    border-top: none;
-    border-color: #2D3234;
-  }
+    .onerow {
+      background: #0D0F11;
+      border-top:none;
+      border-bottom: 0.03rem solid #979797;
+      padding:0.2rem 0.4rem;
 
-  .leftWord {
-    font-family: PingFangSC-Medium;
-    font-size: 0.32rem;
-    color: #FFFFFF;
-    line-height: 0.32rem;
-  }
-  .rightword {
-    font-size: 0.24rem;
-    color: #565A64;
-    line-height: 0.28rem;
-    float: right;
-  }
-  .cusdivide {
-    background-color: #212121;
-    padding: 0rem;
-    height: 0.34rem;
-    border-bottom: 0.05rem solid #2D3234;
-  }
-  .iconSize {
-    font-size: 0.5rem;
-    right: 0.3rem;
+      .key {
+        font-family: PingFangSC-Medium;
+        font-size: $font-size;
+        color: $color-text-key;
+        line-height: $font-size;
+      }
+
+      .value {
+        float: right;
+        font-size: $font-size-small;
+        color: $color-text-value;
+        line-height: 0.28rem;
+        padding-right:0.3rem;
+      }
+    }
+
+    .cusdivide {
+      height: 0.3rem;
+    }
+
   }
 
-  /*
-.iconSize{
-  font-size: 20px ;
-}
-
-
-.item{
-  padding-bottom: 0.2rem;
-  padding-top: 0.2rem;
-  border-width:0.01rem;
-}
-  .myhome{font-size:$font-size-big;
-    padding-bottom: 0.2rem}
-
-  .leftWord{font-size:0.3rem;}
- .rightword{font-size:0.1rem;float:right;color:#d8d8d8}
-
-  .circle1 {
-    border-radius:100px;
-    background: #d8d8d8;
-    width: 40px;
-    height: 40px;
-    display: inline-block;
-  }
-  .circle2 {
-    border-radius:100px;
-    background: #d8d8d8;
-    width: 40px;
-    height: 40px;
-    display: inline-block;
-  }
-
-
-
-*/
-
-  /* .addbutton{border-radius:50px;
-     background: #11a7df;
-
-     height: 0.4rem;
-     display: inline-block;
-     cursor: pointer;
-     color:white;
-     line-height: 0.3rem;
-   text-align: center;
-
-   margin-top:0.25rem;
-   }*/
-  //.personality{
-  //  color:#d8d8d8;
-  //
-  //}
-
-  //.bottom{
-  //  background: #f5f5f5;
-  //  height:100px
-  //}
 }

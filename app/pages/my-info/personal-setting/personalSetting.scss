@@ -1,31 +1,105 @@
-.personalSetting{
-  background-image: none;
-  .headColor{
-    background-color: $global-head-bg;
-    background-image: none;
-  }
-  .whiteColor {
-    color: $color-base;
+.personalSetting {
+
+  font-family: PingFangSC-Regular;
+
+  .content {
+    color: rgba(255, 255, 255, 1);
+    background: $global-background;
+
+    .onerow {
+      background-color: #0D0F11;
+      border-top: none;
+      border-bottom: 0.03rem solid #979797;
+      padding: 0.2rem 0.25rem 0.2rem 0.4rem;
+
+      .key {
+        font-family: PingFangSC-Medium;
+        font-size: $font-size;
+        color: $color-text-key;
+        line-height: $font-size;
+        vertical-align: middle;
+      }
+
+      .value {
+        float: right;
+        font-size: $font-size-small;
+        color: $color-text-value;
+        line-height: 0.28rem;
+        padding-right:0.5rem;
+      }
+
+      .camera{
+        padding: 0;
+
+        .camera-key{
+          line-height: 1.4rem;
+        }
+
+        .camera-size{
+          float:right;
+          width: 1.4rem;
+          height: 1.4rem;
+        }
+      }
+
+      .sex{
+        padding:0;
+
+        .sex-key{
+          line-height: 0.48rem;
+        }
+
+        .sex-icon{
+          width: 0.48rem;
+          height: 0.48rem;
+          float:right;
+          margin-left:0.5rem;
+        }
+      }
+
+      .unbinding{
+        color:#FF687A;
+      }
+    }
+
+    .tips {
+      text-align: center;
+      font-size: $font-size;
+      color: white;
+      line-height: 0.32rem;
+      margin:0.4rem auto;
+    }
+
+    .inputStyle {
+      background-color: #0D0F11;
+      color: #565A64;
+      font-size: 0.28rem;
+      line-height: 1rem;
+      border-top: 0;
+      border-bottom: 0.04rem solid #979797;
+      .inputText {
+        color: white;
+        height: 1rem;
+      }
+      .verifyBtn {
+        opacity: 0.91;
+        background: #546281;
+        color: white;
+        margin-right: 0.5rem;
+      }
+    }
+
   }
 
-  .itemStyle{
-    background-color: #0D0F11;
-    color: $color-base;
-    border-top:0 ;
-    border-bottom: 0.01rem solid #2D3234;
-    margin:0;
+  .submitBtn {
+    background-color: #546281;
+    padding: 0;
+    border-radius: 0.06rem;
+    border: 1px solid #3A4050;
+    opacity: 0.91;
+    .title {
+      color: white;
+      font-size: 0.36rem;
+    }
   }
-
-  .item-icon{
-    color:#565A64;
-    font-size:0.5rem;
-  }
-
-  .rightword {
-    font-size: 0.24rem;
-    color: #565A64;
-    float:right;
-    padding-top: 0.03rem;
-  }
-
 }

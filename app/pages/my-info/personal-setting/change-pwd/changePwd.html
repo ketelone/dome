@@ -1,0 +1,27 @@
+<ion-view view-title="{{title}}" class="personalSetting">
+  <!--header-->
+  <ion-header-bar class="header">
+    <button class="button button-icon icon ion-ios-arrow-left header_button" ng-click="goBack()"></button>
+    <div class="h1 title header_title">{{title}}</div>
+  </ion-header-bar>
+  <ion-content class="content">
+    <div class="tips">
+      {{tips}}<br/>{{value}}
+    </div>
+    <div class="list">
+      <label class="item item-input inputStyle">
+        <input type="{{inputType}}" class="inputText" placeholder="{{inputDes}}">
+      </label>
+      <label class="item item-input inputStyle" style="border: 0;">
+        <input type="text" class="inputText"
+               placeholder="{{'my-info.personal-setting.verify_placeholder' | translate}}">
+        <button class="button verifyBtn">
+          {{'my-info.personal-setting.get_verify' | translate}}
+        </button>
+      </label>
+    </div>
+  </ion-content>
+  <ion-footer-bar class="submitBtn">
+    <h1 class="title">{{'my-info.personal-setting.submit' | translate}}</h1>
+  </ion-footer-bar>
+</ion-view>

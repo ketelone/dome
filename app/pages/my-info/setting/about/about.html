@@ -1,0 +1,17 @@
+<ion-view view-title="{{'my-info.setting.about' | translate}}" class="about">
+  <!--header-->
+  <ion-header-bar class="header">
+    <button class="button button-icon icon ion-ios-arrow-left header_button" ng-click="goBack()"></button>
+    <div class="h1 title header_title" translate="my-info.setting.about"></div>
+  </ion-header-bar>
+  <!--content-->
+  <ion-content class="content">
+    <span>
+      <img ng-src="build/img/my-info/img_kohler_about.png" alt="kohler logo" class="img-size"/>
+    </span>
+    <div class="description">
+      <p class="title" translate="my-info.setting.kohler_title"></p>
+      <span translate="my-info.setting.kohler_description"></span>
+    </div>
+  </ion-content>
+</ion-view>

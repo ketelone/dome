@@ -1,41 +1,96 @@
-<ion-view view-title="个人资料设置" class="personalSetting">
-  <ion-header-bar class="headColor">
-    <button class="button button-icon icon ion-ios-arrow-left whiteColor" ng-click="goBack()"></button>
-    <div class="h1 title whiteColor" translate={{'my-info.personalSetting'}}></div>
+<ion-view view-title="{{'my-info.personal-setting.title' | translate}}" class="personalSetting">
+  <!--header-->
+  <ion-header-bar class="header">
+    <button class="button button-icon icon ion-ios-arrow-left header_button" ng-click="goBack()"></button>
+    <div class="h1 title header_title" translate="my-info.personal-setting.title"></div>
   </ion-header-bar>
-  <ion-content style="background-color:#212121">
+  <!--content-->
+  <ion-content class="content">
     <ion-list>
-      <li class="item item-icon-right itemStyle">
-        <span class="leftword">头像</span>
-        <i class="icon ion-ios-arrow-right item-icon"></i>
+      <!--head_img-->
+      <li class="item onerow">
+        <div class="row camera">
+          <div class="col-50">
+            <span class="key camera-key">{{'my-info.personal-setting.head_img' | translate}}</span>
+          </div>
+          <div class="col">
+            <img ng-src="build/img/my-info/icon_avatar.png" alt="camera icon"
+                 class="camera-size" ng-click="getPhoto()"/>
+          </div>
+        </div>
       </li>
-      <li class="item item-icon-right itemStyle">
-        <span class="leftword">昵称</span>
-        <span class="rightword">老爸</span>
-        <i class="icon ion-ios-arrow-right item-icon"></i>
+      <!--nickname-->
+      <li class="item item-icon-right onerow">
+        <div class="row">
+          <div class="col-50">
+            <span class="key">{{'my-info.personal-setting.nickname' | translate}}</span>
+          </div>
+          <div class="col">
+            <span class="value">{{userData.nickname}}</span>
+          </div>
+        </div>
+        <i class="icon ion-ios-arrow-right"></i>
       </li>
-      <li class="item item-icon-right itemStyle">
-        <span class="leftword">性别</span>
-        <i class="icon ion-ios-arrow-right item-icon"></i>
+      <!--sex-->
+      <li class="item onerow">
+        <div class="row sex">
+          <div class="col-50 sex-key">
+            <span class="key">{{'my-info.personal-setting.sex' | translate}}</span>
+          </div>
+          <div class="col">
+            <img class="sex-icon" ng-src={{userData.female_img}}
+                 alt="female icon" ng-click="setSex(1)"/>
+            <img class="sex-icon" ng-src={{userData.male_img}}
+                 alt="male icon" ng-click="setSex(0)"/>
+          </div>
+        </div>
       </li>
-      <li class="item item-icon-right itemStyle">
-        <span class="leftword">手机号码</span>
-        <span class="rightword">188 2832 1238</span>
-        <i class="icon ion-ios-arrow-right item-icon"></i>
+      <!--telphone-->
+      <li class="item item-icon-right onerow" ui-sref="binding({type:0})">
+        <div class="row">
+          <div class="col-50">
+            <span class="key">{{'my-info.personal-setting.telephone' | translate}}</span>
+          </div>
+          <div class="col">
+            <span ng-hide="userData.telephone" class="value unbinding">{{'my-info.personal-setting.unbinding' | translate}}</span>
+            <span ng-show="userData.telephone" class="value">{{userData.telephone}}</span>
+          </div>
+        </div>
+        <i class="icon ion-ios-arrow-right"></i>
       </li>
-      <li class="item item-icon-right itemStyle">
-        <span class="leftword">邮箱</span>
-        <span class="rightword" style="color:#FF687A;">未绑定</span>
-        <i class="icon ion-ios-arrow-right item-icon"></i>
+      <!--email-->
+      <li class="item item-icon-right onerow" ui-sref="binding({type:1})">
+        <div class="row">
+          <div class="col-50">
+            <span class="key">{{'my-info.personal-setting.email' | translate}}</span>
+          </div>
+          <div class="col">
+            <span ng-hide="userData.email" class="value unbinding">{{'my-info.personal-setting.unbinding' | translate}}</span>
+            <span ng-show="userData.email" class="value">{{userData.email}}</span>
+          </div>
+        </div>
+        <i class="icon ion-ios-arrow-right"></i>
       </li>
-      <li class="item item-icon-right itemStyle">
-        <span class="leftword">地区</span>
-        <span class="rightword">上海</span>
-        <i class="icon ion-ios-arrow-right item-icon"></i>
+      <!--state-->
+      <li class="item item-icon-right onerow">
+        <div class="row">
+          <div class="col-50">
+            <span class="key">{{'my-info.personal-setting.state' | translate}}</span>
+          </div>
+          <div class="col">
+            <span class="value">{{userData.state}}</span>
+          </div>
+        </div>
+        <i class="icon ion-ios-arrow-right"></i>
       </li>
-      <li class="item item-icon-right itemStyle">
-        <span class="leftword">修改密码</span>
-        <i class="icon ion-ios-arrow-right item-icon"></i>
+      <!--change password-->
+      <li class="item item-icon-right onerow" ui-sref="changePwd({type:0})">
+        <div class="row">
+          <div class="col-50">
+            <span class="key">{{'my-info.personal-setting.changePwd' | translate}}</span>
+          </div>
+        </div>
+        <i class="icon ion-ios-arrow-right"></i>
       </li>
     </ion-list>
   </ion-content>

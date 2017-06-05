@@ -1,61 +1,80 @@
 .setting {
-  .headColor {
-    background-color: $global-head-bg;
-  }
-  .iconColor {
-    color: $color-base
-  }
+
+  font-family: PingFangSC-Regular;
 
   .content {
-
     color: rgba(255, 255, 255, 1);
     background: $global-background;
-  }
-  .iconSize {
-    font-size: 0.5rem;
-    right: 0.3rem;
-  }
-  .onerow {
-    background: #0D0F11;
-    padding: 0.14rem 0rem 0.14rem 0.4rem;
-    border-bottom: 0.05rem solid #2D3234;
-  }
-  .item {
-    border-top: none;
-    border-color: #2D3234;
+
+    .row-title{
+      background-color:  $global-background;
+      padding:0.1rem 0.4rem;
+      border:none;
+
+      .key{
+        font-size: 0.28rem;
+        color: #FFFFFF;
+        line-height: 0.32rem;
+      }
+    }
+
+    .onerow {
+      background-color: #0D0F11;
+      border-top: none;
+      border-bottom: 0.03rem solid #979797;
+      padding: 0.2rem 0.4rem;
+
+      .key {
+        font-family: PingFangSC-Medium;
+        font-size: $font-size;
+        color: $color-text-key;
+        line-height: $font-size;
+        vertical-align: middle;
+      }
+
+      .value {
+        float: right;
+        font-size: $font-size-small;
+        color: $color-text-value;
+        line-height: 0.28rem;
+        padding-right:0.24rem;
+      }
+
+      .circle-choice{
+        float: right;
+        width: 0.42rem;
+        height:0.42rem;
+      }
+
+    }
+
+    .cusdivide {
+      height: 0.3rem;
+    }
+
+    .redpoint1 {
+      position: absolute;
+      left: 0.2rem;
+      top: 0.4rem;
+      width: 0.14rem;
+      height: 0.14rem;
+      display: inline-block;
+      border-radius: 6rem;
+      background: #FF304A;
+    }
+
   }
 
-  .leftWord {
-    font-family: PingFangSC-Medium;
-    font-size: 0.32rem;
-    color: #FFFFFF;
-    line-height: 0.32rem;
+  .footer{
+    opacity: 0.91;
+    background: #546281;
+    border: 0.01rem solid #3A4050;
+    border-radius: 0.06rem;
 
-  }
-  .rightword {
-    font-size: 0.24rem;
-    color: #565A64;
-    line-height: 0.28rem;
-    float:right;
-  }
-  .cusdivide {
-    background-color: $global-background;
-    padding: 0rem;
-    height: 0.34rem;
-    border-bottom: 0.05rem solid #2D3234;
-
-  }
-
-  .redpoint1 {
-    border-radius: 6rem;
-    background: red;
-    width: 0.14rem;
-    height: 0.14rem;
-    display: inline-block;
-    left: 0.2rem;
-    top: 0.3rem;
-    position: absolute;
-
+    .title{
+      font-size: 0.36rem;
+      color: #FFFFFF;
+    }
   }
 
 }

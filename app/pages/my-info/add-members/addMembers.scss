@@ -1,5 +1,67 @@
 .addMembers{
 
+  font-family: PingFangSC-Regular;
+
+  .content{
+    color:$color-text-key;
+    background: rgba(15, 17, 18, 1);
+
+    .oneRow{
+      padding:0.4rem 0rem 0.36rem 0.357rem;
+
+      .roomImg{
+        width:1.4rem;
+        height:1.4rem;
+      }
+
+      .bathroom{
+        padding-top:0.25rem;
+
+        .bathroomWord{
+          font-size: 0.32rem;
+          color: #FFFFFF;
+        }
+      }
+
+      .device{
+        padding-top:0.15rem;
+
+        .deviceWord{
+          font-size: 0.24rem;
+          color: #565A64;
+        }
+      }
+
+      .action{
+        padding-top:0.4rem;
+        font-size: 0.32rem;
+        white-space: nowrap;
+        text-align: center;
+
+        .rename{
+          color: #41FCDC;
+        }
+        .disband{
+          color: #FF687A;
+        }
+        .manager{
+          color: #FFFFFF;
+        }
+      }
+    }
+  }
+
+  .createBtn {
+    background-color: #546281;
+    padding: 0;
+    border-radius: 0.06rem;
+    border: 1px solid #3A4050;
+    opacity: 0.91;
+    .title {
+      color: white;
+      font-size: 0.36rem;
+    }
+  }
 
   .cusicon{
    margin-right: 10px;

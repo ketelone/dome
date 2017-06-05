@@ -17,7 +17,6 @@ angular.module('nextgenModule')
           explainDeviceError: explainDeviceError,
           explainMemory: explainMemory,
           explainSystemState: explainSystemState,
-          getCmdvalue: getCmdvalue,
           getCmd: getCmd,
           sendCmd: sendCmd,
           getDeviceStatus:getDeviceStatus
@@ -27,7 +26,7 @@ angular.module('nextgenModule')
 
         /*设置出水参数 cmd + arg1 + arg2 + arg3
          var argment =  {
-         'temperature':'0-100',    //这个最好传16进制的字符串 比如0 ->00 100->64
+         'unit':'0-100',    //这个最好传16进制的字符串 比如0 ->00 100->64
          'out':'HRS',			  //这个参数是个枚举字符串 HRS，HS，SP，HDS 分别表示 头顶花洒，头顶摇摆，spout，手持花洒，
 
          }*/
@@ -242,25 +241,6 @@ angular.module('nextgenModule')
           dict["cmd"] = '80';
           return dict;
         }
-
-        function getCmdvalue(header, idx, data, ctrId, devId) {
-          if (data.length % 2 != 0) {
-            data = "0" + data;
-          }
-          var checksum = parseInt(idx, 16) ^ parseInt(ctrId, 16) ^ parseInt(devId, 16);
-          for (var i = 0, len = data.length; i < len; i += 2) {
-            var hex = data.substring(i, i + 2);
-            checksum ^= parseInt(hex, 16);
-          }
-          var length = data.length / 2 + 4;
-          return header + doStr(length)
-            + doStr(idx)
-            + doStr(ctrId)
-            + doStr(devId)
-            + data
-            + doStr(checksum.toString(16));
-        };
-
 
         function getCmd(value, deviceId) {
           var cmd = {

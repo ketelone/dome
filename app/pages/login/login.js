@@ -1,32 +1,20 @@
-﻿/**
- * Created by gusenlin on 16/4/24.
- */
-angular.module('loginModule')
-
+﻿angular.module('loginModule')
   .controller('loginCtrl', [
-    '$scope',
-    '$state',
-    'baseConfig',
-    '$ionicLoading',
-    '$http',
-    '$timeout',
-    '$ionicHistory',
-    '$ionicPlatform',
-    '$ionicScrollDelegate',
-    'hmsPopup',
-    '$rootScope',
-    'publicMethod',
-    function ($scope,
-              $state,
-              baseConfig,
-              $ionicLoading,
-              $http,
-              $timeout,
-              $ionicHistory,
-              $ionicPlatform,
-              $ionicScrollDelegate,
-              hmsPopup,
-              $rootScope, publicMethod) {
+    '$scope','$state','baseConfig','$ionicLoading',
+    '$http','$timeout','$ionicHistory','$ionicPlatform',
+    '$ionicScrollDelegate','hmsPopup','$rootScope',
+    'publicMethod','$stateParams',
+    function ($scope,$state,baseConfig,$ionicLoading,
+              $http,$timeout,$ionicHistory,$ionicPlatform,
+              $ionicScrollDelegate,hmsPopup,$rootScope,
+              publicMethod,$stateParams) {
+
+      var login_type=$stateParams.type?Number($stateParams.type):0;
+      if(login_type){
+        $scope.loginWay="login.loginByEmail";
+      }else{
+        $scope.loginWay="login.loginByTel";
+      }
 
       localStorage.boxLinkCount = 1;
 

@@ -1,16 +1,16 @@
 /**
- * Created by chenjiacheng on 17/3/27.
+ * Writed by LiaoXuyi
  */
-
 angular.module('messageModule')
   .config(['$stateProvider',
     function ($stateProvider) {
-      $stateProvider
-        .state('messageDetail', {
-          url: '/messageDetail',
-          templateUrl: 'build/pages/message/message-detail/messageDetail.html',
-          controller: 'messageDetailCtrl'
-        })
+      //配置消息详情页面路由
+      //Configure messageDetail router
+      $stateProvider.state('messageDetail', {
+        url: '/message/detail/:messageId',
+        templateUrl: 'build/pages/message/message-detail/messageDetail.html',
+        controller: 'messageDetailCtrl'
+      })
     }
   ])
   .controller('messageCtrl', [
@@ -18,59 +18,70 @@ angular.module('messageModule')
     'hmsPopup', 'hmsHttp', 'SettingsService', 'baseConfig',
     function ($scope, $state, $timeout, publicMethod, $ionicPopup,
               hmsPopup, hmsHttp, SettingsService, baseConfig) {
-      $scope.data = {
-        showDelete: false //左侧选择框是否显示
-      };
-      $scope.threeBottom = false;
-      $scope.exceptionitems = [];//异常消息数组
-      $scope.statusitems = [];//状态消息数组
-      $scope.showMessage=false;//是否显示空消息
-      $scope.message="";//空消息的内容
+      /**whether show delete checkbox on the left**/
+      $scope.showDelete=false //左侧选择框是否显示
+      /**whether show three button on the bottom**/
+      $scope.threeBottom = false;//底下三个选项是否显示
+      /**the message object array**/
+      $scope.messages = [];//消息对象数组
+      /**the message to tell user the messages array is empty**/
+      $scope.empty_message="";//空消息的内容
+      /**whether show empty_message**/
+      $scope.showEmptyMessage=false;//是否显示空消息
+      /**the clicked tab **/
+      $scope.index=0;//选中的tab的下标
 
-      //tab列表
-      $scope.listStatus = [
-        {
-          des: "message.status",
-          isClick: true,
-        },
-        {
-          des: "message.exception",
-          isClick: false,
-        },
-        {
-          des: "message.other",
-          isClick: false,
-        },
-      ]
-
+      //设置messages数组的数据
       /**
-       *@author:chenjiacheng
-       *@name:logout
-       *@params:
-       *@return:
-       *@disc:判断是否已读
+       * set type of message and ask the interface to get the messages
+       * @param type:the type of message
+       * @return the new messages array
        */
-      var read = function () {
-        for (var i = 0; i < $scope.statusitems.length; i++) {
-          if ($scope.statusitems[i].hasRead == true) {
-            $scope.statusitems[i].readStyle = "hasread";
-          }
+      function setMessages(type) {
+        $scope.messages=[];
+        if(type==0) {
+          $scope.messages.push({
+            id: "100",
+            message: "message.statusMessage1",
+            device: "message.device1",
+            messageDel: "message.messageDel1",
+            time: "message.time",
+            circleUrl1: "build/img/common/radio_q.png",
+            ischecked: false,
+            hasRead: true,
+          });
+          $scope.messages.push({
+            id: "200",
+            message: "message.statusMessage1",
+            device: "message.device1",
+            messageDel: "message.messageDel1",
+            time: "message.time",
+            circleUrl1: "build/img/common/radio_q.png",
+            ischecked: false,
+            hasRead: false,
+          });
         }
-        for (var i = 0; i < $scope.exceptionitems.length; i++) {
-          if ($scope.exceptionitems[i].hasRead == true) {
-            $scope.exceptionitems[i].readStyle = "hasread";
-          }
+        else if(type==1){
+          $scope.messages.push({
+            id: "200",
+            message: "message.exceptionMessage",
+            device: "message.device2",
+            time: "message.time",
+            circleUrl1: "build/img/common/radio_q.png",
+            ischecked: false,
+            hasRead: false,
+          });
+          $scope.messages.push({
+            id: "300",
+            message: "message.exceptionMessage",
+            device: "message.device2",
+            time: "message.time",
+            circleUrl1: "build/img/common/radio_q.png",
+            ischecked: false,
+            hasRead: true,
+          });
         }
-      }
-
-      /**
-       *@author:chenjiacheng
-       *@name:getException
-       *@params:
-       *@return:
-       *@disc: Get exception information from interface
-       */
-      function getException() {
+        //获取数据
         // hmsPopup.showLoading();
         // var url = baseConfig.basePath + "/r/api/cmm/deviceException/query";
         // var paramter = [
@@ -78,321 +89,149 @@ angular.module('messageModule')
         // ];
         // hmsHttp.post(url, paramter).success(
         //   function (response) {
-        //     //异常及保修
         //     if(response.success == true){
         //       for (var i = 0; i < response.rows.length; i++) {
-        //         if (response.rows[i].exceptionType == 'err') {
+        //         if (type==0&&response.rows[i].exceptionType == 'err') {//'warn'
         //           //状态及提醒
         //           $scope.statusitems.push({
         //             id: response.rows[i].exceptionId,
-        //             statusMessage: response.rows[i].description,
+        //             message: response.rows[i].description,
         //             device: response.rows[i].deviceName,
         //             time: response.rows[i].creationDate,
-        //             exceptionId : response.rows[i].exceptionId,
         //             circleUrl1: "build/img/common/radio_q.png",
         //             ischecked: false,
-        //             name: "status",
         //             hasRead: false,
-        //             readStyle: ""
         //           });
         //         }
-        //         else if (response.rows[i].exceptionType == 'warn') {
-        //           $scope.exceptionitems.push(
-        //             {
-        //               id: response.rows[i].exceptionId,
-        //               exceptionMessage: response.rows[i].description,
-        //               device: response.rows[i].deviceName,
-        //               time: response.rows[i].creationDate,
-        //               exceptionId : response.rows[i].exceptionId,
-        //               circleUrl1: "build/img/common/radio_q.png",
-        //               ischecked: false,
-        //               name: "exception",
-        //               hasRead: false,
-        //               readStyle: ""
-        //             }
-        //           );
-        //         }
         //       }
+        //       hmsPopup.hideLoading();
         //     }
         //   }
         // ).error(
         //   function (response, status, header, config) {
+        //     $timeout(function () {
+        //       hmsPopup.hideLoading();
+        //     },2000);
         //   }
         // );
-        $scope.exceptionitems.push({
-          id: "200",
-          exceptionMessage: "message.exceptionMessage",
-          device: "message.device2",
-          time: "message.time",
-          circleUrl1: "build/img/common/radio_q.png",
-          ischecked: false,
-          name: "exception",
-          hasRead: true,
-          readStyle: ""
-        });
-        $scope.statusitems.push({
-          id: "100",
-          statusMessage: "message.statusMessage1",
-          device: "message.device1",
-          messageDel: "message.messageDel1",
-          time: "message.time",
-          circleUrl1: "build/img/common/radio_q.png",
-          ischecked: false,
-          name: "status",
-          hasRead: true,
-          readStyle: ""
-        });
-        // console.log($scope.statusitems);
-        read();
-        // hmsPopup.hideLoading();
       }
 
-      getException();
+      //初始化messages数组
+      /**init the messages array when entering the message page**/
+      setMessages(0);
 
       //tab点击，切换内容
+      /**
+       * change the clicked tab style and reset messages array
+       * if messages array is empty,show the empty_message
+       * @param index: the index of clicked tab
+       */
       $scope.listClick = function (index) {
-        switch(index){
-          case 0:
-            $scope.listStatus[0].isClick=true;
-            $scope.listStatus[1].isClick=false;
-            $scope.listStatus[2].isClick=false;
-            if($scope.statusitems.length==0){
-              $scope.message="message.noMessageWord1";
-              $scope.showMessage=true;
-            }else{
-              $scope.showMessage=false;
-              $scope.message="";
-            }
-            break;
-          case 1:
-            $scope.listStatus[0].isClick=false;
-            $scope.listStatus[1].isClick=true;
-            $scope.listStatus[2].isClick=false;
-            if($scope.exceptionitems.length==0){
-              $scope.message="message.noMessageWord2";
-              $scope.showMessage=true;
-            }else{
-              $scope.showMessage=false;
-              $scope.message="";
-            }
-            break;
-          case 2:
-            $scope.listStatus[0].isClick=false;
-            $scope.listStatus[1].isClick=false;
-            $scope.listStatus[2].isClick=true;
-            $scope.message="message.noMessageWord3";
-            $scope.showMessage=true;
-            break;
+        $scope.index=index;
+        setMessages(index);//获取数据
+        if($scope.messages.length==0){
+          $scope.empty_message="message.noMessageWord"+index;
+          $scope.showEmptyMessage=true;
+        }else{
+          $scope.empty_message="";
+          $scope.showEmptyMessage=false;
         }
       }
 
+      /**the img of selected checkbox**/
       var circleUrl2 = "build/img/common/radio_h.png";
+      /**the img of unselected checkbox**/
       var circleUrltemp = "build/img/common/radio_q.png";
 
       /**
-       *@author:chenjiacheng
-       *@name:logout
-       *@params:
-       *@return:
-       *@disc:go  messageDetail list
-       */
-      $scope.goMessDetail = function (item) {
-        SettingsService.set("exceptionId", item.id);
-        $state.go("messageDetail");
-      }
-
-      /**
-       *@author:chenjiacheng
-       *@name:goDetele
-       *@params:
-       *@return:
-       *@disc:goDetele item
+       * delete message and refresh the messages arrays
+       * @param item:the clicked message
        */
       $scope.goDeteleitem = function (item) {
-        console.log(item);
-        var toDetele = function () {
-          if (item.name == 'status') {
-            $scope.statusitems.splice($scope.statusitems.indexOf(item), 1);
+        var toDetele = function (res) {
+          if(res==true){//comfirm to delete message
+            //ask the interface to delete the message
+            // var paramter = [{"exceptionId": item.id}];
+            // console.log(paramter);
+            // var url = baseConfig.basePath + "/r/api/cmm/deviceException/delete";
+            // hmsHttp.post(url, paramter).success(function (response) {
+            //   console.log(response);
+            // }).error(
+            // );
+            //refresh the messages arrays
+            $scope.messages.splice($scope.messages.indexOf(item), 1);
           }
-          else {
-            $scope.exceptionitems.splice($scope.exceptionitems.indexOf(item), 1);
-          }
-          var paramter = [{"exceptionId": item.exceptionId}];
-          console.log(paramter);
-          var url = baseConfig.basePath + "/r/api/cmm/deviceException/delete";
-          hmsHttp.post(url, paramter).success(function (response) {
-            console.log(response);
-          }).error(
-          );
-        }
-        hmsPopup.confirmNoTitle("<div ><div>删除后将无法在消息记录中找回,</div><br><div style='text-align:center'>是否要删除此消息?</div></div><br><br>", toDetele);
+        };
+        //pop the dialog to ask whether confirm to delete message
+        hmsPopup.confirmNoTitle("<div style='text-align:center'>删除后将无法在消息记录中找回,<br/>是否要删除此消息?</div>",
+        "删除","取消",toDetele);
       };
 
-      /**
-       *@author:chenjiacheng
-       *@name:manyChoose
-       *@params:
-       *@return:
-       *@disc:ClickmanyChoose
-       */
+      /**show three buttom on the bottom and checkbox on the left**/
       $scope.manyChoose = function () {
         $scope.threeBottom = true;
-        $scope.data.showDelete = true;
+        $scope.showDelete = true;
       }
 
       /**
-       *@author:chenjiacheng
-       *@name:onChoose
-       *@params:
-       *@return:
-       *@disc:choose you click
+       * reverse the img of checkbox when the message is selected
+       * @param item:the clicked message
        */
       $scope.onChoose = function (item) {
-        //alert("statustrue");
-        //  alert($scope.data.showDelete);
-        //  if($scope.data.showDelete==false){
-        //    return;
-        //  }
-        if (item.ischecked == true && item.name == "status") {
-          //alert("statustrue");
-          for (var i = 0; i < $scope.statusitems.length; i++) {
-            if ($scope.statusitems[i].id == item.id) {
-              $scope.statusitems[i].ischecked = false;
-              $scope.statusitems[i].circleUrl1 = circleUrltemp;
-            }
-          }
+        if (item.ischecked) {//被选中
+          item.circleUrl1 = circleUrltemp;
+        }else{
+          item.circleUrl1 = circleUrl2;
         }
-
-        else if (item.ischecked == false && item.name == "status") {
-
-          for (var i = 0; i < $scope.statusitems.length; i++) {
-            if ($scope.statusitems[i].id == item.id) {
-              $scope.statusitems[i].ischecked = true;
-              $scope.statusitems[i].circleUrl1 = circleUrl2;
-            }
-          }
-        }
-
-        else if (item.ischecked == true && item.name == "exception") {
-
-          for (var i = 0; i < $scope.exceptionitems.length; i++) {
-            if ($scope.exceptionitems[i].id == item.id) {
-              $scope.exceptionitems[i].ischecked = false;
-              $scope.exceptionitems[i].circleUrl1 = circleUrltemp;
-              //alert(  $scope.exceptionitems[i].circleUrltemp +"2");
-              //alert( $scope.exceptionitems[i].circleUrl1 +"1");
-            }
-          }
-
-        }
-        else if (item.ischecked == false && item.name == "exception") {
-          //alert("exceptionfalse");
-
-          for (var i = 0; i < $scope.exceptionitems.length; i++) {
-            if ($scope.exceptionitems[i].id == item.id) {
-              $scope.exceptionitems[i].ischecked = true;
-              $scope.exceptionitems[i].circleUrl1 = circleUrl2;
-            }
-          }
-          ;
-        }
+        item.ischecked=!item.ischecked;
       }
 
-      /**
-       *@author:chenjiacheng
-       *@name:bottomGocancel
-       *@params:
-       *@return:
-       *@disc:clickbottomGocancel
-       */
+      /**cancel the multi-choose operation,hide three button and checkbox**/
       $scope.bottomGocancel = function () {
-        for (var i = 0; i < $scope.statusitems.length; i++) {
-          $scope.statusitems[i].ischecked = false;
-          $scope.statusitems[i].circleUrl1 = circleUrltemp;
-        }
-        for (var i = 0; i < $scope.exceptionitems.length; i++) {
-          $scope.exceptionitems[i].ischecked = false;
-          $scope.exceptionitems[i].circleUrl1 = circleUrltemp;
-        }
+        $scope.messages.forEach(function (message) {
+          message.ischecked = false;
+          message.circleUrl1 = circleUrltemp;
+        });
         $scope.threeBottom = false;
-        $scope.data.showDelete = false;
+        $scope.showDelete = false;
       }
 
-      /**
-       *@author:chenjiacheng
-       *@name:bottomManychoose
-       *@params:
-       *@return:
-       *@disc:clickbottomManychoose
-       */
-      $scope.hasChooseAllstatus = false;
-      $scope.hasChooseAllexception = false;
+      /**select all message in this tab**/
       $scope.bottomManychoose = function () {
-        if ($scope.hasStaus == true) {
-          $scope.hasChooseAllstatus = !$scope.hasChooseAllstatus;
-          if ($scope.hasChooseAllstatus == true) {
-            for (var i = 0; i < $scope.statusitems.length; i++) {
-              $scope.statusitems[i].ischecked = true;
-              $scope.statusitems[i].circleUrl1 = circleUrl2;
-            }
-          } else {
-            for (var i = 0; i < $scope.statusitems.length; i++) {
-
-              $scope.statusitems[i].ischecked = false;
-              $scope.statusitems[i].circleUrl1 = circleUrltemp;
-            }
-          }
-        } else {
-          $scope.hasChooseAllexception = !$scope.hasChooseAllexception;
-          if ($scope.hasChooseAllexception == true) {
-            for (var i = 0; i < $scope.exceptionitems.length; i++) {
-              $scope.exceptionitems[i].ischecked = true;
-              $scope.exceptionitems[i].circleUrl1 = circleUrl2;
-            }
-
-          } else {
-            for (var i = 0; i < $scope.exceptionitems.length; i++) {
-
-              $scope.exceptionitems[i].ischecked = false;
-              $scope.exceptionitems[i].circleUrl1 = circleUrltemp;
-            }
-          }
-        }
+        //change the img of checkbox
+        $scope.messages.forEach(function (message) {
+          message.ischecked = true;
+          message.circleUrl1 = circleUrl2;
+        });
       }
 
-      /**
-       *@author:chenjiacheng
-       *@name:bottomGodetele
-       *@params:
-       *@return:
-       *@disc:clickbottomGodetele
-       */
+      /**delete the selected messages**/
       $scope.bottomGodetele = function () {
-        if ($scope.hasStaus == true) {
-          var tempArry = [];
-          for (var i = 0; i < $scope.statusitems.length; i++) {
-            if ($scope.statusitems[i].ischecked == false) {
-              tempArry.push($scope.statusitems[i]);
-            }
+        var deleteArray=$scope.messages.filter(function(message){
+          return message.ischecked;
+        });
+        var tempArray=$scope.messages.filter(function(message){
+          return !message.ischecked;
+        });
+        var toDetele = function (res) {
+          if(res==true){//comfirm to delete message
+            //refresh the messages arrays
+            $scope.messages=tempArray;
+            // var paramter = [{"exceptionId": item.id}];
+            // console.log(paramter);
+            // var url = baseConfig.basePath + "/r/api/cmm/deviceException/delete";
+            // hmsHttp.post(url, paramter).success(function (response) {
+            //   console.log(response);
+            // }).error(
+            // );
           }
-          $scope.statusitems = tempArry;
-
-          if ($scope.statusitems.length == 0) {
-            $scope.threeBottom = false;
-          }
-        }
-        else {
-          var tempArry = [];
-          for (var i = 0; i < $scope.exceptionitems.length; i++) {
-            if ($scope.exceptionitems[i].ischecked == false) {
-
-              tempArry.push($scope.exceptionitems[i]);
-            }
-          }
-          $scope.exceptionitems = tempArry;
-        }
+        };
+        //pop the dialog to ask whether confirm to delete messages
+        hmsPopup.confirmNoTitle("<div style='text-align:center'>删除后将无法在消息记录中找回,<br/>是否要删除这些消息?</div>",
+          "删除","取消",toDetele);
+        //hide three button and checkbox
         $scope.threeBottom = false;
-        $scope.data.showDelete = false;
+        $scope.showDelete = false;
       }
 
     }]);

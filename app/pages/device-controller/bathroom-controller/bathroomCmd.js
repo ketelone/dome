@@ -132,7 +132,7 @@
          *@autor: caolei
          *@params: arg
          *@return: environment json
-         *@disc: get environment's temperature and humidity
+         *@disc: get environment's unit and humidity
          */
         function explainEnvironmentStatus(arg){
           var environment ;
@@ -251,7 +251,7 @@
         /*5.设置Heater参数 ——————————————————————TEMP设置暂不作用，温度由Bathroom Heater自行控制。 cmd+mode+temp
          {
          "operate":"SET_HEATER_PARA",
-         "temperature":"00~40",
+         "unit":"00~40",
          "mode":"NORMAL/SWING"
          }*/
 

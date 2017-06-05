@@ -1,0 +1,24 @@
+.about{
+
+  .content {
+    color: rgba(255, 255, 255, 1);
+    background: $global-background;
+
+    .img-size{
+      background-color: #000122;
+      height: 4.36rem;
+    }
+
+    .description{
+      padding:0.2rem 0.4rem;
+      font-family: PingFangSC-Regular;
+      font-size: $font-size;
+      line-height: 0.48rem;
+      letter-spacing: 0.02rem;
+
+      .title{
+        text-align: center;
+      }
+    }
+  }
+}

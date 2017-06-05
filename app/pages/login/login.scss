@@ -1,12 +1,52 @@
 .login{
-  //background: url("../img/homepage copy 2@2x.jpg");
-  background-color: lightblue;
-  background-size: 100% 100%;
-  animation:backgroundTransition 4s linear;
-  -webkit-animation: backgroundTransition 4s linear;
-  .content-style{
-    background-color: transparent;
+
+  background: rgba(0,0,0,0.86);
+  background-image: url(../img/login/img_bg.png);
+  font-family: PingFangSC-Regular;
+  color:#fff;
+
+  .title{
+    width:100%;
+    margin-top:2rem;
+    font-size: $font-size;
+    line-height: 0.4rem;
+    text-align: center;
   }
+
+  .login-modal{
+    width:5.5rem;
+    margin:2rem auto;
+
+    .list{
+      padding:0;
+
+      .item{
+        margin-bottom: 0.1rem;
+        border: none;
+        background-color: #000;
+      }
+
+      .img-size1{
+        width:0.36rem;
+        height: 0.36rem;
+      }
+
+      .img-size2{
+        width:0.32rem;
+        height: 0.32rem;
+      }
+
+    }
+
+    .forget_pwd{
+      padding: 0 0.2rem;
+      font-size: $font-size-small;
+      line-height: 0.33rem;
+      color:#909090;
+      text-align: right;
+    }
+  }
+
   .hasPassword{
     width: 45%;
     height:45px;

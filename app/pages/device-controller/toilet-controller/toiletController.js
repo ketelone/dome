@@ -476,14 +476,14 @@ angular.module('toiletControlModule')
         var temperature = handleOriginData[2].gearInit*2;
         var volume = handleOriginData[0].gearInit*2;
         var place = handleOriginData[1].gearInit*2;
-        // if(temperature === 3){
-        //   temperature = 4;
-        // }else if(temperature === 4){
-        //   temperature = 6;
-        // }else if(temperature === 5){
-        //   temperature = 8;
-        // }else if(temperature === 6){
-        //   temperature = 10;
+        // if(unit === 3){
+        //   unit = 4;
+        // }else if(unit === 4){
+        //   unit = 6;
+        // }else if(unit === 5){
+        //   unit = 8;
+        // }else if(unit === 6){
+        //   unit = 10;
         // };
         var cmdvalue = getCmd(tolitercmdObj.header,tolitercmdObj.idx,nimi.frontRearDry(type,temperature,volume,place,flushOptions,mSwitchType),tolitercmdObj.ctrId,tolitercmdObj.devId);
         //send instructin

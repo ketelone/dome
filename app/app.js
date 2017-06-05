@@ -41,69 +41,171 @@ angular.module('myApp')
       if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
         cordova.plugins.Keyboard.hideKeyboardAccessoryBar(false);
         cordova.plugins.Keyboard.disableScroll(true);
-
       }
       if (window.StatusBar) {
         // org.apache.cordova.statusbar required
         StatusBar.styleDefault();
       }
 
+      //unit setting
+      window.localStorage.temperatureUnit = window.localStorage.temperatureUnit ? window.localStorage.temperatureUnit : "C";
+      window.localStorage.waterUnit = window.localStorage.waterUnit ? window.localStorage.waterUnit : "L";
+      window.localStorage.electricityUnit = window.localStorage.electricityUnit ? window.localStorage.electricityUnit : "H";
 
-      window.localStorage.temperature="°C";
-      window.localStorage.useWater="S";
-      window.localStorage.useElectricity="h";
-
-      if (window.localStorage.languageFlag == undefined || window.localStorage.language == "default") {
+      //language settting
+      if (!window.localStorage.language) {
         navigator.globalization.getPreferredLanguage(
           function (language) {
-            //alert(language.value == 'zh-Hans-CN');
-            //alert(language.value == 'zh-CN' || language.value == 'zh-Hans-CN');
             if (language.value == 'zh-CN' || language.value == 'zh-Hans-CN') {
-              //alert(language.value + '1');
               $translate.use('zh');
-              window.localStorage.language="中文简体";
+              window.localStorage.language = "zh";
             }
             else if (language.value == 'zh-TW' || language.value == 'zh-Hans-TW') {
               $translate.use('en');
-              window.localStorage.language="English";
+              window.localStorage.language = "tw";
             }
             else if (language.value == 'en-US' || language.value == 'en-CN') {
-              //alert(language.value + '2');
               $translate.use('en');
-              window.localStorage.language="English";
+              window.localStorage.language = "en";
             }
             else if (language.value == 'en-TH' || language.value == 'th-CN') {
               $translate.use('en');
-              window.localStorage.language="English";
+              window.localStorage.language = "th";
             }
             else {
               $translate.use('en');
-              //alert(language.value + "a");
             }
-            window.localStorage.languageFlag = true;
-            window.localStorage.language = "default";
           },
           function () {
             // alert('Error getting locale\n');
           });
       }
       else {
-        if (window.localStorage.language == '中文简体') {
+        if (window.localStorage.language == 'zh') {
           $translate.use('zh');
         }
-        else if (window.localStorage.language == '中文繁体') {
+        else if (window.localStorage.language == 'tw') {
           $translate.use('en');
         }
-        else if (window.localStorage.language == 'English') {
+        else if (window.localStorage.language == 'en') {
           $translate.use('en');
         }
-        else if (window.localStorage.language == 'ภาษาไทย') {
+        else if (window.localStorage.language == 'th') {
           $translate.use('en');
         }
         else {
           $translate.use('en');
         }
       }
+
+      //极光推送插件
+      // var getRegistrationID = function() {
+      //   window.plugins.jPushPlugin.getRegistrationID(onGetRegistrationID);
+      // };
+      //
+      // var onGetRegistrationID = function(data) {
+      //   try {
+      //     console.log("JPushPlugin:registrationID is " + data);
+      //
+      //     if (data.length == 0) {
+      //       var t1 = window.setTimeout(getRegistrationID, 1000);
+      //     }
+      //     alert("onGetRegistrationID:"+data);
+      //   } catch (exception) {
+      //     console.log(exception);
+      //   }
+      // };
+
+      var init = function () {
+        try {
+          window.plugins.jPushPlugin.init();
+          alert('执行启动');
+          // window.setTimeout(getRegistrationID, 1000);
+          if (device.platform != "Android") {
+            window.plugins.jPushPlugin.setDebugModeFromIos();
+            window.plugins.jPushPlugin.setApplicationIconBadgeNumber(0);
+          } else {
+            window.plugins.jPushPlugin.setDebugMode(true);
+            window.plugins.jPushPlugin.setStatisticsOpen(true);
+          }
+          var alias = 'angela';
+          var tags = ['angela'];
+          window.plugins.jPushPlugin.setTagsWithAlias(tags, alias, function () {
+            // Success callback
+            console.log(tags + ' - ' + alias);
+            alert(tags + ' - ' + alias);
+          });
+        }
+        catch (exception) {
+          alert(exception);
+          console.log(exception);
+        }
+      };
+
+      var onTagsWithAlias = function(event) {
+        try {
+          console.log("onTagsWithAlias");
+          var result = "result code:" + event.resultCode + " ";
+          result += "tags:" + event.tags + " ";
+          result += "alias:" + event.alias + " ";
+          alert("result:"+result);
+        } catch (exception) {
+          alert("error");
+          console.log(exception)
+        }
+      };
+
+      var onOpenNotification = function(event) {
+        try {
+          var alertContent;
+          if (device.platform == "Android") {
+            alertContent = event.alert;
+          } else {
+            alertContent = event.aps.alert;
+          }
+          alert("open Notification:" + alertContent);
+        } catch (exception) {
+          console.log("JPushPlugin:onOpenNotification" + exception);
+        }
+      };
+
+      var onReceiveNotification = function(event) {
+        try {
+          var alertContent;
+          if (device.platform == "Android") {
+            alertContent = event.alert;
+          } else {
+            alertContent = event.aps.alert;
+          }
+          alert("onReceiveNotification:"+alertContent);
+        } catch (exception) {
+          console.log(exception)
+        }
+      };
+
+      var onReceiveMessage = function(event) {
+        try {
+          var message;
+          if (device.platform == "Android") {
+            message = event.message;
+          } else {
+            message = event.content;
+          }
+          alert("onReceiveMessage:"+message);
+        } catch (exception) {
+          console.log("JPushPlugin:onReceiveMessage-->" + exception);
+        }
+      };
+
+      document.addEventListener("jpush.setTagsWithAlias", onTagsWithAlias, false);
+      document.addEventListener("deviceready", init, false);
+      //获取点击通知的内容
+      document.addEventListener("jpush.openNotification", onOpenNotification, false);
+      //获取通知
+      document.addEventListener("jpush.receiveNotification", onReceiveNotification, false);
+      //获取自定义消息
+      document.addEventListener("jpush.receiveMessage", onReceiveMessage, false);
+
     });
 
     localStorage.boxLinkCount = 1;
@@ -471,7 +573,9 @@ angular.module('myApp')
        var errorcb = function(msg){
 
        };*/
+
     });
+
   });
 
 angular.module('myApp')
@@ -513,7 +617,6 @@ angular.module('myApp')
           templateUrl: 'build/pages/tab/tabs.html',
           controller: 'TabsCtrl'
         })
-
         .state('indexPage', {
           url: '/indexPage',
           templateUrl: 'build/pages/index-page/indexPage.html',
@@ -723,16 +826,16 @@ angular.module('myApp')
           templateUrl: 'build/pages/device-controller/mc-controller/mc-learning/mc.learning.html',
           controller: 'mcLearningCtrl'
         })
-
-        .state('nextgenSet', {
-          url: '/nextgenSet',
-          templateUrl: 'build/pages/device-controller/nextgen-controller/nextgen-set/nextgenSet.html',
-          controller: 'nextgenSetCtrl'
-        })
+        //nextgen shower router setting
         .state('nextgen', {
           url: '/nextgen',
           templateUrl: 'build/pages/device-controller/nextgen-controller/nextgen.html',
           controller: 'nextgenCtrl'
+        })
+        .state('nextgenSet', {
+          url: '/nextgenSet',
+          templateUrl: 'build/pages/device-controller/nextgen-controller/nextgen-set/nextgenSet.html',
+          controller: 'nextgenSetCtrl'
         })
         .state('nextgenInfo', {
           url: '/nextgenInfo',
