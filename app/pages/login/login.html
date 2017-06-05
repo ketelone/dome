@@ -1,41 +1,72 @@
-<ion-view view-title="登录" class="login" calculate-portrait="big-portrait,little-portrait">
-  <ion-content class="content-style" has-bouncing="false" scrollbar-y="false" delegate-handle="loginScroll">
-    <div class="hand_logo">
-      <img src="build/img/login/logo@3x.png">
+<ion-view view-title="{{'login.title' | translate}}" class="login">
+  <ion-content>
+    <div class="title" translate={{loginWay}}></div>
+    <div class="login-modal">
+      <div class="list">
+        <label class="item item-input">
+          <i class="icon">
+            <img ng-src="build/img/login/icon_china.png" class="img-size1">
+          </i>
+          <input type="text" placeholder="Search">
+        </label>
+        <label class="item item-input">
+          <i class="icon">
+            <img ng-src="build/img/login/icon_phone.png" class="img-size2">
+          </i>
+          <input type="tel" placeholder="">
+        </label>
+        <label class="item item-input">
+          <i class="icon">
+            <img ng-src="build/img/login/icon_pw.png" class="img-size2">
+          </i>
+          <input type="password" placeholder="">
+        </label>
+      </div>
+      <div class="forget_pwd" translate="login.rememberPassword"></div>
     </div>
-    <div>
-      <ion-item class="login-item">
-      <!--  <label ng-class="{'focus-user-label':!focusUsername,'blur-user-label':focusUsername}">用户名</label>-->
-        <div class="login_user_img">
-          <img src="build/img/login/user@3x.png" style="width: 0.3rem;">
-        </div>
-        <input type="text" autocomplete="off" class="username-input-text" ng-model="loginInfo.username"
-               ng-change="usernameChange()" ng-blur="userNameBlur()" style="font-size: 0.4rem;height: 0.5rem;"/>
-        <ion-item class="user-clear-item" ng-show="showUserClearButton">
-          <button class="button button-block clear-button" ng-click="clearUsername()">
-            <img src="build/img/login/cancel@3x.png" class="clear-image"/>
-          </button>
-        </ion-item>
-        <div class="gray-line"></div>
-       <!-- <label ng-class="{'focus-password-label':!focusPassword,'blur-password-label':focusPassword}">密码</label>-->
-        <div  class="login_pwd_img">
-          <img src="build/img/login/password@3x.png" style="width: 0.3rem;">
-        </div>
-        <input type="password" autocomplete="off" class="password-input"  style="font-size: 0.4rem" ng-model="loginInfo.password"
-             ng-change="passwordChange()"/>
-        <ion-item class="password-clear-item" ng-show="showPasswordClearButton">
-          <button class="button button-block clear-button" ng-click="clearPassword()">
-            <img src="build/img/login/cancel@3x.png" class="clear-image"/>
-          </button>
-        </ion-item>
-        <div class="gray-line"></div>
-        <div class="col" style="min-width: 30%;padding: 0px;">
-          <div style="font-size: 12px;color: #FAFBFD;margin-right: 10%;line-height: 35px;text-align: right" ng-click="forgetPw()"><span translate="login.rememberPassword"></span></div>
-        </div>
-    </div>
-    <div>
-      <div class="hasPassword" ng-click="login()"><span translate="login.login"></span></div>
-      <div class="noPassword" ng-click="registered()" style="margin-top: 10px"><span translate="login.createNew.createAccount"></span></div>
+    <div class="login-btn"></div>
+    <div class="action">
+      <div></div>
+      <div></div>
     </div>
   </ion-content>
+  <!--<ion-content class="content-style" has-bouncing="false" scrollbar-y="false" delegate-handle="loginScroll">-->
+    <!--<div class="hand_logo">-->
+      <!--<img src="build/img/login/logo@3x.png">-->
+    <!--</div>-->
+    <!--<div>-->
+      <!--<ion-item class="login-item">-->
+      <!--&lt;!&ndash;  <label ng-class="{'focus-user-label':!focusUsername,'blur-user-label':focusUsername}">用户名</label>&ndash;&gt;-->
+        <!--<div class="login_user_img">-->
+          <!--<img src="build/img/login/user@3x.png" style="width: 0.3rem;">-->
+        <!--</div>-->
+        <!--<input type="text" autocomplete="off" class="username-input-text" ng-model="loginInfo.username"-->
+               <!--ng-change="usernameChange()" ng-blur="userNameBlur()" style="font-size: 0.4rem;height: 0.5rem;"/>-->
+        <!--<ion-item class="user-clear-item" ng-show="showUserClearButton">-->
+          <!--<button class="button button-block clear-button" ng-click="clearUsername()">-->
+            <!--<img src="build/img/login/cancel@3x.png" class="clear-image"/>-->
+          <!--</button>-->
+        <!--</ion-item>-->
+        <!--<div class="gray-line"></div>-->
+       <!--&lt;!&ndash; <label ng-class="{'focus-password-label':!focusPassword,'blur-password-label':focusPassword}">密码</label>&ndash;&gt;-->
+        <!--<div  class="login_pwd_img">-->
+          <!--<img src="build/img/login/password@3x.png" style="width: 0.3rem;">-->
+        <!--</div>-->
+        <!--<input type="password" autocomplete="off" class="password-input"  style="font-size: 0.4rem" ng-model="loginInfo.password"-->
+             <!--ng-change="passwordChange()"/>-->
+        <!--<ion-item class="password-clear-item" ng-show="showPasswordClearButton">-->
+          <!--<button class="button button-block clear-button" ng-click="clearPassword()">-->
+            <!--<img src="build/img/login/cancel@3x.png" class="clear-image"/>-->
+          <!--</button>-->
+        <!--</ion-item>-->
+        <!--<div class="gray-line"></div>-->
+        <!--<div class="col" style="min-width: 30%;padding: 0px;">-->
+          <!--<div style="font-size: 12px;color: #FAFBFD;margin-right: 10%;line-height: 35px;text-align: right" ng-click="forgetPw()"><span translate="login.rememberPassword"></span></div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div>-->
+      <!--<div class="hasPassword" ng-click="login()"><span translate="login.login"></span></div>-->
+      <!--<div class="noPassword" ng-click="registered()" style="margin-top: 10px"><span translate="login.createNew.createAccount"></span></div>-->
+    <!--</div>-->
+  <!--</ion-content>-->
 </ion-view>

@@ -107,7 +107,8 @@
     }
   },
   "login": {
-    "login": "Log In",
+    "title": "登录",
+    "loginByTel":"手机号登录",
     "rememberPassword": "Forget Password?",
     "usernamePlaceholder": "Your User Name",
     "passwordPlaceholder": "Password",

@@ -48,9 +48,9 @@ angular.module('myApp')
       }
 
       //unit setting
-      window.localStorage.temperatureUnit=window.localStorage.temperatureUnit?window.localStorage.temperatureUnit:"C";
-      window.localStorage.waterUnit=window.localStorage.waterUnit?window.localStorage.waterUnit:"L";
-      window.localStorage.electricityUnit=window.localStorage.electricityUnit?window.localStorage.electricityUnit:"H";
+      window.localStorage.temperatureUnit = window.localStorage.temperatureUnit ? window.localStorage.temperatureUnit : "C";
+      window.localStorage.waterUnit = window.localStorage.waterUnit ? window.localStorage.waterUnit : "L";
+      window.localStorage.electricityUnit = window.localStorage.electricityUnit ? window.localStorage.electricityUnit : "H";
 
       //language settting
       if (!window.localStorage.language) {
@@ -58,19 +58,19 @@ angular.module('myApp')
           function (language) {
             if (language.value == 'zh-CN' || language.value == 'zh-Hans-CN') {
               $translate.use('zh');
-              window.localStorage.language="zh";
+              window.localStorage.language = "zh";
             }
             else if (language.value == 'zh-TW' || language.value == 'zh-Hans-TW') {
               $translate.use('en');
-              window.localStorage.language="tw";
+              window.localStorage.language = "tw";
             }
             else if (language.value == 'en-US' || language.value == 'en-CN') {
               $translate.use('en');
-              window.localStorage.language="en";
+              window.localStorage.language = "en";
             }
             else if (language.value == 'en-TH' || language.value == 'th-CN') {
               $translate.use('en');
-              window.localStorage.language="th";
+              window.localStorage.language = "th";
             }
             else {
               $translate.use('en');
@@ -98,14 +98,11 @@ angular.module('myApp')
         }
       }
 
-      //单位设置
-
-
       //极光推送插件
       // var getRegistrationID = function() {
       //   window.plugins.jPushPlugin.getRegistrationID(onGetRegistrationID);
       // };
-
+      //
       // var onGetRegistrationID = function(data) {
       //   try {
       //     console.log("JPushPlugin:registrationID is " + data);
@@ -119,27 +116,44 @@ angular.module('myApp')
       //   }
       // };
 
-      try {
-        window.plugins.jPushPlugin.init();
-        alert('执行启动');
-        // window.setTimeout(getRegistrationID, 1000);
-        if (device.platform != "Android") {
-          window.plugins.jPushPlugin.setDebugModeFromIos();
-          window.plugins.jPushPlugin.setApplicationIconBadgeNumber(0);
-        } else {
-          window.plugins.jPushPlugin.setDebugMode(true);
-          window.plugins.jPushPlugin.setStatisticsOpen(true);
+      var init = function () {
+        try {
+          window.plugins.jPushPlugin.init();
+          alert('执行启动');
+          // window.setTimeout(getRegistrationID, 1000);
+          if (device.platform != "Android") {
+            window.plugins.jPushPlugin.setDebugModeFromIos();
+            window.plugins.jPushPlugin.setApplicationIconBadgeNumber(0);
+          } else {
+            window.plugins.jPushPlugin.setDebugMode(true);
+            window.plugins.jPushPlugin.setStatisticsOpen(true);
+          }
+          var alias = 'angela';
+          var tags = ['angela'];
+          window.plugins.jPushPlugin.setTagsWithAlias(tags, alias, function () {
+            // Success callback
+            console.log(tags + ' - ' + alias);
+            alert(tags + ' - ' + alias);
+          });
         }
-        var alias = 'angela';
-        var tags = ['angela'];
-        window.plugins.jPushPlugin.setTagsWithAlias(tags, alias, function () {
-          // Success callback
-          console.log(tags + ' - ' + alias);
-          alert(tags + ' - ' + alias);
-        });
-      } catch (exception) {
-        console.log(exception);
-      }
+        catch (exception) {
+          alert(exception);
+          console.log(exception);
+        }
+      };
+
+      var onTagsWithAlias = function(event) {
+        try {
+          console.log("onTagsWithAlias");
+          var result = "result code:" + event.resultCode + " ";
+          result += "tags:" + event.tags + " ";
+          result += "alias:" + event.alias + " ";
+          alert("result:"+result);
+        } catch (exception) {
+          alert("error");
+          console.log(exception)
+        }
+      };
 
       var onOpenNotification = function(event) {
         try {
@@ -183,6 +197,8 @@ angular.module('myApp')
         }
       };
 
+      document.addEventListener("jpush.setTagsWithAlias", onTagsWithAlias, false);
+      document.addEventListener("deviceready", init, false);
       //获取点击通知的内容
       document.addEventListener("jpush.openNotification", onOpenNotification, false);
       //获取通知

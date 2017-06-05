@@ -106,7 +106,9 @@
     }
   },
   "login": {
-    "login": "登录",
+    "title": "登录",
+    "loginByTel":"手机号登录",
+    "loginByEmail":"邮箱登录",
     "rememberPassword": "忘记密码?",
     "usernamePlaceholder": "请输入用户名",
     "passwordPlaceholder": "请输入密码",
